@@ -1,7 +1,7 @@
 -- ============================================================================
 -- HỆ THỐNG ĐẶT VÉ XEM PHIM TRỰC TUYẾN CHO CHUỖI RẠP
 -- KIẾN TRÚC DBMS-FIRST / STORED-PROCEDURE-ONLY
--- SCRIPT 02: TẠO CÁC VIEW (VIEWS)
+-- SCRIPT 03: TẠO CÁC VIEW (VIEWS)
 -- ============================================================================
 
 USE CinemaBookingDB
@@ -46,8 +46,8 @@ SELECT
      FROM dbo.CHITIETVE cv
      INNER JOIN dbo.DONDATVE ddv ON cv.DonDatVeID = ddv.DonDatVeID
      WHERE ddv.SuatChieuID = sc.SuatChieuID
-       AND ddv.TrangThai NOT IN (N'Đã hủy', N'Hết hạn')
-       AND cv.TrangThai NOT IN (N'Đã hủy')
+       AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, SYSDATETIME()) = 1
+       AND cv.TrangThai <> N'Đã hủy'
     ) AS SoGheDaDat
 FROM dbo.SUATCHIEU sc
 INNER JOIN dbo.PHIM p ON sc.PhimID = p.PhimID
@@ -82,7 +82,8 @@ SELECT
     ddv.TongTienDoAn,
     ddv.TienGiamGia,
     (ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TongTienThanhToan,
-    ddv.TrangThai AS TrangThaiDon,
+    CASE WHEN ddv.TrangThai = N'Chờ thanh toán' AND ddv.HanGiuCho <= SYSDATETIME() THEN N'Hết hạn' ELSE ddv.TrangThai END AS TrangThaiDon,
+    ddv.HanGiuCho,
     km.MaCode AS MaKhuyenMai,
     (SELECT COUNT(*) FROM dbo.CHITIETVE cv WHERE cv.DonDatVeID = ddv.DonDatVeID AND cv.TrangThai <> N'Đã hủy') AS SoLuongVe,
     (SELECT TOP 1 tt.TrangThai
@@ -130,7 +131,8 @@ SELECT
     ddv.TongTienDoAn,
     ddv.TienGiamGia,
     (ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TongTienThanhToan,
-    ddv.TrangThai AS TrangThaiDon,
+    CASE WHEN ddv.TrangThai = N'Chờ thanh toán' AND ddv.HanGiuCho <= SYSDATETIME() THEN N'Hết hạn' ELSE ddv.TrangThai END AS TrangThaiDon,
+    ddv.HanGiuCho,
     km.MaCode AS MaKhuyenMai,
     km.MoTa AS MoTaKhuyenMai,
     -- Danh sách ghế dạng chuỗi (A1, A2...)
@@ -266,5 +268,5 @@ LEFT JOIN dbo.SUATCHIEU sc ON p.PhimID = sc.PhimID
 GROUP BY p.PhimID, p.TenPhim, p.ThoiLuong, p.NgayKhoiChieu, p.DoTuoi, p.PosterURL, p.TrangThai;
 GO
 
-PRINT N'>>> [02_views.sql] Đã tạo 6 View nghiệp vụ thành công.';
+PRINT N'>>> [03_views.sql] Đã tạo 6 View nghiệp vụ thành công.';
 GO

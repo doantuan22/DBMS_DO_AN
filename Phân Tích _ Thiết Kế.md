@@ -138,7 +138,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tên Use Case** | Đặt vé |
 | **Tác nhân thực hiện** | Khách hàng |
 | **Mô tả chức năng** | Khách hàng hoàn tất chọn suất chiếu, ghế, đồ ăn, khuyến mãi để tạo đơn/vé duy nhất. |
-| **Luồng hoạt động** | 1\. Khách hàng chọn SuatChieuID và danh sách GheID muốn đặt.<br><br>2\. (Tuỳ chọn) khách hàng chọn thêm SanPhamID ăn uống và/hoặc nhập mã khuyến mãi.<br><br>3\. Hệ thống kiểm tra ghế thuộc đúng phòng của suất chiếu (BR03) và chưa được bán hợp lệ trong cùng suất chiếu (BR02) trong một Transaction.<br><br>4\. Hệ thống tính giá vé (giá cơ bản của suất chiếu kết hợp phụ thu BANGGIA theo loại ghế/ngày/định dạng) và chốt giá trị snapshot GiaVe (BR09).<br><br>5\. Hệ thống tạo bản ghi DONDATVE, các CHITIETVE tương ứng ghế đã chọn, CHITIETDOAN nếu có đồ ăn, gắn KhuyenMaiID nếu áp dụng khuyến mãi.<br><br>6\. Nếu phát hiện xung đột (ghế vừa bị người khác đặt), hệ thống rollback toàn bộ giao dịch và thông báo lỗi cho khách hàng. |
+| **Luồng hoạt động** | 1\. Khách hàng chọn SuatChieuID và danh sách GheID muốn đặt.<br><br>2\. (Tuỳ chọn) khách hàng chọn thêm SanPhamID ăn uống và/hoặc nhập mã khuyến mãi.<br><br>3\. Hệ thống kiểm tra ghế thuộc đúng phòng của suất chiếu (BR03) và chưa được bán hợp lệ trong cùng suất chiếu (BR02) trong một Transaction.<br><br>4\. Hệ thống tính giá vé (giá cơ bản của suất chiếu kết hợp phụ thu BANGGIA theo loại ghế/ngày/định dạng) và chốt giá trị snapshot GiaVe (BR09).<br><br>5\. Hệ thống tạo bản ghi DONDATVE ở trạng thái Chờ thanh toán, các CHITIETVE tương ứng ghế đã chọn, CHITIETDOAN nếu có đồ ăn, gắn KhuyenMaiID nếu áp dụng khuyến mãi. Đơn được giữ ghế trong một khoảng thời gian giới hạn (HanGiuCho = thời điểm đặt + 10 phút); ghế đó hiển thị "đang giữ chỗ" với khách khác và không thể đặt. Quá hạn mà chưa thanh toán, đơn chuyển sang Hết hạn và ghế được nhả.<br><br>6\. Nếu phát hiện xung đột (ghế vừa bị người khác đặt), hệ thống rollback toàn bộ giao dịch và thông báo lỗi cho khách hàng. |
 
 **Chức năng Mua đồ ăn/thức uống kèm vé**
 
@@ -168,7 +168,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tên Use Case** | Thanh toán đơn đặt vé |
 | **Tác nhân thực hiện** | Khách hàng |
 | **Mô tả chức năng** | Khách hàng thực hiện thanh toán cho đơn đặt vé đã tạo; một đơn có thể có nhiều lần thử giao dịch. |
-| **Luồng hoạt động** | 1\. Khách hàng chọn DonDatVeID cần thanh toán và phương thức thanh toán.<br><br>2\. Hệ thống tạo bản ghi THANHTOAN (số tiền, phương thức, thời gian, mã giao dịch, trạng thái = đang xử lý).<br><br>3\. Hệ thống ghi nhận kết quả giao dịch trả về và cập nhật trạng thái bản ghi THANHTOAN tương ứng.<br><br>4\. Hệ thống đồng bộ trạng thái DONDATVE.TrangThai theo kết quả thanh toán mới nhất. |
+| **Luồng hoạt động** | 1\. Khách hàng chọn DonDatVeID cần thanh toán và phương thức thanh toán.<br><br>2\. Hệ thống tạo bản ghi THANHTOAN (số tiền, phương thức, thời gian, mã giao dịch, trạng thái = đang xử lý).<br><br>3\. Hệ thống ghi nhận kết quả giao dịch trả về và cập nhật trạng thái bản ghi THANHTOAN tương ứng.<br><br>4\. Hệ thống đồng bộ trạng thái DONDATVE.TrangThai theo kết quả thanh toán mới nhất.<br><br>5\. Khi khách bắt đầu một lần thanh toán, thời gian giữ ghế được gia hạn thêm tối thiểu 5 phút; không thể thanh toán đơn đã hết hạn giữ ghế. Thanh toán thành công là hoàn tất: hệ thống không có chức năng hoàn tiền và không hủy đơn đã thanh toán. |
 
 **Chức năng Xem lịch sử đặt vé**
 
@@ -270,7 +270,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tên Use Case** | Hủy suất chiếu |
 | **Tác nhân thực hiện** | Quản lý rạp |
 | **Mô tả chức năng** | Hủy một suất chiếu chưa diễn ra hoặc không còn nhu cầu chiếu. |
-| **Luồng hoạt động** | 1\. Quản lý rạp chọn suất chiếu cần hủy trong phạm vi rạp quản lý.<br><br>2\. Hệ thống kiểm tra các ràng buộc liên quan (đơn đặt vé đã tồn tại cho suất chiếu này, nếu có).<br><br>3\. Hệ thống cập nhật trạng thái/hủy bản ghi SUATCHIEU và ngừng hiển thị suất chiếu cho khách hàng. |
+| **Luồng hoạt động** | 1\. Quản lý rạp chọn suất chiếu cần hủy trong phạm vi rạp quản lý.<br><br>2\. Hệ thống kiểm tra ràng buộc: chỉ được hủy suất chiếu chưa có ai đặt vé, tức không có đơn đang giữ chỗ hoặc đã thanh toán cho suất này (đơn đã hủy hoặc hết hạn không tính). Nếu đã có khách đặt, hệ thống từ chối hủy.<br><br>3\. Hệ thống cập nhật trạng thái/hủy bản ghi SUATCHIEU và ngừng hiển thị suất chiếu cho khách hàng. |
 
 **Chức năng Cấu hình bảng giá cho rạp được phân công**
 
@@ -726,6 +726,7 @@ DANHGIAPHIM liên kết trực tiếp NGUOIDUNG - PHIM và có UNIQUE(PhimID, Ng
 | TongTienDoAn | DECIMAL | \>= 0 | Tổng đồ ăn snapshot |
 | TienGiamGia | DECIMAL | \>= 0 | Mức giảm thực tế |
 | TrangThai | NVARCHAR | DEFAULT Chờ thanh toán | Trạng thái đơn |
+| HanGiuCho | DATETIME2 | NULL; bắt buộc khi Chờ thanh toán | Hạn giữ ghế của đơn chờ thanh toán (NgayDat + 10 phút, gia hạn khi bắt đầu thanh toán) |
 
 **3.8.2. SUATCHIEU**
 
@@ -856,7 +857,7 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | --- | --- | --- |
 | Đặt vé | DONDATVE, CHITIETVE, KHUYENMAI | Kiểm tra lại ghế/giá, tạo đơn/vé, rollback khi một bước lỗi. |
 | Thanh toán | THANHTOAN, DONDATVE | Ghi giao dịch và đổi trạng thái đơn đồng bộ. |
-| Hủy vé/hoàn tiền | DONDATVE, CHITIETVE, THANHTOAN | Đổi trạng thái và ghi hoàn tiền như một giao dịch logic. |
+| Hủy đơn chưa thanh toán / hết hạn giữ ghế | DONDATVE, CHITIETVE, KHUYENMAI | Đổi trạng thái đơn, hủy vé để nhả ghế và hoàn lại lượt dùng mã khuyến mãi như một giao dịch logic. Hệ thống không có hoàn tiền: đơn đã thanh toán không thể hủy. |
 | Xử lý khiếu nại | KHIEUNAI, XULY_KHIEUNAI | Ghi lịch sử và cập nhật trạng thái cùng lúc. |
 | Phân công rạp | PHANCONG_RAP, NGUOIDUNG | Tạo/điều chỉnh phân công nhất quán. |
 

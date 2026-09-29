@@ -364,6 +364,8 @@ CREATE TABLE dbo.DONDATVE (
     TongTienDoAn DECIMAL(18,2) NOT NULL DEFAULT 0,
     TienGiamGia DECIMAL(18,2) NOT NULL DEFAULT 0,
     TrangThai NVARCHAR(50) NOT NULL DEFAULT N'Chờ thanh toán',
+    -- Hạn giữ ghế của đơn đang chờ thanh toán (NULL với đơn đã thanh toán/hủy/hết hạn)
+    HanGiuCho DATETIME2 NULL,
     CONSTRAINT PK_DONDATVE PRIMARY KEY CLUSTERED (DonDatVeID),
     CONSTRAINT FK_DONDATVE_NguoiDung FOREIGN KEY (NguoiDungID)
         REFERENCES dbo.NGUOIDUNG(NguoiDungID),
@@ -374,6 +376,7 @@ CREATE TABLE dbo.DONDATVE (
     CONSTRAINT CK_DONDATVE_TongTienVe CHECK (TongTienVe >= 0),
     CONSTRAINT CK_DONDATVE_TongTienDoAn CHECK (TongTienDoAn >= 0),
     CONSTRAINT CK_DONDATVE_TienGiamGia CHECK (TienGiamGia >= 0),
+    CONSTRAINT CK_DONDATVE_HanGiuCho CHECK (TrangThai <> N'Chờ thanh toán' OR HanGiuCho IS NOT NULL),
     CONSTRAINT CK_DONDATVE_TrangThai CHECK (TrangThai IN (N'Chờ thanh toán', N'Đã thanh toán', N'Đã hủy', N'Hoàn tiền', N'Hết hạn', N'Hoàn thành'))
 );
 GO
@@ -543,6 +546,8 @@ CREATE NONCLUSTERED INDEX IX_BANGGIA_Lookup ON dbo.BANGGIA(RapID, LoaiGhe, LoaiN
 -- Index cho đơn đặt vé & chi tiết vé
 CREATE NONCLUSTERED INDEX IX_DONDATVE_NguoiDung ON dbo.DONDATVE(NguoiDungID, NgayDat DESC);
 CREATE NONCLUSTERED INDEX IX_DONDATVE_SuatChieu ON dbo.DONDATVE(SuatChieuID, TrangThai);
+-- Job quét đơn hết hạn giữ ghế: chỉ các đơn đang chờ thanh toán
+CREATE NONCLUSTERED INDEX IX_DONDATVE_HanGiuCho ON dbo.DONDATVE(HanGiuCho) INCLUDE (SuatChieuID) WHERE TrangThai = N'Chờ thanh toán';
 -- Covering: sơ đồ ghế / kiểm tra trùng ghế join DONDATVE -> CHITIETVE chỉ đọc GheID, TrangThai, GiaVe
 CREATE NONCLUSTERED INDEX IX_CHITIETVE_DonDatVe ON dbo.CHITIETVE(DonDatVeID) INCLUDE (GheID, TrangThai, GiaVe);
 -- Kiểm tra khuyến mãi đã được dùng (sp_Admin_Promotion_Delete); chỉ các đơn có áp mã

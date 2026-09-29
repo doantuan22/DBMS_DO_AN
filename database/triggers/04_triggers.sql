@@ -102,7 +102,7 @@ BEGIN
           AND i.TrangThai <> N'Đã hủy'
           AND cv_exist.TrangThai <> N'Đã hủy'
           AND ddv_new.TrangThai NOT IN (N'Đã hủy', N'Hết hạn')
-          AND ddv_exist.TrangThai NOT IN (N'Đã hủy', N'Hết hạn')
+          AND dbo.fn_DonDangGiuGhe(ddv_exist.TrangThai, ddv_exist.HanGiuCho, SYSDATETIME()) = 1
     )
     BEGIN
         ;THROW 50003, N'Lỗi xung đột [BR02]: Ghế này đã được đặt hoặc đang được giữ bởi một đơn khác cho cùng suất chiếu.', 1;

@@ -524,36 +524,73 @@ CREATE PROCEDURE dbo.sp_Manager_Showtime_Cancel
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    -- Gọi được cả độc lập lẫn trong transaction của bên gọi: chỉ COMMIT/ROLLBACK khi tự mở transaction,
+    -- ngược lại dùng SAVE TRANSACTION và chỉ rollback phần của mình.
+    DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
     BEGIN TRY
-        BEGIN TRANSACTION;
+        IF @TuMoTran = 1
+            BEGIN TRANSACTION;
+        ELSE
+            SAVE TRANSACTION sp_Manager_Showtime_Cancel;
 
         DECLARE @RapID INT;
-        SELECT @RapID = pc.RapID
-        FROM dbo.SUATCHIEU sc
+        DECLARE @TrangThai NVARCHAR(50);
+
+        SELECT @RapID = pc.RapID, @TrangThai = sc.TrangThai
+        FROM dbo.SUATCHIEU sc WITH (UPDLOCK, HOLDLOCK)
         INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID
         WHERE sc.SuatChieuID = @SuatChieuID;
+
+        IF @RapID IS NULL
+        BEGIN
+            ;THROW 50116, N'Suất chiếu không tồn tại.', 1;
+        END
 
         IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0
         BEGIN
             ;THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
         END
 
+        IF @TrangThai = N'Đã hủy'
+        BEGIN
+            ;THROW 50117, N'Suất chiếu đã được hủy trước đó.', 1;
+        END
+
+        -- Dọn các đơn quá hạn giữ ghế của suất này để chúng không bị tính là "đã có người đặt"
+        EXEC dbo.sp_Order_ExpirePending @SuatChieuID = @SuatChieuID, @TraVeKetQua = 0;
+
+        -- Ràng buộc: chỉ hủy được suất chiếu chưa có ai đặt vé (đơn đang giữ chỗ hoặc đã thanh toán)
+        IF EXISTS (
+            SELECT 1
+            FROM dbo.DONDATVE ddv
+            WHERE ddv.SuatChieuID = @SuatChieuID
+              AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, SYSDATETIME()) = 1
+        )
+        BEGIN
+            ;THROW 50118, N'Không thể hủy: suất chiếu này đã có khách đặt vé.', 1;
+        END
+
         UPDATE dbo.SUATCHIEU
         SET TrangThai = N'Đã hủy'
         WHERE SuatChieuID = @SuatChieuID;
 
-        -- Đổi trạng thái các đơn đặt vé chưa thanh toán sang Đã hủy
-        UPDATE dbo.DONDATVE
-        SET TrangThai = N'Đã hủy'
-        WHERE SuatChieuID = @SuatChieuID AND TrangThai = N'Chờ thanh toán';
-
-        COMMIT TRANSACTION;
+        IF @TuMoTran = 1
+            COMMIT TRANSACTION;
 
         SELECT N'Hủy suất chiếu thành công.' AS [Message];
 
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        IF XACT_STATE() = -1
+            ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @TuMoTran = 1
+                ROLLBACK TRANSACTION;
+            ELSE
+                ROLLBACK TRANSACTION sp_Manager_Showtime_Cancel;
+        END
         ;THROW;
     END CATCH
 END;

@@ -22,6 +22,12 @@ Các đường truy vấn nóng:
 | Thêm | `IX_DONDATVE_KhuyenMai` | `(KhuyenMaiID) WHERE KhuyenMaiID IS NOT NULL` | `sp_Admin_Promotion_Delete` kiểm tra khuyến mãi đã dùng; không quét cả `DONDATVE`. Filtered vì phần lớn đơn không có mã |
 | Thêm | `IX_KHIEUNAI_DonDatVe` | `(DonDatVeID) WHERE DonDatVeID IS NOT NULL` | `sp_Support_Complaint_GetOrderReference` (CSKH-04). Filtered vì khiếu nại có thể không gắn đơn |
 
+Bổ sung sau (giữ ghế có thời hạn, migration 002):
+
+| Loại | Index | Định nghĩa | Phục vụ |
+| --- | --- | --- | --- |
+| Thêm | `IX_DONDATVE_HanGiuCho` | `(HanGiuCho) INCLUDE (SuatChieuID) WHERE TrangThai = N'Chờ thanh toán'` | `sp_Order_ExpirePending` quét đơn quá hạn giữ ghế; index chỉ chứa đơn đang chờ thanh toán nên rất nhỏ |
+
 Áp dụng:
 
 - Cài mới: đã nằm trong `database/schema/01_schema.sql`.

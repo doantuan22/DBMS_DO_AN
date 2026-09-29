@@ -1,7 +1,7 @@
 -- ============================================================================
 -- HỆ THỐNG ĐẶT VÉ XEM PHIM TRỰC TUYẾN CHO CHUỖI RẠP
 -- KIẾN TRÚC DBMS-FIRST / STORED-PROCEDURE-ONLY
--- SCRIPT 03: TẠO CÁC USER-DEFINED FUNCTIONS (FUNCTIONS)
+-- SCRIPT 02: TẠO CÁC USER-DEFINED FUNCTIONS (FUNCTIONS)
 -- ============================================================================
 
 USE CinemaBookingDB
@@ -9,6 +9,52 @@ GO
 
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+GO
+
+-- 0a. Function: fn_ThoiGianGiuChoPhut (thời gian giữ ghế khi đơn chờ thanh toán, tính bằng phút)
+IF OBJECT_ID(N'dbo.fn_ThoiGianGiuChoPhut', N'FN') IS NOT NULL DROP FUNCTION dbo.fn_ThoiGianGiuChoPhut;
+GO
+CREATE FUNCTION dbo.fn_ThoiGianGiuChoPhut()
+RETURNS INT
+AS
+BEGIN
+    RETURN 10;   -- Điểm duy nhất cấu hình thời gian giữ ghế (chuẩn rạp: 5-15 phút)
+END;
+GO
+
+-- 0b. Function: fn_ThoiGianGiaHanThanhToanPhut (gia hạn giữ ghế khi khách bắt đầu một lần thanh toán)
+IF OBJECT_ID(N'dbo.fn_ThoiGianGiaHanThanhToanPhut', N'FN') IS NOT NULL DROP FUNCTION dbo.fn_ThoiGianGiaHanThanhToanPhut;
+GO
+CREATE FUNCTION dbo.fn_ThoiGianGiaHanThanhToanPhut()
+RETURNS INT
+AS
+BEGIN
+    RETURN 5;
+END;
+GO
+
+-- 0c. Function: fn_DonDangGiuGhe (đơn có đang chiếm ghế hay không)
+--  * Đã thanh toán / Hoàn thành: chiếm ghế vĩnh viễn
+--  * Chờ thanh toán: chỉ chiếm ghế khi chưa quá HanGiuCho (đơn quá hạn nhả ghế ngay, không cần chờ job dọn)
+--  * Còn lại (Đã hủy, Hết hạn...): không chiếm ghế
+-- @Now được truyền vào (thay vì gọi SYSDATETIME bên trong) để function có thể inline trong truy vấn lớn.
+IF OBJECT_ID(N'dbo.fn_DonDangGiuGhe', N'FN') IS NOT NULL DROP FUNCTION dbo.fn_DonDangGiuGhe;
+GO
+CREATE FUNCTION dbo.fn_DonDangGiuGhe
+(
+    @TrangThai NVARCHAR(50),
+    @HanGiuCho DATETIME2,
+    @Now DATETIME2
+)
+RETURNS BIT
+AS
+BEGIN
+    RETURN CASE
+        WHEN @TrangThai IN (N'Đã thanh toán', N'Hoàn thành') THEN 1
+        WHEN @TrangThai = N'Chờ thanh toán' AND @HanGiuCho > @Now THEN 1
+        ELSE 0
+    END;
+END;
 GO
 
 -- 1. Function: fn_TinhGiaVe (Tính giá vé chốt cho từng ghế theo suất chiếu và phụ thu bảng giá)
@@ -173,13 +219,17 @@ RETURN
         INNER JOIN dbo.GHE g ON sc.PhongID = g.PhongID
         WHERE sc.SuatChieuID = @SuatChieuID
     ),
-    GheDaDat AS (
-        SELECT DISTINCT cv.GheID
+    GheChiemCho AS (
+        -- Mức 2 = đã bán (đơn đã thanh toán), mức 1 = đang giữ chỗ chờ thanh toán
+        SELECT
+            cv.GheID,
+            MAX(CASE WHEN ddv.TrangThai = N'Chờ thanh toán' THEN 1 ELSE 2 END) AS Muc
         FROM dbo.CHITIETVE cv
         INNER JOIN dbo.DONDATVE ddv ON cv.DonDatVeID = ddv.DonDatVeID
         WHERE ddv.SuatChieuID = @SuatChieuID
-          AND ddv.TrangThai NOT IN (N'Đã hủy', N'Hết hạn')
-          AND cv.TrangThai NOT IN (N'Đã hủy')
+          AND cv.TrangThai <> N'Đã hủy'
+          AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, SYSDATETIME()) = 1
+        GROUP BY cv.GheID
     )
     SELECT
         gp.GheID,
@@ -191,11 +241,12 @@ RETURN
         dbo.fn_TinhGiaVe(@SuatChieuID, gp.GheID) AS GiaVe,
         CASE
             WHEN gp.TrangThaiGheVatLy <> N'Hoạt động' THEN N'Bảo trì'
-            WHEN gdd.GheID IS NOT NULL THEN N'Đã đặt'
+            WHEN gdd.Muc = 2 THEN N'Đã đặt'
+            WHEN gdd.Muc = 1 THEN N'Đang giữ'
             ELSE N'Trống'
         END AS TrangThaiGhe
     FROM GhePhong gp
-    LEFT JOIN GheDaDat gdd ON gp.GheID = gdd.GheID
+    LEFT JOIN GheChiemCho gdd ON gp.GheID = gdd.GheID
 );
 GO
 
@@ -289,5 +340,5 @@ BEGIN
 END;
 GO
 
-PRINT N'>>> [03_functions.sql] Đã tạo 7 User-Defined Functions thành công.';
+PRINT N'>>> [02_functions.sql] Đã tạo 10 User-Defined Functions thành công.';
 GO

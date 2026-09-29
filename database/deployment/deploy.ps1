@@ -23,8 +23,8 @@ $db = Split-Path -Parent $PSScriptRoot
 
 $steps = @(
     'schema/01_schema.sql',
-    'views/02_views.sql',
-    'functions/03_functions.sql',
+    'functions/02_functions.sql',
+    'views/03_views.sql',
     'triggers/04_triggers.sql',
     'procedures/system/system_procedures.sql',
     'procedures/auth/auth_procedures.sql',
@@ -35,7 +35,7 @@ $steps = @(
     'security/06_security_rbac.sql'
 )
 if (-not $SkipSeed) { $steps += 'seed/07_seed_data.sql' }
-if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql' }
+if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql', 'tests/10_tests_seat_hold.sql' }
 
 foreach ($step in $steps) {
     $path = Join-Path $db $step

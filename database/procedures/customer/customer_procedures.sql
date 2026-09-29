@@ -422,11 +422,17 @@ CREATE PROCEDURE dbo.sp_Booking_Create
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET XACT_ABORT ON;
+
+    -- Gọi được cả độc lập lẫn trong transaction của bên gọi: chỉ COMMIT/ROLLBACK khi tự mở transaction,
+    -- ngược lại dùng SAVE TRANSACTION và chỉ rollback phần của mình.
+    DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
 
     BEGIN TRY
         -- Sử dụng mức cô lập cao nhất để ngăn race condition (đặt trùng cùng 1 ghế)
-        BEGIN TRANSACTION;
+        IF @TuMoTran = 1
+            BEGIN TRANSACTION;
+        ELSE
+            SAVE TRANSACTION sp_Booking_Create;
 
         -- 1. Kiểm tra tài khoản khách hàng hợp lệ
         IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')
@@ -455,6 +461,9 @@ BEGIN
         BEGIN
             ;THROW 50022, N'Suất chiếu đã kết thúc, đã đóng bán hoặc bị hủy.', 1;
         END
+
+        -- 2b. Giải phóng các đơn đã quá hạn giữ ghế của suất chiếu này (đã khóa suất chiếu ở trên)
+        EXEC dbo.sp_Order_ExpirePending @SuatChieuID = @SuatChieuID, @TraVeKetQua = 0;
 
         -- 3. Tách danh sách ghế cần đặt vào bảng tạm
         DECLARE @BangGheCanDat TABLE (GheID INT PRIMARY KEY);
@@ -489,7 +498,7 @@ BEGIN
             INNER JOIN @BangGheCanDat bg ON cv.GheID = bg.GheID
             WHERE ddv.SuatChieuID = @SuatChieuID
               AND cv.TrangThai <> N'Đã hủy'
-              AND ddv.TrangThai NOT IN (N'Đã hủy', N'Hết hạn')
+              AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, SYSDATETIME()) = 1
         )
         BEGIN
             ;THROW 50025, N'Một hoặc nhiều ghế bạn chọn vừa được khách hàng khác đặt. Vui lòng chọn ghế khác.', 1;
@@ -584,7 +593,8 @@ BEGIN
             TongTienVe,
             TongTienDoAn,
             TienGiamGia,
-            TrangThai
+            TrangThai,
+            HanGiuCho
         )
         VALUES
         (
@@ -595,7 +605,8 @@ BEGIN
             @TongTienVe,
             @TongTienDoAn,
             @TienGiamGia,
-            N'Chờ thanh toán'
+            N'Chờ thanh toán',
+            DATEADD(MINUTE, dbo.fn_ThoiGianGiuChoPhut(), SYSDATETIME())
         );
 
         SET @NewDonDatVeID = SCOPE_IDENTITY();
@@ -622,7 +633,8 @@ BEGIN
             FROM @BangChiTietDoAn;
         END
 
-        COMMIT TRANSACTION;
+        IF @TuMoTran = 1
+            COMMIT TRANSACTION;
 
         -- Trả về kết quả chốt của đơn đặt vé
         SELECT
@@ -635,13 +647,22 @@ BEGIN
             ddv.TienGiamGia,
             (ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TongThanhToan,
             ddv.TrangThai,
+            ddv.HanGiuCho,
             (SELECT COUNT(*) FROM dbo.CHITIETVE WHERE DonDatVeID = ddv.DonDatVeID) AS SoLuongVe
         FROM dbo.DONDATVE ddv
         WHERE ddv.DonDatVeID = @NewDonDatVeID;
 
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        IF XACT_STATE() = -1
+            ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @TuMoTran = 1
+                ROLLBACK TRANSACTION;
+            ELSE
+                ROLLBACK TRANSACTION sp_Booking_Create;
+        END
         ;THROW;
     END CATCH
 END;
@@ -684,14 +705,24 @@ CREATE PROCEDURE dbo.sp_Payment_CreateAttempt
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    -- Gọi được cả độc lập lẫn trong transaction của bên gọi: chỉ COMMIT/ROLLBACK khi tự mở transaction,
+    -- ngược lại dùng SAVE TRANSACTION và chỉ rollback phần của mình.
+    DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
     BEGIN TRY
-        BEGIN TRANSACTION;
+        IF @TuMoTran = 1
+            BEGIN TRANSACTION;
+        ELSE
+            SAVE TRANSACTION sp_Payment_CreateAttempt;
 
         DECLARE @TrangThaiDon NVARCHAR(50);
         DECLARE @TongTien DECIMAL(18,2);
+        DECLARE @HanGiuCho DATETIME2;
+        DECLARE @Now DATETIME2 = SYSDATETIME();
 
         SELECT
             @TrangThaiDon = TrangThai,
+            @HanGiuCho = HanGiuCho,
             @TongTien = (TongTienVe + TongTienDoAn - TienGiamGia)
         FROM dbo.DONDATVE WITH (UPDLOCK, HOLDLOCK)
         WHERE DonDatVeID = @DonDatVeID;
@@ -701,34 +732,58 @@ BEGIN
             ;THROW 50030, N'Đơn đặt vé không tồn tại.', 1;
         END
 
+        IF @TrangThaiDon = N'Hết hạn' OR (@TrangThaiDon = N'Chờ thanh toán' AND @HanGiuCho <= @Now)
+        BEGIN
+            ;THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;
+        END
+
         IF @TrangThaiDon NOT IN (N'Chờ thanh toán')
         BEGIN
             ;THROW 50031, N'Đơn hàng không ở trạng thái Chờ thanh toán.', 1;
         END
 
-        SET @MaGiaoDich = CONCAT('TXN-', FORMAT(SYSDATETIME(), 'yyyyMMddHHmmss'), '-', CAST(@DonDatVeID AS VARCHAR(10)));
+        SET @MaGiaoDich = CONCAT('TXN-', FORMAT(@Now, 'yyyyMMddHHmmss'), '-', CAST(@DonDatVeID AS VARCHAR(10)), '-', LEFT(REPLACE(CONVERT(VARCHAR(36), NEWID()), '-', ''), 6));
 
         INSERT INTO dbo.THANHTOAN (DonDatVeID, PhuongThuc, SoTien, NgayTao, MaGiaoDich, TrangThai)
-        VALUES (@DonDatVeID, @PhuongThuc, @TongTien, SYSDATETIME(), @MaGiaoDich, N'Đang xử lý');
+        VALUES (@DonDatVeID, @PhuongThuc, @TongTien, @Now, @MaGiaoDich, N'Đang xử lý');
 
         SET @ThanhToanID = SCOPE_IDENTITY();
 
-        COMMIT TRANSACTION;
+        -- Gia hạn giữ ghế trong lúc khách đang thực hiện thanh toán (không bao giờ rút ngắn hạn hiện có)
+        UPDATE dbo.DONDATVE
+        SET HanGiuCho = CASE
+                WHEN DATEADD(MINUTE, dbo.fn_ThoiGianGiaHanThanhToanPhut(), @Now) > HanGiuCho
+                THEN DATEADD(MINUTE, dbo.fn_ThoiGianGiaHanThanhToanPhut(), @Now)
+                ELSE HanGiuCho END
+        WHERE DonDatVeID = @DonDatVeID;
+
+        IF @TuMoTran = 1
+            COMMIT TRANSACTION;
 
         SELECT
-            ThanhToanID,
-            DonDatVeID,
-            PhuongThuc,
-            SoTien,
-            NgayTao,
-            MaGiaoDich,
-            TrangThai
-        FROM dbo.THANHTOAN
-        WHERE ThanhToanID = @ThanhToanID;
+            tt.ThanhToanID,
+            tt.DonDatVeID,
+            tt.PhuongThuc,
+            tt.SoTien,
+            tt.NgayTao,
+            tt.MaGiaoDich,
+            tt.TrangThai,
+            ddv.HanGiuCho
+        FROM dbo.THANHTOAN tt
+        INNER JOIN dbo.DONDATVE ddv ON ddv.DonDatVeID = tt.DonDatVeID
+        WHERE tt.ThanhToanID = @ThanhToanID;
 
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        IF XACT_STATE() = -1
+            ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @TuMoTran = 1
+                ROLLBACK TRANSACTION;
+            ELSE
+                ROLLBACK TRANSACTION sp_Payment_CreateAttempt;
+        END
         ;THROW;
     END CATCH
 END;
@@ -749,17 +804,40 @@ CREATE PROCEDURE dbo.sp_Payment_UpdateResult
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    -- Gọi được cả độc lập lẫn trong transaction của bên gọi: chỉ COMMIT/ROLLBACK khi tự mở transaction,
+    -- ngược lại dùng SAVE TRANSACTION và chỉ rollback phần của mình.
+    DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
     BEGIN TRY
-        BEGIN TRANSACTION;
+        IF @TrangThaiThanhToan NOT IN (N'Thành công', N'Thất bại')
+        BEGIN
+            ;THROW 50114, N'Kết quả thanh toán phải là Thành công hoặc Thất bại.', 1;
+        END
+
+        IF @TuMoTran = 1
+            BEGIN TRANSACTION;
+        ELSE
+            SAVE TRANSACTION sp_Payment_UpdateResult;
 
         DECLARE @DonDatVeID INT;
         DECLARE @SoTien DECIMAL(18,2);
         DECLARE @NguoiDungID INT;
+        DECLARE @SuatChieuID INT;
+        DECLARE @KhuyenMaiID INT;
+        DECLARE @TrangThaiDon NVARCHAR(50);
+        DECLARE @HanGiuCho DATETIME2;
+        DECLARE @TrangThaiHienTai NVARCHAR(50);
+        DECLARE @Now DATETIME2 = SYSDATETIME();
 
         SELECT
             @DonDatVeID = tt.DonDatVeID,
             @SoTien = tt.SoTien,
-            @NguoiDungID = ddv.NguoiDungID
+            @TrangThaiHienTai = tt.TrangThai,
+            @NguoiDungID = ddv.NguoiDungID,
+            @SuatChieuID = ddv.SuatChieuID,
+            @KhuyenMaiID = ddv.KhuyenMaiID,
+            @TrangThaiDon = ddv.TrangThai,
+            @HanGiuCho = ddv.HanGiuCho
         FROM dbo.THANHTOAN tt WITH (UPDLOCK, HOLDLOCK)
         INNER JOIN dbo.DONDATVE ddv WITH (UPDLOCK, HOLDLOCK) ON tt.DonDatVeID = ddv.DonDatVeID
         WHERE tt.ThanhToanID = @ThanhToanID;
@@ -769,44 +847,118 @@ BEGIN
             ;THROW 50032, N'Giao dịch thanh toán không tồn tại.', 1;
         END
 
-        -- Cập nhật bản ghi THANHTOAN
-        UPDATE dbo.THANHTOAN
-        SET TrangThai = @TrangThaiThanhToan,
-            NgayThanhToan = CASE WHEN @TrangThaiThanhToan = N'Thành công' THEN SYSDATETIME() ELSE NULL END,
-            MaGiaoDich = ISNULL(@MaGiaoDichNgoai, MaGiaoDich),
-            GhiChu = @GhiChu
-        WHERE ThanhToanID = @ThanhToanID;
+        -- Gọi lại cùng một kết quả (ví dụ cổng thanh toán gửi callback hai lần): không xử lý lại
+        IF @TrangThaiHienTai = @TrangThaiThanhToan
+        BEGIN
+            IF @TuMoTran = 1
+                COMMIT TRANSACTION;
+            SELECT ddv.DonDatVeID, ddv.TrangThai AS TrangThaiDon, tt.ThanhToanID, tt.MaGiaoDich,
+                   tt.TrangThai AS TrangThaiThanhToan, tt.NgayThanhToan
+            FROM dbo.DONDATVE ddv
+            INNER JOIN dbo.THANHTOAN tt ON ddv.DonDatVeID = tt.DonDatVeID
+            WHERE tt.ThanhToanID = @ThanhToanID;
+            RETURN;
+        END
 
-        -- Đồng bộ trạng thái DONDATVE
+        IF @TrangThaiHienTai <> N'Đang xử lý'
+        BEGIN
+            ;THROW 50115, N'Giao dịch đã có kết quả cuối cùng, không thể đổi.', 1;
+        END
+
         IF @TrangThaiThanhToan = N'Thành công'
         BEGIN
-            UPDATE dbo.DONDATVE
-            SET TrangThai = N'Đã thanh toán'
-            WHERE DonDatVeID = @DonDatVeID;
-
-            -- Cộng điểm tích lũy cho khách hàng (1% số tiền)
-            DECLARE @DiemCong INT = CAST(@SoTien / 1000 AS INT);
-            IF @DiemCong > 0
+            IF @TrangThaiDon NOT IN (N'Chờ thanh toán', N'Hết hạn')
             BEGIN
-                UPDATE dbo.HOSOKHACHHANG
-                SET DiemTichLuy = DiemTichLuy + @DiemCong
-                WHERE NguoiDungID = @NguoiDungID;
+                ;THROW 50113, N'Đơn hàng không còn ở trạng thái có thể thanh toán.', 1;
+            END
+
+            -- Kết quả về muộn sau khi hết hạn giữ ghế: chỉ chấp nhận nếu suất chiếu còn mở bán
+            -- và không có đơn nào khác đang giữ/mua các ghế này. Nếu không, ghi nhận giao dịch thất bại.
+            DECLARE @Muon BIT = CASE WHEN @TrangThaiDon = N'Hết hạn' OR @HanGiuCho <= @Now THEN 1 ELSE 0 END;
+            DECLARE @TuChoi BIT = 0;
+
+            IF @Muon = 1
+            BEGIN
+                IF NOT EXISTS (SELECT 1 FROM dbo.SUATCHIEU WHERE SuatChieuID = @SuatChieuID
+                               AND TrangThai = N'Mở bán' AND ThoiGianBatDau > @Now)
+                   OR EXISTS (
+                        SELECT 1
+                        FROM dbo.CHITIETVE mine
+                        INNER JOIN dbo.CHITIETVE other ON other.GheID = mine.GheID AND other.DonDatVeID <> mine.DonDatVeID
+                        INNER JOIN dbo.DONDATVE od ON od.DonDatVeID = other.DonDatVeID
+                        WHERE mine.DonDatVeID = @DonDatVeID
+                          AND od.SuatChieuID = @SuatChieuID
+                          AND other.TrangThai <> N'Đã hủy'
+                          AND dbo.fn_DonDangGiuGhe(od.TrangThai, od.HanGiuCho, @Now) = 1)
+                BEGIN
+                    SET @TuChoi = 1;
+                END
+            END
+
+            IF @TuChoi = 1
+            BEGIN
+                UPDATE dbo.THANHTOAN
+                SET TrangThai = N'Thất bại',
+                    NgayThanhToan = NULL,
+                    MaGiaoDich = ISNULL(@MaGiaoDichNgoai, MaGiaoDich),
+                    GhiChu = N'Kết quả về sau khi hết thời gian giữ ghế và ghế không còn khả dụng.'
+                WHERE ThanhToanID = @ThanhToanID;
+            END
+            ELSE
+            BEGIN
+                UPDATE dbo.THANHTOAN
+                SET TrangThai = N'Thành công',
+                    NgayThanhToan = @Now,
+                    MaGiaoDich = ISNULL(@MaGiaoDichNgoai, MaGiaoDich),
+                    GhiChu = @GhiChu
+                WHERE ThanhToanID = @ThanhToanID;
+
+                UPDATE dbo.DONDATVE
+                SET TrangThai = N'Đã thanh toán',
+                    HanGiuCho = NULL
+                WHERE DonDatVeID = @DonDatVeID;
+
+                -- Đơn đã bị dọn (Hết hạn) nhưng thanh toán thành công còn hợp lệ: khôi phục vé và lượt dùng mã
+                IF @TrangThaiDon = N'Hết hạn'
+                BEGIN
+                    UPDATE dbo.CHITIETVE SET TrangThai = N'Đã đặt'
+                    WHERE DonDatVeID = @DonDatVeID AND TrangThai = N'Đã hủy';
+
+                    IF @KhuyenMaiID IS NOT NULL
+                    BEGIN
+                        UPDATE dbo.KHUYENMAI SET SoLuongDaDung = SoLuongDaDung + 1
+                        WHERE KhuyenMaiID = @KhuyenMaiID AND SoLuongDaDung < SoLuong;
+                    END
+                END
+
+                -- Cộng điểm tích lũy cho khách hàng (1 điểm / 1.000đ)
+                DECLARE @DiemCong INT = CAST(@SoTien / 1000 AS INT);
+                IF @DiemCong > 0
+                BEGIN
+                    UPDATE dbo.HOSOKHACHHANG
+                    SET DiemTichLuy = DiemTichLuy + @DiemCong
+                    WHERE NguoiDungID = @NguoiDungID;
+                END
             END
         END
-        ELSE IF @TrangThaiThanhToan = N'Thất bại'
+        ELSE
         BEGIN
-            -- Giữ đơn ở trạng thái Chờ thanh toán để khách hàng có thể thử lại
-            UPDATE dbo.DONDATVE
-            SET TrangThai = N'Chờ thanh toán'
-            WHERE DonDatVeID = @DonDatVeID AND TrangThai = N'Chờ thanh toán';
+            -- Thất bại: giữ đơn ở Chờ thanh toán (còn trong hạn giữ ghế) để khách thử lại
+            UPDATE dbo.THANHTOAN
+            SET TrangThai = N'Thất bại',
+                NgayThanhToan = NULL,
+                MaGiaoDich = ISNULL(@MaGiaoDichNgoai, MaGiaoDich),
+                GhiChu = @GhiChu
+            WHERE ThanhToanID = @ThanhToanID;
         END
 
-        COMMIT TRANSACTION;
+        IF @TuMoTran = 1
+            COMMIT TRANSACTION;
 
-        -- Trả về trạng thái chi tiết của đơn
         SELECT
             ddv.DonDatVeID,
             ddv.TrangThai AS TrangThaiDon,
+            ddv.HanGiuCho,
             tt.ThanhToanID,
             tt.MaGiaoDich,
             tt.TrangThai AS TrangThaiThanhToan,
@@ -817,7 +969,15 @@ BEGIN
 
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        IF XACT_STATE() = -1
+            ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @TuMoTran = 1
+                ROLLBACK TRANSACTION;
+            ELSE
+                ROLLBACK TRANSACTION sp_Payment_UpdateResult;
+        END
         ;THROW;
     END CATCH
 END;

@@ -3,6 +3,7 @@
 // Add an entry here only after the procedure exists under database/procedures/.
 export const PROCEDURES = Object.freeze({
   SYSTEM_HEALTH_CHECK: 'dbo.sp_System_HealthCheck',
+  EXPIRE_PENDING_ORDERS: 'dbo.sp_Order_ExpirePending',
 
   // Authentication: the database returns the bcrypt hash, the backend compares it.
   AUTH_LOGIN: 'dbo.sp_Auth_Login',
