@@ -14,3 +14,10 @@ export const AREA_PATHS = Object.freeze({
   SUPPORT: '/support',
   ADMIN: '/admin',
 });
+
+export const ROLE_AREAS = Object.freeze({
+  [ROLES.CUSTOMER]: { path: AREA_PATHS.CUSTOMER, label: 'Khách hàng', permission: 'DAT_VE' },
+  [ROLES.MANAGER]: { path: AREA_PATHS.MANAGER, label: 'Quản lý rạp', permission: 'QL_PHONG' },
+  [ROLES.SUPPORT]: { path: AREA_PATHS.SUPPORT, label: 'CSKH', permission: 'QL_KHIEUNAI' },
+  [ROLES.ADMIN]: { path: AREA_PATHS.ADMIN, label: 'Quản trị', permission: 'QL_NGUOIDUNG' },
+});

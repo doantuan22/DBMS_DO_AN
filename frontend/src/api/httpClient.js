@@ -1,16 +1,25 @@
 // Thin REST client. The frontend only knows HTTP endpoints, never database objects.
+import { authTokenStorage, expireAuthToken } from './authToken';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
 
 export async function request(path, { method = 'GET', body, headers, signal } = {}) {
+  const token = authTokenStorage.get();
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method,
-    headers: { 'Content-Type': 'application/json', ...headers },
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     credentials: 'include',
     body: body === undefined ? undefined : JSON.stringify(body),
     signal,
   });
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
+    if (response.status === 401) expireAuthToken();
+    if (response.status === 403 && typeof window !== 'undefined') window.dispatchEvent(new Event('auth:forbidden'));
     const error = new Error(payload?.error?.message ?? `HTTP ${response.status}`);
     error.status = response.status;
     error.code = payload?.error?.code;

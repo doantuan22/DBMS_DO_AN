@@ -47,6 +47,10 @@ npm run build
 
 Biến môi trường backend: `PORT`, `NODE_ENV`, `DB_SERVER`, `DB_PORT`, `DB_DATABASE`, `DB_USER`, `DB_PASSWORD`, `DB_ENCRYPT`, `DB_TRUST_SERVER_CERTIFICATE`, `FRONTEND_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`. Không commit file `.env`.
 
+Auth dùng Bearer JWT, thời hạn mặc định `1h`; token chỉ lưu trong `sessionStorage` của tab trình duyệt. Tạo secret tối thiểu 32 byte cho `JWT_SECRET` bằng lệnh trong `backend/.env.example`. Đăng ký thành công tạo khách hàng và chuyển về màn hình đăng nhập; profile chỉ sửa họ tên, điện thoại, ngày sinh và giới tính.
+
+Auth API hiện có `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, `PUT /api/auth/me` và `GET /api/auth/permissions`. Login trả `token` dạng Bearer; quyền được nạp từ `sp_Auth_Login` và làm mới từ `sp_RBAC_GetPermissionsByUser` cho mỗi request đã xác thực. Để kiểm tra giao diện, chạy `npm test` trong `frontend/`.
+
 ## Quy tắc bắt buộc
 
 1. **Stored-Procedure-only**: backend chỉ được `pool -> request() -> .input()/.output() -> .execute('dbo.sp_xxx')`. Table, View, Function không được truy cập trực tiếp; View đọc qua procedure bọc, Function gọi trong procedure.
@@ -61,4 +65,4 @@ Biến môi trường backend: `PORT`, `NODE_ENV`, `DB_SERVER`, `DB_PORT`, `DB_D
 
 ## Trạng thái
 
-Database baseline đã có schema, constraints, procedures, seed và SQL verification scripts; không triển khai lại schema từ ứng dụng. Backend/frontend hiện ở foundation: procedure client và API health đã có, frontend có route/layout theo vai trò và hiển thị trạng thái kết nối DB. Các use case nghiệp vụ, API xác thực và giao diện chức năng vẫn đang chờ triển khai theo Roadmap V2.
+Database baseline đã có schema, constraints, procedures, seed và SQL verification scripts; không triển khai lại schema từ ứng dụng. Phase 2 auth foundation đã được triển khai ở Backend/Frontend. Các API nghiệp vụ và màn hình portal vẫn chờ các phase tiếp theo. Để dùng auth trên môi trường local, cần cấu hình `JWT_SECRET` và nạp account demo theo quy trình Database đã được nhóm phê duyệt.

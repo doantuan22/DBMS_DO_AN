@@ -8,6 +8,10 @@ export const PROCEDURES = Object.freeze({
   // Authentication: the database returns the bcrypt hash, the backend compares it.
   AUTH_LOGIN: 'dbo.sp_Auth_Login',
   AUTH_REGISTER_CUSTOMER: 'dbo.sp_Auth_RegisterCustomer',
+  USER_GET_CURRENT: 'dbo.sp_User_GetCurrent',
+  USER_UPDATE_PROFILE: 'dbo.sp_User_UpdateProfile',
+  RBAC_GET_PERMISSIONS_BY_USER: 'dbo.sp_RBAC_GetPermissionsByUser',
+  MANAGER_LIST_ASSIGNED_CINEMAS: 'dbo.sp_Manager_ListAssignedCinemas',
   USER_GET_PASSWORD_HASH: 'dbo.sp_User_GetPasswordHash',
   USER_CHANGE_PASSWORD: 'dbo.sp_User_ChangePassword',
 
