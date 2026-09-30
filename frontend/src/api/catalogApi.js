@@ -33,3 +33,17 @@ export const getShowtimes = async (movieId, filters = {}, options = {}) => {
 
 export const getShowtimeDetail = (showtimeId, options = {}) =>
   request(`/showtimes/${encodeURIComponent(showtimeId)}`, options);
+
+export const getSeats = async (showtimeId, options = {}) => {
+  const result = await request(`/showtimes/${encodeURIComponent(showtimeId)}/seats`, options);
+  return result.seats;
+};
+
+export const getProducts = async (options = {}) => {
+  const result = await request('/products', options);
+  return result.products;
+};
+
+export const validatePromotion = (body, options = {}) => request('/promotions/validate', { method: 'POST', body, ...options });
+
+export const createBooking = (body, options = {}) => request('/bookings', { method: 'POST', body, ...options });

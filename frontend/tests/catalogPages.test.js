@@ -13,6 +13,8 @@ let MovieDetail;
 let BookingPreparation;
 let MovieCard;
 let ShowtimeBrowser;
+let SeatMap;
+let ProductPicker;
 let AppRoutes;
 let AuthProvider;
 
@@ -25,6 +27,8 @@ before(async () => {
   ({ default: BookingPreparation } = await vite.ssrLoadModule('/src/pages/BookingPreparation.jsx'));
   ({ default: MovieCard } = await vite.ssrLoadModule('/src/components/MovieCard.jsx'));
   ({ default: ShowtimeBrowser } = await vite.ssrLoadModule('/src/components/ShowtimeBrowser.jsx'));
+  ({ default: SeatMap } = await vite.ssrLoadModule('/src/components/SeatMap.jsx'));
+  ({ default: ProductPicker } = await vite.ssrLoadModule('/src/components/ProductPicker.jsx'));
   ({ default: AppRoutes } = await vite.ssrLoadModule('/src/routes/index.jsx'));
   ({ AuthProvider } = await vite.ssrLoadModule('/src/context/AuthContext.jsx'));
 });
@@ -54,7 +58,7 @@ test('movie detail and selected-showtime route render loading shells for guests'
   const detail = render(React.createElement(MemoryRouter, { initialEntries: ['/movies/4'] },
     React.createElement(Routes, null, React.createElement(Route, { path: '/movies/:movieId', element: React.createElement(MovieDetail) }))));
   const booking = render(React.createElement(MemoryRouter, { initialEntries: ['/booking/5'] },
-    React.createElement(Routes, null, React.createElement(Route, { path: '/booking/:showtimeId', element: React.createElement(BookingPreparation) }))));
+    React.createElement(AuthProvider, null, React.createElement(Routes, null, React.createElement(Route, { path: '/booking/:showtimeId', element: React.createElement(BookingPreparation) })))));
   assert.match(detail, /Đang tải thông tin phim/);
   assert.match(booking, /Đang xác nhận suất chiếu/);
 });
@@ -76,6 +80,30 @@ test('showtime browser has empty and loading states', () => {
   const empty = render(React.createElement(ShowtimeBrowser, { ...base, state: { status: 'empty', data: [] } }));
   assert.match(loading, /Đang tải lịch chiếu/);
   assert.match(empty, /Không có suất chiếu phù hợp/);
+});
+
+test('seat map preserves each database state and only enables empty seats', () => {
+  const html = render(React.createElement(SeatMap, {
+    seats: [
+      { id: 1, label: 'A1', status: 'Trống' }, { id: 2, label: 'A2', status: 'Đang giữ' },
+      { id: 3, label: 'A3', status: 'Đã đặt' }, { id: 4, label: 'A4', status: 'Bảo trì' },
+    ], selectedSeatIds: [1], onToggle() {},
+  }));
+  assert.match(html, /A1 — Trống/);
+  assert.match(html, /aria-pressed="true"/);
+  assert.match(html, /A2 — Đang giữ/);
+  assert.match(html, /A3 — Đã đặt/);
+  assert.match(html, /A4 — Bảo trì/);
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 3);
+});
+
+test('product picker submits quantities without accepting a product price from the user', () => {
+  const html = render(React.createElement(ProductPicker, {
+    products: [{ id: 8, name: 'Combo', price: 95000 }], quantities: { 8: 2 }, onQuantityChange() {},
+  }));
+  assert.match(html, /Số lượng Combo/);
+  assert.match(html, /value="2"/);
+  assert.doesNotMatch(html, /productPrice|finalPrice|total/i);
 });
 
 test('guest can render the public movie route without authentication', () => {

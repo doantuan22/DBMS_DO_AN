@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { ROLE_AREAS } from '../../constants/roles';
+import { ROLE_AREAS, ROLES } from '../../constants/roles';
 
 export default function Login() {
   const { login } = useAuth();
@@ -17,7 +17,7 @@ export default function Login() {
     setBusy(true);
     try {
       const user = await login(form);
-      navigate(ROLE_AREAS[user.role]?.path ?? '/', { replace: true });
+      navigate(user.role === ROLES.CUSTOMER ? '/' : (ROLE_AREAS[user.role]?.path ?? '/'), { replace: true });
     } catch (err) {
       setError(err.status === 401 ? 'Email hoặc mật khẩu không đúng, hoặc tài khoản chưa hoạt động.' : err.status === 503 ? 'Dịch vụ đăng nhập hiện chưa sẵn sàng.' : err.status === 400 ? err.message : 'Không thể đăng nhập lúc này. Vui lòng thử lại.');
     } finally {
