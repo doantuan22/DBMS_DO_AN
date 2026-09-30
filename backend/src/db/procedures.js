@@ -30,6 +30,13 @@ export const PROCEDURES = Object.freeze({
   PROMOTION_VALIDATE: 'dbo.sp_Promotion_Validate',
   BOOKING_CREATE: 'dbo.sp_Booking_Create',
 
+  // Payment and order history. These procedures remain the source of truth for
+  // order ownership, amount, payment state and state transitions.
+  PAYMENT_CREATE_ATTEMPT: 'dbo.sp_Payment_CreateAttempt',
+  PAYMENT_UPDATE_RESULT: 'dbo.sp_Payment_UpdateResult',
+  ORDER_LIST_BY_CUSTOMER: 'dbo.sp_Order_ListByCustomer',
+  ORDER_GET_DETAIL_BY_CUSTOMER: 'dbo.sp_Order_GetDetailByCustomer',
+
   BOOK_TICKET: 'dbo.sp_DatVe',
   ADD_SHOWTIME: 'dbo.sp_ThemSuatChieu',
   PROCESS_PAYMENT: 'dbo.sp_XuLyThanhToan',

@@ -13,6 +13,9 @@ import Movies from '../pages/Movies';
 import MovieDetail from '../pages/MovieDetail';
 import Cinemas from '../pages/Cinemas';
 import BookingPreparation from '../pages/BookingPreparation';
+import Orders from '../pages/Orders';
+import OrderDetail from '../pages/OrderDetail';
+import PaymentPage from '../pages/PaymentPage';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
 const protectedArea = (role, area, title) => (
@@ -26,7 +29,7 @@ const protectedArea = (role, area, title) => (
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }]} />}>
+      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }, { to: '/orders', label: 'Đơn của tôi' }]} />}>
         <Route index element={<><Home /><DatabaseHealth /></>} />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetail />} />
@@ -40,6 +43,14 @@ export default function AppRoutes() {
       <Route element={<RequireAuth />}>
         <Route path="/profile" element={<AreaLayout title="Hồ sơ cá nhân" />}>
           <Route index element={<Profile />} />
+        </Route>
+      </Route>
+
+      <Route element={<RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />}>
+        <Route path="/orders" element={<AreaLayout title="Đơn đặt vé" links={[{ to: '/', label: 'Trang chủ' }, { to: '/orders', label: 'Đơn của tôi' }]} />}>
+          <Route index element={<Orders />} />
+          <Route path=":orderId" element={<OrderDetail />} />
+          <Route path=":orderId/payment" element={<PaymentPage />} />
         </Route>
       </Route>
 

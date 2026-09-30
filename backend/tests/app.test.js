@@ -72,3 +72,15 @@ test('booking requires a customer identity and seat routes validate the showtime
     server.close();
   }
 });
+
+test('order and payment routes require an authenticated customer before database access', async () => {
+  const server = createApp().listen(0);
+  const { port } = server.address();
+  try {
+    const orders = await fetch(`http://127.0.0.1:${port}/api/orders`);
+    assert.equal(orders.status, 401);
+    assert.equal((await orders.json()).error.code, 'UNAUTHENTICATED');
+    const invalid = await fetch(`http://127.0.0.1:${port}/api/orders/0`);
+    assert.equal(invalid.status, 401);
+  } finally { server.close(); }
+});

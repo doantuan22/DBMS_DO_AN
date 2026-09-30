@@ -11,6 +11,9 @@ let Movies;
 let Cinemas;
 let MovieDetail;
 let BookingPreparation;
+let Orders;
+let OrderDetail;
+let PaymentPage;
 let MovieCard;
 let ShowtimeBrowser;
 let SeatMap;
@@ -25,6 +28,9 @@ before(async () => {
   ({ default: Cinemas } = await vite.ssrLoadModule('/src/pages/Cinemas.jsx'));
   ({ default: MovieDetail } = await vite.ssrLoadModule('/src/pages/MovieDetail.jsx'));
   ({ default: BookingPreparation } = await vite.ssrLoadModule('/src/pages/BookingPreparation.jsx'));
+  ({ default: Orders } = await vite.ssrLoadModule('/src/pages/Orders.jsx'));
+  ({ default: OrderDetail } = await vite.ssrLoadModule('/src/pages/OrderDetail.jsx'));
+  ({ default: PaymentPage } = await vite.ssrLoadModule('/src/pages/PaymentPage.jsx'));
   ({ default: MovieCard } = await vite.ssrLoadModule('/src/components/MovieCard.jsx'));
   ({ default: ShowtimeBrowser } = await vite.ssrLoadModule('/src/components/ShowtimeBrowser.jsx'));
   ({ default: SeatMap } = await vite.ssrLoadModule('/src/components/SeatMap.jsx'));
@@ -112,4 +118,15 @@ test('guest can render the public movie route without authentication', () => {
   assert.match(html, /Danh sách phim/);
   assert.match(html, /Đang tải danh sách phim/);
   assert.match(html, /Đăng nhập/);
+});
+
+test('order history, detail and payment pages render database-backed loading shells', () => {
+  const inRoute = (path, element) => {
+    const route = React.createElement(Route, { path: '/orders/:orderId/*', element });
+    const routes = React.createElement(Routes, null, route);
+    return render(React.createElement(MemoryRouter, { initialEntries: [path] }, React.createElement(AuthProvider, null, routes)));
+  };
+  assert.match(render(React.createElement(MemoryRouter, null, React.createElement(AuthProvider, null, React.createElement(Orders)))), /Đơn đặt vé của tôi/);
+  assert.match(inRoute('/orders/12', React.createElement(OrderDetail)), /Đang tải chi tiết đơn/);
+  assert.match(inRoute('/orders/12/payment', React.createElement(PaymentPage)), /Đang tải thông tin thanh toán/);
 });

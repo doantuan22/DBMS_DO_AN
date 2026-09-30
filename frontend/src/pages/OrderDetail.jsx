@@ -1,0 +1,29 @@
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { getOrder } from '../api/ordersApi';
+import { ErrorState, LoadingState } from '../components/CatalogStates';
+
+const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(value ?? 0);
+
+export default function OrderDetail() {
+  const { orderId } = useParams();
+  const [resource, setResource] = useState({ status: 'loading' });
+  const load = useCallback(async () => {
+    setResource({ status: 'loading' });
+    try { setResource({ status: 'success', data: (await getOrder(orderId)).order }); } catch (error) { setResource({ status: 'error', error }); }
+  }, [orderId]);
+  useEffect(() => { void Promise.resolve().then(load); }, [load]);
+  if (resource.status === 'loading') return <LoadingState>Đang tải chi tiết đơn…</LoadingState>;
+  if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;
+  const order = resource.data;
+  return <section className="catalog-page"><p className="catalog-eyebrow">ĐƠN #{order.id}</p><h1>{order.movieTitle}</h1>
+    <p>{order.cinemaName} · {order.roomName} · {order.startsAt}</p><p>Trạng thái đơn: {order.status}</p>
+    <p>Ghế: {order.seatLabels || order.tickets.map((ticket) => ticket.label).join(', ')}</p>
+    <p>Vé: {money(order.ticketTotal)} · Đồ ăn: {money(order.productTotal)} · Giảm giá: {money(order.discountTotal)} · <strong>Tổng: {money(order.total)}</strong></p>
+    <h2>Vé</h2><ul>{order.tickets.map((ticket) => <li key={ticket.id}>{ticket.label} · {ticket.type} · {money(ticket.price)} · {ticket.status}</li>)}</ul>
+    <h2>Đồ ăn</h2>{order.products.length ? <ul>{order.products.map((product) => <li key={product.id}>{product.quantity} × {product.name} · {money(product.total)}</li>)}</ul> : <p>Không có đồ ăn.</p>}
+    <h2>Lịch sử thanh toán</h2>{order.payments.length ? <ul>{order.payments.map((payment) => <li key={payment.id}>#{payment.id} · {payment.method} · {money(payment.amount)} · {payment.status} · {payment.transactionCode}</li>)}</ul> : <p>Chưa có giao dịch thanh toán.</p>}
+    {order.status === 'Chờ thanh toán' && <Link className="catalog-button" to={`/orders/${order.id}/payment`}>Thanh toán đơn này</Link>}
+    <Link className="catalog-button catalog-button--secondary" to="/orders">Quay lại đơn của tôi</Link>
+  </section>;
+}
