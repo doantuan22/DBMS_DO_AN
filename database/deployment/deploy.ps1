@@ -40,6 +40,8 @@ if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_re
 foreach ($step in $steps) {
     $path = Join-Path $db $step
     $sql = [IO.File]::ReadAllText($path, [Text.Encoding]::UTF8)
+    # A :setvar inside a script would override the -v value below; the password comes from -AppPassword
+    $sql = [regex]::Replace($sql, '(?m)^:setvar[^\r\n]*\r?\n', '')
     $tmp = Join-Path ([IO.Path]::GetTempPath()) ("deploy_" + [IO.Path]::GetFileName($path))
     [IO.File]::WriteAllText($tmp, $sql.Replace('CinemaBookingDB', $Database), (New-Object Text.UTF8Encoding($true)))
     Write-Host "== $step"

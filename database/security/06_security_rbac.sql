@@ -6,18 +6,26 @@
 -- TUYỆT ĐỐI BỊ DENY TRUY CẬP TRỰC TIẾP CÁC BẢNG (NO DIRECT TABLE DML/SELECT)
 -- ============================================================================
 
--- Mật khẩu KHÔNG được ghi trong file: truyền qua sqlcmd -v AppPassword="..." (xem database/deployment/deploy.ps1)
+-- CÁCH CHẠY TRONG SSMS: bật Query -> SQLCMD Mode rồi Execute (cần để $(AppPassword) được thay giá trị).
+-- Mật khẩu của login ứng dụng (phải trùng DB_PASSWORD trong backend/.env). KHÔNG commit mật khẩu thật lên Git.
+-- Khi chạy bằng deploy.ps1 thì dòng :setvar này được bỏ qua và mật khẩu lấy từ tham số -AppPassword.
+:setvar AppPassword "do_an_dbms"
+
 USE master
 GO
 
 -- 1. Tạo Login cấp Server cho ứng dụng (nếu chưa có)
 IF NOT EXISTS (SELECT name FROM sys.server_principals WHERE name = N'CinemaAppUser')
 BEGIN
-    CREATE LOGIN CinemaAppUser WITH PASSWORD = N'$(AppPassword)', CHECK_POLICY = ON;
+    -- CHECK_POLICY = OFF: không áp chính sách mật khẩu Windows (môi trường đồ án/máy cá nhân).
+    -- Môi trường thật: dùng mật khẩu mạnh và đổi thành CHECK_POLICY = ON.
+    CREATE LOGIN CinemaAppUser WITH PASSWORD = N'$(AppPassword)', CHECK_POLICY = OFF;
     PRINT N'>>> Đã tạo Server Login: CinemaAppUser';
 END
 ELSE
 BEGIN
+    -- Tắt CHECK_POLICY trước để login đã tồn tại (đang bật chính sách) nhận được mật khẩu đơn giản
+    ALTER LOGIN CinemaAppUser WITH CHECK_POLICY = OFF;
     ALTER LOGIN CinemaAppUser WITH PASSWORD = N'$(AppPassword)';
     PRINT N'>>> Đã cập nhật mật khẩu cho Server Login: CinemaAppUser';
 END
