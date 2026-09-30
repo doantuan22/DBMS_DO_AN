@@ -4,7 +4,8 @@ export const getHealth = (req, res) => res.json({ status: 'ok' });
 
 export async function getDatabaseHealth(req, res, next) {
   try {
-    res.json(await healthService.checkDatabase());
+    const health = await healthService.checkDatabase();
+    res.status(health.ok ? 200 : 503).json(health);
   } catch (err) {
     next(err);
   }

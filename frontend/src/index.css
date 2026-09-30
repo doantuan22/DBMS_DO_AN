@@ -1,5 +1,18 @@
-:root { font-family: system-ui, sans-serif; color: #08060d; background: #fff; }
-body { margin: 0; }
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #171923;
+  background: #f5f6fa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+}
+body { min-width: 320px; min-height: 100vh; margin: 0; }
+button { font: inherit; }
 .area__header { display: flex; gap: 1rem; align-items: center; padding: .75rem 1rem; border-bottom: 1px solid #e5e4e7; }
 .area__header nav { display: flex; gap: .75rem; }
 .area__main { padding: 1rem; }
+.health-card, .system-state { max-width: 42rem; margin: 1.5rem auto; padding: 1.25rem; border: 1px solid #dfe3eb; border-radius: .75rem; background: #fff; }
+.health-card--healthy { border-color: #9bd4ad; }
+.health-card--unavailable { border-color: #e9bd9b; }
+.system-state { margin-top: 15vh; text-align: center; }
+.system-state button { padding: .55rem 1rem; border: 0; border-radius: .4rem; color: #fff; background: #273e82; cursor: pointer; }

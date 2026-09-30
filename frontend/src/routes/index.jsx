@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
 import Placeholder from '../pages/Placeholder';
+import DatabaseHealth from '../components/DatabaseHealth';
 import RequireRole from './RequireRole';
 import { AREA_PATHS, ROLES } from '../constants/roles';
 
@@ -12,7 +13,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }]} />}>
-        <Route index element={<Placeholder title="Public: danh sách phim" />} />
+        <Route index element={<><Placeholder title="Public: danh sách phim" /><DatabaseHealth /></>} />
       </Route>
 
       <Route element={<RequireRole role={ROLES.CUSTOMER} />}>

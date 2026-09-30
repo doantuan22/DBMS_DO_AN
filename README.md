@@ -2,6 +2,8 @@
 
 Ứng dụng web đặt vé xem phim cho chuỗi rạp: xem phim và lịch chiếu, chọn ghế, mua đồ ăn, khuyến mãi, thanh toán, đánh giá, khiếu nại. Bốn vai trò: `KHACH_HANG`, `QUAN_LY_RAP`, `CSKH`, `ADMIN`. Thiết kế chi tiết: `Phân Tích _ Thiết Kế.md`.
 
+Kế hoạch triển khai hiện hành: [Roadmap V2 DBMS-first](KeHoach_PhatTrien_DuAn_DatVeXemPhim_DBMS_First_v2%20(1).md).
+
 Kiến trúc **DBMS-first**: SQL Server giữ toàn vẹn dữ liệu và nghiệp vụ; backend chỉ điều phối; frontend chỉ hiển thị. Xem [docs/architecture.md](docs/architecture.md).
 
 ```
@@ -59,4 +61,4 @@ Biến môi trường backend: `PORT`, `NODE_ENV`, `DB_SERVER`, `DB_PORT`, `DB_D
 
 ## Trạng thái
 
-Mới ở mức foundation: cấu trúc thư mục, cấu hình, procedure client, route/layout theo vai trò và endpoint `/api/health`. Chưa có schema, use case hay xác thực hoàn chỉnh.
+Database baseline đã có schema, constraints, procedures, seed và SQL verification scripts; không triển khai lại schema từ ứng dụng. Backend/frontend hiện ở foundation: procedure client và API health đã có, frontend có route/layout theo vai trò và hiển thị trạng thái kết nối DB. Các use case nghiệp vụ, API xác thực và giao diện chức năng vẫn đang chờ triển khai theo Roadmap V2.
