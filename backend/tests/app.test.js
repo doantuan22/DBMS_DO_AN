@@ -55,3 +55,20 @@ test('catalog read routes are public and reject invalid filters before a DB call
     server.close();
   }
 });
+
+test('booking requires a customer identity and seat routes validate the showtime ID', async () => {
+  const server = createApp().listen(0);
+  const { port } = server.address();
+  try {
+    const booking = await fetch(`http://127.0.0.1:${port}/api/bookings`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ showtimeId: 1, seatIds: [1] }),
+    });
+    assert.equal(booking.status, 401);
+    assert.equal((await booking.json()).error.code, 'UNAUTHENTICATED');
+    const seats = await fetch(`http://127.0.0.1:${port}/api/showtimes/0/seats`);
+    assert.equal(seats.status, 400);
+    assert.equal((await seats.json()).error.code, 'INVALID_REQUEST');
+  } finally {
+    server.close();
+  }
+});

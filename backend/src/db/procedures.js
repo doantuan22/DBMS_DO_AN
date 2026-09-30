@@ -23,6 +23,13 @@ export const PROCEDURES = Object.freeze({
   SHOWTIME_LIST_BY_MOVIE: 'dbo.sp_Showtime_ListByMovie',
   SHOWTIME_GET_DETAIL: 'dbo.sp_Showtime_GetDetail',
 
+  // Booking core. The database owns availability, pricing, promotion revalidation
+  // and the booking transaction.
+  SEAT_LIST_BY_SHOWTIME: 'dbo.sp_Seat_ListByShowtime',
+  PRODUCT_LIST_ACTIVE: 'dbo.sp_Product_ListActive',
+  PROMOTION_VALIDATE: 'dbo.sp_Promotion_Validate',
+  BOOKING_CREATE: 'dbo.sp_Booking_Create',
+
   BOOK_TICKET: 'dbo.sp_DatVe',
   ADD_SHOWTIME: 'dbo.sp_ThemSuatChieu',
   PROCESS_PAYMENT: 'dbo.sp_XuLyThanhToan',
