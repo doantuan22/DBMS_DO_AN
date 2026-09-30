@@ -17,6 +17,8 @@ test('issues a signed identity token with expiry and verifies it', () => {
 test('rejects tampered tokens and refuses weak/missing secrets', () => {
   const jwt = createJwtService({ secret });
   const { token } = jwt.issue(1);
-  assert.throws(() => jwt.verify(`${token.slice(0, -1)}x`), { code: 'UNAUTHENTICATED' });
+  const [header, payload, signature] = token.split('.');
+  const tamperedSignature = `${signature[0] === 'a' ? 'b' : 'a'}${signature.slice(1)}`;
+  assert.throws(() => jwt.verify(`${header}.${payload}.${tamperedSignature}`), { code: 'UNAUTHENTICATED' });
   assert.throws(() => createJwtService({ secret: '' }).issue(1), { code: 'AUTH_NOT_CONFIGURED', status: 503 });
 });

@@ -15,6 +15,14 @@ export const PROCEDURES = Object.freeze({
   USER_GET_PASSWORD_HASH: 'dbo.sp_User_GetPasswordHash',
   USER_CHANGE_PASSWORD: 'dbo.sp_User_ChangePassword',
 
+  // Public catalog: read procedures only.
+  GENRE_LIST: 'dbo.sp_Genre_List',
+  CINEMA_LIST: 'dbo.sp_Cinema_List',
+  MOVIE_LIST: 'dbo.sp_Movie_List',
+  MOVIE_GET_DETAIL: 'dbo.sp_Movie_GetDetail',
+  SHOWTIME_LIST_BY_MOVIE: 'dbo.sp_Showtime_ListByMovie',
+  SHOWTIME_GET_DETAIL: 'dbo.sp_Showtime_GetDetail',
+
   BOOK_TICKET: 'dbo.sp_DatVe',
   ADD_SHOWTIME: 'dbo.sp_ThemSuatChieu',
   PROCESS_PAYMENT: 'dbo.sp_XuLyThanhToan',

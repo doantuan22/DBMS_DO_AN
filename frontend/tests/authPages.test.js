@@ -11,7 +11,7 @@ let Login;
 let Register;
 
 before(async () => {
-  vite = await createServer({ configFile: 'vite.config.js', server: { middlewareMode: true }, appType: 'custom' });
+  vite = await createServer({ configFile: 'vite.config.js', server: { middlewareMode: true, hmr: false }, appType: 'custom' });
   ({ AuthProvider } = await vite.ssrLoadModule('/src/context/AuthContext.jsx'));
   ({ default: Login } = await vite.ssrLoadModule('/src/pages/auth/Login.jsx'));
   ({ default: Register } = await vite.ssrLoadModule('/src/pages/auth/Register.jsx'));

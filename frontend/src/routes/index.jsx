@@ -8,6 +8,11 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Profile from '../pages/auth/Profile';
 import Forbidden from '../pages/Forbidden';
+import Home from '../pages/Home';
+import Movies from '../pages/Movies';
+import MovieDetail from '../pages/MovieDetail';
+import Cinemas from '../pages/Cinemas';
+import BookingPreparation from '../pages/BookingPreparation';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
 const protectedArea = (role, area, title) => (
@@ -21,8 +26,12 @@ const protectedArea = (role, area, title) => (
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }]} />}>
-        <Route index element={<><Placeholder title="Public: danh sách phim" /><DatabaseHealth /></>} />
+      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }]} />}>
+        <Route index element={<><Home /><DatabaseHealth /></>} />
+        <Route path="movies" element={<Movies />} />
+        <Route path="movies/:movieId" element={<MovieDetail />} />
+        <Route path="cinemas" element={<Cinemas />} />
+        <Route path="booking/:showtimeId" element={<BookingPreparation />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forbidden" element={<Forbidden />} />

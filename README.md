@@ -51,6 +51,8 @@ Auth dùng Bearer JWT, thời hạn mặc định `1h`; token chỉ lưu trong `
 
 Auth API hiện có `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, `PUT /api/auth/me` và `GET /api/auth/permissions`. Login trả `token` dạng Bearer; quyền được nạp từ `sp_Auth_Login` và làm mới từ `sp_RBAC_GetPermissionsByUser` cho mỗi request đã xác thực. Để kiểm tra giao diện, chạy `npm test` trong `frontend/`.
 
+Phase 3 public catalog dùng dữ liệu SQL thật qua Stored Procedure: `GET /api/movies`, `GET /api/movies/:movieId`, `GET /api/genres`, `GET /api/cinemas`, `GET /api/movies/:movieId/showtimes`, `GET /api/showtimes/:showtimeId`. Hợp đồng tham số và response: [docs/api-phase3.md](docs/api-phase3.md). Các route này public, không yêu cầu JWT.
+
 ## Quy tắc bắt buộc
 
 1. **Stored-Procedure-only**: backend chỉ được `pool -> request() -> .input()/.output() -> .execute('dbo.sp_xxx')`. Table, View, Function không được truy cập trực tiếp; View đọc qua procedure bọc, Function gọi trong procedure.
@@ -65,4 +67,4 @@ Auth API hiện có `POST /api/auth/register`, `POST /api/auth/login`, `GET /api
 
 ## Trạng thái
 
-Database baseline đã có schema, constraints, procedures, seed và SQL verification scripts; không triển khai lại schema từ ứng dụng. Phase 2 auth foundation đã được triển khai ở Backend/Frontend. Các API nghiệp vụ và màn hình portal vẫn chờ các phase tiếp theo. Để dùng auth trên môi trường local, cần cấu hình `JWT_SECRET` và nạp account demo theo quy trình Database đã được nhóm phê duyệt.
+Database baseline đã có schema, constraints, procedures, seed và SQL verification scripts; không triển khai lại schema từ ứng dụng. Phase 2 Authentication/RBAC và Phase 3 public movie/cinema/showtime catalog đã được triển khai ở Backend/Frontend. SeatMap, booking và các portal nghiệp vụ vẫn thuộc các phase tiếp theo. Mỗi môi trường local cần tự cấu hình `JWT_SECRET` và account demo theo quy trình Database đã được nhóm phê duyệt.

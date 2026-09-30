@@ -27,4 +27,57 @@ button { font: inherit; }
 .auth-card input[readonly] { background: #f0f2f6; }
 .form-error { color: #a42b2b; }
 .form-success { color: #17653a; }
+.catalog-page { max-width: 76rem; margin: 0 auto; padding: 1rem 0 3rem; }
+.catalog-hero { display: grid; justify-items: start; gap: .85rem; margin: 1rem 0 2rem; padding: clamp(1.5rem, 5vw, 3.5rem); border-radius: 1rem; color: #fff; background: linear-gradient(120deg, #182b62, #3f63ad); }
+.catalog-hero h1, .catalog-section-heading h1, .catalog-section-heading h2, .movie-detail h1 { margin: 0; }
+.catalog-hero h1 { max-width: 42rem; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.1; }
+.catalog-hero p { max-width: 38rem; margin: 0; }
+.catalog-eyebrow { margin: 0 0 .4rem; color: #8ca6e5; font-size: .75rem; font-weight: 800; letter-spacing: .12em; }
+.catalog-section { margin: 2rem 0; }
+.catalog-section-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; margin: 1.5rem 0; }
+.catalog-section-heading a, .catalog-back { color: #273e82; font-weight: 700; }
+.catalog-button { display: inline-flex; justify-content: center; align-items: center; min-height: 2.5rem; padding: .6rem .9rem; border: 0; border-radius: .45rem; color: #fff !important; background: #273e82; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.catalog-button--secondary { color: #273e82 !important; border: 1px solid #cad3e6; background: #fff; }
+.catalog-grid, .movie-grid, .cinema-grid, .showtime-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; }
+.movie-card, .cinema-card, .showtime-card, .actor-card, .review-card { overflow: hidden; border: 1px solid #e2e6ef; border-radius: .8rem; background: #fff; }
+.movie-card__poster { display: grid; place-items: center; height: 18rem; overflow: hidden; color: #5a6680; background: #e8ebf2; text-decoration: none; }
+.movie-card__poster img { width: 100%; height: 100%; object-fit: cover; }
+.movie-card__fallback { padding: 1rem; }
+.movie-card__body { display: grid; justify-items: start; gap: .55rem; padding: 1rem; }
+.movie-card__body h2, .movie-card__body p { margin: 0; }
+.movie-card__body h2 { font-size: 1.1rem; }
+.movie-card__body h2 a { color: inherit; text-decoration: none; }
+.catalog-muted { color: #667085; }
+.catalog-state { padding: 1rem; border: 1px solid #dfe3eb; border-radius: .65rem; background: #fff; }
+.catalog-state--error { color: #8d2525; border-color: #edcaca; }
+.catalog-state button { padding: .5rem .8rem; border: 0; border-radius: .4rem; color: #fff; background: #273e82; cursor: pointer; }
+.catalog-filters { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0 1.5rem; }
+.catalog-filters label { display: grid; min-width: min(100%, 15rem); gap: .4rem; font-weight: 650; }
+.catalog-filters input, .catalog-filters select { min-height: 2.65rem; padding: .5rem .65rem; border: 1px solid #cbd1dc; border-radius: .4rem; background: #fff; font: inherit; }
+.cinema-card { padding: 1.15rem; }
+.cinema-card h2, .cinema-card p { margin: .45rem 0; }
+.cinema-card__city { color: #435b9b; font-size: .85rem; font-weight: 700; }
+.movie-detail__intro { display: grid; grid-template-columns: minmax(12rem, 20rem) 1fr; gap: clamp(1rem, 4vw, 2.5rem); margin: 1rem 0 2rem; }
+.movie-detail__poster { display: grid; min-height: 20rem; place-items: center; overflow: hidden; border-radius: .8rem; color: #5a6680; background: #e8ebf2; }
+.movie-detail__poster img { width: 100%; height: 100%; max-height: 31rem; object-fit: cover; }
+.movie-detail__content { align-self: center; }
+.movie-detail__content h1 { margin: .25rem 0 .6rem; font-size: clamp(2rem, 5vw, 3.2rem); }
+.movie-detail__description { max-width: 55rem; line-height: 1.7; }
+.movie-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .8rem; }
+.movie-facts div { padding: .7rem; border-radius: .5rem; background: #fff; }
+.movie-facts dt { color: #667085; font-size: .85rem; }
+.movie-facts dd { margin: .25rem 0 0; font-weight: 650; }
+.catalog-chips, .actor-list, .review-list { display: flex; flex-wrap: wrap; gap: .7rem; }
+.catalog-chip, .actor-card, .review-card { padding: .8rem 1rem; }
+.actor-card { display: grid; gap: .25rem; min-width: 9rem; }
+.actor-card small { color: #667085; }
+.review-card { flex: 1 1 16rem; }
+.review-card p { margin-bottom: 0; }
+.showtime-browser { margin-top: 2.5rem; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid #dfe3eb; border-radius: .9rem; background: #f9faff; }
+.showtime-card { display: grid; justify-items: start; gap: .35rem; padding: 1rem; }
+.showtime-card > div strong { color: #273e82; font-size: 1.2rem; }
+.showtime-card p { margin: .25rem 0; }
+.phase-note { margin: 1rem 0; padding: 1rem; border-left: 4px solid #5979c2; background: #eef2fc; }
+.booking-preparation { max-width: 52rem; padding: 2rem; border: 1px solid #dfe3eb; border-radius: .8rem; background: #fff; }
+@media (max-width: 680px) { .movie-detail__intro { grid-template-columns: 1fr; } .movie-detail__poster { max-height: 26rem; } }
 @media (max-width: 680px) { .area__account { width: 100%; margin-left: 0; } }

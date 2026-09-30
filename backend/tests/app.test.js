@@ -35,3 +35,23 @@ test('auth routes reject missing credentials and role escalation before database
     server.close();
   }
 });
+
+test('catalog read routes are public and reject invalid filters before a DB call', async () => {
+  const server = createApp().listen(0);
+  const { port } = server.address();
+  try {
+    const invalidId = await fetch(`http://127.0.0.1:${port}/api/movies/0`);
+    assert.equal(invalidId.status, 400);
+    assert.equal((await invalidId.json()).error.code, 'INVALID_REQUEST');
+
+    const invalidFilter = await fetch(`http://127.0.0.1:${port}/api/movies?genreId=1&page=1`);
+    assert.equal(invalidFilter.status, 400);
+    assert.equal((await invalidFilter.json()).error.code, 'UNKNOWN_QUERY_PARAMETER');
+
+    const invalidDate = await fetch(`http://127.0.0.1:${port}/api/movies/1/showtimes?date=2026-02-30`);
+    assert.equal(invalidDate.status, 400);
+    assert.equal((await invalidDate.json()).error.code, 'INVALID_REQUEST');
+  } finally {
+    server.close();
+  }
+});
