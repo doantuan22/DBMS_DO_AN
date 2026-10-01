@@ -74,6 +74,13 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
+    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_KHIEUNAI') = 0
+       AND dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
+        ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền truy cập khiếu nại.', 1;
+
+    IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
+        ;THROW 50061, N'Khiếu nại không tồn tại.', 1;
+
     -- Recordset 1: Chi tiết khiếu nại
     SELECT
         kn.KhieuNaiID,
@@ -119,6 +126,13 @@ CREATE PROCEDURE dbo.sp_Support_Complaint_GetOrderReference
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_KHIEUNAI') = 0
+       AND dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
+        ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xem đơn tham chiếu.', 1;
+
+    IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
+        ;THROW 50061, N'Khiếu nại không tồn tại.', 1;
 
     DECLARE @DonDatVeID INT;
     SELECT @DonDatVeID = DonDatVeID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID;
@@ -172,6 +186,11 @@ BEGIN
     SET NOCOUNT ON;
     BEGIN TRY
         BEGIN TRANSACTION;
+
+        IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
+        BEGIN
+            ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xử lý khiếu nại.', 1;
+        END
 
         IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
         BEGIN
@@ -233,12 +252,27 @@ CREATE PROCEDURE dbo.sp_Support_Complaint_UpdateStatus
 AS
 BEGIN
     SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
-    UPDATE dbo.KHIEUNAI
-    SET TrangThai = @TrangThaiMoi
-    WHERE KhieuNaiID = @KhieuNaiID;
+        IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
+            ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xử lý khiếu nại.', 1;
 
-    SELECT KhieuNaiID, TrangThai FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID;
+        IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
+            ;THROW 50061, N'Khiếu nại không tồn tại.', 1;
+
+        -- Status-only actions remain append-only: the trigger synchronizes
+        -- KHIEUNAI.TrangThai with this new history item atomically.
+        INSERT INTO dbo.XULY_KHIEUNAI (KhieuNaiID, NguoiXuLyID, NoiDungXuLy, NgayXuLy, TrangThaiSauXuLy)
+        VALUES (@KhieuNaiID, @NguoiDungID, N'Cập nhật trạng thái khiếu nại.', SYSDATETIME(), @TrangThaiMoi);
+
+        COMMIT TRANSACTION;
+        SELECT KhieuNaiID, TrangThai FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        ;THROW;
+    END CATCH
 END;
 GO
 

@@ -27,24 +27,48 @@ function managerError(error) {
   }
 }
 
-const cinemaDto = (r) => ({ assignmentId: r.PhanCongID, id: r.RapID, name: r.TenRap, address: r.DiaChi, city: r.ThanhPho, phone: r.SoDienThoai, startsOn: r.NgayBatDau, endsOn: r.NgayKetThuc, assignmentStatus: r.TrangThaiPhanCong });
-const roomDto = (r) => ({ id: r.PhongID, cinemaId: r.RapID, cinemaName: r.TenRap, name: r.TenPhong, type: r.LoaiPhong, status: r.TrangThai, seatCount: r.TongSoGhe });
-const seatDto = (r) => ({ id: r.GheID, roomId: r.PhongID, row: r.HangGhe, number: r.SoGhe, label: r.TenGhe, type: r.LoaiGhe, status: r.TrangThai });
-const showtimeDto = (r) => ({ id: r.SuatChieuID, movieId: r.PhimID, movieTitle: r.TenPhim, roomId: r.PhongID, roomName: r.TenPhong, cinemaId: r.RapID, cinemaName: r.TenRap, startsAt: r.ThoiGianBatDau, endsAt: r.ThoiGianKetThuc, format: r.DinhDang, basePrice: number(r.GiaVeCoBan), status: r.TrangThai ?? r.TrangThaiSuatChieu });
-const pricingDto = (r) => ({ id: r.GiaID, cinemaId: r.RapID, seatType: r.LoaiGhe, dayType: r.LoaiNgay, format: r.DinhDang, surcharge: number(r.PhuThu), startsOn: r.NgayBatDau, endsOn: r.NgayKetThuc, status: r.TrangThai });
+const int = (value) => ({ type: DbTypes.Int, value });
+const text = (length, value) => ({ type: DbTypes.NVarChar(length), value });
+const date = (value) => ({ type: DbTypes.Date, value });
+
+function cinemaDto(row) {
+  return { assignmentId: row.PhanCongID, id: row.RapID, name: row.TenRap, address: row.DiaChi, city: row.ThanhPho, phone: row.SoDienThoai, startsOn: row.NgayBatDau, endsOn: row.NgayKetThuc, assignmentStatus: row.TrangThaiPhanCong };
+}
+function roomDto(row) {
+  return { id: row.PhongID, cinemaId: row.RapID, cinemaName: row.TenRap, name: row.TenPhong, type: row.LoaiPhong, status: row.TrangThai, seatCount: row.TongSoGhe };
+}
+function seatDto(row) {
+  return { id: row.GheID, roomId: row.PhongID, row: row.HangGhe, number: row.SoGhe, label: row.TenGhe, type: row.LoaiGhe, status: row.TrangThai };
+}
+function showtimeDto(row) {
+  return { id: row.SuatChieuID, movieId: row.PhimID, movieTitle: row.TenPhim, roomId: row.PhongID, roomName: row.TenPhong, cinemaId: row.RapID, cinemaName: row.TenRap, startsAt: row.ThoiGianBatDau, endsAt: row.ThoiGianKetThuc, format: row.DinhDang, basePrice: number(row.GiaVeCoBan), status: row.TrangThai ?? row.TrangThaiSuatChieu };
+}
+function pricingDto(row) {
+  return { id: row.GiaID, cinemaId: row.RapID, seatType: row.LoaiGhe, dayType: row.LoaiNgay, format: row.DinhDang, surcharge: number(row.PhuThu), startsOn: row.NgayBatDau, endsOn: row.NgayKetThuc, status: row.TrangThai };
+}
 
 export function createManagerService({ execute = executeProcedure } = {}) {
-  async function call(key, params) { try { return await execute(key, params); } catch (error) { managerError(error); } }
+  async function call(key, params) {
+    try {
+      return await execute(key, params);
+    } catch (error) {
+      managerError(error);
+    }
+  }
   return {
-    async listCinemas(userId) { return rows(await call('MANAGER_LIST_ASSIGNED_CINEMAS', { NguoiDungID: { type: DbTypes.Int, value: userId } })).map(cinemaDto); },
-    async listRooms(userId, cinemaId) { return rows(await call('MANAGER_ROOM_LIST', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId } })).map(roomDto); },
+    async listCinemas(userId) {
+      return rows(await call('MANAGER_LIST_ASSIGNED_CINEMAS', { NguoiDungID: int(userId) })).map(cinemaDto);
+    },
+    async listRooms(userId, cinemaId) {
+      return rows(await call('MANAGER_ROOM_LIST', { NguoiDungID: int(userId), RapID: int(cinemaId) })).map(roomDto);
+    },
     async createRoom(userId, cinemaId, input) { return roomDto(rows(await call('MANAGER_ROOM_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TenPhong: { type: DbTypes.NVarChar(100), value: input.name }, LoaiPhong: { type: DbTypes.NVarChar(50), value: input.type } }))[0]); },
     async updateRoom(userId, id, input) { return roomDto(rows(await call('MANAGER_ROOM_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id }, TenPhong: { type: DbTypes.NVarChar(100), value: input.name }, LoaiPhong: { type: DbTypes.NVarChar(50), value: input.type }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
-    async deleteRoom(userId, id) { await call('MANAGER_ROOM_DELETE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id } }); },
-    async listSeats(userId, id) { return rows(await call('MANAGER_SEAT_LIST_BY_ROOM', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id } })).map(seatDto); },
+    async deleteRoom(userId, id) { await call('MANAGER_ROOM_DELETE', { NguoiDungID: int(userId), PhongID: int(id) }); },
+    async listSeats(userId, id) { return rows(await call('MANAGER_SEAT_LIST_BY_ROOM', { NguoiDungID: int(userId), PhongID: int(id) })).map(seatDto); },
     async createSeat(userId, roomId, input) { return seatDto(rows(await call('MANAGER_SEAT_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: roomId }, HangGhe: { type: DbTypes.VarChar(10), value: input.row }, SoGhe: { type: DbTypes.Int, value: input.number }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.type } }))[0]); },
     async updateSeat(userId, id, input) { return seatDto(rows(await call('MANAGER_SEAT_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GheID: { type: DbTypes.Int, value: id }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.type }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
-    async deleteSeat(userId, id) { await call('MANAGER_SEAT_DELETE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GheID: { type: DbTypes.Int, value: id } }); },
+    async deleteSeat(userId, id) { await call('MANAGER_SEAT_DELETE', { NguoiDungID: int(userId), GheID: int(id) }); },
     async listShowtimes(userId, cinemaId, range) { return rows(await call('MANAGER_SHOWTIME_LIST', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TuNgay: { type: DbTypes.Date, value: range.fromDate }, DenNgay: { type: DbTypes.Date, value: range.toDate } })).map(showtimeDto); },
     async createShowtime(userId, input) { return showtimeDto(rows(await call('MANAGER_SHOWTIME_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhimID: { type: DbTypes.Int, value: input.movieId }, PhongID: { type: DbTypes.Int, value: input.roomId }, ThoiGianBatDau: { type: DbTypes.DateTime2, value: new Date(input.startsAt) }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: new Date(input.endsAt) }, DinhDang: { type: DbTypes.NVarChar(50), value: input.format }, GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice } }))[0]); },
     async updateShowtime(userId, id, input) { return showtimeDto(rows(await call('MANAGER_SHOWTIME_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, SuatChieuID: { type: DbTypes.Int, value: id }, PhimID: { type: DbTypes.Int, value: input.movieId }, ThoiGianBatDau: { type: DbTypes.DateTime2, value: new Date(input.startsAt) }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: new Date(input.endsAt) }, DinhDang: { type: DbTypes.NVarChar(50), value: input.format }, GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },

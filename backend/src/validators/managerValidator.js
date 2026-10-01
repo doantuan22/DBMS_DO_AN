@@ -1,28 +1,181 @@
 import { HttpError } from '../utils/httpError.js';
 
 const ROOM_TYPES = new Set(['2D', '3D', 'IMAX', '4DX', 'ScreenX']);
-const ROOM_STATUSES = new Set(['Hoạt động', 'Bảo trì', 'Ngưng hoạt động']);
+const ROOM_STATUSES = new Set(['Hoạt động', 'Bảo trì', 'Ngừng hoạt động']);
 const SEAT_TYPES = new Set(['Thường', 'VIP', 'Sweetbox', 'Đôi']);
 const SEAT_STATUSES = new Set(['Hoạt động', 'Hỏng', 'Bảo trì']);
-const SHOWTIME_STATUSES = new Set(['Mở bán', 'Tạm ngưng', 'Đã hủy', 'Hoàn thành']);
+const SHOWTIME_STATUSES = new Set(['Mở bán', 'Tạm ngừng', 'Đã hủy', 'Hoàn thành']);
 const DAY_TYPES = new Set(['Ngày thường', 'Cuối tuần', 'Ngày lễ', 'Tất cả']);
 const PRICING_STATUSES = new Set(['Áp dụng', 'Hết hạn', 'Tạm dừng']);
 
-function objectOnly(value, allowed) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new HttpError(400, 'INVALID_REQUEST', 'Request body must be an object.'); if (Object.keys(value).some((key) => !allowed.includes(key))) throw new HttpError(400, 'UNKNOWN_REQUEST_FIELD', 'Request contains unsupported fields.'); return value; }
-function id(value, field) { if (!/^\d+$/.test(String(value ?? ''))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`); const parsed = Number(value); if (!Number.isSafeInteger(parsed) || parsed <= 0) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`); return parsed; }
-function text(value, field, max) { if (typeof value !== 'string' || !value.trim() || value.trim().length > max) throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`); return value.trim(); }
-function enumValue(value, field, values) { if (typeof value !== 'string' || !values.has(value)) throw new HttpError(400, 'INVALID_REQUEST', `${field} is not supported by the database contract.`); return value; }
-function nonNegative(value, field) { if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a non-negative number.`); return value; }
-function validDate(value, field) { if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value) || Number.isNaN(Date.parse(`${value}T00:00:00Z`))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`); return value; }
-function validDateTime(value, field) { if (typeof value !== 'string' || Number.isNaN(Date.parse(value))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime.`); return value; }
+function objectOnly(value, allowedFields) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'Request body must be an object.');
+  }
+  if (Object.keys(value).some((key) => !allowedFields.includes(key))) {
+    throw new HttpError(400, 'UNKNOWN_REQUEST_FIELD', 'Request contains unsupported fields.');
+  }
+  return value;
+}
 
-export const cinemaId = (value) => id(value, 'cinemaId'); export const roomId = (value) => id(value, 'roomId'); export const seatId = (value) => id(value, 'seatId'); export const showtimeId = (value) => id(value, 'showtimeId'); export const pricingId = (value) => id(value, 'pricingId');
-export function roomCreate(value) { const body = objectOnly(value, ['name', 'type']); return { name: text(body.name, 'name', 100), type: body.type === undefined ? '2D' : enumValue(body.type, 'type', ROOM_TYPES) }; }
-export function roomUpdate(value) { const body = objectOnly(value, ['name', 'type', 'status']); return { name: text(body.name, 'name', 100), type: enumValue(body.type, 'type', ROOM_TYPES), status: enumValue(body.status, 'status', ROOM_STATUSES) }; }
-export function seatCreate(value) { const body = objectOnly(value, ['row', 'number', 'type']); if (typeof body.row !== 'string' || !body.row.trim() || body.row.trim().length > 10 || !Number.isInteger(body.number) || body.number <= 0) throw new HttpError(400, 'INVALID_REQUEST', 'Seat row or number is invalid.'); return { row: body.row.trim(), number: body.number, type: body.type === undefined ? 'Thường' : enumValue(body.type, 'type', SEAT_TYPES) }; }
-export function seatUpdate(value) { const body = objectOnly(value, ['type', 'status']); return { type: enumValue(body.type, 'type', SEAT_TYPES), status: enumValue(body.status, 'status', SEAT_STATUSES) }; }
-export function showtimeCreate(value) { const body = objectOnly(value, ['movieId', 'roomId', 'startsAt', 'endsAt', 'format', 'basePrice']); const startsAt = validDateTime(body.startsAt, 'startsAt'); const endsAt = validDateTime(body.endsAt, 'endsAt'); if (Date.parse(endsAt) <= Date.parse(startsAt)) throw new HttpError(400, 'INVALID_REQUEST', 'endsAt must be after startsAt.'); return { movieId: id(body.movieId, 'movieId'), roomId: id(body.roomId, 'roomId'), startsAt, endsAt, format: body.format === undefined ? '2D' : enumValue(body.format, 'format', ROOM_TYPES), basePrice: nonNegative(body.basePrice, 'basePrice') }; }
-export function showtimeUpdate(value) { const body = objectOnly(value, ['movieId', 'startsAt', 'endsAt', 'format', 'basePrice', 'status']); const startsAt = validDateTime(body.startsAt, 'startsAt'); const endsAt = validDateTime(body.endsAt, 'endsAt'); if (Date.parse(endsAt) <= Date.parse(startsAt)) throw new HttpError(400, 'INVALID_REQUEST', 'endsAt must be after startsAt.'); return { movieId: id(body.movieId, 'movieId'), startsAt, endsAt, format: enumValue(body.format, 'format', ROOM_TYPES), basePrice: nonNegative(body.basePrice, 'basePrice'), status: enumValue(body.status, 'status', SHOWTIME_STATUSES) }; }
-export function pricingCreate(value) { const body = objectOnly(value, ['seatType', 'dayType', 'format', 'surcharge', 'startsOn', 'endsOn']); const startsOn = validDate(body.startsOn, 'startsOn'); const endsOn = body.endsOn === null || body.endsOn === undefined || body.endsOn === '' ? null : validDate(body.endsOn, 'endsOn'); if (endsOn && endsOn < startsOn) throw new HttpError(400, 'INVALID_REQUEST', 'endsOn must not precede startsOn.'); return { seatType: enumValue(body.seatType, 'seatType', new Set([...SEAT_TYPES, 'Tất cả'])), dayType: enumValue(body.dayType, 'dayType', DAY_TYPES), format: enumValue(body.format, 'format', new Set([...ROOM_TYPES, 'Tất cả'])), surcharge: nonNegative(body.surcharge, 'surcharge'), startsOn, endsOn }; }
-export function pricingUpdate(value) { const body = objectOnly(value, ['surcharge', 'status']); return { surcharge: nonNegative(body.surcharge, 'surcharge'), status: enumValue(body.status, 'status', PRICING_STATUSES) }; }
-export function dateRange(query = {}) { if (!query || typeof query !== 'object' || Array.isArray(query) || Object.keys(query).some((key) => !['fromDate', 'toDate'].includes(key))) throw new HttpError(400, 'UNKNOWN_QUERY_PARAMETER', 'Request contains unsupported query parameters.'); const fromDate = query.fromDate ? validDate(query.fromDate, 'fromDate') : null; const toDate = query.toDate ? validDate(query.toDate, 'toDate') : null; if (fromDate && toDate && fromDate > toDate) throw new HttpError(400, 'INVALID_REQUEST', 'fromDate must not be after toDate.'); return { fromDate, toDate }; }
+function id(value, field) {
+  if (!/^\d+$/.test(String(value ?? ''))) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
+  }
+  const parsed = Number(value);
+  if (!Number.isSafeInteger(parsed) || parsed <= 0) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
+  }
+  return parsed;
+}
+
+function text(value, field, maxLength) {
+  if (typeof value !== 'string' || !value.trim() || value.trim().length > maxLength) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
+  }
+  return value.trim();
+}
+
+function enumValue(value, field, supportedValues) {
+  if (typeof value !== 'string' || !supportedValues.has(value)) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} is not supported by the database contract.`);
+  }
+  return value;
+}
+
+function nonNegative(value, field) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a non-negative number.`);
+  }
+  return value;
+}
+
+function validDate(value, field) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)
+    || Number.isNaN(Date.parse(`${value}T00:00:00Z`))) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`);
+  }
+  return value;
+}
+
+function validDateTime(value, field) {
+  if (typeof value !== 'string' || Number.isNaN(Date.parse(value))) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime.`);
+  }
+  return value;
+}
+
+function showtimeTimes(body) {
+  const startsAt = validDateTime(body.startsAt, 'startsAt');
+  const endsAt = validDateTime(body.endsAt, 'endsAt');
+  if (Date.parse(endsAt) <= Date.parse(startsAt)) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'endsAt must be after startsAt.');
+  }
+  return { startsAt, endsAt };
+}
+
+export const cinemaId = (value) => id(value, 'cinemaId');
+export const roomId = (value) => id(value, 'roomId');
+export const seatId = (value) => id(value, 'seatId');
+export const showtimeId = (value) => id(value, 'showtimeId');
+export const pricingId = (value) => id(value, 'pricingId');
+
+export function roomCreate(value) {
+  const body = objectOnly(value, ['name', 'type']);
+  return {
+    name: text(body.name, 'name', 100),
+    type: body.type === undefined ? '2D' : enumValue(body.type, 'type', ROOM_TYPES),
+  };
+}
+
+export function roomUpdate(value) {
+  const body = objectOnly(value, ['name', 'type', 'status']);
+  return {
+    name: text(body.name, 'name', 100),
+    type: enumValue(body.type, 'type', ROOM_TYPES),
+    status: enumValue(body.status, 'status', ROOM_STATUSES),
+  };
+}
+
+export function seatCreate(value) {
+  const body = objectOnly(value, ['row', 'number', 'type']);
+  if (typeof body.row !== 'string' || !body.row.trim() || body.row.trim().length > 10
+    || !Number.isInteger(body.number) || body.number <= 0) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'Seat row or number is invalid.');
+  }
+  return {
+    row: body.row.trim(),
+    number: body.number,
+    type: body.type === undefined ? 'Thường' : enumValue(body.type, 'type', SEAT_TYPES),
+  };
+}
+
+export function seatUpdate(value) {
+  const body = objectOnly(value, ['type', 'status']);
+  return {
+    type: enumValue(body.type, 'type', SEAT_TYPES),
+    status: enumValue(body.status, 'status', SEAT_STATUSES),
+  };
+}
+
+export function showtimeCreate(value) {
+  const body = objectOnly(value, ['movieId', 'roomId', 'startsAt', 'endsAt', 'format', 'basePrice']);
+  return {
+    movieId: id(body.movieId, 'movieId'),
+    roomId: id(body.roomId, 'roomId'),
+    ...showtimeTimes(body),
+    format: body.format === undefined ? '2D' : enumValue(body.format, 'format', ROOM_TYPES),
+    basePrice: nonNegative(body.basePrice, 'basePrice'),
+  };
+}
+
+export function showtimeUpdate(value) {
+  const body = objectOnly(value, ['movieId', 'startsAt', 'endsAt', 'format', 'basePrice', 'status']);
+  return {
+    movieId: id(body.movieId, 'movieId'),
+    ...showtimeTimes(body),
+    format: enumValue(body.format, 'format', ROOM_TYPES),
+    basePrice: nonNegative(body.basePrice, 'basePrice'),
+    status: enumValue(body.status, 'status', SHOWTIME_STATUSES),
+  };
+}
+
+export function pricingCreate(value) {
+  const body = objectOnly(value, ['seatType', 'dayType', 'format', 'surcharge', 'startsOn', 'endsOn']);
+  const startsOn = validDate(body.startsOn, 'startsOn');
+  const endsOn = body.endsOn === null || body.endsOn === undefined || body.endsOn === ''
+    ? null
+    : validDate(body.endsOn, 'endsOn');
+  if (endsOn && endsOn < startsOn) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'endsOn must not precede startsOn.');
+  }
+  return {
+    seatType: enumValue(body.seatType, 'seatType', new Set([...SEAT_TYPES, 'Tất cả'])),
+    dayType: enumValue(body.dayType, 'dayType', DAY_TYPES),
+    format: enumValue(body.format, 'format', new Set([...ROOM_TYPES, 'Tất cả'])),
+    surcharge: nonNegative(body.surcharge, 'surcharge'),
+    startsOn,
+    endsOn,
+  };
+}
+
+export function pricingUpdate(value) {
+  const body = objectOnly(value, ['surcharge', 'status']);
+  return {
+    surcharge: nonNegative(body.surcharge, 'surcharge'),
+    status: enumValue(body.status, 'status', PRICING_STATUSES),
+  };
+}
+
+export function dateRange(query = {}) {
+  if (!query || typeof query !== 'object' || Array.isArray(query)
+    || Object.keys(query).some((key) => !['fromDate', 'toDate'].includes(key))) {
+    throw new HttpError(400, 'UNKNOWN_QUERY_PARAMETER', 'Request contains unsupported query parameters.');
+  }
+  const fromDate = query.fromDate ? validDate(query.fromDate, 'fromDate') : null;
+  const toDate = query.toDate ? validDate(query.toDate, 'toDate') : null;
+  if (fromDate && toDate && fromDate > toDate) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'fromDate must not be after toDate.');
+  }
+  return { fromDate, toDate };
+}

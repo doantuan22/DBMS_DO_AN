@@ -29,6 +29,11 @@ export const PROCEDURES = Object.freeze({
   MANAGER_PRICING_UPDATE: 'dbo.sp_Manager_Pricing_Update',
   MANAGER_DASHBOARD: 'dbo.sp_Manager_Dashboard',
   MANAGER_REVENUE: 'dbo.sp_Manager_Revenue',
+  SUPPORT_COMPLAINT_LIST: 'dbo.sp_Support_Complaint_List',
+  SUPPORT_COMPLAINT_GET_DETAIL: 'dbo.sp_Support_Complaint_GetDetail',
+  SUPPORT_COMPLAINT_GET_ORDER_REFERENCE: 'dbo.sp_Support_Complaint_GetOrderReference',
+  SUPPORT_COMPLAINT_ADD_PROCESSING: 'dbo.sp_Support_Complaint_AddProcessing',
+  SUPPORT_COMPLAINT_UPDATE_STATUS: 'dbo.sp_Support_Complaint_UpdateStatus',
   USER_GET_PASSWORD_HASH: 'dbo.sp_User_GetPasswordHash',
   USER_CHANGE_PASSWORD: 'dbo.sp_User_ChangePassword',
 

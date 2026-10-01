@@ -20,6 +20,8 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `migrations/002_seat_hold.sql` | Adds `DONDATVE.HanGiuCho`; then re-run functions, views, triggers, procedures |
 | - | `migrations/003_complaint_order_ownership.sql` | Alters only `sp_Complaint_Create`: a supplied order reference must belong to the complaint sender. |
 | - | `migrations/004_manager_showtime_list.sql` | Adds `sp_Manager_Showtime_List`, a manager-scoped alternative to raw showtime queries. |
+| - | `migrations/005_support_status_history_atomicity.sql` | Makes a CSKH status update append a processing-history record atomically. |
+| - | `migrations/006_support_procedure_authorization.sql` | Adds permission and not-found guards to CSKH detail, order-reference, and processing procedures. Run after 005 on an existing database. |
 | - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
 | - | `deployment/deploy.ps1` | Runs the steps above in order |
 
