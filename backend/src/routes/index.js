@@ -12,6 +12,7 @@ import orderRoutes from './orderRoutes.js';
 import complaintRoutes from './complaintRoutes.js';
 import managerRoutes from './managerRoutes.js';
 import supportRoutes from './supportRoutes.js';
+import adminRoutes from './adminRoutes.js';
 
 // Feature routers (auth, movies, bookings, ...) are mounted here as they are built.
 const router = Router();
@@ -28,5 +29,6 @@ router.use('/orders', orderRoutes);
 router.use('/complaints', complaintRoutes);
 router.use('/manager', managerRoutes);
 router.use('/support', supportRoutes);
+router.use('/admin', adminRoutes);
 
 export default router;

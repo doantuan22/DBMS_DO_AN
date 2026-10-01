@@ -20,6 +20,7 @@ import Complaints from '../pages/Complaints';
 import ComplaintDetail from '../pages/ComplaintDetail';
 import ManagerPortal from '../pages/ManagerPortal';
 import SupportPortal from '../pages/SupportPortal';
+import AdminPortal from '../pages/AdminPortal';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
 const protectedArea = (role, area, title) => (
@@ -75,7 +76,11 @@ export default function AppRoutes() {
       </Route>
 
       {protectedArea(ROLES.CUSTOMER, ROLE_AREAS[ROLES.CUSTOMER], 'Customer area')}
-      {protectedArea(ROLES.ADMIN, ROLE_AREAS[ROLES.ADMIN], 'Admin area')}
+      <Route element={<RequireRole role={ROLES.ADMIN} permission={ROLE_AREAS[ROLES.ADMIN].permission} />}>
+        <Route path="/admin" element={<AreaLayout title="Quản trị hệ thống" links={[{ to: '/', label: 'Trang chủ' }, { to: '/admin', label: 'Admin' }]} />}>
+          <Route index element={<AdminPortal />} />
+        </Route>
+      </Route>
 
       <Route path="*" element={<Placeholder title="404 - Không tìm thấy trang" />} />
     </Routes>

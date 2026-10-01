@@ -374,7 +374,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tên Use Case** | Đăng nhập hệ thống |
 | **Tác nhân thực hiện** | Quản trị viên (Admin) |
 | **Mô tả chức năng** | Quản trị viên đăng nhập để truy cập toàn bộ khu vực Admin. |
-| **Luồng hoạt động** | 1\. Admin nhập Email + mật khẩu.<br><br>2\. Hệ thống xác thực tài khoản, xác định vai trò ADMIN và tra cứu quyền qua VAITRO_QUYEN.<br><br>3\. Hệ thống điều hướng vào khu vực Admin: người dùng, vai trò, quyền, rạp, phân công, danh mục phim/sản phẩm/khuyến mãi. |
+| **Luồng hoạt động** | 1\. Admin nhập Email + mật khẩu.<br><br>2\. Hệ thống xác thực tài khoản, xác định vai trò ADMIN và tra cứu quyền qua VAITRO_QUYEN.<br><br>3\. Hệ thống điều hướng vào khu vực Admin: người dùng, vai trò, quyền, rạp, phân công, danh mục phim/sản phẩm/khuyến mãi, suất chiếu, khiếu nại và báo cáo. |
 
 **Chức năng Quản lý tài khoản người dùng**
 
@@ -525,16 +525,6 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tác nhân thực hiện** | Quản trị viên (Admin) |
 | **Mô tả chức năng** | Tổng hợp doanh thu và số liệu vận hành của toàn bộ hệ thống, không giới hạn theo rạp. |
 | **Luồng hoạt động** | 1\. Admin chọn khoảng thời gian/tiêu chí báo cáo.<br><br>2\. Hệ thống tổng hợp dữ liệu từ toàn bộ RAPCHIEUPHIM → PHONGCHIEU → SUATCHIEU → DONDATVE → THANHTOAN thông qua các View/Function báo cáo (F12).<br><br>3\. Hệ thống hiển thị báo cáo doanh thu theo rạp, theo phim, theo thời gian cho Admin theo dõi. |
-
-**Chức năng Cấu hình hệ thống**
-
-|     |     |
-| --- | --- |
-| **Mã Use Case** | ADM-17 |
-| **Tên Use Case** | Cấu hình hệ thống |
-| **Tác nhân thực hiện** | Quản trị viên (Admin) |
-| **Mô tả chức năng** | Quản lý các cấu hình, tham số và danh mục dùng chung áp dụng cho toàn hệ thống. |
-| **Luồng hoạt động** | 1\. Admin truy cập màn hình cấu hình hệ thống.<br><br>2\. Admin cập nhật các tham số/danh mục cấu hình chung (ví dụ: danh mục dùng chung, tham số nghiệp vụ mặc định).<br><br>3\. Hệ thống lưu và áp dụng cấu hình mới cho toàn bộ hệ thống. |
 
 **CHƯƠNG 3: PHÂN TÍCH VÀ THIẾT KẾ CƠ SỞ DỮ LIỆU**
 
@@ -868,7 +858,7 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | KHACH_HANG | Dữ liệu cá nhân/đơn của mình | Đặt vé, thanh toán, lịch sử, đánh giá, khiếu nại. |
 | QUAN_LY_RAP | Rạp được phân công | Phòng, ghế, suất chiếu, bảng giá, doanh thu trong phạm vi. |
 | CSKH | Dữ liệu hỗ trợ | Xem/tra cứu khiếu nại và ghi lịch sử xử lý. |
-| ADMIN | Toàn hệ thống | Người dùng, role, quyền, rạp, phân công, danh mục/cấu hình. |
+| ADMIN | Toàn hệ thống | Người dùng, role, quyền, rạp, phân công, danh mục, suất chiếu, khiếu nại và báo cáo. |
 
 Backend Node.js kiểm tra cả quyền chức năng và phạm vi rạp trước khi gọi SQL. Ở SQL Server cần tạo Role/Login tương ứng và minh họa GRANT, REVOKE, DENY theo yêu cầu project. Không cấp quyền trực tiếp quá rộng cho tài khoản ứng dụng; ưu tiên quyền thực thi Stored Procedure/View cần thiết.
 

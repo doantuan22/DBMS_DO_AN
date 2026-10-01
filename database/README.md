@@ -22,6 +22,7 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `migrations/004_manager_showtime_list.sql` | Adds `sp_Manager_Showtime_List`, a manager-scoped alternative to raw showtime queries. |
 | - | `migrations/005_support_status_history_atomicity.sql` | Makes a CSKH status update append a processing-history record atomically. |
 | - | `migrations/006_support_procedure_authorization.sql` | Adds permission and not-found guards to CSKH detail, order-reference, and processing procedures. Run after 005 on an existing database. |
+| - | `migrations/008_admin_global_portal.sql` | Removes the obsolete ADM-17 permission seed and adds Admin-global Cinema/Movie/Product lists, Room/Seat/Pricing/Showtime contracts, and Assignment Update (`usp_Admin_*` names avoid SQL Server's special `sp_` name resolution). Apply to `CinemaBookingDB` after base deployment. |
 | - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
 | - | `deployment/deploy.ps1` | Runs the steps above in order |
 
@@ -38,7 +39,7 @@ Put the same password in `backend/.env` (`DB_USER=CinemaAppUser`, `DB_PASSWORD=.
 
 ## Design decisions
 
-- 25 tables exactly as in the analysis document. There is no configuration table, so ADM-17 (system configuration) has no procedures yet.
+- 25 tables exactly as in the analysis document. System configuration is outside the approved Admin use-case scope.
 - Passwords are hashed with bcrypt **in the backend**. `sp_Auth_Login(@Email)` returns the hash (`MatKhauHash`); it does not compare passwords. `sp_User_GetPasswordHash` + `sp_User_ChangePassword(@NewPasswordHash)` handle password changes.
 - `NGUOIDUNG.SoDienThoai` and `THANHTOAN.MaGiaoDich` are unique only when not NULL (filtered unique indexes).
 - `TRG_DanhGia_KiemTraDaXemPhim` requires a paid/completed order for a showtime of the movie that has already started; the analysis document was updated to say so.

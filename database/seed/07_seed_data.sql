@@ -80,8 +80,7 @@ INSERT INTO dbo.QUYEN (QuyenID, MaQuyen, TenQuyen, MoTa) VALUES
 (20, 'QL_THELOAI', N'Quản lý thể loại', N'Thêm, sửa thể loại phim'),
 (21, 'QL_SANPHAM', N'Quản lý sản phẩm đồ ăn', N'Thêm, sửa giá sản phẩm ăn uống'),
 (22, 'QL_KHUYENMAI', N'Quản lý khuyến mãi', N'Tạo và cấu hình mã giảm giá'),
-(23, 'XEM_BAO_CAO_TOANHE', N'Báo cáo doanh thu toàn hệ thống', N'Xem doanh thu toàn chuỗi rạp'),
-(24, 'CAU_HINH_HETHONG', N'Cấu hình hệ thống', N'Quản lý các thông số cấu hình hệ thống');
+(23, 'XEM_BAO_CAO_TOANHE', N'Báo cáo doanh thu toàn hệ thống', N'Xem doanh thu toàn chuỗi rạp');
 SET IDENTITY_INSERT dbo.QUYEN OFF;
 GO
 
@@ -98,7 +97,7 @@ INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID) VALUES
 INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID) VALUES
 (3, 1), (3, 11), (3, 12), (3, 13);
 
--- Admin: Toàn bộ quyền 1..24
+-- Admin: mọi quyền hiện hành (ADM-17/System Config permission is excluded)
 INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID)
 SELECT 1, QuyenID FROM dbo.QUYEN;
 GO

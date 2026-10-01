@@ -1,0 +1,66 @@
+import { adminService } from '../services/adminService.js';
+import * as validators from '../validators/adminValidator.js';
+
+const handle = (action, status = 200) => async (req, res, next) => {
+  try { res.status(status).json(await action(req)); } catch (error) { next(error); }
+};
+
+export const dashboard = handle(async () => ({ dashboard: await adminService.dashboard() }));
+export const users = handle(async (req) => ({ users: await adminService.users(validators.userFilters(req.query)) }));
+export const roles = handle(async () => ({ roles: await adminService.roles() }));
+export const permissions = handle(async () => ({ permissions: await adminService.permissions() }));
+export const assignments = handle(async (req) => ({ assignments: await adminService.assignments(validators.assignmentFilters(req.query)) }));
+export const cinemas = handle(async () => ({ cinemas: await adminService.cinemas() }));
+export const movies = handle(async (req) => ({ movies: await adminService.movies(validators.movieFilters(req.query)) }));
+export const genres = handle(async () => ({ genres: await adminService.genres() }));
+export const actors = handle(async () => ({ actors: await adminService.actors() }));
+export const products = handle(async () => ({ products: await adminService.products() }));
+export const promotions = handle(async () => ({ promotions: await adminService.promotions() }));
+export const revenue = handle(async (req) => adminService.revenue(validators.revenueFilters(req.query)));
+
+export const createUser = handle(async (req) => ({ user: await adminService.createUser(validators.userCreate(req.body)) }));
+export const updateUserStatus = handle(async (req) => ({ user: await adminService.setUserStatus(validators.pathId(req.params.userId, 'userId'), validators.userStatus(req.body).status) }));
+export const createRole = handle(async (req) => ({ role: await adminService.createRole(validators.roleWrite(req.body, true)) }));
+export const updateRole = handle(async (req) => ({ role: await adminService.updateRole(validators.pathId(req.params.roleId, 'roleId'), validators.roleWrite(req.body)) }));
+export const deleteRole = handle(async (req) => ({ result: await adminService.deleteRole(validators.pathId(req.params.roleId, 'roleId')) }));
+export const createPermission = handle(async (req) => ({ permission: await adminService.createPermission(validators.permissionWrite(req.body, true)) }));
+export const updatePermission = handle(async (req) => ({ permission: await adminService.updatePermission(validators.pathId(req.params.permissionId, 'permissionId'), validators.permissionWrite(req.body)) }));
+export const deletePermission = handle(async (req) => ({ result: await adminService.deletePermission(validators.pathId(req.params.permissionId, 'permissionId')) }));
+export const setRolePermissions = handle(async (req) => ({ permissions: await adminService.setRolePermissions(validators.pathId(req.params.roleId, 'roleId'), validators.rolePermissionSet(req.body).permissionIds) }));
+export const rolePermissions = handle(async (req) => ({ permissions: await adminService.rolePermissions(validators.pathId(req.params.roleId, 'roleId')) }));
+export const createAssignment = handle(async (req) => ({ assignment: await adminService.createAssignment(validators.assignmentWrite(req.body)) }));
+export const updateAssignment = handle(async (req) => ({ assignment: await adminService.updateAssignment(validators.pathId(req.params.assignmentId, 'assignmentId'), validators.assignmentWrite(req.body)) }));
+export const createCinema = handle(async (req) => ({ cinema: await adminService.createCinema(validators.cinemaWrite(req.body, true)) }));
+export const updateCinema = handle(async (req) => ({ cinema: await adminService.updateCinema(validators.pathId(req.params.cinemaId, 'cinemaId'), validators.cinemaWrite(req.body)) }));
+export const deleteCinema = handle(async (req) => ({ result: await adminService.deleteCinema(validators.pathId(req.params.cinemaId, 'cinemaId')) }));
+export const rooms = handle(async (req) => ({ rooms: await adminService.rooms({ cinemaId: validators.resourceIdFilter(req.query, 'cinemaId') }) }));
+export const createRoom = handle(async (req) => ({ room: await adminService.createRoom(validators.roomWrite(req.body, true)) }));
+export const updateRoom = handle(async (req) => ({ room: await adminService.updateRoom(validators.pathId(req.params.roomId, 'roomId'), validators.roomWrite(req.body)) }));
+export const deleteRoom = handle(async (req) => ({ result: await adminService.deleteRoom(validators.pathId(req.params.roomId, 'roomId')) }));
+export const seats = handle(async (req) => ({ seats: await adminService.seats({ roomId: validators.resourceIdFilter(req.query, 'roomId') }) }));
+export const createSeat = handle(async (req) => ({ seat: await adminService.createSeat(validators.seatWrite(req.body, true)) }));
+export const updateSeat = handle(async (req) => ({ seat: await adminService.updateSeat(validators.pathId(req.params.seatId, 'seatId'), validators.seatWrite(req.body)) }));
+export const deleteSeat = handle(async (req) => ({ result: await adminService.deleteSeat(validators.pathId(req.params.seatId, 'seatId')) }));
+export const pricing = handle(async (req) => ({ pricing: await adminService.pricing({ cinemaId: validators.resourceIdFilter(req.query, 'cinemaId') }) }));
+export const createPricing = handle(async (req) => ({ pricing: await adminService.createPricing(validators.pricingWrite(req.body, true)) }));
+export const updatePricing = handle(async (req) => ({ pricing: await adminService.updatePricing(validators.pathId(req.params.pricingId, 'pricingId'), validators.pricingWrite(req.body)) }));
+export const showtimes = handle(async (req) => ({ showtimes: await adminService.showtimes(validators.showtimeFilters(req.query)) }));
+export const createShowtime = handle(async (req) => ({ showtime: await adminService.createShowtime(validators.showtimeWrite(req.body, true)) }));
+export const updateShowtime = handle(async (req) => ({ showtime: await adminService.updateShowtime(validators.pathId(req.params.showtimeId, 'showtimeId'), validators.showtimeWrite(req.body)) }));
+export const cancelShowtime = handle(async (req) => ({ result: await adminService.cancelShowtime(validators.pathId(req.params.showtimeId, 'showtimeId')) }));
+export const createGenre = handle(async (req) => ({ genre: await adminService.createGenre(validators.genreWrite(req.body)) }));
+export const updateGenre = handle(async (req) => ({ genre: await adminService.updateGenre(validators.pathId(req.params.genreId, 'genreId'), validators.genreWrite(req.body)) }));
+export const deleteGenre = handle(async (req) => ({ result: await adminService.deleteGenre(validators.pathId(req.params.genreId, 'genreId')) }));
+export const createActor = handle(async (req) => ({ actor: await adminService.createActor(validators.actorWrite(req.body)) }));
+export const updateActor = handle(async (req) => ({ actor: await adminService.updateActor(validators.pathId(req.params.actorId, 'actorId'), validators.actorWrite(req.body)) }));
+export const deleteActor = handle(async (req) => ({ result: await adminService.deleteActor(validators.pathId(req.params.actorId, 'actorId')) }));
+export const createMovie = handle(async (req) => ({ movie: await adminService.createMovie(validators.movieWrite(req.body, true)) }), 201);
+export const updateMovie = handle(async (req) => ({ movie: await adminService.updateMovie(validators.pathId(req.params.movieId, 'movieId'), validators.movieWrite(req.body)) }));
+export const deleteMovie = handle(async (req) => ({ result: await adminService.deleteMovie(validators.pathId(req.params.movieId, 'movieId')) }));
+export const setMovieActors = handle(async (req) => ({ actors: await adminService.setMovieActors(validators.pathId(req.params.movieId, 'movieId'), validators.movieCast(req.body).cast) }));
+export const createProduct = handle(async (req) => ({ product: await adminService.createProduct(validators.productWrite(req.body, true)) }), 201);
+export const updateProduct = handle(async (req) => ({ product: await adminService.updateProduct(validators.pathId(req.params.productId, 'productId'), validators.productWrite(req.body)) }));
+export const deleteProduct = handle(async (req) => ({ result: await adminService.deleteProduct(validators.pathId(req.params.productId, 'productId')) }));
+export const createPromotion = handle(async (req) => ({ promotion: await adminService.createPromotion(validators.promotionWrite(req.body, true)) }), 201);
+export const updatePromotion = handle(async (req) => ({ promotion: await adminService.updatePromotion(validators.pathId(req.params.promotionId, 'promotionId'), validators.promotionWrite(req.body)) }));
+export const deletePromotion = handle(async (req) => ({ result: await adminService.deletePromotion(validators.pathId(req.params.promotionId, 'promotionId')) }));

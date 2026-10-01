@@ -10,7 +10,7 @@ Database • Frontend • Backend • Lộ trình tích hợp • Ràng buộc c
 | --- | --- |
 | Kiến trúc bắt buộc | React → REST API → Node.js/Express.js → EXEC Stored Procedure → SQL Server |
 | Phạm vi tài khoản | KHACH_HANG • QUAN_LY_RAP • CSKH • ADMIN |
-| Mục tiêu cuối | 46/46 Use Case chạy end-to-end; không có SQL nghiệp vụ trong source Backend |
+| Mục tiêu cuối | 45/45 Use Case chạy end-to-end; không có SQL nghiệp vụ trong source Backend |
 
 **Nguyên tắc trung tâm: mọi SELECT / INSERT / UPDATE / DELETE, View, Function, Trigger và Transaction nghiệp vụ được triển khai ở DBMS. Backend chỉ truyền tham số, EXEC Stored Procedure và nhận kết quả.**
 
@@ -21,7 +21,7 @@ Roadmap này thay thế phiên bản trước và áp dụng ràng buộc kiến
 **Quy tắc xuyên suốt: Backend không được dùng .query() để gửi SELECT/INSERT/UPDATE/DELETE; không dùng ORM/query builder để sinh SQL; tài khoản kết nối ứng dụng ưu tiên chỉ có quyền EXECUTE trên Stored Procedure được cho phép.**
 
 - Phạm vi dữ liệu: 25 bảng theo ERD đã chốt, gồm tài khoản/RBAC, rạp-phòng-ghế, phim, lịch chiếu-giá, đặt vé-thanh toán, đánh giá-khiếu nại.
-- Phạm vi chức năng: 46 Use Case gồm 14 Khách hàng, 9 Quản lý rạp, 6 CSKH và 17 Admin.
+- Phạm vi chức năng: 45 Use Case gồm 14 Khách hàng, 9 Quản lý rạp, 6 CSKH và 16 Admin.
 - Nguyên tắc triển khai: phát triển theo vertical slice; trong mỗi slice phải làm DBMS entry point trước, sau đó Backend API gọi SP, cuối cùng Frontend tích hợp.
 - Nguyên tắc nghiệm thu: một Use Case chỉ DONE khi DBMS object + Stored Procedure gateway + Backend API + Frontend UI + kiểm thử tích hợp đều hoàn tất.
 - Nguyên tắc nguồn sự thật: dữ liệu và nghiệp vụ chốt giá, ghế, khuyến mãi, trạng thái đơn, quyền/phạm vi truy cập được kiểm chứng tại server/DBMS; Frontend không được là nguồn sự thật.
@@ -38,7 +38,7 @@ Database trở thành lớp trung tâm của kiến trúc. Không chỉ lưu d�
 - Xây dựng View để đóng gói tập dữ liệu đọc phức tạp; Function để tái sử dụng phép tính/danh sách; Trigger để bảo vệ quy tắc tự động; các object này được gọi từ DBMS, không viết lại ở Node.js.
 - Mọi nghiệp vụ nhiều bước như đặt vé, thanh toán, xử lý khiếu nại, phân công rạp phải có Transaction tại SQL Server và rollback đúng khi lỗi.
 - Giải quyết race condition đặt ghế: nhiều request đồng thời cho cùng SuatChieuID + GheID chỉ tối đa một giao dịch được commit.
-- Xây dựng Stored Procedure gateway đủ cho 46 Use Case và các endpoint hỗ trợ, với input/output/error contract rõ ràng.
+- Xây dựng Stored Procedure gateway đủ cho 45 Use Case và các endpoint hỗ trợ, với input/output/error contract rõ ràng.
 - Tài khoản ứng dụng không có quyền đọc/ghi trực tiếp Table; ưu tiên chỉ GRANT EXECUTE cho schema/procedure cần dùng.
 - Có seed, test SQL, test concurrency, backup/restore và script triển khai có thể chạy từ database trống.
 
@@ -93,9 +93,9 @@ Danh sách dưới đây là baseline đề xuất để không phát sinh raw S
 | Đánh giá / khiếu nại khách hàng | sp_Review_Create; sp_Review_ListByMovie; sp_Complaint_Create; sp_Complaint_ListByCustomer; sp_Complaint_GetByCustomer |
 | Manager - phạm vi rạp | sp_Manager_ListAssignedCinemas; sp_Manager_Room_List/Create/Update/Delete; sp_Manager_Seat_List/Create/Update/Delete; sp_Manager_Showtime_List/Create/Update/Cancel; sp_Manager_Pricing_List/Create/Update; sp_Manager_Dashboard; sp_Manager_Revenue |
 | CSKH | sp_Support_Complaint_List; sp_Support_Complaint_GetDetail; sp_Support_Complaint_GetOrderReference; sp_Support_Complaint_AddProcessing; sp_Support_Complaint_UpdateStatus |
-| Admin - RBAC | sp_Admin_User_List/CreateInternal/UpdateStatus; sp_Admin_Role_List/Create/Update/Delete; sp_Admin_Permission_List/Create/Update/Delete; sp_Admin_RolePermission_Set; sp_Admin_Assignment_List/Create/Update |
-| Admin - danh mục | sp_Admin_Cinema_\*; sp_Admin_Room_\*; sp_Admin_Seat_\*; sp_Admin_Movie_\*; sp_Admin_Genre_\*; sp_Admin_Actor_\*; sp_Admin_Product_\*; sp_Admin_Promotion_\*; sp_Admin_Pricing_\*; sp_Admin_Showtime_\* |
-| Admin - hỗ trợ/báo cáo/cấu hình | sp_Admin_Complaint_List/Get/Process; sp_Admin_Report_Revenue; sp_Admin_Dashboard; sp_Admin_Config_Get/Update |
+| Admin - RBAC | sp_Admin_User_List/CreateInternal/UpdateStatus; sp_Admin_Role_List/Create/Update/Delete; sp_Admin_Permission_List/Create/Update/Delete; sp_Admin_RolePermission_Set; sp_Admin_Assignment_List/Create; usp_Admin_Assignment_Update; usp_Admin_RolePermission_List |
+| Admin - danh mục | sp_Admin_Cinema_/Movie_/Product_ writes; usp_Admin_Cinema_/Movie_/Product_List all-status lists; usp_Admin_Room_*; usp_Admin_Seat_*; sp_Admin_Genre_*; sp_Admin_Actor_*; sp_Admin_Promotion_*; usp_Admin_Pricing_*; usp_Admin_Showtime_* |
+| Admin - hỗ trợ/báo cáo | sp_Admin_Complaint_List/Get/Process; sp_Admin_Report_Revenue; sp_Admin_Dashboard |
 | Hệ thống | sp_System_HealthCheck; sp_System_GetReferenceData nếu cần danh mục dùng chung |
 
 ### **E. Transaction, concurrency và snapshot**
@@ -119,7 +119,7 @@ Danh sách dưới đây là baseline đề xuất để không phát sinh raw S
 
 | **Phase** | **Tên phase** | **Công việc chính** | **Điều kiện hoàn tất** |
 | --- | --- | --- | --- |
-| DB-01 | Baseline & DB Contract | Khóa ERD 25 bảng, naming, datatype, trạng thái, danh sách View/Function/Trigger/SP; lập mapping 46 Use Case → SP entry point. | Không còn Use Case nào chưa có kế hoạch DBMS entry point. |
+| DB-01 | Baseline & DB Contract | Khóa ERD 25 bảng, naming, datatype, trạng thái, danh sách View/Function/Trigger/SP; lập mapping 45 Use Case → SP entry point. | Không còn Use Case nào chưa có kế hoạch DBMS entry point. |
 | DB-02 | Schema | Tạo database, 25 bảng, PK/FK/IDENTITY, nullability, quan hệ và script create/drop theo thứ tự dependency. | schema.sql chạy sạch trên DB trống; 25/25 bảng đúng lược đồ. |
 | DB-03 | Constraint & Integrity | CHECK/UNIQUE/DEFAULT, business key, FK rules, snapshot fields và test dữ liệu sai. | Dữ liệu sai bị DB từ chối; test dương/âm đầy đủ. |
 | DB-04 | View & Function | Xây 5 View, 5 Function baseline và helper DBMS cần cho các module; chuẩn output để SP tái sử dụng. | View/Function test độc lập; không cần Backend query trực tiếp. |
@@ -148,7 +148,7 @@ Frontend không thay đổi về công nghệ nhưng thay đổi rõ về trách
 
 ## **2.1. Mục tiêu cần đạt**
 
-- Tạo giao diện đầy đủ cho Public/Customer, Manager, CSKH và Admin theo 46 Use Case.
+- Tạo giao diện đầy đủ cho Public/Customer, Manager, CSKH và Admin theo 45 Use Case.
 - Booking flow liền mạch: phim → lịch chiếu → ghế → đồ ăn → khuyến mãi → xác nhận → thanh toán → lịch sử.
 - Tất cả screen dùng API thật; mock chỉ dùng tạm trong phase đầu và phải được loại bỏ trước nghiệm thu.
 - Có loading, empty, error, success, confirm, retry, pagination/filter khi cần; xử lý rõ 401/403/404/409/422/500.
@@ -163,7 +163,7 @@ Frontend không thay đổi về công nghệ nhưng thay đổi rõ về trách
 | Public/Customer | Home; danh sách/chi tiết phim; lịch chiếu; chọn ghế; sản phẩm; promotion; checkout; thanh toán; lịch sử/chi tiết đơn; hồ sơ; đánh giá; khiếu nại. |
 | Manager | Dashboard rạp; rạp được phân công; phòng; ghế; suất chiếu; bảng giá; vận hành; doanh thu. |
 | CSKH | Danh sách khiếu nại; filter; chi tiết; đơn tham chiếu; timeline xử lý; form xử lý; cập nhật trạng thái. |
-| Admin | Dashboard; tài khoản; role; permission; role-permission; phân công rạp; rạp/phòng/ghế; phim/thể loại/diễn viên; sản phẩm; khuyến mãi; bảng giá; suất chiếu; khiếu nại; báo cáo; cấu hình. |
+| Admin | Dashboard; tài khoản; role; permission; role-permission; phân công rạp; rạp/phòng/ghế; phim/thể loại/diễn viên; sản phẩm; khuyến mãi; bảng giá; suất chiếu; khiếu nại; báo cáo. |
 
 ## **2.3. Các phase lớn của Frontend**
 
@@ -177,7 +177,7 @@ Frontend không thay đổi về công nghệ nhưng thay đổi rõ về trách
 | FE-06 | Review & Complaint | Review form, eligibility feedback, complaint form, optional order reference, status tracking. | KH-13..KH-14 hoàn chỉnh. |
 | FE-07 | Manager Portal | CRUD phòng/ghế/suất/bảng giá; dashboard/revenue; scope awareness. | QLR-01..QLR-09 có UI đầy đủ. |
 | FE-08 | CSKH Portal | Queue/filter/detail/reference order/timeline/process/update status. | CSKH-01..CSKH-06 chạy end-to-end. |
-| FE-09 | Admin Portal | Users/RBAC/assignment/catalog/pricing/showtime/complaint/report/config. | ADM-01..ADM-17 có UI tương ứng. |
+| FE-09 | Admin Portal | Users/RBAC/assignment/catalog/pricing/showtime/complaint/report. | ADM-01..ADM-16 có UI tương ứng. |
 | FE-10 | UX Hardening | Loading/error/empty/toast/confirm/pagination/responsive/a11y; chống double-submit. | Không còn màn hình thiếu state hoặc hành vi không nhất quán. |
 | FE-11 | Frontend & E2E Test | Component/form/route/API tests; E2E customer/manager/CSKH/admin flows. | Flow chính PASS trên môi trường tích hợp. |
 | FE-12 | Production Build | Env production, build, asset optimization/lazy load nếu cần, deploy. | Frontend production truy cập được và không còn mock trong flow chính. |
@@ -196,7 +196,7 @@ Backend là lớp API và điều phối; không phải nơi viết SQL. Mọi t
 
 ## **3.1. Mục tiêu cần đạt**
 
-- Cung cấp REST API đầy đủ cho 46 Use Case, với method/path/auth/permission/input/output/error contract rõ.
+- Cung cấp REST API đầy đủ cho 45 Use Case, với method/path/auth/permission/input/output/error contract rõ.
 - Xác thực, session/JWT, account status, RBAC và manager scope; dữ liệu kiểm tra quyền/phạm vi lấy qua Stored Procedure hoặc claim đã được phát hành từ nguồn DBMS theo thiết kế.
 - Tạo một lớp DB client/repository chỉ làm connection pool, typed input/output parameter và execute Stored Procedure.
 - Tuyệt đối không chứa SELECT/INSERT/UPDATE/DELETE/JOIN/GROUP BY hoặc transaction SQL trong source Backend.
@@ -241,7 +241,7 @@ pool.request()
 | CSKH | complaint queue/detail/reference/process/status → sp_Support_\*. |
 | Admin/RBAC | users, roles, permissions, role-permission, assignment → sp_Admin_\*. |
 | Admin/Catalog | cinema/room/seat/movie/genre/actor/product/promotion/pricing/showtime → sp_Admin_\*. |
-| Reports/Config | global reports, dashboard, config → sp_Admin_Report_\*/sp_Admin_Dashboard/sp_Admin_Config_\* |
+| Reports | global reports, dashboard → sp_Admin_Report_\*/sp_Admin_Dashboard |
 
 ## **3.5. Các phase lớn của Backend**
 
@@ -255,7 +255,7 @@ pool.request()
 | BE-06 | Review & Complaint | Review/create/list complaint/detail thông qua SP. | KH-13..KH-14 PASS. |
 | BE-07 | Manager | Room/seat/showtime/pricing/dashboard/revenue API; scope enforced. | QLR-01..QLR-09 PASS. |
 | BE-08 | CSKH | Complaint queue/detail/reference/process/status API. | CSKH-01..CSKH-06 PASS. |
-| BE-09 | Admin | Users/RBAC/assignment/catalog/pricing/showtime/complaint/report/config API. | ADM-01..ADM-17 PASS. |
+| BE-09 | Admin | Users/RBAC/assignment/catalog/pricing/showtime/complaint/report API. | ADM-01..ADM-16 PASS. |
 | BE-10 | Validation, Security & No-SQL Audit | Request schema, CORS, rate limit, headers, payload limit; scan source cấm .query/raw SQL/ORM. | Không lộ secret; không có raw SQL trong src; audit PASS. |
 | BE-11 | API Docs & Test | Swagger/OpenAPI; unit/service/API/integration/concurrency tests; mock SP client cho unit nếu cần. | Frontend dùng contract; test suite PASS. |
 | BE-12 | Production Readiness | Env prod, health/readiness, logging, graceful shutdown, deployment. | Backend deploy được và chỉ cần EXECUTE quyền DBMS. |
@@ -275,7 +275,7 @@ Thứ tự trong từng phase là DBMS contract/object → Backend API gọi Sto
 
 ## **PHASE 0 - Khóa baseline & kiến trúc**
 
-- DB: khóa ERD 25 bảng, danh sách View/Function/Trigger, naming, trạng thái; lập ma trận 46 UC → Stored Procedure entry point.
+- DB: khóa ERD 25 bảng, danh sách View/Function/Trigger, naming, trạng thái; lập ma trận 45 UC → Stored Procedure entry point.
 - BE: chốt cấu trúc Route/Middleware/Controller/Service/DB Procedure Client; cấm raw SQL/ORM; chốt API/error convention.
 - FE: chốt route map, role layouts, screen/component inventory, UX states và API contract cần dùng.
 
@@ -347,11 +347,11 @@ Thứ tự trong từng phase là DBMS contract/object → Backend API gọi Sto
 
 ## **PHASE 9 - Admin Portal**
 
-- DB: SP Admin cho users/RBAC/assignment/cinema/room/seat/movie/genre/actor/product/promotion/pricing/showtime/complaint/report/config; seed permission/security script.
+- DB: SP Admin cho users/RBAC/assignment/cinema/room/seat/movie/genre/actor/product/promotion/pricing/showtime/complaint/report; seed permission/security script.
 - BE: Admin APIs map 1:1 hoặc có contract rõ với SP; không raw CRUD SQL.
-- FE: toàn bộ màn hình ADM-01..ADM-17.
+- FE: toàn bộ màn hình ADM-01..ADM-16.
 
-**Điều kiện kết thúc: Admin quản trị toàn hệ thống; không còn Use Case bắt buộc thiếu SP/API/UI.**
+**Điều kiện kết thúc: Admin quản trị toàn hệ thống; ADM-01..ADM-16 PASS; không còn Use Case bắt buộc thiếu SP/API/UI.**
 
 ## **PHASE 10 - Dashboard + báo cáo + tối ưu**
 
@@ -367,7 +367,7 @@ Thứ tự trong từng phase là DBMS contract/object → Backend API gọi Sto
 - BE: security, rate limit, logging, Swagger, test suite; quét source cấm .query/raw SQL/ORM; kiểm tra chỉ .execute SP.
 - FE: loading/error/empty/responsive/a11y; E2E 4 role; bỏ toàn bộ mock production.
 
-**Điều kiện kết thúc: 46/46 UC PASS; no-SQL audit PASS; concurrent booking PASS; không Critical/High blocker.**
+**Điều kiện kết thúc: 45/45 UC PASS; no-SQL audit PASS; concurrent booking PASS; không Critical/High blocker.**
 
 ## **PHASE 12 - Deployment + nghiệm thu 100%**
 
@@ -375,7 +375,7 @@ Thứ tự trong từng phase là DBMS contract/object → Backend API gọi Sto
 - BE: deploy env production; secret/CORS/health/readiness đúng; kiểm tra không có SQL inline trong bundle/source.
 - FE: production build/deploy; base URL và auth flow đúng.
 
-**Điều kiện kết thúc: demo full 4 role từ môi trường sạch; checklist bàn giao đủ; database restore được; 46/46 UC PASS.**
+**Điều kiện kết thúc: demo full 4 role từ môi trường sạch; checklist bàn giao đủ; database restore được; 45/45 UC PASS.**
 
 # **4\. RÀNG BUỘC CÔNG VIỆC**
 
@@ -464,7 +464,7 @@ Các ràng buộc dưới đây là điều kiện bắt buộc của roadmap m�
 - Mỗi Backend endpoint có test chứng minh nó gọi đúng SP và không bypass DB client.
 - Mỗi Manager API có case đúng rạp và sai rạp; order/complaint có ownership case.
 - Booking: concurrent seat, wrong room, invalid promotion, rollback giữa chừng; Payment: success/fail/retry; Review: chưa xem/đã xem/duplicate.
-- Trước release chạy regression 46 Use Case và no-SQL source audit.
+- Trước release chạy regression 45 Use Case và no-SQL source audit.
 
 ## **4.11. Ràng buộc Git và quy trình làm việc**
 
@@ -509,7 +509,7 @@ Các ràng buộc dưới đây là điều kiện bắt buộc của roadmap m�
 - Lấy ngẫu nhiên ít nhất 5 endpoint ở các module khác nhau và trace: endpoint → service → procedure name → SQL object implementation.
 - No-SQL audit phải được lưu kết quả PASS cùng release checklist.
 
-# **PHỤ LỤC A - CHECKLIST 46 USE CASE (SP-ONLY)**
+# **PHỤ LỤC A - CHECKLIST 45 USE CASE (SP-ONLY)**
 
 | **Mã** | **Actor** | **Chức năng** | **Stored Procedure entry point** | **Nghiệm thu** |
 | --- | --- | --- | --- | --- |
@@ -547,18 +547,17 @@ Các ràng buộc dưới đây là điều kiện bắt buộc của roadmap m�
 | ADM-03 | Admin | Quản lý vai trò | sp_Admin_Role_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
 | ADM-04 | Admin | Quản lý danh mục quyền | sp_Admin_Permission_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
 | ADM-05 | Admin | Gán quyền cho vai trò | sp_Admin_RolePermission_Set | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-06 | Admin | Phân công quản lý rạp | sp_Admin_Assignment_\* / sp_PhanCongQuanLyRap | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-07 | Admin | Quản lý rạp chiếu phim | sp_Admin_Cinema_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-08 | Admin | Quản lý phòng chiếu và ghế | sp_Admin_Room_\* / sp_Admin_Seat_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-09 | Admin | Quản lý danh mục phim | sp_Admin_Movie_\* / sp_Admin_Actor_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-06 | Admin | Phân công quản lý rạp | sp_Admin_Assignment_List/Create; usp_Admin_Assignment_Update | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-07 | Admin | Quản lý rạp chiếu phim | sp_Admin_Cinema_Create/Update/Delete; usp_Admin_Cinema_List | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-08 | Admin | Quản lý phòng chiếu và ghế | usp_Admin_Room_\* / usp_Admin_Seat_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-09 | Admin | Quản lý danh mục phim | usp_Admin_Movie_List; sp_Admin_Movie_Create/Update/Delete; sp_Admin_Actor_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
 | ADM-10 | Admin | Quản lý thể loại phim | sp_Admin_Genre_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-11 | Admin | Quản lý sản phẩm ăn uống | sp_Admin_Product_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-11 | Admin | Quản lý sản phẩm ăn uống | usp_Admin_Product_List; sp_Admin_Product_Create/Update/Delete | DB ☐ BE ☐ FE ☐ INT ☐ |
 | ADM-12 | Admin | Quản lý chương trình khuyến mãi | sp_Admin_Promotion_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-13 | Admin | Quản lý bảng giá | sp_Admin_Pricing_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-14 | Admin | Quản lý suất chiếu | sp_Admin_Showtime_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-13 | Admin | Quản lý bảng giá | usp_Admin_Pricing_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
+| ADM-14 | Admin | Quản lý suất chiếu | usp_Admin_Showtime_\* | DB ☐ BE ☐ FE ☐ INT ☐ |
 | ADM-15 | Admin | Xử lý khiếu nại | sp_Admin_Complaint_\* hoặc dùng sp_Support_\* với permission | DB ☐ BE ☐ FE ☐ INT ☐ |
 | ADM-16 | Admin | Xem báo cáo doanh thu toàn hệ thống | sp_Admin_Report_Revenue / sp_Admin_Dashboard | DB ☐ BE ☐ FE ☐ INT ☐ |
-| ADM-17 | Admin | Cấu hình hệ thống | sp_Admin_Config_Get / sp_Admin_Config_Update | DB ☐ BE ☐ FE ☐ INT ☐ |
 
 # **PHỤ LỤC B - CHECKLIST BÀN GIAO CUỐI**
 
@@ -567,7 +566,7 @@ Các ràng buộc dưới đây là điều kiện bắt buộc của roadmap m�
 | Database | schema/constraint/index; views; functions; triggers; stored procedures; seed; security; tests; backup; deployment scripts. |
 | Backend | source; .env.example; SP-only DB client; Swagger/OpenAPI; tests; no-SQL audit report; deployment config; health/logging. |
 | Frontend | source; .env.example; production build; route map; API integration; responsive/loading/error states; tests. |
-| Tài liệu | README; sơ đồ kiến trúc DBMS-first; ma trận 46 UC → SP/API/UI; tài khoản demo; kết quả test. |
-| Nghiệm thu | 46/46 UC; booking concurrency; manager scope; CSKH; Admin; application DB user EXECUTE-only; backup/restore; clean build. |
+| Tài liệu | README; sơ đồ kiến trúc DBMS-first; ma trận 45 UC → SP/API/UI; tài khoản demo; kết quả test. |
+| Nghiệm thu | 45/45 UC; booking concurrency; manager scope; CSKH; Admin; application DB user EXECUTE-only; backup/restore; clean build. |
 
-**TIÊU CHÍ “100% HOÀN THIỆN”: 46/46 Use Case PASS; Database có đầy đủ object và Stored Procedure gateway; Backend không có SQL nghiệp vụ/ORM query; Frontend không còn mock flow chính; RBAC/scope/concurrency/rollback PASS; deploy từ môi trường sạch thành công.**
+**TIÊU CHÍ “100% HOÀN THIỆN”: 45/45 Use Case PASS; Database có đầy đủ object và Stored Procedure gateway; Backend không có SQL nghiệp vụ/ORM query; Frontend không còn mock flow chính; RBAC/scope/concurrency/rollback PASS; deploy từ môi trường sạch thành công.**
