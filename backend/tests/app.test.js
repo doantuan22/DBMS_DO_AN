@@ -84,3 +84,18 @@ test('order and payment routes require an authenticated customer before database
     assert.equal(invalid.status, 401);
   } finally { server.close(); }
 });
+
+test('review creation and complaint routes require an authenticated customer before database access', async () => {
+  const server = createApp().listen(0);
+  const { port } = server.address();
+  try {
+    const review = await fetch(`http://127.0.0.1:${port}/api/movies/1/reviews`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ rating: 5 }),
+    });
+    assert.equal(review.status, 401);
+    const complaints = await fetch(`http://127.0.0.1:${port}/api/complaints`);
+    assert.equal(complaints.status, 401);
+    const complaint = await fetch(`http://127.0.0.1:${port}/api/complaints/0`);
+    assert.equal(complaint.status, 401);
+  } finally { server.close(); }
+});

@@ -1287,9 +1287,18 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF @DonDatVeID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID = @DonDatVeID)
+    -- A referenced order is optional, but when present it must belong to the
+    -- authenticated complaint sender. Keep one non-disclosing error for an
+    -- absent order and an order owned by another customer.
+    IF @DonDatVeID IS NOT NULL AND NOT EXISTS
+    (
+        SELECT 1
+        FROM dbo.DONDATVE
+        WHERE DonDatVeID = @DonDatVeID
+          AND NguoiDungID = @NguoiDungID
+    )
     BEGIN
-        ;THROW 50041, N'Đơn đặt vé tham chiếu không tồn tại.', 1;
+        ;THROW 50041, N'Đơn đặt vé tham chiếu không hợp lệ.', 1;
     END
 
     INSERT INTO dbo.KHIEUNAI (NguoiDungID, DonDatVeID, LoaiKhieuNai, TieuDe, NoiDung, MucDoUuTien, NgayTao, TrangThai)

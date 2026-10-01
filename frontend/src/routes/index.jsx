@@ -16,6 +16,8 @@ import BookingPreparation from '../pages/BookingPreparation';
 import Orders from '../pages/Orders';
 import OrderDetail from '../pages/OrderDetail';
 import PaymentPage from '../pages/PaymentPage';
+import Complaints from '../pages/Complaints';
+import ComplaintDetail from '../pages/ComplaintDetail';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
 const protectedArea = (role, area, title) => (
@@ -51,6 +53,10 @@ export default function AppRoutes() {
           <Route index element={<Orders />} />
           <Route path=":orderId" element={<OrderDetail />} />
           <Route path=":orderId/payment" element={<PaymentPage />} />
+        </Route>
+        <Route path="/complaints" element={<AreaLayout title="Khiếu nại" links={[{ to: '/', label: 'Trang chủ' }, { to: '/complaints', label: 'Khiếu nại' }]} />}>
+          <Route index element={<Complaints />} />
+          <Route path=":complaintId" element={<ComplaintDetail />} />
         </Route>
       </Route>
 

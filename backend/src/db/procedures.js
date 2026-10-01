@@ -37,6 +37,14 @@ export const PROCEDURES = Object.freeze({
   ORDER_LIST_BY_CUSTOMER: 'dbo.sp_Order_ListByCustomer',
   ORDER_GET_DETAIL_BY_CUSTOMER: 'dbo.sp_Order_GetDetailByCustomer',
 
+  // Phase 6 customer feedback. Identity is always passed by the service from
+  // the authenticated JWT; these names are never supplied by a client.
+  REVIEW_CREATE: 'dbo.sp_Review_Create',
+  REVIEW_LIST_BY_MOVIE: 'dbo.sp_Review_ListByMovie',
+  COMPLAINT_CREATE: 'dbo.sp_Complaint_Create',
+  COMPLAINT_LIST_BY_CUSTOMER: 'dbo.sp_Complaint_ListByCustomer',
+  COMPLAINT_GET_BY_CUSTOMER: 'dbo.sp_Complaint_GetByCustomer',
+
   BOOK_TICKET: 'dbo.sp_DatVe',
   ADD_SHOWTIME: 'dbo.sp_ThemSuatChieu',
   PROCESS_PAYMENT: 'dbo.sp_XuLyThanhToan',

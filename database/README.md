@@ -18,6 +18,8 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `tests/10_tests_seat_hold.sql` | Tests for seat hold, hold expiry, payment window, showtime-cancel rule (rolls back) |
 | - | `migrations/001_index_revision.sql` | Index revision for an existing database (see `docs/database-indexes.md`) |
 | - | `migrations/002_seat_hold.sql` | Adds `DONDATVE.HanGiuCho`; then re-run functions, views, triggers, procedures |
+| - | `migrations/003_complaint_order_ownership.sql` | Alters only `sp_Complaint_Create`: a supplied order reference must belong to the complaint sender. |
+| - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
 | - | `deployment/deploy.ps1` | Runs the steps above in order |
 
 Empty folders (`constraints/`, `indexes/`, `tests/{procedures,triggers,concurrency}/`) are placeholders.

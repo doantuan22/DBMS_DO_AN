@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { getCinemas, getMovieDetail, getShowtimes } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
 import ShowtimeBrowser from '../components/ShowtimeBrowser';
+import MovieReviews from '../components/MovieReviews';
 import { loadResource, showtimeFilters } from '../services/catalogResource';
 
 export default function MovieDetail() {
@@ -38,7 +39,7 @@ export default function MovieDetail() {
   if (movieResource.status === 'loading') return <LoadingState>Đang tải thông tin phim…</LoadingState>;
   if (movieResource.status === 'error') return <ErrorState error={movieResource.error} />;
 
-  const { movie, genres, actors, reviews } = movieResource.data;
+  const { movie, genres, actors } = movieResource.data;
   const showtimeResource = showtimesState.key === showtimeKey ? showtimesState : { status: 'loading' };
   return (
     <article className="catalog-page movie-detail">
@@ -64,7 +65,7 @@ export default function MovieDetail() {
       </section>
       {genres.length > 0 && <section className="catalog-section"><h2>Thể loại</h2><div className="catalog-chips">{genres.map((genre) => <span className="catalog-chip" key={genre.id}>{genre.name}</span>)}</div></section>}
       {actors.length > 0 && <section className="catalog-section"><h2>Diễn viên</h2><div className="actor-list">{actors.map((actor) => <article className="actor-card" key={actor.id}><strong>{actor.name}</strong>{actor.role && <span>{actor.role}</span>}{actor.nationality && <small>{actor.nationality}</small>}</article>)}</div></section>}
-      {reviews.length > 0 && <section className="catalog-section"><h2>Đánh giá gần đây</h2><div className="review-list">{reviews.map((review) => <article className="review-card" key={review.id}><strong>{review.reviewerName} · {review.rating}/5</strong>{review.content && <p>{review.content}</p>}</article>)}</div></section>}
+      <MovieReviews movieId={movie.id} />
       {cinemaError && <ErrorState error={cinemaError} />}
       {!cinemaError && <ShowtimeBrowser cinemas={cinemas} cinemaId={cinemaId} date={date} onCinemaChange={setCinemaId} onDateChange={setDate} state={showtimeResource} />}
     </article>

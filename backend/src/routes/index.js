@@ -9,6 +9,7 @@ import bookingRoutes from './bookingRoutes.js';
 import productRoutes from './productRoutes.js';
 import promotionRoutes from './promotionRoutes.js';
 import orderRoutes from './orderRoutes.js';
+import complaintRoutes from './complaintRoutes.js';
 
 // Feature routers (auth, movies, bookings, ...) are mounted here as they are built.
 const router = Router();
@@ -22,5 +23,6 @@ router.use('/products', productRoutes);
 router.use('/promotions', promotionRoutes);
 router.use('/bookings', bookingRoutes);
 router.use('/orders', orderRoutes);
+router.use('/complaints', complaintRoutes);
 
 export default router;
