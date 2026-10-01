@@ -1,0 +1,59 @@
+import { DbTypes, executeProcedure } from '../db/procedureClient.js';
+import { HttpError } from '../utils/httpError.js';
+
+const rows = (result, index = 0) => result.recordsets?.[index] ?? (index === 0 ? result.recordset ?? [] : []);
+const sqlError = (error) => error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
+const number = (value) => value == null ? null : Number(value);
+
+function managerError(error) {
+  if (error instanceof HttpError) throw error;
+  switch (sqlError(error)) {
+    case 50050: throw new HttpError(403, 'MANAGER_CINEMA_FORBIDDEN', 'You are not assigned to this cinema.');
+    case 50001: throw new HttpError(409, 'SHOWTIME_OVERLAP', 'The room already has an overlapping showtime.');
+    case 50051: throw new HttpError(409, 'ROOM_NAME_CONFLICT', 'This room name already exists in the cinema.');
+    case 50053: throw new HttpError(409, 'ROOM_HAS_SHOWTIMES', 'A room with showtime history cannot be deleted.');
+    case 50054: throw new HttpError(409, 'SEAT_POSITION_CONFLICT', 'This seat position already exists in the room.');
+    case 50055: throw new HttpError(409, 'SEAT_LAYOUT_LOCKED', 'The room has ticket history.');
+    case 50057: throw new HttpError(400, 'SHOWTIME_TIME_INVALID', 'Showtime end must be after its start.');
+    case 50052:
+    case 50056:
+    case 50058:
+    case 50109:
+    case 50116: throw new HttpError(404, 'MANAGER_RESOURCE_NOT_FOUND', 'Manager resource was not found.');
+    case 50110: throw new HttpError(409, 'SEAT_HAS_TICKETS', 'A seat with tickets cannot be deleted.');
+    case 50117: throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
+    case 50118: throw new HttpError(409, 'SHOWTIME_HAS_BOOKINGS', 'Showtime has active bookings and cannot be cancelled.');
+    default: throw error;
+  }
+}
+
+const cinemaDto = (r) => ({ assignmentId: r.PhanCongID, id: r.RapID, name: r.TenRap, address: r.DiaChi, city: r.ThanhPho, phone: r.SoDienThoai, startsOn: r.NgayBatDau, endsOn: r.NgayKetThuc, assignmentStatus: r.TrangThaiPhanCong });
+const roomDto = (r) => ({ id: r.PhongID, cinemaId: r.RapID, cinemaName: r.TenRap, name: r.TenPhong, type: r.LoaiPhong, status: r.TrangThai, seatCount: r.TongSoGhe });
+const seatDto = (r) => ({ id: r.GheID, roomId: r.PhongID, row: r.HangGhe, number: r.SoGhe, label: r.TenGhe, type: r.LoaiGhe, status: r.TrangThai });
+const showtimeDto = (r) => ({ id: r.SuatChieuID, movieId: r.PhimID, movieTitle: r.TenPhim, roomId: r.PhongID, roomName: r.TenPhong, cinemaId: r.RapID, cinemaName: r.TenRap, startsAt: r.ThoiGianBatDau, endsAt: r.ThoiGianKetThuc, format: r.DinhDang, basePrice: number(r.GiaVeCoBan), status: r.TrangThai ?? r.TrangThaiSuatChieu });
+const pricingDto = (r) => ({ id: r.GiaID, cinemaId: r.RapID, seatType: r.LoaiGhe, dayType: r.LoaiNgay, format: r.DinhDang, surcharge: number(r.PhuThu), startsOn: r.NgayBatDau, endsOn: r.NgayKetThuc, status: r.TrangThai });
+
+export function createManagerService({ execute = executeProcedure } = {}) {
+  async function call(key, params) { try { return await execute(key, params); } catch (error) { managerError(error); } }
+  return {
+    async listCinemas(userId) { return rows(await call('MANAGER_LIST_ASSIGNED_CINEMAS', { NguoiDungID: { type: DbTypes.Int, value: userId } })).map(cinemaDto); },
+    async listRooms(userId, cinemaId) { return rows(await call('MANAGER_ROOM_LIST', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId } })).map(roomDto); },
+    async createRoom(userId, cinemaId, input) { return roomDto(rows(await call('MANAGER_ROOM_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TenPhong: { type: DbTypes.NVarChar(100), value: input.name }, LoaiPhong: { type: DbTypes.NVarChar(50), value: input.type } }))[0]); },
+    async updateRoom(userId, id, input) { return roomDto(rows(await call('MANAGER_ROOM_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id }, TenPhong: { type: DbTypes.NVarChar(100), value: input.name }, LoaiPhong: { type: DbTypes.NVarChar(50), value: input.type }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
+    async deleteRoom(userId, id) { await call('MANAGER_ROOM_DELETE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id } }); },
+    async listSeats(userId, id) { return rows(await call('MANAGER_SEAT_LIST_BY_ROOM', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id } })).map(seatDto); },
+    async createSeat(userId, roomId, input) { return seatDto(rows(await call('MANAGER_SEAT_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: roomId }, HangGhe: { type: DbTypes.VarChar(10), value: input.row }, SoGhe: { type: DbTypes.Int, value: input.number }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.type } }))[0]); },
+    async updateSeat(userId, id, input) { return seatDto(rows(await call('MANAGER_SEAT_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GheID: { type: DbTypes.Int, value: id }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.type }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
+    async deleteSeat(userId, id) { await call('MANAGER_SEAT_DELETE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GheID: { type: DbTypes.Int, value: id } }); },
+    async listShowtimes(userId, cinemaId, range) { return rows(await call('MANAGER_SHOWTIME_LIST', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TuNgay: { type: DbTypes.Date, value: range.fromDate }, DenNgay: { type: DbTypes.Date, value: range.toDate } })).map(showtimeDto); },
+    async createShowtime(userId, input) { return showtimeDto(rows(await call('MANAGER_SHOWTIME_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhimID: { type: DbTypes.Int, value: input.movieId }, PhongID: { type: DbTypes.Int, value: input.roomId }, ThoiGianBatDau: { type: DbTypes.DateTime2, value: new Date(input.startsAt) }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: new Date(input.endsAt) }, DinhDang: { type: DbTypes.NVarChar(50), value: input.format }, GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice } }))[0]); },
+    async updateShowtime(userId, id, input) { return showtimeDto(rows(await call('MANAGER_SHOWTIME_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, SuatChieuID: { type: DbTypes.Int, value: id }, PhimID: { type: DbTypes.Int, value: input.movieId }, ThoiGianBatDau: { type: DbTypes.DateTime2, value: new Date(input.startsAt) }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: new Date(input.endsAt) }, DinhDang: { type: DbTypes.NVarChar(50), value: input.format }, GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
+    async cancelShowtime(userId, id, reason) { await call('MANAGER_SHOWTIME_CANCEL', { NguoiDungID: { type: DbTypes.Int, value: userId }, SuatChieuID: { type: DbTypes.Int, value: id }, LyDo: { type: DbTypes.NVarChar(255), value: reason ?? null } }); },
+    async listPricing(userId, cinemaId) { return rows(await call('MANAGER_PRICING_LIST', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId } })).map(pricingDto); },
+    async createPricing(userId, cinemaId, input) { return pricingDto(rows(await call('MANAGER_PRICING_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.seatType }, LoaiNgay: { type: DbTypes.NVarChar(50), value: input.dayType }, DinhDang: { type: DbTypes.NVarChar(50), value: input.format }, PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, NgayBatDau: { type: DbTypes.Date, value: input.startsOn }, NgayKetThuc: { type: DbTypes.Date, value: input.endsOn } }))[0]); },
+    async updatePricing(userId, id, input) { return pricingDto(rows(await call('MANAGER_PRICING_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GiaID: { type: DbTypes.Int, value: id }, PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
+    async dashboard(userId, cinemaId) { const r = rows(await call('MANAGER_DASHBOARD', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId } }))[0]; return r && { cinemaId: r.RapID, cinemaName: r.TenRap, city: r.ThanhPho, activeRooms: r.TongPhongChieu, activeSeats: r.TongGhe, showtimesToday: r.SuatChieuHomNay, paidOrdersToday: r.DonDatVeHomNay }; },
+    async revenue(userId, cinemaId, range) { return rows(await call('MANAGER_REVENUE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TuNgay: { type: DbTypes.Date, value: range.fromDate }, DenNgay: { type: DbTypes.Date, value: range.toDate } })).map((r) => ({ date: r.Ngay, orderCount: r.SoDon, ticketCount: r.SoVeBan, ticketRevenue: number(r.DoanhThuVe), productRevenue: number(r.DoanhThuDoAn), discount: number(r.TienGiamGia), totalRevenue: number(r.DoanhThuThucTe) })); },
+  };
+}
+export const managerService = createManagerService();

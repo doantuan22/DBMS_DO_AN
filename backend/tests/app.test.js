@@ -99,3 +99,13 @@ test('review creation and complaint routes require an authenticated customer bef
     assert.equal(complaint.status, 401);
   } finally { server.close(); }
 });
+
+test('manager APIs reject unauthenticated callers before scoped procedures execute', async () => {
+  const server = createApp().listen(0);
+  const { port } = server.address();
+  try {
+    const result = await fetch(`http://127.0.0.1:${port}/api/manager/cinemas`);
+    assert.equal(result.status, 401);
+    assert.equal((await result.json()).error.code, 'UNAUTHENTICATED');
+  } finally { server.close(); }
+});

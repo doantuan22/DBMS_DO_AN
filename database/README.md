@@ -10,7 +10,7 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | 2 | `functions/02_functions.sql` | 5 baseline functions + 2 RBAC helpers + seat-hold helpers (`fn_ThoiGianGiuChoPhut`, `fn_ThoiGianGiaHanThanhToanPhut`, `fn_DonDangGiuGhe`). Must run before the views |
 | 3 | `views/03_views.sql` | 5 baseline views + `vw_ThongKePhim`. `vw_DoanhThuTheoRap` counts only `THANHTOAN.TrangThai = N'Thành công'` |
 | 4 | `triggers/04_triggers.sql` | 5 baseline triggers + complaint-status sync trigger |
-| 5 | `procedures/{system,auth,customer,manager,support,admin}/<actor>_procedures.sql` | Stored procedure gateway, 93 procedures split by actor (1 / 7 / 22 / 19 / 6 / 38), deployed in that order |
+| 5 | `procedures/{system,auth,customer,manager,support,admin}/<actor>_procedures.sql` | Stored procedure gateway, 94 procedures split by actor (1 / 7 / 22 / 20 / 6 / 38), deployed in that order |
 | 6 | `security/06_security_rbac.sql` | Login `CinemaAppUser`, role `db_executor`: `GRANT EXECUTE`, `DENY SELECT/INSERT/UPDATE/DELETE`. Password comes from `-v AppPassword` |
 | 7 | `seed/07_seed_data.sql` | Demo data. Every demo account has password `123456` stored as a bcrypt hash |
 | - | `tests/08_tests_verification.sql` | Integration tests (creates an order; run only on a scratch database) |
@@ -19,6 +19,7 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `migrations/001_index_revision.sql` | Index revision for an existing database (see `docs/database-indexes.md`) |
 | - | `migrations/002_seat_hold.sql` | Adds `DONDATVE.HanGiuCho`; then re-run functions, views, triggers, procedures |
 | - | `migrations/003_complaint_order_ownership.sql` | Alters only `sp_Complaint_Create`: a supplied order reference must belong to the complaint sender. |
+| - | `migrations/004_manager_showtime_list.sql` | Adds `sp_Manager_Showtime_List`, a manager-scoped alternative to raw showtime queries. |
 | - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
 | - | `deployment/deploy.ps1` | Runs the steps above in order |
 

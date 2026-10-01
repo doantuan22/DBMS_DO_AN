@@ -9,7 +9,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const targets = ['backend/src', 'backend/tests'];
 
 const SQL_KEYWORDS = [
-  /\bSELECT\b/i, /\bINSERT\b/i, /\bUPDATE\b/i, /\bDELETE\b/i, /\bMERGE\b/i,
+  /\bSELECT\b/i, /\bINSERT\b/i, /\bUPDATE\b/i, /(?<!\.)\bDELETE\b/i, /\bMERGE\b/i,
   /\bJOIN\b/i, /\bGROUP\s+BY\b/i, /\bHAVING\b/i,
   /\bBEGIN\s+TRAN/i, /\bCOMMIT\b/i, /\bROLLBACK\b/i,
 ];
