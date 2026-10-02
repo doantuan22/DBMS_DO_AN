@@ -39,7 +39,12 @@ function cinemaDto(row) {
     description: row.MoTa,
     operatingSince: dateOnly(row.NgayHoatDong),
     status: row.TrangThai,
+    coverImageUrl: row.AnhDaiDienURL ?? null,
   };
+}
+
+function cinemaImageDto(row) {
+  return { id: row.HinhAnhRapID, cinemaId: row.RapID, url: row.URL, description: row.MoTa, cover: row.LaAnhDaiDien, displayOrder: row.ThuTuHienThi, status: row.TrangThai, createdAt: row.NgayTao };
 }
 
 function showtimeDto(row) {
@@ -121,6 +126,11 @@ export function createCatalogService({ execute = executeProcedure } = {}) {
     return (result.recordset ?? []).map(cinemaDto);
   }
 
+  async function listCinemaImages(cinemaId) {
+    const result = await execute('CINEMA_GET_IMAGES', { RapID: { type: DbTypes.Int, value: cinemaId } });
+    return (result.recordset ?? []).map(cinemaImageDto);
+  }
+
   async function listShowtimes({ movieId, cinemaId, date }) {
     const result = await execute('SHOWTIME_LIST_BY_MOVIE', {
       PhimID: { type: DbTypes.Int, value: movieId },
@@ -139,7 +149,7 @@ export function createCatalogService({ execute = executeProcedure } = {}) {
     return showtimeDto(row);
   }
 
-  return { listGenres, listMovies, getMovieDetail, listCinemas, listShowtimes, getShowtimeDetail };
+  return { listGenres, listMovies, getMovieDetail, listCinemas, listCinemaImages, listShowtimes, getShowtimeDetail };
 }
 
 export const catalogService = createCatalogService();

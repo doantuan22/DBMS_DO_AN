@@ -7,7 +7,8 @@ All endpoints are public and do not require a Bearer token. Backend calls only t
 | `GET /api/movies` | List movies | `status`, `genreId` (positive integer), `search` (up to 100 characters). No pagination is supported by the procedure. | `dbo.sp_Movie_List` |
 | `GET /api/movies/:movieId` | Movie details, genres, actors, recent reviews | `movieId` must be a positive integer. | `dbo.sp_Movie_GetDetail` |
 | `GET /api/genres` | Genre selector data | None | `dbo.sp_Genre_List` |
-| `GET /api/cinemas` | Active cinema list | Optional `city` (up to 100 characters) | `dbo.sp_Cinema_List` |
+| `GET /api/cinemas` | Active cinema list with nullable cover image URL | Optional `city` (up to 100 characters) | `dbo.sp_Cinema_List` |
+| `GET /api/cinemas/:cinemaId/images` | Active cinema gallery | Required positive `cinemaId` | `dbo.sp_Cinema_GetImages` |
 | `GET /api/movies/:movieId/showtimes` | Future showtimes for a movie | Required positive `movieId`; optional positive `cinemaId`; optional real `date` in `YYYY-MM-DD` format | `dbo.sp_Showtime_ListByMovie` |
 | `GET /api/showtimes/:showtimeId` | Showtime selection context for Phase 4 | `showtimeId` must be a positive integer. | `dbo.sp_Showtime_GetDetail` |
 
@@ -16,7 +17,8 @@ All endpoints are public and do not require a Bearer token. Backend calls only t
 - Movie list: `{ "movies": [{ "id", "title", "durationMinutes", "releaseDate", "language", "subtitle", "ageRating", "director", "posterUrl", "trailerUrl", "status", "averageRating", "reviewCount", "genres" }] }`.
 - Movie detail: `{ "movie": { ... }, "genres": [], "actors": [], "reviews": [] }`.
 - Genre list: `{ "genres": [{ "id", "name" }] }`.
-- Cinema list: `{ "cinemas": [{ "id", "name", "address", "city", "phone", "description", "operatingSince", "status" }] }`.
+- Cinema list: `{ "cinemas": [{ "id", "name", "address", "city", "phone", "description", "operatingSince", "status", "coverImageUrl" }] }`, where `coverImageUrl` is `null` if the cinema has no active cover.
+- Cinema gallery: `{ "images": [{ "id", "cinemaId", "url", "description", "cover", "displayOrder", "status", "createdAt" }] }`; only active images are returned in deterministic display order.
 - Showtime list: `{ "showtimes": [{ "id", "movieId", "movieTitle", "cinemaId", "cinemaName", "roomId", "roomName", "startsAt", "endsAt", "date", "startTime", "endTime", "format", "basePrice", "status", "totalSeats", "bookedSeats", "availableSeats" }] }`.
 - Showtime detail: one showtime DTO with the fields above.
 

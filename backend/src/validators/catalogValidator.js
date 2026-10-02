@@ -45,6 +45,7 @@ function validDate(value) {
 }
 
 export const validateMovieId = (value) => positiveInteger(value, 'movieId');
+export const validateCinemaId = (value) => positiveInteger(value, 'cinemaId');
 export const validateShowtimeId = (value) => positiveInteger(value, 'showtimeId');
 
 export function validateMovieListQuery(query) {

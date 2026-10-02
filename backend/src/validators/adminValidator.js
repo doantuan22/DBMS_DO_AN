@@ -79,8 +79,9 @@ function bodyShape(value, schema) {
     if (rule === 'datetime' && (typeof item !== 'string' || Number.isNaN(Date.parse(item)))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a valid datetime.`);
     if (rule === 'ids' && (!Array.isArray(item) || item.some((id) => !Number.isSafeInteger(id) || id <= 0))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a list of positive integers.`);
     if (rule === 'cast' && (!Array.isArray(item) || item.some((cast) => !cast || !Number.isSafeInteger(cast.actorId) || cast.actorId <= 0 || typeof cast.role !== 'string'))) throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
+    if (rule === 'boolean' && typeof item !== 'boolean') throw new HttpError(400, 'INVALID_REQUEST', `${field} must be true or false.`);
     if (typeof item === 'string' && item.length > 4000) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
-    const fieldMax = { email: 150, phone: 20, code: 50, title: 255, name: 255, address: 255, city: 100, type: 50, status: 50, format: 50, seatType: 50, dayType: 50, discountType: 20, nationalitiy: 100, nationality: 100 }[field];
+    const fieldMax = { email: 150, phone: 20, code: 50, title: 255, name: 255, address: 255, city: 100, type: 50, status: 50, format: 50, seatType: 50, dayType: 50, discountType: 20, nationalitiy: 100, nationality: 100, url: 500, description: 255 }[field];
     if (fieldMax && typeof item === 'string' && item.length > fieldMax) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
     result[field] = typeof item === 'string' ? item.trim() : item;
   }
@@ -102,6 +103,17 @@ export const cinemaWrite = (v, create = false) => bodyShape(v, create ? { name: 
 export const roomWrite = (v, create = false) => bodyShape(v, create ? { cinemaId: 'id', name: 'string', type: 'string' } : { name: 'string', type: 'string', status: 'string' });
 export const seatWrite = (v, create = false) => bodyShape(v, create ? { roomId: 'id', row: 'string', number: 'positive', type: 'string' } : { type: 'string', status: 'string' });
 export const pricingWrite = (v, create = false) => bodyShape(v, create ? { cinemaId: 'id', seatType: 'string', dayType: 'string', format: 'string', surcharge: 'nonnegative', startsOn: 'date', endsOn: 'nullable-date?' } : { surcharge: 'nonnegative', status: 'string' });
+export const cinemaImageWrite = (v, create = false) => {
+  const input = v && typeof v === 'object' && !Array.isArray(v) && v.description === '' ? { ...v, description: null } : v;
+  const result = bodyShape(input, create
+    ? { url: 'string', description: 'string?', cover: 'boolean?', displayOrder: 'nonnegative', status: 'string?' }
+    : { url: 'string', description: 'string?', displayOrder: 'nonnegative', status: 'string' });
+  if (!/^https?:\/\/\S+$/i.test(result.url) && !/^\/\S+/.test(result.url)) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'url must be an http(s) URL or an absolute local path.');
+  }
+  return result;
+};
+export const cinemaImageCover = (v) => bodyShape(v, { cover: 'boolean' });
 export const showtimeFilters = (query) => {
   const input = queryOnly(query, ['cinemaId', 'fromDate', 'toDate']);
   const fromDate = optionalDate(input.fromDate, 'fromDate'); const toDate = optionalDate(input.toDate, 'toDate');

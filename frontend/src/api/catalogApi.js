@@ -26,6 +26,11 @@ export const getCinemas = async (filters = {}, options = {}) => {
   return result.cinemas;
 };
 
+export const getCinemaImages = async (cinemaId, options = {}) => {
+  const result = await request(`/cinemas/${encodeURIComponent(cinemaId)}/images`, options);
+  return result.images;
+};
+
 export const getShowtimes = async (movieId, filters = {}, options = {}) => {
   const result = await request(`/movies/${encodeURIComponent(movieId)}/showtimes${queryString(filters)}`, options);
   return result.showtimes;

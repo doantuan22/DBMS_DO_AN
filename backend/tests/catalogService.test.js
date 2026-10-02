@@ -83,3 +83,15 @@ test('cinema list and showtime filters call their own stored procedures', async 
   assert.equal(showtime.availableSeats, 60);
   assert.equal(calls[2].key, 'SHOWTIME_GET_DETAIL');
 });
+
+test('cinema list maps nullable cover images and gallery uses one stored procedure', async () => {
+  const { service, calls, results } = fixture();
+  results.set('CINEMA_LIST', { recordset: [{ RapID: 2, TenRap: 'Cinema', DiaChi: 'Address', ThanhPho: 'City', TrangThai: 'Hoạt động', AnhDaiDienURL: null }] });
+  results.set('CINEMA_GET_IMAGES', { recordset: [{ HinhAnhRapID: 8, RapID: 2, URL: '/images/cinema.jpg', MoTa: 'Lobby', LaAnhDaiDien: true, ThuTuHienThi: 0, TrangThai: 'Hoạt động' }] });
+  const cinemas = await service.listCinemas({ city: null });
+  const images = await service.listCinemaImages(2);
+  assert.equal(cinemas[0].coverImageUrl, null);
+  assert.deepEqual(images[0], { id: 8, cinemaId: 2, url: '/images/cinema.jpg', description: 'Lobby', cover: true, displayOrder: 0, status: 'Hoạt động', createdAt: undefined });
+  assert.deepEqual(calls.map((call) => call.key), ['CINEMA_LIST', 'CINEMA_GET_IMAGES']);
+  assert.equal(calls[1].params.RapID.value, 2);
+});

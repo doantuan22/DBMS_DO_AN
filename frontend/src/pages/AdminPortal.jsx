@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
+import CinemaImageManager from '../components/CinemaImageManager';
 
 const sections = [
   ['dashboard', 'Tổng quan'], ['users', 'Tài khoản'], ['roles', 'Vai trò'], ['permissions', 'Quyền'],
-  ['assignments', 'Phân công'], ['cinemas', 'Rạp'], ['rooms', 'Phòng'], ['seats', 'Ghế'],
+  ['assignments', 'Phân công'], ['cinemas', 'Rạp'], ['cinemaImages', 'Ảnh rạp'], ['rooms', 'Phòng'], ['seats', 'Ghế'],
   ['movies', 'Phim'], ['genres', 'Thể loại'], ['actors', 'Diễn viên'], ['products', 'Sản phẩm'],
   ['promotions', 'Khuyến mãi'], ['pricing', 'Bảng giá'], ['showtimes', 'Suất chiếu'],
   ['complaints', 'Khiếu nại'], ['revenue', 'Doanh thu'],
@@ -14,7 +15,7 @@ const loaders = {
   permissions: (api) => api.permissions(), assignments: (api) => api.assignments(), cinemas: (api) => api.cinemas(),
   rooms: (api) => api.rooms(), seats: (api) => api.seats(), movies: (api) => api.movies(), genres: (api) => api.genres(),
   actors: (api) => api.actors(), products: (api) => api.products(), promotions: (api) => api.promotions(),
-  pricing: (api) => api.pricing(), showtimes: (api) => api.showtimes(), complaints: (api) => api.complaints(),
+  pricing: (api) => api.pricing(), showtimes: (api) => api.showtimes(), complaints: (api) => api.complaints(), cinemaImages: async () => ({ images: [] }),
   revenue: (api, range) => api.revenue(range),
 };
 
@@ -169,6 +170,14 @@ export default function AdminPortal() {
       setNotice({ ok: true, text: 'Đã cập nhật danh sách diễn viên.' }); await load();
     } catch { setNotice({ ok: false, text: 'Không thể lưu danh sách diễn viên. Kiểm tra JSON và mã diễn viên.' }); }
   };
+
+  if (active === 'cinemaImages') return <section className="catalog-section" aria-label="Quản lý ảnh rạp">
+    <h1>Quản trị hệ thống</h1>
+    <nav className="catalog-actions" aria-label="Phân hệ quản trị">
+      {sections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); }}>{label}</button>)}
+    </nav>
+    <h2>Ảnh rạp</h2><CinemaImageManager />
+  </section>;
 
   return <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
     <h1>Quản trị hệ thống</h1>

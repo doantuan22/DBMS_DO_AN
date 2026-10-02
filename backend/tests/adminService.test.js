@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createAdminService } from '../src/services/adminService.js';
-import { assignmentFilters, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
+import { assignmentFilters, cinemaImageWrite, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
 import { HttpError } from '../src/utils/httpError.js';
 import { requireAdmin } from '../src/middleware/requireAdmin.js';
 import { PROCEDURES } from '../src/db/procedures.js';
@@ -78,4 +78,19 @@ test('admin maps seat history, held showtime, and assignment role SQL errors to 
 
   const assignmentService = createAdminService({ execute: async () => { throw { number: 50071 }; } });
   await assert.rejects(assignmentService.createAssignment({ userId: 5, cinemaId: 1 }), (error) => error.status === 400 && error.code === 'ASSIGNMENT_MANAGER_REQUIRED');
+});
+
+test('cinema image writes use route-scoped, typed stored-procedure parameters', async () => {
+  const calls = [];
+  const service = createAdminService({ execute: async (key, params) => { calls.push({ key, params }); return { recordset: [{ HinhAnhRapID: 6 }] }; } });
+  const input = cinemaImageWrite({ url: '/uploads/cinema.jpg', description: '', cover: true, displayOrder: 0, status: 'Hoạt động' }, true);
+  await service.createCinemaImage(7, input);
+  await service.setCinemaImageCover(7, 6, true);
+  assert.equal(calls[0].key, 'ADMIN_CINEMA_IMAGE_CREATE');
+  assert.equal(calls[0].params.RapID.value, 7);
+  assert.equal(calls[0].params.LaAnhDaiDien.value, true);
+  assert.equal(calls[1].key, 'ADMIN_CINEMA_IMAGE_SET_COVER');
+  assert.equal(calls[1].params.HinhAnhRapID.value, 6);
+  assert.throws(() => cinemaImageWrite({ url: 'not-a-url', displayOrder: 0, status: 'Hoạt động' }), HttpError);
+  assert.throws(() => cinemaImageWrite({ url: 'https://example.invalid/a.jpg', displayOrder: -1, status: 'Hoạt động' }), HttpError);
 });

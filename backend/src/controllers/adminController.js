@@ -33,6 +33,11 @@ export const updateAssignment = handle(async (req) => ({ assignment: await admin
 export const createCinema = handle(async (req) => ({ cinema: await adminService.createCinema(validators.cinemaWrite(req.body, true)) }));
 export const updateCinema = handle(async (req) => ({ cinema: await adminService.updateCinema(validators.pathId(req.params.cinemaId, 'cinemaId'), validators.cinemaWrite(req.body)) }));
 export const deleteCinema = handle(async (req) => ({ result: await adminService.deleteCinema(validators.pathId(req.params.cinemaId, 'cinemaId')) }));
+export const cinemaImages = handle(async (req) => ({ images: await adminService.cinemaImages(validators.pathId(req.params.cinemaId, 'cinemaId')) }));
+export const createCinemaImage = handle(async (req) => ({ image: await adminService.createCinemaImage(validators.pathId(req.params.cinemaId, 'cinemaId'), validators.cinemaImageWrite(req.body, true)) }), 201);
+export const updateCinemaImage = handle(async (req) => ({ image: await adminService.updateCinemaImage(validators.pathId(req.params.cinemaId, 'cinemaId'), validators.pathId(req.params.imageId, 'imageId'), validators.cinemaImageWrite(req.body)) }));
+export const deleteCinemaImage = handle(async (req) => ({ result: await adminService.deleteCinemaImage(validators.pathId(req.params.cinemaId, 'cinemaId'), validators.pathId(req.params.imageId, 'imageId')) }));
+export const setCinemaImageCover = handle(async (req) => ({ image: await adminService.setCinemaImageCover(validators.pathId(req.params.cinemaId, 'cinemaId'), validators.pathId(req.params.imageId, 'imageId'), validators.cinemaImageCover(req.body).cover) }));
 export const rooms = handle(async (req) => ({ rooms: await adminService.rooms({ cinemaId: validators.resourceIdFilter(req.query, 'cinemaId') }) }));
 export const createRoom = handle(async (req) => ({ room: await adminService.createRoom(validators.roomWrite(req.body, true)) }));
 export const updateRoom = handle(async (req) => ({ room: await adminService.updateRoom(validators.pathId(req.params.roomId, 'roomId'), validators.roomWrite(req.body)) }));

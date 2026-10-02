@@ -6,7 +6,7 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 
 | Order | File | Content |
 | --- | --- | --- |
-| 1 | `schema/01_schema.sql` | Database `CinemaBookingDB`, 25 tables, constraints, indexes (**drops and recreates all tables**) |
+| 1 | `schema/01_schema.sql` | Database `CinemaBookingDB`, 25 baseline tables, constraints, indexes (**drops and recreates all tables**) |
 | 2 | `functions/02_functions.sql` | 5 baseline functions + 2 RBAC helpers + seat-hold helpers (`fn_ThoiGianGiuChoPhut`, `fn_ThoiGianGiaHanThanhToanPhut`, `fn_DonDangGiuGhe`). Must run before the views |
 | 3 | `views/03_views.sql` | 5 baseline views + `vw_ThongKePhim`. `vw_DoanhThuTheoRap` counts only `THANHTOAN.TrangThai = N'Thành công'` |
 | 4 | `triggers/04_triggers.sql` | 5 baseline triggers + complaint-status sync trigger |
@@ -23,7 +23,9 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `migrations/005_support_status_history_atomicity.sql` | Makes a CSKH status update append a processing-history record atomically. |
 | - | `migrations/006_support_procedure_authorization.sql` | Adds permission and not-found guards to CSKH detail, order-reference, and processing procedures. Run after 005 on an existing database. |
 | - | `migrations/008_admin_global_portal.sql` | Removes the obsolete ADM-17 permission seed and adds Admin-global Cinema/Movie/Product lists, Room/Seat/Pricing/Showtime contracts, and Assignment Update (`usp_Admin_*` names avoid SQL Server's special `sp_` name resolution). Apply to `CinemaBookingDB` after base deployment. |
+| - | `migrations/009_cinema_images.sql` | ADM-07 extension: adds `HINHANH_RAPCHIEUPHIM`, image constraints/indexes, public gallery read, Admin image CRUD and transactional cover selection. |
 | - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
+| - | `tests/12_tests_cinema_images.sql` | Transactional ADM-07 cinema image verification: FK, defaults, cover change, ordering, invalid cinema and deletion. |
 | - | `deployment/deploy.ps1` | Runs the steps above in order |
 
 Empty folders (`constraints/`, `indexes/`, `tests/{procedures,triggers,concurrency}/`) are placeholders.

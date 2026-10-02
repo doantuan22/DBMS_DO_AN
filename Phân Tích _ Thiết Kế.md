@@ -433,8 +433,8 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Mã Use Case** | ADM-07 |
 | **Tên Use Case** | Quản lý rạp chiếu phim (toàn hệ thống) |
 | **Tác nhân thực hiện** | Quản trị viên (Admin) |
-| **Mô tả chức năng** | Thêm/sửa/xóa thông tin rạp chiếu phim trên toàn hệ thống, không giới hạn phạm vi phân công. |
-| **Luồng hoạt động** | 1\. Admin truy cập màn hình quản lý rạp.<br><br>2\. Admin thêm/sửa/xóa thông tin RAPCHIEUPHIM: tên rạp, địa chỉ, thành phố, số điện thoại, mô tả, ngày hoạt động, trạng thái. |
+| **Mô tả chức năng** | Thêm/sửa/xóa thông tin rạp chiếu phim trên toàn hệ thống, không giới hạn phạm vi phân công; quản lý gallery ảnh URL/metadata thuộc rạp. |
+| **Luồng hoạt động** | 1\. Admin truy cập màn hình quản lý rạp.<br><br>2\. Admin thêm/sửa/xóa thông tin RAPCHIEUPHIM: tên rạp, địa chỉ, thành phố, số điện thoại, mô tả, ngày hoạt động, trạng thái.<br><br>3\. Trong cùng ADM-07, Admin quản lý HINHANH_RAPCHIEUPHIM: URL/path, mô tả, thứ tự hiển thị, trạng thái và một ảnh đại diện. |
 
 **Chức năng Quản lý rạp chiếu phim**
 
@@ -552,7 +552,7 @@ CSDL là phần lõi của hệ thống vì các nghiệp vụ đặt vé, thanh
 
 **3.3. Mô hình ERD**
 
-Mô hình ERD của hệ thống quản lý đặt vé xem phim trực tuyến được xây dựng nhằm biểu diễn đầy đủ các thực thể dữ liệu, thuộc tính và mối quan hệ phát sinh từ các nghiệp vụ của hệ thống. Theo thiết kế hiện tại cơ sở dữ liệu gồm 25 bảng được chia thành các nhóm chính: tài khoản – phân quyền, rạp – phòng – ghế, phim – thể loại – diễn viên, suất chiếu – bảng giá, đặt vé – sản phẩm – thanh toán, đánh giá phim và khiếu nại – chăm sóc khách hàng.
+Mô hình ERD của hệ thống quản lý đặt vé xem phim trực tuyến được xây dựng nhằm biểu diễn đầy đủ các thực thể dữ liệu, thuộc tính và mối quan hệ phát sinh từ các nghiệp vụ của hệ thống. Theo thiết kế hiện tại cơ sở dữ liệu gồm 26 bảng được chia thành các nhóm chính: tài khoản – phân quyền, rạp – phòng – ghế – hình ảnh, phim – thể loại – diễn viên, suất chiếu – bảng giá, đặt vé – sản phẩm – thanh toán, đánh giá phim và khiếu nại – chăm sóc khách hàng.
 
 Trong mô hình, bảng NGUOIDUNG giữ vai trò trung tâm đối với các nghiệp vụ liên quan đến tài khoản. Mỗi người dùng thuộc một VAITRO, trong khi quyền của từng vai trò được xác định thông qua bảng trung gian VAITRO_QUYEN liên kết với QUYEN. Đối với khách hàng, các thông tin mở rộng được lưu tại HOSOKHACHHANG. Riêng người dùng có vai trò quản lý rạp có thể được gán cho một hoặc nhiều rạp thông qua bảng PHANCONG_RAP, từ đó giới hạn phạm vi dữ liệu mà quản lý được phép thao tác.
 
@@ -581,6 +581,8 @@ VAITRO (1) — (n) VAITRO_QUYEN — (n) — (1) QUYEN
 NGUOIDUNG (1) — (0..1) HOSOKHACHHANG
 
 NGUOIDUNG (1) — (n) PHANCONG_RAP — (n) — (1) RAPCHIEUPHIM
+
+RAPCHIEUPHIM (1) — (n) HINHANH_RAPCHIEUPHIM
 
 RAPCHIEUPHIM (1) — (n) PHONGCHIEU
 
@@ -621,6 +623,7 @@ _Hình 3.1: Mô hình ERD hệ thống quản lý đặt vé xem phim trực tuy
 | NGUOIDUNG 1 - 0..1 HOSOKHACHHANG | Hồ sơ mở rộng chỉ cần cho tài khoản khách hàng. |
 | NGUOIDUNG n - n RAPCHIEUPHIM qua PHANCONG_RAP | Một quản lý có thể quản lý nhiều rạp; một rạp có thể có nhiều phân công theo thời gian. |
 | RAPCHIEUPHIM 1 - n PHONGCHIEU 1 - n GHE | Mỗi ghế thuộc đúng một phòng; mỗi phòng thuộc đúng một rạp. |
+| RAPCHIEUPHIM 1 - n HINHANH_RAPCHIEUPHIM | Một rạp có thể chưa có hoặc có nhiều ảnh URL/metadata; mỗi ảnh thuộc đúng một rạp. Một filtered unique index bảo đảm tối đa một ảnh đại diện/rạp. |
 | PHONGCHIEU 1 - n SUATCHIEU; PHIM 1 - n SUATCHIEU | Mỗi suất chiếu gắn một phim và một phòng. |
 | PHIM n - n THELOAI / DIENVIEN | Dùng PHIM_THELOAI và PHIM_DIENVIEN để chuẩn hóa quan hệ nhiều-nhiều. |
 | NGUOIDUNG 1 - n DONDATVE; SUATCHIEU 1 - n DONDATVE | Mỗi đơn do một người dùng tạo cho một suất chiếu. |
@@ -640,6 +643,7 @@ _Hình 3.1: Mô hình ERD hệ thống quản lý đặt vé xem phim trực tuy
 | HOSOKHACHHANG | NguoiDungID (PK, FK), NgaySinh, GioiTinh, DiemTichLuy |
 | PHANCONG_RAP | PhanCongID (PK), NguoiDungID (FK), RapID (FK), NgayBatDau, NgayKetThuc, TrangThai |
 | RAPCHIEUPHIM | RapID (PK), TenRap, DiaChi, ThanhPho, SoDienThoai, MoTa, NgayHoatDong, TrangThai |
+| HINHANH_RAPCHIEUPHIM | HinhAnhRapID (PK), RapID (FK), URL, MoTa, LaAnhDaiDien, ThuTuHienThi, TrangThai, NgayTao |
 | PHONGCHIEU | PhongID (PK), RapID (FK), TenPhong, LoaiPhong, TrangThai |
 | GHE | GheID (PK), PhongID (FK), HangGhe, SoGhe, LoaiGhe, TrangThai |
 | PHIM | PhimID (PK), TenPhim, ThoiLuong, NgayKhoiChieu, NgayKetThuc, NgonNgu, PhuDe, DoTuoi, DaoDien, MoTa, PosterURL, TrailerURL, TrangThai |

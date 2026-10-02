@@ -36,6 +36,7 @@ $steps = @(
 )
 if (-not $SkipSeed) { $steps += 'seed/07_seed_data.sql' }
 $steps += 'migrations/008_admin_global_portal.sql'
+$steps += 'migrations/009_cinema_images.sql'
 if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql', 'tests/10_tests_seat_hold.sql' }
 
 foreach ($step in $steps) {
