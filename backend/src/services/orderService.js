@@ -1,5 +1,6 @@
 import { DbTypes, executeProcedure, executeProcedureWithOutputs } from '../db/procedureClient.js';
 import { HttpError } from '../utils/httpError.js';
+import { isNumericRangeError } from '../utils/sqlErrors.js';
 
 const rowOf = (result, index) => (result.recordsets?.[index] ?? (index === 0 ? result.recordset : []) ?? []);
 const number = (value) => value === null || value === undefined ? null : Number(value);
@@ -51,6 +52,7 @@ function sqlErrorNumber(error) { return error.number ?? error.originalError?.inf
 
 function mapOrderError(error) {
   if (error instanceof HttpError) throw error;
+  if (isNumericRangeError(error)) throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
   switch (sqlErrorNumber(error)) {
     case 50030:
     case 50033: throw new HttpError(404, 'ORDER_NOT_FOUND', 'Order was not found.');

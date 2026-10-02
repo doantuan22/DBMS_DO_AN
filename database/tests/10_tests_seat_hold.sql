@@ -25,13 +25,13 @@ SELECT TOP 1 @Ghe1 = GheID FROM dbo.fn_DanhSachGheSuatChieu(@Suat) WHERE TrangTh
 SELECT TOP 1 @Ghe2 = GheID FROM dbo.fn_DanhSachGheSuatChieu(@Suat) WHERE TrangThaiGhe = N'Trống' AND GheID > @Ghe1 ORDER BY GheID;
 DECLARE @GheStr VARCHAR(50) = CAST(@Ghe1 AS VARCHAR(10));
 
--- T1: đặt vé tạo đơn Chờ thanh toán có HanGiuCho ~ +10 phút; ghế hiện 'Đang giữ'
+-- T1: đặt vé tạo đơn Chờ thanh toán có HanGiuCho ~ +5 phút (migration 012); ghế hiện 'Đang giữ'
 SET @Total += 1;
 EXEC dbo.sp_DatVe @NguoiDungID = 5, @SuatChieuID = @Suat, @DanhSachGheId = @GheStr, @NewDonDatVeID = @Don1 OUTPUT;
 SELECT @Han = HanGiuCho FROM dbo.DONDATVE WHERE DonDatVeID = @Don1;
 SELECT @Muc = TrangThaiGhe FROM dbo.fn_DanhSachGheSuatChieu(@Suat) WHERE GheID = @Ghe1;
-IF DATEDIFF(MINUTE, SYSDATETIME(), @Han) BETWEEN 9 AND 10 AND @Muc = N'Đang giữ'
-    PRINT N'PASS - T1: đơn chờ thanh toán giữ ghế 10 phút, sơ đồ ghế hiện Đang giữ';
+IF DATEDIFF(SECOND, SYSDATETIME(), @Han) BETWEEN 290 AND 300 AND @Muc = N'Đang giữ'
+    PRINT N'PASS - T1: đơn chờ thanh toán giữ ghế 5 phút, sơ đồ ghế hiện Đang giữ';
 ELSE BEGIN SET @Fail += 1; PRINT N'FAIL - T1: ' + ISNULL(@Muc, N'?'); END
 
 -- T2: người khác không đặt được ghế đang được giữ
@@ -90,12 +90,12 @@ BEGIN TRY EXEC dbo.sp_Payment_CreateAttempt @DonDatVeID = @Don2, @PhuongThuc = N
 BEGIN CATCH SET @Err = ERROR_NUMBER(); END CATCH
 IF @Err IN (50111, 50031) PRINT N'PASS - T8: không thanh toán được đơn hết hạn'; ELSE BEGIN SET @Fail += 1; PRINT N'FAIL - T8: err=' + CAST(@Err AS VARCHAR(10)); END
 
--- T9: bắt đầu thanh toán sẽ gia hạn giữ ghế (không rút ngắn)
+-- T9: bắt đầu thanh toán KHÔNG gia hạn giữ ghế (migration 012: hạn giữ chỉ đặt một lần lúc tạo đơn)
 SET @Total += 1;
 UPDATE dbo.DONDATVE SET HanGiuCho = DATEADD(MINUTE, 1, SYSDATETIME()) WHERE DonDatVeID = @Don3;
 EXEC dbo.sp_Payment_CreateAttempt @DonDatVeID = @Don3, @PhuongThuc = N'MOMO', @ThanhToanID = @Tt OUTPUT, @MaGiaoDich = @Ma OUTPUT;
 SELECT @Han = HanGiuCho FROM dbo.DONDATVE WHERE DonDatVeID = @Don3;
-IF DATEDIFF(MINUTE, SYSDATETIME(), @Han) >= 4 PRINT N'PASS - T9: bắt đầu thanh toán gia hạn giữ ghế';
+IF DATEDIFF(SECOND, SYSDATETIME(), @Han) <= 61 PRINT N'PASS - T9: bắt đầu thanh toán không gia hạn giữ ghế';
 ELSE BEGIN SET @Fail += 1; PRINT N'FAIL - T9'; END
 
 -- T10: kết quả thanh toán về muộn khi ghế đã bị đơn khác giữ -> giao dịch thất bại, không đè đơn khác

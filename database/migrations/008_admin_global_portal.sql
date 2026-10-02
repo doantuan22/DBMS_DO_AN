@@ -2,6 +2,9 @@
 -- removed ADM-17 experiment; this file intentionally starts at 008.
 -- No Admin procedure below checks or relies on Manager cinema assignments.
 
+USE CinemaBookingDB
+GO
+
 -- Remove the obsolete permission seed left by ADM-17. This is intentionally
 -- limited to its RBAC links and catalog row; no technical config is touched.
 IF EXISTS (SELECT 1 FROM dbo.QUYEN WHERE MaQuyen = 'CAU_HINH_HETHONG')

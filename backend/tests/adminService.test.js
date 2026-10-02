@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createAdminService, mapAdminProcedureError } from '../src/services/adminService.js';
-import { CINEMA_IMAGE_STATUSES, assignmentFilters, cinemaImageWrite, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
+import { CINEMA_IMAGE_STATUSES, assignmentFilters, promotionWrite, cinemaImageWrite, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
 import { HttpError } from '../src/utils/httpError.js';
 import { requireAdmin } from '../src/middleware/requireAdmin.js';
 import { PROCEDURES } from '../src/db/procedures.js';
@@ -187,8 +187,9 @@ test('unknown SQL errors are not swallowed and HttpErrors pass through', () => {
 });
 
 test('regression guard: every error number thrown by an admin SQL source is mapped', () => {
+  // 012+ belong to the customer booking flow; their codes are mapped (and tested) in bookingService.
   const sources = ['procedures/admin/admin_procedures.sql', ...readdirSync(new URL('../../database/migrations/', import.meta.url))
-    .filter((name) => /^(008|009|01\d)_.*\.sql$/.test(name)).map((name) => `migrations/${name}`)];
+    .filter((name) => /^(008|009|010|011)_.*\.sql$/.test(name)).map((name) => `migrations/${name}`)];
   const thrown = new Set();
   for (const file of sources) {
     const sql = readFileSync(new URL(`../../database/${file}`, import.meta.url), 'utf8');
@@ -264,4 +265,19 @@ test('writes that bypass write() still get constraint errors mapped', async () =
   await assert.rejects(service.createMovie(movie), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
   await assert.rejects(service.updateMovie(1, { ...movie, status: 'Đang chiếu' }), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
   await assert.rejects(createAdminService({ execute: async () => { throw { number: 2627 }; } }).createUser({ name: 'N', email: 'a@b.invalid', password: 'StrongPass1!', roleId: 2 }), (error) => error.status === 409 && error.code === 'DUPLICATE_RECORD');
+});
+
+test('promotion validator: percent discounts are limited to (0, 99], fixed discounts only need to be positive', () => {
+  const base = { code: 'AUDIT1', startsAt: '2030-01-01T00:00:00Z', endsAt: '2031-01-01T00:00:00Z', quantity: 5 };
+  for (const [discountType, discountValue] of [['Phần trăm', 99], ['Phần trăm', 0.5], ['PERCENT', 10], ['Số tiền', 5000000], ['FIXED', 100000]]) {
+    assert.equal(promotionWrite({ ...base, discountType, discountValue }, true).discountValue, discountValue);
+  }
+  for (const [discountType, discountValue] of [['Phần trăm', 100], ['Phần trăm', 150], ['PERCENT', 99.01], ['Phần trăm', 1e15]]) {
+    assert.throws(() => promotionWrite({ ...base, discountType, discountValue }, true), (error) => error.status === 400 && /at most 99/.test(error.message));
+  }
+  for (const discountValue of [0, -5]) assert.throws(() => promotionWrite({ ...base, discountType: 'Phần trăm', discountValue }, true), { status: 400 });
+  // update shape applies the same rule
+  const update = { description: 'x', discountType: 'Phần trăm', discountValue: 100, startsAt: base.startsAt, endsAt: base.endsAt, quantity: 5, status: 'Hoạt động' };
+  assert.throws(() => promotionWrite(update), { status: 400 });
+  assert.equal(promotionWrite({ ...update, discountValue: 99 }).discountValue, 99);
 });

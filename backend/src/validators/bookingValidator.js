@@ -9,8 +9,13 @@ function requestObject(value, allowedKeys) {
   return value;
 }
 
+// Business limits (mirrored by dbo.fn_GioiHanGheMoiDon / fn_GioiHanSoLuongSanPham in migration 012).
+export const MAX_SEATS_PER_ORDER = 10;
+export const MAX_PRODUCT_QUANTITY = 10;
+const SQL_INT_MAX = 2147483647;
+
 export function positiveInteger(value, field) {
-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value <= 0) {
+  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value <= 0 || value > SQL_INT_MAX) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
   }
   return value;
@@ -22,7 +27,18 @@ function seatIds(value) {
   }
   const ids = value.map((item) => positiveInteger(item, 'seatIds'));
   if (new Set(ids).size !== ids.length) throw new HttpError(400, 'DUPLICATE_SEAT', 'seatIds must not contain duplicates.');
+  if (ids.length > MAX_SEATS_PER_ORDER) {
+    throw new HttpError(400, 'SEAT_LIMIT_EXCEEDED', `An order can contain at most ${MAX_SEATS_PER_ORDER} seats.`);
+  }
   return ids;
+}
+
+function quantity(value) {
+  const amount = positiveInteger(value, 'quantity');
+  if (amount > MAX_PRODUCT_QUANTITY) {
+    throw new HttpError(400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED', `Each product quantity must be at most ${MAX_PRODUCT_QUANTITY}.`);
+  }
+  return amount;
 }
 
 function products(value = []) {
@@ -33,7 +49,7 @@ function products(value = []) {
     }
     return {
       productId: positiveInteger(item.productId, 'productId'),
-      quantity: positiveInteger(item.quantity, 'quantity'),
+      quantity: quantity(item.quantity),
     };
   });
   if (new Set(items.map((item) => item.productId)).size !== items.length) {

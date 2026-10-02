@@ -5,7 +5,7 @@ function positiveInteger(value, field) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
   }
   const parsed = Number(value);
-  if (!Number.isSafeInteger(parsed)) throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
+  if (!Number.isSafeInteger(parsed) || parsed > 2147483647) throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
   return parsed;
 }
 

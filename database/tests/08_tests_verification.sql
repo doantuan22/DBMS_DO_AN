@@ -19,15 +19,15 @@ DECLARE @PassedTests INT = 0;
 DECLARE @TotalTests INT = 0;
 
 -- ----------------------------------------------------------------------------
--- TEST 1: KIỂM TRA SỰ TỒN TẠI ĐÚNG 25 BẢNG THEO THIẾT KẾ
+-- TEST 1: KIỂM TRA SỰ TỒN TẠI ĐÚNG 26 BẢNG THEO THIẾT KẾ
 -- ----------------------------------------------------------------------------
 SET @TotalTests = @TotalTests + 1;
 DECLARE @BangCount INT;
 SELECT @BangCount = COUNT(*) FROM sys.tables WHERE is_ms_shipped = 0;
 
-IF @BangCount = 25
+IF @BangCount = 26
 BEGIN
-    PRINT N'[PASS] Test 1: Kiểm tra cấu trúc 25 bảng thành công (Số bảng hiện tại: ' + CAST(@BangCount AS VARCHAR(10)) + N').';
+    PRINT N'[PASS] Test 1: Kiểm tra cấu trúc 26 bảng thành công (Số bảng hiện tại: ' + CAST(@BangCount AS VARCHAR(10)) + N').';
     SET @PassedTests = @PassedTests + 1;
 END
 ELSE

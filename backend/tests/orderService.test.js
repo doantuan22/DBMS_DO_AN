@@ -56,3 +56,12 @@ test('database ownership and state errors map to safe REST errors', async () => 
   const expired = createOrderService({ execute: async () => detailResult(), executeWithOutputs: async () => { throw sqlError(50111); } });
   await assert.rejects(expired.createPaymentAttempt(5, 12, { paymentMethod: 'MOMO' }), { status: 409, code: 'ORDER_HOLD_EXPIRED' });
 });
+
+test('numeric overflow while paying maps to 400 and unrelated errors are untouched', async () => {
+  for (const number of [8115, 245, 248]) {
+    const service = createOrderService({ execute: async () => { throw sqlError(number); } });
+    await assert.rejects(service.getOrderDetail(5, 12), { status: 400, code: 'INVALID_REQUEST' });
+  }
+  const service = createOrderService({ execute: async () => { throw sqlError(2627); } });
+  await assert.rejects(service.getOrderDetail(5, 12), (error) => error.number === 2627);
+});

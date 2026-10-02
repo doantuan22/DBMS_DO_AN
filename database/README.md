@@ -26,11 +26,15 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `migrations/009_cinema_images.sql` | ADM-07 extension: adds `HINHANH_RAPCHIEUPHIM`, image constraints/indexes, public gallery read, Admin image CRUD and transactional cover selection. |
 | - | `migrations/010_cinema_image_fixes.sql` | Cinema image fixes: Create/SetCover emit only the final image result set (lock no longer returns a result set); normalises out-of-domain `TrangThai` to `Tạm ẩn` and adds `CK_HINHANH_RAPCHIEUPHIM_TrangThai` (`Hoạt động`, `Tạm ẩn`). Run after 009; apply with `sqlcmd -f 65001`. |
 | - | `migrations/011_cinema_image_update_lock.sql` | `usp_Admin_CinemaImage_Update` now takes the same cinema-wide key-range lock inside a transaction as Create/SetCover (fixes Update/SetCover deadlocks); contract unchanged. Run after 010; apply with `sqlcmd -f 65001`. |
+| - | `migrations/012_booking_limits_and_pricing.sql` | Booking limits and pricing (audit round 4): max 10 seats per order and 10 units per product line (lines of one product are summed first), percent promotions in (0, 99] with `CK_KHUYENMAI_PhanTram99` and every discount capped at 99% of the subtotal, hold fixed at 5 minutes and never extended, at most 3 unpaid unexpired orders per customer (customer row lock before the showtime lock), and additive surcharges in `fn_TinhGiaVe`. New error numbers 50026/50027/50028. Existing orders keep their stored amounts. Run after 011; apply with `sqlcmd -f 65001`. |
 | - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
 | - | `tests/12_tests_cinema_images.sql` | Transactional ADM-07 cinema image verification: FK, defaults, cover change, ordering, invalid cinema and deletion. |
 | - | `tests/13_tests_cinema_image_fixes.sql` | Transactional verification of migration 010: single DTO result set from Create/SetCover, one cover per cinema, `TrangThai` CHECK. |
 | - | `tests/14_tests_cinema_image_update_lock.sql` | Transactional verification of migration 011: single DTO result set from Update, one-cover rule over an Update/SetCover chain, 50230 for missing image, `TrangThai` CHECK. |
-| - | `deployment/deploy.ps1` | Runs the steps above in order |
+| - | `tests/15_tests_booking_limits.sql` | Transactional verification of migration 012 (promotion CHECK and cap, seat/product caps by direct procedure call, 5-minute hold, 3-order limit, additive surcharges). |
+| - | `tests/stress/` | Manual stress tests run through the API (cinema image lock, booking concurrency); never part of an automated run. See `tests/stress/README.md`. |
+| - | `deployment/deploy.ps1` | Runs the steps above in order (shared logic in `DeployCommon.ps1`; the default target is still `CinemaBookingDB` / `CinemaAppUser`) |
+| - | `deployment/deploy-isolated.ps1` | Builds a disposable copy from the repository only, with its own database and login names; refuses the shared names (see Deploy) |
 
 Empty folders (`constraints/`, `indexes/`, `tests/{procedures,triggers,concurrency}/`) are placeholders.
 
@@ -41,7 +45,16 @@ Empty folders (`constraints/`, `indexes/`, `tests/{procedures,triggers,concurren
 .\database\deployment\deploy.ps1 -Database CinemaScratch -AppPassword '...' -RunTests   # scratch DB + tests
 ```
 
-`-RunTests` runs tests 08-14 in numeric order after the migrations. Test 08 creates an order and `01_schema.sql` drops every table, so use a disposable database; the security step also resets the `CinemaAppUser` server login password to `-AppPassword`. Tests 11-14 roll back and can be run alone with `sqlcmd -S localhost -E -C -I -f 65001 -b -i <file>`.
+`-RunTests` runs tests 08-15 in numeric order after the migrations. Test 08 creates an order and `01_schema.sql` drops every table, so use a disposable database; the security step also resets the `CinemaAppUser` server login password to `-AppPassword`. Tests 11-14 roll back and can be run alone with `sqlcmd -S localhost -E -C -I -f 65001 -b -i <file>`.
+
+To build a disposable copy next to a database that is in use (it refuses the shared database and login names, takes the password from `DEPLOY_APP_PASSWORD` only, and `-Recreate` drops an existing copy of the same name):
+
+```powershell
+$env:DEPLOY_APP_PASSWORD = '<password for the new login>'
+.\database\deployment\deploy-isolated.ps1 -Database CinemaBookingDB_RepoCheck -AppLogin CinemaRepoUser -RunTests
+```
+
+Every step runs with `sqlcmd -d <database>`, so migrations without a `USE` line cannot land in `master`. Migrations 001-006 are replayed after the seed (idempotent) so that the result is identical to a database that was upgraded step by step. Remove a disposable copy with `ALTER DATABASE <db> SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE <db>;` and `DROP LOGIN <login>;`. The scripts need `-ExecutionPolicy Bypass` when script execution is disabled.
 
 Put the same password in `backend/.env` (`DB_USER=CinemaAppUser`, `DB_PASSWORD=...`). `.env` is git-ignored.
 

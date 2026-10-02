@@ -1,5 +1,6 @@
 import { DbTypes, executeProcedure, executeProcedureWithOutputs } from '../db/procedureClient.js';
 import { HttpError } from '../utils/httpError.js';
+import { isNumericRangeError } from '../utils/sqlErrors.js';
 
 const SEAT_AVAILABLE = 'Trống';
 
@@ -56,10 +57,14 @@ function sqlErrorNumber(error) {
 
 function mapBookingError(error) {
   if (error instanceof HttpError) throw error;
+  if (isNumericRangeError(error)) throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
   switch (sqlErrorNumber(error)) {
     case 50021: throw new HttpError(404, 'SHOWTIME_NOT_FOUND', 'Showtime was not found.');
     case 50022: throw new HttpError(409, 'SHOWTIME_UNAVAILABLE', 'This showtime is no longer available for booking.');
     case 50024: throw new HttpError(409, 'SEAT_UNAVAILABLE', 'One or more selected seats are unavailable.');
+    case 50026: throw new HttpError(400, 'SEAT_LIMIT_EXCEEDED', 'An order can contain at most 10 seats.');
+    case 50027: throw new HttpError(400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED', 'Each product quantity must be at most 10.');
+    case 50028: throw new HttpError(409, 'ACTIVE_ORDER_LIMIT_REACHED', 'You already hold the maximum number of unpaid orders. Pay for one or wait for it to expire.');
     case 50025:
     case 50003: throw new HttpError(409, 'SEAT_CONFLICT', 'One or more selected seats were just booked by another customer.');
     default: throw error;

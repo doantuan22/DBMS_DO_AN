@@ -1,58 +1,27 @@
 <#
 .SYNOPSIS
-  Deploys the SQL Server database in dependency order using sqlcmd.
+  Deploys the SQL Server database in dependency order using sqlcmd (shared logic: DeployCommon.ps1).
 
 .PARAMETER Server        SQL Server instance (default: localhost).
 .PARAMETER Database      Target database name (default: CinemaBookingDB). Scripts hardcode CinemaBookingDB; another name is substituted on the fly.
-.PARAMETER AppPassword   Password for the application login CinemaAppUser (required, never stored in files).
+.PARAMETER AppLogin      Application login created/updated by the security step (default: CinemaAppUser; substituted on the fly).
+.PARAMETER AppPassword   Password for the application login (required, never stored in files). Falls back to $env:DEPLOY_APP_PASSWORD.
 .PARAMETER SkipSeed      Do not load demo data.
-.PARAMETER RunTests      Run tests 08-14 at the end (08 creates an order: scratch database only).
+.PARAMETER RunTests      Run tests 08-15 at the end (08 creates an order: scratch database only).
 
-WARNING: 01_schema.sql drops and recreates every table. Use only on a new/disposable database.
+WARNING: 01_schema.sql drops and recreates every table, and the security step resets the login password.
+Use only on a new/disposable database. To build next to a database that is in use, prefer deploy-isolated.ps1,
+which refuses the shared database and login names.
 #>
 param(
     [string]$Server = 'localhost',
     [string]$Database = 'CinemaBookingDB',
-    [Parameter(Mandatory = $true)][string]$AppPassword,
+    [string]$AppLogin = 'CinemaAppUser',
+    [string]$AppPassword = $env:DEPLOY_APP_PASSWORD,
     [switch]$SkipSeed,
     [switch]$RunTests
 )
 
 $ErrorActionPreference = 'Stop'
-$db = Split-Path -Parent $PSScriptRoot
-
-$steps = @(
-    'schema/01_schema.sql',
-    'functions/02_functions.sql',
-    'views/03_views.sql',
-    'triggers/04_triggers.sql',
-    'procedures/system/system_procedures.sql',
-    'procedures/auth/auth_procedures.sql',
-    'procedures/customer/customer_procedures.sql',
-    'procedures/manager/manager_procedures.sql',
-    'procedures/support/support_procedures.sql',
-    'procedures/admin/admin_procedures.sql',
-    'security/06_security_rbac.sql'
-)
-if (-not $SkipSeed) { $steps += 'seed/07_seed_data.sql' }
-$steps += 'migrations/008_admin_global_portal.sql'
-$steps += 'migrations/009_cinema_images.sql'
-$steps += 'migrations/010_cinema_image_fixes.sql'
-$steps += 'migrations/011_cinema_image_update_lock.sql'
-if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql', 'tests/10_tests_seat_hold.sql', 'tests/11_tests_complaint_order_ownership.sql', 'tests/12_tests_cinema_images.sql', 'tests/13_tests_cinema_image_fixes.sql', 'tests/14_tests_cinema_image_update_lock.sql' }
-
-foreach ($step in $steps) {
-    $path = Join-Path $db $step
-    $sql = [IO.File]::ReadAllText($path, [Text.Encoding]::UTF8)
-    # A :setvar inside a script would override the -v value below; the password comes from -AppPassword
-    $sql = [regex]::Replace($sql, '(?m)^:setvar[^\r\n]*\r?\n', '')
-    $tmp = Join-Path ([IO.Path]::GetTempPath()) ("deploy_" + [IO.Path]::GetFileName($path))
-    [IO.File]::WriteAllText($tmp, $sql.Replace('CinemaBookingDB', $Database), (New-Object Text.UTF8Encoding($true)))
-    Write-Host "== $step"
-    # -I: QUOTED_IDENTIFIER ON (required by filtered indexes); -b: stop with error code on failure
-    & sqlcmd -S $Server -E -C -I -b -f 65001 -i $tmp -v AppPassword="$AppPassword"
-    $code = $LASTEXITCODE
-    Remove-Item $tmp -Force
-    if ($code -ne 0) { throw "Failed at $step (sqlcmd exit code $code)" }
-}
-Write-Host 'Deployment finished.'
+. (Join-Path $PSScriptRoot 'DeployCommon.ps1')
+Invoke-Deploy -Server $Server -Database $Database -AppLogin $AppLogin -AppPassword $AppPassword -SkipSeed:$SkipSeed -RunTests:$RunTests

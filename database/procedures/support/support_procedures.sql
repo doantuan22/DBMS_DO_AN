@@ -76,10 +76,10 @@ BEGIN
 
     IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_KHIEUNAI') = 0
        AND dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
-        ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền truy cập khiếu nại.', 1;
+        THROW 50060, N'Lỗi bảo mật: Bạn không có quyền truy cập khiếu nại.', 1;
 
     IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
-        ;THROW 50061, N'Khiếu nại không tồn tại.', 1;
+        THROW 50061, N'Khiếu nại không tồn tại.', 1;
 
     -- Recordset 1: Chi tiết khiếu nại
     SELECT
@@ -129,10 +129,10 @@ BEGIN
 
     IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_KHIEUNAI') = 0
        AND dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
-        ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xem đơn tham chiếu.', 1;
+        THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xem đơn tham chiếu.', 1;
 
     IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
-        ;THROW 50061, N'Khiếu nại không tồn tại.', 1;
+        THROW 50061, N'Khiếu nại không tồn tại.', 1;
 
     DECLARE @DonDatVeID INT;
     SELECT @DonDatVeID = DonDatVeID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID;
@@ -256,10 +256,10 @@ BEGIN
         BEGIN TRANSACTION;
 
         IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'XULY_KHIEUNAI') = 0
-            ;THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xử lý khiếu nại.', 1;
+            THROW 50060, N'Lỗi bảo mật: Bạn không có quyền xử lý khiếu nại.', 1;
 
         IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)
-            ;THROW 50061, N'Khiếu nại không tồn tại.', 1;
+            THROW 50061, N'Khiếu nại không tồn tại.', 1;
 
         -- Status-only actions remain append-only: the trigger synchronizes
         -- KHIEUNAI.TrangThai with this new history item atomically.

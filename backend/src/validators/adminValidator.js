@@ -132,4 +132,13 @@ export const actorWrite = (v) => bodyShape(v, { name: 'string', birthDate: 'date
 export const movieWrite = (v, create = false) => bodyShape(v, create ? { title: 'string', durationMinutes: 'positive', releaseDate: 'date', endDate: 'nullable-date?', language: 'string?', subtitle: 'string?', ageRating: 'string?', director: 'string?', description: 'string?', posterUrl: 'string?', trailerUrl: 'string?', genreIds: 'ids' } : { title: 'string', durationMinutes: 'positive', releaseDate: 'date', endDate: 'nullable-date?', language: 'string?', subtitle: 'string?', ageRating: 'string?', director: 'string?', description: 'string?', posterUrl: 'string?', trailerUrl: 'string?', status: 'string', genreIds: 'ids' });
 export const movieCast = (v) => bodyShape(v, { cast: 'cast' });
 export const productWrite = (v, create = false) => bodyShape(v, create ? { name: 'string', type: 'string', price: 'number', description: 'string?', image: 'string?' } : { name: 'string', type: 'string', price: 'number', description: 'string?', image: 'string?', status: 'string' });
-export const promotionWrite = (v, create = false) => bodyShape(v, create ? { code: 'string', description: 'string?', discountType: 'string', discountValue: 'positive', minimumOrder: 'number?', maximumDiscount: 'number?', startsAt: 'datetime', endsAt: 'datetime', quantity: 'positive' } : { description: 'string?', discountType: 'string', discountValue: 'positive', minimumOrder: 'number?', maximumDiscount: 'number?', startsAt: 'datetime', endsAt: 'datetime', quantity: 'positive', status: 'string' });
+const PERCENT_DISCOUNT_TYPES = new Set(['Phần trăm', 'PERCENT']);
+export const MAX_PERCENT_DISCOUNT = 99; // mirrors CK_KHUYENMAI_PhanTram99 and dbo.fn_GioiHanGiamGiaPhanTram
+export const promotionWrite = (v, create = false) => {
+  const result = promotionShape(v, create);
+  if (PERCENT_DISCOUNT_TYPES.has(result.discountType) && result.discountValue > MAX_PERCENT_DISCOUNT) {
+    throw new HttpError(400, 'INVALID_REQUEST', `A percent discount must be greater than 0 and at most ${MAX_PERCENT_DISCOUNT}.`);
+  }
+  return result;
+};
+const promotionShape = (v, create) => bodyShape(v, create ? { code: 'string', description: 'string?', discountType: 'string', discountValue: 'positive', minimumOrder: 'number?', maximumDiscount: 'number?', startsAt: 'datetime', endsAt: 'datetime', quantity: 'positive' } : { description: 'string?', discountType: 'string', discountValue: 'positive', minimumOrder: 'number?', maximumDiscount: 'number?', startsAt: 'datetime', endsAt: 'datetime', quantity: 'positive', status: 'string' });

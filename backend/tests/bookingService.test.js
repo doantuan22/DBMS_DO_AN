@@ -43,3 +43,18 @@ test('database seat conflicts become HTTP 409 without exposing SQL details', asy
     status: 409, code: 'SEAT_CONFLICT',
   });
 });
+
+test('booking limit errors and numeric overflow map to fixed 4xx responses', async () => {
+  const input = { showtimeId: 7, seatIds: [11], products: [], promotionCode: null };
+  const cases = [[50026, 400, 'SEAT_LIMIT_EXCEEDED'], [50027, 400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED'], [50028, 409, 'ACTIVE_ORDER_LIMIT_REACHED'],
+    [248, 400, 'INVALID_REQUEST'], [245, 400, 'INVALID_REQUEST'], [8115, 400, 'INVALID_REQUEST']];
+  for (const [number, status, code] of cases) {
+    const { service, results } = fixture();
+    const error = new Error('The conversion of the nvarchar value overflowed an int column in table dbo.CHITIETDOAN'); error.number = number;
+    results.set('BOOKING_CREATE', error);
+    await assert.rejects(service.createBooking(5, input), (thrown) => thrown.status === status && thrown.code === code && !/dbo|CHITIET|nvarchar/i.test(thrown.message));
+  }
+  const { service, results } = fixture();
+  const unknown = new Error('other'); unknown.number = 2627; results.set('BOOKING_CREATE', unknown);
+  await assert.rejects(service.createBooking(5, input), (thrown) => thrown === unknown); // unrelated SQL errors still surface as 500
+});

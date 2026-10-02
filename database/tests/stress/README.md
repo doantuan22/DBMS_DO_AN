@@ -20,3 +20,23 @@ Rules:
 - `200` is success. `409 CINEMA_IMAGE_INACTIVE` is valid (cover requested on a hidden image).
   Any other status (especially `500`, i.e. a deadlock) or an invariant violation fails the run.
 - Exit code: `0` clean, `1` failure, `2` bad setup (arguments, login or fixtures).
+
+# Booking concurrency stress test (`booking-stress.mjs`)
+
+Checks the seat locks and the per-customer holding-order limit through the real API:
+A. 60 parallel bookings of one seat -> exactly one 201, the rest 409; B. 120 overlapping 3-seat bookings -> no seat sold twice;
+C. parallel bursts per customer -> exactly 3 succeed (`ACTIVE_ORDER_LIMIT_REACHED` for the rest). Any 5xx fails the run.
+
+```powershell
+$env:STRESS_CONFIRM_DISPOSABLE = 'yes'
+$env:STRESS_ADMIN_PASSWORD = '<admin password>'
+node database/tests/stress/booking-stress.mjs --email=admin@example.com --base-url=http://localhost:4000/api
+```
+
+Options: `--customers` (8), `--seat-requests` (60), `--overlap-requests` (120), `--burst` (4, parallel bookings per customer in C),
+`--room-id` (1, needs >= 20 seats), `--movie-id` (1); each also as `STRESS_*` environment variable. Exit code `0` clean, `1` failed, `2` bad setup.
+
+**It leaves data behind that the API cannot delete** (customers `audit.stress.*@example.invalid` and one showtime in the year 2100+),
+so it refuses to run without `STRESS_CONFIRM_DISPOSABLE=yes`. Run it only against a disposable database (e.g. the one built by
+`deploy-isolated.ps1`). Deadlocks are not visible through the API; check the server log for `deadlock`/1205/1222 after the run.
+
