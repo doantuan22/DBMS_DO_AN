@@ -27,3 +27,10 @@ test('manager validators use only database contract fields and valid date ranges
   assert.deepEqual(dateRange({ fromDate: '2027-01-01', toDate: '2027-01-02' }), { fromDate: '2027-01-01', toDate: '2027-01-02' });
   assert.throws(() => dateRange({ fromDate: '2027-01-03', toDate: '2027-01-02' }), { code: 'INVALID_REQUEST' });
 });
+
+test('overlapping active pricing rules become 409 for managers too', async () => {
+  const failing = createManagerService({ execute: async () => { throw sqlError(50215); } });
+  const input = { seatType: 'VIP', dayType: 'Tất cả', format: '2D', surcharge: 1000, startsOn: '2030-01-01', endsOn: null, status: 'Áp dụng' };
+  await assert.rejects(failing.createPricing(2, 1, input), { status: 409, code: 'PRICING_OVERLAP' });
+  await assert.rejects(failing.updatePricing(2, 5, input), { status: 409, code: 'PRICING_OVERLAP' });
+});

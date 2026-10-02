@@ -7,7 +7,7 @@
 .PARAMETER AppLogin      Application login created/updated by the security step (default: CinemaAppUser; substituted on the fly).
 .PARAMETER AppPassword   Password for the application login (required, never stored in files). Falls back to $env:DEPLOY_APP_PASSWORD.
 .PARAMETER SkipSeed      Do not load demo data.
-.PARAMETER RunTests      Run tests 08-15 at the end (08 creates an order: scratch database only).
+.PARAMETER RunTests      Run tests 08-16 at the end (08 creates an order: scratch database only).
 
 WARNING: 01_schema.sql drops and recreates every table, and the security step resets the login password.
 Use only on a new/disposable database. To build next to a database that is in use, prefer deploy-isolated.ps1,

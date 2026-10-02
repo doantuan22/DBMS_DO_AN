@@ -21,6 +21,7 @@ function managerError(error) {
     case 50109:
     case 50116: throw new HttpError(404, 'MANAGER_RESOURCE_NOT_FOUND', 'Manager resource was not found.');
     case 50110: throw new HttpError(409, 'SEAT_HAS_TICKETS', 'A seat with tickets cannot be deleted.');
+    case 50215: throw new HttpError(409, 'PRICING_OVERLAP', 'An active pricing rule with the same conditions already covers part of this period.');
     case 50117: throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
     case 50118: throw new HttpError(409, 'SHOWTIME_HAS_BOOKINGS', 'Showtime has active bookings and cannot be cancelled.');
     default: throw error;

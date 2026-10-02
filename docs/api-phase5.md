@@ -33,7 +33,7 @@ There is no `sp_Order_GetPaymentStatus` in the database baseline. The order deta
 
 | Classification | Object | Observation |
 | --- | --- | --- |
-| MATCH | `sp_Payment_CreateAttempt` | creates a `THANHTOAN` attempt, derives the amount from `DONDATVE`, and extends the hold in its own transaction. |
+| CHANGED (migration 012) | `sp_Payment_CreateAttempt` | creates a `THANHTOAN` attempt and derives the amount from `DONDATVE`. It no longer extends the hold: `HanGiuCho` is set once at order creation (5 minutes) and no payment action moves it. |
 | STRONGER THAN DESIGN | `sp_Payment_UpdateResult` | locks payment and order, is idempotent for an identical callback, rejects a conflicting final result, and protects late-payment seat availability. |
 | MATCH | `sp_Order_GetDetailByCustomer` | SQL checks customer ownership and returns order, tickets, products and all payment attempts. |
 | IMPLEMENTATION DETAIL | payment status endpoint | no dedicated `sp_Order_GetPaymentStatus` exists; the existing detail procedure already supplies the needed payment state. |

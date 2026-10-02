@@ -138,7 +138,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tên Use Case** | Đặt vé |
 | **Tác nhân thực hiện** | Khách hàng |
 | **Mô tả chức năng** | Khách hàng hoàn tất chọn suất chiếu, ghế, đồ ăn, khuyến mãi để tạo đơn/vé duy nhất. |
-| **Luồng hoạt động** | 1\. Khách hàng chọn SuatChieuID và danh sách GheID muốn đặt.<br><br>2\. (Tuỳ chọn) khách hàng chọn thêm SanPhamID ăn uống và/hoặc nhập mã khuyến mãi.<br><br>3\. Hệ thống kiểm tra ghế thuộc đúng phòng của suất chiếu (BR03) và chưa được bán hợp lệ trong cùng suất chiếu (BR02) trong một Transaction.<br><br>4\. Hệ thống tính giá vé (giá cơ bản của suất chiếu kết hợp phụ thu BANGGIA theo loại ghế/ngày/định dạng) và chốt giá trị snapshot GiaVe (BR09).<br><br>5\. Hệ thống tạo bản ghi DONDATVE ở trạng thái Chờ thanh toán, các CHITIETVE tương ứng ghế đã chọn, CHITIETDOAN nếu có đồ ăn, gắn KhuyenMaiID nếu áp dụng khuyến mãi. Đơn được giữ ghế trong một khoảng thời gian giới hạn (HanGiuCho = thời điểm đặt + 10 phút); ghế đó hiển thị "đang giữ chỗ" với khách khác và không thể đặt. Quá hạn mà chưa thanh toán, đơn chuyển sang Hết hạn và ghế được nhả.<br><br>6\. Nếu phát hiện xung đột (ghế vừa bị người khác đặt), hệ thống rollback toàn bộ giao dịch và thông báo lỗi cho khách hàng. |
+| **Luồng hoạt động** | 1\. Khách hàng chọn SuatChieuID và danh sách GheID muốn đặt.<br><br>2\. (Tuỳ chọn) khách hàng chọn thêm SanPhamID ăn uống và/hoặc nhập mã khuyến mãi.<br><br>3\. Hệ thống kiểm tra ghế thuộc đúng phòng của suất chiếu (BR03) và chưa được bán hợp lệ trong cùng suất chiếu (BR02) trong một Transaction.<br><br>4\. Hệ thống tính giá vé (giá cơ bản của suất chiếu kết hợp phụ thu BANGGIA theo loại ghế/ngày/định dạng; mọi phụ thu áp dụng được CỘNG DỒN, và hai dòng BANGGIA cùng rạp, cùng điều kiện, cùng "Áp dụng" không được có khoảng hiệu lực giao nhau; cuối tuần là thứ Bảy và Chủ nhật) và chốt giá trị snapshot GiaVe (BR09).<br><br>5\. Hệ thống tạo bản ghi DONDATVE ở trạng thái Chờ thanh toán, các CHITIETVE tương ứng ghế đã chọn, CHITIETDOAN nếu có đồ ăn, gắn KhuyenMaiID nếu áp dụng khuyến mãi. Đơn được giữ ghế đúng 5 phút (HanGiuCho = thời điểm đặt + 5 phút, đặt một lần và không bao giờ được gia hạn); mỗi đơn tối đa 10 ghế, mỗi dòng sản phẩm tối đa 10, mỗi khách tối đa 3 đơn đang giữ chỗ (chưa thanh toán và chưa quá hạn); ghế đó hiển thị "đang giữ chỗ" với khách khác và không thể đặt. Quá hạn mà chưa thanh toán, đơn chuyển sang Hết hạn và ghế được nhả.<br><br>6\. Nếu phát hiện xung đột (ghế vừa bị người khác đặt), hệ thống rollback toàn bộ giao dịch và thông báo lỗi cho khách hàng. |
 
 **Chức năng Mua đồ ăn/thức uống kèm vé**
 
@@ -168,7 +168,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 | **Tên Use Case** | Thanh toán đơn đặt vé |
 | **Tác nhân thực hiện** | Khách hàng |
 | **Mô tả chức năng** | Khách hàng thực hiện thanh toán cho đơn đặt vé đã tạo; một đơn có thể có nhiều lần thử giao dịch. |
-| **Luồng hoạt động** | 1\. Khách hàng chọn DonDatVeID cần thanh toán và phương thức thanh toán.<br><br>2\. Hệ thống tạo bản ghi THANHTOAN (số tiền, phương thức, thời gian, mã giao dịch, trạng thái = đang xử lý).<br><br>3\. Hệ thống ghi nhận kết quả giao dịch trả về và cập nhật trạng thái bản ghi THANHTOAN tương ứng.<br><br>4\. Hệ thống đồng bộ trạng thái DONDATVE.TrangThai theo kết quả thanh toán mới nhất.<br><br>5\. Khi khách bắt đầu một lần thanh toán, thời gian giữ ghế được gia hạn thêm tối thiểu 5 phút; không thể thanh toán đơn đã hết hạn giữ ghế. Thanh toán thành công là hoàn tất: hệ thống không có chức năng hoàn tiền và không hủy đơn đã thanh toán. |
+| **Luồng hoạt động** | 1\. Khách hàng chọn DonDatVeID cần thanh toán và phương thức thanh toán.<br><br>2\. Hệ thống tạo bản ghi THANHTOAN (số tiền, phương thức, thời gian, mã giao dịch, trạng thái = đang xử lý).<br><br>3\. Hệ thống ghi nhận kết quả giao dịch trả về và cập nhật trạng thái bản ghi THANHTOAN tương ứng.<br><br>4\. Hệ thống đồng bộ trạng thái DONDATVE.TrangThai theo kết quả thanh toán mới nhất.<br><br>5\. Thời gian giữ ghế KHÔNG được gia hạn dưới bất kỳ thao tác nào (kể cả bắt đầu thanh toán hay thanh toán thất bại); không thể bắt đầu thanh toán đơn đã hết hạn giữ ghế. Kết quả thanh toán thành công đến muộn sau hạn giữ vẫn được ghi nhận nếu suất chiếu còn mở bán và không đơn nào khác đang giữ hoặc đã mua các ghế đó (thanh toán hiện là mô phỏng; khi tích hợp cổng thanh toán thật cần chính sách riêng cho trường hợp này). Thanh toán thành công là hoàn tất: hệ thống không có chức năng hoàn tiền và không hủy đơn đã thanh toán. |
 
 **Chức năng Xem lịch sử đặt vé**
 
@@ -720,7 +720,7 @@ DANHGIAPHIM liên kết trực tiếp NGUOIDUNG - PHIM và có UNIQUE(PhimID, Ng
 | TongTienDoAn | DECIMAL | \>= 0 | Tổng đồ ăn snapshot |
 | TienGiamGia | DECIMAL | \>= 0 | Mức giảm thực tế |
 | TrangThai | NVARCHAR | DEFAULT Chờ thanh toán | Trạng thái đơn |
-| HanGiuCho | DATETIME2 | NULL; bắt buộc khi Chờ thanh toán | Hạn giữ ghế của đơn chờ thanh toán (NgayDat + 10 phút, gia hạn khi bắt đầu thanh toán) |
+| HanGiuCho | DATETIME2 | NULL; bắt buộc khi Chờ thanh toán | Hạn giữ ghế của đơn chờ thanh toán (NgayDat + 5 phút, đặt một lần lúc tạo đơn, không gia hạn) |
 
 **3.8.2. SUATCHIEU**
 

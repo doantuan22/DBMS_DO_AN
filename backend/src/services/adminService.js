@@ -109,6 +109,8 @@ export function mapAdminProcedureError(error) {
       throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
     case 50001:
       throw new HttpError(409, 'SHOWTIME_OVERLAP', 'The room already has an overlapping showtime.');
+    case 50215:
+      throw new HttpError(409, 'PRICING_OVERLAP', 'An active pricing rule with the same conditions already covers part of this period.');
     case 50212:
       throw new HttpError(404, 'ASSIGNMENT_NOT_FOUND', 'Assignment was not found.');
     case 50213:

@@ -7,7 +7,7 @@
 .PARAMETER Database      Target database name (required), e.g. CinemaBookingDB_RepoCheck. Must not be CinemaBookingDB.
 .PARAMETER AppLogin      Application login to create (required), e.g. CinemaRepoUser. Must not be CinemaAppUser.
 .PARAMETER SkipSeed      Do not load demo data.
-.PARAMETER RunTests      Run tests 08-15 at the end.
+.PARAMETER RunTests      Run tests 08-16 at the end.
 .PARAMETER Recreate      Drop the target database first if it already exists (never allowed for the shared name).
 .PARAMETER AllowSharedTarget  Explicit confirmation to disable the safety check (not recommended).
 

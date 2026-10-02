@@ -59,7 +59,9 @@ function mapBookingError(error) {
   if (error instanceof HttpError) throw error;
   if (isNumericRangeError(error)) throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
   switch (sqlErrorNumber(error)) {
+    case 50020: throw new HttpError(403, 'ACCOUNT_UNAVAILABLE', 'This account cannot place orders.');
     case 50021: throw new HttpError(404, 'SHOWTIME_NOT_FOUND', 'Showtime was not found.');
+    case 50023: throw new HttpError(400, 'INVALID_REQUEST', 'Select at least one seat.');
     case 50022: throw new HttpError(409, 'SHOWTIME_UNAVAILABLE', 'This showtime is no longer available for booking.');
     case 50024: throw new HttpError(409, 'SEAT_UNAVAILABLE', 'One or more selected seats are unavailable.');
     case 50026: throw new HttpError(400, 'SEAT_LIMIT_EXCEEDED', 'An order can contain at most 10 seats.');

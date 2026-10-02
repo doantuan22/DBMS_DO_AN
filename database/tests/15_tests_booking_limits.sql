@@ -192,6 +192,7 @@ BEGIN TRY
     IF ISNULL(@Err, 0) <> 50028 THROW 52050, N'The 4th holding order was not refused with 50028.', 1;
     -- another customer is not affected
     DECLARE @Other INT = (SELECT TOP 1 NguoiDungID FROM dbo.NGUOIDUNG WHERE NguoiDungID <> @User AND VaiTroID = (SELECT VaiTroID FROM dbo.NGUOIDUNG WHERE NguoiDungID = @User) AND TrangThai = N'Hoạt động' ORDER BY NguoiDungID);
+    UPDATE dbo.DONDATVE SET HanGiuCho = DATEADD(MINUTE, -1, SYSDATETIME()) WHERE NguoiDungID = @Other AND TrangThai = N'Chờ thanh toán';   -- no live holds from earlier runs
     DELETE @Dto; INSERT @Dto EXEC dbo.sp_Booking_Create @NguoiDungID = @Other, @SuatChieuID = @ShowMon, @DanhSachGheId = @Gh, @NewDonDatVeID = @Don OUTPUT;
     -- paying one order frees a slot
     EXEC dbo.sp_Payment_CreateAttempt @DonDatVeID = @H1, @PhuongThuc = N'VNPAY', @ThanhToanID = @Pay OUTPUT, @MaGiaoDich = @Txn OUTPUT;
@@ -232,6 +233,7 @@ BEGIN TRY
     IF NOT EXISTS (SELECT 1 FROM dbo.fn_DanhSachGheSuatChieu(@ShowImaxSun) WHERE GheID = @ImaxVip AND GiaVe = 195000)
         THROW 52061, N'The seat map price differs from fn_TinhGiaVe.', 1;
     DECLARE @Free INT = (SELECT TOP 1 NguoiDungID FROM dbo.NGUOIDUNG WHERE NguoiDungID NOT IN (@User, @Other) AND VaiTroID = (SELECT VaiTroID FROM dbo.NGUOIDUNG WHERE NguoiDungID = @User) AND TrangThai = N'Hoạt động' ORDER BY NguoiDungID DESC);
+    UPDATE dbo.DONDATVE SET HanGiuCho = DATEADD(MINUTE, -1, SYSDATETIME()) WHERE NguoiDungID = @Free AND TrangThai = N'Chờ thanh toán';
     DELETE @Dto; SET @Don = NULL;
     INSERT @Dto EXEC dbo.sp_Booking_Create @NguoiDungID = @Free, @SuatChieuID = @ShowImaxSun, @DanhSachGheId = @ImaxVip, @NewDonDatVeID = @Don OUTPUT;
     IF NOT EXISTS (SELECT 1 FROM dbo.CHITIETVE WHERE DonDatVeID = @Don AND GiaVe = 195000) THROW 52062, N'The stored ticket price is not the additive price.', 1;

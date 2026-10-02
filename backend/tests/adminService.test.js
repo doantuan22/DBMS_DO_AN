@@ -159,7 +159,7 @@ const ADMIN_ERROR_TABLE = {
   50205: [409, 'SEAT_POSITION_CONFLICT'], 50206: [404, 'SEAT_NOT_FOUND'], 50207: [409, 'SEAT_HAS_TICKET_HISTORY'],
   50208: [404, 'CINEMA_NOT_FOUND'], 50209: [400, 'PRICING_INVALID'], 50210: [404, 'PRICING_NOT_FOUND'],
   50211: [400, 'SHOWTIME_TIME_INVALID'], 50212: [404, 'ASSIGNMENT_NOT_FOUND'], 50213: [400, 'ASSIGNMENT_PERIOD_INVALID'],
-  50214: [404, 'ROLE_NOT_FOUND'], 50220: [400, 'CINEMA_IMAGE_URL_REQUIRED'], 50221: [400, 'CINEMA_IMAGE_ORDER_INVALID'],
+  50214: [404, 'ROLE_NOT_FOUND'], 50215: [409, 'PRICING_OVERLAP'], 50220: [400, 'CINEMA_IMAGE_URL_REQUIRED'], 50221: [400, 'CINEMA_IMAGE_ORDER_INVALID'],
   50230: [404, 'CINEMA_IMAGE_NOT_FOUND'], 50232: [409, 'CINEMA_IMAGE_INACTIVE'],
 };
 
@@ -189,7 +189,7 @@ test('unknown SQL errors are not swallowed and HttpErrors pass through', () => {
 test('regression guard: every error number thrown by an admin SQL source is mapped', () => {
   // 012+ belong to the customer booking flow; their codes are mapped (and tested) in bookingService.
   const sources = ['procedures/admin/admin_procedures.sql', ...readdirSync(new URL('../../database/migrations/', import.meta.url))
-    .filter((name) => /^(008|009|010|011)_.*\.sql$/.test(name)).map((name) => `migrations/${name}`)];
+    .filter((name) => /^(008|009|010|011|013)_.*\.sql$/.test(name)).map((name) => `migrations/${name}`)];
   const thrown = new Set();
   for (const file of sources) {
     const sql = readFileSync(new URL(`../../database/${file}`, import.meta.url), 'utf8');

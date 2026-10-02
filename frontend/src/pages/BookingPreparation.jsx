@@ -5,6 +5,7 @@ import { ErrorState, LoadingState } from '../components/CatalogStates';
 import ProductPicker from '../components/ProductPicker';
 import SeatMap from '../components/SeatMap';
 import { useAuth } from '../context/AuthContext';
+import { SEAT_LIMIT_MESSAGE, bookingErrorMessage, clampQuantity, toggleSeatSelection } from '../utils/bookingLimits';
 
 const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(value ?? 0);
 
@@ -28,6 +29,7 @@ export default function BookingPreparation() {
   const [promotion, setPromotion] = useState(null);
   const [promotionBusy, setPromotionBusy] = useState(false);
   const [bookingState, setBookingState] = useState({ status: 'idle' });
+  const [seatLimitNotice, setSeatLimitNotice] = useState(null);
 
   const loadSeats = useCallback(async (signal) => {
     try {
@@ -62,11 +64,13 @@ export default function BookingPreparation() {
 
   function toggleSeat(id) {
     setPromotion(null);
-    setSelectedSeatIds((previous) => previous.includes(id) ? previous.filter((seatId) => seatId !== id) : [...previous, id]);
+    const result = toggleSeatSelection(selectedSeatIds, id);
+    setSeatLimitNotice(result.limitReached ? SEAT_LIMIT_MESSAGE : null);
+    setSelectedSeatIds(result.selectedIds);
   }
 
   function changeQuantity(productId, value) {
-    const quantity = Math.max(0, Number.parseInt(value, 10) || 0);
+    const { quantity } = clampQuantity(value);
     setPromotion(null);
     setQuantities((previous) => ({ ...previous, [productId]: quantity }));
   }
@@ -97,11 +101,12 @@ export default function BookingPreparation() {
       setSelectedSeatIds([]);
       await loadSeats();
     } catch (error) {
-      if (error.status === 409) {
+      const friendly = bookingErrorMessage(error);
+      if (error.status === 409 && !friendly) {
         setSelectedSeatIds([]);
         setBookingState({ status: 'conflict', message: error.message });
         await loadSeats();
-      } else setBookingState({ status: 'error', message: error.message });
+      } else setBookingState({ status: 'error', message: friendly ?? error.message });
     }
   }
 
@@ -118,7 +123,7 @@ export default function BookingPreparation() {
 
       {seatsState.status === 'loading' && <LoadingState>Đang tải sơ đồ ghế…</LoadingState>}
       {seatsState.status === 'error' && <ErrorState error={seatsState.error} />}
-      {seatsState.status === 'success' && <SeatMap seats={seats} selectedSeatIds={selectedSeatIds} onToggle={toggleSeat} />}
+      {seatsState.status === 'success' && <SeatMap seats={seats} selectedSeatIds={selectedSeatIds} onToggle={toggleSeat} limitNotice={seatLimitNotice} />}
       {productsState.status === 'loading' && <LoadingState>Đang tải sản phẩm…</LoadingState>}
       {productsState.status === 'error' && <ErrorState error={productsState.error} />}
       {productsState.status === 'success' && <ProductPicker products={products} quantities={quantities} onQuantityChange={changeQuantity} />}

@@ -1,0 +1,29 @@
+import { HOLD_MINUTES, MAX_HOLDING_ORDERS, MAX_PRODUCT_QUANTITY, MAX_SEATS_PER_ORDER } from '../constants/bookingLimits';
+
+export const SEAT_LIMIT_MESSAGE = `Mỗi đơn chỉ được chọn tối đa ${MAX_SEATS_PER_ORDER} ghế.`;
+export const QUANTITY_LIMIT_MESSAGE = `Mỗi sản phẩm chỉ được đặt tối đa ${MAX_PRODUCT_QUANTITY}.`;
+
+// Adds or removes a seat. Selecting an extra seat beyond the limit is refused (selection unchanged, limitReached = true).
+export function toggleSeatSelection(selectedIds, seatId, max = MAX_SEATS_PER_ORDER) {
+  if (selectedIds.includes(seatId)) return { selectedIds: selectedIds.filter((id) => id !== seatId), limitReached: false };
+  if (selectedIds.length >= max) return { selectedIds, limitReached: true };
+  return { selectedIds: [...selectedIds, seatId], limitReached: false };
+}
+
+// Parses a typed quantity into 0..max; limited = the user asked for more than max.
+export function clampQuantity(value, max = MAX_PRODUCT_QUANTITY) {
+  const parsed = Math.max(0, Number.parseInt(value, 10) || 0);
+  return { quantity: Math.min(parsed, max), limited: parsed > max };
+}
+
+// Friendly Vietnamese text for API errors of the booking and payment flow (null = use the server message).
+export function bookingErrorMessage(error) {
+  switch (error?.code) {
+    case 'ACTIVE_ORDER_LIMIT_REACHED':
+      return `Bạn đang giữ ${MAX_HOLDING_ORDERS} đơn chưa thanh toán. Hãy thanh toán hoặc chờ đơn cũ hết hạn (${HOLD_MINUTES} phút) rồi đặt tiếp.`;
+    case 'SEAT_LIMIT_EXCEEDED': return SEAT_LIMIT_MESSAGE;
+    case 'PRODUCT_QUANTITY_LIMIT_EXCEEDED': return QUANTITY_LIMIT_MESSAGE;
+    case 'ORDER_HOLD_EXPIRED': return `Đơn đã hết thời gian giữ ghế (${HOLD_MINUTES} phút). Vui lòng đặt vé lại.`;
+    default: return null;
+  }
+}

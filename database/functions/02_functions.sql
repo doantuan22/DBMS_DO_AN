@@ -12,6 +12,7 @@ SET QUOTED_IDENTIFIER ON;
 GO
 
 -- 0a. Function: fn_ThoiGianGiuChoPhut (thời gian giữ ghế khi đơn chờ thanh toán, tính bằng phút)
+-- LƯU Ý: migration 012 đặt lại giá trị này = 5 phút và hạn giữ không bao giờ được gia hạn (CREATE OR ALTER).
 IF OBJECT_ID(N'dbo.fn_ThoiGianGiuChoPhut', N'FN') IS NOT NULL DROP FUNCTION dbo.fn_ThoiGianGiuChoPhut;
 GO
 CREATE FUNCTION dbo.fn_ThoiGianGiuChoPhut()
@@ -22,7 +23,8 @@ BEGIN
 END;
 GO
 
--- 0b. Function: fn_ThoiGianGiaHanThanhToanPhut (gia hạn giữ ghế khi khách bắt đầu một lần thanh toán)
+-- 0b. Function: fn_ThoiGianGiaHanThanhToanPhut (trước đây: gia hạn giữ ghế khi khách bắt đầu một lần thanh toán;
+--     KHÔNG còn được dùng từ migration 012 vì hạn giữ không còn gia hạn)
 IF OBJECT_ID(N'dbo.fn_ThoiGianGiaHanThanhToanPhut', N'FN') IS NOT NULL DROP FUNCTION dbo.fn_ThoiGianGiaHanThanhToanPhut;
 GO
 CREATE FUNCTION dbo.fn_ThoiGianGiaHanThanhToanPhut()

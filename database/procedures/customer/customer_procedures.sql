@@ -749,6 +749,7 @@ BEGIN
 
         SET @ThanhToanID = SCOPE_IDENTITY();
 
+        -- [Đã bị thay thế bởi migration 012: sp_Payment_CreateAttempt KHÔNG còn gia hạn giữ ghế; HanGiuCho chỉ đặt một lần lúc tạo đơn.]
         -- Gia hạn giữ ghế trong lúc khách đang thực hiện thanh toán (không bao giờ rút ngắn hạn hiện có)
         UPDATE dbo.DONDATVE
         SET HanGiuCho = CASE

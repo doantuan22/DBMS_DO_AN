@@ -34,11 +34,12 @@ function Get-DeploySteps {
     $steps += 'migrations/010_cinema_image_fixes.sql'
     $steps += 'migrations/011_cinema_image_update_lock.sql'
     $steps += 'migrations/012_booking_limits_and_pricing.sql'
+    $steps += 'migrations/013_pricing_overlap_and_weekend.sql'
     if ($RunTests) {
         $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql', 'tests/10_tests_seat_hold.sql',
                   'tests/11_tests_complaint_order_ownership.sql', 'tests/12_tests_cinema_images.sql',
                   'tests/13_tests_cinema_image_fixes.sql', 'tests/14_tests_cinema_image_update_lock.sql',
-                  'tests/15_tests_booking_limits.sql'
+                  'tests/15_tests_booking_limits.sql', 'tests/16_tests_pricing_overlap_weekend.sql'
     }
     return $steps
 }

@@ -21,6 +21,18 @@ Rules:
   Any other status (especially `500`, i.e. a deadlock) or an invariant violation fails the run.
 - Exit code: `0` clean, `1` failure, `2` bad setup (arguments, login or fixtures).
 
+# Pricing overlap stress test (`pricing-overlap-stress.mjs`)
+
+Parallel identical pricing-rule creations on one cinema (migration 013): exactly one succeeds per round, the others are `409 PRICING_OVERLAP`,
+no 5xx, and no pair of active rules with the same conditions and intersecting validity remains. Options: `--rounds` (12, max 60), `--parallel` (2).
+Same environment variables and safety flag as the booking test below. It leaves a cinema `AUDIT_STRESS_PRICING_*` with pricing rows set to `Hết hạn`
+(the API cannot delete them): disposable database only.
+
+```powershell
+$env:STRESS_CONFIRM_DISPOSABLE = 'yes'; $env:STRESS_ADMIN_PASSWORD = '<admin password>'
+node database/tests/stress/pricing-overlap-stress.mjs --email=admin@example.com --base-url=http://localhost:4000/api
+```
+
 # Booking concurrency stress test (`booking-stress.mjs`)
 
 Checks the seat locks and the per-customer holding-order limit through the real API:

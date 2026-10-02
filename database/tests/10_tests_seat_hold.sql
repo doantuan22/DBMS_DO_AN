@@ -14,6 +14,9 @@ DECLARE @Suat INT, @Ghe1 INT, @Ghe2 INT, @Tt INT, @Ma VARCHAR(100), @Trang NVARC
 
 BEGIN TRANSACTION;
 
+-- Đơn giữ chỗ còn sót từ lần chạy trước (ví dụ test 08 commit một đơn) làm đủ giới hạn 3 đơn/khách (migration 012): nhả chúng trong transaction này (được rollback cùng test)
+UPDATE dbo.DONDATVE SET HanGiuCho = DATEADD(MINUTE, -1, SYSDATETIME()) WHERE NguoiDungID IN (5, 6, 7, 8) AND TrangThai = N'Chờ thanh toán';
+
 -- Chọn suất chiếu mở bán trong tương lai có ít nhất 2 ghế trống
 SELECT TOP 1 @Suat = sc.SuatChieuID
 FROM dbo.SUATCHIEU sc

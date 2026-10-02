@@ -46,7 +46,7 @@ test('database seat conflicts become HTTP 409 without exposing SQL details', asy
 
 test('booking limit errors and numeric overflow map to fixed 4xx responses', async () => {
   const input = { showtimeId: 7, seatIds: [11], products: [], promotionCode: null };
-  const cases = [[50026, 400, 'SEAT_LIMIT_EXCEEDED'], [50027, 400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED'], [50028, 409, 'ACTIVE_ORDER_LIMIT_REACHED'],
+  const cases = [[50020, 403, 'ACCOUNT_UNAVAILABLE'], [50023, 400, 'INVALID_REQUEST'], [50026, 400, 'SEAT_LIMIT_EXCEEDED'], [50027, 400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED'], [50028, 409, 'ACTIVE_ORDER_LIMIT_REACHED'],
     [248, 400, 'INVALID_REQUEST'], [245, 400, 'INVALID_REQUEST'], [8115, 400, 'INVALID_REQUEST']];
   for (const [number, status, code] of cases) {
     const { service, results } = fixture();
