@@ -103,6 +103,8 @@ export const cinemaWrite = (v, create = false) => bodyShape(v, create ? { name: 
 export const roomWrite = (v, create = false) => bodyShape(v, create ? { cinemaId: 'id', name: 'string', type: 'string' } : { name: 'string', type: 'string', status: 'string' });
 export const seatWrite = (v, create = false) => bodyShape(v, create ? { roomId: 'id', row: 'string', number: 'positive', type: 'string' } : { type: 'string', status: 'string' });
 export const pricingWrite = (v, create = false) => bodyShape(v, create ? { cinemaId: 'id', seatType: 'string', dayType: 'string', format: 'string', surcharge: 'nonnegative', startsOn: 'date', endsOn: 'nullable-date?' } : { surcharge: 'nonnegative', status: 'string' });
+// Mirrors CK_HINHANH_RAPCHIEUPHIM_TrangThai (migration 010).
+export const CINEMA_IMAGE_STATUSES = ['Hoạt động', 'Tạm ẩn'];
 export const cinemaImageWrite = (v, create = false) => {
   const input = v && typeof v === 'object' && !Array.isArray(v) && v.description === '' ? { ...v, description: null } : v;
   const result = bodyShape(input, create
@@ -110,6 +112,9 @@ export const cinemaImageWrite = (v, create = false) => {
     : { url: 'string', description: 'string?', displayOrder: 'nonnegative', status: 'string' });
   if (!/^https?:\/\/\S+$/i.test(result.url) && !/^\/\S+/.test(result.url)) {
     throw new HttpError(400, 'INVALID_REQUEST', 'url must be an http(s) URL or an absolute local path.');
+  }
+  if (result.status !== undefined && !CINEMA_IMAGE_STATUSES.includes(result.status)) {
+    throw new HttpError(400, 'INVALID_REQUEST', `status must be one of: ${CINEMA_IMAGE_STATUSES.join(', ')}.`);
   }
   return result;
 };

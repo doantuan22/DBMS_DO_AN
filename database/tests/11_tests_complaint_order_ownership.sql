@@ -1,5 +1,8 @@
 -- DBR-01 integration verification. Run after migrations/003_complaint_order_ownership.sql
 -- on a disposable database or inside a transaction; this script rolls back all rows it creates.
+USE CinemaBookingDB
+GO
+
 SET NOCOUNT ON;
 -- Expected THROW cases are caught below, so keep the enclosing test transaction alive.
 SET XACT_ABORT OFF;

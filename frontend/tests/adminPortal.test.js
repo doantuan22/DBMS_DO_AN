@@ -21,3 +21,11 @@ test('Admin portal exposes the ADM resource work areas, including global cinema 
   }
   assert.match(html, /aria-label="Cổng quản trị hệ thống"/);
 });
+
+test('cinema image status is chosen from the whitelist, not typed freely', async () => {
+  const { CINEMA_IMAGE_STATUSES } = await vite.ssrLoadModule('/src/constants/cinemaImageStatuses.js');
+  assert.deepEqual(CINEMA_IMAGE_STATUSES, ['Hoạt động', 'Tạm ẩn']);
+  const source = (await import('node:fs')).readFileSync(new URL('../src/components/CinemaImageManager.jsx', import.meta.url), 'utf8');
+  assert.match(source, /<label>Trạng thái<select /);
+  assert.doesNotMatch(source, /<label>Trạng thái<input /);
+});

@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createAdminService } from '../src/services/adminService.js';
-import { assignmentFilters, cinemaImageWrite, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
+import { createAdminService, mapAdminProcedureError } from '../src/services/adminService.js';
+import { CINEMA_IMAGE_STATUSES, assignmentFilters, cinemaImageWrite, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
 import { HttpError } from '../src/utils/httpError.js';
 import { requireAdmin } from '../src/middleware/requireAdmin.js';
 import { PROCEDURES } from '../src/db/procedures.js';
+import { readFileSync, readdirSync } from 'node:fs';
 
 test('migration-008 procedures avoid SQL Server system-procedure prefix resolution', () => {
   const keys = [
@@ -93,4 +94,174 @@ test('cinema image writes use route-scoped, typed stored-procedure parameters', 
   assert.equal(calls[1].params.HinhAnhRapID.value, 6);
   assert.throws(() => cinemaImageWrite({ url: 'not-a-url', displayOrder: 0, status: 'Hoạt động' }), HttpError);
   assert.throws(() => cinemaImageWrite({ url: 'https://example.invalid/a.jpg', displayOrder: -1, status: 'Hoạt động' }), HttpError);
+});
+
+test('BUG-001: admin cinema list binds no parameters, matching usp_Admin_Cinema_List', async () => {
+  const cinema = { RapID: 1, TenRap: 'Cinema', DiaChi: 'Address', ThanhPho: 'City', SoDienThoai: null, MoTa: null, NgayHoatDong: null, TrangThai: 'Hoạt động' };
+  const service = createAdminService({ execute: async (key, params) => {
+    // The procedure declares no parameters; binding any of them makes SQL Server reject the call.
+    if (key === 'ADMIN_CINEMA_LIST' && params && Object.keys(params).length > 0) throw new Error('too many arguments specified');
+    return { recordsets: [[cinema]] };
+  } });
+  assert.deepEqual(await service.cinemas(), [cinema]);
+});
+
+test('BUG-003: image create and set-cover return the final image row of their procedure', async () => {
+  const image = (id, cover) => ({ HinhAnhRapID: id, RapID: 7, URL: 'https://example.invalid/a.jpg', MoTa: null, LaAnhDaiDien: cover, ThuTuHienThi: 0, TrangThai: 'Hoạt động', NgayTao: 'now' });
+  const service = createAdminService({ execute: async (key) => ({ recordsets: [[key === 'ADMIN_CINEMA_IMAGE_CREATE' ? image(21, true) : image(22, true)]] }) });
+  const created = await service.createCinemaImage(7, cinemaImageWrite({ url: 'https://example.invalid/a.jpg', cover: true, displayOrder: 0 }, true));
+  assert.deepEqual(Object.keys(created), ['HinhAnhRapID', 'RapID', 'URL', 'MoTa', 'LaAnhDaiDien', 'ThuTuHienThi', 'TrangThai', 'NgayTao']);
+  assert.equal(created.HinhAnhRapID, 21);
+  assert.equal((await service.setCinemaImageCover(7, 22, true)).HinhAnhRapID, 22);
+});
+
+test('BUG-003: write() reads the first result set, so image procedures must emit only the final DTO', () => {
+  const sql = readFileSync(new URL('../../database/migrations/010_cinema_image_fixes.sql', import.meta.url), 'utf8');
+  for (const name of ['usp_Admin_CinemaImage_Create', 'usp_Admin_CinemaImage_SetCover']) {
+    const start = sql.indexOf(`CREATE OR ALTER PROCEDURE dbo.${name}`);
+    assert.notEqual(start, -1, `${name} missing from migration 010`);
+    const body = sql.slice(start, sql.indexOf('\nGO', start));
+    // Result-set-producing statements: SELECT that does not assign to a variable.
+    const resultSets = body.split('\n').map((line) => line.trim()).filter((line) => /^SELECT\s/i.test(line) && !/^SELECT\s+@/i.test(line));
+    assert.equal(resultSets.length, 1, `${name} must emit exactly one result set`);
+    assert.match(resultSets[0], /^SELECT HinhAnhRapID, RapID, URL, MoTa, LaAnhDaiDien/);
+    assert.match(body, /SELECT @LockedImageID = HinhAnhRapID FROM dbo\.HINHANH_RAPCHIEUPHIM WITH \(UPDLOCK, HOLDLOCK\)/);
+  }
+});
+
+test('BUG-002: cinema image status must be in the whitelist for create and update', () => {
+  assert.deepEqual(CINEMA_IMAGE_STATUSES, ['Hoạt động', 'Tạm ẩn']);
+  const base = { url: 'https://example.invalid/a.jpg', displayOrder: 0 };
+  for (const create of [true, false]) {
+    for (const status of CINEMA_IMAGE_STATUSES) assert.equal(cinemaImageWrite({ ...base, status }, create).status, status);
+    for (const status of ['INVALID_AUDIT', 'hoạt động', '']) {
+      assert.throws(() => cinemaImageWrite({ ...base, status }, create), (error) => error.status === 400 && error.code === 'INVALID_REQUEST');
+    }
+  }
+  assert.equal(cinemaImageWrite(base, true).status, undefined); // create falls back to the service default
+  assert.throws(() => cinemaImageWrite(base, false), HttpError);
+  assert.throws(() => cinemaImageWrite({ ...base, status: 'INVALID_AUDIT' }, true), /status must be one of: Hoạt động, Tạm ẩn/);
+});
+
+// SQL error number -> [HTTP status, error code] for every business error an admin procedure can throw.
+const ADMIN_ERROR_TABLE = {
+  50001: [409, 'SHOWTIME_OVERLAP'], 50056: [404, 'ROOM_NOT_FOUND'], 50058: [404, 'SHOWTIME_NOT_FOUND'],
+  50070: [409, 'EMAIL_ALREADY_EXISTS'], 50071: [400, 'ASSIGNMENT_MANAGER_REQUIRED'], 50072: [409, 'PROMOTION_CODE_EXISTS'],
+  50090: [404, 'ROLE_NOT_FOUND'], 50091: [409, 'ROLE_IN_USE'], 50092: [409, 'PERMISSION_CODE_EXISTS'],
+  50093: [404, 'PERMISSION_NOT_FOUND'], 50094: [409, 'PERMISSION_IN_USE'], 50095: [404, 'CINEMA_NOT_FOUND'],
+  50096: [409, 'CINEMA_HAS_DEPENDENCIES'], 50097: [409, 'GENRE_ALREADY_EXISTS'], 50098: [404, 'GENRE_NOT_FOUND'],
+  50099: [409, 'GENRE_IN_USE'], 50100: [404, 'ACTOR_NOT_FOUND'], 50101: [409, 'ACTOR_IN_USE'],
+  50102: [404, 'MOVIE_NOT_FOUND'], 50103: [400, 'MOVIE_CAST_INVALID'], 50104: [409, 'MOVIE_HAS_DEPENDENCIES'],
+  50105: [404, 'PRODUCT_NOT_FOUND'], 50106: [409, 'PRODUCT_IN_USE'], 50107: [404, 'PROMOTION_NOT_FOUND'],
+  50108: [409, 'PROMOTION_IN_USE'], 50116: [404, 'SHOWTIME_NOT_FOUND'], 50117: [409, 'SHOWTIME_ALREADY_CANCELLED'],
+  50118: [409, 'SHOWTIME_HAS_HELD_ORDERS'], 50200: [404, 'CINEMA_NOT_FOUND'], 50201: [409, 'ROOM_NAME_CONFLICT'],
+  50202: [404, 'ROOM_NOT_FOUND'], 50203: [409, 'ROOM_HAS_SHOWTIMES'], 50204: [404, 'ROOM_NOT_FOUND'],
+  50205: [409, 'SEAT_POSITION_CONFLICT'], 50206: [404, 'SEAT_NOT_FOUND'], 50207: [409, 'SEAT_HAS_TICKET_HISTORY'],
+  50208: [404, 'CINEMA_NOT_FOUND'], 50209: [400, 'PRICING_INVALID'], 50210: [404, 'PRICING_NOT_FOUND'],
+  50211: [400, 'SHOWTIME_TIME_INVALID'], 50212: [404, 'ASSIGNMENT_NOT_FOUND'], 50213: [400, 'ASSIGNMENT_PERIOD_INVALID'],
+  50214: [404, 'ROLE_NOT_FOUND'], 50220: [400, 'CINEMA_IMAGE_URL_REQUIRED'], 50221: [400, 'CINEMA_IMAGE_ORDER_INVALID'],
+  50230: [404, 'CINEMA_IMAGE_NOT_FOUND'], 50232: [409, 'CINEMA_IMAGE_INACTIVE'],
+};
+
+function mapped(error) {
+  try { mapAdminProcedureError(error); } catch (thrown) { return thrown; }
+  return undefined;
+}
+
+test('every admin business error number maps to its expected HTTP status and code', () => {
+  for (const [number, [status, code]] of Object.entries(ADMIN_ERROR_TABLE)) {
+    for (const error of [{ number: Number(number) }, { originalError: { info: { number: Number(number) } } }]) {
+      const result = mapped(error);
+      assert.ok(result instanceof HttpError, `error ${number} is not mapped`);
+      assert.equal(result.status, status, `error ${number} status`);
+      assert.equal(result.code, code, `error ${number} code`);
+    }
+  }
+});
+
+test('unknown SQL errors are not swallowed and HttpErrors pass through', () => {
+  const unknown = { number: 8134 };
+  assert.equal(mapped(unknown), unknown);
+  const http = new HttpError(418, 'TEAPOT', 'x');
+  assert.equal(mapped(http), http);
+});
+
+test('regression guard: every error number thrown by an admin SQL source is mapped', () => {
+  const sources = ['procedures/admin/admin_procedures.sql', ...readdirSync(new URL('../../database/migrations/', import.meta.url))
+    .filter((name) => /^(008|009|01\d)_.*\.sql$/.test(name)).map((name) => `migrations/${name}`)];
+  const thrown = new Set();
+  for (const file of sources) {
+    const sql = readFileSync(new URL(`../../database/${file}`, import.meta.url), 'utf8');
+    for (const match of sql.matchAll(/THROW\s+(5\d{4})\s*,/g)) thrown.add(Number(match[1]));
+  }
+  assert.ok(thrown.size >= 40, 'expected to find the admin error numbers in the SQL sources');
+  const unmapped = [...thrown].filter((number) => !(number in ADMIN_ERROR_TABLE) || !(mapped({ number }) instanceof HttpError));
+  assert.deepEqual(unmapped, [], `admin procedures throw unmapped business errors: ${unmapped.join(', ')}`);
+});
+
+test('set movie cast maps procedure errors to business HTTP errors', async () => {
+  const missing = createAdminService({ execute: async () => { throw { number: 50102 }; } });
+  await assert.rejects(missing.setMovieActors(9, []), (error) => error.status === 404 && error.code === 'MOVIE_NOT_FOUND');
+  const invalid = createAdminService({ execute: async () => { throw { number: 50103 }; } });
+  await assert.rejects(invalid.setMovieActors(9, []), (error) => error.status === 400 && error.code === 'MOVIE_CAST_INVALID');
+});
+
+test('cinema deletion blockers are business errors, not 500s', async () => {
+  for (const [number, status, code] of [[50095, 404, 'CINEMA_NOT_FOUND'], [50096, 409, 'CINEMA_HAS_DEPENDENCIES']]) {
+    const service = createAdminService({ execute: async () => { throw { number }; } });
+    await assert.rejects(service.deleteCinema(1), (error) => error.status === status && error.code === code);
+  }
+});
+
+test('showtime create and update map procedure errors and keep the success result untouched', async () => {
+  const input = { movieId: 1, roomId: 2, startsAt: '2031-01-01T10:00:00Z', endsAt: '2031-01-01T12:00:00Z', format: '2D', basePrice: 50000, status: 'Mở bán' };
+  const result = { recordsets: [[{ SuatChieuID: 5 }]] };
+  const ok = createAdminService({ execute: async () => result });
+  assert.equal(await ok.createShowtime(input), result);
+  assert.equal(await ok.updateShowtime(5, input), result);
+  for (const [number, status, code] of [[50001, 409, 'SHOWTIME_OVERLAP'], [50056, 404, 'ROOM_NOT_FOUND'], [50058, 404, 'SHOWTIME_NOT_FOUND'], [50211, 400, 'SHOWTIME_TIME_INVALID']]) {
+    const failing = createAdminService({ execute: async () => { throw { number }; } });
+    await assert.rejects(failing.createShowtime(input), (error) => error.status === status && error.code === code);
+    await assert.rejects(failing.updateShowtime(5, input), (error) => error.status === status && error.code === code);
+  }
+});
+
+// Native SQL Server constraint errors: fixed client messages, never table/constraint names.
+const SQL_ERROR_CASES = [
+  ['unique key (2627)', { number: 2627, message: 'Violation of UNIQUE KEY constraint \'UQ_NGUOIDUNG_SoDienThoai\'. Cannot insert duplicate key in object \'dbo.NGUOIDUNG\'.' }, 409, 'DUPLICATE_RECORD'],
+  ['unique index (2601)', { number: 2601, message: 'Cannot insert duplicate key row in object \'dbo.HINHANH_RAPCHIEUPHIM\' with unique index \'UX_HINHANH_RAPCHIEUPHIM_Rap_Cover\'.' }, 409, 'DUPLICATE_RECORD'],
+  ['2627 via originalError', { originalError: { info: { number: 2627 }, message: 'Violation of UNIQUE KEY constraint \'UQ_QUYEN_MaQuyen\'.' } }, 409, 'DUPLICATE_RECORD'],
+  ['547 DELETE', { number: 547, message: 'The DELETE statement conflicted with the REFERENCE constraint "FK_VAITRO_QUYEN_QUYEN". The conflict occurred in database "CinemaBookingDB", table "dbo.VAITRO_QUYEN", column \'QuyenID\'.' }, 409, 'RECORD_IN_USE'],
+  ['547 INSERT', { number: 547, message: 'The INSERT statement conflicted with the FOREIGN KEY constraint "FK_VAITRO_QUYEN_QUYEN". The conflict occurred in database "CinemaBookingDB", table "dbo.QUYEN", column \'QuyenID\'.' }, 400, 'INVALID_REFERENCE'],
+  ['547 UPDATE CHECK', { number: 547, message: 'The UPDATE statement conflicted with the CHECK constraint "CK_RAPCHIEUPHIM_TrangThai". The conflict occurred in database "CinemaBookingDB", table "dbo.RAPCHIEUPHIM", column \'TrangThai\'.' }, 400, 'INVALID_REFERENCE'],
+  ['547 unrecognised statement', { number: 547, message: 'Some localised text about constraint "CK_X" on table "dbo.Y".' }, 400, 'INVALID_REFERENCE'],
+  ['547 without message', { number: 547 }, 400, 'INVALID_REFERENCE'],
+];
+
+test('native SQL constraint errors map to fixed 4xx responses without leaking schema names', () => {
+  for (const [label, error, status, code] of SQL_ERROR_CASES) {
+    const result = mapped(error);
+    assert.ok(result instanceof HttpError, `${label} is not mapped`);
+    assert.equal(result.status, status, `${label} status`);
+    assert.equal(result.code, code, `${label} code`);
+    assert.doesNotMatch(result.message, /dbo|FK_|UQ_|CK_|UX_|constraint|table|column|statement|NGUOIDUNG|QUYEN|VAITRO|RAPCHIEUPHIM/i, `${label} message leaks schema details`);
+  }
+});
+
+test('business 50xxx errors keep their mapping even if the SQL message looks like a constraint error', () => {
+  for (const [number, [status, code]] of Object.entries(ADMIN_ERROR_TABLE)) {
+    const result = mapped({ number: Number(number), message: 'The DELETE statement conflicted with the REFERENCE constraint "FK_X".' });
+    assert.equal(result.status, status);
+    assert.equal(result.code, code);
+  }
+});
+
+test('writes that bypass write() still get constraint errors mapped', async () => {
+  const fk = { number: 547, message: 'The INSERT statement conflicted with the FOREIGN KEY constraint "FK_VAITRO_QUYEN_QUYEN".' };
+  const service = createAdminService({ execute: async () => { throw fk; }, executeWithOutputs: async () => { throw fk; } });
+  const movie = { title: 'T', durationMinutes: 90, releaseDate: '2031-01-01', genreIds: [999999] };
+  await assert.rejects(service.setRolePermissions(1, [999999]), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
+  await assert.rejects(service.createMovie(movie), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
+  await assert.rejects(service.updateMovie(1, { ...movie, status: 'Đang chiếu' }), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
+  await assert.rejects(createAdminService({ execute: async () => { throw { number: 2627 }; } }).createUser({ name: 'N', email: 'a@b.invalid', password: 'StrongPass1!', roleId: 2 }), (error) => error.status === 409 && error.code === 'DUPLICATE_RECORD');
 });

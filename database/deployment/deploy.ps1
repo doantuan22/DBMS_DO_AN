@@ -6,7 +6,7 @@
 .PARAMETER Database      Target database name (default: CinemaBookingDB). Scripts hardcode CinemaBookingDB; another name is substituted on the fly.
 .PARAMETER AppPassword   Password for the application login CinemaAppUser (required, never stored in files).
 .PARAMETER SkipSeed      Do not load demo data.
-.PARAMETER RunTests      Run tests 08 and 09 at the end.
+.PARAMETER RunTests      Run tests 08-14 at the end (08 creates an order: scratch database only).
 
 WARNING: 01_schema.sql drops and recreates every table. Use only on a new/disposable database.
 #>
@@ -37,7 +37,9 @@ $steps = @(
 if (-not $SkipSeed) { $steps += 'seed/07_seed_data.sql' }
 $steps += 'migrations/008_admin_global_portal.sql'
 $steps += 'migrations/009_cinema_images.sql'
-if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql', 'tests/10_tests_seat_hold.sql' }
+$steps += 'migrations/010_cinema_image_fixes.sql'
+$steps += 'migrations/011_cinema_image_update_lock.sql'
+if ($RunTests) { $steps += 'tests/08_tests_verification.sql', 'tests/09_tests_revisions.sql', 'tests/10_tests_seat_hold.sql', 'tests/11_tests_complaint_order_ownership.sql', 'tests/12_tests_cinema_images.sql', 'tests/13_tests_cinema_image_fixes.sql', 'tests/14_tests_cinema_image_update_lock.sql' }
 
 foreach ($step in $steps) {
     $path = Join-Path $db $step

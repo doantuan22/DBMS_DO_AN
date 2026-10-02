@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
+import { CINEMA_IMAGE_STATUSES } from '../constants/cinemaImageStatuses';
 
 const blank = () => ({ url: '', description: '', displayOrder: 0, status: 'Hoạt động', cover: false });
 
@@ -66,7 +67,7 @@ export default function CinemaImageManager() {
       <label>URL hoặc đường dẫn ảnh<input required value={form.url} onChange={(event) => setForm((value) => ({ ...value, url: event.target.value }))} /></label>
       <label>Mô tả<input value={form.description} onChange={(event) => setForm((value) => ({ ...value, description: event.target.value }))} /></label>
       <label>Thứ tự hiển thị<input required min="0" type="number" value={form.displayOrder} onChange={(event) => setForm((value) => ({ ...value, displayOrder: event.target.value }))} /></label>
-      <label>Trạng thái<input required value={form.status} onChange={(event) => setForm((value) => ({ ...value, status: event.target.value }))} /></label>
+      <label>Trạng thái<select required value={form.status} onChange={(event) => setForm((value) => ({ ...value, status: event.target.value }))}>{CINEMA_IMAGE_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}</select></label>
       {!selected && <label><input type="checkbox" checked={form.cover} onChange={(event) => setForm((value) => ({ ...value, cover: event.target.checked }))} /> Ảnh đại diện</label>}
       <div className="catalog-actions"><button className="catalog-button">Lưu</button>{selected && <button type="button" className="catalog-button catalog-button--secondary" onClick={() => { setSelected(null); setForm(blank()); }}>Bỏ chọn</button>}</div>
     </form>}

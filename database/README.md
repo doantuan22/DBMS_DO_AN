@@ -24,8 +24,12 @@ All SQL lives here and nowhere else. The application reaches data **only** throu
 | - | `migrations/006_support_procedure_authorization.sql` | Adds permission and not-found guards to CSKH detail, order-reference, and processing procedures. Run after 005 on an existing database. |
 | - | `migrations/008_admin_global_portal.sql` | Removes the obsolete ADM-17 permission seed and adds Admin-global Cinema/Movie/Product lists, Room/Seat/Pricing/Showtime contracts, and Assignment Update (`usp_Admin_*` names avoid SQL Server's special `sp_` name resolution). Apply to `CinemaBookingDB` after base deployment. |
 | - | `migrations/009_cinema_images.sql` | ADM-07 extension: adds `HINHANH_RAPCHIEUPHIM`, image constraints/indexes, public gallery read, Admin image CRUD and transactional cover selection. |
+| - | `migrations/010_cinema_image_fixes.sql` | Cinema image fixes: Create/SetCover emit only the final image result set (lock no longer returns a result set); normalises out-of-domain `TrangThai` to `Tạm ẩn` and adds `CK_HINHANH_RAPCHIEUPHIM_TrangThai` (`Hoạt động`, `Tạm ẩn`). Run after 009; apply with `sqlcmd -f 65001`. |
+| - | `migrations/011_cinema_image_update_lock.sql` | `usp_Admin_CinemaImage_Update` now takes the same cinema-wide key-range lock inside a transaction as Create/SetCover (fixes Update/SetCover deadlocks); contract unchanged. Run after 010; apply with `sqlcmd -f 65001`. |
 | - | `tests/11_tests_complaint_order_ownership.sql` | Transactional DBR-01 verification for null, own, foreign and nonexistent order references. |
 | - | `tests/12_tests_cinema_images.sql` | Transactional ADM-07 cinema image verification: FK, defaults, cover change, ordering, invalid cinema and deletion. |
+| - | `tests/13_tests_cinema_image_fixes.sql` | Transactional verification of migration 010: single DTO result set from Create/SetCover, one cover per cinema, `TrangThai` CHECK. |
+| - | `tests/14_tests_cinema_image_update_lock.sql` | Transactional verification of migration 011: single DTO result set from Update, one-cover rule over an Update/SetCover chain, 50230 for missing image, `TrangThai` CHECK. |
 | - | `deployment/deploy.ps1` | Runs the steps above in order |
 
 Empty folders (`constraints/`, `indexes/`, `tests/{procedures,triggers,concurrency}/`) are placeholders.
@@ -36,6 +40,8 @@ Empty folders (`constraints/`, `indexes/`, `tests/{procedures,triggers,concurren
 .\database\deployment\deploy.ps1 -AppPassword '<strong password>'                 # schema..seed
 .\database\deployment\deploy.ps1 -Database CinemaScratch -AppPassword '...' -RunTests   # scratch DB + tests
 ```
+
+`-RunTests` runs tests 08-14 in numeric order after the migrations. Test 08 creates an order and `01_schema.sql` drops every table, so use a disposable database; the security step also resets the `CinemaAppUser` server login password to `-AppPassword`. Tests 11-14 roll back and can be run alone with `sqlcmd -S localhost -E -C -I -f 65001 -b -i <file>`.
 
 Put the same password in `backend/.env` (`DB_USER=CinemaAppUser`, `DB_PASSWORD=...`). `.env` is git-ignored.
 
