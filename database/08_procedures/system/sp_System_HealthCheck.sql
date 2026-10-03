@@ -7,7 +7,7 @@ BEGIN
     SET NOCOUNT ON;
     SELECT
         'Healthy' AS [Status],
-        SYSDATETIME() AS [ServerTime],
+        dbo.fn_BayGio() AS [ServerTime],
         DB_NAME() AS [DatabaseName],
         @@VERSION AS [SQLVersion];
 END;

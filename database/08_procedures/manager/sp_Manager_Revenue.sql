@@ -29,7 +29,7 @@ BEGIN
             ddv.TongTienDoAn,
             ddv.TienGiamGia,
             SUM(tt.SoTien) AS TienDaThu,
-            CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) AS NgayThu,
+            dbo.fn_NgayKinhDoanh(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao))) AS NgayThu,
             (SELECT COUNT(*) FROM dbo.CHITIETVE cv
              WHERE cv.DonDatVeID = ddv.DonDatVeID AND cv.TrangThai <> N'Đã hủy') AS SoVe
         FROM dbo.DONDATVE ddv

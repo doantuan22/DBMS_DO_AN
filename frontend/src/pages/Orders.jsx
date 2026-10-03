@@ -1,3 +1,4 @@
+import { formatDateTime } from '../utils/dateTime';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getOrders } from '../api/ordersApi';
@@ -22,7 +23,7 @@ export default function Orders() {
       {resource.status === 'success' && resource.data.length > 0 && <div className="catalog-list">
         {resource.data.map((order) => <article className="catalog-card" key={order.id}>
           <h2>{order.movieTitle}</h2>
-          <p>{order.cinemaName} · {order.roomName} · {order.startsAt}</p>
+          <p>{order.cinemaName} · {order.roomName} · {formatDateTime(order.startsAt)}</p>
           <p>Đơn #{order.id} · {order.status}</p>
           <p>Tổng thanh toán: {money(order.total)} · Thanh toán gần nhất: {order.latestPaymentStatus ?? 'Chưa tạo'}</p>
           <Link className="catalog-button" to={`/orders/${order.id}`}>Xem chi tiết</Link>

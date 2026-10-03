@@ -5,6 +5,6 @@ CREATE OR ALTER FUNCTION dbo.fn_HomNay()
 RETURNS DATE
 AS
 BEGIN
-    RETURN CONVERT(DATE, dbo.fn_BayGio());
+    RETURN dbo.fn_NgayKinhDoanh(dbo.fn_BayGio());
 END;
 GO

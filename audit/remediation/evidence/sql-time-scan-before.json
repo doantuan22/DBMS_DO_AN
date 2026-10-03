@@ -1,0 +1,856 @@
+[
+  {
+    "file": "database/05_functions/fn_BayGio.sql",
+    "line": 4,
+    "source": "CREATE OR ALTER FUNCTION dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/05_functions/fn_BayGio.sql",
+    "line": 8,
+    "source": "RETURN DATEADD(HOUR, 7, SYSUTCDATETIME());",
+    "classification": "WRONG",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/05_functions/fn_DanhSachGheSuatChieu.sql",
+    "line": 35,
+    "source": "AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql",
+    "line": 17,
+    "source": "AND sc.ThoiGianBatDau > dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql",
+    "line": 18,
+    "source": "AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/05_functions/fn_HomNay.sql",
+    "line": 4,
+    "source": "CREATE OR ALTER FUNCTION dbo.fn_HomNay()",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/05_functions/fn_HomNay.sql",
+    "line": 8,
+    "source": "RETURN CONVERT(DATE, dbo.fn_BayGio());",
+    "classification": "BUSINESS-DATE",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/05_functions/fn_KiemTraQuanLyRapScope.sql",
+    "line": 34,
+    "source": "AND dbo.fn_HomNay() >= pcr.NgayBatDau",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/05_functions/fn_KiemTraQuanLyRapScope.sql",
+    "line": 35,
+    "source": "AND (pcr.NgayKetThuc IS NULL OR dbo.fn_HomNay() <= pcr.NgayKetThuc)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/05_functions/fn_TinhGiaVe.sql",
+    "line": 7,
+    "source": "-- DATEFIRST 7 / us_english). 1900-01-01 was a Monday, so DATEDIFF(DAY, '19000101', date) % 7 is 0 = Monday ...",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/05_functions/fn_TinhGiaVe.sql",
+    "line": 33,
+    "source": "@NgayChieu = CAST(sc.ThoiGianBatDau AS DATE)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/05_functions/fn_TinhGiaVe.sql",
+    "line": 47,
+    "source": "IF DATEDIFF(DAY, CONVERT(DATE, '19000101', 112), @NgayChieu) % 7 IN (5, 6)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/06_views/vw_ChiTietDonDatVe.sql",
+    "line": 33,
+    "source": "CASE WHEN ddv.TrangThai = N'Chờ thanh toán' AND ddv.HanGiuCho <= dbo.fn_BayGio() THEN N'Hết hạn' ELSE ddv.TrangThai END AS TrangThaiDon,",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/06_views/vw_LichChieuChiTiet.sql",
+    "line": 25,
+    "source": "CAST(sc.ThoiGianBatDau AS DATE) AS NgayChieu,",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/06_views/vw_LichChieuChiTiet.sql",
+    "line": 26,
+    "source": "FORMAT(sc.ThoiGianBatDau, 'HH:mm') AS GioBatDau,",
+    "classification": "DISPLAY-ONLY",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/06_views/vw_LichChieuChiTiet.sql",
+    "line": 27,
+    "source": "FORMAT(sc.ThoiGianKetThuc, 'HH:mm') AS GioKetThuc,",
+    "classification": "DISPLAY-ONLY",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/06_views/vw_LichChieuChiTiet.sql",
+    "line": 36,
+    "source": "AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/06_views/vw_LichSuDatVe.sql",
+    "line": 28,
+    "source": "CASE WHEN ddv.TrangThai = N'Chờ thanh toán' AND ddv.HanGiuCho <= dbo.fn_BayGio() THEN N'Hết hạn' ELSE ddv.TrangThai END AS TrangThaiDon,",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/07_triggers/TRG_ChiTietVe_KiemTraTrungGhe.sql",
+    "line": 23,
+    "source": "AND dbo.fn_DonDangGiuGhe(ddv_exist.TrangThai, ddv_exist.HanGiuCho, dbo.fn_BayGio()) = 1",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/07_triggers/TRG_DanhGia_KiemTraDaXemPhim.sql",
+    "line": 22,
+    "source": "AND sc.ThoiGianBatDau <= dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/admin/sp_Admin_Dashboard.sql",
+    "line": 15,
+    "source": "(SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE CAST(ThoiGianBatDau AS DATE) = dbo.fn_HomNay() AND TrangThai<>N'Đã hủy') AS SuatChieuHomNay,",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+    "line": 41,
+    "source": "HAVING (@TuNgay IS NULL OR CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) >= @TuNgay)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+    "line": 42,
+    "source": "AND (@DenNgay IS NULL OR CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) <= @DenNgay);",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/admin/sp_Admin_RolePermission_Set.sql",
+    "line": 19,
+    "source": "SELECT DISTINCT @VaiTroID, CAST(value AS INT), dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/admin/sp_Admin_User_Create.sql",
+    "line": 23,
+    "source": "VALUES (@VaiTroID, @HoTen, @Email, @MatKhauHash, @SoDienThoai, dbo.fn_BayGio(), N'Hoạt động');",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/admin/usp_Admin_Showtime_List.sql",
+    "line": 16,
+    "source": "AND (@TuNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) >= @TuNgay)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/admin/usp_Admin_Showtime_List.sql",
+    "line": 17,
+    "source": "AND (@DenNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) <= @DenNgay)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+    "line": 14,
+    "source": "DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/auth/sp_Auth_Login.sql",
+    "line": 59,
+    "source": "AND dbo.fn_HomNay() >= pcr.NgayBatDau",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/auth/sp_Auth_Login.sql",
+    "line": 60,
+    "source": "AND (pcr.NgayKetThuc IS NULL OR dbo.fn_HomNay() <= pcr.NgayKetThuc);",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/auth/sp_Auth_RegisterCustomer.sql",
+    "line": 54,
+    "source": "VALUES (@VaiTroID, @HoTen, @Email, @MatKhauHash, @SoDienThoai, dbo.fn_BayGio(), N'Hoạt động');",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+    "line": 46,
+    "source": "WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Chờ thanh toán' AND HanGiuCho > dbo.fn_BayGio())",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+    "line": 69,
+    "source": "IF @TrangThaiSuatChieu <> N'Mở bán' OR @ThoiGianBatDau <= dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+    "line": 115,
+    "source": "AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+    "line": 132,
+    "source": "CONCAT('TK-', FORMAT(dbo.fn_BayGio(), 'yyyyMMddHHmmss'), '-', CAST(bg.GheID AS VARCHAR(10)), '-', LEFT(REPLACE(CONVERT(VARCHAR(36), NEWID()), '-', ''), 6))",
+    "classification": "DISPLAY-ONLY",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+    "line": 237,
+    "source": "dbo.fn_BayGio(),",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+    "line": 242,
+    "source": "DATEADD(MINUTE, dbo.fn_ThoiGianGiuChoPhut(), dbo.fn_BayGio())",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/customer/sp_Complaint_Create.sql",
+    "line": 31,
+    "source": "VALUES (@NguoiDungID, @DonDatVeID, @LoaiKhieuNai, @TieuDe, @NoiDung, @MucDoUuTien, dbo.fn_BayGio(), N'Mới');",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/customer/sp_Order_ExpirePending.sql",
+    "line": 29,
+    "source": "AND d.HanGiuCho <= dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/customer/sp_Review_Create.sql",
+    "line": 24,
+    "source": "VALUES (@PhimID, @NguoiDungID, @SoSao, @NoiDung, dbo.fn_BayGio());",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Dashboard.sql",
+    "line": 26,
+    "source": "(SELECT COUNT(*) FROM dbo.SUATCHIEU sc INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND CAST(sc.ThoiGianBatDau AS DATE) = dbo.fn_HomNay() AND sc.TrangThai<>N'Đã hủy') AS SuatChieuHomNay,",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Dashboard.sql",
+    "line": 33,
+    "source": "GROUP BY tt.DonDatVeID HAVING CAST(MAX(ISNULL(tt.NgayThanhToan,tt.NgayTao)) AS DATE)=dbo.fn_HomNay())",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_ListAssignedCinemas.sql",
+    "line": 27,
+    "source": "AND dbo.fn_HomNay() >= pcr.NgayBatDau",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_ListAssignedCinemas.sql",
+    "line": 28,
+    "source": "AND (pcr.NgayKetThuc IS NULL OR dbo.fn_HomNay() <= pcr.NgayKetThuc);",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Revenue.sql",
+    "line": 21,
+    "source": "IF @TuNgay IS NULL SET @TuNgay = DATEADD(DAY, -30, dbo.fn_HomNay());",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Revenue.sql",
+    "line": 22,
+    "source": "IF @DenNgay IS NULL SET @DenNgay = dbo.fn_HomNay();",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Revenue.sql",
+    "line": 32,
+    "source": "CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) AS NgayThu,",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Showtime_List.sql",
+    "line": 26,
+    "source": "AND (@TuNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) >= @TuNgay)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Showtime_List.sql",
+    "line": 27,
+    "source": "AND (@DenNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) <= @DenNgay)",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+    "line": 14,
+    "source": "DECLARE @RapID INT, @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldRoom INT, @OldFormat NVARCHAR(50), @OldStatus NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+    "line": 14,
+    "source": "@OrderStatus NVARCHAR(50), @Hold DATETIME2, @Amount DECIMAL(18,2), @Now DATETIME2=dbo.fn_BayGio();",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+    "line": 26,
+    "source": "SET @MaGiaoDich=CONCAT('TXN-',FORMAT(@Now,'yyyyMMddHHmmss'),'-',CAST(@DonDatVeID AS VARCHAR(10)),'-',LEFT(REPLACE(CONVERT(VARCHAR(36),NEWID()),'-',''),6));",
+    "classification": "DISPLAY-ONLY",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+    "line": 16,
+    "source": "@PromoID INT,@Now DATETIME2=dbo.fn_BayGio();",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/public/sp_Promotion_Validate.sql",
+    "line": 58,
+    "source": "IF dbo.fn_BayGio() < @NgayBatDau OR dbo.fn_BayGio() > @NgayKetThuc",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/public/sp_Promotion_Validate.sql",
+    "line": 72,
+    "source": "SET @Message = N'Đơn hàng chưa đạt giá trị tối thiểu ' + FORMAT(@DonHangToiThieu, 'N0') + ' đ để áp dụng mã này.';",
+    "classification": "DISPLAY-ONLY",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/public/sp_Showtime_ListByMovie.sql",
+    "line": 45,
+    "source": "AND ThoiGianBatDau > dbo.fn_BayGio()",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+    "line": 22,
+    "source": "VALUES (@KhieuNaiID, @NguoiDungID, @NoiDungXuLy, dbo.fn_BayGio(), @TrangThaiSauXuLy);",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/support/sp_Support_Complaint_UpdateStatus.sql",
+    "line": 21,
+    "source": "VALUES (@KhieuNaiID, @NguoiDungID, N'Cập nhật trạng thái khiếu nại.', dbo.fn_BayGio(), @TrangThaiMoi);",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/system/sp_Clock_GetNow.sql",
+    "line": 9,
+    "source": "SELECT dbo.fn_BayGio() AS BayGio,(SELECT ThoiLuong FROM dbo.PHIM WHERE PhimID=@PhimID) AS ThoiLuong;",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/system/sp_Showtime_CancelCascade.sql",
+    "line": 31,
+    "source": "SET @Now = dbo.fn_BayGio();",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+    "line": 10,
+    "source": "DECLARE @Span DECIMAL(20,7)=DATEDIFF_BIG(SECOND,@ThoiGianBatDau,@ThoiGianKetThuc)",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+    "line": 11,
+    "source": "+(CONVERT(DECIMAL(20,7),DATEPART(NANOSECOND,@ThoiGianKetThuc))-DATEPART(NANOSECOND,@ThoiGianBatDau))/1000000000;",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+    "line": 14,
+    "source": "OR @ThoiGianBatDau < dbo.fn_BayGio() OR @ThoiGianKetThuc <= @ThoiGianBatDau",
+    "classification": "SUSPICIOUS",
+    "reason": "Pre-fix local now; callers require UTC instant after contract change"
+  },
+  {
+    "file": "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+    "line": 17,
+    "source": "(@Span < CONVERT(BIGINT,@ThoiLuong)*60 OR @Span > (CONVERT(BIGINT,@ThoiLuong)+120)*60))",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/08_procedures/system/sp_System_HealthCheck.sql",
+    "line": 10,
+    "source": "SYSDATETIME() AS [ServerTime],",
+    "classification": "WRONG",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/001_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/001_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/002_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/002_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/003_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/003_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/003_reference.sql",
+    "line": 21,
+    "source": "UPDATE dbo.VAITRO_QUYEN SET NgayGan=CONVERT(datetime2,@SeedDay);",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/004_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/004_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/005_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/005_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/006_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/006_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/006_reference.sql",
+    "line": 6,
+    "source": "(2, 1, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,2,@SeedDay), N'Hiệu lực'), -- Manager 1 quản lý Rạp 1",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/006_reference.sql",
+    "line": 7,
+    "source": "(3, 2, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,2,@SeedDay), N'Hiệu lực'); -- Manager 2 quản lý Rạp 2",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/007_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/007_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/008_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/008_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/009_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/009_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/010_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/010_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/011_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/011_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/011_reference.sql",
+    "line": 7,
+    "source": "(1, N'Dune: Hành Tinh Cát - Phần Hai', 166, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), N'Tiếng Anh', N'Phụ đề Tiếng Việt', N'T16', N'Denis Villeneuve', N'Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.', 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800', 'https://youtube.com/watch?v=Way9Dexny3w', N'Đang chiếu'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/011_reference.sql",
+    "line": 8,
+    "source": "(2, N'Mai', 131, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), N'Tiếng Việt', N'Phụ đề Tiếng Anh', N'T18', N'Trấn Thành', N'Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.', 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800', 'https://youtube.com/watch?v=exampleMai', N'Đang chiếu'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/011_reference.sql",
+    "line": 9,
+    "source": "(3, N'Oppenheimer', 180, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), N'Tiếng Anh', N'Phụ đề Tiếng Việt', N'T18', N'Christopher Nolan', N'Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800', 'https://youtube.com/watch?v=uYPbbksJxIg', N'Đang chiếu'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/011_reference.sql",
+    "line": 10,
+    "source": "(4, N'Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô', 110, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), N'Tiếng Nhật', N'Phụ đề Tiếng Việt & Lồng tiếng', N'P', N'Nagaoka Chika', N'Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.', 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800', 'https://youtube.com/watch?v=exampleConan', N'Đang chiếu');",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/012_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/012_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 6,
+    "source": "(1, N'VIP', N'Tất cả', N'Tất cả', 15000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 7,
+    "source": "(1, N'Sweetbox', N'Tất cả', N'Tất cả', 30000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 8,
+    "source": "(1, N'Tất cả', N'Cuối tuần', N'Tất cả', 10000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 9,
+    "source": "(1, N'Tất cả', N'Tất cả', N'IMAX', 50000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 10,
+    "source": "(2, N'VIP', N'Tất cả', N'Tất cả', 15000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 11,
+    "source": "(2, N'Sweetbox', N'Tất cả', N'Tất cả', 25000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/013_reference.sql",
+    "line": 12,
+    "source": "(3, N'VIP', N'Tất cả', N'Tất cả', 10000, DATEADD(DAY,-30,@SeedDay), NULL, N'Áp dụng');",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 9,
+    "source": "(1, 1, 1, DATEADD(HOUR,18,CONVERT(datetime2,DATEADD(DAY,-2,@SeedDay))), DATEADD(MINUTE,1246,CONVERT(datetime2,DATEADD(DAY,-2,@SeedDay))), N'2D', 80000, N'Hoàn thành'),",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 11,
+    "source": "(2, 1, 1, DATEADD(HOUR, 2, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), DATEADD(MINUTE, 286, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), N'2D', 85000, N'Mở bán'),",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 13,
+    "source": "(3, 1, 2, DATEADD(HOUR, 5, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), DATEADD(MINUTE, 466, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), N'IMAX', 120000, N'Mở bán'),",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 15,
+    "source": "(4, 2, 4, DATEADD(HOUR, 3, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), DATEADD(MINUTE, 311, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), N'2D', 80000, N'Mở bán'),",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/014_reference.sql",
+    "line": 17,
+    "source": "(5, 4, 6, DATEADD(HOUR, 4, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), DATEADD(MINUTE, 350, DATEADD(DAY,1,CONVERT(datetime2,@SeedDay))), N'2D', 75000, N'Mở bán');",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/015_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/015_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/016_reference.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/016_reference.sql",
+    "line": 3,
+    "source": "DECLARE @SeedDay date = CONVERT(date,SESSION_CONTEXT(N'CinemaSeedDay'));",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/016_reference.sql",
+    "line": 7,
+    "source": "(1, 'CHAOBANMOI', N'Giảm 10% cho khách hàng mới', N'Phần trăm', 10.00, 100000, 50000, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), 1000, 0, N'Hoạt động'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/016_reference.sql",
+    "line": 8,
+    "source": "(2, 'GIAM30K', N'Giảm trực tiếp 30.000 đ cho đơn từ 150k', N'Số tiền', 30000, 150000, NULL, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), 500, 0, N'Hoạt động'),",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/016_reference.sql",
+    "line": 9,
+    "source": "(3, 'VIPMEMBER', N'Giảm 20% cho thành viên thân thiết', N'Phần trăm', 20.00, 200000, 100000, DATEADD(DAY,-30,@SeedDay), DATEADD(YEAR,1,@SeedDay), 200, 0, N'Hoạt động');",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/017_cinema_images.sql",
+    "line": 1,
+    "source": "IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0",
+    "classification": "CORRECT",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/017_cinema_images.sql",
+    "line": 4,
+    "source": "SELECT RapID,N'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba',N'Development cinema image',1,0,CONVERT(datetime2,SESSION_CONTEXT(N'CinemaSeedDay')) FROM dbo.RAPCHIEUPHIM;",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  },
+  {
+    "file": "database/10_seed/seed-all.sql",
+    "line": 6,
+    "source": "DECLARE @day date = TRY_CONVERT(date,N'$(SeedDate)',126);",
+    "classification": "BUSINESS-DATE",
+    "reason": "Reviewed in R1 scan; date operations must be classified by argument semantics"
+  }
+]

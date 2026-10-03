@@ -1,6 +1,7 @@
 import sql from 'mssql';
 import { getPool } from './pool.js';
 import { PROCEDURES, isKnownProcedure } from './procedures.js';
+import { parseApiInstant, serializeDateOnly, serializeInstant } from '../utils/dateTime.js';
 
 // mssql data types, re-exported so services can declare typed parameters.
 export const DbTypes = sql;
@@ -16,8 +17,33 @@ function resolveProcedure(key) {
 function bindInputs(request, params = {}) {
   for (const [name, { type, value }] of Object.entries(params)) {
     if (!type) throw new Error(`Parameter "${name}" must declare a type`);
-    request.input(name, type, value);
+    const sqlType = type.type ?? type;
+    const instantType = [sql.DateTime, sql.DateTime2, sql.SmallDateTime, sql.DateTimeOffset].includes(sqlType);
+    request.input(name, type, value == null ? null : sqlType === sql.Date
+      ? serializeDateOnly(value)
+      : instantType && !(value instanceof Date) ? parseApiInstant(value, name) : value);
   }
+}
+
+// SQL metadata, rather than field names, distinguishes DATE from timestamps
+// (NgayBatDau is DATE for pricing but datetime2 for promotions).
+export function normalizeTemporalResult(result, outputs = {}) {
+  const recordsets = result.recordsets ?? (result.recordset ? [result.recordset] : []);
+  for (const recordset of recordsets) {
+    for (const row of recordset) {
+      for (const [name, value] of Object.entries(row)) {
+        if (!(value instanceof Date)) continue;
+        const type = recordset.columns?.[name]?.type;
+        if (type === sql.Date) row[name] = serializeDateOnly(value);
+        else if (type === sql.Time) row[name] = `${String(value.getUTCHours()).padStart(2, '0')}:${String(value.getUTCMinutes()).padStart(2, '0')}:${String(value.getUTCSeconds()).padStart(2, '0')}`;
+        else row[name] = serializeInstant(value);
+      }
+    }
+  }
+  for (const [name, value] of Object.entries(result.output ?? {})) {
+    if (value instanceof Date) result.output[name] = (outputs[name]?.type ?? outputs[name]) === sql.Date ? serializeDateOnly(value) : serializeInstant(value);
+  }
+  return result;
 }
 
 // Builds a client around a pool provider, so tests can inject a fake pool.
@@ -27,7 +53,7 @@ export function createProcedureClient(poolProvider = getPool) {
     const pool = await poolProvider();
     const request = pool.request();
     bindInputs(request, params);
-    return request.execute(name);
+    return normalizeTemporalResult(await request.execute(name));
   }
 
   // outputs: { name: sql.Int }
@@ -40,7 +66,7 @@ export function createProcedureClient(poolProvider = getPool) {
       if (!type) throw new Error(`Output parameter "${outName}" must declare a type`);
       request.output(outName, type);
     }
-    return request.execute(name);
+    return normalizeTemporalResult(await request.execute(name), outputs);
   }
 
   return { executeProcedure, executeProcedureWithOutputs };

@@ -1,4 +1,32 @@
-# CinemaBookingDB — R0 reproducible baseline
+# CinemaBookingDB — reproducible baseline (R0 + R1)
+
+R1 timezone contract hiện hành: **26 tables, 6 views, 20 functions, 7 triggers,
+124 procedures, 61 indexes, 157 constraints**. Ba function mới chỉ tập trung
+conversion UTC/business timezone và business date. Schema tables/indexes và
+các policy booking/payment/refund/RBAC giữ nguyên. Xem
+[DATETIME_CONTRACT](../docs/DATETIME_CONTRACT.md) và
+[R1 report](../audit/remediation/R1_TIMEZONE_REPORT.md).
+
+`fn_BayGio()` hiện trả UTC; `fn_HomNay()` vẫn trả ngày Việt Nam. Driver dùng
+`useUTC=true`; instant REST là ISO UTC và SQL DATE là YYYY-MM-DD. Seed local
+timestamps được convert bằng helper timezone-aware khi dựng baseline. Báo cáo
+R0 bên dưới là bằng chứng phiên trước, không phải counts/semantics hiện hành.
+
+Kiểm tra R1 trên disposable database:
+
+```powershell
+npm.cmd run r1:checks
+npm.cmd run db:reset -- --database=CinemaBookingDB_R0_R1_Test
+npm.cmd run db:test -- --database=CinemaBookingDB_R0_R1_Test
+npm.cmd run r1:integration -- --database=CinemaBookingDB_R0_R1_Test
+npm.cmd run r1:sql-tests -- --database=CinemaBookingDB_R0_R1_Test
+npm.cmd run db:smoke -- --database=CinemaBookingDB_R0_R1_Test --stress
+npm.cmd run r1:browser
+```
+
+Không áp dụng migration seed R1 cho dataset khác fingerprint R0 đã chứng minh.
+Tool sẽ từ chối dữ liệu thay đổi/không rõ nguồn. Migration đã có backup và
+forward/rollback test; clean rebuild mới luôn chứa R1, không cần migration seed.
 
 SQL Server giữ toàn bộ SQL nghiệp vụ, integrity, concurrency, transaction, giá và booking authoritative. Backend chỉ bind input/output có type và execute procedure trong whitelist `backend/src/db/procedures.js`. Không raw SQL, query API, ORM, hoặc transaction SQL trong backend.
 

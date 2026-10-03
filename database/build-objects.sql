@@ -52,6 +52,9 @@
 :r ./05_functions/fn_GioiHanGheMoiDon.sql
 :r ./05_functions/fn_GioiHanGiamGiaPhanTram.sql
 :r ./05_functions/fn_GioiHanSoLuongSanPham.sql
+:r ./05_functions/fn_GioRap.sql
+:r ./05_functions/fn_UtcTuGioRap.sql
+:r ./05_functions/fn_NgayKinhDoanh.sql
 :r ./05_functions/fn_HomNay.sql
 :r ./05_functions/fn_KiemTraQuanLyRapScope.sql
 :r ./05_functions/fn_KiemTraQuyenNguoiDung.sql

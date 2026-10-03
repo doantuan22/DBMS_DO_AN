@@ -1,3 +1,4 @@
+import { isDateOnly, isApiInstant } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
 
 function queryOnly(query, allowed) {
@@ -26,8 +27,7 @@ function optionalText(value, field, limit) {
 
 function optionalDate(value, field) {
   if (value == null || value === '') return null;
-  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)
-    || Number.isNaN(Date.parse(`${value}T00:00:00Z`))) {
+  if (!isDateOnly(value)) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`);
   }
   return value;
@@ -74,9 +74,9 @@ function bodyShape(value, schema) {
     if (rule === 'string' && (typeof item !== 'string' || !item.trim())) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be text.`);
     if (rule === 'email' && (typeof item !== 'string' || !/^\S+@\S+\.\S+$/.test(item))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a valid email.`);
     if (rule === 'password' && (typeof item !== 'string' || item.length < 8 || item.length > 128)) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be 8 to 128 characters.`);
-    if (rule === 'date' && (typeof item !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(item) || Number.isNaN(Date.parse(`${item}T00:00:00Z`)))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`);
-    if (rule === 'nullable-date' && item !== null && (typeof item !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(item) || Number.isNaN(Date.parse(`${item}T00:00:00Z`)))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD or null.`);
-    if (rule === 'datetime' && (typeof item !== 'string' || Number.isNaN(Date.parse(item)))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a valid datetime.`);
+    if (rule === 'date' && (!isDateOnly(item))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`);
+    if (rule === 'nullable-date' && item !== null && (!isDateOnly(item))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD or null.`);
+    if (rule === 'datetime' && !isApiInstant(item)) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime with Z or an explicit offset.`);
     if (rule === 'ids' && (!Array.isArray(item) || item.some((id) => !Number.isSafeInteger(id) || id <= 0))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a list of positive integers.`);
     if (rule === 'cast' && (!Array.isArray(item) || item.some((cast) => !cast || !Number.isSafeInteger(cast.actorId) || cast.actorId <= 0 || typeof cast.role !== 'string'))) throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
     if (rule === 'boolean' && typeof item !== 'boolean') throw new HttpError(400, 'INVALID_REQUEST', `${field} must be true or false.`);

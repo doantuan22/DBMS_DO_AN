@@ -18,7 +18,7 @@ INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID) VALUES
 INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID)
 SELECT 1, QuyenID FROM dbo.QUYEN;
 -- Seed fixture timestamp is fixed by SeedDate, rather than wall-clock timing.
-UPDATE dbo.VAITRO_QUYEN SET NgayGan=CONVERT(datetime2,@SeedDay);
+UPDATE dbo.VAITRO_QUYEN SET NgayGan=dbo.fn_UtcTuGioRap(CONVERT(datetime2,@SeedDay));
 
 END;
 GO

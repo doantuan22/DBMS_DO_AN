@@ -73,7 +73,7 @@ test('cinema/date selectors render API-backed choices and showtime selection car
   const html = render(React.createElement(MemoryRouter, null, React.createElement(ShowtimeBrowser, {
     cinemas: [{ id: 9, name: 'Cinema Nine', city: 'Hanoi' }],
     cinemaId: '9', date: '2026-09-30', onCinemaChange() {}, onDateChange() {},
-    state: { status: 'success', data: [{ id: 73, startTime: '19:30', endTime: '21:00', cinemaName: 'Cinema Nine', roomName: 'Room A', format: '2D', basePrice: 85000 }] },
+    state: { status: 'success', data: [{ id: 73, startsAt: '2026-09-30T12:30:00.000Z', endsAt: '2026-09-30T14:00:00.000Z', cinemaName: 'Cinema Nine', roomName: 'Room A', format: '2D', basePrice: 85000 }] },
   })));
   assert.match(html, /<option value="9" selected="">Cinema Nine/);
   assert.match(html, /type="date" value="2026-09-30"/);

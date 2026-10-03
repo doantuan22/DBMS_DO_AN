@@ -11,6 +11,7 @@ function orderSummaryDto(row) {
     movieTitle: row.TenPhim, posterUrl: row.PosterURL, cinemaId: row.RapID,
     cinemaName: row.TenRap, roomName: row.TenPhong, startsAt: row.ThoiGianBatDau,
     endsAt: row.ThoiGianKetThuc, format: row.DinhDang, bookedAt: row.NgayDat,
+    holdExpiresAt: row.HanGiuCho ?? null,
     ticketTotal: number(row.TongTienVe), productTotal: number(row.TongTienDoAn),
     discountTotal: number(row.TienGiamGia), total: number(row.TongTienThanhToan),
     status: row.TrangThaiDon, promotionCode: row.MaKhuyenMai, ticketCount: row.SoLuongVe,

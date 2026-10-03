@@ -1,3 +1,4 @@
+import HoldDeadline from '../components/HoldDeadline';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { createPaymentAttempt, getOrder, submitPaymentResult } from '../api/ordersApi';
@@ -44,6 +45,7 @@ export default function PaymentPage() {
   return <section className="catalog-page"><p className="catalog-eyebrow">THANH TOÁN MÔ PHỎNG</p><h1>Đơn #{order.id}</h1>
     <p>{order.movieTitle} · {order.cinemaName}</p><p>Database chốt tổng thanh toán: <strong>{money(order.total)}</strong></p><p>Trạng thái đơn: {order.status}</p>
     <p className="catalog-muted">Số tiền không nhận từ trình duyệt. Database lấy tổng tiền của đơn khi tạo giao dịch.</p>
+    {payable && <HoldDeadline deadline={order.holdExpiresAt} />}
     {payable && !attempt && <><label>Phương thức <select value={method} onChange={(event) => setMethod(event.target.value)}>{METHODS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label><button type="button" onClick={createAttempt} disabled={busy}>{busy ? 'Đang tạo giao dịch…' : 'Tạo giao dịch thanh toán'}</button></>}
     {attempt && <section className="booking-section"><h2>Giao dịch #{attempt.id}</h2><p>{attempt.method} · {money(attempt.amount)} · {attempt.status}</p><p>Mã giao dịch: {attempt.transactionCode}</p><button type="button" onClick={() => finish('Thành công')} disabled={busy}>Mô phỏng thành công</button><button type="button" onClick={() => finish('Thất bại')} disabled={busy}>Mô phỏng thất bại</button></section>}
     {message && <p role="status" className={message.includes('Đã') ? 'form-success' : 'form-error'}>{message}</p>}

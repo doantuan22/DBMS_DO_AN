@@ -1,0 +1,640 @@
+[
+  {
+    "Object": "BANGGIA",
+    "Column/Field": "NgayBatDau",
+    "SQL Type": "date",
+    "Meaning": "Start of validity",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/05_functions/fn_TinhGiaVe.sql",
+      "database/07_triggers/TRG_BangGia_KiemTraChongLan.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Update.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Update.sql",
+      "database/10_seed/013_reference.sql"
+    ],
+    "Read By": [
+      "database/05_functions/fn_TinhGiaVe.sql",
+      "database/07_triggers/TRG_BangGia_KiemTraChongLan.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_List.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Update.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_List.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Update.sql"
+    ],
+    "API Field": "startsOn/endsOn; NgayBatDau/NgayKetThuc",
+    "Frontend Consumer": "ManagerPortal pricing, AdminPortal pricing",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "BANGGIA",
+    "Column/Field": "NgayKetThuc",
+    "SQL Type": "date",
+    "Meaning": "End of validity",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/05_functions/fn_TinhGiaVe.sql",
+      "database/07_triggers/TRG_BangGia_KiemTraChongLan.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Update.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Update.sql",
+      "database/10_seed/013_reference.sql"
+    ],
+    "Read By": [
+      "database/05_functions/fn_TinhGiaVe.sql",
+      "database/07_triggers/TRG_BangGia_KiemTraChongLan.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_List.sql",
+      "database/08_procedures/admin/usp_Admin_Pricing_Update.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_List.sql",
+      "database/08_procedures/manager/sp_Manager_Pricing_Update.sql"
+    ],
+    "API Field": "startsOn/endsOn; NgayBatDau/NgayKetThuc",
+    "Frontend Consumer": "ManagerPortal pricing, AdminPortal pricing",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "DANHGIAPHIM",
+    "Column/Field": "NgayDanhGia",
+    "SQL Type": "datetime2",
+    "Meaning": "Review creation",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/customer/sp_Review_Create.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/customer/sp_Review_Create.sql",
+      "database/08_procedures/customer/sp_Review_ListByMovie.sql",
+      "database/08_procedures/public/sp_Movie_GetDetail.sql"
+    ],
+    "API Field": "createdAt",
+    "Frontend Consumer": "MovieReviews, MovieDetail",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "DIENVIEN",
+    "Column/Field": "NgaySinh",
+    "SQL Type": "date",
+    "Meaning": "Birthday",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Actor_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Actor_Update.sql",
+      "database/10_seed/010_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Actor_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Actor_List.sql",
+      "database/08_procedures/admin/sp_Admin_Actor_Update.sql"
+    ],
+    "API Field": "NgaySinh",
+    "Frontend Consumer": "AdminPortal actors",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "DONDATVE",
+    "Column/Field": "NgayDat",
+    "SQL Type": "datetime2",
+    "Meaning": "Booking creation",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/booking/sp_Booking_Create.sql"
+    ],
+    "Read By": [
+      "database/06_views/vw_ChiTietDonDatVe.sql",
+      "database/06_views/vw_LichSuDatVe.sql",
+      "database/08_procedures/booking/sp_Booking_Create.sql",
+      "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "database/08_procedures/customer/sp_Order_ListByCustomer.sql"
+    ],
+    "API Field": "bookedAt/holdExpiresAt",
+    "Frontend Consumer": "BookingPreparation, Orders, OrderDetail, SupportPortal, ComplaintDetail",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "DONDATVE",
+    "Column/Field": "HanGiuCho",
+    "SQL Type": "datetime2",
+    "Meaning": "Authoritative seat hold deadline",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/07_triggers/TRG_ChiTietVe_KiemTraTrungGhe.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "database/08_procedures/booking/sp_Booking_Create.sql",
+      "database/08_procedures/customer/sp_Order_ExpirePending.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "database/08_procedures/system/sp_Showtime_CancelCascade.sql"
+    ],
+    "Read By": [
+      "database/05_functions/fn_DanhSachGheSuatChieu.sql",
+      "database/05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql",
+      "database/06_views/vw_ChiTietDonDatVe.sql",
+      "database/06_views/vw_LichChieuChiTiet.sql",
+      "database/06_views/vw_LichSuDatVe.sql",
+      "database/07_triggers/TRG_ChiTietVe_KiemTraTrungGhe.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "database/08_procedures/booking/sp_Booking_Create.sql",
+      "database/08_procedures/customer/sp_Order_ExpirePending.sql",
+      "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "database/08_procedures/customer/sp_Order_ListByCustomer.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "database/08_procedures/system/sp_Showtime_CancelCascade.sql"
+    ],
+    "API Field": "bookedAt/holdExpiresAt",
+    "Frontend Consumer": "BookingPreparation, Orders, OrderDetail, SupportPortal, ComplaintDetail",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "HINHANH_RAPCHIEUPHIM",
+    "Column/Field": "NgayTao",
+    "SQL Type": "datetime2",
+    "Meaning": "Record creation",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/admin/usp_Admin_CinemaImage_Create.sql",
+      "database/08_procedures/admin/usp_Admin_CinemaImage_SetCover.sql",
+      "database/08_procedures/admin/usp_Admin_CinemaImage_Update.sql",
+      "database/10_seed/017_cinema_images.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/usp_Admin_CinemaImage_Create.sql",
+      "database/08_procedures/admin/usp_Admin_CinemaImage_List.sql",
+      "database/08_procedures/admin/usp_Admin_CinemaImage_SetCover.sql",
+      "database/08_procedures/admin/usp_Admin_CinemaImage_Update.sql",
+      "database/08_procedures/public/sp_Cinema_GetImages.sql",
+      "database/10_seed/017_cinema_images.sql"
+    ],
+    "API Field": "createdAt; NgayTao",
+    "Frontend Consumer": "CinemaImageManager, Cinemas",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "HOSOKHACHHANG",
+    "Column/Field": "NgaySinh",
+    "SQL Type": "date",
+    "Meaning": "Birthday",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/auth/sp_Auth_RegisterCustomer.sql",
+      "database/08_procedures/auth/sp_User_UpdateProfile.sql",
+      "database/10_seed/004_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/auth/sp_Auth_RegisterCustomer.sql",
+      "database/08_procedures/auth/sp_User_GetCurrent.sql",
+      "database/08_procedures/auth/sp_User_UpdateProfile.sql"
+    ],
+    "API Field": "birthday",
+    "Frontend Consumer": "auth/Profile, auth/Register",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "KHIEUNAI",
+    "Column/Field": "NgayTao",
+    "SQL Type": "datetime2",
+    "Meaning": "Record creation",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/customer/sp_Complaint_Create.sql"
+    ],
+    "Read By": [
+      "database/06_views/vw_DanhSachKhieuNai.sql",
+      "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "database/08_procedures/customer/sp_Complaint_GetByCustomer.sql",
+      "database/08_procedures/customer/sp_Complaint_ListByCustomer.sql",
+      "database/08_procedures/support/sp_Support_Complaint_GetDetail.sql"
+    ],
+    "API Field": "createdAt",
+    "Frontend Consumer": "Complaints, ComplaintDetail, SupportPortal, AdminPortal complaints",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "KHUYENMAI",
+    "Column/Field": "NgayBatDau",
+    "SQL Type": "datetime2",
+    "Meaning": "Start of validity",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Promotion_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Promotion_Update.sql",
+      "database/10_seed/016_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Promotion_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Promotion_List.sql",
+      "database/08_procedures/admin/sp_Admin_Promotion_Update.sql",
+      "database/08_procedures/public/sp_Promotion_Validate.sql"
+    ],
+    "API Field": "NgayBatDau/NgayKetThuc",
+    "Frontend Consumer": "AdminPortal promotions",
+    "Current Semantics": "Mixed: local seed; UTC API parameters; local DB comparison",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "KHUYENMAI",
+    "Column/Field": "NgayKetThuc",
+    "SQL Type": "datetime2",
+    "Meaning": "End of validity",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Promotion_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Promotion_Update.sql",
+      "database/10_seed/016_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Promotion_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Promotion_List.sql",
+      "database/08_procedures/admin/sp_Admin_Promotion_Update.sql",
+      "database/08_procedures/public/sp_Promotion_Validate.sql"
+    ],
+    "API Field": "NgayBatDau/NgayKetThuc",
+    "Frontend Consumer": "AdminPortal promotions",
+    "Current Semantics": "Mixed: local seed; UTC API parameters; local DB comparison",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "NGUOIDUNG",
+    "Column/Field": "NgayTao",
+    "SQL Type": "datetime2",
+    "Meaning": "Record creation",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/admin/sp_Admin_User_Create.sql",
+      "database/08_procedures/auth/sp_Auth_RegisterCustomer.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "database/10_seed/004_reference.sql"
+    ],
+    "Read By": [
+      "database/06_views/vw_DanhSachKhieuNai.sql",
+      "database/08_procedures/admin/sp_Admin_User_Create.sql",
+      "database/08_procedures/admin/sp_Admin_User_List.sql",
+      "database/08_procedures/auth/sp_Auth_RegisterCustomer.sql",
+      "database/08_procedures/auth/sp_User_GetCurrent.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "database/08_procedures/support/sp_Support_Complaint_GetDetail.sql"
+    ],
+    "API Field": "createdAt; NgayTao",
+    "Frontend Consumer": "auth/Profile, AdminPortal users",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "PHANCONG_RAP",
+    "Column/Field": "NgayBatDau",
+    "SQL Type": "date",
+    "Meaning": "Start of validity",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Assignment_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Assignment_Update.sql",
+      "database/10_seed/006_reference.sql"
+    ],
+    "Read By": [
+      "database/05_functions/fn_KiemTraQuanLyRapScope.sql",
+      "database/08_procedures/admin/sp_Admin_Assignment_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Assignment_List.sql",
+      "database/08_procedures/admin/usp_Admin_Assignment_Update.sql",
+      "database/08_procedures/auth/sp_Auth_Login.sql",
+      "database/08_procedures/manager/sp_Manager_ListAssignedCinemas.sql"
+    ],
+    "API Field": "startsOn/endsOn; NgayBatDau/NgayKetThuc",
+    "Frontend Consumer": "ManagerPortal cinemas, AdminPortal assignments",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "PHANCONG_RAP",
+    "Column/Field": "NgayKetThuc",
+    "SQL Type": "date",
+    "Meaning": "End of validity",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Assignment_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Assignment_Update.sql",
+      "database/10_seed/006_reference.sql"
+    ],
+    "Read By": [
+      "database/05_functions/fn_KiemTraQuanLyRapScope.sql",
+      "database/08_procedures/admin/sp_Admin_Assignment_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Assignment_List.sql",
+      "database/08_procedures/admin/usp_Admin_Assignment_Update.sql",
+      "database/08_procedures/auth/sp_Auth_Login.sql",
+      "database/08_procedures/manager/sp_Manager_ListAssignedCinemas.sql"
+    ],
+    "API Field": "startsOn/endsOn; NgayBatDau/NgayKetThuc",
+    "Frontend Consumer": "ManagerPortal cinemas, AdminPortal assignments",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "PHIM",
+    "Column/Field": "NgayKhoiChieu",
+    "SQL Type": "date",
+    "Meaning": "Movie release business date",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "database/10_seed/011_reference.sql"
+    ],
+    "Read By": [
+      "database/06_views/vw_ThongKePhim.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "database/08_procedures/admin/usp_Admin_Movie_List.sql",
+      "database/08_procedures/public/sp_Movie_GetDetail.sql",
+      "database/08_procedures/public/sp_Movie_List.sql"
+    ],
+    "API Field": "releaseDate/endDate; NgayKhoiChieu/NgayKetThuc",
+    "Frontend Consumer": "MovieDetail, AdminPortal movies",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "PHIM",
+    "Column/Field": "NgayKetThuc",
+    "SQL Type": "date",
+    "Meaning": "End of validity",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "database/10_seed/011_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "database/08_procedures/admin/usp_Admin_Movie_List.sql",
+      "database/08_procedures/public/sp_Movie_GetDetail.sql",
+      "database/08_procedures/public/sp_Movie_List.sql"
+    ],
+    "API Field": "releaseDate/endDate; NgayKhoiChieu/NgayKetThuc",
+    "Frontend Consumer": "MovieDetail, AdminPortal movies",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "PHIM",
+    "Column/Field": "ThoiLuong",
+    "SQL Type": "int",
+    "Meaning": "Movie duration in minutes",
+    "Category": "DURATION",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "database/10_seed/011_reference.sql"
+    ],
+    "Read By": [
+      "database/03_constraints/003_check_constraints.sql",
+      "database/06_views/vw_ChiTietDonDatVe.sql",
+      "database/06_views/vw_LichChieuChiTiet.sql",
+      "database/06_views/vw_ThongKePhim.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "database/08_procedures/admin/usp_Admin_Movie_List.sql",
+      "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "database/08_procedures/public/sp_Movie_GetDetail.sql",
+      "database/08_procedures/public/sp_Movie_List.sql",
+      "database/08_procedures/public/sp_Showtime_GetDetail.sql",
+      "database/08_procedures/public/sp_Showtime_ListByMovie.sql",
+      "database/08_procedures/system/sp_Clock_GetNow.sql",
+      "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+      "database/10_seed/011_reference.sql"
+    ],
+    "API Field": "durationMinutes/ThoiLuong",
+    "Frontend Consumer": "MovieCard, MovieDetail, AdminPortal movies",
+    "Current Semantics": "Minutes",
+    "Target Semantics": "Minutes",
+    "Risk": "No timezone conversion"
+  },
+  {
+    "Object": "RAPCHIEUPHIM",
+    "Column/Field": "NgayHoatDong",
+    "SQL Type": "date",
+    "Meaning": "Cinema opening business date",
+    "Category": "DATE_ONLY",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Cinema_Create.sql",
+      "database/10_seed/005_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Cinema_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Cinema_List.sql",
+      "database/08_procedures/public/sp_Cinema_List.sql"
+    ],
+    "API Field": "operatingSince; NgayHoatDong",
+    "Frontend Consumer": "Cinemas, AdminPortal cinemas",
+    "Current Semantics": "Business calendar date; driver Date may leak ISO timestamp",
+    "Target Semantics": "DATE / YYYY-MM-DD; no conversion",
+    "Risk": "Date becoming timestamp in DTO"
+  },
+  {
+    "Object": "SUATCHIEU",
+    "Column/Field": "ThoiGianBatDau",
+    "SQL Type": "datetime2",
+    "Meaning": "Showtime start",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/05_functions/fn_TinhGiaVe.sql",
+      "database/07_triggers/TRG_DanhGia_KiemTraDaXemPhim.sql",
+      "database/07_triggers/TRG_SuatChieu_KiemTraTrungLich.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "database/08_procedures/booking/sp_Booking_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "database/08_procedures/system/sp_Showtime_CancelCascade.sql",
+      "database/10_seed/014_reference.sql"
+    ],
+    "Read By": [
+      "database/05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql",
+      "database/05_functions/fn_TinhGiaVe.sql",
+      "database/06_views/vw_ChiTietDonDatVe.sql",
+      "database/06_views/vw_LichChieuChiTiet.sql",
+      "database/06_views/vw_LichSuDatVe.sql",
+      "database/07_triggers/TRG_DanhGia_KiemTraDaXemPhim.sql",
+      "database/07_triggers/TRG_SuatChieu_KiemTraTrungLich.sql",
+      "database/08_procedures/admin/sp_Admin_Dashboard.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_List.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "database/08_procedures/booking/sp_Booking_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Dashboard.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_List.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "database/08_procedures/system/sp_Showtime_CancelCascade.sql"
+    ],
+    "API Field": "startsAt/endsAt, date/startTime/endTime; ThoiGianBatDau/ThoiGianKetThuc",
+    "Frontend Consumer": "ShowtimeBrowser, BookingPreparation, Orders, OrderDetail, ManagerPortal, AdminPortal showtimes",
+    "Current Semantics": "Mixed: local seed; UTC API parameters; local DB comparison",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "SUATCHIEU",
+    "Column/Field": "ThoiGianKetThuc",
+    "SQL Type": "datetime2",
+    "Meaning": "Showtime end",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/07_triggers/TRG_SuatChieu_KiemTraTrungLich.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "database/10_seed/014_reference.sql"
+    ],
+    "Read By": [
+      "database/06_views/vw_ChiTietDonDatVe.sql",
+      "database/06_views/vw_LichChieuChiTiet.sql",
+      "database/06_views/vw_LichSuDatVe.sql",
+      "database/07_triggers/TRG_SuatChieu_KiemTraTrungLich.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Create.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_List.sql",
+      "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Create.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_List.sql",
+      "database/08_procedures/manager/sp_Manager_Showtime_Update.sql"
+    ],
+    "API Field": "startsAt/endsAt, date/startTime/endTime; ThoiGianBatDau/ThoiGianKetThuc",
+    "Frontend Consumer": "ShowtimeBrowser, BookingPreparation, Orders, OrderDetail, ManagerPortal, AdminPortal showtimes",
+    "Current Semantics": "Mixed: local seed; UTC API parameters; local DB comparison",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "THANHTOAN",
+    "Column/Field": "NgayTao",
+    "SQL Type": "datetime2",
+    "Meaning": "Record creation",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "database/08_procedures/manager/sp_Manager_Dashboard.sql",
+      "database/08_procedures/manager/sp_Manager_Revenue.sql",
+      "database/08_procedures/payment/sp_Payment_CreateAttempt.sql"
+    ],
+    "API Field": "createdAt/paidAt",
+    "Frontend Consumer": "PaymentPage, OrderDetail, SupportPortal, AdminPortal reports",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "THANHTOAN",
+    "Column/Field": "NgayThanhToan",
+    "SQL Type": "datetime2",
+    "Meaning": "Payment result recorded",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "database/08_procedures/payment/sp_Payment_UpdateResult.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "database/08_procedures/manager/sp_Manager_Dashboard.sql",
+      "database/08_procedures/manager/sp_Manager_Revenue.sql",
+      "database/08_procedures/payment/sp_Payment_UpdateResult.sql"
+    ],
+    "API Field": "createdAt/paidAt",
+    "Frontend Consumer": "PaymentPage, OrderDetail, SupportPortal, AdminPortal reports",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "VAITRO_QUYEN",
+    "Column/Field": "NgayGan",
+    "SQL Type": "datetime2",
+    "Meaning": "Permission grant",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/admin/sp_Admin_RolePermission_Set.sql",
+      "database/10_seed/003_reference.sql"
+    ],
+    "Read By": [
+      "database/08_procedures/admin/sp_Admin_RolePermission_Set.sql",
+      "database/10_seed/003_reference.sql"
+    ],
+    "API Field": "NgayGan (not exposed in current REST)",
+    "Frontend Consumer": "No time consumer",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  },
+  {
+    "Object": "XULY_KHIEUNAI",
+    "Column/Field": "NgayXuLy",
+    "SQL Type": "datetime2",
+    "Meaning": "Complaint processing",
+    "Category": "INSTANT",
+    "Written By": [
+      "database/03_constraints/005_function_defaults.sql",
+      "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "database/08_procedures/support/sp_Support_Complaint_UpdateStatus.sql"
+    ],
+    "Read By": [
+      "database/06_views/vw_DanhSachKhieuNai.sql",
+      "database/08_procedures/customer/sp_Complaint_GetByCustomer.sql",
+      "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "database/08_procedures/support/sp_Support_Complaint_GetDetail.sql",
+      "database/08_procedures/support/sp_Support_Complaint_UpdateStatus.sql"
+    ],
+    "API Field": "createdAt",
+    "Frontend Consumer": "ComplaintDetail, SupportPortal, AdminPortal complaints",
+    "Current Semantics": "Vietnam wall-clock via fn_BayGio default/explicit writer; driver decodes as UTC",
+    "Target Semantics": "UTC datetime2 / ISO UTC Z",
+    "Risk": "Mixed historical origin; not safe to mass migrate"
+  }
+]

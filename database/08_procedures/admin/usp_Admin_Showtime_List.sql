@@ -13,8 +13,8 @@ BEGIN
     INNER JOIN dbo.RAPCHIEUPHIM r ON r.RapID = pc.RapID
     INNER JOIN dbo.PHIM p ON p.PhimID = sc.PhimID
     WHERE (@RapID IS NULL OR pc.RapID = @RapID)
-      AND (@TuNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) >= @TuNgay)
-      AND (@DenNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) <= @DenNgay)
+      AND (@TuNgay IS NULL OR dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau) >= @TuNgay)
+      AND (@DenNgay IS NULL OR dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau) <= @DenNgay)
     ORDER BY sc.ThoiGianBatDau DESC;
 END;
 GO

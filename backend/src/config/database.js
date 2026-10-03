@@ -8,6 +8,8 @@ export const databaseConfig = Object.freeze({
   user: env.db.user,
   password: env.db.password,
   options: {
+    // All SQL instant columns/parameters contain UTC components.
+    useUTC: true,
     encrypt: env.db.encrypt,
     trustServerCertificate: env.db.trustServerCertificate,
   },

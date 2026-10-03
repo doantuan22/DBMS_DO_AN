@@ -1,3 +1,5 @@
+import HoldDeadline from '../components/HoldDeadline';
+import { formatDateTime } from '../utils/dateTime';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getOrder } from '../api/ordersApi';
@@ -17,7 +19,8 @@ export default function OrderDetail() {
   if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;
   const order = resource.data;
   return <section className="catalog-page"><p className="catalog-eyebrow">ĐƠN #{order.id}</p><h1>{order.movieTitle}</h1>
-    <p>{order.cinemaName} · {order.roomName} · {order.startsAt}</p><p>Trạng thái đơn: {order.status}</p>
+    <p>{order.cinemaName} · {order.roomName} · {formatDateTime(order.startsAt)}</p><p>Trạng thái đơn: {order.status}</p>
+    {order.status === 'Chờ thanh toán' && <HoldDeadline deadline={order.holdExpiresAt} />}
     <p>Ghế: {order.seatLabels || order.tickets.map((ticket) => ticket.label).join(', ')}</p>
     <p>Vé: {money(order.ticketTotal)} · Đồ ăn: {money(order.productTotal)} · Giảm giá: {money(order.discountTotal)} · <strong>Tổng: {money(order.total)}</strong></p>
     <h2>Vé</h2><ul>{order.tickets.map((ticket) => <li key={ticket.id}>{ticket.label} · {ticket.type} · {money(ticket.price)} · {ticket.status}</li>)}</ul>

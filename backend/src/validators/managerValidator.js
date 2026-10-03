@@ -1,3 +1,4 @@
+import { isDateOnly, isApiInstant } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
 
 const ROOM_TYPES = new Set(['2D', '3D', 'IMAX', '4DX', 'ScreenX']);
@@ -51,16 +52,15 @@ function nonNegative(value, field) {
 }
 
 function validDate(value, field) {
-  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)
-    || Number.isNaN(Date.parse(`${value}T00:00:00Z`))) {
+  if (!isDateOnly(value)) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`);
   }
   return value;
 }
 
 function validDateTime(value, field) {
-  if (typeof value !== 'string' || Number.isNaN(Date.parse(value))) {
-    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime.`);
+  if (!isApiInstant(value)) {
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime with Z or an explicit offset.`);
   }
   return value;
 }

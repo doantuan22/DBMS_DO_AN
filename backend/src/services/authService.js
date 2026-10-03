@@ -2,6 +2,7 @@ import { executeProcedure, executeProcedureWithOutputs, DbTypes } from '../db/pr
 import { verifyPassword, hashPassword } from '../utils/password.js';
 import { issueToken } from '../utils/jwt.js';
 import { HttpError } from '../utils/httpError.js';
+import { serializeDateOnly } from '../utils/dateTime.js';
 
 const ACTIVE = 'Hoạt động';
 const invalidCredentials = () => new HttpError(401, 'INVALID_CREDENTIALS', 'Email or password is incorrect.');
@@ -43,7 +44,7 @@ export function toUserDto(row, permissions = [], cinemaAssignments = []) {
     status: row.TrangThai,
     role: row.MaVaiTro,
     roleName: row.TenVaiTro,
-    birthday: row.NgaySinh ?? null,
+    birthday: serializeDateOnly(row.NgaySinh),
     gender: row.GioiTinh ?? null,
     loyaltyPoints: row.DiemTichLuy ?? 0,
     permissions,

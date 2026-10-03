@@ -1,3 +1,4 @@
+import { isDateOnly } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
 
 const allowedRegistrationFields = new Set(['HoTen', 'Email', 'MatKhau', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
@@ -30,7 +31,7 @@ function optionalText(value, field, maxLength) {
 function dateOrNull(value, field) {
   const date = optionalText(value, field, 10);
   if (date === null) return null;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`)) || new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
+  if (!isDateOnly(date)) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a valid YYYY-MM-DD date.`);
   }
   return date;

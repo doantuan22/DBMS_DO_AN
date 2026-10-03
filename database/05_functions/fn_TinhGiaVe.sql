@@ -30,7 +30,7 @@ BEGIN
         @DinhDang = sc.DinhDang,
         @ThoiGianBatDau = sc.ThoiGianBatDau,
         @RapID = pc.RapID,
-        @NgayChieu = CAST(sc.ThoiGianBatDau AS DATE)
+        @NgayChieu = dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau)
     FROM dbo.SUATCHIEU sc
     INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID
     WHERE sc.SuatChieuID = @SuatChieuID;

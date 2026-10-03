@@ -38,8 +38,8 @@ BEGIN
     INNER JOIN dbo.THANHTOAN tt ON tt.DonDatVeID = ddv.DonDatVeID AND tt.TrangThai = N'Thành công'
     WHERE (@RapID IS NULL OR pc.RapID = @RapID)
     GROUP BY ddv.DonDatVeID, pc.RapID, ddv.TongTienVe, ddv.TongTienDoAn, ddv.TienGiamGia
-    HAVING (@TuNgay IS NULL OR CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) >= @TuNgay)
-       AND (@DenNgay IS NULL OR CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) <= @DenNgay);
+    HAVING (@TuNgay IS NULL OR dbo.fn_NgayKinhDoanh(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao))) >= @TuNgay)
+       AND (@DenNgay IS NULL OR dbo.fn_NgayKinhDoanh(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao))) <= @DenNgay);
 
     -- Recordset 1: Doanh thu theo từng rạp
     SELECT

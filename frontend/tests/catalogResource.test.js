@@ -12,5 +12,5 @@ test('catalog resources represent success, empty results, and errors', async () 
 test('showtime filters omit unselected values and use a stable local calendar date', () => {
   assert.deepEqual(showtimeFilters('', ''), {});
   assert.deepEqual(showtimeFilters('3', '2026-09-30'), { cinemaId: '3', date: '2026-09-30' });
-  assert.equal(localDateString(new Date(2026, 8, 30, 23, 0)), '2026-09-30');
+  assert.equal(localDateString(new Date('2026-09-30T16:00:00Z')), '2026-09-30');
 });

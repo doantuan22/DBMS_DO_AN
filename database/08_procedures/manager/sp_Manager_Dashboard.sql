@@ -23,14 +23,14 @@ BEGIN
         r.ThanhPho,
         (SELECT COUNT(*) FROM dbo.PHONGCHIEU pc WHERE pc.RapID = @RapID AND pc.TrangThai = N'Hoạt động') AS TongPhongChieu,
         (SELECT COUNT(*) FROM dbo.GHE g INNER JOIN dbo.PHONGCHIEU pc ON g.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND g.TrangThai = N'Hoạt động') AS TongGhe,
-        (SELECT COUNT(*) FROM dbo.SUATCHIEU sc INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND CAST(sc.ThoiGianBatDau AS DATE) = dbo.fn_HomNay() AND sc.TrangThai<>N'Đã hủy') AS SuatChieuHomNay,
+        (SELECT COUNT(*) FROM dbo.SUATCHIEU sc INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau) = dbo.fn_HomNay() AND sc.TrangThai<>N'Đã hủy') AS SuatChieuHomNay,
         (SELECT COUNT(DISTINCT ddv.DonDatVeID)
          FROM dbo.DONDATVE ddv
          INNER JOIN dbo.SUATCHIEU sc ON ddv.SuatChieuID = sc.SuatChieuID
          INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID
          WHERE pc.RapID = @RapID
            AND EXISTS(SELECT 1 FROM dbo.THANHTOAN tt WHERE tt.DonDatVeID=ddv.DonDatVeID AND tt.TrangThai=N'Thành công'
-                      GROUP BY tt.DonDatVeID HAVING CAST(MAX(ISNULL(tt.NgayThanhToan,tt.NgayTao)) AS DATE)=dbo.fn_HomNay())
+                      GROUP BY tt.DonDatVeID HAVING dbo.fn_NgayKinhDoanh(MAX(ISNULL(tt.NgayThanhToan,tt.NgayTao)))=dbo.fn_HomNay())
         ) AS DonDatVeHomNay
     FROM dbo.RAPCHIEUPHIM r
     WHERE r.RapID = @RapID;

@@ -1,0 +1,1182 @@
+[
+  {
+    "object": "fn_BayGio",
+    "type": "SQL_SCALAR_FUNCTION",
+    "parameters": [
+      {
+        "objectName": "fn_BayGio",
+        "parameter": "",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": true
+      }
+    ],
+    "temporalLines": [
+      "CREATE   FUNCTION dbo.fn_BayGio()",
+      "RETURNS DATETIME2(7)",
+      "    RETURN DATEADD(HOUR, 7, SYSUTCDATETIME());"
+    ]
+  },
+  {
+    "object": "fn_DonDangGiuGhe",
+    "type": "SQL_SCALAR_FUNCTION",
+    "parameters": [
+      {
+        "objectName": "fn_DonDangGiuGhe",
+        "parameter": "@HanGiuCho",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "fn_DonDangGiuGhe",
+        "parameter": "@Now",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @HanGiuCho DATETIME2,",
+      "    @Now DATETIME2"
+    ]
+  },
+  {
+    "object": "fn_GheCoVeHieuLucSuatTuongLai",
+    "type": "SQL_SCALAR_FUNCTION",
+    "parameters": [],
+    "temporalLines": [
+      "-- Baseline: migrations/014_showtime_lifecycle.sql:14 (dbo.fn_GheCoVeHieuLucSuatTuongLai)",
+      "          AND sc.ThoiGianBatDau > dbo.fn_BayGio()",
+      "          AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1"
+    ]
+  },
+  {
+    "object": "fn_HomNay",
+    "type": "SQL_SCALAR_FUNCTION",
+    "parameters": [
+      {
+        "objectName": "fn_HomNay",
+        "parameter": "",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": true
+      }
+    ],
+    "temporalLines": [
+      "CREATE   FUNCTION dbo.fn_HomNay()",
+      "RETURNS DATE",
+      "    RETURN CONVERT(DATE, dbo.fn_BayGio());"
+    ]
+  },
+  {
+    "object": "fn_KiemTraQuanLyRapScope",
+    "type": "SQL_SCALAR_FUNCTION",
+    "parameters": [],
+    "temporalLines": [
+      "          AND dbo.fn_HomNay() >= pcr.NgayBatDau",
+      "          AND (pcr.NgayKetThuc IS NULL OR dbo.fn_HomNay() <= pcr.NgayKetThuc)"
+    ]
+  },
+  {
+    "object": "fn_TinhGiaVe",
+    "type": "SQL_SCALAR_FUNCTION",
+    "parameters": [],
+    "temporalLines": [
+      "-- Rule kept exactly as before: Saturday and Sunday are \"Cuối tuần\" (DATEPART(dw) IN (1, 7) under the default",
+      "-- DATEFIRST 7 / us_english). 1900-01-01 was a Monday, so DATEDIFF(DAY, '19000101', date) % 7 is 0 = Monday ...",
+      "-- 5 = Saturday, 6 = Sunday, whatever DATEFIRST or the language is (style 112 is language independent too).",
+      "    DECLARE @ThoiGianBatDau DATETIME2;",
+      "    DECLARE @NgayChieu DATE;",
+      "        @NgayChieu = CAST(sc.ThoiGianBatDau AS DATE)",
+      "    -- 5 = Saturday, 6 = Sunday counted from a Monday (independent of DATEFIRST and language)",
+      "    IF DATEDIFF(DAY, CONVERT(DATE, '19000101', 112), @NgayChieu) % 7 IN (5, 6)"
+    ]
+  },
+  {
+    "object": "fn_DanhSachGheSuatChieu",
+    "type": "SQL_INLINE_TABLE_VALUED_FUNCTION",
+    "parameters": [],
+    "temporalLines": [
+      "          AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1"
+    ]
+  },
+  {
+    "object": "usp_Admin_Room_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.usp_Admin_Room_Update",
+      "    UPDATE dbo.PHONGCHIEU SET TenPhong = @TenPhong, LoaiPhong = @LoaiPhong, TrangThai = @TrangThai WHERE PhongID = @PhongID;"
+    ]
+  },
+  {
+    "object": "usp_Admin_Seat_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.usp_Admin_Seat_Update",
+      "        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminSeatUpdate;",
+      "        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;",
+      "        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminSeatUpdate; END"
+    ]
+  },
+  {
+    "object": "usp_Admin_Showtime_Cancel",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.usp_Admin_Showtime_Cancel @SuatChieuID INT",
+      "    EXEC dbo.sp_Showtime_CancelCascade @SuatChieuID = @SuatChieuID, @NguoiDungID = NULL, @LyDo = NULL;"
+    ]
+  },
+  {
+    "object": "usp_Admin_Showtime_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter": "@ThoiGianBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter": "@ThoiGianKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "-- Baseline: migrations/008_admin_global_portal.sql:266 (dbo.usp_Admin_Showtime_Create)",
+      "CREATE   PROCEDURE dbo.usp_Admin_Showtime_Create",
+      "    @PhimID INT, @PhongID INT, @ThoiGianBatDau DATETIME2, @ThoiGianKetThuc DATETIME2,",
+      "    EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,@ThoiGianKetThuc=@ThoiGianKetThuc;",
+      "    EXEC dbo.sp_Showtime_GetDetail @SuatChieuID = @NewSuatChieuID;"
+    ]
+  },
+  {
+    "object": "usp_Admin_Showtime_List",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "usp_Admin_Showtime_List",
+        "parameter": "@TuNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "usp_Admin_Showtime_List",
+        "parameter": "@DenNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.usp_Admin_Showtime_List",
+      "    @RapID INT = NULL, @TuNgay DATE = NULL, @DenNgay DATE = NULL",
+      "      AND (@TuNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) >= @TuNgay)",
+      "      AND (@DenNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) <= @DenNgay)"
+    ]
+  },
+  {
+    "object": "usp_Admin_Showtime_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter": "@ThoiGianBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter": "@ThoiGianKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "-- Baseline: migrations/014_showtime_lifecycle.sql:178 (dbo.usp_Admin_Showtime_Update)",
+      "CREATE   PROCEDURE dbo.usp_Admin_Showtime_Update",
+      "    @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2, @ThoiGianKetThuc DATETIME2,",
+      "        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminShowtimeUpdate;",
+      "        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();",
+      "        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,@ThoiGianKetThuc=@ThoiGianKetThuc;",
+      "        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,",
+      "        EXEC dbo.sp_Showtime_GetDetail @SuatChieuID=@SuatChieuID;",
+      "        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminShowtimeUpdate; END"
+    ]
+  },
+  {
+    "object": "usp_Admin_Pricing_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.usp_Admin_Pricing_Update @GiaID INT, @PhuThu DECIMAL(18,2), @TrangThai NVARCHAR(50)",
+      "    UPDATE dbo.BANGGIA SET PhuThu = @PhuThu, TrangThai = @TrangThai WHERE GiaID = @GiaID;"
+    ]
+  },
+  {
+    "object": "usp_Admin_Pricing_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter": "@NgayBatDau",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @PhuThu DECIMAL(18,2), @NgayBatDau DATE, @NgayKetThuc DATE = NULL"
+    ]
+  },
+  {
+    "object": "usp_Admin_CinemaImage_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "-- usp_Admin_CinemaImage_Update (migration 009) ran without a transaction or the",
+      "-- cinema-wide key-range lock that Create/SetCover take. Its row-level UPDATE locks",
+      "-- were acquired in a different order than SetCover's, so concurrent Update and",
+      "CREATE   PROCEDURE dbo.usp_Admin_CinemaImage_Update",
+      "        IF @OwnTransaction = 1 BEGIN TRANSACTION; ELSE SAVE TRANSACTION CinemaImageUpdate;",
+      "        UPDATE dbo.HINHANH_RAPCHIEUPHIM",
+      "            ELSE ROLLBACK TRANSACTION CinemaImageUpdate;"
+    ]
+  },
+  {
+    "object": "usp_Admin_CinemaImage_SetCover",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        UPDATE dbo.HINHANH_RAPCHIEUPHIM SET LaAnhDaiDien = 0 WHERE RapID = @RapID AND LaAnhDaiDien = 1;",
+      "        UPDATE dbo.HINHANH_RAPCHIEUPHIM SET LaAnhDaiDien = 1 WHERE RapID = @RapID AND HinhAnhRapID = @HinhAnhRapID;"
+    ]
+  },
+  {
+    "object": "usp_Admin_CinemaImage_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "            UPDATE dbo.HINHANH_RAPCHIEUPHIM SET LaAnhDaiDien = 0 WHERE RapID = @RapID AND LaAnhDaiDien = 1;"
+    ]
+  },
+  {
+    "object": "usp_Admin_Assignment_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter": "@NgayBatDau",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.usp_Admin_Assignment_Update",
+      "    @PhanCongID INT, @NguoiDungID INT, @RapID INT, @NgayBatDau DATE,",
+      "    @NgayKetThuc DATE = NULL, @TrangThai NVARCHAR(50)",
+      "        UPDATE dbo.PHANCONG_RAP"
+    ]
+  },
+  {
+    "object": "sp_XuLyThanhToan",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "EXEC dbo.sp_Payment_UpdateResult"
+    ]
+  },
+  {
+    "object": "sp_User_UpdateProfile",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_User_UpdateProfile",
+        "parameter": "@NgaySinh",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_User_UpdateProfile",
+      "    @NgaySinh DATE = NULL,",
+      "        UPDATE dbo.NGUOIDUNG",
+      "            UPDATE dbo.HOSOKHACHHANG"
+    ]
+  },
+  {
+    "object": "sp_Admin_Actor_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Actor_Create",
+        "parameter": "@NgaySinh",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgaySinh DATE = NULL,"
+    ]
+  },
+  {
+    "object": "sp_Admin_Actor_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Actor_Update",
+        "parameter": "@NgaySinh",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Actor_Update",
+      "    @NgaySinh DATE = NULL,",
+      "    UPDATE dbo.DIENVIEN SET HoTen = @HoTen, NgaySinh = @NgaySinh, QuocTich = @QuocTich WHERE DienVienID = @DienVienID;"
+    ]
+  },
+  {
+    "object": "sp_Admin_Assignment_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Assignment_Create",
+        "parameter": "@NgayBatDau",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Admin_Assignment_Create",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgayBatDau DATE,",
+      "    @NgayKetThuc DATE = NULL"
+    ]
+  },
+  {
+    "object": "sp_Admin_Cinema_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter": "@NgayHoatDong",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgayHoatDong DATE = NULL"
+    ]
+  },
+  {
+    "object": "sp_Admin_Cinema_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Cinema_Update",
+      "    UPDATE dbo.RAPCHIEUPHIM"
+    ]
+  },
+  {
+    "object": "sp_Admin_Dashboard",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        (SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE CAST(ThoiGianBatDau AS DATE) = dbo.fn_HomNay() AND TrangThai<>N'Đã hủy') AS SuatChieuHomNay,"
+    ]
+  },
+  {
+    "object": "sp_Admin_Genre_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Genre_Update",
+      "    UPDATE dbo.THELOAI SET TenTheLoai = @TenTheLoai WHERE TheLoaiID = @TheLoaiID;"
+    ]
+  },
+  {
+    "object": "sp_Admin_Movie_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter": "@NgayKhoiChieu",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgayKhoiChieu DATE,",
+      "    @NgayKetThuc DATE = NULL,"
+    ]
+  },
+  {
+    "object": "sp_Admin_Movie_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter": "@NgayKhoiChieu",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Movie_Update",
+      "    @NgayKhoiChieu DATE,",
+      "    @NgayKetThuc DATE = NULL,",
+      "        UPDATE dbo.PHIM"
+    ]
+  },
+  {
+    "object": "sp_Admin_Permission_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Permission_Update",
+      "    UPDATE dbo.QUYEN SET TenQuyen = @TenQuyen, MoTa = @MoTa WHERE QuyenID = @QuyenID;"
+    ]
+  },
+  {
+    "object": "sp_Admin_Product_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Product_Update",
+      "    UPDATE dbo.SANPHAM"
+    ]
+  },
+  {
+    "object": "sp_Admin_Promotion_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter": "@NgayBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgayBatDau DATETIME2,",
+      "    @NgayKetThuc DATETIME2,"
+    ]
+  },
+  {
+    "object": "sp_Admin_Promotion_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter": "@NgayBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Promotion_Update",
+      "    @NgayBatDau DATETIME2,",
+      "    @NgayKetThuc DATETIME2,",
+      "    UPDATE dbo.KHUYENMAI"
+    ]
+  },
+  {
+    "object": "sp_Admin_Report_Revenue",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Admin_Report_Revenue",
+        "parameter": "@TuNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Admin_Report_Revenue",
+        "parameter": "@DenNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @TuNgay DATE = NULL,",
+      "    @DenNgay DATE = NULL,",
+      "    HAVING (@TuNgay IS NULL OR CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) >= @TuNgay)",
+      "       AND (@DenNgay IS NULL OR CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) <= @DenNgay);"
+    ]
+  },
+  {
+    "object": "sp_Admin_Role_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_Role_Update",
+      "    UPDATE dbo.VAITRO SET TenVaiTro = @TenVaiTro, MoTa = @MoTa WHERE VaiTroID = @VaiTroID;"
+    ]
+  },
+  {
+    "object": "sp_Admin_RolePermission_Set",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        SELECT DISTINCT @VaiTroID, CAST(value AS INT), dbo.fn_BayGio()"
+    ]
+  },
+  {
+    "object": "sp_Admin_User_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "    VALUES (@VaiTroID, @HoTen, @Email, @MatKhauHash, @SoDienThoai, dbo.fn_BayGio(), N'Hoạt động');"
+    ]
+  },
+  {
+    "object": "sp_Admin_User_UpdateStatus",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Admin_User_UpdateStatus",
+      "    UPDATE dbo.NGUOIDUNG"
+    ]
+  },
+  {
+    "object": "sp_Auth_Login",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "      AND dbo.fn_HomNay() >= pcr.NgayBatDau",
+      "      AND (pcr.NgayKetThuc IS NULL OR dbo.fn_HomNay() <= pcr.NgayKetThuc);"
+    ]
+  },
+  {
+    "object": "sp_Auth_RegisterCustomer",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter": "@NgaySinh",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgaySinh DATE = NULL,",
+      "        VALUES (@VaiTroID, @HoTen, @Email, @MatKhauHash, @SoDienThoai, dbo.fn_BayGio(), N'Hoạt động');"
+    ]
+  },
+  {
+    "object": "sp_Booking_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "            WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Chờ thanh toán' AND HanGiuCho > dbo.fn_BayGio())",
+      "        DECLARE @ThoiGianBatDau DATETIME2;",
+      "        IF @TrangThaiSuatChieu <> N'Mở bán' OR @ThoiGianBatDau <= dbo.fn_BayGio()",
+      "              AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1",
+      "            CONCAT('TK-', FORMAT(dbo.fn_BayGio(), 'yyyyMMddHHmmss'), '-', CAST(bg.GheID AS VARCHAR(10)), '-', LEFT(REPLACE(CONVERT(VARCHAR(36), NEWID()), '-', ''), 6))",
+      "            EXEC dbo.sp_Promotion_Validate",
+      "                UPDATE dbo.KHUYENMAI WITH (UPDLOCK, HOLDLOCK)",
+      "            dbo.fn_BayGio(),",
+      "            DATEADD(MINUTE, dbo.fn_ThoiGianGiuChoPhut(), dbo.fn_BayGio())"
+    ]
+  },
+  {
+    "object": "sp_Clock_GetNow",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "    SELECT dbo.fn_BayGio() AS BayGio,(SELECT ThoiLuong FROM dbo.PHIM WHERE PhimID=@PhimID) AS ThoiLuong;"
+    ]
+  },
+  {
+    "object": "sp_Complaint_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "    VALUES (@NguoiDungID, @DonDatVeID, @LoaiKhieuNai, @TieuDe, @NoiDung, @MucDoUuTien, dbo.fn_BayGio(), N'Mới');"
+    ]
+  },
+  {
+    "object": "sp_Manager_Dashboard",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        (SELECT COUNT(*) FROM dbo.SUATCHIEU sc INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND CAST(sc.ThoiGianBatDau AS DATE) = dbo.fn_HomNay() AND sc.TrangThai<>N'Đã hủy') AS SuatChieuHomNay,",
+      "                      GROUP BY tt.DonDatVeID HAVING CAST(MAX(ISNULL(tt.NgayThanhToan,tt.NgayTao)) AS DATE)=dbo.fn_HomNay())"
+    ]
+  },
+  {
+    "object": "sp_Manager_ListAssignedCinemas",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "      AND dbo.fn_HomNay() >= pcr.NgayBatDau",
+      "      AND (pcr.NgayKetThuc IS NULL OR dbo.fn_HomNay() <= pcr.NgayKetThuc);"
+    ]
+  },
+  {
+    "object": "sp_Manager_Pricing_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter": "@NgayBatDau",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgayBatDau DATE,",
+      "    @NgayKetThuc DATE = NULL"
+    ]
+  },
+  {
+    "object": "sp_Manager_Pricing_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Manager_Pricing_Update",
+      "    UPDATE dbo.BANGGIA"
+    ]
+  },
+  {
+    "object": "sp_Manager_Revenue",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Manager_Revenue",
+        "parameter": "@TuNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Manager_Revenue",
+        "parameter": "@DenNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @TuNgay DATE = NULL,",
+      "    @DenNgay DATE = NULL",
+      "    IF @TuNgay IS NULL SET @TuNgay = DATEADD(DAY, -30, dbo.fn_HomNay());",
+      "    IF @DenNgay IS NULL SET @DenNgay = dbo.fn_HomNay();",
+      "            CAST(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao)) AS DATE) AS NgayThu,"
+    ]
+  },
+  {
+    "object": "sp_Manager_Room_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Manager_Room_Update",
+      "    UPDATE dbo.PHONGCHIEU"
+    ]
+  },
+  {
+    "object": "sp_Manager_Seat_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Manager_Seat_Update",
+      "        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerSeatUpdate;",
+      "        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;",
+      "        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerSeatUpdate; END"
+    ]
+  },
+  {
+    "object": "sp_Manager_Showtime_Cancel",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Manager_Showtime_Cancel",
+      "    EXEC dbo.sp_Showtime_CancelCascade @SuatChieuID = @SuatChieuID, @NguoiDungID = @NguoiDungID, @LyDo = @LyDo;"
+    ]
+  },
+  {
+    "object": "sp_Manager_Showtime_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter": "@ThoiGianBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter": "@ThoiGianKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "-- Baseline: procedures/manager/manager_procedures.sql:396 (dbo.sp_Manager_Showtime_Create)",
+      "CREATE   PROCEDURE dbo.sp_Manager_Showtime_Create",
+      "    @ThoiGianBatDau DATETIME2,",
+      "    @ThoiGianKetThuc DATETIME2,",
+      "    EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,@ThoiGianKetThuc=@ThoiGianKetThuc;",
+      "    EXEC dbo.sp_Showtime_GetDetail @SuatChieuID = @NewSuatChieuID;"
+    ]
+  },
+  {
+    "object": "sp_Manager_Showtime_List",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Manager_Showtime_List",
+        "parameter": "@TuNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Manager_Showtime_List",
+        "parameter": "@DenNgay",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "-- Phase 7: manager-scoped showtime listing. No raw backend query is permitted.",
+      "CREATE   PROCEDURE dbo.sp_Manager_Showtime_List",
+      "    @TuNgay DATE = NULL,",
+      "    @DenNgay DATE = NULL",
+      "      AND (@TuNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) >= @TuNgay)",
+      "      AND (@DenNgay IS NULL OR CAST(sc.ThoiGianBatDau AS DATE) <= @DenNgay)"
+    ]
+  },
+  {
+    "object": "sp_Manager_Showtime_Update",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter": "@ThoiGianBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter": "@ThoiGianKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "-- Baseline: migrations/014_showtime_lifecycle.sql:143 (dbo.sp_Manager_Showtime_Update)",
+      "CREATE   PROCEDURE dbo.sp_Manager_Showtime_Update",
+      "    @NguoiDungID INT, @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2,",
+      "    @ThoiGianKetThuc DATETIME2, @DinhDang NVARCHAR(50), @GiaVeCoBan DECIMAL(18,2), @TrangThai NVARCHAR(50)",
+      "        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerShowtimeUpdate;",
+      "        DECLARE @RapID INT, @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldRoom INT, @OldFormat NVARCHAR(50), @OldStatus NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();",
+      "        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,@ThoiGianKetThuc=@ThoiGianKetThuc;",
+      "        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,",
+      "        EXEC dbo.sp_Showtime_GetDetail @SuatChieuID = @SuatChieuID;",
+      "        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerShowtimeUpdate; END"
+    ]
+  },
+  {
+    "object": "sp_Order_Cancel",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        UPDATE dbo.DONDATVE",
+      "        UPDATE dbo.CHITIETVE",
+      "            UPDATE dbo.KHUYENMAI"
+    ]
+  },
+  {
+    "object": "sp_Order_ExpirePending",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        UPDATE d",
+      "          AND d.HanGiuCho <= dbo.fn_BayGio()",
+      "            UPDATE cv",
+      "            UPDATE km"
+    ]
+  },
+  {
+    "object": "sp_Payment_CreateAttempt",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "-- Baseline: migrations/014_showtime_lifecycle.sql:257 (dbo.sp_Payment_CreateAttempt)",
+      "        DECLARE @UserID INT, @SuatID INT, @RoomID INT, @ShowStatus NVARCHAR(50), @Starts DATETIME2,",
+      "                @OrderStatus NVARCHAR(50), @Hold DATETIME2, @Amount DECIMAL(18,2), @Now DATETIME2=dbo.fn_BayGio();"
+    ]
+  },
+  {
+    "object": "sp_Payment_UpdateResult",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "-- Baseline: migrations/014_showtime_lifecycle.sql:293 (dbo.sp_Payment_UpdateResult)",
+      "CREATE   PROCEDURE dbo.sp_Payment_UpdateResult",
+      "        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentUpdateResult;",
+      "        DECLARE @UserID INT,@SuatID INT,@LockedUser INT,@ShowStatus NVARCHAR(50),@Starts DATETIME2,@DonID INT,",
+      "            @Amount DECIMAL(18,2),@CurrentPayment NVARCHAR(50),@OrderStatus NVARCHAR(50),@Hold DATETIME2,",
+      "            @PromoID INT,@Now DATETIME2=dbo.fn_BayGio();",
+      "            UPDATE dbo.THANHTOAN SET TrangThai=N'Thành công',NgayThanhToan=@Now,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;",
+      "            UPDATE dbo.DONDATVE SET TrangThai=N'Đã thanh toán',HanGiuCho=NULL WHERE DonDatVeID=@DonID;",
+      "            IF @Points>0 UPDATE dbo.HOSOKHACHHANG SET DiemTichLuy=DiemTichLuy+@Points WHERE NguoiDungID=@UserID;",
+      "            UPDATE dbo.THANHTOAN SET TrangThai=N'Thất bại',NgayThanhToan=NULL,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;",
+      "        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION PaymentUpdateResult; END"
+    ]
+  },
+  {
+    "object": "sp_Promotion_Validate",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "-- Baseline: migrations/012_booking_limits_and_pricing.sql:151 (dbo.sp_Promotion_Validate)",
+      "CREATE   PROCEDURE dbo.sp_Promotion_Validate",
+      "    DECLARE @NgayBatDau DATETIME2;",
+      "    DECLARE @NgayKetThuc DATETIME2;",
+      "    IF dbo.fn_BayGio() < @NgayBatDau OR dbo.fn_BayGio() > @NgayKetThuc"
+    ]
+  },
+  {
+    "object": "sp_PhanCongQuanLyRap",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_PhanCongQuanLyRap",
+        "parameter": "@NgayBatDau",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_PhanCongQuanLyRap",
+        "parameter": "@NgayKetThuc",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @NgayBatDau DATE,",
+      "    @NgayKetThuc DATE = NULL"
+    ]
+  },
+  {
+    "object": "sp_Review_Create",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "    VALUES (@PhimID, @NguoiDungID, @SoSao, @NoiDung, dbo.fn_BayGio());"
+    ]
+  },
+  {
+    "object": "sp_Seat_ListByShowtime",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Seat_ListByShowtime"
+    ]
+  },
+  {
+    "object": "sp_Showtime_CancelCascade",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "-- Baseline: migrations/014_showtime_lifecycle.sql:36 (dbo.sp_Showtime_CancelCascade)",
+      "CREATE   PROCEDURE dbo.sp_Showtime_CancelCascade",
+      "    DECLARE @Status NVARCHAR(50), @StartsAt DATETIME2, @RapID INT, @Now DATETIME2;",
+      "        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ShowtimeCancelCascade;",
+      "        SET @Now = dbo.fn_BayGio();",
+      "        UPDATE km",
+      "        UPDATE h SET DiemTichLuy = CASE WHEN h.DiemTichLuy >= p.Points THEN h.DiemTichLuy - p.Points ELSE 0 END",
+      "        UPDATE tt SET TrangThai = N'Đã hoàn tiền', GhiChu = N'Suất chiếu đã bị hủy; hoàn tiền mô phỏng.'",
+      "        UPDATE cv SET TrangThai = N'Đã hủy'",
+      "        UPDATE d",
+      "        UPDATE dbo.SUATCHIEU SET TrangThai = N'Đã hủy' WHERE SuatChieuID = @SuatChieuID;",
+      "            ELSE ROLLBACK TRANSACTION ShowtimeCancelCascade;"
+    ]
+  },
+  {
+    "object": "sp_Showtime_GetDetail",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Showtime_GetDetail"
+    ]
+  },
+  {
+    "object": "sp_Showtime_ListByMovie",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Showtime_ListByMovie",
+        "parameter": "@NgayChieu",
+        "sqlType": "date",
+        "scale": 0,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "-- Baseline: procedures/customer/customer_procedures.sql:164 (dbo.sp_Showtime_ListByMovie)",
+      "CREATE   PROCEDURE dbo.sp_Showtime_ListByMovie",
+      "    @NgayChieu DATE = NULL",
+      "      AND ThoiGianBatDau > dbo.fn_BayGio()"
+    ]
+  },
+  {
+    "object": "sp_Showtime_ValidateTimes",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_Showtime_ValidateTimes",
+        "parameter": "@ThoiGianBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_Showtime_ValidateTimes",
+        "parameter": "@ThoiGianKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "CREATE   PROCEDURE dbo.sp_Showtime_ValidateTimes",
+      "    @PhimID INT, @ThoiGianBatDau DATETIME2, @ThoiGianKetThuc DATETIME2",
+      "    DECLARE @Span DECIMAL(20,7)=DATEDIFF_BIG(SECOND,@ThoiGianBatDau,@ThoiGianKetThuc)",
+      "        +(CONVERT(DECIMAL(20,7),DATEPART(NANOSECOND,@ThoiGianKetThuc))-DATEPART(NANOSECOND,@ThoiGianBatDau))/1000000000;",
+      "       OR @ThoiGianBatDau < dbo.fn_BayGio() OR @ThoiGianKetThuc <= @ThoiGianBatDau"
+    ]
+  },
+  {
+    "object": "sp_Support_Complaint_AddProcessing",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        VALUES (@KhieuNaiID, @NguoiDungID, @NoiDungXuLy, dbo.fn_BayGio(), @TrangThaiSauXuLy);"
+    ]
+  },
+  {
+    "object": "sp_Support_Complaint_UpdateStatus",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "-- Baseline: migrations/005_support_status_history_atomicity.sql:3 (dbo.sp_Support_Complaint_UpdateStatus)",
+      "CREATE   PROCEDURE dbo.sp_Support_Complaint_UpdateStatus",
+      "        VALUES (@KhieuNaiID, @NguoiDungID, N'Cập nhật trạng thái khiếu nại.', dbo.fn_BayGio(), @TrangThaiMoi);"
+    ]
+  },
+  {
+    "object": "sp_System_HealthCheck",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "        SYSDATETIME() AS [ServerTime],"
+    ]
+  },
+  {
+    "object": "sp_ThemSuatChieu",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [
+      {
+        "objectName": "sp_ThemSuatChieu",
+        "parameter": "@ThoiGianBatDau",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      },
+      {
+        "objectName": "sp_ThemSuatChieu",
+        "parameter": "@ThoiGianKetThuc",
+        "sqlType": "datetime2",
+        "scale": 7,
+        "is_output": false
+      }
+    ],
+    "temporalLines": [
+      "    @ThoiGianBatDau DATETIME2,",
+      "    @ThoiGianKetThuc DATETIME2,",
+      "EXEC dbo.sp_Manager_Showtime_Create"
+    ]
+  },
+  {
+    "object": "sp_User_ChangePassword",
+    "type": "SQL_STORED_PROCEDURE",
+    "parameters": [],
+    "temporalLines": [
+      "    UPDATE dbo.NGUOIDUNG"
+    ]
+  },
+  {
+    "object": "TRG_BangGia_KiemTraChongLan",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "-- modified; only rows being inserted/updated to \"Áp dụng\" are checked.",
+      "AFTER INSERT, UPDATE",
+      "    -- within the statement itself (multi-row insert/update)"
+    ]
+  },
+  {
+    "object": "TRG_ChiTietVe_KiemTraGheDungPhong",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "AFTER INSERT, UPDATE"
+    ]
+  },
+  {
+    "object": "TRG_ChiTietVe_KiemTraTrungGhe",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "AFTER INSERT, UPDATE",
+      "          AND dbo.fn_DonDangGiuGhe(ddv_exist.TrangThai, ddv_exist.HanGiuCho, dbo.fn_BayGio()) = 1"
+    ]
+  },
+  {
+    "object": "TRG_DanhGia_KiemTraDaXemPhim",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "              AND sc.ThoiGianBatDau <= dbo.fn_BayGio()"
+    ]
+  },
+  {
+    "object": "TRG_SuatChieu_KiemTraTrungLich",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "AFTER INSERT, UPDATE",
+      "    -- Kiểm tra giao nhau giữa các dòng trong chính tập INSERTED (phòng trường hợp insert/update theo lô)"
+    ]
+  },
+  {
+    "object": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "    UPDATE kn"
+    ]
+  },
+  {
+    "object": "TRG_XuLyKhieuNai_KiemTraVaiTro",
+    "type": "SQL_TRIGGER",
+    "parameters": [],
+    "temporalLines": [
+      "AFTER INSERT, UPDATE"
+    ]
+  },
+  {
+    "object": "vw_LichChieuChiTiet",
+    "type": "VIEW",
+    "parameters": [],
+    "temporalLines": [
+      "    CAST(sc.ThoiGianBatDau AS DATE) AS NgayChieu,",
+      "       AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1"
+    ]
+  },
+  {
+    "object": "vw_LichSuDatVe",
+    "type": "VIEW",
+    "parameters": [],
+    "temporalLines": [
+      "    CASE WHEN ddv.TrangThai = N'Chờ thanh toán' AND ddv.HanGiuCho <= dbo.fn_BayGio() THEN N'Hết hạn' ELSE ddv.TrangThai END AS TrangThaiDon,"
+    ]
+  },
+  {
+    "object": "vw_ChiTietDonDatVe",
+    "type": "VIEW",
+    "parameters": [],
+    "temporalLines": [
+      "    CASE WHEN ddv.TrangThai = N'Chờ thanh toán' AND ddv.HanGiuCho <= dbo.fn_BayGio() THEN N'Hết hạn' ELSE ddv.TrangThai END AS TrangThaiDon,"
+    ]
+  }
+]

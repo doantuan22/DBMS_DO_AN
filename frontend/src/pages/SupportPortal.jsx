@@ -1,10 +1,11 @@
+import { formatDateTime as formatTime } from '../utils/dateTime';
 import { useCallback, useEffect, useState } from 'react';
 import * as api from '../api/supportApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 
 const complaintStatuses = ['Mới', 'Đang xử lý', 'Đã giải quyết', 'Đã đóng', 'Từ chối'];
 const processingStatuses = ['Đang xử lý', 'Đã giải quyết', 'Đã đóng', 'Từ chối'];
-const formatTime = (value) => value ? new Date(value).toLocaleString('vi-VN') : '—';
+
 
 export default function SupportPortal() {
   const [filters, setFilters] = useState({ status: '', type: '', search: '' });

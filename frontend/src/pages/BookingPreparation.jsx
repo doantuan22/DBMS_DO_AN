@@ -1,3 +1,5 @@
+import { formatDateTime, formatTime } from '../utils/dateTime';
+import HoldDeadline from '../components/HoldDeadline';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { createBooking, getProducts, getSeats, getShowtimeDetail, validatePromotion } from '../api/catalogApi';
@@ -118,7 +120,7 @@ export default function BookingPreparation() {
       <p className="catalog-eyebrow">SUẤT CHIẾU ĐÃ CHỌN</p>
       <h1>{showtime.movieTitle}</h1>
       <p>{showtime.cinemaName} · {showtime.roomName} · {showtime.format}</p>
-      <p>{showtime.date} · {showtime.startTime}{showtime.endTime ? ` – ${showtime.endTime}` : ''}</p>
+      <p>{formatDateTime(showtime.startsAt)}{showtime.endsAt ? ` – ${formatTime(showtime.endsAt)}` : ''}</p>
       <p className="catalog-muted">Mã suất chiếu: {showtime.id}</p>
 
       {seatsState.status === 'loading' && <LoadingState>Đang tải sơ đồ ghế…</LoadingState>}
@@ -146,7 +148,7 @@ export default function BookingPreparation() {
         {user && user.role !== 'KHACH_HANG' && <p role="alert">Chỉ tài khoản khách hàng được đặt vé.</p>}
         {bookingState.status === 'conflict' && <p className="form-error" role="alert">{bookingState.message} Sơ đồ ghế đã được làm mới.</p>}
         {bookingState.status === 'error' && <p className="form-error" role="alert">{bookingState.message}</p>}
-        {bookingState.status === 'success' && <div className="form-success" role="status">Đặt vé thành công. Mã đơn: {bookingState.booking.id}. Tổng thanh toán do DB chốt: {money(bookingState.booking.total)}. Giữ ghế đến: {bookingState.booking.holdExpiresAt}. <Link to={`/orders/${bookingState.booking.id}/payment`}>Thanh toán đơn này</Link></div>}
+        {bookingState.status === 'success' && <div className="form-success" role="status">Đặt vé thành công. Mã đơn: {bookingState.booking.id}. Tổng thanh toán do DB chốt: {money(bookingState.booking.total)}. <HoldDeadline deadline={bookingState.booking.holdExpiresAt} />. <Link to={`/orders/${bookingState.booking.id}/payment`}>Thanh toán đơn này</Link></div>}
         <button type="button" onClick={submitBooking} disabled={bookingState.status === 'loading' || !user || user.role !== 'KHACH_HANG'}>{bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}</button>
       </section>
       <Link className="catalog-button catalog-button--secondary" to={`/movies/${showtime.movieId}`}>Quay lại lịch chiếu</Link>

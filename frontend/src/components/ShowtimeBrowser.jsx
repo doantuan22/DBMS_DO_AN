@@ -1,3 +1,4 @@
+import { formatTime } from '../utils/dateTime';
 import { Link } from 'react-router-dom';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 
@@ -12,8 +13,8 @@ export function ShowtimeList({ state }) {
       {state.data.map((showtime) => (
         <article className="showtime-card" key={showtime.id}>
           <div>
-            <strong>{showtime.startTime}</strong>
-            <span>{showtime.endTime ? ` – ${showtime.endTime}` : ''}</span>
+            <strong>{formatTime(showtime.startsAt)}</strong>
+            <span>{showtime.endsAt ? ` – ${formatTime(showtime.endsAt)}` : ''}</span>
           </div>
           <p>{showtime.cinemaName} · {showtime.roomName} · {showtime.format}</p>
           <p className="catalog-muted">Giá vé cơ bản: {money(showtime.basePrice)}</p>

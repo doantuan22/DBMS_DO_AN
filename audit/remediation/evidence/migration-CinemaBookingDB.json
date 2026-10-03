@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB",
+  "direction": "R0 -> R1",
+  "provenance": {
+    "r0Commit": "9867d15ba93f73dd8afcd618f99ab1c226289e11",
+    "all26BeforeMatch": true,
+    "all26AfterMatch": true,
+    "origin": "Exact immutable R0 seed; SQL-local seed literals/default clock, no API-generated rows"
+  },
+  "backup": {
+    "copyOnly": true,
+    "checksum": true,
+    "restoreVerifyOnly": "PASS"
+  },
+  "changedModules": [
+    "fn_BayGio",
+    "fn_GioRap",
+    "fn_UtcTuGioRap",
+    "fn_NgayKinhDoanh",
+    "fn_HomNay",
+    "fn_TinhGiaVe",
+    "vw_LichChieuChiTiet",
+    "sp_Admin_Dashboard",
+    "sp_Admin_Report_Revenue",
+    "sp_Manager_Dashboard",
+    "sp_Manager_Revenue",
+    "sp_Manager_Showtime_List",
+    "sp_System_HealthCheck",
+    "usp_Admin_Showtime_List"
+  ],
+  "data": [
+    {
+      "table": "HINHANH_RAPCHIEUPHIM",
+      "rows": 3,
+      "fields": [
+        "NgayTao"
+      ]
+    },
+    {
+      "table": "KHUYENMAI",
+      "rows": 3,
+      "fields": [
+        "NgayBatDau",
+        "NgayKetThuc"
+      ]
+    },
+    {
+      "table": "NGUOIDUNG",
+      "rows": 8,
+      "fields": [
+        "NgayTao"
+      ]
+    },
+    {
+      "table": "SUATCHIEU",
+      "rows": 5,
+      "fields": [
+        "ThoiGianBatDau",
+        "ThoiGianKetThuc"
+      ]
+    },
+    {
+      "table": "VAITRO_QUYEN",
+      "rows": 40,
+      "fields": [
+        "NgayGan"
+      ]
+    }
+  ],
+  "dateOnlyChanged": 0,
+  "ambiguousHistoricalRowsModified": 0,
+  "at": "2026-10-03T15:53:45.035Z"
+}

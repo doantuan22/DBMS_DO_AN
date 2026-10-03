@@ -1,10 +1,6 @@
 import { executeProcedure, DbTypes } from '../db/procedureClient.js';
 import { HttpError } from '../utils/httpError.js';
-
-const dateOnly = (value) => {
-  if (value === null || value === undefined) return null;
-  return value instanceof Date ? value.toISOString().slice(0, 10) : String(value).slice(0, 10);
-};
+import { serializeDateOnly as dateOnly } from '../utils/dateTime.js';
 
 const rowsAt = (result, index = 0) => result.recordsets?.[index] ?? (index === 0 ? result.recordset ?? [] : []);
 
@@ -135,7 +131,7 @@ export function createCatalogService({ execute = executeProcedure } = {}) {
     const result = await execute('SHOWTIME_LIST_BY_MOVIE', {
       PhimID: { type: DbTypes.Int, value: movieId },
       RapID: { type: DbTypes.Int, value: cinemaId },
-      NgayChieu: { type: DbTypes.Date, value: date ? new Date(`${date}T00:00:00.000Z`) : null },
+      NgayChieu: { type: DbTypes.Date, value: date ?? null },
     });
     return (result.recordset ?? []).map(showtimeDto);
   }

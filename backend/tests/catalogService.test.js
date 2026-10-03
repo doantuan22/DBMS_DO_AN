@@ -76,7 +76,7 @@ test('cinema list and showtime filters call their own stored procedures', async 
   assert.equal((await service.listCinemas({ city: 'City' }))[0].id, 2);
   assert.deepEqual(await service.listShowtimes({ movieId: 7, cinemaId: 2, date: '2026-10-01' }), []);
   const dateParameter = calls[1].params.NgayChieu.value;
-  assert.equal(dateParameter.toISOString(), '2026-10-01T00:00:00.000Z');
+  assert.equal(dateParameter, '2026-10-01');
   assert.deepEqual(calls.map((call) => call.key), ['CINEMA_LIST', 'SHOWTIME_LIST_BY_MOVIE']);
   const showtime = await service.getShowtimeDetail(25);
   assert.equal(showtime.id, 25);

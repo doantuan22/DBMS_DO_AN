@@ -5,7 +5,7 @@ function profileForm(user) {
   return {
     HoTen: user.name ?? '',
     SoDienThoai: user.phone ?? '',
-    NgaySinh: user.birthday ? String(user.birthday).slice(0, 10) : '',
+    NgaySinh: user.birthday ?? '',
     GioiTinh: user.gender ?? '',
   };
 }

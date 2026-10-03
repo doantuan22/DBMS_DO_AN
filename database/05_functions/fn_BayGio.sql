@@ -5,6 +5,7 @@ CREATE OR ALTER FUNCTION dbo.fn_BayGio()
 RETURNS DATETIME2(7)
 AS
 BEGIN
-    RETURN DATEADD(HOUR, 7, SYSUTCDATETIME());
+    -- Canonical instant: UTC components in datetime2, independent of host TZ.
+    RETURN SYSUTCDATETIME();
 END;
 GO
