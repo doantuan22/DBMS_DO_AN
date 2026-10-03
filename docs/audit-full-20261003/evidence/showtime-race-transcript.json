@@ -1,0 +1,144 @@
+[
+  {
+    "label": "admin-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "admin@cinemadb.vn",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "admin@cinemadb.vn",
+        "phone": "0901000001",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    }
+  },
+  {
+    "label": "overlap-other-session-while-first-uncommitted",
+    "method": "POST",
+    "url": "/admin/showtimes",
+    "status": 409,
+    "request": {
+      "movieId": 14,
+      "roomId": 37,
+      "startsAt": "2026-10-15T17:00:00Z",
+      "endsAt": "2026-10-15T18:30:00Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    }
+  }
+]

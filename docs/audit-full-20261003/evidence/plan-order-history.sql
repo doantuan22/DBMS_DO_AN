@@ -1,0 +1,6 @@
+SET SHOWPLAN_XML ON;
+GO
+EXEC dbo.sp_Order_ListByCustomer @NguoiDungID=26;
+GO
+SET SHOWPLAN_XML OFF;
+GO

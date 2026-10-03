@@ -1,0 +1,1824 @@
+[
+  {
+    "name": "sp_System_HealthCheck",
+    "classification": "SYSTEM",
+    "keys": [
+      "SYSTEM_HEALTH_CHECK"
+    ],
+    "callers": [
+      "backend/src/services/healthService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Order_ExpirePending",
+    "classification": "SYSTEM",
+    "keys": [
+      "EXPIRE_PENDING_ORDERS"
+    ],
+    "callers": [
+      "backend/src/jobs/expirePendingOrders.js"
+    ],
+    "internal": [
+      "sp_Booking_Create",
+      "sp_Manager_Showtime_Cancel",
+      "usp_Admin_Showtime_Cancel"
+    ],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Auth_RegisterCustomer",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "AUTH_REGISTER_CUSTOMER"
+    ],
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Auth_Login",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "AUTH_LOGIN"
+    ],
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_RBAC_GetPermissionsByUser",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "RBAC_GET_PERMISSIONS_BY_USER"
+    ],
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_User_GetCurrent",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "USER_GET_CURRENT"
+    ],
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "internal": [
+      "sp_User_UpdateProfile"
+    ],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_User_UpdateProfile",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "USER_UPDATE_PROFILE"
+    ],
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_User_GetPasswordHash",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "USER_GET_PASSWORD_HASH"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_User_ChangePassword",
+    "classification": "PUBLIC/AUTH",
+    "keys": [
+      "USER_CHANGE_PASSWORD"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Genre_List",
+    "classification": "PUBLIC",
+    "keys": [
+      "ADMIN_GENRE_LIST",
+      "GENRE_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js",
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Cinema_List",
+    "classification": "PUBLIC",
+    "keys": [
+      "CINEMA_LIST"
+    ],
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Movie_List",
+    "classification": "PUBLIC",
+    "keys": [
+      "MOVIE_LIST"
+    ],
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Movie_GetDetail",
+    "classification": "PUBLIC",
+    "keys": [
+      "MOVIE_GET_DETAIL"
+    ],
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [
+      "sp_Admin_Movie_Create",
+      "sp_Admin_Movie_Update"
+    ],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Showtime_ListByMovie",
+    "classification": "PUBLIC",
+    "keys": [
+      "SHOWTIME_LIST_BY_MOVIE"
+    ],
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Showtime_GetDetail",
+    "classification": "PUBLIC",
+    "keys": [
+      "SHOWTIME_GET_DETAIL"
+    ],
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [
+      "sp_Manager_Showtime_Create",
+      "sp_Manager_Showtime_Update",
+      "usp_Admin_Showtime_Create",
+      "usp_Admin_Showtime_Update"
+    ],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Seat_ListByShowtime",
+    "classification": "PUBLIC",
+    "keys": [
+      "SEAT_LIST_BY_SHOWTIME"
+    ],
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Product_ListActive",
+    "classification": "PUBLIC",
+    "keys": [
+      "PRODUCT_LIST_ACTIVE"
+    ],
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Promotion_Validate",
+    "classification": "CUSTOMER",
+    "keys": [
+      "PROMOTION_VALIDATE"
+    ],
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "internal": [
+      "sp_Booking_Create"
+    ],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Booking_Create",
+    "classification": "CUSTOMER",
+    "keys": [
+      "BOOKING_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "internal": [
+      "sp_DatVe"
+    ],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_DatVe",
+    "classification": "CUSTOMER",
+    "keys": [
+      "BOOK_TICKET"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Payment_CreateAttempt",
+    "classification": "CUSTOMER",
+    "keys": [
+      "PAYMENT_CREATE_ATTEMPT"
+    ],
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Payment_UpdateResult",
+    "classification": "CUSTOMER",
+    "keys": [
+      "PAYMENT_UPDATE_RESULT"
+    ],
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "internal": [
+      "sp_XuLyThanhToan"
+    ],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_XuLyThanhToan",
+    "classification": "CUSTOMER",
+    "keys": [
+      "PROCESS_PAYMENT"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Order_ListByCustomer",
+    "classification": "CUSTOMER",
+    "keys": [
+      "ORDER_LIST_BY_CUSTOMER"
+    ],
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Order_GetDetailByCustomer",
+    "classification": "CUSTOMER",
+    "keys": [
+      "ORDER_GET_DETAIL_BY_CUSTOMER"
+    ],
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Order_Cancel",
+    "classification": "CUSTOMER",
+    "keys": [],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Review_Create",
+    "classification": "CUSTOMER",
+    "keys": [
+      "REVIEW_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Review_ListByMovie",
+    "classification": "PUBLIC",
+    "keys": [
+      "REVIEW_LIST_BY_MOVIE"
+    ],
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Complaint_Create",
+    "classification": "CUSTOMER",
+    "keys": [
+      "COMPLAINT_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Complaint_ListByCustomer",
+    "classification": "CUSTOMER",
+    "keys": [
+      "COMPLAINT_LIST_BY_CUSTOMER"
+    ],
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Complaint_GetByCustomer",
+    "classification": "CUSTOMER",
+    "keys": [
+      "COMPLAINT_GET_BY_CUSTOMER"
+    ],
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_ListAssignedCinemas",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_LIST_ASSIGNED_CINEMAS"
+    ],
+    "callers": [
+      "backend/src/services/authService.js",
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Room_List",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_ROOM_LIST"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Room_Create",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_ROOM_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Room_Update",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_ROOM_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Room_Delete",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_ROOM_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Seat_ListByRoom",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SEAT_LIST_BY_ROOM"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Seat_Create",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SEAT_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Seat_Update",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SEAT_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Seat_BatchCreate",
+    "classification": "MANAGER",
+    "keys": [],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Showtime_Create",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SHOWTIME_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [
+      "sp_ThemSuatChieu"
+    ],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_ThemSuatChieu",
+    "classification": "CUSTOMER",
+    "keys": [
+      "ADD_SHOWTIME"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Showtime_Update",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SHOWTIME_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Showtime_Cancel",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SHOWTIME_CANCEL"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Pricing_List",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_PRICING_LIST"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Pricing_Create",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_PRICING_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Pricing_Update",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_PRICING_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Dashboard",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_DASHBOARD"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Revenue",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_REVENUE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Seat_Delete",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SEAT_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Manager_Showtime_List",
+    "classification": "MANAGER",
+    "keys": [
+      "MANAGER_SHOWTIME_LIST"
+    ],
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Support_Complaint_List",
+    "classification": "SUPPORT",
+    "keys": [
+      "SUPPORT_COMPLAINT_LIST"
+    ],
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Support_Complaint_GetDetail",
+    "classification": "SUPPORT",
+    "keys": [
+      "SUPPORT_COMPLAINT_GET_DETAIL"
+    ],
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Support_Complaint_GetOrderReference",
+    "classification": "SUPPORT",
+    "keys": [
+      "SUPPORT_COMPLAINT_GET_ORDER_REFERENCE"
+    ],
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Support_Complaint_AddProcessing",
+    "classification": "SUPPORT",
+    "keys": [
+      "SUPPORT_COMPLAINT_ADD_PROCESSING"
+    ],
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "internal": [
+      "sp_XuLyKhieuNai"
+    ],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_XuLyKhieuNai",
+    "classification": "CUSTOMER",
+    "keys": [
+      "PROCESS_COMPLAINT"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Support_Complaint_UpdateStatus",
+    "classification": "SUPPORT",
+    "keys": [
+      "SUPPORT_COMPLAINT_UPDATE_STATUS"
+    ],
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_User_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_USER_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_User_UpdateStatus",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_USER_UPDATE_STATUS"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_User_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_USER_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Role_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROLE_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Role_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROLE_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Permission_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PERMISSION_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_RolePermission_Set",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROLE_PERMISSION_SET"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Assignment_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ASSIGNMENT_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [
+      "sp_PhanCongQuanLyRap"
+    ],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_PhanCongQuanLyRap",
+    "classification": "CUSTOMER",
+    "keys": [
+      "ASSIGN_CINEMA_MANAGER"
+    ],
+    "callers": [],
+    "internal": [],
+    "usage": "POSSIBLY DEAD",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Assignment_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ASSIGNMENT_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Cinema_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Cinema_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Movie_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_MOVIE_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Movie_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_MOVIE_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Product_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRODUCT_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Product_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRODUCT_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Promotion_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PROMOTION_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Promotion_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PROMOTION_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Report_Revenue",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_REPORT_REVENUE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Dashboard",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_DASHBOARD"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Role_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROLE_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Role_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROLE_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Permission_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PERMISSION_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Permission_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PERMISSION_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Permission_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PERMISSION_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Cinema_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Genre_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_GENRE_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Genre_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_GENRE_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Genre_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_GENRE_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Actor_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ACTOR_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Actor_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ACTOR_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Actor_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ACTOR_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Actor_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ACTOR_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_MovieActor_Set",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_MOVIE_ACTOR_SET"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": true
+  },
+  {
+    "name": "sp_Admin_Movie_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_MOVIE_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Product_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRODUCT_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Promotion_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PROMOTION_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Admin_Promotion_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PROMOTION_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Cinema_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Product_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRODUCT_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Movie_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_MOVIE_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Room_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROOM_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Room_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROOM_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Room_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROOM_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Room_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROOM_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Seat_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SEAT_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Seat_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SEAT_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Seat_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SEAT_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Seat_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SEAT_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Pricing_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRICING_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Pricing_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRICING_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Pricing_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_PRICING_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Showtime_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SHOWTIME_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Showtime_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SHOWTIME_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Showtime_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SHOWTIME_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Showtime_Cancel",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_SHOWTIME_CANCEL"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_Assignment_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ASSIGNMENT_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_RolePermission_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_ROLE_PERMISSION_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "sp_Cinema_GetImages",
+    "classification": "PUBLIC",
+    "keys": [
+      "CINEMA_GET_IMAGES"
+    ],
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_CinemaImage_List",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_IMAGE_LIST"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_CinemaImage_Create",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_IMAGE_CREATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_CinemaImage_Update",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_IMAGE_UPDATE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_CinemaImage_Delete",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_IMAGE_DELETE"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": false,
+    "tryCatch": false,
+    "xactAbort": false
+  },
+  {
+    "name": "usp_Admin_CinemaImage_SetCover",
+    "classification": "ADMIN",
+    "keys": [
+      "ADMIN_CINEMA_IMAGE_SET_COVER"
+    ],
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "internal": [],
+    "usage": "CALLED",
+    "transaction": true,
+    "tryCatch": true,
+    "xactAbort": false
+  }
+]

@@ -21,7 +21,7 @@ React.js -> REST -> Express (Route > Middleware > Controller > Service)
 
 ## Cài đặt và chạy
 
-Yêu cầu: Node.js >= 20, npm, SQL Server.
+Yêu cầu: Node.js >= 20.12, npm, SQL Server và sqlcmd cho database tooling.
 
 ```bash
 npm run install:all        # hoặc: npm install trong backend/ và frontend/
@@ -47,6 +47,8 @@ npm run build
 
 Biến môi trường backend: `PORT`, `NODE_ENV`, `DB_SERVER`, `DB_PORT`, `DB_DATABASE`, `DB_USER`, `DB_PASSWORD`, `DB_ENCRYPT`, `DB_TRUST_SERVER_CERTIFICATE`, `FRONTEND_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`. Không commit file `.env`.
 
+Database R0: điền `DB_USER=sa` và password riêng trong DEV, `DB_DATABASE=CinemaBookingDB`, chạy `npm run db:reset` từ root trước khi start backend. Lệnh DROP/CREATE toàn bộ DB, seed và verify; không cần SSMS hoặc backup để dựng project. Kiểm tra bằng `npm run db:test`, `npm run db:verify`, `npm run db:smoke`. Hướng dẫn cấu trúc, SQLCMD và bảo trì: [database/README.md](database/README.md). Production vẫn dùng application login EXECUTE-only.
+
 Auth dùng Bearer JWT, thời hạn mặc định `1h`; token chỉ lưu trong `sessionStorage` của tab trình duyệt. Tạo secret tối thiểu 32 byte cho `JWT_SECRET` bằng lệnh trong `backend/.env.example`. Đăng ký thành công tạo khách hàng và chuyển về màn hình đăng nhập; profile chỉ sửa họ tên, điện thoại, ngày sinh và giới tính.
 
 Auth API hiện có `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, `PUT /api/auth/me` và `GET /api/auth/permissions`. Login trả `token` dạng Bearer; quyền được nạp từ `sp_Auth_Login` và làm mới từ `sp_RBAC_GetPermissionsByUser` cho mỗi request đã xác thực. Để kiểm tra giao diện, chạy `npm test` trong `frontend/`.
@@ -58,7 +60,7 @@ Phase 3 public catalog dùng dữ liệu SQL thật qua Stored Procedure: `GET /
 1. **Stored-Procedure-only**: backend chỉ được `pool -> request() -> .input()/.output() -> .execute('dbo.sp_xxx')`. Table, View, Function không được truy cập trực tiếp; View đọc qua procedure bọc, Function gọi trong procedure.
 2. **Không SQL thô trong backend**: không `SELECT/INSERT/UPDATE/DELETE/MERGE/JOIN/GROUP BY`, không transaction SQL, không `.query()`, không ORM/query builder (Prisma, Sequelize, TypeORM, Knex).
 3. Tên procedure lấy từ whitelist `backend/src/db/procedures.js`, không nhận từ client.
-4. Mọi file SQL nằm trong `database/`. Tài khoản ứng dụng chỉ có `EXECUTE`.
+4. SQL nghiệp vụ và baseline nằm trong `database/`. Production application login chỉ có `EXECUTE`; DEV/R0 dùng `sa` từ environment.
 5. Kiểm tra tự động: `npm run audit:no-sql`.
 
 ## Thứ tự phát triển

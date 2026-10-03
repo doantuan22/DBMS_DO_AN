@@ -1,0 +1,114 @@
+{
+  "status": "PASS",
+  "before": {
+    "tables": 26,
+    "views": 6,
+    "functions": 17,
+    "triggers": 7,
+    "procedures": 124,
+    "indexes": 61,
+    "constraints": 157
+  },
+  "sourceBefore": {
+    "tables": 26,
+    "views": 6,
+    "functions": 14,
+    "triggers": 7,
+    "procedures": 121,
+    "indexes": 61,
+    "constraints": 157
+  },
+  "baseline": {
+    "tables": 26,
+    "views": 6,
+    "functions": 17,
+    "triggers": 7,
+    "procedures": 124,
+    "indexes": 61,
+    "constraints": 157
+  },
+  "dbOnlyModules": [
+    "fn_BayGio",
+    "fn_GheCoVeHieuLucSuatTuongLai",
+    "fn_HomNay",
+    "sp_Clock_GetNow",
+    "sp_Showtime_CancelCascade",
+    "sp_Showtime_ValidateTimes"
+  ],
+  "sourceOnlyModules": [],
+  "differentModules": [
+    "fn_KiemTraQuanLyRapScope",
+    "fn_DanhSachGheSuatChieu",
+    "sp_Admin_Dashboard",
+    "sp_Admin_RolePermission_Set",
+    "sp_Admin_User_Create",
+    "sp_Auth_Login",
+    "sp_Auth_RegisterCustomer",
+    "sp_Booking_Create",
+    "sp_Complaint_Create",
+    "sp_Manager_Dashboard",
+    "sp_Manager_ListAssignedCinemas",
+    "sp_Manager_Revenue",
+    "sp_Manager_Seat_Update",
+    "sp_Manager_Showtime_Cancel",
+    "sp_Manager_Showtime_Create",
+    "sp_Manager_Showtime_Update",
+    "sp_Order_ExpirePending",
+    "sp_Order_GetDetailByCustomer",
+    "sp_Order_ListByCustomer",
+    "sp_Payment_CreateAttempt",
+    "sp_Payment_UpdateResult",
+    "sp_Promotion_Validate",
+    "sp_Review_Create",
+    "sp_Showtime_ListByMovie",
+    "sp_Support_Complaint_AddProcessing",
+    "sp_Support_Complaint_UpdateStatus",
+    "usp_Admin_Seat_Update",
+    "usp_Admin_Showtime_Cancel",
+    "usp_Admin_Showtime_Create",
+    "usp_Admin_Showtime_Update",
+    "TRG_ChiTietVe_KiemTraTrungGhe",
+    "TRG_DanhGia_KiemTraDaXemPhim",
+    "vw_ChiTietDonDatVe",
+    "vw_LichChieuChiTiet",
+    "vw_LichSuDatVe"
+  ],
+  "addedColumns": [
+    "DONDATVE.LyDoHuy",
+    "DONDATVE.ThongBaoHuy"
+  ],
+  "clockDefaultsPreserved": 8,
+  "generatedDefaultNamesStabilized": 25,
+  "removedApplicationObjects": 0,
+  "unknownCriticalObjects": 0,
+  "backendContracts": "PASS",
+  "capturedProcedureCalls": 120,
+  "whitelistEntries": 120,
+  "missingBackend": [],
+  "rawBusinessSql": 0,
+  "run1": "PASS",
+  "run2": "PASS",
+  "definitionParityAcrossRuns": true,
+  "seedDataParityAcrossRuns": true,
+  "backend": "PASS",
+  "sqlSmoke": "PASS",
+  "backendTests": "90/90 PASS",
+  "concurrency": [
+    {
+      "test": "booking-stress.mjs",
+      "status": "PASS"
+    },
+    {
+      "test": "pricing-overlap-stress.mjs",
+      "status": "PASS"
+    },
+    {
+      "test": "cinema-image-lock-stress.mjs",
+      "status": "PASS"
+    }
+  ],
+  "negativeVerify": "PASS",
+  "clone": "PASS",
+  "credentialLeakScan": "PASS",
+  "at": "2026-10-03T13:53:08.793Z"
+}

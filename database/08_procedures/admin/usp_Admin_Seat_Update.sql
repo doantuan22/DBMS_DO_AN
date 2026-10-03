@@ -1,0 +1,24 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+GO
+CREATE OR ALTER PROCEDURE dbo.usp_Admin_Seat_Update
+    @GheID INT, @LoaiGhe NVARCHAR(50), @TrangThai NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
+    BEGIN TRY
+        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminSeatUpdate;
+        IF NOT EXISTS (SELECT 1 FROM dbo.GHE WITH (UPDLOCK,HOLDLOCK) WHERE GheID=@GheID) THROW 50206, N'Ghế không tồn tại.', 1;
+        IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;
+        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;
+        IF @OwnTran=1 COMMIT TRANSACTION;
+        SELECT GheID,PhongID,HangGhe,SoGhe,LoaiGhe,TrangThai FROM dbo.GHE WHERE GheID=@GheID;
+    END TRY
+    BEGIN CATCH
+        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminSeatUpdate; END
+        ;THROW;
+    END CATCH
+END;
+GO

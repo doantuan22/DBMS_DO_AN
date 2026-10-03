@@ -1,0 +1,6 @@
+SET SHOWPLAN_XML ON;
+GO
+EXEC dbo.sp_Seat_ListByShowtime @SuatChieuID=60;
+GO
+SET SHOWPLAN_XML OFF;
+GO

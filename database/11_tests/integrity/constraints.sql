@@ -1,0 +1,27 @@
+SET NOCOUNT ON;
+SET XACT_ABORT ON;
+DECLARE @error int;
+BEGIN TRANSACTION;
+BEGIN TRY
+ INSERT dbo.NGUOIDUNG(VaiTroID,HoTen,Email,MatKhau,SoDienThoai)
+ SELECT VaiTroID,HoTen,Email,MatKhau,NULL FROM dbo.NGUOIDUNG WHERE Email='admin@cinemadb.vn';
+END TRY
+BEGIN CATCH
+ SET @error=ERROR_NUMBER();
+END CATCH;
+IF @@TRANCOUNT>0 ROLLBACK TRANSACTION;
+IF ISNULL(@error,0) NOT IN(2627,2601) THROW 51014, 'Email uniqueness failed.', 1;
+PRINT 'PASS email business key rejects duplicate';
+GO
+DECLARE @error int;
+BEGIN TRANSACTION;
+BEGIN TRY
+ INSERT dbo.GHE(PhongID,HangGhe,SoGhe) VALUES(-2147483647,'Z',1);
+END TRY
+BEGIN CATCH
+ SET @error=ERROR_NUMBER();
+END CATCH;
+IF @@TRANCOUNT>0 ROLLBACK TRANSACTION;
+IF ISNULL(@error,0)<>547 THROW 51014, 'Room foreign key failed.', 1;
+PRINT 'PASS seat room FK rejects orphan';
+GO

@@ -1,0 +1,856 @@
+[
+  {
+    "label": "customerA-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "audit.mus0s7zc.customera@example.invalid",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 26,
+        "name": "AUDIT_mus0s7zc_A_updated",
+        "email": "audit.mus0s7zc.customera@example.invalid",
+        "phone": null,
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    }
+  },
+  {
+    "label": "customerB-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "audit.mus0s7zc.customerb@example.invalid",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 27,
+        "name": "AUDIT_mus0s7zc_customerB",
+        "email": "audit.mus0s7zc.customerb@example.invalid",
+        "phone": null,
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    }
+  },
+  {
+    "label": "admin-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "admin@cinemadb.vn",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "admin@cinemadb.vn",
+        "phone": "0901000001",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    }
+  },
+  {
+    "label": "managerA-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "audit.mus0s7zc.managera@example.invalid",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 28,
+        "name": "AUDIT_mus0s7zc_managerA",
+        "email": "audit.mus0s7zc.managera@example.invalid",
+        "phone": null,
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "QUAN_LY_RAP",
+        "roleName": "Quản lý rạp",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          }
+        ],
+        "cinemaAssignments": [
+          {
+            "cinemaId": 40,
+            "name": "AUDIT_mus0s7zc_Cinema_A",
+            "city": "AUDIT City",
+            "assignmentStatus": "Hiệu lực"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "label": "support-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "audit.mus0s7zc.support@example.invalid",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 30,
+        "name": "AUDIT_mus0s7zc_support",
+        "email": "audit.mus0s7zc.support@example.invalid",
+        "phone": null,
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "CSKH",
+        "roleName": "Chăm sóc khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    }
+  },
+  {
+    "label": "eleven-seats",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 400,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283
+      ],
+      "products": []
+    },
+    "response": {
+      "error": {
+        "code": "SEAT_LIMIT_EXCEEDED",
+        "message": "An order can contain at most 10 seats."
+      }
+    }
+  },
+  {
+    "label": "eleven-products",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 400,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [
+        285
+      ],
+      "products": [
+        {
+          "productId": 12,
+          "quantity": 11
+        }
+      ]
+    },
+    "response": {
+      "error": {
+        "code": "PRODUCT_QUANTITY_LIMIT_EXCEEDED",
+        "message": "Each product quantity must be at most 10."
+      }
+    }
+  },
+  {
+    "label": "split-product-quantity",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 400,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [
+        285
+      ],
+      "products": [
+        {
+          "productId": 12,
+          "quantity": 6
+        },
+        {
+          "productId": 12,
+          "quantity": 5
+        }
+      ]
+    },
+    "response": {
+      "error": {
+        "code": "DUPLICATE_PRODUCT",
+        "message": "products must not contain duplicate productId values."
+      }
+    }
+  },
+  {
+    "label": "duplicate-seat-input",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 400,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [
+        285,
+        285
+      ],
+      "products": []
+    },
+    "response": {
+      "error": {
+        "code": "DUPLICATE_SEAT",
+        "message": "seatIds must not contain duplicates."
+      }
+    }
+  },
+  {
+    "label": "empty-seat-input",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 400,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [],
+      "products": []
+    },
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "seatIds must contain at least one seat."
+      }
+    }
+  },
+  {
+    "label": "booking-user-spoof",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 400,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [
+        285
+      ],
+      "products": [],
+      "userId": 27
+    },
+    "response": {
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    }
+  },
+  {
+    "label": "movie-missing",
+    "method": "GET",
+    "url": "/movies/2147483647",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "MOVIE_NOT_FOUND",
+        "message": "Movie was not found."
+      }
+    }
+  },
+  {
+    "label": "showtime-missing",
+    "method": "GET",
+    "url": "/showtimes/2147483647",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_NOT_FOUND",
+        "message": "Showtime was not found."
+      }
+    }
+  },
+  {
+    "label": "customer-support-write",
+    "method": "POST",
+    "url": "/support/complaints/19/processings",
+    "status": 403,
+    "request": {
+      "content": "AUDIT denied",
+      "nextStatus": "Đang xử lý"
+    },
+    "response": {
+      "error": {
+        "code": "SUPPORT_REQUIRED",
+        "message": "Support access is required."
+      }
+    }
+  },
+  {
+    "label": "support-admin-write",
+    "method": "POST",
+    "url": "/admin/cinemas",
+    "status": 403,
+    "request": {
+      "name": "AUDIT denied",
+      "address": "AUDIT",
+      "city": "AUDIT"
+    },
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    }
+  },
+  {
+    "label": "manager-customer-booking",
+    "method": "POST",
+    "url": "/bookings",
+    "status": 403,
+    "request": {
+      "showtimeId": 60,
+      "seatIds": [
+        285
+      ],
+      "products": []
+    },
+    "response": {
+      "error": {
+        "code": "CUSTOMER_REQUIRED",
+        "message": "Booking is available to customer accounts only."
+      }
+    }
+  },
+  {
+    "label": "foreign-complaint-detail",
+    "method": "GET",
+    "url": "/complaints/19",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "COMPLAINT_NOT_FOUND",
+        "message": "Complaint was not found."
+      }
+    }
+  },
+  {
+    "label": "foreign-payment-result",
+    "method": "POST",
+    "url": "/orders/41/payments/21/result",
+    "status": 404,
+    "request": {
+      "status": "Thành công"
+    },
+    "response": {
+      "error": {
+        "code": "ORDER_NOT_FOUND",
+        "message": "Order was not found."
+      }
+    }
+  },
+  {
+    "label": "wrong-cinema-image-update",
+    "method": "PUT",
+    "url": "/admin/cinemas/41/images/1070",
+    "status": 404,
+    "request": {
+      "url": "/favicon.svg",
+      "displayOrder": 2,
+      "status": "Hoạt động"
+    },
+    "response": {
+      "error": {
+        "code": "CINEMA_IMAGE_NOT_FOUND",
+        "message": "Cinema image was not found in this cinema."
+      }
+    }
+  },
+  {
+    "label": "inactive-cover",
+    "method": "PATCH",
+    "url": "/admin/cinemas/40/images/1069/cover",
+    "status": 409,
+    "request": {
+      "cover": true
+    },
+    "response": {
+      "error": {
+        "code": "CINEMA_IMAGE_INACTIVE",
+        "message": "An inactive image cannot be the cover."
+      }
+    }
+  },
+  {
+    "label": "invalid-image-protocol",
+    "method": "POST",
+    "url": "/admin/cinemas/40/images",
+    "status": 400,
+    "request": {
+      "url": "javascript:alert(1)",
+      "displayOrder": 0
+    },
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "url must be an http(s) URL or an absolute local path."
+      }
+    }
+  },
+  {
+    "label": "percent-100",
+    "method": "POST",
+    "url": "/admin/promotions",
+    "status": 400,
+    "request": {
+      "code": "AUDIT_mus0s7zc_100",
+      "discountType": "PERCENT",
+      "discountValue": 100,
+      "startsAt": "2026-10-03T00:00:00+07:00",
+      "endsAt": "2026-10-04T23:59:59+07:00",
+      "quantity": 1
+    },
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "A percent discount must be greater than 0 and at most 99."
+      }
+    }
+  },
+  {
+    "label": "browser-login",
+    "method": "POST",
+    "url": "/auth/login",
+    "status": 200,
+    "request": {
+      "Email": "audit.mus0s7zc.browser@example.invalid",
+      "MatKhau": "[REDACTED]"
+    },
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 35,
+        "name": "AUDIT_mus0s7zc_Browser",
+        "email": "audit.mus0s7zc.browser@example.invalid",
+        "phone": null,
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 172,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    }
+  },
+  {
+    "label": "food-snapshot-order-before",
+    "method": "GET",
+    "url": "/orders/50",
+    "status": 200,
+    "response": {
+      "order": {
+        "id": 50,
+        "showtimeId": 60,
+        "movieId": 14,
+        "movieTitle": "AUDIT_mus0s7zc_Movie",
+        "posterUrl": "/favicon.svg",
+        "cinemaId": 40,
+        "cinemaName": "AUDIT_mus0s7zc_Cinema_A",
+        "roomName": "AUDIT_mus0s7zc_Room",
+        "startsAt": "2026-10-07T10:00:00.000Z",
+        "endsAt": "2026-10-07T11:30:00.000Z",
+        "format": "2D",
+        "bookedAt": "2026-10-03T14:01:48.340Z",
+        "ticketTotal": 92000,
+        "productTotal": 60000,
+        "discountTotal": 30400,
+        "total": 121600,
+        "status": "Hết hạn",
+        "promotionCode": "AUDIT_MUS0S7ZC",
+        "user": {
+          "id": 35,
+          "name": "AUDIT_mus0s7zc_Browser",
+          "email": "audit.mus0s7zc.browser@example.invalid",
+          "phone": null
+        },
+        "roomId": 35,
+        "roomType": "2D",
+        "cinemaAddress": "AUDIT test address",
+        "ageRating": null,
+        "durationMinutes": 90,
+        "promotionDescription": "AUDIT changed",
+        "seatLabels": "A2",
+        "ticketCodes": "TK-20261003140148-274-41E63D",
+        "tickets": [
+          {
+            "id": 60,
+            "code": "TK-20261003140148-274-41E63D",
+            "seatId": 274,
+            "row": "A",
+            "number": 2,
+            "label": "A2",
+            "type": "Thường",
+            "price": 92000,
+            "status": "Đã đặt"
+          }
+        ],
+        "products": [
+          {
+            "id": 13,
+            "productId": 12,
+            "name": "AUDIT_mus0s7zc_Product",
+            "type": "Snack",
+            "quantity": 2,
+            "unitPrice": 30000,
+            "total": 60000
+          }
+        ],
+        "payments": []
+      }
+    }
+  },
+  {
+    "label": "deletable-cinema-create",
+    "method": "POST",
+    "url": "/admin/cinemas",
+    "status": 200,
+    "request": {
+      "name": "AUDIT_mus0s7zc_Delete",
+      "address": "AUDIT",
+      "city": "AUDIT"
+    },
+    "response": {
+      "cinema": {
+        "RapID": 42,
+        "TenRap": "AUDIT_mus0s7zc_Delete",
+        "DiaChi": "AUDIT",
+        "ThanhPho": "AUDIT",
+        "SoDienThoai": null,
+        "MoTa": null,
+        "NgayHoatDong": null,
+        "TrangThai": "Hoạt động"
+      }
+    }
+  },
+  {
+    "label": "deletable-cinema-delete",
+    "method": "DELETE",
+    "url": "/admin/cinemas/42",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa rạp."
+      }
+    }
+  },
+  {
+    "label": "cinema-dependency-delete",
+    "method": "DELETE",
+    "url": "/admin/cinemas/40",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "CINEMA_HAS_DEPENDENCIES",
+        "message": "A cinema with rooms, assignments, pricing or images cannot be deleted; change its status instead."
+      }
+    }
+  },
+  {
+    "label": "product-dependency-delete",
+    "method": "DELETE",
+    "url": "/admin/products/12",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "PRODUCT_IN_USE",
+        "message": "A product used in orders cannot be deleted; change its status instead."
+      }
+    }
+  },
+  {
+    "label": "seat-dependency-delete",
+    "method": "DELETE",
+    "url": "/admin/seats/273",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SEAT_HAS_TICKET_HISTORY",
+        "message": "Seats with ticket history cannot be changed or deleted."
+      }
+    }
+  },
+  {
+    "label": "pricing-overlap",
+    "method": "POST",
+    "url": "/admin/pricing",
+    "status": 409,
+    "request": {
+      "cinemaId": 40,
+      "seatType": "Tất cả",
+      "dayType": "Tất cả",
+      "format": "Tất cả",
+      "surcharge": 100,
+      "startsOn": "2026-10-03",
+      "endsOn": null
+    },
+    "response": {
+      "error": {
+        "code": "PRICING_OVERLAP",
+        "message": "An active pricing rule with the same conditions already covers part of this period."
+      }
+    }
+  }
+]

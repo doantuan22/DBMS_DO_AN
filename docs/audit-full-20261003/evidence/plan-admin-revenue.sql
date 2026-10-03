@@ -1,0 +1,6 @@
+SET SHOWPLAN_XML ON;
+GO
+EXEC dbo.sp_Admin_Report_Revenue;
+GO
+SET SHOWPLAN_XML OFF;
+GO

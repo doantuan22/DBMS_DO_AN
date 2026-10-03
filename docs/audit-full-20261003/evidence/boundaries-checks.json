@@ -1,0 +1,153 @@
+[
+  {
+    "label": "eleven-seats",
+    "status": "PASS"
+  },
+  {
+    "label": "eleven-products",
+    "status": "PASS"
+  },
+  {
+    "label": "split-product-quantity",
+    "status": "PASS"
+  },
+  {
+    "label": "duplicate-seat-input",
+    "status": "PASS"
+  },
+  {
+    "label": "empty-seat-input",
+    "status": "PASS"
+  },
+  {
+    "label": "booking-user-spoof",
+    "status": "PASS"
+  },
+  {
+    "label": "movie-missing-404",
+    "status": "PASS"
+  },
+  {
+    "label": "showtime-missing-404",
+    "status": "PASS"
+  },
+  {
+    "label": "customer-support-write-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "support-admin-write-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "manager-customer-booking-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "foreign-complaint-detail-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "foreign-payment-result-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "wrong-cinema-image-update-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "inactive-cover-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "invalid-image-protocol-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "percent-100-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "food-and-promo-final-total",
+    "status": "PASS",
+    "evidence": {
+      "id": 50,
+      "showtimeId": 60,
+      "movieId": 14,
+      "movieTitle": "AUDIT_mus0s7zc_Movie",
+      "posterUrl": "/favicon.svg",
+      "cinemaId": 40,
+      "cinemaName": "AUDIT_mus0s7zc_Cinema_A",
+      "roomName": "AUDIT_mus0s7zc_Room",
+      "startsAt": "2026-10-07T10:00:00.000Z",
+      "endsAt": "2026-10-07T11:30:00.000Z",
+      "format": "2D",
+      "bookedAt": "2026-10-03T14:01:48.340Z",
+      "ticketTotal": 92000,
+      "productTotal": 60000,
+      "discountTotal": 30400,
+      "total": 121600,
+      "status": "Hết hạn",
+      "promotionCode": "AUDIT_MUS0S7ZC",
+      "user": {
+        "id": 35,
+        "name": "AUDIT_mus0s7zc_Browser",
+        "email": "audit.mus0s7zc.browser@example.invalid",
+        "phone": null
+      },
+      "roomId": 35,
+      "roomType": "2D",
+      "cinemaAddress": "AUDIT test address",
+      "ageRating": null,
+      "durationMinutes": 90,
+      "promotionDescription": "AUDIT changed",
+      "seatLabels": "A2",
+      "ticketCodes": "TK-20261003140148-274-41E63D",
+      "tickets": [
+        {
+          "id": 60,
+          "code": "TK-20261003140148-274-41E63D",
+          "seatId": 274,
+          "row": "A",
+          "number": 2,
+          "label": "A2",
+          "type": "Thường",
+          "price": 92000,
+          "status": "Đã đặt"
+        }
+      ],
+      "products": [
+        {
+          "id": 13,
+          "productId": 12,
+          "name": "AUDIT_mus0s7zc_Product",
+          "type": "Snack",
+          "quantity": 2,
+          "unitPrice": 30000,
+          "total": 60000
+        }
+      ],
+      "payments": []
+    }
+  },
+  {
+    "label": "delete-own-empty-cinema",
+    "status": "PASS"
+  },
+  {
+    "label": "delete-own-cinema-with-history-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "delete-own-product-with-order-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "delete-own-seat-with-ticket-denied",
+    "status": "PASS"
+  },
+  {
+    "label": "pricing-overlap-denied",
+    "status": "PASS"
+  }
+]

@@ -1,0 +1,631 @@
+[
+  {
+    "id": "BUG-001",
+    "title": "DateTime2 local và UTC lệch 7 giờ",
+    "severity": "P1",
+    "confidence": "PROVEN",
+    "uc": "KH-05, KH-07, KH-10, QLR-04/05, ADM-12/14",
+    "layer": "DB / BE / Integration",
+    "rule": "Giờ chiếu và hạn giữ ghế phải cùng hợp đồng thời gian.",
+    "expected": "10:00 +07 được lưu/hiển thị 10:00; hạn giữ ghế là đúng 5 phút theo cùng múi giờ.",
+    "actual": "Suất 57 gửi 10:00 +07 nhưng API startTime=03:00. Suất 60 gửi 17:00 +07 nhưng trả 10:00. bookedAt/HanGiuCho lưu giờ Việt Nam nhưng JSON gắn Z; ví dụ order 40 tạo thực tế 06:41 UTC, hạn giữ trả 13:46Z.",
+    "steps": "Xem request audit-showtime-create, wall-clock-contract-check và real-five-minute-expiry-order; so sánh với đồng hồ SQL local/UTC.",
+    "evidence": [
+      "integration-transcript.json",
+      "supplemental-transcript.json",
+      "live-environment.json"
+    ],
+    "db": [
+      "sp_Showtime_GetDetail",
+      "fn_BayGio",
+      "sp_Booking_Create"
+    ],
+    "be": [
+      "backend/src/services/adminService.js",
+      "backend/src/services/managerService.js",
+      "backend/src/config/database.js"
+    ],
+    "fe": [
+      "frontend/src/pages/ManagerPortal.jsx",
+      "frontend/src/pages/BookingPreparation.jsx"
+    ],
+    "rootCause": "new Date(offset) đổi sang UTC; driver useUTC mặc định truyền UTC components vào datetime2 mang nghĩa local; đọc local datetime2 như UTC.",
+    "fix": "Thống nhất UTC hoặc giờ rạp xuyên DB/driver/DTO; không sửa dữ liệu lịch sử hàng loạt trước khi xác định nguồn.",
+    "tests": "+07/Z/datetime-local, qua nửa đêm, hold 5 phút, promo start/end và payment cutoff.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Có thể đóng đặt/thanh toán trước giờ dự kiến 7 giờ; timestamp phía FE sai nghĩa."
+  },
+  {
+    "id": "BUG-002",
+    "title": "Manager không đóng bán được và enum sai gây 500",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "QLR-05",
+    "layer": "BE / Integration",
+    "rule": "Trạng thái suất theo CK_SUATCHIEU_TrangThai.",
+    "expected": "Đóng bán được chấp nhận; Tạm ngừng trả 400.",
+    "actual": "Đóng bán trả 400; Tạm ngừng vượt validator rồi SQL CHECK lỗi, HTTP 500.",
+    "steps": "Gọi manager-close-correct-domain và manager-pause-wrong-domain trên suất audit 58.",
+    "evidence": [
+      "integration-transcript.json"
+    ],
+    "db": [
+      "CK_SUATCHIEU_TrangThai",
+      "sp_Manager_Showtime_Update"
+    ],
+    "be": [
+      "backend/src/validators/managerValidator.js",
+      "backend/src/services/managerService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/ManagerPortal.jsx"
+    ],
+    "rootCause": "SHOWTIME_STATUSES chứa Tạm ngừng thay Đóng bán; thiếu mapping 547.",
+    "fix": "Đồng bộ domain và map CHECK thành lỗi client.",
+    "tests": "Toàn bộ enum hợp lệ/không hợp lệ và trạng thái null.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-003",
+    "title": "Lỗi lifecycle database mới không được map",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "QLR-04/05, ADM-14",
+    "layer": "BE / Integration",
+    "rule": "Validation nghiệp vụ phải trả 400/409 với thông báo có thể xử lý.",
+    "expected": "Suất ngắn hơn phim bị từ chối bằng lỗi nghiệp vụ.",
+    "actual": "manager-short-duration trả 500 EREQUEST; live sp_Showtime_ValidateTimes có THROW mới mà service không xử lý.",
+    "steps": "POST suất dài 1 phút cho phim audit 90 phút.",
+    "evidence": [
+      "integration-transcript.json",
+      "live-objects.json"
+    ],
+    "db": [
+      "sp_Showtime_ValidateTimes"
+    ],
+    "be": [
+      "backend/src/services/managerService.js",
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/ManagerPortal.jsx"
+    ],
+    "rootCause": "BE của commit 7c3562 không có đầy đủ error contract của DB 014/015.",
+    "fix": "Chọn baseline đồng bộ trước, rồi khai báo và kiểm tra mapping theo flow.",
+    "tests": "Mọi THROW lifecycle; phân biệt lỗi nhập, 404, xung đột và 500.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-004",
+    "title": "Manager UI gửi trường roomId không được phép khi tạo ghế",
+    "severity": "P1",
+    "confidence": "PROVEN",
+    "uc": "QLR-03",
+    "layer": "FE / Integration",
+    "rule": "UI phải gọi đúng contract createSeat(roomId, body).",
+    "expected": "Body chỉ row, number, type.",
+    "actual": "UI trải {...seat} chứa roomId; API trả 400 UNKNOWN_REQUEST_FIELD; ghế không tạo.",
+    "steps": "Chọn phòng audit ManagerRoom → Ghế → nhập hàng UI → Tạo ghế.",
+    "evidence": [
+      "browser-manager-seat-error.png",
+      "browser-manager-seat-error.txt",
+      "browser-network.json",
+      "integration-transcript.json"
+    ],
+    "db": [
+      "sp_Manager_Seat_Create"
+    ],
+    "be": [
+      "backend/src/validators/managerValidator.js"
+    ],
+    "fe": [
+      "frontend/src/pages/ManagerPortal.jsx"
+    ],
+    "rootCause": "Spread cả state routing field vào payload.",
+    "fix": "Tạo payload theo contract; bổ sung busy/refresh cho form ghế.",
+    "tests": "Browser tạo ghế thật và đọc lại DB; unknown-field âm.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-005",
+    "title": "Admin UI sửa ảnh rạp luôn gửi cover ngoài contract",
+    "severity": "P1",
+    "confidence": "PROVEN",
+    "uc": "ADM-07",
+    "layer": "FE / Integration",
+    "rule": "Sửa metadata ảnh và set cover là hai API contract.",
+    "expected": "PUT metadata không có cover.",
+    "actual": "Lưu ảnh đã chọn trả 400 UNKNOWN_REQUEST_FIELD.",
+    "steps": "Admin → Ảnh rạp → chọn rạp audit → Sửa → Lưu.",
+    "evidence": [
+      "browser-admin-image-update-error.png",
+      "browser-network.json"
+    ],
+    "db": [
+      "usp_Admin_CinemaImage_Update"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js"
+    ],
+    "fe": [
+      "frontend/src/components/CinemaImageManager.jsx"
+    ],
+    "rootCause": "Update dùng spread form chứa cover, trong khi cover là PATCH riêng.",
+    "fix": "Tách payload create/update/setCover theo contract hiện hành.",
+    "tests": "Sửa URL/mô tả/order/status, cover PATCH, cover đang ẩn.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-006",
+    "title": "9 form sửa Admin không nạp trạng thái ban đầu",
+    "severity": "P1",
+    "confidence": "PROVEN",
+    "uc": "ADM-02/07/08/09/11/12/13/14",
+    "layer": "FE / Integration",
+    "rule": "Form edit phải nạp các trường editOnly của bản ghi đang chọn.",
+    "expected": "Trạng thái ban đầu phản ánh TrangThai hiện tại.",
+    "actual": "Tài khoản, rạp, phòng, ghế, phim, sản phẩm, khuyến mãi, bảng giá, suất đều có status rỗng; Lưu mặc định rạp trả 400.",
+    "steps": "Chọn Sửa/Trạng thái của các fixture ID trong browser-admin-extra-checks.",
+    "evidence": [
+      "browser-admin-extra-checks.json",
+      "browser-admin-cinema-edit-error.png",
+      "browser-network.json"
+    ],
+    "db": [
+      "Các SP update Admin",
+      "Các CHECK TrangThai"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "onSelect tính rowValues từ editableFields của render selected=null, trước khi setSelected có hiệu lực.",
+    "fix": "Tính trường edit trực tiếp từ definition và bản ghi; dùng enum/select.",
+    "tests": "9 resource: chọn edit → không đổi status → lưu trường khác → DB status giữ nguyên.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-007",
+    "title": "Sửa tên vai trò báo thành công nhưng không lưu",
+    "severity": "P1",
+    "confidence": "PROVEN",
+    "uc": "ADM-03",
+    "layer": "FE / Integration",
+    "rule": "Thay tên/mô tả vai trò phải UPDATE VAITRO.",
+    "expected": "Tên mới được lưu qua role update.",
+    "actual": "Tên UiRole không đổi; UI báo Đã lưu thay đổi và chỉ gọi role-permissions.",
+    "steps": "Admin → Vai trò → chọn audit UiRole → đổi tên → Lưu → GET roles.",
+    "evidence": [
+      "browser-checks.json",
+      "browser-network.json"
+    ],
+    "db": [
+      "sp_Admin_Role_Update",
+      "sp_Admin_RolePermission_Set"
+    ],
+    "be": [
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "Nhánh permissionIds !== undefined luôn thắng nhánh update role sau onSelect.",
+    "fix": "Tách thao tác role metadata và permissions; không báo thành công khi bỏ qua thay đổi.",
+    "tests": "Sửa tên, mô tả, quyền độc lập và cùng lúc.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-008",
+    "title": "Admin UI không gỡ được toàn bộ quyền",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-05",
+    "layer": "FE / Integration",
+    "rule": "Danh sách quyền trống phải thành [].",
+    "expected": "Input trống gửi permissionIds: [].",
+    "actual": "split empty → Number('')=0 → [0], API trả 400. API trực tiếp [] hoạt động.",
+    "steps": "Xóa hết nội dung QuyenID cần gán rồi Lưu.",
+    "evidence": [
+      "browser-admin-role-permission-error.png",
+      "supplemental-transcript.json"
+    ],
+    "db": [
+      "sp_Admin_RolePermission_Set"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "Parser giữ số 0 vì Number.isSafeInteger(0) true.",
+    "fix": "Parse empty thành [] và kiểm tra ID > 0.",
+    "tests": "Empty, whitespace, trùng ID, ID âm/0, permission đang xóa.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-009",
+    "title": "ID vượt SQL INT được nhận rồi trả 500",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-08 và các path dùng cùng validator",
+    "layer": "BE / Integration",
+    "rule": "ID phải nằm trong miền SQL INT.",
+    "expected": "2147483648 trả 400.",
+    "actual": "POST rooms cinemaId 2147483648 trả 500 EPARAM.",
+    "steps": "Gọi integer-overflow trong transcript.",
+    "evidence": [
+      "integration-transcript.json"
+    ],
+    "db": [
+      "@RapID INT"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js",
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [],
+    "rootCause": "Number.isSafeInteger không bảo đảm miền int32; Admin không map numeric parameter error.",
+    "fix": "Giới hạn ID <=2147483647 và map lỗi parameter.",
+    "tests": "Biên int32 trên body/path/query, Infinity, số phân số và string.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-010",
+    "title": "Số ghế phân số bị làm thành số nguyên",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-08",
+    "layer": "BE / DB / Integration",
+    "rule": "SoGhe là số nguyên dương.",
+    "expected": "1.5 trả 400 và không có ghế mới.",
+    "actual": "API nhận number 1.5, driver INT tạo ghế F1 (GheID 302).",
+    "steps": "POST fractional-seat, đọc response và danh sách ghế.",
+    "evidence": [
+      "integration-transcript.json"
+    ],
+    "db": [
+      "GHE",
+      "usp_Admin_Seat_Create"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js",
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "Rule positive kiểm tra số >0 nhưng không Number.isInteger.",
+    "fix": "Dùng rule integer cho số ghế, duration, quantity và display order.",
+    "tests": "1.5/-1/0/maxint, xác nhận không sinh dòng khi bị từ chối.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Request và giá trị được lưu khác nhau."
+  },
+  {
+    "id": "BUG-011",
+    "title": "Giới hạn tên Admin không khớp SQL parameter",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-02/03/04/07/08/10/11",
+    "layer": "BE / Integration",
+    "rule": "Độ dài phải khớp contract từng resource.",
+    "expected": "Tên phòng >100 bị từ chối 400 trước RPC.",
+    "actual": "Tên phòng 124 ký tự qua validator name<=255 rồi RPC trả 500; các name parameter 100/150 khác cùng rủi ro.",
+    "steps": "POST overlength-room-name.",
+    "evidence": [
+      "supplemental-transcript.json",
+      "backend-sp-contract-capture.json"
+    ],
+    "db": [
+      "@TenPhong NVARCHAR(100)"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js",
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "Một fieldMax name=255 dùng chung cho parameter 100/150; nhiều field khác thiếu bound tương ứng.",
+    "fix": "Schema validation riêng theo resource, gồm độ dài nvarchar/varchar và byte encoding.",
+    "tests": "room100/101, product150/151, role100/101; text MAX và description500 hợp lệ.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-012",
+    "title": "Sửa rạp không tồn tại trả 200 null",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-07",
+    "layer": "DB / BE",
+    "rule": "UPDATE resource không tồn tại phải 404.",
+    "expected": "Không cập nhật và trả CINEMA_NOT_FOUND.",
+    "actual": "PUT /admin/cinemas/2147483647 trả 200 {cinema:null}.",
+    "steps": "Gọi missing-cinema trong transcript.",
+    "evidence": [
+      "integration-transcript.json"
+    ],
+    "db": [
+      "sp_Admin_Cinema_Update"
+    ],
+    "be": [
+      "backend/src/controllers/adminController.js",
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "SP UPDATE không kiểm tra existence; service.write nhận null vẫn trả success.",
+    "fix": "Kiểm existence ở SP hoặc contract trả not-found rõ ràng.",
+    "tests": "Missing ID từng CRUD, xác nhận UI không hiện saved thành công.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-013",
+    "title": "Ngày sinh tương lai được ghi vào hồ sơ",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "KH-03",
+    "layer": "BE / DB",
+    "rule": "Ngày sinh hợp lệ không được nằm trong tương lai.",
+    "expected": "2999-01-01 bị từ chối.",
+    "actual": "PUT /auth/me trả 200 và lưu birthday tương lai cho fixture user 26; dữ liệu cũ user17 cũng có cùng dạng lỗi.",
+    "steps": "Gọi future-birthday-profile.",
+    "evidence": [
+      "supplemental-transcript.json",
+      "data-invalid-born-dates.json"
+    ],
+    "db": [
+      "HOSOKHACHHANG",
+      "sp_User_UpdateProfile"
+    ],
+    "be": [
+      "backend/src/validators/authValidator.js"
+    ],
+    "fe": [
+      "frontend/src/pages/auth/Profile.jsx"
+    ],
+    "rootCause": "Validator chỉ kiểm tra calendar date; không giới hạn <= ngày hiện tại.",
+    "fix": "Áp business date rule ở BE/SP và xử lý dữ liệu cũ theo xác minh.",
+    "tests": "Today, tomorrow, leap date, giới hạn tuổi theo chính sách đã duyệt.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Hồ sơ có thông tin ngày sinh không thực tế."
+  },
+  {
+    "id": "BUG-014",
+    "title": "Admin tạo mật khẩu 73 byte không đăng nhập được bằng mật khẩu gốc",
+    "severity": "P1",
+    "confidence": "PROVEN",
+    "uc": "ADM-02",
+    "layer": "BE / Security / Integration",
+    "rule": "Create/login/hash phải dùng cùng quy tắc mật khẩu bcrypt.",
+    "expected": "Từ chối >72 byte khi tạo hoặc hỗ trợ cùng hợp đồng xác thực.",
+    "actual": "Create user thành công; login mật khẩu gốc trả 400; login tiền tố 72 byte trả 200.",
+    "steps": "admin-73-byte-password-create → original-password-login → truncated-password-login.",
+    "evidence": [
+      "additional-transcript.json",
+      "additional-checks.json"
+    ],
+    "db": [
+      "sp_Admin_User_Create"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js",
+      "backend/src/validators/authValidator.js",
+      "backend/src/utils/password.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "Admin chấp nhận 8..128 ký tự, bcrypt cắt 72 byte, Login từ chối >72 byte.",
+    "fix": "Dùng cùng validation 8..72 byte trên mọi đường tạo tài khoản.",
+    "tests": "72/73 ASCII byte, Unicode vượt byte dù ít ký tự, không trim password ngoài ý định.",
+    "impact": "Mật khẩu được chấp nhận khác mật khẩu người dùng đã đặt.",
+    "data": "Không thay đổi profile; tài khoản nội bộ bị kẹt login."
+  },
+  {
+    "id": "BUG-015",
+    "title": "Admin tạo tài khoản khách hàng thiếu hồ sơ mở rộng",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-02, KH-03",
+    "layer": "DB / BE",
+    "rule": "Luồng Admin tạo nhân sự và luồng register customer có contract riêng.",
+    "expected": "Chặn KHACH_HANG trên create staff hoặc tạo đầy đủ HOSOKHACHHANG trong transaction.",
+    "actual": "roleId4 tạo user34 MaVaiTro KHACH_HANG nhưng không có HOSOKHACHHANG.",
+    "steps": "POST admin-customer-role-create; query customer-profile-missing-after.",
+    "evidence": [
+      "supplemental-transcript.json",
+      "customer-profile-missing-after.json"
+    ],
+    "db": [
+      "sp_Admin_User_Create",
+      "NGUOIDUNG",
+      "HOSOKHACHHANG"
+    ],
+    "be": [
+      "backend/src/validators/adminValidator.js",
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "SP tạo bất kỳ role tồn tại nhưng chỉ INSERT NGUOIDUNG.",
+    "fix": "Xác định rõ role được phép; tạo atomic hồ sơ nếu thực sự hỗ trợ customer.",
+    "tests": "Allowed staff roles, customer role, custom role, profile/points invariants.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Customer mới không đủ aggregate hồ sơ."
+  },
+  {
+    "id": "BUG-016",
+    "title": "Booking bỏ silently sản phẩm không tồn tại",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "KH-07/08",
+    "layer": "DB / BE / Integration",
+    "rule": "Đơn hàng phải phản ánh các sản phẩm được chọn hoặc báo unavailable.",
+    "expected": "Sản phẩm ID không tồn tại bị từ chối và rollback.",
+    "actual": "POST unknown-product-booking trả 201 nhưng productTotal=0, không có sản phẩm yêu cầu. Preview promo cùng sản phẩm có validation chặn, create booking không chặn.",
+    "steps": "Đặt ghế audit với products=[{productId:2147483647,quantity:1}].",
+    "evidence": [
+      "additional-transcript.json"
+    ],
+    "db": [
+      "sp_Booking_Create",
+      "SANPHAM",
+      "CHITIETDOAN"
+    ],
+    "be": [
+      "backend/src/services/bookingService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/BookingPreparation.jsx"
+    ],
+    "rootCause": "INNER JOIN SANPHAM + WHERE Đang bán loại dòng sai mà không kiểm đủ cardinality.",
+    "fix": "Kiểm toàn bộ requested products tồn tại/đang bán trong cùng transaction.",
+    "tests": "Unknown/inactive product, mất hiệu lực giữa preview và submit, không tạo order/ticket khi thất bại.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Đơn thiếu mặt hàng khách đã chọn."
+  },
+  {
+    "id": "BUG-017",
+    "title": "Hai request phân công giống nhau tạo hai dòng",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "ADM-06",
+    "layer": "DB / Integration",
+    "rule": "Không nhân đôi một phân công hoàn toàn giống nhau.",
+    "expected": "Một row, request còn lại conflict/idempotent.",
+    "actual": "Hai POST đồng thời đều200; PhanCongID13/14 cùng manager29, rạp41, bắt đầu2026-11-02, Hiệu lực.",
+    "steps": "assignment-create-concurrency-0/1; query assignment-duplicates-after.",
+    "evidence": [
+      "additional-transcript.json",
+      "assignment-duplicates-after.json"
+    ],
+    "db": [
+      "PHANCONG_RAP",
+      "sp_Admin_Assignment_Create"
+    ],
+    "be": [
+      "backend/src/services/adminService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/AdminPortal.jsx"
+    ],
+    "rootCause": "Không unique key/business guard cho cùng user/rap/khoảng; SP INSERT đơn.",
+    "fix": "Chốt semantics overlap/historical assignment, thêm guard transaction và key phù hợp.",
+    "tests": "Same duplicate concurrent, future/expired, overlapping periods nếu không cho phép.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Phân công lặp; không chứng minh Manager vượt rạp khác."
+  },
+  {
+    "id": "BUG-018",
+    "title": "Số lượt đánh giá phim bị nhân theo số suất chiếu",
+    "severity": "P2",
+    "confidence": "PROVEN",
+    "uc": "KH-04",
+    "layer": "DB / BE / Integration",
+    "rule": "Số lượt đánh giá phải bằng COUNT DANHGIAPHIM của phim.",
+    "expected": "Một đánh giá của phim audit trả reviewCount=1.",
+    "actual": "vw_ThongKePhim JOIN DANHGIAPHIM và SUATCHIEU cùng lúc rồi COUNT(dg.DanhGiaID); API phim audit trả số nhân theo số suất. Có3phim sai trong query.",
+    "steps": "So COUNT trực tiếp với view, gọi GET /movies/14.",
+    "evidence": [
+      "movie-review-count-multiplication.json",
+      "aggregates-transcript.json"
+    ],
+    "db": [
+      "vw_ThongKePhim",
+      "sp_Movie_List",
+      "sp_Movie_GetDetail"
+    ],
+    "be": [
+      "backend/src/services/catalogService.js"
+    ],
+    "fe": [
+      "frontend/src/pages/MovieDetail.jsx"
+    ],
+    "rootCause": "JOIN hai quan hệ 1-n trước aggregate; AVG không đổi khi lặp đồng đều, COUNT bị nhân.",
+    "fix": "Pre-aggregate từng nhánh hoặc COUNT DISTINCT reviewID.",
+    "tests": "0/1/n reviews ×0/1/n showtimes, list và detail consistency.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Sai dữ liệu thống kê trả ra, không tăng actual review rows."
+  },
+  {
+    "id": "BUG-019",
+    "title": "Các Customer API không kiểm permission chức năng",
+    "severity": "P1",
+    "confidence": "HIGH-CONFIDENCE",
+    "uc": "KH-07/10/13/14, ADM-05",
+    "layer": "BE / Security",
+    "rule": "VAITRO_QUYEN xác định quyền chức năng theo thiết kế §1.1.",
+    "expected": "Thu hồi DAT_VE/THANH_TOAN/DANH_GIA/GUI_KHIEU_NAI phải chặn API tương ứng.",
+    "actual": "Routes chỉ authenticate + requireCustomer; SP booking kiểm active account, không kiểm DAT_VE. Chưa thu hồi quyền của role KHACH_HANG dùng chung để thử trên DB thật.",
+    "steps": "Đọc route compositions và core SP; không gọi kết quả là runtime bypass đã chứng minh.",
+    "evidence": [
+      "api-chain-inventory.json",
+      "live-objects.json"
+    ],
+    "db": [
+      "sp_Booking_Create",
+      "sp_Payment_CreateAttempt",
+      "sp_Review_Create"
+    ],
+    "be": [
+      "backend/src/routes/bookingRoutes.js",
+      "backend/src/routes/orderRoutes.js",
+      "backend/src/routes/movieRoutes.js",
+      "backend/src/routes/complaintRoutes.js"
+    ],
+    "fe": [
+      "frontend/src/constants/roles.js"
+    ],
+    "rootCause": "Customer role guard được dùng thay functional permission guard.",
+    "fix": "Định nghĩa permission từng endpoint, kiểm ở BE và SP có identity khi phù hợp.",
+    "tests": "Fresh isolated RBAC role: revoke permission→oldJWT denied; giữ role unchanged.",
+    "impact": "Rủi ro thu hồi quyền không có hiệu lực ở API customer; chưa chứng minh khai thác real DB.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  },
+  {
+    "id": "BUG-020",
+    "title": "FE chặn cả portal bằng một permission đại diện",
+    "severity": "P2",
+    "confidence": "HIGH-CONFIDENCE",
+    "uc": "ADM-03..16, QLR-03..09, KH-10/14",
+    "layer": "FE / Security",
+    "rule": "Quyền từng chức năng độc lập với quyền vào một phân hệ khác.",
+    "expected": "User giữ quyền chức năng được vào màn hình tương ứng.",
+    "actual": "Orders/payment/complaints đều gated DAT_VE; Manager toàn portal QL_PHONG; Admin toàn portal QL_NGUOIDUNG. Không chạy đổi seeded permissions.",
+    "steps": "Đọc routes/ROLE_AREAS/RequireRole và so endpoint permission matrix.",
+    "evidence": [
+      "api-chain-inventory.json"
+    ],
+    "db": [
+      "VAITRO_QUYEN"
+    ],
+    "be": [
+      "backend/src/routes/adminRoutes.js",
+      "backend/src/routes/managerRoutes.js"
+    ],
+    "fe": [
+      "frontend/src/routes/index.jsx",
+      "frontend/src/constants/roles.js"
+    ],
+    "rootCause": "Area permission coarse được gán cho nhiều chức năng có permission khác.",
+    "fix": "Guard/chọn navigation theo từng function; server vẫn là authority.",
+    "tests": "Khách chỉ có GUI_KHIEU_NAI; Manager chỉ QL_SUATCHIEU; Admin chỉ report/role.",
+    "impact": "Không chứng minh truy cập trái quyền.",
+    "data": "Không chứng minh sửa dữ liệu cũ qua hành vi này."
+  }
+]

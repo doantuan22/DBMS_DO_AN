@@ -1,0 +1,3127 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/admin/dashboard",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 11,
+    "globalAuth": true,
+    "handlers": "requirePermission('XEM_BAO_CAO_TOANHE'), admin.dashboard",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#dashboard",
+    "validators": [],
+    "serviceMethods": [
+      "admin.dashboard"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Dashboard"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "fn_HomNay",
+      "KHIEUNAI",
+      "NGUOIDUNG",
+      "PHIM",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM",
+      "SUATCHIEU",
+      "THANHTOAN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/users",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 12,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_NGUOIDUNG'), admin.users",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#users",
+    "validators": [
+      "validators.userFilters"
+    ],
+    "serviceMethods": [
+      "admin.users"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_User_List"
+    ],
+    "tablesAndDependencies": [
+      "HOSOKHACHHANG",
+      "NGUOIDUNG",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/users",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 13,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_NGUOIDUNG'), admin.createUser",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createUser",
+    "validators": [
+      "validators.userCreate"
+    ],
+    "serviceMethods": [
+      "admin.createUser"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_User_Create"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "NGUOIDUNG",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/users/:userId/status",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 14,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_NGUOIDUNG'), admin.updateUserStatus",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateUserStatus",
+    "validators": [
+      "validators.pathId",
+      "validators.userStatus"
+    ],
+    "serviceMethods": [
+      "admin.setUserStatus"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_User_UpdateStatus"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/roles",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 15,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_VAITRO'), admin.roles",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#roles",
+    "validators": [],
+    "serviceMethods": [
+      "admin.roles"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Role_List"
+    ],
+    "tablesAndDependencies": [
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/roles/:roleId/permissions",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 16,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_QUYEN'), admin.rolePermissions",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#rolePermissions",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.rolePermissions"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_RolePermission_List"
+    ],
+    "tablesAndDependencies": [
+      "QUYEN",
+      "VAITRO",
+      "VAITRO_QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/roles",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 17,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_VAITRO'), admin.createRole",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createRole",
+    "validators": [
+      "validators.roleWrite"
+    ],
+    "serviceMethods": [
+      "admin.createRole"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Role_Create"
+    ],
+    "tablesAndDependencies": [
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/roles/:roleId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 18,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_VAITRO'), admin.updateRole",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateRole",
+    "validators": [
+      "validators.pathId",
+      "validators.roleWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateRole"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Role_Update"
+    ],
+    "tablesAndDependencies": [
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/roles/:roleId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 19,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_VAITRO'), admin.deleteRole",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteRole",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteRole"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Role_Delete"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "VAITRO",
+      "VAITRO_QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/permissions",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 20,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_QUYEN'), admin.permissions",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#permissions",
+    "validators": [],
+    "serviceMethods": [
+      "admin.permissions"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Permission_List"
+    ],
+    "tablesAndDependencies": [
+      "QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/permissions",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 21,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_QUYEN'), admin.createPermission",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createPermission",
+    "validators": [
+      "validators.permissionWrite"
+    ],
+    "serviceMethods": [
+      "admin.createPermission"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Permission_Create"
+    ],
+    "tablesAndDependencies": [
+      "QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/permissions/:permissionId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 22,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_QUYEN'), admin.updatePermission",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updatePermission",
+    "validators": [
+      "validators.pathId",
+      "validators.permissionWrite"
+    ],
+    "serviceMethods": [
+      "admin.updatePermission"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Permission_Update"
+    ],
+    "tablesAndDependencies": [
+      "QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/permissions/:permissionId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 23,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_QUYEN'), admin.deletePermission",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deletePermission",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deletePermission"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Permission_Delete"
+    ],
+    "tablesAndDependencies": [
+      "QUYEN",
+      "VAITRO_QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/roles/:roleId/permissions",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 24,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_QUYEN'), admin.setRolePermissions",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#setRolePermissions",
+    "validators": [
+      "validators.pathId",
+      "validators.rolePermissionSet"
+    ],
+    "serviceMethods": [
+      "admin.setRolePermissions"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_RolePermission_Set"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "QUYEN",
+      "VAITRO_QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/assignments",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 25,
+    "globalAuth": true,
+    "handlers": "requirePermission('PHANCONG_RAP'), admin.assignments",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#assignments",
+    "validators": [
+      "validators.assignmentFilters"
+    ],
+    "serviceMethods": [
+      "admin.assignments"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Assignment_List"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "PHANCONG_RAP",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/assignments",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 26,
+    "globalAuth": true,
+    "handlers": "requirePermission('PHANCONG_RAP'), admin.createAssignment",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createAssignment",
+    "validators": [
+      "validators.assignmentWrite"
+    ],
+    "serviceMethods": [
+      "admin.createAssignment"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Assignment_Create"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "PHANCONG_RAP",
+      "RAPCHIEUPHIM",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/assignments/:assignmentId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 27,
+    "globalAuth": true,
+    "handlers": "requirePermission('PHANCONG_RAP'), admin.updateAssignment",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateAssignment",
+    "validators": [
+      "validators.pathId",
+      "validators.assignmentWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateAssignment"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Assignment_Update"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "PHANCONG_RAP",
+      "RAPCHIEUPHIM",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/cinemas",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 28,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.cinemas",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#cinemas",
+    "validators": [],
+    "serviceMethods": [
+      "admin.cinemas"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Cinema_List"
+    ],
+    "tablesAndDependencies": [
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/cinemas",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 29,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.createCinema",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createCinema",
+    "validators": [
+      "validators.cinemaWrite"
+    ],
+    "serviceMethods": [
+      "admin.createCinema"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Cinema_Create"
+    ],
+    "tablesAndDependencies": [
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/cinemas/:cinemaId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 30,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.updateCinema",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateCinema",
+    "validators": [
+      "validators.pathId",
+      "validators.cinemaWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateCinema"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Cinema_Update"
+    ],
+    "tablesAndDependencies": [
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/cinemas/:cinemaId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 31,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.deleteCinema",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteCinema",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteCinema"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Cinema_Delete"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA",
+      "HINHANH_RAPCHIEUPHIM",
+      "PHANCONG_RAP",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/cinemas/:cinemaId/images",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 32,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.cinemaImages",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#cinemaImages",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.cinemaImages"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_CinemaImage_List"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/cinemas/:cinemaId/images",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 33,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.createCinemaImage",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createCinemaImage",
+    "validators": [
+      "validators.pathId",
+      "validators.cinemaImageWrite"
+    ],
+    "serviceMethods": [
+      "admin.createCinemaImage"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_CinemaImage_Create"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/cinemas/:cinemaId/images/:imageId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 34,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.updateCinemaImage",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateCinemaImage",
+    "validators": [
+      "validators.pathId",
+      "validators.cinemaImageWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateCinemaImage"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_CinemaImage_Update"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/cinemas/:cinemaId/images/:imageId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 35,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.deleteCinemaImage",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteCinemaImage",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteCinemaImage"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_CinemaImage_Delete"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/admin/cinemas/:cinemaId/images/:imageId/cover",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 36,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_RAP'), admin.setCinemaImageCover",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#setCinemaImageCover",
+    "validators": [
+      "validators.pathId",
+      "validators.cinemaImageCover"
+    ],
+    "serviceMethods": [
+      "admin.setCinemaImageCover"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_CinemaImage_SetCover"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/rooms",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 37,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), admin.rooms",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#rooms",
+    "validators": [
+      "validators.resourceIdFilter"
+    ],
+    "serviceMethods": [
+      "admin.rooms"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Room_List"
+    ],
+    "tablesAndDependencies": [
+      "GHE",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/rooms",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 38,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), admin.createRoom",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createRoom",
+    "validators": [
+      "validators.roomWrite"
+    ],
+    "serviceMethods": [
+      "admin.createRoom"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Room_Create"
+    ],
+    "tablesAndDependencies": [
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/rooms/:roomId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 39,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), admin.updateRoom",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateRoom",
+    "validators": [
+      "validators.pathId",
+      "validators.roomWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateRoom"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Room_Update"
+    ],
+    "tablesAndDependencies": [
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/rooms/:roomId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 40,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), admin.deleteRoom",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteRoom",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteRoom"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Room_Delete"
+    ],
+    "tablesAndDependencies": [
+      "GHE",
+      "PHONGCHIEU",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/seats",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 41,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), admin.seats",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#seats",
+    "validators": [
+      "validators.resourceIdFilter"
+    ],
+    "serviceMethods": [
+      "admin.seats"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Seat_List"
+    ],
+    "tablesAndDependencies": [
+      "GHE",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/seats",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 42,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), admin.createSeat",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createSeat",
+    "validators": [
+      "validators.seatWrite"
+    ],
+    "serviceMethods": [
+      "admin.createSeat"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Seat_Create"
+    ],
+    "tablesAndDependencies": [
+      "GHE",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/seats/:seatId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 43,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), admin.updateSeat",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateSeat",
+    "validators": [
+      "validators.pathId",
+      "validators.seatWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateSeat"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Seat_Update"
+    ],
+    "tablesAndDependencies": [
+      "fn_GheCoVeHieuLucSuatTuongLai",
+      "GHE"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/seats/:seatId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 44,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), admin.deleteSeat",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteSeat",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteSeat"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Seat_Delete"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETVE",
+      "GHE"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/pricing",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 45,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_BANG_GIA'), admin.pricing",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#pricing",
+    "validators": [
+      "validators.resourceIdFilter"
+    ],
+    "serviceMethods": [
+      "admin.pricing"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Pricing_List"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/pricing",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 46,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_BANG_GIA'), admin.createPricing",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createPricing",
+    "validators": [
+      "validators.pricingWrite"
+    ],
+    "serviceMethods": [
+      "admin.createPricing"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Pricing_Create"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/pricing/:pricingId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 47,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_BANG_GIA'), admin.updatePricing",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updatePricing",
+    "validators": [
+      "validators.pathId",
+      "validators.pricingWrite"
+    ],
+    "serviceMethods": [
+      "admin.updatePricing"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Pricing_Update"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/showtimes",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 48,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), admin.showtimes",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#showtimes",
+    "validators": [
+      "validators.showtimeFilters"
+    ],
+    "serviceMethods": [
+      "admin.showtimes"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Showtime_List"
+    ],
+    "tablesAndDependencies": [
+      "PHIM",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/showtimes",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 49,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), admin.createShowtime",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createShowtime",
+    "validators": [
+      "validators.showtimeWrite"
+    ],
+    "serviceMethods": [
+      "admin.createShowtime"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Showtime_Create"
+    ],
+    "tablesAndDependencies": [
+      "PHONGCHIEU",
+      "sp_Showtime_GetDetail",
+      "sp_Showtime_ValidateTimes",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/showtimes/:showtimeId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 50,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), admin.updateShowtime",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateShowtime",
+    "validators": [
+      "validators.pathId",
+      "validators.showtimeWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateShowtime"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Showtime_Update"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "fn_BayGio",
+      "sp_Showtime_GetDetail",
+      "sp_Showtime_ValidateTimes",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/showtimes/:showtimeId/cancel",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 51,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), admin.cancelShowtime",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#cancelShowtime",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.cancelShowtime"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Showtime_Cancel"
+    ],
+    "tablesAndDependencies": [
+      "sp_Showtime_CancelCascade"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/movies",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 52,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.movies",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#movies",
+    "validators": [
+      "validators.movieFilters"
+    ],
+    "serviceMethods": [
+      "admin.movies"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Movie_List"
+    ],
+    "tablesAndDependencies": [
+      "PHIM",
+      "PHIM_DIENVIEN",
+      "PHIM_THELOAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/movies",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 53,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.createMovie",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createMovie",
+    "validators": [
+      "validators.movieWrite"
+    ],
+    "serviceMethods": [
+      "admin.createMovie"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Movie_Create"
+    ],
+    "tablesAndDependencies": [
+      "PHIM",
+      "PHIM_THELOAI",
+      "sp_Movie_GetDetail"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/movies/:movieId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 54,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.updateMovie",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateMovie",
+    "validators": [
+      "validators.pathId",
+      "validators.movieWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateMovie"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Movie_Update"
+    ],
+    "tablesAndDependencies": [
+      "PHIM",
+      "PHIM_THELOAI",
+      "sp_Movie_GetDetail"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/movies/:movieId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 55,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.deleteMovie",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteMovie",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteMovie"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Movie_Delete"
+    ],
+    "tablesAndDependencies": [
+      "DANHGIAPHIM",
+      "PHIM",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/movies/:movieId/actors",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 56,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.setMovieActors",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#setMovieActors",
+    "validators": [
+      "validators.pathId",
+      "validators.movieCast"
+    ],
+    "serviceMethods": [
+      "admin.setMovieActors"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_MovieActor_Set"
+    ],
+    "tablesAndDependencies": [
+      "DIENVIEN",
+      "PHIM",
+      "PHIM_DIENVIEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/genres",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 57,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_THELOAI'), admin.genres",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#genres",
+    "validators": [],
+    "serviceMethods": [
+      "admin.genres"
+    ],
+    "procedures": [
+      "dbo.sp_Genre_List"
+    ],
+    "tablesAndDependencies": [
+      "THELOAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/genres",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 58,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_THELOAI'), admin.createGenre",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createGenre",
+    "validators": [
+      "validators.genreWrite"
+    ],
+    "serviceMethods": [
+      "admin.createGenre"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Genre_Create"
+    ],
+    "tablesAndDependencies": [
+      "THELOAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/genres/:genreId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 59,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_THELOAI'), admin.updateGenre",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateGenre",
+    "validators": [
+      "validators.pathId",
+      "validators.genreWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateGenre"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Genre_Update"
+    ],
+    "tablesAndDependencies": [
+      "THELOAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/genres/:genreId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 60,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_THELOAI'), admin.deleteGenre",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteGenre",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteGenre"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Genre_Delete"
+    ],
+    "tablesAndDependencies": [
+      "PHIM_THELOAI",
+      "THELOAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/actors",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 61,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.actors",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#actors",
+    "validators": [],
+    "serviceMethods": [
+      "admin.actors"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Actor_List"
+    ],
+    "tablesAndDependencies": [
+      "DIENVIEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/actors",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 62,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.createActor",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createActor",
+    "validators": [
+      "validators.actorWrite"
+    ],
+    "serviceMethods": [
+      "admin.createActor"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Actor_Create"
+    ],
+    "tablesAndDependencies": [
+      "DIENVIEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/actors/:actorId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 63,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.updateActor",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateActor",
+    "validators": [
+      "validators.pathId",
+      "validators.actorWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateActor"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Actor_Update"
+    ],
+    "tablesAndDependencies": [
+      "DIENVIEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/actors/:actorId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 64,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_DANHMUC_PHIM'), admin.deleteActor",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteActor",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteActor"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Actor_Delete"
+    ],
+    "tablesAndDependencies": [
+      "DIENVIEN",
+      "PHIM_DIENVIEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/products",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 65,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SANPHAM'), admin.products",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#products",
+    "validators": [],
+    "serviceMethods": [
+      "admin.products"
+    ],
+    "procedures": [
+      "dbo.usp_Admin_Product_List"
+    ],
+    "tablesAndDependencies": [
+      "SANPHAM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/products",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 66,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SANPHAM'), admin.createProduct",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createProduct",
+    "validators": [
+      "validators.productWrite"
+    ],
+    "serviceMethods": [
+      "admin.createProduct"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Product_Create"
+    ],
+    "tablesAndDependencies": [
+      "SANPHAM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/products/:productId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 67,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SANPHAM'), admin.updateProduct",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updateProduct",
+    "validators": [
+      "validators.pathId",
+      "validators.productWrite"
+    ],
+    "serviceMethods": [
+      "admin.updateProduct"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Product_Update"
+    ],
+    "tablesAndDependencies": [
+      "SANPHAM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/products/:productId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 68,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SANPHAM'), admin.deleteProduct",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deleteProduct",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deleteProduct"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Product_Delete"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETDOAN",
+      "SANPHAM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/promotions",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 69,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHUYENMAI'), admin.promotions",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#promotions",
+    "validators": [],
+    "serviceMethods": [
+      "admin.promotions"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Promotion_List"
+    ],
+    "tablesAndDependencies": [
+      "KHUYENMAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/promotions",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 70,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHUYENMAI'), admin.createPromotion",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#createPromotion",
+    "validators": [
+      "validators.promotionWrite"
+    ],
+    "serviceMethods": [
+      "admin.createPromotion"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Promotion_Create"
+    ],
+    "tablesAndDependencies": [
+      "KHUYENMAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/promotions/:promotionId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 71,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHUYENMAI'), admin.updatePromotion",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#updatePromotion",
+    "validators": [
+      "validators.pathId",
+      "validators.promotionWrite"
+    ],
+    "serviceMethods": [
+      "admin.updatePromotion"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Promotion_Update"
+    ],
+    "tablesAndDependencies": [
+      "KHUYENMAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/promotions/:promotionId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 72,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHUYENMAI'), admin.deletePromotion",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#deletePromotion",
+    "validators": [
+      "validators.pathId"
+    ],
+    "serviceMethods": [
+      "admin.deletePromotion"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Promotion_Delete"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "KHUYENMAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/reports/revenue",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 73,
+    "globalAuth": true,
+    "handlers": "requirePermission('XEM_BAO_CAO_TOANHE'), admin.revenue",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/controllers/adminController.js#revenue",
+    "validators": [
+      "validators.revenueFilters"
+    ],
+    "serviceMethods": [
+      "admin.revenue"
+    ],
+    "procedures": [
+      "dbo.sp_Admin_Report_Revenue"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETVE",
+      "DONDATVE",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM",
+      "SUATCHIEU",
+      "THANHTOAN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/complaints",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 80,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => ({ complaints: await supportService.list(req.user.userId, validators.listFilters(req.query)) }))",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/routes/adminRoutes.js#inline",
+    "validators": [
+      "validators.listFilters"
+    ],
+    "serviceMethods": [
+      "support.list"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_List"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuyenNguoiDung",
+      "vw_DanhSachKhieuNai"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/complaints/:complaintId",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 81,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.detail(req.user.userId, complaintId(req)) }))",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/routes/adminRoutes.js#inline",
+    "validators": [],
+    "serviceMethods": [
+      "support.detail"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_GetDetail"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "NGUOIDUNG",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/complaints/:complaintId/order-reference",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 82,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => supportService.orderReference(req.user.userId, complaintId(req)))",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/routes/adminRoutes.js#inline",
+    "validators": [],
+    "serviceMethods": [
+      "support.orderReference"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_GetOrderReference"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "vw_ChiTietDonDatVe"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/complaints/:complaintId/processings",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 83,
+    "globalAuth": true,
+    "handlers": "requirePermission('XULY_KHIEUNAI'), wrapSupport(async (req) => ({ processing: await supportService.addProcessing(req.user.userId, complaintId(req), validators.processing(req.body)) }))",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/routes/adminRoutes.js#inline",
+    "validators": [
+      "validators.processing"
+    ],
+    "serviceMethods": [
+      "support.addProcessing"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_AddProcessing"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/complaints/:complaintId/status",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 84,
+    "globalAuth": true,
+    "handlers": "requirePermission('XULY_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.updateStatus(req.user.userId, complaintId(req), validators.statusUpdate(req.body)) }))",
+    "globalGuards": [
+      "authenticate, requireAdmin"
+    ],
+    "controller": "backend/src/routes/adminRoutes.js#inline",
+    "validators": [
+      "validators.statusUpdate"
+    ],
+    "serviceMethods": [
+      "support.updateStatus"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_UpdateStatus"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/auth/register",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 6,
+    "globalAuth": false,
+    "handlers": "authController.register",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/authController.js#register",
+    "validators": [
+      "validateRegister"
+    ],
+    "serviceMethods": [
+      "auth.registerCustomer"
+    ],
+    "procedures": [
+      "dbo.sp_Auth_RegisterCustomer"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "HOSOKHACHHANG",
+      "NGUOIDUNG",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/auth/login",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 7,
+    "globalAuth": false,
+    "handlers": "authController.login",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/authController.js#login",
+    "validators": [
+      "validateLogin"
+    ],
+    "serviceMethods": [
+      "auth.login"
+    ],
+    "procedures": [
+      "dbo.sp_Auth_Login"
+    ],
+    "tablesAndDependencies": [
+      "fn_HomNay",
+      "HOSOKHACHHANG",
+      "NGUOIDUNG",
+      "PHANCONG_RAP",
+      "QUYEN",
+      "RAPCHIEUPHIM",
+      "VAITRO",
+      "VAITRO_QUYEN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/me",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 8,
+    "globalAuth": false,
+    "handlers": "authenticate, authController.currentUser",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/authController.js#currentUser",
+    "validators": [],
+    "serviceMethods": [
+      "auth.getCurrentUser"
+    ],
+    "procedures": [
+      "dbo.sp_User_GetCurrent",
+      "dbo.sp_RBAC_GetPermissionsByUser"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "QUYEN",
+      "VAITRO_QUYEN",
+      "HOSOKHACHHANG",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/auth/me",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 9,
+    "globalAuth": false,
+    "handlers": "authenticate, authController.updateCurrentUser",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/authController.js#updateCurrentUser",
+    "validators": [
+      "validateProfile"
+    ],
+    "serviceMethods": [
+      "auth.updateProfile"
+    ],
+    "procedures": [
+      "dbo.sp_User_UpdateProfile",
+      "dbo.sp_User_GetCurrent",
+      "dbo.sp_RBAC_GetPermissionsByUser"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "QUYEN",
+      "VAITRO_QUYEN",
+      "HOSOKHACHHANG",
+      "VAITRO",
+      "sp_User_GetCurrent"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/permissions",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 10,
+    "globalAuth": false,
+    "handlers": "authenticate, authController.currentPermissions",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/authController.js#currentPermissions",
+    "validators": [],
+    "serviceMethods": [
+      "auth.getCurrentUser"
+    ],
+    "procedures": [
+      "dbo.sp_User_GetCurrent",
+      "dbo.sp_RBAC_GetPermissionsByUser"
+    ],
+    "tablesAndDependencies": [
+      "NGUOIDUNG",
+      "QUYEN",
+      "VAITRO_QUYEN",
+      "HOSOKHACHHANG",
+      "VAITRO"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/bookings",
+    "file": "backend/src/routes/bookingRoutes.js",
+    "line": 7,
+    "globalAuth": false,
+    "handlers": "authenticate, requireCustomer, bookingController.createBooking",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/bookingController.js#createBooking",
+    "validators": [
+      "validateBooking"
+    ],
+    "serviceMethods": [
+      "booking.createBooking"
+    ],
+    "procedures": [
+      "dbo.sp_Booking_Create"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETDOAN",
+      "CHITIETVE",
+      "DONDATVE",
+      "fn_BayGio",
+      "fn_DonDangGiuGhe",
+      "fn_GioiHanDonDangGiu",
+      "fn_GioiHanGheMoiDon",
+      "fn_GioiHanGiamGiaPhanTram",
+      "fn_GioiHanSoLuongSanPham",
+      "fn_TinhGiaVe",
+      "fn_ThoiGianGiuChoPhut",
+      "GHE",
+      "KHUYENMAI",
+      "NGUOIDUNG",
+      "SANPHAM",
+      "sp_Order_ExpirePending",
+      "sp_Promotion_Validate",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/cinemas",
+    "file": "backend/src/routes/cinemaRoutes.js",
+    "line": 5,
+    "globalAuth": false,
+    "handlers": "catalogController.listCinemas",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#listCinemas",
+    "validators": [
+      "validateCinemaListQuery"
+    ],
+    "serviceMethods": [
+      "catalog.listCinemas"
+    ],
+    "procedures": [
+      "dbo.sp_Cinema_List"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/cinemas/:cinemaId/images",
+    "file": "backend/src/routes/cinemaRoutes.js",
+    "line": 6,
+    "globalAuth": false,
+    "handlers": "catalogController.listCinemaImages",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#listCinemaImages",
+    "validators": [
+      "validateCinemaId"
+    ],
+    "serviceMethods": [
+      "catalog.listCinemaImages"
+    ],
+    "procedures": [
+      "dbo.sp_Cinema_GetImages"
+    ],
+    "tablesAndDependencies": [
+      "HINHANH_RAPCHIEUPHIM",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/complaints",
+    "file": "backend/src/routes/complaintRoutes.js",
+    "line": 8,
+    "globalAuth": true,
+    "handlers": "feedbackController.listComplaints",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/feedbackController.js#listComplaints",
+    "validators": [],
+    "serviceMethods": [
+      "feedback.listComplaints"
+    ],
+    "procedures": [
+      "dbo.sp_Complaint_ListByCustomer"
+    ],
+    "tablesAndDependencies": [
+      "KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/complaints",
+    "file": "backend/src/routes/complaintRoutes.js",
+    "line": 9,
+    "globalAuth": true,
+    "handlers": "feedbackController.createComplaint",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/feedbackController.js#createComplaint",
+    "validators": [],
+    "serviceMethods": [
+      "feedback.createComplaint"
+    ],
+    "procedures": [
+      "dbo.sp_Complaint_Create"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "fn_BayGio",
+      "KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/complaints/:complaintId",
+    "file": "backend/src/routes/complaintRoutes.js",
+    "line": 10,
+    "globalAuth": true,
+    "handlers": "feedbackController.getComplaint",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/feedbackController.js#getComplaint",
+    "validators": [],
+    "serviceMethods": [
+      "feedback.getComplaint"
+    ],
+    "procedures": [
+      "dbo.sp_Complaint_GetByCustomer"
+    ],
+    "tablesAndDependencies": [
+      "KHIEUNAI",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/genres",
+    "file": "backend/src/routes/genreRoutes.js",
+    "line": 5,
+    "globalAuth": false,
+    "handlers": "catalogController.listGenres",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#listGenres",
+    "validators": [],
+    "serviceMethods": [
+      "catalog.listGenres"
+    ],
+    "procedures": [
+      "dbo.sp_Genre_List"
+    ],
+    "tablesAndDependencies": [
+      "THELOAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/health",
+    "file": "backend/src/routes/healthRoutes.js",
+    "line": 5,
+    "globalAuth": false,
+    "handlers": "healthController.getHealth",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/healthController.js#getHealth",
+    "validators": [],
+    "serviceMethods": [],
+    "procedures": [],
+    "tablesAndDependencies": [],
+    "note": "liveness only; no database call"
+  },
+  {
+    "method": "GET",
+    "path": "/api/health/db",
+    "file": "backend/src/routes/healthRoutes.js",
+    "line": 6,
+    "globalAuth": false,
+    "handlers": "healthController.getDatabaseHealth",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/healthController.js#getDatabaseHealth",
+    "validators": [],
+    "serviceMethods": [
+      "health.checkDatabase"
+    ],
+    "procedures": [
+      "dbo.sp_System_HealthCheck"
+    ],
+    "tablesAndDependencies": [],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/cinemas",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 9,
+    "globalAuth": true,
+    "handlers": "manager.listCinemas",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#listCinemas",
+    "validators": [],
+    "serviceMethods": [
+      "manager.listCinemas"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_ListAssignedCinemas"
+    ],
+    "tablesAndDependencies": [
+      "fn_HomNay",
+      "PHANCONG_RAP",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/cinemas/:cinemaId/rooms",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 10,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), manager.listRooms",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#listRooms",
+    "validators": [
+      "validators.cinemaId"
+    ],
+    "serviceMethods": [
+      "manager.listRooms"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Room_List"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/manager/cinemas/:cinemaId/rooms",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 11,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), manager.createRoom",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#createRoom",
+    "validators": [
+      "validators.cinemaId",
+      "validators.roomCreate"
+    ],
+    "serviceMethods": [
+      "manager.createRoom"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Room_Create"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/manager/rooms/:roomId",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 12,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), manager.updateRoom",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#updateRoom",
+    "validators": [
+      "validators.roomId",
+      "validators.roomUpdate"
+    ],
+    "serviceMethods": [
+      "manager.updateRoom"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Room_Update"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/manager/rooms/:roomId",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 13,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_PHONG'), manager.deleteRoom",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#deleteRoom",
+    "validators": [
+      "validators.roomId"
+    ],
+    "serviceMethods": [
+      "manager.deleteRoom"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Room_Delete"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/rooms/:roomId/seats",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 14,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), manager.listSeats",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#listSeats",
+    "validators": [
+      "validators.roomId"
+    ],
+    "serviceMethods": [
+      "manager.listSeats"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Seat_ListByRoom"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/manager/rooms/:roomId/seats",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 15,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), manager.createSeat",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#createSeat",
+    "validators": [
+      "validators.roomId",
+      "validators.seatCreate"
+    ],
+    "serviceMethods": [
+      "manager.createSeat"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Seat_Create"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/manager/seats/:seatId",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 16,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), manager.updateSeat",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#updateSeat",
+    "validators": [
+      "validators.seatId",
+      "validators.seatUpdate"
+    ],
+    "serviceMethods": [
+      "manager.updateSeat"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Seat_Update"
+    ],
+    "tablesAndDependencies": [
+      "fn_GheCoVeHieuLucSuatTuongLai",
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/manager/seats/:seatId",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 17,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_GHE'), manager.deleteSeat",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#deleteSeat",
+    "validators": [
+      "validators.seatId"
+    ],
+    "serviceMethods": [
+      "manager.deleteSeat"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Seat_Delete"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETVE",
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/cinemas/:cinemaId/showtimes",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 18,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), manager.listShowtimes",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#listShowtimes",
+    "validators": [
+      "validators.cinemaId",
+      "validators.dateRange"
+    ],
+    "serviceMethods": [
+      "manager.listShowtimes"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Showtime_List"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "PHIM",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/manager/showtimes",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 19,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), manager.createShowtime",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#createShowtime",
+    "validators": [
+      "validators.showtimeCreate"
+    ],
+    "serviceMethods": [
+      "manager.createShowtime"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Showtime_Create"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuanLyRapScope",
+      "PHONGCHIEU",
+      "sp_Showtime_GetDetail",
+      "sp_Showtime_ValidateTimes",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/manager/showtimes/:showtimeId",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 20,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), manager.updateShowtime",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#updateShowtime",
+    "validators": [
+      "validators.showtimeId",
+      "validators.showtimeUpdate"
+    ],
+    "serviceMethods": [
+      "manager.updateShowtime"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Showtime_Update"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "fn_BayGio",
+      "fn_KiemTraQuanLyRapScope",
+      "PHONGCHIEU",
+      "sp_Showtime_GetDetail",
+      "sp_Showtime_ValidateTimes",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/manager/showtimes/:showtimeId/cancel",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 21,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_SUAT_CHIEU'), manager.cancelShowtime",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#cancelShowtime",
+    "validators": [
+      "validators.showtimeId"
+    ],
+    "serviceMethods": [
+      "manager.cancelShowtime"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Showtime_Cancel"
+    ],
+    "tablesAndDependencies": [
+      "sp_Showtime_CancelCascade"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/cinemas/:cinemaId/pricing",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 22,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_BANG_GIA'), manager.listPricing",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#listPricing",
+    "validators": [
+      "validators.cinemaId"
+    ],
+    "serviceMethods": [
+      "manager.listPricing"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Pricing_List"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA",
+      "fn_KiemTraQuanLyRapScope"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/manager/cinemas/:cinemaId/pricing",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 23,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_BANG_GIA'), manager.createPricing",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#createPricing",
+    "validators": [
+      "validators.cinemaId",
+      "validators.pricingCreate"
+    ],
+    "serviceMethods": [
+      "manager.createPricing"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Pricing_Create"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA",
+      "fn_KiemTraQuanLyRapScope"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/manager/pricing/:pricingId",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 24,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_BANG_GIA'), manager.updatePricing",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#updatePricing",
+    "validators": [
+      "validators.pricingId",
+      "validators.pricingUpdate"
+    ],
+    "serviceMethods": [
+      "manager.updatePricing"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Pricing_Update"
+    ],
+    "tablesAndDependencies": [
+      "BANGGIA",
+      "fn_KiemTraQuanLyRapScope"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/cinemas/:cinemaId/dashboard",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 25,
+    "globalAuth": true,
+    "handlers": "requirePermission('XEM_BAO_CAO_RAP'), manager.dashboard",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#dashboard",
+    "validators": [
+      "validators.cinemaId"
+    ],
+    "serviceMethods": [
+      "manager.dashboard"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Dashboard"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "fn_HomNay",
+      "fn_KiemTraQuanLyRapScope",
+      "GHE",
+      "PHONGCHIEU",
+      "RAPCHIEUPHIM",
+      "SUATCHIEU",
+      "THANHTOAN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/manager/cinemas/:cinemaId/revenue",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 26,
+    "globalAuth": true,
+    "handlers": "requirePermission('XEM_BAO_CAO_RAP'), manager.revenue",
+    "globalGuards": [
+      "authenticate, requireManager"
+    ],
+    "controller": "backend/src/controllers/managerController.js#revenue",
+    "validators": [
+      "validators.cinemaId",
+      "validators.dateRange"
+    ],
+    "serviceMethods": [
+      "manager.revenue"
+    ],
+    "procedures": [
+      "dbo.sp_Manager_Revenue"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETVE",
+      "DONDATVE",
+      "fn_HomNay",
+      "fn_KiemTraQuanLyRapScope",
+      "PHONGCHIEU",
+      "SUATCHIEU",
+      "THANHTOAN"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/movies",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 8,
+    "globalAuth": false,
+    "handlers": "catalogController.listMovies",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#listMovies",
+    "validators": [
+      "validateMovieListQuery"
+    ],
+    "serviceMethods": [
+      "catalog.listMovies"
+    ],
+    "procedures": [
+      "dbo.sp_Movie_List"
+    ],
+    "tablesAndDependencies": [
+      "PHIM",
+      "PHIM_THELOAI",
+      "THELOAI",
+      "vw_ThongKePhim"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/movies/:movieId/showtimes",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 9,
+    "globalAuth": false,
+    "handlers": "catalogController.listShowtimes",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#listShowtimes",
+    "validators": [
+      "validateShowtimeListQuery"
+    ],
+    "serviceMethods": [
+      "catalog.listShowtimes"
+    ],
+    "procedures": [
+      "dbo.sp_Showtime_ListByMovie"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "vw_LichChieuChiTiet"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/movies/:movieId/reviews",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 10,
+    "globalAuth": false,
+    "handlers": "feedbackController.listReviews",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/feedbackController.js#listReviews",
+    "validators": [],
+    "serviceMethods": [
+      "feedback.listReviews"
+    ],
+    "procedures": [
+      "dbo.sp_Review_ListByMovie"
+    ],
+    "tablesAndDependencies": [
+      "DANHGIAPHIM",
+      "NGUOIDUNG"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/movies/:movieId/reviews",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 11,
+    "globalAuth": false,
+    "handlers": "authenticate, requireCustomer, feedbackController.createReview",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/feedbackController.js#createReview",
+    "validators": [],
+    "serviceMethods": [
+      "feedback.createReview"
+    ],
+    "procedures": [
+      "dbo.sp_Review_Create"
+    ],
+    "tablesAndDependencies": [
+      "DANHGIAPHIM",
+      "fn_BayGio"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/movies/:movieId",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 12,
+    "globalAuth": false,
+    "handlers": "catalogController.getMovieDetail",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#getMovieDetail",
+    "validators": [
+      "validateMovieId"
+    ],
+    "serviceMethods": [
+      "catalog.getMovieDetail"
+    ],
+    "procedures": [
+      "dbo.sp_Movie_GetDetail"
+    ],
+    "tablesAndDependencies": [
+      "DANHGIAPHIM",
+      "DIENVIEN",
+      "NGUOIDUNG",
+      "PHIM",
+      "PHIM_DIENVIEN",
+      "PHIM_THELOAI",
+      "THELOAI",
+      "vw_ThongKePhim"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 8,
+    "globalAuth": true,
+    "handlers": "orderController.listOrders",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/orderController.js#listOrders",
+    "validators": [],
+    "serviceMethods": [
+      "order.listOrders"
+    ],
+    "procedures": [
+      "dbo.sp_Order_ListByCustomer"
+    ],
+    "tablesAndDependencies": [
+      "DONDATVE",
+      "vw_LichSuDatVe"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/orders/:orderId",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 9,
+    "globalAuth": true,
+    "handlers": "orderController.getOrder",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/orderController.js#getOrder",
+    "validators": [],
+    "serviceMethods": [
+      "order.getOrderDetail"
+    ],
+    "procedures": [
+      "dbo.sp_Order_GetDetailByCustomer"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETDOAN",
+      "CHITIETVE",
+      "DONDATVE",
+      "GHE",
+      "SANPHAM",
+      "THANHTOAN",
+      "vw_ChiTietDonDatVe"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/:orderId/payments",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 10,
+    "globalAuth": true,
+    "handlers": "orderController.createPayment",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/orderController.js#createPayment",
+    "validators": [],
+    "serviceMethods": [
+      "order.createPaymentAttempt"
+    ],
+    "procedures": [
+      "dbo.sp_Order_GetDetailByCustomer",
+      "dbo.sp_Payment_CreateAttempt"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETDOAN",
+      "CHITIETVE",
+      "DONDATVE",
+      "GHE",
+      "SANPHAM",
+      "THANHTOAN",
+      "vw_ChiTietDonDatVe",
+      "fn_BayGio",
+      "NGUOIDUNG",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/orders/:orderId/payments/:paymentId/result",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 11,
+    "globalAuth": true,
+    "handlers": "orderController.updatePayment",
+    "globalGuards": [
+      "authenticate, requireCustomer"
+    ],
+    "controller": "backend/src/controllers/orderController.js#updatePayment",
+    "validators": [],
+    "serviceMethods": [
+      "order.updatePaymentResult"
+    ],
+    "procedures": [
+      "dbo.sp_Order_GetDetailByCustomer",
+      "dbo.sp_Payment_UpdateResult"
+    ],
+    "tablesAndDependencies": [
+      "CHITIETDOAN",
+      "CHITIETVE",
+      "DONDATVE",
+      "GHE",
+      "SANPHAM",
+      "THANHTOAN",
+      "vw_ChiTietDonDatVe",
+      "fn_BayGio",
+      "HOSOKHACHHANG",
+      "NGUOIDUNG",
+      "SUATCHIEU"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/products",
+    "file": "backend/src/routes/productRoutes.js",
+    "line": 5,
+    "globalAuth": false,
+    "handlers": "listProducts",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/bookingController.js#listProducts",
+    "validators": [],
+    "serviceMethods": [
+      "booking.listProducts"
+    ],
+    "procedures": [
+      "dbo.sp_Product_ListActive"
+    ],
+    "tablesAndDependencies": [
+      "SANPHAM"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/promotions/validate",
+    "file": "backend/src/routes/promotionRoutes.js",
+    "line": 7,
+    "globalAuth": false,
+    "handlers": "authenticate, requireCustomer, validatePromotion",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/bookingController.js#validatePromotion",
+    "validators": [
+      "validatePromotion",
+      "validatePromotionBody"
+    ],
+    "serviceMethods": [
+      "booking.validatePromotion"
+    ],
+    "procedures": [
+      "dbo.sp_Seat_ListByShowtime",
+      "dbo.sp_Product_ListActive",
+      "dbo.sp_Promotion_Validate"
+    ],
+    "tablesAndDependencies": [
+      "SANPHAM",
+      "fn_BayGio",
+      "fn_GioiHanGiamGiaPhanTram",
+      "KHUYENMAI",
+      "fn_DanhSachGheSuatChieu"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/showtimes/:showtimeId/seats",
+    "file": "backend/src/routes/showtimeRoutes.js",
+    "line": 6,
+    "globalAuth": false,
+    "handlers": "listSeats",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/bookingController.js#listSeats",
+    "validators": [
+      "validateShowtimeId"
+    ],
+    "serviceMethods": [
+      "booking.listSeats"
+    ],
+    "procedures": [
+      "dbo.sp_Seat_ListByShowtime"
+    ],
+    "tablesAndDependencies": [
+      "fn_DanhSachGheSuatChieu"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/showtimes/:showtimeId",
+    "file": "backend/src/routes/showtimeRoutes.js",
+    "line": 7,
+    "globalAuth": false,
+    "handlers": "catalogController.getShowtimeDetail",
+    "globalGuards": [],
+    "controller": "backend/src/controllers/catalogController.js#getShowtimeDetail",
+    "validators": [
+      "validateShowtimeId"
+    ],
+    "serviceMethods": [
+      "catalog.getShowtimeDetail"
+    ],
+    "procedures": [
+      "dbo.sp_Showtime_GetDetail"
+    ],
+    "tablesAndDependencies": [
+      "vw_LichChieuChiTiet"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/support/complaints",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 11,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHIEUNAI'), controller.list",
+    "globalGuards": [
+      "authenticate, requireSupport"
+    ],
+    "controller": "backend/src/controllers/supportController.js#list",
+    "validators": [
+      "validators.listFilters"
+    ],
+    "serviceMethods": [
+      "support.list"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_List"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuyenNguoiDung",
+      "vw_DanhSachKhieuNai"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/support/complaints/:complaintId",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 12,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHIEUNAI'), controller.detail",
+    "globalGuards": [
+      "authenticate, requireSupport"
+    ],
+    "controller": "backend/src/controllers/supportController.js#detail",
+    "validators": [
+      "validators.complaintId"
+    ],
+    "serviceMethods": [
+      "support.detail"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_GetDetail"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "NGUOIDUNG",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "GET",
+    "path": "/api/support/complaints/:complaintId/order-reference",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 13,
+    "globalAuth": true,
+    "handlers": "requirePermission('QL_KHIEUNAI'), controller.orderReference,",
+    "globalGuards": [
+      "authenticate, requireSupport"
+    ],
+    "controller": "backend/src/controllers/supportController.js#orderReference",
+    "validators": [
+      "validators.complaintId"
+    ],
+    "serviceMethods": [
+      "support.orderReference"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_GetOrderReference"
+    ],
+    "tablesAndDependencies": [
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "vw_ChiTietDonDatVe"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "POST",
+    "path": "/api/support/complaints/:complaintId/processings",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 18,
+    "globalAuth": true,
+    "handlers": "requirePermission('XULY_KHIEUNAI'), controller.addProcessing,",
+    "globalGuards": [
+      "authenticate, requireSupport"
+    ],
+    "controller": "backend/src/controllers/supportController.js#addProcessing",
+    "validators": [
+      "validators.complaintId",
+      "validators.processing"
+    ],
+    "serviceMethods": [
+      "support.addProcessing"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_AddProcessing"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/support/complaints/:complaintId/status",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 23,
+    "globalAuth": true,
+    "handlers": "requirePermission('XULY_KHIEUNAI'), controller.updateStatus,",
+    "globalGuards": [
+      "authenticate, requireSupport"
+    ],
+    "controller": "backend/src/controllers/supportController.js#updateStatus",
+    "validators": [
+      "validators.complaintId",
+      "validators.statusUpdate"
+    ],
+    "serviceMethods": [
+      "support.updateStatus"
+    ],
+    "procedures": [
+      "dbo.sp_Support_Complaint_UpdateStatus"
+    ],
+    "tablesAndDependencies": [
+      "fn_BayGio",
+      "fn_KiemTraQuyenNguoiDung",
+      "KHIEUNAI",
+      "XULY_KHIEUNAI"
+    ],
+    "note": "captured service call contracts; dependent objects in complete-module-audit.json"
+  }
+]

@@ -1,6 +1,6 @@
 // Whitelist of stored procedures the application may execute.
 // Callers pass a key from PROCEDURES; a procedure name is never accepted from a request.
-// Add an entry here only after the procedure exists under database/procedures/.
+// Add an entry here only after the procedure exists under database/08_procedures/.
 export const PROCEDURES = Object.freeze({
   SYSTEM_HEALTH_CHECK: 'dbo.sp_System_HealthCheck',
   EXPIRE_PENDING_ORDERS: 'dbo.sp_Order_ExpirePending',

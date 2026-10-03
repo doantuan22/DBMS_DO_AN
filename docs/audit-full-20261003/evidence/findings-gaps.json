@@ -1,0 +1,93 @@
+[
+  [
+    "GAP-001",
+    "QLR-05",
+    "UI sửa suất chiếu",
+    "COMPLETE",
+    "PARTIAL",
+    "MISSING",
+    "VERIFIED",
+    "Không có action/form sửa; BE có route nhưng enum BUG-002.",
+    "P1",
+    "PROVEN",
+    "browser-checks.json"
+  ],
+  [
+    "GAP-002",
+    "QLR-02/03",
+    "Sửa tên/loại phòng và loại ghế theo đặc tả",
+    "COMPLETE",
+    "COMPLETE",
+    "PARTIAL",
+    "VERIFIED",
+    "UI chỉ đổi trạng thái phòng/ghế; tạo ghế còn BUG-004.",
+    "P2",
+    "PROVEN",
+    "browser-manager-seat-error.txt"
+  ],
+  [
+    "GAP-003",
+    "QLR-07",
+    "Chọn loại ngày, định dạng, ngày kết thúc và sửa phụ thu",
+    "COMPLETE",
+    "COMPLETE",
+    "PARTIAL",
+    "VERIFIED",
+    "UI chỉ expose seatType/surcharge/start; dayType=Ngày thường, format=2D cố định, endsOn rỗng; update chỉ toggle status.",
+    "P2",
+    "HIGH-CONFIDENCE",
+    "browser-checks.json"
+  ],
+  [
+    "GAP-004",
+    "QLR-09",
+    "Chọn khoảng ngày báo cáo",
+    "COMPLETE",
+    "COMPLETE",
+    "MISSING",
+    "VERIFIED",
+    "Manager UI không có date filter; API đã hỗ trợ range.",
+    "P2",
+    "PROVEN",
+    "browser-checks.json"
+  ],
+  [
+    "GAP-005",
+    "CSKH-04",
+    "Đối chiếu đầy đủ đơn tham chiếu: tiền, suất, ghế, giao dịch",
+    "PARTIAL",
+    "PARTIAL",
+    "PARTIAL",
+    "VERIFIED",
+    "API trả row view với money/seat summary; không recordsets tickets/payments. CSKH UI chỉ id và status.",
+    "P2",
+    "PROVEN",
+    "browser-support-detail.txt"
+  ],
+  [
+    "GAP-006",
+    "ADM-07 / KH-05",
+    "Public gallery ảnh rạp",
+    "COMPLETE",
+    "COMPLETE",
+    "MISSING",
+    "VERIFIED",
+    "API GET cinema/images có dữ liệu thật; FE public chỉ cover/fallback, export getCinemaImages không có component gallery sử dụng.",
+    "P2",
+    "HIGH-CONFIDENCE",
+    "integration-transcript.json"
+  ],
+  [
+    "GAP-007",
+    "Nhiều UC",
+    "Real DB/browser regression suite trong repo",
+    "PARTIAL",
+    "PARTIAL",
+    "PARTIAL",
+    "NOT VERIFIED",
+    "116 test có sẵn chủ yếu stub/source assertion/SSR. SQL suites có direct INSERT và stress sweeper không phù hợp database đang dùng; không chạy nguyên bản.",
+    "P2",
+    "PROVEN",
+    "backend-tests.txt"
+  ]
+]

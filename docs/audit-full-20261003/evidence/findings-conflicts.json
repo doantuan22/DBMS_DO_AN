@@ -1,0 +1,67 @@
+[
+  [
+    "CONFLICT-001",
+    "KH-10 / QLR-06 / ADM-14: không refund, không hủy đơn đã thanh toán",
+    "sp_Showtime_CancelCascade hủy paid order, đổi payment Thành công→Đã hoàn tiền, giảm points.",
+    "BE commit7c3562 cho phép gọi cancel wrapper DB mới và trả200.",
+    "Confirmation nói active hold sẽ từ chối; order/payment DTO không giải thích refund lifecycle mới.",
+    "KH-10 hiện hành nói không refund; source013 cancel guard. Đoạn mô hình §3.6 có nhắc refund, tự mâu thuẫn.",
+    "Test hủy suất57 đã paid order36 trả200; payment lịch sử bị đổi trạng thái.",
+    "Theo scope hiện hành và KH-10: không hủy paid order, không refund; nếu thay đổi phải cập nhật thiết kế và bảo toàn event lịch sử.",
+    "P1",
+    "PROVEN",
+    "integration-transcript.json"
+  ],
+  [
+    "CONFLICT-002",
+    "KH-10: success đến muộn được ghi nhận nếu ghế còn trống/suất còn mở",
+    "Live sp_Payment_UpdateResult014 từ chối mọi late success với50111.",
+    "Map409 ORDER_HOLD_EXPIRED.",
+    "Khách không hoàn tất attempt đã bắt đầu trước hạn.",
+    "KH-10 nêu rõ cho phép late success có kiểm seat collision; source002 có policy này.",
+    "Order40 attempt18 trước hạn; callback sau hơn5phút nhận409 dù ghế chưa bán cho người khác.",
+    "Áp policy late callback hiện hành hoặc sửa scope có quyết định rõ ràng; mô phỏng hiện tại không phải gateway thật.",
+    "P1",
+    "PROVEN",
+    "additional-transcript.json"
+  ],
+  [
+    "CONFLICT-003",
+    "Baseline source phải phản ánh database deploy",
+    "35module khác và6DB-only,2cột order mới.",
+    "BE/source dừng migration013, DB definitions ghi014/015.",
+    "Portal/form/enum theo contract trước.",
+    "DeployCommon chỉ001..013,007 intentionally absent.",
+    "Git rollback chỉ rollback code; không rollback SQL Server.",
+    "Chọn version DB tương ứng commit hoặc khôi phục migration mới qua task riêng có review; audit không deploy/reset DB.",
+    "P1",
+    "PROVEN",
+    "module-drift.json"
+  ],
+  [
+    "CONFLICT-004",
+    "45 UC, ADM-17 đã bị gỡ",
+    "Không CAUHINH_HE_THONG hoặc sp_Admin_Config.",
+    "Không route config.",
+    "Không mục Cấu hình hệ thống.",
+    "Actor overview §2.1 vẫn có mục thứ17; UCtables và roadmap45. README mô tả Phase2/3 và portal còn là tương lai.",
+    "Documentation chậm hơn implementation và scope.",
+    "45UC; bỏ mục obsolete trong task docs riêng, giữ lời giải thích removal.",
+    "P3",
+    "PROVEN",
+    "documentation-inventory.json"
+  ],
+  [
+    "CONFLICT-005",
+    "Phân quyền theo VAITRO_QUYEN và vai trò",
+    "fn_KiemTraQuyenNguoiDung cho ADMIN bypass; nhiều Admin SP không nhận actor id.",
+    "HTTP Admin vẫn requirePermission, Customer thiếu permission guard (BUG-019).",
+    "Coarse area permission (BUG-020).",
+    "Thiết kế §1.1 xác định permission chức năng; Admin global nghĩa phạm vi tất cả rạp, chưa đồng nghĩa bypass mọi functional permission.",
+    "Ba tầng không có một policy thống nhất với partial grants.",
+    "Chốt semantics Admin bypass và functional grant; kiểm cả API và DB caller theo policy đã duyệt.",
+    "P2",
+    "HIGH-CONFIDENCE",
+    "api-chain-inventory.json"
+  ]
+]

@@ -47,4 +47,8 @@ test('rejects parameters without a declared type', async () => {
     client.executeProcedure('BOOK_TICKET', { X: { value: 1 } }),
     /must declare a type/,
   );
+  await assert.rejects(
+    client.executeProcedureWithOutputs('BOOK_TICKET', {}, { NewOrder: undefined }),
+    /Output parameter "NewOrder" must declare a type/,
+  );
 });

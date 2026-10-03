@@ -1,0 +1,16 @@
+DECLARE @major int=CONVERT(int,SERVERPROPERTY('ProductMajorVersion'));
+IF @major<13 THROW 51000, 'SQL Server 2016 SP1 or later is required.', 1;
+DECLARE @compatibility int=CASE WHEN @major>=17 THEN 170 ELSE @major*10 END;
+DECLARE @options nvarchar(200)=N'ALTER DATABASE [CinemaBookingDB] SET COMPATIBILITY_LEVEL = '+CONVERT(nvarchar(3),@compatibility);
+EXEC(@options);
+ALTER DATABASE [CinemaBookingDB] SET READ_COMMITTED_SNAPSHOT ON;
+ALTER DATABASE [CinemaBookingDB] SET AUTO_CLOSE OFF;
+ALTER DATABASE [CinemaBookingDB] SET AUTO_SHRINK OFF;
+ALTER DATABASE [CinemaBookingDB] SET RECOVERY FULL;
+GO
+USE [CinemaBookingDB];
+GO
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET XACT_ABORT ON;
+GO

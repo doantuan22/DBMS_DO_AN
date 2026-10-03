@@ -1,0 +1,5810 @@
+[
+  {
+    "key": "SYSTEM_HEALTH_CHECK",
+    "name": "sp_System_HealthCheck",
+    "callers": [
+      "backend/src/services/healthService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "EXPIRE_PENDING_ORDERS",
+    "name": "sp_Order_ExpirePending",
+    "callers": [
+      "backend/src/jobs/expirePendingOrders.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Order_ExpirePending",
+        "parameter_id": 1,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Order_ExpirePending",
+        "parameter_id": 2,
+        "name": "@TraVeKetQua",
+        "typeName": "bit",
+        "max_length": 1,
+        "precision": 1,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "AUTH_LOGIN",
+    "name": "sp_Auth_Login",
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_Login",
+        "parameter_id": 1,
+        "name": "@Email",
+        "typeName": "varchar",
+        "max_length": 150,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "AUTH_REGISTER_CUSTOMER",
+    "name": "sp_Auth_RegisterCustomer",
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 1,
+        "name": "@HoTen",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 2,
+        "name": "@Email",
+        "typeName": "varchar",
+        "max_length": 150,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 3,
+        "name": "@MatKhauHash",
+        "typeName": "varchar",
+        "max_length": 255,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 4,
+        "name": "@SoDienThoai",
+        "typeName": "varchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 5,
+        "name": "@NgaySinh",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 6,
+        "name": "@GioiTinh",
+        "typeName": "nvarchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Auth_RegisterCustomer",
+        "parameter_id": 7,
+        "name": "@NewUserId",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "USER_GET_CURRENT",
+    "name": "sp_User_GetCurrent",
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_GetCurrent",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "USER_UPDATE_PROFILE",
+    "name": "sp_User_UpdateProfile",
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_UpdateProfile",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_UpdateProfile",
+        "parameter_id": 2,
+        "name": "@HoTen",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_UpdateProfile",
+        "parameter_id": 3,
+        "name": "@SoDienThoai",
+        "typeName": "varchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_UpdateProfile",
+        "parameter_id": 4,
+        "name": "@NgaySinh",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_UpdateProfile",
+        "parameter_id": 5,
+        "name": "@GioiTinh",
+        "typeName": "nvarchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "RBAC_GET_PERMISSIONS_BY_USER",
+    "name": "sp_RBAC_GetPermissionsByUser",
+    "callers": [
+      "backend/src/services/authService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_RBAC_GetPermissionsByUser",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_LIST_ASSIGNED_CINEMAS",
+    "name": "sp_Manager_ListAssignedCinemas",
+    "callers": [
+      "backend/src/services/authService.js",
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_ListAssignedCinemas",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_ROOM_LIST",
+    "name": "sp_Manager_Room_List",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_List",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_List",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_ROOM_CREATE",
+    "name": "sp_Manager_Room_Create",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Create",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Create",
+        "parameter_id": 3,
+        "name": "@TenPhong",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Create",
+        "parameter_id": 4,
+        "name": "@LoaiPhong",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_ROOM_UPDATE",
+    "name": "sp_Manager_Room_Update",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Update",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Update",
+        "parameter_id": 2,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Update",
+        "parameter_id": 3,
+        "name": "@TenPhong",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Update",
+        "parameter_id": 4,
+        "name": "@LoaiPhong",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Update",
+        "parameter_id": 5,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_ROOM_DELETE",
+    "name": "sp_Manager_Room_Delete",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Delete",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Room_Delete",
+        "parameter_id": 2,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SEAT_LIST_BY_ROOM",
+    "name": "sp_Manager_Seat_ListByRoom",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_ListByRoom",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_ListByRoom",
+        "parameter_id": 2,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SEAT_CREATE",
+    "name": "sp_Manager_Seat_Create",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Create",
+        "parameter_id": 2,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Create",
+        "parameter_id": 3,
+        "name": "@HangGhe",
+        "typeName": "varchar",
+        "max_length": 10,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Create",
+        "parameter_id": 4,
+        "name": "@SoGhe",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Create",
+        "parameter_id": 5,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SEAT_UPDATE",
+    "name": "sp_Manager_Seat_Update",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Update",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Update",
+        "parameter_id": 2,
+        "name": "@GheID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Update",
+        "parameter_id": 3,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Update",
+        "parameter_id": 4,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SEAT_DELETE",
+    "name": "sp_Manager_Seat_Delete",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Delete",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Seat_Delete",
+        "parameter_id": 2,
+        "name": "@GheID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SHOWTIME_LIST",
+    "name": "sp_Manager_Showtime_List",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_List",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_List",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_List",
+        "parameter_id": 3,
+        "name": "@TuNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_List",
+        "parameter_id": 4,
+        "name": "@DenNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SHOWTIME_CREATE",
+    "name": "sp_Manager_Showtime_Create",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 2,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 3,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 4,
+        "name": "@ThoiGianBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 5,
+        "name": "@ThoiGianKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 6,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Create",
+        "parameter_id": 7,
+        "name": "@GiaVeCoBan",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SHOWTIME_UPDATE",
+    "name": "sp_Manager_Showtime_Update",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 2,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 3,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 4,
+        "name": "@ThoiGianBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 5,
+        "name": "@ThoiGianKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 6,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 7,
+        "name": "@GiaVeCoBan",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Update",
+        "parameter_id": 8,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_SHOWTIME_CANCEL",
+    "name": "sp_Manager_Showtime_Cancel",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Cancel",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Cancel",
+        "parameter_id": 2,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Showtime_Cancel",
+        "parameter_id": 3,
+        "name": "@LyDo",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_PRICING_LIST",
+    "name": "sp_Manager_Pricing_List",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_List",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_List",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_PRICING_CREATE",
+    "name": "sp_Manager_Pricing_Create",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 3,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 4,
+        "name": "@LoaiNgay",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 5,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 6,
+        "name": "@PhuThu",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 7,
+        "name": "@NgayBatDau",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Create",
+        "parameter_id": 8,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_PRICING_UPDATE",
+    "name": "sp_Manager_Pricing_Update",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 2,
+        "name": "@GiaID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 3,
+        "name": "@PhuThu",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 4,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_DASHBOARD",
+    "name": "sp_Manager_Dashboard",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Dashboard",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Dashboard",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MANAGER_REVENUE",
+    "name": "sp_Manager_Revenue",
+    "callers": [
+      "backend/src/services/managerService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Revenue",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Revenue",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Revenue",
+        "parameter_id": 3,
+        "name": "@TuNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Revenue",
+        "parameter_id": 4,
+        "name": "@DenNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_USER_LIST",
+    "name": "sp_Admin_User_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_List",
+        "parameter_id": 1,
+        "name": "@VaiTroID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_List",
+        "parameter_id": 2,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_List",
+        "parameter_id": 3,
+        "name": "@SearchTerm",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_USER_UPDATE_STATUS",
+    "name": "sp_Admin_User_UpdateStatus",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_UpdateStatus",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_UpdateStatus",
+        "parameter_id": 2,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_USER_CREATE",
+    "name": "sp_Admin_User_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_Create",
+        "parameter_id": 1,
+        "name": "@HoTen",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_Create",
+        "parameter_id": 2,
+        "name": "@Email",
+        "typeName": "varchar",
+        "max_length": 150,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_Create",
+        "parameter_id": 3,
+        "name": "@MatKhauHash",
+        "typeName": "varchar",
+        "max_length": 255,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_Create",
+        "parameter_id": 4,
+        "name": "@SoDienThoai",
+        "typeName": "varchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_User_Create",
+        "parameter_id": 5,
+        "name": "@VaiTroID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROLE_LIST",
+    "name": "sp_Admin_Role_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_ROLE_CREATE",
+    "name": "sp_Admin_Role_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Create",
+        "parameter_id": 1,
+        "name": "@MaVaiTro",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Create",
+        "parameter_id": 2,
+        "name": "@TenVaiTro",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Create",
+        "parameter_id": 3,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROLE_UPDATE",
+    "name": "sp_Admin_Role_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Update",
+        "parameter_id": 1,
+        "name": "@VaiTroID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Update",
+        "parameter_id": 2,
+        "name": "@TenVaiTro",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Update",
+        "parameter_id": 3,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROLE_DELETE",
+    "name": "sp_Admin_Role_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Role_Delete",
+        "parameter_id": 1,
+        "name": "@VaiTroID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PERMISSION_LIST",
+    "name": "sp_Admin_Permission_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_PERMISSION_CREATE",
+    "name": "sp_Admin_Permission_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Create",
+        "parameter_id": 1,
+        "name": "@MaQuyen",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Create",
+        "parameter_id": 2,
+        "name": "@TenQuyen",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Create",
+        "parameter_id": 3,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PERMISSION_UPDATE",
+    "name": "sp_Admin_Permission_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Update",
+        "parameter_id": 1,
+        "name": "@QuyenID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Update",
+        "parameter_id": 2,
+        "name": "@TenQuyen",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Update",
+        "parameter_id": 3,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PERMISSION_DELETE",
+    "name": "sp_Admin_Permission_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Permission_Delete",
+        "parameter_id": 1,
+        "name": "@QuyenID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROLE_PERMISSION_SET",
+    "name": "sp_Admin_RolePermission_Set",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_RolePermission_Set",
+        "parameter_id": 1,
+        "name": "@VaiTroID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_RolePermission_Set",
+        "parameter_id": 2,
+        "name": "@QuyenIdList",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ASSIGNMENT_LIST",
+    "name": "sp_Admin_Assignment_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Assignment_List",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Assignment_List",
+        "parameter_id": 2,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ASSIGNMENT_CREATE",
+    "name": "sp_Admin_Assignment_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Assignment_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Assignment_Create",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Assignment_Create",
+        "parameter_id": 3,
+        "name": "@NgayBatDau",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Assignment_Create",
+        "parameter_id": 4,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_LIST",
+    "name": "usp_Admin_Cinema_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_CINEMA_CREATE",
+    "name": "sp_Admin_Cinema_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter_id": 1,
+        "name": "@TenRap",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter_id": 2,
+        "name": "@DiaChi",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter_id": 3,
+        "name": "@ThanhPho",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter_id": 4,
+        "name": "@SoDienThoai",
+        "typeName": "varchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter_id": 5,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Create",
+        "parameter_id": 6,
+        "name": "@NgayHoatDong",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_UPDATE",
+    "name": "sp_Admin_Cinema_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 2,
+        "name": "@TenRap",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 3,
+        "name": "@DiaChi",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 4,
+        "name": "@ThanhPho",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 5,
+        "name": "@SoDienThoai",
+        "typeName": "varchar",
+        "max_length": 20,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 6,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Update",
+        "parameter_id": 7,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_DELETE",
+    "name": "sp_Admin_Cinema_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Cinema_Delete",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_IMAGE_LIST",
+    "name": "usp_Admin_CinemaImage_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_List",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_IMAGE_CREATE",
+    "name": "usp_Admin_CinemaImage_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Create",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Create",
+        "parameter_id": 2,
+        "name": "@URL",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Create",
+        "parameter_id": 3,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Create",
+        "parameter_id": 4,
+        "name": "@LaAnhDaiDien",
+        "typeName": "bit",
+        "max_length": 1,
+        "precision": 1,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Create",
+        "parameter_id": 5,
+        "name": "@ThuTuHienThi",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Create",
+        "parameter_id": 6,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_IMAGE_UPDATE",
+    "name": "usp_Admin_CinemaImage_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Update",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Update",
+        "parameter_id": 2,
+        "name": "@HinhAnhRapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Update",
+        "parameter_id": 3,
+        "name": "@URL",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Update",
+        "parameter_id": 4,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Update",
+        "parameter_id": 5,
+        "name": "@ThuTuHienThi",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Update",
+        "parameter_id": 6,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_IMAGE_DELETE",
+    "name": "usp_Admin_CinemaImage_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Delete",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_Delete",
+        "parameter_id": 2,
+        "name": "@HinhAnhRapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_CINEMA_IMAGE_SET_COVER",
+    "name": "usp_Admin_CinemaImage_SetCover",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_SetCover",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_CinemaImage_SetCover",
+        "parameter_id": 2,
+        "name": "@HinhAnhRapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_MOVIE_LIST",
+    "name": "usp_Admin_Movie_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Movie_List",
+        "parameter_id": 1,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Movie_List",
+        "parameter_id": 2,
+        "name": "@TheLoaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Movie_List",
+        "parameter_id": 3,
+        "name": "@SearchTerm",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_MOVIE_CREATE",
+    "name": "sp_Admin_Movie_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 1,
+        "name": "@TenPhim",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 2,
+        "name": "@ThoiLuong",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 3,
+        "name": "@NgayKhoiChieu",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 4,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 5,
+        "name": "@NgonNgu",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 6,
+        "name": "@PhuDe",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 7,
+        "name": "@DoTuoi",
+        "typeName": "nvarchar",
+        "max_length": 40,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 8,
+        "name": "@DaoDien",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 9,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 10,
+        "name": "@PosterURL",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 11,
+        "name": "@TrailerURL",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 12,
+        "name": "@TheLoaiIdList",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Create",
+        "parameter_id": 13,
+        "name": "@NewPhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_MOVIE_UPDATE",
+    "name": "sp_Admin_Movie_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 2,
+        "name": "@TenPhim",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 3,
+        "name": "@ThoiLuong",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 4,
+        "name": "@NgayKhoiChieu",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 5,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 6,
+        "name": "@NgonNgu",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 7,
+        "name": "@PhuDe",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 8,
+        "name": "@DoTuoi",
+        "typeName": "nvarchar",
+        "max_length": 40,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 9,
+        "name": "@DaoDien",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 10,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 11,
+        "name": "@PosterURL",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 12,
+        "name": "@TrailerURL",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 13,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Update",
+        "parameter_id": 14,
+        "name": "@TheLoaiIdList",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_MOVIE_DELETE",
+    "name": "sp_Admin_Movie_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Movie_Delete",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_MOVIE_ACTOR_SET",
+    "name": "sp_Admin_MovieActor_Set",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_MovieActor_Set",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_MovieActor_Set",
+        "parameter_id": 2,
+        "name": "@DanhSachJson",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_GENRE_LIST",
+    "name": "sp_Genre_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_GENRE_CREATE",
+    "name": "sp_Admin_Genre_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Genre_Create",
+        "parameter_id": 1,
+        "name": "@TenTheLoai",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_GENRE_UPDATE",
+    "name": "sp_Admin_Genre_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Genre_Update",
+        "parameter_id": 1,
+        "name": "@TheLoaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Genre_Update",
+        "parameter_id": 2,
+        "name": "@TenTheLoai",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_GENRE_DELETE",
+    "name": "sp_Admin_Genre_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Genre_Delete",
+        "parameter_id": 1,
+        "name": "@TheLoaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ACTOR_LIST",
+    "name": "sp_Admin_Actor_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_ACTOR_CREATE",
+    "name": "sp_Admin_Actor_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Create",
+        "parameter_id": 1,
+        "name": "@HoTen",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Create",
+        "parameter_id": 2,
+        "name": "@NgaySinh",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Create",
+        "parameter_id": 3,
+        "name": "@QuocTich",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ACTOR_UPDATE",
+    "name": "sp_Admin_Actor_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Update",
+        "parameter_id": 1,
+        "name": "@DienVienID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Update",
+        "parameter_id": 2,
+        "name": "@HoTen",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Update",
+        "parameter_id": 3,
+        "name": "@NgaySinh",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Update",
+        "parameter_id": 4,
+        "name": "@QuocTich",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ACTOR_DELETE",
+    "name": "sp_Admin_Actor_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Actor_Delete",
+        "parameter_id": 1,
+        "name": "@DienVienID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PRODUCT_LIST",
+    "name": "usp_Admin_Product_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_PRODUCT_CREATE",
+    "name": "sp_Admin_Product_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Create",
+        "parameter_id": 1,
+        "name": "@TenSanPham",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Create",
+        "parameter_id": 2,
+        "name": "@LoaiSanPham",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Create",
+        "parameter_id": 3,
+        "name": "@Gia",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Create",
+        "parameter_id": 4,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Create",
+        "parameter_id": 5,
+        "name": "@HinhAnh",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PRODUCT_UPDATE",
+    "name": "sp_Admin_Product_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 1,
+        "name": "@SanPhamID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 2,
+        "name": "@TenSanPham",
+        "typeName": "nvarchar",
+        "max_length": 300,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 3,
+        "name": "@LoaiSanPham",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 4,
+        "name": "@Gia",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 5,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 6,
+        "name": "@HinhAnh",
+        "typeName": "nvarchar",
+        "max_length": 1000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Update",
+        "parameter_id": 7,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PRODUCT_DELETE",
+    "name": "sp_Admin_Product_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Product_Delete",
+        "parameter_id": 1,
+        "name": "@SanPhamID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PROMOTION_LIST",
+    "name": "sp_Admin_Promotion_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_PROMOTION_CREATE",
+    "name": "sp_Admin_Promotion_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 1,
+        "name": "@MaCode",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 2,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 3,
+        "name": "@LoaiGiamGia",
+        "typeName": "nvarchar",
+        "max_length": 40,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 4,
+        "name": "@GiaTriGiam",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 5,
+        "name": "@DonHangToiThieu",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 6,
+        "name": "@GiamToiDa",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 7,
+        "name": "@NgayBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 8,
+        "name": "@NgayKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Create",
+        "parameter_id": 9,
+        "name": "@SoLuong",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PROMOTION_UPDATE",
+    "name": "sp_Admin_Promotion_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 1,
+        "name": "@KhuyenMaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 2,
+        "name": "@MoTa",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 3,
+        "name": "@LoaiGiamGia",
+        "typeName": "nvarchar",
+        "max_length": 40,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 4,
+        "name": "@GiaTriGiam",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 5,
+        "name": "@DonHangToiThieu",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 6,
+        "name": "@GiamToiDa",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 7,
+        "name": "@NgayBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 8,
+        "name": "@NgayKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 9,
+        "name": "@SoLuong",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Update",
+        "parameter_id": 10,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PROMOTION_DELETE",
+    "name": "sp_Admin_Promotion_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Promotion_Delete",
+        "parameter_id": 1,
+        "name": "@KhuyenMaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_REPORT_REVENUE",
+    "name": "sp_Admin_Report_Revenue",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Report_Revenue",
+        "parameter_id": 1,
+        "name": "@TuNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Report_Revenue",
+        "parameter_id": 2,
+        "name": "@DenNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Admin_Report_Revenue",
+        "parameter_id": 3,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_DASHBOARD",
+    "name": "sp_Admin_Dashboard",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "ADMIN_ASSIGNMENT_UPDATE",
+    "name": "usp_Admin_Assignment_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter_id": 1,
+        "name": "@PhanCongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter_id": 2,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter_id": 3,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter_id": 4,
+        "name": "@NgayBatDau",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter_id": 5,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Assignment_Update",
+        "parameter_id": 6,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROLE_PERMISSION_LIST",
+    "name": "usp_Admin_RolePermission_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_RolePermission_List",
+        "parameter_id": 1,
+        "name": "@VaiTroID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROOM_LIST",
+    "name": "usp_Admin_Room_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_List",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROOM_CREATE",
+    "name": "usp_Admin_Room_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Create",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Create",
+        "parameter_id": 2,
+        "name": "@TenPhong",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Create",
+        "parameter_id": 3,
+        "name": "@LoaiPhong",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROOM_UPDATE",
+    "name": "usp_Admin_Room_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Update",
+        "parameter_id": 1,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Update",
+        "parameter_id": 2,
+        "name": "@TenPhong",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Update",
+        "parameter_id": 3,
+        "name": "@LoaiPhong",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Update",
+        "parameter_id": 4,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_ROOM_DELETE",
+    "name": "usp_Admin_Room_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Room_Delete",
+        "parameter_id": 1,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SEAT_LIST",
+    "name": "usp_Admin_Seat_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_List",
+        "parameter_id": 1,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SEAT_CREATE",
+    "name": "usp_Admin_Seat_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Create",
+        "parameter_id": 1,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Create",
+        "parameter_id": 2,
+        "name": "@HangGhe",
+        "typeName": "varchar",
+        "max_length": 10,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Create",
+        "parameter_id": 3,
+        "name": "@SoGhe",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Create",
+        "parameter_id": 4,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SEAT_UPDATE",
+    "name": "usp_Admin_Seat_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Update",
+        "parameter_id": 1,
+        "name": "@GheID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Update",
+        "parameter_id": 2,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Update",
+        "parameter_id": 3,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SEAT_DELETE",
+    "name": "usp_Admin_Seat_Delete",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Seat_Delete",
+        "parameter_id": 1,
+        "name": "@GheID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PRICING_LIST",
+    "name": "usp_Admin_Pricing_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_List",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PRICING_CREATE",
+    "name": "usp_Admin_Pricing_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 2,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 3,
+        "name": "@LoaiNgay",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 4,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 5,
+        "name": "@PhuThu",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 6,
+        "name": "@NgayBatDau",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Create",
+        "parameter_id": 7,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_PRICING_UPDATE",
+    "name": "usp_Admin_Pricing_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Update",
+        "parameter_id": 1,
+        "name": "@GiaID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Update",
+        "parameter_id": 2,
+        "name": "@PhuThu",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Pricing_Update",
+        "parameter_id": 3,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SHOWTIME_LIST",
+    "name": "usp_Admin_Showtime_List",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_List",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_List",
+        "parameter_id": 2,
+        "name": "@TuNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_List",
+        "parameter_id": 3,
+        "name": "@DenNgay",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SHOWTIME_CREATE",
+    "name": "usp_Admin_Showtime_Create",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter_id": 2,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter_id": 3,
+        "name": "@ThoiGianBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter_id": 4,
+        "name": "@ThoiGianKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter_id": 5,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Create",
+        "parameter_id": 6,
+        "name": "@GiaVeCoBan",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SHOWTIME_UPDATE",
+    "name": "usp_Admin_Showtime_Update",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 1,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 2,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 3,
+        "name": "@ThoiGianBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 4,
+        "name": "@ThoiGianKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 5,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 6,
+        "name": "@GiaVeCoBan",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Update",
+        "parameter_id": 7,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADMIN_SHOWTIME_CANCEL",
+    "name": "usp_Admin_Showtime_Cancel",
+    "callers": [
+      "backend/src/services/adminService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "usp_Admin_Showtime_Cancel",
+        "parameter_id": 1,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SUPPORT_COMPLAINT_LIST",
+    "name": "sp_Support_Complaint_List",
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_List",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_List",
+        "parameter_id": 2,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_List",
+        "parameter_id": 3,
+        "name": "@LoaiKhieuNai",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_List",
+        "parameter_id": 4,
+        "name": "@SearchTerm",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SUPPORT_COMPLAINT_GET_DETAIL",
+    "name": "sp_Support_Complaint_GetDetail",
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_GetDetail",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_GetDetail",
+        "parameter_id": 2,
+        "name": "@KhieuNaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SUPPORT_COMPLAINT_GET_ORDER_REFERENCE",
+    "name": "sp_Support_Complaint_GetOrderReference",
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "parameter_id": 2,
+        "name": "@KhieuNaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SUPPORT_COMPLAINT_ADD_PROCESSING",
+    "name": "sp_Support_Complaint_AddProcessing",
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_AddProcessing",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_AddProcessing",
+        "parameter_id": 2,
+        "name": "@KhieuNaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_AddProcessing",
+        "parameter_id": 3,
+        "name": "@NoiDungXuLy",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_AddProcessing",
+        "parameter_id": 4,
+        "name": "@TrangThaiSauXuLy",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SUPPORT_COMPLAINT_UPDATE_STATUS",
+    "name": "sp_Support_Complaint_UpdateStatus",
+    "callers": [
+      "backend/src/services/supportService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_UpdateStatus",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_UpdateStatus",
+        "parameter_id": 2,
+        "name": "@KhieuNaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Support_Complaint_UpdateStatus",
+        "parameter_id": 3,
+        "name": "@TrangThaiMoi",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "USER_GET_PASSWORD_HASH",
+    "name": "sp_User_GetPasswordHash",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_GetPasswordHash",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "USER_CHANGE_PASSWORD",
+    "name": "sp_User_ChangePassword",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_ChangePassword",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_User_ChangePassword",
+        "parameter_id": 2,
+        "name": "@NewPasswordHash",
+        "typeName": "varchar",
+        "max_length": 255,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "GENRE_LIST",
+    "name": "sp_Genre_List",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "CINEMA_LIST",
+    "name": "sp_Cinema_List",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Cinema_List",
+        "parameter_id": 1,
+        "name": "@ThanhPho",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "CINEMA_GET_IMAGES",
+    "name": "sp_Cinema_GetImages",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Cinema_GetImages",
+        "parameter_id": 1,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MOVIE_LIST",
+    "name": "sp_Movie_List",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Movie_List",
+        "parameter_id": 1,
+        "name": "@TrangThai",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Movie_List",
+        "parameter_id": 2,
+        "name": "@TheLoaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Movie_List",
+        "parameter_id": 3,
+        "name": "@SearchTerm",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "MOVIE_GET_DETAIL",
+    "name": "sp_Movie_GetDetail",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Movie_GetDetail",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SHOWTIME_LIST_BY_MOVIE",
+    "name": "sp_Showtime_ListByMovie",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Showtime_ListByMovie",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Showtime_ListByMovie",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Showtime_ListByMovie",
+        "parameter_id": 3,
+        "name": "@NgayChieu",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SHOWTIME_GET_DETAIL",
+    "name": "sp_Showtime_GetDetail",
+    "callers": [
+      "backend/src/services/catalogService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Showtime_GetDetail",
+        "parameter_id": 1,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "SEAT_LIST_BY_SHOWTIME",
+    "name": "sp_Seat_ListByShowtime",
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Seat_ListByShowtime",
+        "parameter_id": 1,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "PRODUCT_LIST_ACTIVE",
+    "name": "sp_Product_ListActive",
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": []
+  },
+  {
+    "key": "PROMOTION_VALIDATE",
+    "name": "sp_Promotion_Validate",
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 1,
+        "name": "@MaCode",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 2,
+        "name": "@TongTienDon",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 3,
+        "name": "@KhuyenMaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 4,
+        "name": "@LoaiGiamGia",
+        "typeName": "nvarchar",
+        "max_length": 40,
+        "precision": 0,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 5,
+        "name": "@GiaTriGiam",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 6,
+        "name": "@TienGiam",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 7,
+        "name": "@IsValid",
+        "typeName": "bit",
+        "max_length": 1,
+        "precision": 1,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Promotion_Validate",
+        "parameter_id": 8,
+        "name": "@Message",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "BOOKING_CREATE",
+    "name": "sp_Booking_Create",
+    "callers": [
+      "backend/src/services/bookingService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Booking_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Booking_Create",
+        "parameter_id": 2,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Booking_Create",
+        "parameter_id": 3,
+        "name": "@MaKhuyenMai",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Booking_Create",
+        "parameter_id": 4,
+        "name": "@DanhSachGheId",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Booking_Create",
+        "parameter_id": 5,
+        "name": "@DanhSachDoAnJson",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Booking_Create",
+        "parameter_id": 6,
+        "name": "@NewDonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "PAYMENT_CREATE_ATTEMPT",
+    "name": "sp_Payment_CreateAttempt",
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_CreateAttempt",
+        "parameter_id": 1,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_CreateAttempt",
+        "parameter_id": 2,
+        "name": "@PhuongThuc",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_CreateAttempt",
+        "parameter_id": 3,
+        "name": "@ThanhToanID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_CreateAttempt",
+        "parameter_id": 4,
+        "name": "@MaGiaoDich",
+        "typeName": "varchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "PAYMENT_UPDATE_RESULT",
+    "name": "sp_Payment_UpdateResult",
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_UpdateResult",
+        "parameter_id": 1,
+        "name": "@ThanhToanID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_UpdateResult",
+        "parameter_id": 2,
+        "name": "@TrangThaiThanhToan",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_UpdateResult",
+        "parameter_id": 3,
+        "name": "@MaGiaoDichNgoai",
+        "typeName": "varchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Payment_UpdateResult",
+        "parameter_id": 4,
+        "name": "@GhiChu",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ORDER_LIST_BY_CUSTOMER",
+    "name": "sp_Order_ListByCustomer",
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Order_ListByCustomer",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ORDER_GET_DETAIL_BY_CUSTOMER",
+    "name": "sp_Order_GetDetailByCustomer",
+    "callers": [
+      "backend/src/services/orderService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Order_GetDetailByCustomer",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Order_GetDetailByCustomer",
+        "parameter_id": 2,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "REVIEW_CREATE",
+    "name": "sp_Review_Create",
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Review_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Review_Create",
+        "parameter_id": 2,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Review_Create",
+        "parameter_id": 3,
+        "name": "@SoSao",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Review_Create",
+        "parameter_id": 4,
+        "name": "@NoiDung",
+        "typeName": "nvarchar",
+        "max_length": 2000,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "REVIEW_LIST_BY_MOVIE",
+    "name": "sp_Review_ListByMovie",
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Review_ListByMovie",
+        "parameter_id": 1,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "COMPLAINT_CREATE",
+    "name": "sp_Complaint_Create",
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_Create",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_Create",
+        "parameter_id": 2,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_Create",
+        "parameter_id": 3,
+        "name": "@LoaiKhieuNai",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_Create",
+        "parameter_id": 4,
+        "name": "@TieuDe",
+        "typeName": "nvarchar",
+        "max_length": 400,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_Create",
+        "parameter_id": 5,
+        "name": "@NoiDung",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_Create",
+        "parameter_id": 6,
+        "name": "@MucDoUuTien",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "COMPLAINT_LIST_BY_CUSTOMER",
+    "name": "sp_Complaint_ListByCustomer",
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_ListByCustomer",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "COMPLAINT_GET_BY_CUSTOMER",
+    "name": "sp_Complaint_GetByCustomer",
+    "callers": [
+      "backend/src/services/feedbackService.js"
+    ],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_GetByCustomer",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Complaint_GetByCustomer",
+        "parameter_id": 2,
+        "name": "@KhieuNaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "BOOK_TICKET",
+    "name": "sp_DatVe",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_DatVe",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_DatVe",
+        "parameter_id": 2,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_DatVe",
+        "parameter_id": 3,
+        "name": "@MaKhuyenMai",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_DatVe",
+        "parameter_id": 4,
+        "name": "@DanhSachGheId",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_DatVe",
+        "parameter_id": 5,
+        "name": "@DanhSachDoAnJson",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_DatVe",
+        "parameter_id": 6,
+        "name": "@NewDonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ADD_SHOWTIME",
+    "name": "sp_ThemSuatChieu",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 2,
+        "name": "@PhimID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 3,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 4,
+        "name": "@ThoiGianBatDau",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 5,
+        "name": "@ThoiGianKetThuc",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 6,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_ThemSuatChieu",
+        "parameter_id": 7,
+        "name": "@GiaVeCoBan",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "PROCESS_PAYMENT",
+    "name": "sp_XuLyThanhToan",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyThanhToan",
+        "parameter_id": 1,
+        "name": "@ThanhToanID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyThanhToan",
+        "parameter_id": 2,
+        "name": "@TrangThaiThanhToan",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyThanhToan",
+        "parameter_id": 3,
+        "name": "@MaGiaoDichNgoai",
+        "typeName": "varchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyThanhToan",
+        "parameter_id": 4,
+        "name": "@GhiChu",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "PROCESS_COMPLAINT",
+    "name": "sp_XuLyKhieuNai",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyKhieuNai",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyKhieuNai",
+        "parameter_id": 2,
+        "name": "@KhieuNaiID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyKhieuNai",
+        "parameter_id": 3,
+        "name": "@NoiDungXuLy",
+        "typeName": "nvarchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_XuLyKhieuNai",
+        "parameter_id": 4,
+        "name": "@TrangThaiSauXuLy",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  },
+  {
+    "key": "ASSIGN_CINEMA_MANAGER",
+    "name": "sp_PhanCongQuanLyRap",
+    "callers": [],
+    "source": true,
+    "database": true,
+    "parameters": [
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_PhanCongQuanLyRap",
+        "parameter_id": 1,
+        "name": "@NguoiDungID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_PhanCongQuanLyRap",
+        "parameter_id": 2,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_PhanCongQuanLyRap",
+        "parameter_id": 3,
+        "name": "@NgayBatDau",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_PhanCongQuanLyRap",
+        "parameter_id": 4,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      }
+    ]
+  }
+]

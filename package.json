@@ -8,6 +8,15 @@
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build",
     "test:backend": "npm --prefix backend test",
-    "audit:no-sql": "node scripts/audit-no-sql.mjs"
+    "audit:no-sql": "node scripts/audit-no-sql.mjs",
+    "db:inventory": "node scripts/db/inventory.mjs",
+    "db:reset": "node scripts/db/run.mjs reset",
+    "db:build": "node scripts/db/run.mjs build",
+    "db:seed": "node scripts/db/run.mjs seed",
+    "db:verify": "node scripts/db/run.mjs verify",
+    "db:test": "node scripts/db/run.mjs test",
+    "db:smoke": "node scripts/db/backend-smoke.mjs",
+    "db:refresh-manifest": "node scripts/db/refresh-manifest.mjs",
+    "db:contracts": "node scripts/db/contract-check.mjs"
   }
 }

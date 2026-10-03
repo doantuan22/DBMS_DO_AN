@@ -1,0 +1,19 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+GO
+CREATE OR ALTER PROCEDURE dbo.sp_Admin_Genre_Create
+(
+    @TenTheLoai NVARCHAR(100)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    IF EXISTS (SELECT 1 FROM dbo.THELOAI WHERE TenTheLoai = @TenTheLoai)
+    BEGIN
+        ;THROW 50097, N'Thể loại đã tồn tại.', 1;
+    END
+
+    INSERT INTO dbo.THELOAI (TenTheLoai) VALUES (@TenTheLoai);
+    SELECT TheLoaiID, TenTheLoai FROM dbo.THELOAI WHERE TheLoaiID = SCOPE_IDENTITY();
+END;
+GO

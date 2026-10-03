@@ -1,0 +1,18 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+GO
+CREATE OR ALTER PROCEDURE dbo.sp_Admin_Role_Create
+(
+    @MaVaiTro VARCHAR(50),
+    @TenVaiTro NVARCHAR(100),
+    @MoTa NVARCHAR(255) = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO dbo.VAITRO (MaVaiTro, TenVaiTro, MoTa)
+    VALUES (@MaVaiTro, @TenVaiTro, @MoTa);
+
+    SELECT VaiTroID, MaVaiTro, TenVaiTro, MoTa FROM dbo.VAITRO WHERE VaiTroID = SCOPE_IDENTITY();
+END;
+GO

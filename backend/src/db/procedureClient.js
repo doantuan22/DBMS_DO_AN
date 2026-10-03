@@ -37,6 +37,7 @@ export function createProcedureClient(poolProvider = getPool) {
     const request = pool.request();
     bindInputs(request, params);
     for (const [outName, type] of Object.entries(outputs)) {
+      if (!type) throw new Error(`Output parameter "${outName}" must declare a type`);
       request.output(outName, type);
     }
     return request.execute(name);
