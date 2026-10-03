@@ -15,6 +15,7 @@ function orderSummaryDto(row) {
     discountTotal: number(row.TienGiamGia), total: number(row.TongTienThanhToan),
     status: row.TrangThaiDon, promotionCode: row.MaKhuyenMai, ticketCount: row.SoLuongVe,
     latestPaymentStatus: row.TrangThaiThanhToanMoiNhat,
+    cancellationReason: row.LyDoHuy ?? null, cancellationMessage: row.ThongBaoHuy ?? null,
   };
 }
 
@@ -60,6 +61,7 @@ function mapOrderError(error) {
     case 50031:
     case 50113: throw new HttpError(409, 'ORDER_NOT_PAYABLE', 'This order can no longer be paid.');
     case 50111: throw new HttpError(409, 'ORDER_HOLD_EXPIRED', 'The payment hold has expired.');
+    case 50121: throw new HttpError(409, 'SHOWTIME_UNAVAILABLE_FOR_PAYMENT', 'Suất chiếu không còn mở bán hoặc đã bắt đầu.');
     case 50114: throw new HttpError(400, 'INVALID_PAYMENT_RESULT', 'Payment result is invalid.');
     case 50115: throw new HttpError(409, 'PAYMENT_FINALIZED', 'Payment attempt already has a final result.');
     default: throw error;

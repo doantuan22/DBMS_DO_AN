@@ -29,6 +29,14 @@ export function mapAdminProcedureError(error) {
   if (error instanceof HttpError) throw error;
   const number = error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
   switch (number) {
+    case 50119:
+      throw new HttpError(409, 'SHOWTIME_CANNOT_CANCEL', 'A showtime that has started or is already cancelled cannot be cancelled.');
+    case 50120:
+      throw new HttpError(409, 'SHOWTIME_HAS_ACTIVE_ORDERS', 'A showtime with active orders cannot be changed.');
+    case 50121:
+      throw new HttpError(409, 'SHOWTIME_UNAVAILABLE_FOR_PAYMENT', 'Suất chiếu không còn mở bán hoặc đã bắt đầu.');
+    case 50123:
+      throw new HttpError(409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Hãy dùng chức năng hủy suất chiếu.');
     case 50207:
       throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'Seats with ticket history cannot be changed or deleted.');
     case 50118:

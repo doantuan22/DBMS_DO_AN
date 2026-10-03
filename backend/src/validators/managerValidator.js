@@ -131,6 +131,9 @@ export function showtimeCreate(value) {
 
 export function showtimeUpdate(value) {
   const body = objectOnly(value, ['movieId', 'startsAt', 'endsAt', 'format', 'basePrice', 'status']);
+  if (body.status === 'Đã hủy') {
+    throw new HttpError(400, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Hãy dùng chức năng hủy suất chiếu.');
+  }
   return {
     movieId: id(body.movieId, 'movieId'),
     ...showtimeTimes(body),

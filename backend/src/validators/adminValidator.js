@@ -126,7 +126,11 @@ export const showtimeFilters = (query) => {
   return { cinemaId: optionalId(input.cinemaId, 'cinemaId'), fromDate, toDate };
 };
 export const resourceIdFilter = (query, key) => optionalId(queryOnly(query, [key])[key], key);
-export const showtimeWrite = (v, create = false) => bodyShape(v, create ? { movieId: 'id', roomId: 'id', startsAt: 'datetime', endsAt: 'datetime', format: 'string', basePrice: 'number' } : { movieId: 'id', startsAt: 'datetime', endsAt: 'datetime', format: 'string', basePrice: 'number', status: 'string' });
+export const showtimeWrite = (v, create = false) => {
+  const result = bodyShape(v, create ? { movieId: 'id', roomId: 'id', startsAt: 'datetime', endsAt: 'datetime', format: 'string', basePrice: 'number' } : { movieId: 'id', startsAt: 'datetime', endsAt: 'datetime', format: 'string', basePrice: 'number', status: 'string' });
+  if (!create && result.status === 'Đã hủy') throw new HttpError(400, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Hãy dùng chức năng hủy suất chiếu.');
+  return result;
+};
 export const genreWrite = (v) => bodyShape(v, { name: 'string' });
 export const actorWrite = (v) => bodyShape(v, { name: 'string', birthDate: 'date?', nationality: 'string?' });
 export const movieWrite = (v, create = false) => bodyShape(v, create ? { title: 'string', durationMinutes: 'positive', releaseDate: 'date', endDate: 'nullable-date?', language: 'string?', subtitle: 'string?', ageRating: 'string?', director: 'string?', description: 'string?', posterUrl: 'string?', trailerUrl: 'string?', genreIds: 'ids' } : { title: 'string', durationMinutes: 'positive', releaseDate: 'date', endDate: 'nullable-date?', language: 'string?', subtitle: 'string?', ageRating: 'string?', director: 'string?', description: 'string?', posterUrl: 'string?', trailerUrl: 'string?', status: 'string', genreIds: 'ids' });

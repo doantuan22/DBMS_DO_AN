@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { createPaymentAttempt, getOrder, submitPaymentResult } from '../api/ordersApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
 import { bookingErrorMessage } from '../utils/bookingLimits';
+import { lifecycleErrorMessage } from '../utils/lifecycleErrorMessage';
 
 const METHODS = ['VNPAY', 'MOMO', 'ZALOPAY', 'THE_NOI_DIA', 'THE_QUOC_TE', 'TIEN_MAT'];
 const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(value ?? 0);
@@ -26,7 +27,7 @@ export default function PaymentPage() {
       const result = await createPaymentAttempt(orderId, method);
       setAttempt(result.payment); setMessage('Đã tạo giao dịch. Chọn kết quả mô phỏng để Database xử lý.');
       await load();
-    } catch (error) { setMessage(bookingErrorMessage(error) ?? error.message); } finally { setBusy(false); }
+    } catch (error) { setMessage(bookingErrorMessage(error) ?? lifecycleErrorMessage(error)); } finally { setBusy(false); }
   }
   async function finish(status) {
     if (!attempt) return;
@@ -35,7 +36,7 @@ export default function PaymentPage() {
       const result = await submitPaymentResult(orderId, attempt.id, status);
       setResource({ status: 'success', data: result.order }); setAttempt(null);
       setMessage(`Database đã ghi nhận giao dịch ${result.payment?.status ?? status}.`);
-    } catch (error) { setMessage(bookingErrorMessage(error) ?? error.message); } finally { setBusy(false); }
+    } catch (error) { setMessage(bookingErrorMessage(error) ?? lifecycleErrorMessage(error)); } finally { setBusy(false); }
   }
   if (resource.status === 'loading') return <LoadingState>Đang tải thông tin thanh toán…</LoadingState>;
   if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;

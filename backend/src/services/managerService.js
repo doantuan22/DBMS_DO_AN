@@ -8,6 +8,11 @@ const number = (value) => value == null ? null : Number(value);
 function managerError(error) {
   if (error instanceof HttpError) throw error;
   switch (sqlError(error)) {
+    case 50119: throw new HttpError(409, 'SHOWTIME_CANNOT_CANCEL', 'A showtime that has started or is already cancelled cannot be cancelled.');
+    case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ACTIVE_ORDERS', 'A showtime with active orders cannot be changed.');
+    case 50121: throw new HttpError(409, 'SHOWTIME_UNAVAILABLE_FOR_PAYMENT', 'Suất chiếu không còn mở bán hoặc đã bắt đầu.');
+    case 50123: throw new HttpError(409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Hãy dùng chức năng hủy suất chiếu.');
+    case 50207: throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'A seat with ticket history cannot be changed.');
     case 50050: throw new HttpError(403, 'MANAGER_CINEMA_FORBIDDEN', 'You are not assigned to this cinema.');
     case 50001: throw new HttpError(409, 'SHOWTIME_OVERLAP', 'The room already has an overlapping showtime.');
     case 50051: throw new HttpError(409, 'ROOM_NAME_CONFLICT', 'This room name already exists in the cinema.');

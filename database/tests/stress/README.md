@@ -1,5 +1,17 @@
 # Cinema image lock stress test (manual, pre-release)
 
+# Showtime cancellation lifecycle race stress (`showtime-cancel-race-stress.mjs`)
+
+Runs at least 500 rounds of a three-way race between booking another seat, completing a payment, and cancelling the same showtime. Every round checks that the showtime is cancelled, no paid order or active ticket remains, and I11/I12 are clear, then removes that round's data. Any SQL deadlock (1205) fails the run. It uses the existing SQL Server integrated login, `sqlcmd`, and seeded customer IDs 5/6.
+
+```powershell
+$env:STRESS_CONFIRM_DISPOSABLE = 'yes'
+$env:STRESS_DB_DATABASE = 'CinemaBookingDB_RepoCheck'
+node database/tests/stress/showtime-cancel-race-stress.mjs
+```
+
+Optional settings: `STRESS_SQL_SERVER` (default `localhost`) and `STRESS_ROUNDS` (500–2000). The target must be a disposable database other than `CinemaBookingDB`; each completed round cleans up its test order/payment/showtime rows.
+
 Checks migrations 010/011 under concurrency through the real API: `PUT` (hide/show) interleaved
 with `PATCH .../cover` on three images of one cinema, then verifies that a cinema never has more
 than one cover and that the cover is never a hidden image. It is **not** part of `npm test` or
@@ -51,4 +63,3 @@ Options: `--customers` (8), `--seat-requests` (60), `--overlap-requests` (120), 
 **It leaves data behind that the API cannot delete** (customers `audit.stress.*@example.invalid` and one showtime in the year 2100+),
 so it refuses to run without `STRESS_CONFIRM_DISPOSABLE=yes`. Run it only against a disposable database (e.g. the one built by
 `deploy-isolated.ps1`). Deadlocks are not visible through the API; check the server log for `deadlock`/1205/1222 after the run.
-

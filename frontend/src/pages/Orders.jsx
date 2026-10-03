@@ -24,6 +24,7 @@ export default function Orders() {
           <h2>{order.movieTitle}</h2>
           <p>{order.cinemaName} · {order.roomName} · {order.startsAt}</p>
           <p>Đơn #{order.id} · {order.status}</p>
+          {order.cancellationMessage && <p role="status">{order.cancellationMessage}</p>}
           <p>Tổng thanh toán: {money(order.total)} · Thanh toán gần nhất: {order.latestPaymentStatus ?? 'Chưa tạo'}</p>
           <Link className="catalog-button" to={`/orders/${order.id}`}>Xem chi tiết</Link>
         </article>)}

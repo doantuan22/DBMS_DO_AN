@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { lifecycleErrorMessage } from '../src/utils/lifecycleErrorMessage.js';
+
+test('lifecycle conflicts have Vietnamese messages in manager/admin portals', () => {
+  const cases = [
+    ['SHOWTIME_CANNOT_CANCEL', 'Chỉ có thể hủy suất chiếu trước giờ bắt đầu.'],
+    ['SHOWTIME_HAS_ACTIVE_ORDERS', 'Suất chiếu đã có đơn; không thể đổi phim, giờ chiếu hoặc định dạng.'],
+    ['SEAT_HAS_TICKET_HISTORY', 'Ghế đã có vé hiệu lực cho suất chiếu tương lai, không thể đổi trạng thái.'],
+    ['SHOWTIME_UNAVAILABLE_FOR_PAYMENT', 'Suất chiếu đã đóng bán, đã hủy hoặc đã bắt đầu; không thể thanh toán.'],
+    ['ORDER_HOLD_EXPIRED', 'Đã hết hạn giữ ghế 5 phút. Vui lòng đặt vé lại.'],
+  ];
+  for (const [code, expected] of cases) assert.equal(lifecycleErrorMessage({ code, message: 'SQL error' }), expected);
+});

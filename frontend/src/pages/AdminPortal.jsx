@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
+import { lifecycleErrorMessage } from '../utils/lifecycleErrorMessage';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import CinemaImageManager from '../components/CinemaImageManager';
 
@@ -102,7 +103,7 @@ export default function AdminPortal() {
           setValues((current) => ({ ...current, permissionIds: (result.permissions ?? []).map((permission) => permission.QuyenID).join(',') }));
         }
       } catch (error) {
-        if (requestId === permissionRequest.current) setNotice({ ok: false, text: error.message });
+        if (requestId === permissionRequest.current) setNotice({ ok: false, text: lifecycleErrorMessage(error) });
       } finally {
         if (requestId === permissionRequest.current) setPermissionsLoading(false);
       }
@@ -123,12 +124,12 @@ export default function AdminPortal() {
           : adminApi.create(definition.path, payload));
       }
       setNotice({ ok: true, text: 'Đã lưu thay đổi.' }); clearForm(); await load();
-    } catch (error) { setNotice({ ok: false, text: error.message }); }
+    } catch (error) { setNotice({ ok: false, text: lifecycleErrorMessage(error) }); }
   };
   const remove = async (row) => {
     if (!definition || !window.confirm('Xác nhận xóa mục này? Ràng buộc nghiệp vụ sẽ từ chối xóa dữ liệu đang được sử dụng.')) return;
     try { await adminApi.remove(`${definition.path}/${row[definition.id]}`); setNotice({ ok: true, text: 'Đã xóa.' }); await load(); }
-    catch (error) { setNotice({ ok: false, text: error.message }); }
+    catch (error) { setNotice({ ok: false, text: lifecycleErrorMessage(error) }); }
   };
   const changeUserStatus = async (row) => {
     const activeStatus = 'Hoạt động';
@@ -137,12 +138,12 @@ export default function AdminPortal() {
     const next = row.TrangThai === activeStatus ? lockedStatus : activeStatus;
     if (!window.confirm(`Xác nhận ${next === lockedStatus ? 'khóa' : 'mở khóa'} tài khoản này?`)) return;
     try { await adminApi.update(`users/${row.NguoiDungID}/status`, { status: next }); setNotice({ ok: true, text: 'Đã cập nhật tài khoản.' }); await load(); }
-    catch (error) { setNotice({ ok: false, text: error.message }); }
+    catch (error) { setNotice({ ok: false, text: lifecycleErrorMessage(error) }); }
   };
   const cancelShowtime = async (row) => {
     if (!window.confirm('Xác nhận hủy suất chiếu? Đơn đang giữ ghế sẽ khiến thao tác bị từ chối.')) return;
     try { await adminApi.create(`showtimes/${row.SuatChieuID}/cancel`, {}); setNotice({ ok: true, text: 'Đã hủy suất chiếu.' }); await load(); }
-    catch (error) { setNotice({ ok: false, text: error.message }); }
+    catch (error) { setNotice({ ok: false, text: lifecycleErrorMessage(error) }); }
   };
   const openComplaint = async (row) => {
     setSelected(row); setComplaint({ status: 'loading' }); setOrderReference(null);
@@ -161,7 +162,7 @@ export default function AdminPortal() {
       setNotice({ ok: true, text: 'Đã cập nhật khiếu nại và ghi lịch sử.' });
       if (action === 'processing') setProcessingForm((current) => ({ ...current, content: '' }));
       await load(); await openComplaint(selected);
-    } catch (error) { setNotice({ ok: false, text: error.message }); }
+    } catch (error) { setNotice({ ok: false, text: lifecycleErrorMessage(error) }); }
   };
   const writeCast = async (event) => {
     event.preventDefault();

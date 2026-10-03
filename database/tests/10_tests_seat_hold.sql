@@ -101,16 +101,17 @@ SELECT @Han = HanGiuCho FROM dbo.DONDATVE WHERE DonDatVeID = @Don3;
 IF DATEDIFF(SECOND, SYSDATETIME(), @Han) <= 61 PRINT N'PASS - T9: bắt đầu thanh toán không gia hạn giữ ghế';
 ELSE BEGIN SET @Fail += 1; PRINT N'FAIL - T9'; END
 
--- T10: kết quả thanh toán về muộn khi ghế đã bị đơn khác giữ -> giao dịch thất bại, không đè đơn khác
+-- T10: kết quả thanh toán về sau hạn giữ 5 phút bị từ chối ngay cả khi ghế vẫn còn trống (P2)
 SET @Total += 1;
 UPDATE dbo.DONDATVE SET HanGiuCho = DATEADD(MINUTE, -1, SYSDATETIME()) WHERE DonDatVeID = @Don3;
-DECLARE @Don4 INT;
-EXEC dbo.sp_DatVe @NguoiDungID = 8, @SuatChieuID = @Suat, @DanhSachGheId = @GheStr2, @NewDonDatVeID = @Don4 OUTPUT;
-EXEC dbo.sp_Payment_UpdateResult @ThanhToanID = @Tt, @TrangThaiThanhToan = N'Thành công';
-IF (SELECT TrangThai FROM dbo.THANHTOAN WHERE ThanhToanID = @Tt) = N'Thất bại'
+SET @Err = 0;
+BEGIN TRY EXEC dbo.sp_Payment_UpdateResult @ThanhToanID = @Tt, @TrangThaiThanhToan = N'Thành công'; END TRY
+BEGIN CATCH SET @Err = ERROR_NUMBER(); END CATCH
+IF @Err = 50111
    AND (SELECT TrangThai FROM dbo.DONDATVE WHERE DonDatVeID = @Don3) <> N'Đã thanh toán'
-    PRINT N'PASS - T10: thanh toán muộn khi ghế đã bị người khác giữ bị từ chối';
-ELSE BEGIN SET @Fail += 1; PRINT N'FAIL - T10'; END
+   AND (SELECT TrangThaiGhe FROM dbo.fn_DanhSachGheSuatChieu(@Suat) WHERE GheID = @Ghe2) = N'Trống'
+    PRINT N'PASS - T10: thanh toán sau hạn bị từ chối và ghế được nhả';
+ELSE BEGIN SET @Fail += 1; PRINT N'FAIL - T10: err=' + CAST(@Err AS VARCHAR(10)); END
 
 -- T11: suất chiếu chưa ai đặt thì hủy được
 SET @Total += 1;

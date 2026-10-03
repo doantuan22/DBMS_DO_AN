@@ -23,13 +23,21 @@ const FLOW_SERVICES = {
 // Which flow(s) a code belongs to. Triggers and the pricing trigger are shared, so they are listed by code first.
 const CODE_FLOWS = { 50001: ['manager', 'admin'], 50002: ['booking'], 50003: ['booking'], 50004: ['feedback'], 50005: ['support'], 50215: ['manager', 'admin'] };
 const FOLDER_FLOWS = [['procedures/auth/', ['auth']], ['procedures/manager/', ['manager']], ['procedures/support/', ['support']], ['procedures/admin/', ['admin']]];
-const MIGRATION_FLOWS = { '003': ['feedback'], '004': ['manager'], '005': ['support'], '006': ['support'], '008': ['admin'], '009': ['admin'], '010': ['admin'], '011': ['admin'], '012': ['booking', 'orders'], '013': ['admin', 'manager'] };
+const MIGRATION_FLOWS = { '003': ['feedback'], '004': ['manager'], '005': ['support'], '006': ['support'], '008': ['admin'], '009': ['admin'], '010': ['admin'], '011': ['admin'], '012': ['booking', 'orders'], '013': ['admin', 'manager'], '014': [] };
 
 function flowsOf(file, code) {
   if (CODE_FLOWS[code]) return CODE_FLOWS[code];
   for (const [prefix, flows] of FOLDER_FLOWS) if (file.startsWith(prefix)) return flows;
   const migration = /^migrations\/(\d{3})_/.exec(file)?.[1];
   if (migration && MIGRATION_FLOWS[migration]) {
+    if (migration === '014') {
+      if ([50119, 50120, 50123, 50207, 50058, 50116, 50117, 50118].includes(code)) return ['admin', 'manager'];
+      if ([50030, 50031, 50032, 50033, 50111, 50113, 50114, 50115, 50121].includes(code)) return ['orders'];
+      if (code === 50050) return ['manager'];
+      if ([50057, 50109].includes(code)) return ['manager'];
+      if ([50206, 50211].includes(code)) return ['admin'];
+      return [];
+    }
     // 012 carries booking codes 50020-50029 and order/payment codes 50030-50039, 50111-50119
     if (migration === '012') return (code >= 50020 && code <= 50029) ? ['booking'] : ['orders'];
     return MIGRATION_FLOWS[migration];

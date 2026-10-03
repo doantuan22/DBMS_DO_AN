@@ -21,6 +21,22 @@ test('orders map the four database recordsets without client prices or ownership
   assert.deepEqual(order.payments[0], { id: 7, method: 'MOMO', amount: 115000, createdAt: undefined, paidAt: undefined, transactionCode: undefined, status: 'Thất bại', note: undefined });
 });
 
+test('customer order details expose the saved showtime cancellation reason and exact notice', async () => {
+  const service = createOrderService({ execute: async () => {
+    const result = detailResult();
+    Object.assign(result.recordsets[0][0], {
+      TrangThaiDon: 'Đã hủy',
+      LyDoHuy: 'Showtime cancelled by operator',
+      ThongBaoHuy: 'Suất chiếu đã bị hủy, tiền sẽ được hoàn về thông qua nền tảng thanh toán',
+    });
+    return result;
+  } });
+  const order = await service.getOrderDetail(5, 12);
+  assert.equal(order.status, 'Đã hủy');
+  assert.equal(order.cancellationReason, 'Showtime cancelled by operator');
+  assert.equal(order.cancellationMessage, 'Suất chiếu đã bị hủy, tiền sẽ được hoàn về thông qua nền tảng thanh toán');
+});
+
 test('payment creation first performs the database ownership lookup and never accepts amount', async () => {
   const calls = [];
   const service = createOrderService({

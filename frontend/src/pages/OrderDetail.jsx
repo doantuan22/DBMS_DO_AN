@@ -18,6 +18,8 @@ export default function OrderDetail() {
   const order = resource.data;
   return <section className="catalog-page"><p className="catalog-eyebrow">ĐƠN #{order.id}</p><h1>{order.movieTitle}</h1>
     <p>{order.cinemaName} · {order.roomName} · {order.startsAt}</p><p>Trạng thái đơn: {order.status}</p>
+    {order.cancellationMessage && <p role="status">{order.cancellationMessage}</p>}
+    {order.cancellationReason && <p>Lý do hủy: {order.cancellationReason}</p>}
     <p>Ghế: {order.seatLabels || order.tickets.map((ticket) => ticket.label).join(', ')}</p>
     <p>Vé: {money(order.ticketTotal)} · Đồ ăn: {money(order.productTotal)} · Giảm giá: {money(order.discountTotal)} · <strong>Tổng: {money(order.total)}</strong></p>
     <h2>Vé</h2><ul>{order.tickets.map((ticket) => <li key={ticket.id}>{ticket.label} · {ticket.type} · {money(ticket.price)} · {ticket.status}</li>)}</ul>
