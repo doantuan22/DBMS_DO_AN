@@ -5,7 +5,7 @@ import path from 'node:path';
 import { credentials, root, dbRoot, read, write } from '../db/lib.mjs';
 import { connect, ask, sql, rbacInventory } from '../r3a/common.mjs';
 const database=process.argv.find(a=>a.startsWith('--database='))?.slice(11);
-assert.match(database??'',/^CinemaBookingDB_R0_R1_R2_(?:R3B|R4)[A-Za-z0-9_]+$/);
+assert.match(database??'',/^CinemaBookingDB_R0_R1_R2_(?:R3B|R4|R5)[A-Za-z0-9_]+$/);
 Object.assign(process.env,credentials(),{DB_DATABASE:database});
 process.chdir(path.join(root,'backend'));
 const {createApp}=await import('../../backend/src/app.js');

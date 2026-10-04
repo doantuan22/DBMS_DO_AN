@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "bugs": {
+    "BUG-002": "RESOLVED",
+    "BUG-003": "RESOLVED",
+    "BUG-008": "RESOLVED",
+    "BUG-009": "RESOLVED",
+    "BUG-010": "RESOLVED",
+    "BUG-011": "RESOLVED",
+    "BUG-012": "RESOLVED",
+    "BUG-013": "RESOLVED",
+    "BUG-015": "RESOLVED",
+    "BUG-016": "RESOLVED",
+    "BUG-017": "RESOLVED",
+    "BUG-018": "RESOLVED"
+  },
+  "database": {
+    "name": "CinemaBookingDB",
+    "tablesBefore": 27,
+    "tablesAfter": 27,
+    "modules": 159,
+    "modifiedExistingModules": 13,
+    "newTables": 0,
+    "newIndexes": 0,
+    "newConstraints": 0,
+    "all27TablesDataPreserved": true,
+    "schemaAndExecutionGrantsPreserved": true,
+    "trialDatabasesRemaining": 0,
+    "backupRestoreVerified": true
+  },
+  "tests": {
+    "backend": 110,
+    "frontend": 37,
+    "r5HTTP": 120,
+    "r5DB": 29,
+    "supplementalHTTP": 46,
+    "stringBindings": 72,
+    "r1": "PASS: SQL fixed clock, 3 host TZs, browser",
+    "r2HTTP": 103,
+    "r2Checks": 14,
+    "r3HTTP": 270,
+    "r3DB": 134,
+    "r3Browser": 26,
+    "r4HTTP": 100,
+    "r4DB": 31,
+    "r4Browser": 156,
+    "cleanReset": "PASS",
+    "sourceParity": "PASS",
+    "migrationUpgrade": "PASS",
+    "migrationIdempotency": "PASS",
+    "migrationFailureAtomicity": "PASS",
+    "bookingConcurrency": "PASS",
+    "assignmentConcurrentCreates": 16,
+    "assignmentConcurrentUpdates": 16,
+    "mainHTTP": 31,
+    "noRawSQL": "PASS",
+    "build": "PASS",
+    "lint": "PASS"
+  },
+  "limitations": [
+    "Main HTTP smoke skips future showtime detail/seats because main data has no suitable future show; both passed on fixture. Historical DATA-* remains unchanged."
+  ]
+}

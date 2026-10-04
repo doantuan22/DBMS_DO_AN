@@ -1,6 +1,7 @@
 import { isDateOnly } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
 import { validatePassword } from '../utils/password.js';
+import { birthDate } from '../utils/inputContract.js';
 
 const allowedRegistrationFields = new Set(['HoTen', 'Email', 'MatKhau', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
 const allowedProfileFields = new Set(['HoTen', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
@@ -74,7 +75,7 @@ function profileFields(body) {
   return {
     HoTen: validateName(body.HoTen),
     SoDienThoai: validatePhone(body.SoDienThoai),
-    NgaySinh: dateOrNull(body.NgaySinh, 'NgaySinh'),
+    NgaySinh: birthDate(dateOrNull(body.NgaySinh, 'NgaySinh'), 'NgaySinh'),
     GioiTinh: validateGender(body.GioiTinh),
   };
 }

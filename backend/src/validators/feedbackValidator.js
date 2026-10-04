@@ -1,10 +1,8 @@
 import { HttpError } from '../utils/httpError.js';
+import { sqlId } from '../utils/inputContract.js';
 
 function positiveInteger(value, field) {
-  if (!/^\d+$/.test(String(value ?? ''))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
-  const parsed = Number(value);
-  if (!Number.isSafeInteger(parsed) || parsed <= 0) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
-  return parsed;
+  return sqlId(value, field);
 }
 
 function objectOnly(value, allowedKeys) {

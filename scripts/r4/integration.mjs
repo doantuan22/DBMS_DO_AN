@@ -5,7 +5,7 @@ import {connect,ask,sql,root,write} from '../r3a/common.mjs';
 import {credentials} from '../db/lib.mjs';
 import {adminForms,formFields,inputValue,toBody} from '../../frontend/src/utils/adminForms.js';
 const database=process.argv.find(a=>a.startsWith('--database='))?.slice(11);
-assert.match(database??'',/^CinemaBookingDB_R0_R1_R2_R4[A-Za-z0-9_]+$/);
+assert.match(database??'',/^CinemaBookingDB_R0_R1_R2_R(?:4|5)[A-Za-z0-9_]+$/);
 Object.assign(process.env,credentials(),{DB_DATABASE:database});
 process.chdir(path.join(root,'backend'));
 const {createApp}=await import('../../backend/src/app.js');
@@ -109,8 +109,8 @@ try{
   check('BUG006 saved values verified '+key,true);
   inventory.push({key,id:row[definition.id],fields,row,payload,persistedPayload:changed,route,status:'PASS'});
  }
- write(path.join(root,'audit/remediation/r4/evidence/edit-inventory.json'),{status:'PASS',database,forms:inventory});
- write(path.join(root,'audit/remediation/r4/evidence/functional-api.json'),{status:'PASS',database,checks,requests});
+ write(path.join(root,process.env.R4_EVIDENCE_DIR||'audit/remediation/r4/evidence','edit-inventory.json'),{status:'PASS',database,forms:inventory});
+ write(path.join(root,process.env.R4_EVIDENCE_DIR||'audit/remediation/r4/evidence','functional-api.json'),{status:'PASS',database,checks,requests});
  console.log(`PASS R4 HTTP/SP: ${requests.length} requests, ${checks.length} DB assertions; ${inventory.length} edit contracts`);
-}catch(error){write(path.join(root,'audit/remediation/r4/evidence/functional-api.json'),{status:'FAIL',database,checks,requests,error:error.message});throw error;}
+}catch(error){write(path.join(root,process.env.R4_EVIDENCE_DIR||'audit/remediation/r4/evidence','functional-api.json'),{status:'FAIL',database,checks,requests,error:error.message});throw error;}
 finally{await new Promise(r=>server.close(r));await closePool();await pool.close();}

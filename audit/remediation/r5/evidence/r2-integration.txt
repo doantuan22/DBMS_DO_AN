@@ -1,0 +1,15 @@
+PASS one live hold blocks admin cancellation with HTTP 409
+PASS multiple live holds block manager cancellation with HTTP 409
+PASS blocked cancellation rolls back expiry and keeps the showtime open
+PASS expired holds release seats and cancellation preserves expired order state
+PASS payment after expiry rejected, retry rejected, no points, seat released
+PASS both payment SP entry points persist expiry and ticket release before domain rejection
+PASS payment before expiry succeeds and repeats safely
+PASS paid-only cancellation: 120/120/90/100/0 points per customer, food excluded
+PASS 12 concurrent cancels plus retry: one audit entry/order and no double-credit
+PASS all successful payment columns/history unchanged; no refund
+PASS caller rollback restores show, orders, audit and points; multiple paid orders/customer sum once
+PASS compensation write failure rolls back cancellation atomically
+PASS payment starts before expiry but waits past deadline: DB rejects after locks
+PASS booking/cancellation race has only valid serialized outcomes
+PASS R2 integration: 14 checks, 103 HTTP requests

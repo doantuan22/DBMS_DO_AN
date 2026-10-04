@@ -1,13 +1,15 @@
 import { isDateOnly, isApiInstant } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
+import { sqlId, sqlInteger, sqlDecimal } from '../utils/inputContract.js';
+import { ROOM_TYPES as roomTypes, SEAT_TYPES as seatTypes, DAY_TYPES as dayTypes, RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
 
-const ROOM_TYPES = new Set(['2D', '3D', 'IMAX', '4DX', 'ScreenX']);
-const ROOM_STATUSES = new Set(['Hoạt động', 'Bảo trì', 'Ngừng hoạt động']);
-const SEAT_TYPES = new Set(['Thường', 'VIP', 'Sweetbox', 'Đôi']);
-const SEAT_STATUSES = new Set(['Hoạt động', 'Hỏng', 'Bảo trì']);
-const SHOWTIME_STATUSES = new Set(['Mở bán', 'Tạm ngừng', 'Đã hủy', 'Hoàn thành']);
-const DAY_TYPES = new Set(['Ngày thường', 'Cuối tuần', 'Ngày lễ', 'Tất cả']);
-const PRICING_STATUSES = new Set(['Áp dụng', 'Hết hạn', 'Tạm dừng']);
+const ROOM_TYPES = new Set(roomTypes);
+const ROOM_STATUSES = new Set(RESOURCE_STATUSES.rooms);
+const SEAT_TYPES = new Set(seatTypes);
+const SEAT_STATUSES = new Set(RESOURCE_STATUSES.seats);
+const SHOWTIME_STATUSES = new Set(RESOURCE_STATUSES.showtimes);
+const DAY_TYPES = new Set(dayTypes);
+const PRICING_STATUSES = new Set(RESOURCE_STATUSES.pricing);
 
 function objectOnly(value, allowedFields) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -20,14 +22,7 @@ function objectOnly(value, allowedFields) {
 }
 
 function id(value, field) {
-  if (!/^\d+$/.test(String(value ?? ''))) {
-    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
-  }
-  const parsed = Number(value);
-  if (!Number.isSafeInteger(parsed) || parsed <= 0) {
-    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
-  }
-  return parsed;
+  return sqlId(value, field);
 }
 
 function text(value, field, maxLength) {
@@ -45,7 +40,8 @@ function enumValue(value, field, supportedValues) {
 }
 
 function nonNegative(value, field) {
-  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+  sqlDecimal(value, field);
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value >= 1e16) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a non-negative number.`);
   }
   return value;
@@ -121,8 +117,8 @@ export function seatUpdate(value) {
 export function showtimeCreate(value) {
   const body = objectOnly(value, ['movieId', 'roomId', 'startsAt', 'endsAt', 'format', 'basePrice']);
   return {
-    movieId: id(body.movieId, 'movieId'),
-    roomId: id(body.roomId, 'roomId'),
+    movieId: sqlInteger(body.movieId, 'movieId'),
+    roomId: sqlInteger(body.roomId, 'roomId'),
     ...showtimeTimes(body),
     format: body.format === undefined ? '2D' : enumValue(body.format, 'format', ROOM_TYPES),
     basePrice: nonNegative(body.basePrice, 'basePrice'),
@@ -132,7 +128,7 @@ export function showtimeCreate(value) {
 export function showtimeUpdate(value) {
   const body = objectOnly(value, ['movieId', 'startsAt', 'endsAt', 'format', 'basePrice', 'status']);
   return {
-    movieId: id(body.movieId, 'movieId'),
+    movieId: sqlInteger(body.movieId, 'movieId'),
     ...showtimeTimes(body),
     format: enumValue(body.format, 'format', ROOM_TYPES),
     basePrice: nonNegative(body.basePrice, 'basePrice'),

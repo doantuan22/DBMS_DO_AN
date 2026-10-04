@@ -49,6 +49,8 @@ BEGIN
             TrangThai = @TrangThai
         WHERE PhimID = @PhimID;
 
+        IF @@ROWCOUNT = 0 THROW 50102, N'Phim không tồn tại.', 1;
+
         IF @TheLoaiIdList IS NOT NULL
         BEGIN
             DELETE FROM dbo.PHIM_THELOAI WHERE PhimID = @PhimID;

@@ -34,6 +34,8 @@ BEGIN
         TrangThai = @TrangThai
     WHERE RapID = @RapID;
 
+    IF @@ROWCOUNT = 0 THROW 50095, N'Rạp không tồn tại.', 1;
+
     SELECT RapID, TenRap, DiaChi, ThanhPho, SoDienThoai, MoTa, TrangThai
     FROM dbo.RAPCHIEUPHIM
     WHERE RapID = @RapID;

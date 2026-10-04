@@ -1,14 +1,12 @@
 import { HttpError } from '../utils/httpError.js';
+import { sqlId } from '../utils/inputContract.js';
 
 const COMPLAINT_STATUSES = new Set(['Mới', 'Đang xử lý', 'Đã giải quyết', 'Đã đóng', 'Từ chối']);
 // CK_XULY_KHIEUNAI_TrangThaiSauXuLy deliberately excludes the initial state.
 const PROCESSING_STATUSES = new Set(['Đang xử lý', 'Đã giải quyết', 'Đã đóng', 'Từ chối']);
 
 function positiveId(value) {
-  if (!/^\d+$/.test(String(value ?? '')) || Number(value) <= 0) {
-    throw new HttpError(400, 'INVALID_REQUEST', 'complaintId must be a positive integer.');
-  }
-  return Number(value);
+  return sqlId(value, 'complaintId');
 }
 
 function requiredText(value, field) {
@@ -26,9 +24,10 @@ function assertOnlyFields(value, fields, errorCode) {
 }
 
 function optionalText(value, field, maxLength) {
-  return value === undefined || value === ''
-    ? null
-    : requiredText(value, field).slice(0, maxLength);
+  if (value === undefined || value === '') return null;
+  const text = requiredText(value, field);
+  if (text.length > maxLength) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
+  return text;
 }
 
 export const complaintId = positiveId;

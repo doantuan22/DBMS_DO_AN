@@ -1,0 +1,293 @@
+{
+  "database": "CinemaBookingDB_R0_R1_R2_R5Fix",
+  "status": "PASS",
+  "checks": [
+    "Failure rolls back changed module and all data",
+    "Upgrade from captured pre-R5 definitions preserves all 27 tables including existing anomalous fixture records",
+    "Applying migration twice is idempotent"
+  ],
+  "before": {
+    "modulesSha256": "d26c78efb1a35662ff058d88bbeba401be708d4dd8bf393dee7682a4e4ff96e7",
+    "schemaSha256": "0cdf70d3dc5d13a8d7a5976f254a72a0a944b80d79a4985ec3387457f3047fcc",
+    "dbPermissionsSha256": "90979166e3444df5af523c878351ce734dceecf5a6390d092b40a0e6d26d43ca",
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "45b1d432cb7af993818a1e835ca3a5589e2a05455b705b3f857a184007dcc744"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 3,
+        "sha256": "d5d38ca1823a0bdfb5fc300821f472a6fabd8a54ce7348206bb571104407b508"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 2,
+        "sha256": "2d0bcd3303a784650d43647a388bbad5355b14c481abd729e272ec59d100124b"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 2,
+        "sha256": "33212efeab81bdb16ce94cb8e4c580d3542bdd56a3872072c192dc1df455f2b0"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 7,
+        "sha256": "9e22066aa1c31f77e97153ee5f4ba2b32d0281373fa81d950e8f0723d4630a50"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 4,
+        "sha256": "c4dea01dc08aa2d6c5f825c08c4202f7880fad4c51d9447c9eaf5f6055ec7674"
+      },
+      {
+        "table": "GHE",
+        "rows": 245,
+        "sha256": "4d2a3860acb7d0d633bb427189a39a702ad8eea450960323d97d6b9be18675cf"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "e83695120ddf2ebb09d9d7fb588d73b0447b49da2b441aed39c12855f74af49c"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 5,
+        "sha256": "f44a7ddf2f9d07256dcfbd9ec1606e64efb704159b811de00a4ed74f9824862b"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "8dd2a2e49025d00333cc85ed7435962d75c3ad13d6fc4d5e1468be3b9eb248a0"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 10,
+        "sha256": "274a016f964a8a43680c5087c3e38608706b77a298da94211ba46e4e50550849"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 5,
+        "sha256": "289224afc321527e2b4230fc10a3f2590f0d42a1809980cf3523919c9b43c7a5"
+      },
+      {
+        "table": "PHIM",
+        "rows": 5,
+        "sha256": "351524c75e21b4483404f3ef22205d7820f60f8f8e04e2596bdfa390158ab3db"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 6,
+        "sha256": "eab880b25a9a14b58296526eec101d9a0f51bd458b384a8e277ecd806d7e039b"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 9,
+        "sha256": "8978c9b08756f2bab26de0a83a838a1929265a8497b4005ccc3ca8f5df5841b2"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 7,
+        "sha256": "d1397453a5467b52a5abd04a272268cdf987298a29cbfe9bf79eaa428f8236b1"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "f5536acf74daf99d2a76332c8b429679232f1dee023e6f47737893f40f00eaec"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "569b20dd6708d3bcf0e0ab479c67525f1f68f244f83bd3d75a58c27e80546f28"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 6,
+        "sha256": "c40357f2f3a45e1d8612dbce5039f81b82c8981c517c5b87e8b7afafed601b79"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 10,
+        "sha256": "c2dc3d1e12a8b79c1d6d8c8c06e07eb0cc46f42ef5bdb5f8decd2f47e520bd4d"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "76a05074ea0246044522c05670b33bdd1a253e883d23008579b33ef696509801"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 5,
+        "sha256": "d42d47c79d314f1113d97bed7db202eb63a14b1f691ba4f2413c1088f3a375fb"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "e20dc77ddd0a032eab0bd63e8c35206569a63e607ee4f26f1cfa6c1a1d5efb46"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ]
+  },
+  "after": {
+    "modulesSha256": "57404a476fc4165a92b73ef8d190043f51d4e94f957e2a6481e037994969eafe",
+    "schemaSha256": "0cdf70d3dc5d13a8d7a5976f254a72a0a944b80d79a4985ec3387457f3047fcc",
+    "dbPermissionsSha256": "90979166e3444df5af523c878351ce734dceecf5a6390d092b40a0e6d26d43ca",
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "45b1d432cb7af993818a1e835ca3a5589e2a05455b705b3f857a184007dcc744"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 3,
+        "sha256": "d5d38ca1823a0bdfb5fc300821f472a6fabd8a54ce7348206bb571104407b508"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 2,
+        "sha256": "2d0bcd3303a784650d43647a388bbad5355b14c481abd729e272ec59d100124b"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 2,
+        "sha256": "33212efeab81bdb16ce94cb8e4c580d3542bdd56a3872072c192dc1df455f2b0"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 7,
+        "sha256": "9e22066aa1c31f77e97153ee5f4ba2b32d0281373fa81d950e8f0723d4630a50"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 4,
+        "sha256": "c4dea01dc08aa2d6c5f825c08c4202f7880fad4c51d9447c9eaf5f6055ec7674"
+      },
+      {
+        "table": "GHE",
+        "rows": 245,
+        "sha256": "4d2a3860acb7d0d633bb427189a39a702ad8eea450960323d97d6b9be18675cf"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "e83695120ddf2ebb09d9d7fb588d73b0447b49da2b441aed39c12855f74af49c"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 5,
+        "sha256": "f44a7ddf2f9d07256dcfbd9ec1606e64efb704159b811de00a4ed74f9824862b"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "8dd2a2e49025d00333cc85ed7435962d75c3ad13d6fc4d5e1468be3b9eb248a0"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 10,
+        "sha256": "274a016f964a8a43680c5087c3e38608706b77a298da94211ba46e4e50550849"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 5,
+        "sha256": "289224afc321527e2b4230fc10a3f2590f0d42a1809980cf3523919c9b43c7a5"
+      },
+      {
+        "table": "PHIM",
+        "rows": 5,
+        "sha256": "351524c75e21b4483404f3ef22205d7820f60f8f8e04e2596bdfa390158ab3db"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 6,
+        "sha256": "eab880b25a9a14b58296526eec101d9a0f51bd458b384a8e277ecd806d7e039b"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 9,
+        "sha256": "8978c9b08756f2bab26de0a83a838a1929265a8497b4005ccc3ca8f5df5841b2"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 7,
+        "sha256": "d1397453a5467b52a5abd04a272268cdf987298a29cbfe9bf79eaa428f8236b1"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "f5536acf74daf99d2a76332c8b429679232f1dee023e6f47737893f40f00eaec"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "569b20dd6708d3bcf0e0ab479c67525f1f68f244f83bd3d75a58c27e80546f28"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 6,
+        "sha256": "c40357f2f3a45e1d8612dbce5039f81b82c8981c517c5b87e8b7afafed601b79"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 10,
+        "sha256": "c2dc3d1e12a8b79c1d6d8c8c06e07eb0cc46f42ef5bdb5f8decd2f47e520bd4d"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "76a05074ea0246044522c05670b33bdd1a253e883d23008579b33ef696509801"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 5,
+        "sha256": "d42d47c79d314f1113d97bed7db202eb63a14b1f691ba4f2413c1088f3a375fb"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "e20dc77ddd0a032eab0bd63e8c35206569a63e607ee4f26f1cfa6c1a1d5efb46"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ]
+  }
+}

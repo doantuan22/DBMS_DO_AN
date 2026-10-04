@@ -18,8 +18,11 @@ BEGIN
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'PHANCONG_RAP') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
+    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
     BEGIN TRY
-        BEGIN TRANSACTION;
+        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AssignmentUpdate;
+        DECLARE @LockedRows BIGINT;
+        SELECT @LockedRows = COUNT_BIG(*) FROM dbo.PHANCONG_RAP WITH (TABLOCKX, HOLDLOCK);
         IF NOT EXISTS (SELECT 1 FROM dbo.PHANCONG_RAP WITH (UPDLOCK, HOLDLOCK) WHERE PhanCongID = @PhanCongID)
             THROW 50212, N'Phân công không tồn tại.', 1;
         IF NOT EXISTS (
@@ -28,18 +31,26 @@ BEGIN
         ) THROW 50071, N'Tài khoản được phân công phải có vai trò QUAN_LY_RAP.', 1;
         IF @NgayKetThuc IS NOT NULL AND @NgayKetThuc < @NgayBatDau
             THROW 50213, N'Khoảng thời gian phân công không hợp lệ.', 1;
+        IF EXISTS (SELECT 1 FROM dbo.PHANCONG_RAP WHERE PhanCongID <> @PhanCongID
+            AND NguoiDungID = @NguoiDungID AND RapID = @RapID AND NgayBatDau = @NgayBatDau
+            AND (NgayKetThuc = @NgayKetThuc OR (NgayKetThuc IS NULL AND @NgayKetThuc IS NULL))
+            AND TrangThai = @TrangThai) THROW 50401, N'Phân công hoàn toàn giống nhau đã tồn tại.', 1;
         UPDATE dbo.PHANCONG_RAP
         SET NguoiDungID = @NguoiDungID, RapID = @RapID, NgayBatDau = @NgayBatDau,
             NgayKetThuc = @NgayKetThuc, TrangThai = @TrangThai
         WHERE PhanCongID = @PhanCongID;
-        COMMIT TRANSACTION;
+        IF @OwnTran = 1 COMMIT TRANSACTION;
         SELECT p.PhanCongID, p.NguoiDungID, nd.HoTen AS TenQuanLy, nd.Email, p.RapID, r.TenRap,
                p.NgayBatDau, p.NgayKetThuc, p.TrangThai
         FROM dbo.PHANCONG_RAP p INNER JOIN dbo.NGUOIDUNG nd ON nd.NguoiDungID = p.NguoiDungID
         INNER JOIN dbo.RAPCHIEUPHIM r ON r.RapID = p.RapID WHERE p.PhanCongID = @PhanCongID;
     END TRY
     BEGIN CATCH
-        IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
+        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @OwnTran = 1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AssignmentUpdate;
+        END
         ;THROW;
     END CATCH
 END;

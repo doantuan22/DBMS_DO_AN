@@ -24,6 +24,8 @@ BEGIN
     SET TrangThai = @TrangThai
     WHERE NguoiDungID = @NguoiDungID;
 
+    IF @@ROWCOUNT = 0 THROW 50403, N'Người dùng không tồn tại.', 1;
+
     SELECT NguoiDungID, HoTen, Email, TrangThai FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID;
 END;
 GO

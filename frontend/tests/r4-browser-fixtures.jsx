@@ -1,5 +1,6 @@
 // Actual React event handlers; the captured payloads are also exercised against SQL by R4 integration.
 export async function testR4Pages() {
+  const {RESOURCE_STATUSES}=await import('../../shared/resourceContract.mjs');
   const inventory=(await (await fetch('/__r4-inventory')).json()).forms;
   const [{default:React},{createRoot},{flushSync},{MemoryRouter},{AuthContext},{default:Admin},{default:Manager},{default:Images},{ADMIN_SECTION_PERMISSIONS}]=await Promise.all([
     import('react'),import('react-dom/client'),import('react-dom'),import('react-router-dom'),import('/src/context/AuthContext.jsx'),import('/src/pages/AdminPortal.jsx'),import('/src/pages/ManagerPortal.jsx'),import('/src/components/CinemaImageManager.jsx'),import('/src/utils/authorization.js'),
@@ -37,10 +38,14 @@ export async function testR4Pages() {
       await wait(()=>buttons(entry.key==='users'?'Trạng thái':'Sửa').length===2);
       buttons(entry.key==='users'?'Trạng thái':'Sửa')[0].click();await settle();
       const form=[...box.querySelectorAll('form')].find(f=>f.querySelector('h3')?.textContent==='Cập nhật');check(entry.key+' edit form exists',Boolean(form));
-      for(const [name,label,kind] of entry.fields){const input=[...form.querySelectorAll('input')].find(i=>i.getAttribute('aria-label')===label),expected=entry.payload[name];
+      for(const [name,label,kind] of entry.fields){const input=[...form.querySelectorAll('input,select')].find(i=>i.getAttribute('aria-label')===label),expected=entry.payload[name];
         check(entry.key+' hydration '+name,Boolean(input)&&((kind==='datetime-local'&&new Date(expected).getTime()===new Date(input.value+'+07:00').getTime())||(kind==='csv'&&input.value===(expected??[]).join(','))||(kind==='number'&&Number(input.value)===expected)||(kind!=='datetime-local'&&kind!=='csv'&&kind!=='number'&&input.value===(expected??''))));
       }
-      check(entry.key+' edit only allowed fields',form.querySelectorAll('input').length===entry.fields.length);
+      check(entry.key+' edit only allowed fields',form.querySelectorAll('input,select').length===entry.fields.length);
+      if(RESOURCE_STATUSES[entry.key]&&entry.fields.some(([name])=>name==='status')){
+        const status=form.querySelector('[aria-label="Trạng thái"]');
+        check('R5 BUG002 '+entry.key+' options match DB enum',JSON.stringify([...status.options].map(o=>o.value).filter(Boolean))===JSON.stringify(RESOURCE_STATUSES[entry.key]));
+      }
       button('Bỏ chọn').click();await settle();check(entry.key+' cancel sends no mutation',!calls.some(c=>c.method!=='GET'));
       buttons(entry.key==='users'?'Trạng thái':'Sửa')[1].click();await settle();
       buttons(entry.key==='users'?'Trạng thái':'Sửa')[0].click();await settle();

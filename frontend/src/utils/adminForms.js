@@ -35,7 +35,6 @@ export const toBody = (values, fields) => Object.fromEntries(fields.map(([name, 
   if (value === '' || value === undefined) return [name, null];
   if (kind === 'datetime-local') return [name, businessLocalToInstant(value)];
   if (kind === 'number') return [name, Number(value)];
-  if (kind === 'csv') return [name, value.split(',').map((part) => Number(part.trim())).filter(Number.isInteger)];
+  if (kind === 'csv') return [name, value.split(',').filter(part => part.trim()).map(part => Number(part.trim()))];
   return [name, value];
 }));
-

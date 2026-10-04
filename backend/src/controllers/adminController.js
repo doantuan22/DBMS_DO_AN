@@ -28,7 +28,7 @@ export const updatePermission = handle(async (req) => ({ permission: await admin
 export const deletePermission = handle(async (req) => ({ result: await adminService.deletePermission(req.user.userId, validators.pathId(req.params.permissionId, 'permissionId')) }));
 export const setRolePermissions = handle(async (req) => ({ permissions: await adminService.setRolePermissions(req.user.userId, validators.pathId(req.params.roleId, 'roleId'), validators.rolePermissionSet(req.body).permissionIds) }));
 export const rolePermissions = handle(async (req) => ({ permissions: await adminService.rolePermissions(req.user.userId, validators.pathId(req.params.roleId, 'roleId')) }));
-export const createAssignment = handle(async (req) => ({ assignment: await adminService.createAssignment(req.user.userId, validators.assignmentWrite(req.body)) }));
+export const createAssignment = handle(async (req) => ({ assignment: await adminService.createAssignment(req.user.userId, validators.assignmentWrite(req.body, true)) }));
 export const updateAssignment = handle(async (req) => ({ assignment: await adminService.updateAssignment(req.user.userId, validators.pathId(req.params.assignmentId, 'assignmentId'), validators.assignmentWrite(req.body)) }));
 export const createCinema = handle(async (req) => ({ cinema: await adminService.createCinema(req.user.userId, validators.cinemaWrite(req.body, true)) }));
 export const updateCinema = handle(async (req) => ({ cinema: await adminService.updateCinema(req.user.userId, validators.pathId(req.params.cinemaId, 'cinemaId'), validators.cinemaWrite(req.body)) }));

@@ -12,6 +12,7 @@ CREATE OR ALTER PROCEDURE dbo.sp_User_UpdateProfile
 AS
 BEGIN
     SET NOCOUNT ON;
+    IF @NgaySinh > dbo.fn_HomNay() THROW 50400, N'Ngày sinh không được ở tương lai.', 1;
     BEGIN TRY
         BEGIN TRANSACTION;
 

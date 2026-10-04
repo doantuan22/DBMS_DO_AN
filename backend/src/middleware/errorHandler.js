@@ -1,10 +1,11 @@
 import { logger } from '../utils/logger.js';
 import { authorizationError } from '../utils/authorizationErrors.js';
+import { nativeSqlError } from '../utils/sqlErrors.js';
 
 // Express recognises error handlers by their four-argument signature.
 // eslint-disable-next-line no-unused-vars
 export function errorHandler(err, req, res, next) {
-  err = authorizationError(err);
+  err = nativeSqlError(authorizationError(err));
   const unavailableCodes = new Set(['ESOCKET', 'ECONNREFUSED', 'ETIMEOUT', 'ENOTOPEN', 'ELOGIN', 'EINSTLOOKUP', 'ENOCONN']);
   const isDatabaseUnavailable = unavailableCodes.has(err.code) || err.name === 'ConnectionError';
   const status = err.status ?? (isDatabaseUnavailable ? 503 : 500);

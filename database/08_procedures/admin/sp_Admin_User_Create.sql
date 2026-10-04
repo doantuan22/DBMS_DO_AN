@@ -24,6 +24,9 @@ BEGIN
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
 
+    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
+    BEGIN TRY
+    IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminCreateUser;
     IF EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE Email = @Email)
     BEGIN
         ;THROW 50070, N'Email đã tồn tại.', 1;
@@ -31,6 +34,13 @@ BEGIN
 
     INSERT INTO dbo.NGUOIDUNG (VaiTroID, HoTen, Email, MatKhau, SoDienThoai, NgayTao, TrangThai)
     VALUES (@VaiTroID, @HoTen, @Email, @MatKhauHash, @SoDienThoai, dbo.fn_BayGio(), N'Hoạt động');
+
+    DECLARE @NewUserID INT = SCOPE_IDENTITY();
+    IF EXISTS (SELECT 1 FROM dbo.VAITRO WITH (HOLDLOCK) WHERE VaiTroID = @VaiTroID AND MaVaiTro = 'KHACH_HANG')
+        INSERT dbo.HOSOKHACHHANG (NguoiDungID, NgaySinh, GioiTinh, DiemTichLuy)
+        VALUES (@NewUserID, NULL, NULL, 0);
+
+    IF @OwnTran = 1 COMMIT TRANSACTION;
 
     SELECT
         nd.NguoiDungID,
@@ -42,6 +52,15 @@ BEGIN
         nd.TrangThai
     FROM dbo.NGUOIDUNG nd
     INNER JOIN dbo.VAITRO vt ON nd.VaiTroID = vt.VaiTroID
-    WHERE nd.NguoiDungID = SCOPE_IDENTITY();
+    WHERE nd.NguoiDungID = @NewUserID;
+    END TRY
+    BEGIN CATCH
+        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @OwnTran = 1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminCreateUser;
+        END
+        ;THROW;
+    END CATCH
 END;
 GO

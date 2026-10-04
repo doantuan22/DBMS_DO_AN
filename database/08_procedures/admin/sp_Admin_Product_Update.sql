@@ -34,6 +34,8 @@ BEGIN
         TrangThai = @TrangThai
     WHERE SanPhamID = @SanPhamID;
 
+    IF @@ROWCOUNT = 0 THROW 50105, N'Sản phẩm không tồn tại.', 1;
+
     SELECT SanPhamID, TenSanPham, LoaiSanPham, Gia, MoTa, HinhAnh, TrangThai
     FROM dbo.SANPHAM
     WHERE SanPhamID = @SanPhamID;

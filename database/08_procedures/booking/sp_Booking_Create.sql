@@ -151,15 +151,35 @@ BEGIN
             DonGia DECIMAL(18,2)
         );
 
-        IF @DanhSachDoAnJson IS NOT NULL AND ISJSON(@DanhSachDoAnJson) = 1
+        IF @DanhSachDoAnJson IS NOT NULL
         BEGIN
+            IF ISJSON(@DanhSachDoAnJson) <> 1 OR LEFT(LTRIM(@DanhSachDoAnJson), 1) <> '['
+                THROW 50402, N'Danh sách sản phẩm phải là mảng JSON hợp lệ.', 1;
+            IF EXISTS (SELECT 1 FROM OPENJSON(@DanhSachDoAnJson) WHERE [type] <> 5)
+                THROW 50402, N'Mỗi sản phẩm phải là một object hợp lệ.', 1;
+            IF EXISTS (
+                SELECT 1 FROM OPENJSON(@DanhSachDoAnJson) item
+                OUTER APPLY (SELECT [value], [type] FROM OPENJSON(item.value) WHERE [key]='SanPhamID') product
+                OUTER APPLY (SELECT [value], [type] FROM OPENJSON(item.value) WHERE [key]='SoLuong') quantity
+                WHERE product.[type] IS NULL OR product.[type] <> 2 OR quantity.[type] IS NULL OR quantity.[type] <> 2
+                  OR product.value LIKE '%[^0-9]%' OR quantity.value LIKE '%[^0-9]%'
+                  OR TRY_CONVERT(INT, product.value) IS NULL OR TRY_CONVERT(INT, product.value) <= 0
+                  OR TRY_CONVERT(BIGINT, quantity.value) IS NULL OR TRY_CONVERT(BIGINT, quantity.value) <= 0
+                  OR (SELECT COUNT(*) FROM OPENJSON(item.value) WHERE [key]='SanPhamID') <> 1
+                  OR (SELECT COUNT(*) FROM OPENJSON(item.value) WHERE [key]='SoLuong') <> 1
+            ) THROW 50402, N'Mọi mã sản phẩm và số lượng phải là số nguyên hợp lệ.', 1;
+
+            DECLARE @ProductInput TABLE (SanPhamID INT NOT NULL, SoLuong BIGINT NOT NULL);
+            INSERT @ProductInput(SanPhamID,SoLuong)
+            SELECT CONVERT(INT,product.value),CONVERT(BIGINT,quantity.value)
+            FROM OPENJSON(@DanhSachDoAnJson) item
+            CROSS APPLY (SELECT [value] FROM OPENJSON(item.value) WHERE [key]='SanPhamID') product
+            CROSS APPLY (SELECT [value] FROM OPENJSON(item.value) WHERE [key]='SoLuong') quantity;
             -- Cộng dồn các dòng trùng sản phẩm TRƯỚC khi kiểm trần (không lách được bằng cách tách dòng).
             -- SoLuong đọc BIGINT để giá trị ngoài miền INT bị chặn bởi trần thay vì gây lỗi tràn số.
             IF EXISTS (
                 SELECT 1
-                FROM OPENJSON(@DanhSachDoAnJson)
-                WITH (SanPhamID INT '$.SanPhamID', SoLuong BIGINT '$.SoLuong') j
-                WHERE j.SoLuong > 0
+                FROM @ProductInput j
                 GROUP BY j.SanPhamID
                 HAVING SUM(j.SoLuong) > dbo.fn_GioiHanSoLuongSanPham()
             )
@@ -167,16 +187,19 @@ BEGIN
                 ;THROW 50027, N'Số lượng mỗi sản phẩm vượt quá mức cho phép.', 1;
             END
 
+            DECLARE @ValidProducts INT;
+            SELECT @ValidProducts = COUNT(*) FROM dbo.SANPHAM sp WITH (UPDLOCK, HOLDLOCK)
+            INNER JOIN (SELECT DISTINCT SanPhamID FROM @ProductInput) requested ON requested.SanPhamID=sp.SanPhamID
+            WHERE sp.TrangThai=N'Đang bán';
+            IF @ValidProducts <> (SELECT COUNT(DISTINCT SanPhamID) FROM @ProductInput)
+                THROW 50402, N'Một hoặc nhiều sản phẩm không tồn tại hoặc không đang bán.', 1;
+
             INSERT INTO @BangChiTietDoAn (SanPhamID, SoLuong, DonGia)
             SELECT
                 j.SanPhamID,
                 CAST(SUM(j.SoLuong) AS INT),
                 sp.Gia
-            FROM OPENJSON(@DanhSachDoAnJson)
-            WITH (
-                SanPhamID INT '$.SanPhamID',
-                SoLuong BIGINT '$.SoLuong'
-            ) j
+            FROM @ProductInput j
             INNER JOIN dbo.SANPHAM sp WITH (UPDLOCK, HOLDLOCK) ON j.SanPhamID = sp.SanPhamID
             WHERE j.SoLuong > 0 AND sp.TrangThai = N'Đang bán'
             GROUP BY j.SanPhamID, sp.Gia;

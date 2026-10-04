@@ -1,0 +1,274 @@
+{
+  "database": "CinemaBookingDB_R0_R1_R2_R5Fix",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "16 concurrent assignment updates -> exactly1 success,15 conflicts",
+      "status": "PASS"
+    },
+    {
+      "name": "No fully identical assignment groups in fixture",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid booking leaves all27 data hashes unchanged with real active promotion",
+      "status": "PASS"
+    },
+    {
+      "name": "Promotion usage increments once only for valid commit",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "name": "login",
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "name": "login",
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "create distinct assignment",
+      "route": "/admin/assignments",
+      "status": 200
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/7",
+      "status": 200
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/8",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/9",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/10",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/11",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/12",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/13",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/14",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/15",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/16",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/17",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/18",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/19",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/20",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/21",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "concurrent equivalent UPDATE",
+      "route": "/admin/assignments/22",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "name": "missing movie empty genres404",
+      "route": "/admin/movies/2147483647",
+      "status": 404,
+      "error": "MOVIE_NOT_FOUND"
+    },
+    {
+      "name": "missing movie nonempty genres404",
+      "route": "/admin/movies/2147483647",
+      "status": 404,
+      "error": "MOVIE_NOT_FOUND"
+    },
+    {
+      "name": "missing pricing404",
+      "route": "/admin/pricing/2147483647",
+      "status": 404,
+      "error": "PRICING_NOT_FOUND"
+    },
+    {
+      "name": "missing assignment404",
+      "route": "/admin/assignments/2147483647",
+      "status": 404,
+      "error": "ASSIGNMENT_NOT_FOUND"
+    },
+    {
+      "name": "customer for promotion rollback",
+      "route": "/auth/register",
+      "status": 201
+    },
+    {
+      "name": "customer login",
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "name": "active promotion fixture",
+      "route": "/admin/promotions",
+      "status": 201
+    },
+    {
+      "name": "create room",
+      "route": "/manager/cinemas/1/rooms",
+      "status": 201
+    },
+    {
+      "name": "create seat",
+      "route": "/manager/rooms/15/seats",
+      "status": 201
+    },
+    {
+      "name": "create show",
+      "route": "/manager/showtimes",
+      "status": 201
+    },
+    {
+      "name": "invalid product with real active promotion",
+      "route": "/bookings",
+      "status": 400,
+      "error": "INVALID_PRODUCT"
+    },
+    {
+      "name": "valid products/promotion succeed",
+      "route": "/bookings",
+      "status": 201
+    }
+  ]
+}

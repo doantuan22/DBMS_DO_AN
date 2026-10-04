@@ -2,6 +2,8 @@ import sql from 'mssql';
 import { getPool } from './pool.js';
 import { PROCEDURES, isKnownProcedure } from './procedures.js';
 import { parseApiInstant, serializeDateOnly, serializeInstant } from '../utils/dateTime.js';
+import { sqlInteger, sqlDecimal } from '../utils/inputContract.js';
+import { HttpError } from '../utils/httpError.js';
 
 // mssql data types, re-exported so services can declare typed parameters.
 export const DbTypes = sql;
@@ -18,6 +20,11 @@ function bindInputs(request, params = {}) {
   for (const [name, { type, value }] of Object.entries(params)) {
     if (!type) throw new Error(`Parameter "${name}" must declare a type`);
     const sqlType = type.type ?? type;
+    if (value != null && sqlType === sql.Int) sqlInteger(value, name, -2147483648);
+    if (value != null && [sql.Decimal, sql.Numeric].includes(sqlType)) sqlDecimal(value, name, type.precision ?? 18, type.scale ?? 0);
+    if (typeof value === 'string' && [sql.NVarChar, sql.VarChar, sql.NChar, sql.Char].includes(sqlType) && type.length !== sql.MAX && type.length && value.length > type.length) {
+      throw new HttpError(400, 'INVALID_REQUEST', `${name} exceeds its SQL parameter length.`);
+    }
     const instantType = [sql.DateTime, sql.DateTime2, sql.SmallDateTime, sql.DateTimeOffset].includes(sqlType);
     request.input(name, type, value == null ? null : sqlType === sql.Date
       ? serializeDateOnly(value)

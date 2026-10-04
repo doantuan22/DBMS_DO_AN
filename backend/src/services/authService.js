@@ -13,6 +13,7 @@ function sqlErrorNumber(error) {
 
 function mapProcedureError(error) {
   switch (sqlErrorNumber(error)) {
+    case 50400: throw new HttpError(400, 'INVALID_BIRTH_DATE', 'Birth date must not be in the future.');
     case 50010: throw new HttpError(409, 'EMAIL_IN_USE', 'Email is already registered.');
     case 50011:
     case 50015: throw new HttpError(409, 'PHONE_IN_USE', 'Phone number is already registered.');

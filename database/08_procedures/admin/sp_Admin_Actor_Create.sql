@@ -20,6 +20,7 @@ BEGIN
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_DANHMUC_PHIM') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
+    IF @NgaySinh > dbo.fn_HomNay() THROW 50400, N'Ngày sinh không được ở tương lai.', 1;
     INSERT INTO dbo.DIENVIEN (HoTen, NgaySinh, QuocTich) VALUES (@HoTen, @NgaySinh, @QuocTich);
     SELECT DienVienID, HoTen, NgaySinh, QuocTich FROM dbo.DIENVIEN WHERE DienVienID = SCOPE_IDENTITY();
 END;

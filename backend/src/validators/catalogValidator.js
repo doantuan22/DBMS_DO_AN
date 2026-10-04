@@ -1,5 +1,7 @@
 import { isDateOnly } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
+import { enumInput } from '../utils/inputContract.js';
+import { RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
 
 function positiveInteger(value, field) {
   if (typeof value !== 'string' || !/^[1-9]\d*$/.test(value)) {
@@ -50,8 +52,10 @@ export const validateShowtimeId = (value) => positiveInteger(value, 'showtimeId'
 export function validateMovieListQuery(query) {
   const input = queryObject(query);
   rejectUnknownQuery(input, new Set(['status', 'genreId', 'search']));
+  const status = optionalText(input.status, 'status', 50);
+  if (status !== null) enumInput(status, 'status', RESOURCE_STATUSES.movies);
   return {
-    status: optionalText(input.status, 'status', 50),
+    status,
     genreId: optionalInteger(input.genreId, 'genreId'),
     search: optionalText(input.search, 'search', 100),
   };

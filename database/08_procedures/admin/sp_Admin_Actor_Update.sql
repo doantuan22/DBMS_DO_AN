@@ -26,6 +26,7 @@ BEGIN
         ;THROW 50100, N'Diễn viên không tồn tại.', 1;
     END
 
+    IF @NgaySinh > dbo.fn_HomNay() THROW 50400, N'Ngày sinh không được ở tương lai.', 1;
     UPDATE dbo.DIENVIEN SET HoTen = @HoTen, NgaySinh = @NgaySinh, QuocTich = @QuocTich WHERE DienVienID = @DienVienID;
     SELECT DienVienID, HoTen, NgaySinh, QuocTich FROM dbo.DIENVIEN WHERE DienVienID = @DienVienID;
 END;

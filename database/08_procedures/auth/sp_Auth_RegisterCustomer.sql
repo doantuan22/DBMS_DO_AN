@@ -15,6 +15,7 @@ CREATE OR ALTER PROCEDURE dbo.sp_Auth_RegisterCustomer
 AS
 BEGIN
     SET NOCOUNT ON;
+    IF @NgaySinh > dbo.fn_HomNay() THROW 50400, N'Ngày sinh không được ở tương lai.', 1;
 
     -- Transaction lồng nhau đúng kỹ thuật:
     --  * Gọi độc lập (@@TRANCOUNT = 0): thủ tục tự BEGIN/COMMIT/ROLLBACK.
