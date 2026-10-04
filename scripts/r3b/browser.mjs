@@ -4,14 +4,17 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createServer } from '../../frontend/node_modules/vite/dist/node/index.js';
-import { root, write } from '../db/lib.mjs';
+import { root, write, read } from '../db/lib.mjs';
 
 const chrome = process.env.R3B_CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 if (!fs.existsSync(chrome)) throw Error('Chrome required (or set R3B_CHROME_PATH).');
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cinema-r3b-browser-'));
-const evidence = path.join(root, 'audit/remediation/r3b/evidence');
+const evidence = path.join(root, process.env.R3B_EVIDENCE_DIR || 'audit/remediation/r3b/evidence');
 const vite = await createServer({ root: path.join(root, 'frontend'), configFile: path.join(root, 'frontend/vite.config.js'), appType: 'custom', server: { host: '127.0.0.1', port: 0, hmr: false } });
 vite.middlewares.use((req, res, next) => {
+  if (req.url === '/__r4-inventory' && process.env.R4_BROWSER) {
+    res.setHeader('Content-Type', 'application/json'); res.end(read(path.join(evidence, 'edit-inventory.json'))); return;
+  }
   if (req.url !== '/__r3b') return next();
   res.setHeader('Content-Type', 'text/html'); res.end('<html><body><script type="module">import "/@vite/client";</script></body></html>');
 });
@@ -48,11 +51,13 @@ try {
   await send('Page.navigate', { url: base + '/__r3b' });
   const ready = Date.now() + 10000;
   while (!(await evaluate("document.readyState==='complete'"))) { if (Date.now() > ready) throw Error('Page timeout'); await new Promise(r => setTimeout(r, 50)); }
-  const result = await evaluate("(async()=>{const {testR3BPages}=await import('/tests/r3b-browser-fixtures.jsx');return testR3BPages();})()");
-  write(path.join(evidence, 'partial-grants-browser.json'), { status: 'PASS', engine: 'Dedicated headless Chrome; real React pages with isolated HTTP fixtures', result });
-  console.log('PASS R3B browser: partial grants, exact action controls, and 403 revocation refresh');
+  const fixture = process.env.R4_BROWSER ? 'r4' : 'r3b';
+  const entry = process.env.R4_BROWSER ? 'testR4Pages' : 'testR3BPages';
+  const result = await evaluate(`(async()=>{const {${entry}}=await import('/tests/${fixture}-browser-fixtures.jsx');return ${entry}();})()`);
+  write(path.join(evidence, process.env.R4_BROWSER ? 'functional-browser.json' : 'partial-grants-browser.json'), { status: 'PASS', engine: 'Dedicated headless Chrome; real React pages with isolated HTTP fixtures', result });
+  console.log(process.env.R4_BROWSER ? 'PASS R4 browser: every Admin edit form, Manager seat payload, and stale request guards' : 'PASS R3B browser: partial grants, exact action controls, and 403 revocation refresh');
 } catch (error) {
-  write(path.join(evidence, 'partial-grants-browser.json'), { status: 'FAIL', error: error.message }); throw error;
+  write(path.join(evidence, process.env.R4_BROWSER ? 'functional-browser.json' : 'partial-grants-browser.json'), { status: 'FAIL', error: error.message }); throw error;
 } finally {
   ws?.close(); child.kill(); await vite.close();
   // Dedicated profile is left in the OS temp directory; never touches the user browser profile.

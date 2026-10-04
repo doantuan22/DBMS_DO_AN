@@ -1,5 +1,6 @@
 import { isDateOnly, isApiInstant } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
+import { validatePassword } from '../utils/password.js';
 
 function queryOnly(query, allowed) {
   if (!query || typeof query !== 'object' || Array.isArray(query)
@@ -73,7 +74,7 @@ function bodyShape(value, schema) {
     if (rule === 'positive' && (typeof item !== 'number' || !Number.isFinite(item) || item <= 0)) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be positive.`);
     if (rule === 'string' && (typeof item !== 'string' || !item.trim())) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be text.`);
     if (rule === 'email' && (typeof item !== 'string' || !/^\S+@\S+\.\S+$/.test(item))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a valid email.`);
-    if (rule === 'password' && (typeof item !== 'string' || item.length < 8 || item.length > 128)) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be 8 to 128 characters.`);
+    if (rule === 'password') validatePassword(item, { field });
     if (rule === 'date' && (!isDateOnly(item))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD.`);
     if (rule === 'nullable-date' && item !== null && (!isDateOnly(item))) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be YYYY-MM-DD or null.`);
     if (rule === 'datetime' && !isApiInstant(item)) throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime with Z or an explicit offset.`);
@@ -83,7 +84,7 @@ function bodyShape(value, schema) {
     if (typeof item === 'string' && item.length > 4000) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
     const fieldMax = { email: 150, phone: 20, code: 50, title: 255, name: 255, address: 255, city: 100, type: 50, status: 50, format: 50, seatType: 50, dayType: 50, discountType: 20, nationalitiy: 100, nationality: 100, url: 500, description: 255 }[field];
     if (fieldMax && typeof item === 'string' && item.length > fieldMax) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
-    result[field] = typeof item === 'string' ? item.trim() : item;
+    result[field] = typeof item === 'string' && rule !== 'password' ? item.trim() : item;
   }
   return result;
 }
@@ -95,7 +96,11 @@ export const userStatus = (v) => {
   if (!new Set(['Hoạt động', 'Bị khóa']).has(result.status)) throw new HttpError(400, 'INVALID_REQUEST', 'status is not supported.');
   return result;
 };
-export const roleWrite = (v, create = false) => bodyShape(v, create ? { code: 'string', name: 'string', description: 'string?' } : { name: 'string', description: 'string?' });
+export const roleWrite = (v, create = false) => {
+  const result = bodyShape(v, create ? { code: 'string', name: 'string', description: 'string?' } : { name: 'string', description: 'string?' });
+  if (result.name.length > 100) throw new HttpError(400, 'INVALID_REQUEST', 'name must be at most 100 characters.');
+  return result;
+};
 export const permissionWrite = (v, create = false) => bodyShape(v, create ? { code: 'string', name: 'string', description: 'string?' } : { name: 'string', description: 'string?' });
 export const rolePermissionSet = (v) => bodyShape(v, { permissionIds: 'ids' });
 export const assignmentWrite = (v) => bodyShape(v, { userId: 'id', cinemaId: 'id', startsOn: 'date', endsOn: 'nullable-date?', status: 'string' });

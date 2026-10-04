@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "basis": "Original HEAD source, read before changes; unchanged deployed SP/contracts and reproduced old operations in functional-api.json",
+  "commit": "dc0455d737cc767cf5a03a8eddae4c5f8e1ae0f4",
+  "traces": [
+    {
+      "bug": "BUG-004",
+      "file": "frontend/src/pages/ManagerPortal.jsx",
+      "before": "api.createSeat(seat.roomId, { ...seat, number: Number(seat.number) })",
+      "result": "roomId was sent in the strict body as well as route; live unchanged validator reproduces400"
+    },
+    {
+      "bug": "BUG-005",
+      "file": "frontend/src/components/CinemaImageManager.jsx",
+      "before": "const payload = { ...form, displayOrder: Number(form.displayOrder) };",
+      "result": "edit state includes cover; unchanged metadata validator reproduces400"
+    },
+    {
+      "bug": "BUG-006",
+      "file": "frontend/src/pages/AdminPortal.jsx",
+      "before": "Object.fromEntries(editableFields.map",
+      "result": "first click hydrates create fields calculated before setSelected; edit status missing; users offered unsupported metadata edits"
+    },
+    {
+      "bug": "BUG-007",
+      "file": "frontend/src/pages/AdminPortal.jsx",
+      "before": "if (active === 'roles' && canGrant && values.permissionIds !== undefined)",
+      "result": "submit calls grants API only; actual DB grant-only operation leaves name unchanged"
+    },
+    {
+      "bug": "BUG-014",
+      "file": "backend/src/validators/adminValidator.js",
+      "before": "item.length > 128",
+      "result": "Admin accepted passwords beyond bcryptjs3.0.3 UTF-8 72-byte limit and trimmed passwords; register/login already enforced upper byte limit"
+    }
+  ]
+}

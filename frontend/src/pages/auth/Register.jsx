@@ -39,7 +39,8 @@ export default function Register() {
       <form onSubmit={submit}>
         <label>Họ tên<input required maxLength="100" autoComplete="name" value={form.HoTen} onChange={(event) => update('HoTen', event.target.value)} /></label>
         <label>Email<input required type="email" maxLength="150" autoComplete="email" value={form.Email} onChange={(event) => update('Email', event.target.value)} /></label>
-        <label>Mật khẩu<input required type="password" minLength="8" maxLength="72" autoComplete="new-password" value={form.MatKhau} onChange={(event) => update('MatKhau', event.target.value)} /></label>
+        <label>Mật khẩu<input required type="password" aria-describedby="password-byte-limit" autoComplete="new-password" value={form.MatKhau} onChange={(event) => update('MatKhau', event.target.value)} /></label>
+        <small id="password-byte-limit">Mật khẩu từ 8 đến 72 byte UTF-8.</small>
         <label>Số điện thoại<input type="tel" maxLength="20" autoComplete="tel" value={form.SoDienThoai} onChange={(event) => update('SoDienThoai', event.target.value)} /></label>
         <label>Ngày sinh<input type="date" value={form.NgaySinh} onChange={(event) => update('NgaySinh', event.target.value)} /></label>
         <label>Giới tính<select value={form.GioiTinh} onChange={(event) => update('GioiTinh', event.target.value)}><option value="">Không cung cấp</option><option>Nam</option><option>Nữ</option><option>Khác</option></select></label>

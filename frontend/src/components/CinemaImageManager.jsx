@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 import { CINEMA_IMAGE_STATUSES } from '../constants/cinemaImageStatuses';
@@ -18,6 +18,7 @@ export default function CinemaImageManager() {
   const [notice, setNotice] = useState(null);
   const [selected, setSelected] = useState(null);
   const [form, setForm] = useState(blank);
+  const imageRequest = useRef(0);
 
   useEffect(() => {
     if (!canManage) return;
@@ -26,16 +27,17 @@ export default function CinemaImageManager() {
 
   const loadImages = async (id = cinemaId) => {
     if (!canManage) return;
-    if (!id) { setImages([]); return; }
+    const requestId = ++imageRequest.current;
+    if (!id) { setImages([]); setLoading(false); setError(null); return; }
     setLoading(true); setError(null);
-    try { setImages((await adminApi.cinemaImages(id)).images ?? []); }
-    catch (requestError) { setError(requestError); }
-    finally { setLoading(false); }
+    try { const result = await adminApi.cinemaImages(id); if (requestId === imageRequest.current) setImages(result.images ?? []); }
+    catch (requestError) { if (requestId === imageRequest.current) setError(requestError); }
+    finally { if (requestId === imageRequest.current) setLoading(false); }
   };
 
   const chooseCinema = async (event) => {
     const id = event.target.value;
-    setCinemaId(id); setSelected(null); setForm(blank()); await loadImages(id);
+    setCinemaId(id); setSelected(null); setForm(blank()); setNotice(null); await loadImages(id);
   };
 
   const edit = (image) => {
@@ -45,18 +47,20 @@ export default function CinemaImageManager() {
 
   const submit = async (event) => {
     event.preventDefault(); if (!canManage) return; setNotice(null);
+    const requestId = imageRequest.current;
     try {
-      const payload = { ...form, displayOrder: Number(form.displayOrder) };
+      const payload = { url: form.url, description: form.description, displayOrder: Number(form.displayOrder), status: form.status };
       if (selected) await adminApi.updateCinemaImage(cinemaId, selected.HinhAnhRapID, payload);
-      else await adminApi.createCinemaImage(cinemaId, payload);
+      else await adminApi.createCinemaImage(cinemaId, { ...payload, cover: form.cover });
+      if (requestId !== imageRequest.current) return;
       setSelected(null); setForm(blank()); setNotice({ ok: true, text: 'Đã lưu ảnh rạp.' }); await loadImages();
-    } catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
+    } catch (requestError) { if (requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
   };
 
   const remove = async (image) => {
     if (!canManage) return;
     if (!window.confirm('Xác nhận xóa ảnh rạp?')) return;
-    try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
+    try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); if (selected?.HinhAnhRapID === image.HinhAnhRapID) { setSelected(null); setForm(blank()); } setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
     catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
   };
 

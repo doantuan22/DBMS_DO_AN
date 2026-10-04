@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "scope": [
+    "BUG-004",
+    "BUG-005",
+    "BUG-006",
+    "BUG-007",
+    "BUG-014"
+  ],
+  "resolved": 5,
+  "database": {
+    "name": "CinemaBookingDB",
+    "tables": 27,
+    "sqlModules": 159,
+    "objectChanges": 0,
+    "migrationRequired": false,
+    "dataSchemaGrantsUnchanged": true,
+    "trialDatabasesRemaining": 0
+  },
+  "tests": {
+    "backend": 104,
+    "frontend": 35,
+    "functionalHTTP": 100,
+    "functionalDBAssertions": 31,
+    "functionalBrowser": 146,
+    "adminGenericEditForms": 14,
+    "additionalEditForms": [
+      "cinema image",
+      "role grants",
+      "movie cast",
+      "complaint status",
+      "complaint processing"
+    ],
+    "r3HTTP": 270,
+    "r3DB": 134,
+    "mainSmoke": 31,
+    "regressionChecks": [
+      {
+        "name": "backend",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "frontend",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "frontend-build",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "frontend-lint",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "no-raw-sql",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "procedure-contracts",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r2-sql",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r2-integration",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r2-browser",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r1-fixed-clock",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r1-integration-UTC",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r1-integration-Asia_Ho_Chi_Minh",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r1-integration-America_Los_Angeles",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "r1-browser",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "booking-concurrency",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "name": "db-verify",
+        "status": "PASS",
+        "exitCode": 0
+      }
+    ]
+  },
+  "limitations": [
+    "Main smoke skips future showtime detail/seats because existing main seed has no suitable future show; both passed on reset fixture."
+  ]
+}

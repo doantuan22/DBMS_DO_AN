@@ -1,0 +1,3067 @@
+{
+  "database": "CinemaBookingDB_R0_R1_R2_R4Fix",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "DB wrong scope",
+      "procedure": "dbo.sp_Manager_Room_List",
+      "error": 50050,
+      "expected": 50050,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoke DAT_VE",
+      "procedure": "dbo.sp_Booking_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoke DAT_VE",
+      "procedure": "dbo.sp_Promotion_Validate",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoke THANH_TOAN",
+      "procedure": "dbo.sp_Payment_CreateAttempt",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoke THANH_TOAN",
+      "procedure": "dbo.sp_Payment_UpdateResult",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoke DANH_GIA",
+      "procedure": "dbo.sp_Review_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoke GUI_KHIEU_NAI",
+      "procedure": "dbo.sp_Complaint_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "own DB order read without write grants",
+      "procedure": "dbo.sp_Order_GetDetailByCustomer",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "own DB complaint read without write grants",
+      "procedure": "dbo.sp_Complaint_GetByCustomer",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "foreign DB payment create",
+      "procedure": "dbo.sp_Payment_CreateAttempt",
+      "error": 50033,
+      "expected": 50033,
+      "status": "PASS"
+    },
+    {
+      "name": "foreign DB payment result",
+      "procedure": "dbo.sp_Payment_UpdateResult",
+      "error": 50033,
+      "expected": 50033,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Dashboard",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Pricing_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Pricing_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Pricing_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Revenue",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Room_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Room_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Room_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Room_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Seat_BatchCreate",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Seat_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Seat_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Seat_ListByRoom",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Seat_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Showtime_Cancel",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Showtime_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Showtime_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Manager DB permission denied",
+      "procedure": "dbo.sp_Manager_Showtime_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "DB revoked scope",
+      "procedure": "dbo.sp_Manager_Room_List",
+      "error": 50050,
+      "expected": 50050,
+      "status": "PASS"
+    },
+    {
+      "name": "manager partial DB showtimes",
+      "procedure": "dbo.sp_Manager_Showtime_List",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination ",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination ",
+      "procedure": "dbo.sp_Support_Complaint_GetDetail",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination ",
+      "procedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination ",
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination ",
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_GetDetail",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_GetDetail",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_GetDetail",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_GetDetail",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_GetDetail",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "error": null,
+      "expected": null,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Support DB same combination QL_KHIEUNAI+TRA_CUU_DON",
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Actor_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Actor_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Actor_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Actor_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Assignment_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Assignment_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Cinema_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Cinema_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Cinema_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Dashboard",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Genre_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Genre_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Genre_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Movie_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Movie_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Movie_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_MovieActor_Set",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Permission_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Permission_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Permission_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Permission_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Product_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Product_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Product_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Promotion_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Promotion_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Promotion_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Promotion_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Report_Revenue",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Role_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Role_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Role_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Role_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_RolePermission_Set",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_User_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_User_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_User_UpdateStatus",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Assignment_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Cinema_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_CinemaImage_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_CinemaImage_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_CinemaImage_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_CinemaImage_SetCover",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_CinemaImage_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Movie_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Pricing_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Pricing_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Pricing_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Product_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_RolePermission_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Room_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Room_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Room_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Room_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Seat_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Seat_Delete",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Seat_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Seat_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Showtime_Cancel",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Showtime_Create",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Showtime_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.usp_Admin_Showtime_Update",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin DB no grant denied",
+      "procedure": "dbo.sp_Admin_Genre_List",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin cascade no NULL bypass",
+      "procedure": "dbo.sp_Showtime_CancelCascade",
+      "error": 50302,
+      "expected": 50302,
+      "status": "PASS"
+    },
+    {
+      "name": "Admin NULL actor denied",
+      "procedure": "dbo.usp_Admin_Showtime_Cancel",
+      "error": 50300,
+      "expected": 50300,
+      "status": "PASS"
+    },
+    {
+      "name": "Cascade NULL actor denied",
+      "procedure": "dbo.sp_Showtime_CancelCascade",
+      "error": 50300,
+      "expected": 50300,
+      "status": "PASS"
+    },
+    {
+      "name": "review wrong actor role",
+      "procedure": "dbo.sp_Review_Create",
+      "error": 50301,
+      "expected": 50301,
+      "status": "PASS"
+    },
+    {
+      "name": "support wrong actor role",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": 50301,
+      "expected": 50301,
+      "status": "PASS"
+    },
+    {
+      "name": "locked DB actor customer",
+      "procedure": "dbo.sp_Order_ListByCustomer",
+      "error": 50300,
+      "expected": 50300,
+      "status": "PASS"
+    },
+    {
+      "name": "locked DB actor manager",
+      "procedure": "dbo.sp_Manager_ListAssignedCinemas",
+      "error": 50300,
+      "expected": 50300,
+      "status": "PASS"
+    },
+    {
+      "name": "locked DB actor support",
+      "procedure": "dbo.sp_Support_Complaint_List",
+      "error": 50300,
+      "expected": 50300,
+      "status": "PASS"
+    },
+    {
+      "name": "locked DB actor admin",
+      "procedure": "dbo.sp_Admin_User_List",
+      "error": 50300,
+      "expected": 50300,
+      "status": "PASS"
+    },
+    {
+      "name": "changed role DB",
+      "procedure": "dbo.sp_Manager_ListAssignedCinemas",
+      "error": 50301,
+      "expected": 50301,
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/auth/me",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/auth/permissions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/orders",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/complaints",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/complaints/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/manager/rooms/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/manager/rooms/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/rooms/1/seats",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/manager/rooms/1/seats",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/manager/seats/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/manager/seats/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/manager/showtimes/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/manager/showtimes/1/cancel",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/manager/pricing/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/dashboard",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/revenue",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/support/complaints/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/support/complaints/1/status",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/users",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/users/1/status",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/roles",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/roles/1/permissions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/roles",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/roles/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/roles/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/permissions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/permissions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/permissions/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/permissions/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/roles/1/permissions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/assignments",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/assignments",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/assignments/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/cinemas",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/cinemas",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/cinemas/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/cinemas/1/images",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/cinemas/1/images",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PATCH",
+      "route": "/admin/cinemas/1/images/1/cover",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/rooms",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/rooms",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/rooms/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/rooms/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/seats",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/seats",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/seats/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/seats/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/pricing",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/pricing/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/showtimes",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/showtimes/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/showtimes/1/cancel",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/movies",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/movies",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/movies/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/movies/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/movies/1/actors",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/genres",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/genres",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/genres/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/genres/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/actors",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/actors",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/actors/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/actors/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/products",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/products",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/products/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/products/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/promotions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/promotions",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/promotions/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "DELETE",
+      "route": "/admin/promotions/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/reports/revenue",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/complaints",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/complaints/1",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "GET",
+      "route": "/admin/complaints/1/order-reference",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "POST",
+      "route": "/admin/complaints/1/processings",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "anonymous denied",
+      "method": "PUT",
+      "route": "/admin/complaints/1/status",
+      "actor": "PUBLIC",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "login customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "login customer2",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "login manager",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "login support",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "login admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "manager bootstrap",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 200
+    },
+    {
+      "name": "wrong cinema scope",
+      "method": "GET",
+      "route": "/manager/cinemas/2/rooms",
+      "actor": "manager",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "name": "manager create room",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 201
+    },
+    {
+      "name": "manager create seat",
+      "method": "POST",
+      "route": "/manager/rooms/14/seats",
+      "actor": "manager",
+      "status": 201
+    },
+    {
+      "name": "manager create seat",
+      "method": "POST",
+      "route": "/manager/rooms/14/seats",
+      "actor": "manager",
+      "status": 201
+    },
+    {
+      "name": "manager create seat",
+      "method": "POST",
+      "route": "/manager/rooms/14/seats",
+      "actor": "manager",
+      "status": 201
+    },
+    {
+      "name": "manager create seat",
+      "method": "POST",
+      "route": "/manager/rooms/14/seats",
+      "actor": "manager",
+      "status": 201
+    },
+    {
+      "name": "manager create showtime",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "manager",
+      "status": 201
+    },
+    {
+      "name": "DAT_VE booking",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer",
+      "status": 201
+    },
+    {
+      "name": "DAT_VE promotion preview",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "customer",
+      "status": 200
+    },
+    {
+      "name": "THANH_TOAN attempt",
+      "method": "POST",
+      "route": "/orders/1037/payments",
+      "actor": "customer",
+      "status": 201
+    },
+    {
+      "name": "GUI complaint",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201
+    },
+    {
+      "name": "old JWT revoke DAT_VE",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "old JWT revoke DAT_VE",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "customer",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "old JWT revoke THANH_TOAN",
+      "method": "POST",
+      "route": "/orders/1037/payments",
+      "actor": "customer",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "old JWT revoke THANH_TOAN",
+      "method": "POST",
+      "route": "/orders/1037/payments/1016/result",
+      "actor": "customer",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "old JWT revoke DANH_GIA",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "customer",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "old JWT revoke GUI_KHIEU_NAI",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "own history without write grants",
+      "method": "GET",
+      "route": "/orders",
+      "actor": "customer",
+      "status": 200
+    },
+    {
+      "name": "own history without write grants",
+      "method": "GET",
+      "route": "/orders/1037",
+      "actor": "customer",
+      "status": 200
+    },
+    {
+      "name": "own history without write grants",
+      "method": "GET",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 200
+    },
+    {
+      "name": "own history without write grants",
+      "method": "GET",
+      "route": "/complaints/2",
+      "actor": "customer",
+      "status": 200
+    },
+    {
+      "name": "foreign safe 404",
+      "method": "GET",
+      "route": "/orders/1037",
+      "actor": "customer2",
+      "status": 404,
+      "error": "ORDER_NOT_FOUND"
+    },
+    {
+      "name": "foreign safe 404",
+      "method": "GET",
+      "route": "/complaints/2",
+      "actor": "customer2",
+      "status": 404,
+      "error": "COMPLAINT_NOT_FOUND"
+    },
+    {
+      "name": "foreign payment create",
+      "method": "POST",
+      "route": "/orders/1037/payments",
+      "actor": "customer2",
+      "status": 404,
+      "error": "ORDER_NOT_FOUND"
+    },
+    {
+      "name": "foreign payment result",
+      "method": "POST",
+      "route": "/orders/1037/payments/1016/result",
+      "actor": "customer2",
+      "status": 404,
+      "error": "ORDER_NOT_FOUND"
+    },
+    {
+      "name": "Customer successful payment",
+      "method": "POST",
+      "route": "/orders/1037/payments/1016/result",
+      "actor": "customer",
+      "status": 200
+    },
+    {
+      "name": "bootstrap no functional grants",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 200
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "PUT",
+      "route": "/manager/rooms/1",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "DELETE",
+      "route": "/manager/rooms/1",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "GET",
+      "route": "/manager/rooms/1/seats",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "POST",
+      "route": "/manager/rooms/1/seats",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "PUT",
+      "route": "/manager/seats/1",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "DELETE",
+      "route": "/manager/seats/1",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "PUT",
+      "route": "/manager/showtimes/1",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "POST",
+      "route": "/manager/showtimes/1/cancel",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "PUT",
+      "route": "/manager/pricing/1",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/dashboard",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Manager HTTP exact permission denied",
+      "method": "GET",
+      "route": "/manager/cinemas/1/revenue",
+      "actor": "manager",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "bootstrap no assignment",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 200
+    },
+    {
+      "name": "old JWT revoked scope",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "name": "manager partial showtimes",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "manager",
+      "status": 200
+    },
+    {
+      "name": "manager same grant cannot enter global Admin",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "manager",
+      "status": 403,
+      "error": "ADMIN_REQUIRED"
+    },
+    {
+      "name": "Support combination ",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination ",
+      "method": "GET",
+      "route": "/support/complaints/2",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination ",
+      "method": "GET",
+      "route": "/support/complaints/2/order-reference",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination ",
+      "method": "POST",
+      "route": "/support/complaints/2/processings",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination ",
+      "method": "PUT",
+      "route": "/support/complaints/2/status",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints/2",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints/2/order-reference",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI",
+      "method": "POST",
+      "route": "/support/complaints/2/processings",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI",
+      "method": "PUT",
+      "route": "/support/complaints/2/status",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination XULY_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination XULY_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints/2",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination XULY_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints/2/order-reference",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination XULY_KHIEUNAI",
+      "method": "POST",
+      "route": "/support/complaints/2/processings",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination XULY_KHIEUNAI",
+      "method": "PUT",
+      "route": "/support/complaints/2/status",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints/2",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints/2/order-reference",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination TRA_CUU_DON",
+      "method": "POST",
+      "route": "/support/complaints/2/processings",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination TRA_CUU_DON",
+      "method": "PUT",
+      "route": "/support/complaints/2/status",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints/2",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "method": "GET",
+      "route": "/support/complaints/2/order-reference",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "method": "POST",
+      "route": "/support/complaints/2/processings",
+      "actor": "support",
+      "status": 201
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+XULY_KHIEUNAI",
+      "method": "PUT",
+      "route": "/support/complaints/2/status",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints/2",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints/2/order-reference",
+      "actor": "support",
+      "status": 200
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+TRA_CUU_DON",
+      "method": "POST",
+      "route": "/support/complaints/2/processings",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Support combination QL_KHIEUNAI+TRA_CUU_DON",
+      "method": "PUT",
+      "route": "/support/complaints/2/status",
+      "actor": "support",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/users/1/status",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/roles",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/roles/1/permissions",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/roles",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/roles/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/roles/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/permissions",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/permissions",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/permissions/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/permissions/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/roles/1/permissions",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/assignments",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/assignments",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/assignments/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/cinemas",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/cinemas",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/cinemas/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/cinemas/1/images",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/cinemas/1/images",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PATCH",
+      "route": "/admin/cinemas/1/images/1/cover",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/rooms",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/rooms",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/rooms/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/rooms/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/seats",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/seats",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/seats/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/seats/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/pricing",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/pricing/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/showtimes",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/showtimes/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/showtimes/1/cancel",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/movies",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/movies",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/movies/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/movies/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/movies/1/actors",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/genres",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/genres",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/genres/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/genres/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/actors",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/actors",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/actors/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/actors/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/products",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/products",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/products/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/products/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/promotions",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/promotions",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/promotions/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "DELETE",
+      "route": "/admin/promotions/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/reports/revenue",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/complaints",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/complaints/1",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "GET",
+      "route": "/admin/complaints/1/order-reference",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "POST",
+      "route": "/admin/complaints/1/processings",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no grants denied",
+      "method": "PUT",
+      "route": "/admin/complaints/1/status",
+      "actor": "admin",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "name": "Admin explicit cancel",
+      "method": "POST",
+      "route": "/admin/showtimes/29/cancel",
+      "actor": "admin",
+      "status": 200
+    },
+    {
+      "name": "Admin retry cancel",
+      "method": "POST",
+      "route": "/admin/showtimes/29/cancel",
+      "actor": "admin",
+      "status": 200
+    },
+    {
+      "name": "locked old JWT customer",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "locked old JWT manager",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "locked old JWT support",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "support",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "locked old JWT admin",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "name": "changed role old JWT",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 403,
+      "error": "MANAGER_REQUIRED"
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/movies",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/movies/1",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/genres",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/cinemas",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/movies/1/showtimes",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/showtimes/29/seats",
+      "actor": "PUBLIC",
+      "status": 200
+    },
+    {
+      "name": "public catalog without JWT",
+      "method": "GET",
+      "route": "/products",
+      "actor": "PUBLIC",
+      "status": 200
+    }
+  ],
+  "tableCount": 27,
+  "identityOnlyJWT": true,
+  "finishedAt": "2026-10-04T13:12:51.588Z"
+}

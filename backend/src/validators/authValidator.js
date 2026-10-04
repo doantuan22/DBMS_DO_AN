@@ -1,5 +1,6 @@
 import { isDateOnly } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
+import { validatePassword } from '../utils/password.js';
 
 const allowedRegistrationFields = new Set(['HoTen', 'Email', 'MatKhau', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
 const allowedProfileFields = new Set(['HoTen', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
@@ -81,9 +82,7 @@ function profileFields(body) {
 export function validateRegister(body) {
   const input = objectBody(body);
   rejectUnknownFields(input, allowedRegistrationFields);
-  if (typeof input.MatKhau !== 'string' || Buffer.byteLength(input.MatKhau, 'utf8') < 8 || Buffer.byteLength(input.MatKhau, 'utf8') > 72) {
-    throw new HttpError(400, 'INVALID_REQUEST', 'MatKhau must be 8 to 72 bytes.');
-  }
+  validatePassword(input.MatKhau, { field: 'MatKhau' });
   return {
     ...profileFields(input),
     Email: validateEmail(input.Email),
@@ -94,9 +93,7 @@ export function validateRegister(body) {
 export function validateLogin(body) {
   const input = objectBody(body);
   rejectUnknownFields(input, new Set(['Email', 'MatKhau']));
-  if (typeof input.MatKhau !== 'string' || !input.MatKhau || Buffer.byteLength(input.MatKhau, 'utf8') > 72) {
-    throw new HttpError(400, 'INVALID_REQUEST', 'Email and password are required.');
-  }
+  validatePassword(input.MatKhau, { field: 'MatKhau', minimumBytes: 1 });
   return { Email: validateEmail(input.Email), MatKhau: input.MatKhau };
 }
 

@@ -1,6 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { userCanAct, ADMIN_SECTION_PERMISSIONS } from '../utils/authorization';
-import { instantToBusinessLocal, businessLocalToInstant, formatApiValue } from '../utils/dateTime';
+import { formatApiValue } from '../utils/dateTime';
+import { adminForms as forms, formFields, inputValue, toBody } from '../utils/adminForms';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
@@ -24,22 +25,6 @@ const loaders = {
 };
 
 // API fields, database row identifiers, and read-only status are explicit per resource.
-const forms = {
-  users: { path: 'users', id: 'NguoiDungID', fields: [['name', 'Họ tên', 'text', 'HoTen'], ['email', 'Email', 'email', 'Email'], ['phone', 'Điện thoại', 'text', 'SoDienThoai'], ['roleId', 'Mã vai trò', 'number', 'VaiTroID']], createOnly: [['password', 'Mật khẩu ban đầu', 'password', '']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  roles: { path: 'roles', id: 'VaiTroID', fields: [['name', 'Tên vai trò', 'text', 'TenVaiTro'], ['description', 'Mô tả', 'text', 'MoTa']], createOnly: [['code', 'Mã vai trò', 'text', 'MaVaiTro']] },
-  permissions: { path: 'permissions', id: 'QuyenID', fields: [['name', 'Tên quyền', 'text', 'TenQuyen'], ['description', 'Mô tả', 'text', 'MoTa']], createOnly: [['code', 'Mã quyền', 'text', 'MaQuyen']] },
-  assignments: { path: 'assignments', id: 'PhanCongID', fields: [['userId', 'Mã quản lý', 'number', 'NguoiDungID'], ['cinemaId', 'Mã rạp', 'number', 'RapID'], ['startsOn', 'Ngày bắt đầu', 'date', 'NgayBatDau'], ['endsOn', 'Ngày kết thúc', 'date', 'NgayKetThuc'], ['status', 'Trạng thái', 'text', 'TrangThai']] },
-  cinemas: { path: 'cinemas', id: 'RapID', fields: [['name', 'Tên rạp', 'text', 'TenRap'], ['address', 'Địa chỉ', 'text', 'DiaChi'], ['city', 'Thành phố', 'text', 'ThanhPho'], ['phone', 'Điện thoại', 'text', 'SoDienThoai'], ['description', 'Mô tả', 'text', 'MoTa']], createOnly: [['operatingSince', 'Ngày hoạt động', 'date', 'NgayHoatDong']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  rooms: { path: 'rooms', id: 'PhongID', fields: [['name', 'Tên phòng', 'text', 'TenPhong'], ['type', 'Loại phòng', 'text', 'LoaiPhong']], createOnly: [['cinemaId', 'Mã rạp', 'number', 'RapID']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  seats: { path: 'seats', id: 'GheID', fields: [['type', 'Loại ghế', 'text', 'LoaiGhe']], createOnly: [['roomId', 'Mã phòng', 'number', 'PhongID'], ['row', 'Hàng', 'text', 'HangGhe'], ['number', 'Số ghế', 'number', 'SoGhe']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  movies: { path: 'movies', id: 'PhimID', fields: [['title', 'Tên phim', 'text', 'TenPhim'], ['durationMinutes', 'Thời lượng (phút)', 'number', 'ThoiLuong'], ['releaseDate', 'Ngày khởi chiếu', 'date', 'NgayKhoiChieu'], ['endDate', 'Ngày kết thúc', 'date', 'NgayKetThuc'], ['language', 'Ngôn ngữ', 'text', 'NgonNgu'], ['subtitle', 'Phụ đề', 'text', 'PhuDe'], ['ageRating', 'Độ tuổi', 'text', 'DoTuoi'], ['director', 'Đạo diễn', 'text', 'DaoDien'], ['description', 'Mô tả', 'text', 'MoTa'], ['posterUrl', 'Poster URL', 'text', 'PosterURL'], ['trailerUrl', 'Trailer URL', 'text', 'TrailerURL'], ['genreIds', 'Mã thể loại (phân cách dấu phẩy)', 'csv', '']], createOnly: [], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  genres: { path: 'genres', id: 'TheLoaiID', fields: [['name', 'Tên thể loại', 'text', 'TenTheLoai']] },
-  actors: { path: 'actors', id: 'DienVienID', fields: [['name', 'Họ tên', 'text', 'HoTen'], ['birthDate', 'Ngày sinh', 'date', 'NgaySinh'], ['nationality', 'Quốc tịch', 'text', 'QuocTich']] },
-  products: { path: 'products', id: 'SanPhamID', fields: [['name', 'Tên sản phẩm', 'text', 'TenSanPham'], ['type', 'Loại sản phẩm', 'text', 'LoaiSanPham'], ['price', 'Giá', 'number', 'Gia'], ['description', 'Mô tả', 'text', 'MoTa'], ['image', 'Hình ảnh URL', 'text', 'HinhAnh']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  promotions: { path: 'promotions', id: 'KhuyenMaiID', fields: [['description', 'Mô tả', 'text', 'MoTa'], ['discountType', 'Loại giảm giá', 'text', 'LoaiGiamGia'], ['discountValue', 'Giá trị giảm', 'number', 'GiaTriGiam'], ['minimumOrder', 'Đơn tối thiểu', 'number', 'DonHangToiThieu'], ['maximumDiscount', 'Giảm tối đa', 'number', 'GiamToiDa'], ['startsAt', 'Bắt đầu (giờ Việt Nam)', 'datetime-local', 'NgayBatDau'], ['endsAt', 'Kết thúc (giờ Việt Nam)', 'datetime-local', 'NgayKetThuc'], ['quantity', 'Số lượng', 'number', 'SoLuong']], createOnly: [['code', 'Mã khuyến mãi', 'text', 'MaCode']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  pricing: { path: 'pricing', id: 'GiaID', fields: [['surcharge', 'Phụ thu', 'number', 'PhuThu']], createOnly: [['cinemaId', 'Mã rạp', 'number', 'RapID'], ['seatType', 'Loại ghế', 'text', 'LoaiGhe'], ['dayType', 'Loại ngày', 'text', 'LoaiNgay'], ['format', 'Định dạng', 'text', 'DinhDang'], ['startsOn', 'Ngày bắt đầu', 'date', 'NgayBatDau'], ['endsOn', 'Ngày kết thúc', 'date', 'NgayKetThuc']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-  showtimes: { path: 'showtimes', id: 'SuatChieuID', fields: [['movieId', 'Mã phim', 'number', 'PhimID'], ['startsAt', 'Bắt đầu (giờ Việt Nam)', 'datetime-local', 'ThoiGianBatDau'], ['endsAt', 'Kết thúc (giờ Việt Nam)', 'datetime-local', 'ThoiGianKetThuc'], ['format', 'Định dạng', 'text', 'DinhDang'], ['basePrice', 'Giá vé cơ bản', 'number', 'GiaVeCoBan']], createOnly: [['roomId', 'Mã phòng', 'number', 'PhongID']], editOnly: [['status', 'Trạng thái', 'text', 'TrangThai']] },
-};
 
 const idColumns = { users: 'NguoiDungID', dashboard: '', revenue: '', complaints: 'KhieuNaiID' };
 const dataRows = (value, key) => {
@@ -50,23 +35,6 @@ const dataRows = (value, key) => {
   if (collection) return collection;
   return Object.entries(value).map(([label, count]) => ({ label, value: count }));
 };
-const inputValue = (value, kind) => {
-  if (value == null) return '';
-  if (kind === 'csv' && Array.isArray(value)) return value.join(',');
-  if (kind === 'csv') return String(value);
-  if (kind === 'datetime-local') return instantToBusinessLocal(value);
-  if (kind === 'date') return value;
-  return String(value);
-};
-const toBody = (values, fields) => Object.fromEntries(fields.map(([name, , kind]) => {
-  const value = values[name];
-  if (kind === 'csv' && (value === '' || value === undefined || value === null)) return [name, []];
-  if (value === '' || value === undefined) return [name, null];
-  if (kind === 'datetime-local') return [name, businessLocalToInstant(value)];
-  if (kind === 'number') return [name, Number(value)];
-  if (kind === 'csv') return [name, value.split(',').map((part) => Number(part.trim())).filter(Number.isInteger)];
-  return [name, value];
-}));
 
 export default function AdminPortal() {
   const { user } = useAuth();
@@ -79,8 +47,9 @@ export default function AdminPortal() {
   const [state, setState] = useState({ status: 'loading' });
   const [selected, setSelected] = useState(null);
   const [values, setValues] = useState({});
-  const [permissionsLoading, setPermissionsLoading] = useState(false);
-  const permissionRequest = useRef(0);
+  const loadRequest = useRef(0);
+  const grantRequest = useRef(0);
+  const editorResource = useRef(active);
   const [notice, setNotice] = useState(null);
   const [complaint, setComplaint] = useState(null);
   const [orderReference, setOrderReference] = useState(null);
@@ -91,8 +60,9 @@ export default function AdminPortal() {
   const [grantIds, setGrantIds] = useState('');
   const readGrants = async () => {
     if (!canGrant || !grantRoleId) return;
-    try { const result = await adminApi.rolePermissions(grantRoleId); setGrantIds(result.permissions.map(item => item.QuyenID).join(',')); }
-    catch (error) { setNotice({ ok: false, text: error.message }); }
+    const requestId = ++grantRequest.current;
+    try { const result = await adminApi.rolePermissions(grantRoleId); if (requestId === grantRequest.current) setGrantIds(result.permissions.map(item => item.QuyenID).join(',')); }
+    catch (error) { if (requestId === grantRequest.current) setNotice({ ok: false, text: error.message }); }
   };
   const saveGrants = async (event) => {
     event.preventDefault(); if (!canGrant) return;
@@ -100,54 +70,44 @@ export default function AdminPortal() {
     catch (error) { setNotice({ ok: false, text: error.message }); }
   };
   const load = useCallback(async () => {
+    if (editorResource.current !== active) { editorResource.current = active; setSelected(null); setValues({}); }
     if (!active) { setState({ status: 'idle' }); return; }
+    const requestId = ++loadRequest.current;
     setState({ status: 'loading' });
-    try { setState({ status: 'success', data: await loaders[active](adminApi, reportRange) }); }
-    catch (error) { setState({ status: 'error', error }); }
+    try { const data = await loaders[active](adminApi, reportRange); if (requestId === loadRequest.current) setState({ status: 'success', data }); }
+    catch (error) { if (requestId === loadRequest.current) setState({ status: 'error', error }); }
   }, [active, reportRange]);
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
   const rows = state.status === 'success' ? dataRows(state.data?.[active] ?? state.data?.dashboard ?? state.data, active) : [];
   const definition = forms[active];
-  const editableFields = definition ? [...definition.fields, ...(selected ? definition.editOnly ?? [] : definition.createOnly ?? [])] : [];
-  const onSelect = async (row) => {
+  const editableFields = definition ? formFields(definition, Boolean(selected)) : [];
+  const onSelect = (row) => {
     setSelected(row);
-    const rowValues = Object.fromEntries(editableFields.map(([name, , kind, column]) => [name, inputValue(row[column], kind)]));
+    const rowValues = Object.fromEntries(formFields(definition, true).map(([name, , kind, column]) => [name, inputValue(row[column], kind)]));
     if (active === 'movies') {
       rowValues.genreIds = inputValue(row.TheLoaiIdList, 'csv');
       rowValues.castJson = row.DanhSachDienVienJson || '[]';
     }
     setValues(rowValues);
-    if (active === 'roles' && canGrant) {
-      const requestId = ++permissionRequest.current;
-      setPermissionsLoading(true);
-      try {
-        const result = await adminApi.rolePermissions(row.VaiTroID);
-        if (requestId === permissionRequest.current) {
-          setValues((current) => ({ ...current, permissionIds: (result.permissions ?? []).map((permission) => permission.QuyenID).join(',') }));
-        }
-      } catch (error) {
-        if (requestId === permissionRequest.current) setNotice({ ok: false, text: error.message });
-      } finally {
-        if (requestId === permissionRequest.current) setPermissionsLoading(false);
-      }
-    }
   };
-  const clearForm = () => { permissionRequest.current += 1; setSelected(null); setValues({}); setPermissionsLoading(false); };
+  const clearForm = () => { setSelected(null); setValues({}); };
+  const switchSection = (key) => {
+    if (key !== active) loadRequest.current += 1;
+    grantRequest.current += 1;
+    setActive(key); clearForm(); setNotice(null); setComplaint(null); setOrderReference(null);
+    setGrantRoleId(''); setGrantIds(''); setProcessingForm({ content: '', nextStatus: 'Đang xử lý' });
+  };
   const submit = async (event) => {
     event.preventDefault(); setNotice(null);
+    const requestId = loadRequest.current;
     try {
-      if (active === 'roles' && canGrant && values.permissionIds !== undefined) {
-        const permissionIds = (values.permissionIds ?? '').split(',').map((item) => Number(item.trim())).filter(Number.isSafeInteger);
-        await adminApi.update(`roles/${selected.VaiTroID}/permissions`, { permissionIds });
-      } else {
-        const payload = active === 'users' && selected ? { status: values.status } : toBody(values, editableFields);
-        const idColumn = definition.id;
-        await (selected
-          ? adminApi.update(`${definition.path}/${selected[idColumn]}${active === 'users' ? '/status' : ''}`, payload)
-          : adminApi.create(definition.path, payload));
-      }
+      const payload = toBody(values, editableFields);
+      await (selected
+        ? adminApi.update(`${definition.path}/${selected[definition.id]}${active === 'users' ? '/status' : ''}`, payload)
+        : adminApi.create(definition.path, payload));
+      if (requestId !== loadRequest.current) return;
       setNotice({ ok: true, text: 'Đã lưu thay đổi.' }); clearForm(); await load();
-    } catch (error) { setNotice({ ok: false, text: error.message }); }
+    } catch (error) { if (requestId === loadRequest.current) setNotice({ ok: false, text: error.message }); }
   };
   const remove = async (row) => {
     if (!definition || !window.confirm('Xác nhận xóa mục này? Ràng buộc nghiệp vụ sẽ từ chối xóa dữ liệu đang được sử dụng.')) return;
@@ -200,7 +160,7 @@ export default function AdminPortal() {
   if (active === 'cinemaImages') return <section className="catalog-section" aria-label="Quản lý ảnh rạp">
     <h1>Quản trị hệ thống</h1>
     <nav className="catalog-actions" aria-label="Phân hệ quản trị">
-      {allowedSections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); }}>{label}</button>)}
+      {allowedSections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => switchSection(key)}>{label}</button>)}
     </nav>
     <h2>Ảnh rạp</h2><CinemaImageManager />
   </section>;
@@ -208,11 +168,11 @@ export default function AdminPortal() {
   return <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
     <h1>Quản trị hệ thống</h1>
     <nav className="catalog-actions" aria-label="Phân hệ quản trị">
-      {allowedSections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); setComplaint(null); setOrderReference(null); }}>{label}</button>)}
+      {allowedSections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => switchSection(key)}>{label}</button>)}
     </nav>
     <h2>{sections.find(([key]) => key === active)?.[1]}</h2>
     {active === 'permissions' && canGrant && <form className="catalog-form" onSubmit={saveGrants}>
-      <h3>Gán quyền cho vai trò</h3><label>Mã vai trò<input aria-label="Mã vai trò nhận quyền" type="number" min="1" required value={grantRoleId} onChange={event => setGrantRoleId(event.target.value)} /></label>
+      <h3>Gán quyền cho vai trò</h3><label>Mã vai trò<input aria-label="Mã vai trò nhận quyền" type="number" min="1" required value={grantRoleId} onChange={event => { grantRequest.current += 1; setGrantRoleId(event.target.value); setGrantIds(''); }} /></label>
       <button type="button" onClick={() => void readGrants()}>Đọc quyền hiện tại</button><label>QuyenID (phân cách dấu phẩy)<input value={grantIds} onChange={event => setGrantIds(event.target.value)} /></label><button className="catalog-button">Lưu quyền vai trò</button>
     </form>}
     {active === 'revenue' && <form className="catalog-actions" onSubmit={(event) => { event.preventDefault(); setReportRange(reportInput); }}><label>Từ ngày<input type="date" value={reportInput.fromDate} onChange={(event) => setReportInput((v) => ({ ...v, fromDate: event.target.value }))} /></label><label>Đến ngày<input type="date" value={reportInput.toDate} onChange={(event) => setReportInput((v) => ({ ...v, toDate: event.target.value }))} /></label><button className="catalog-button">Lọc doanh thu</button></form>}
@@ -226,8 +186,7 @@ export default function AdminPortal() {
       <h3>{selected ? 'Cập nhật' : 'Tạo mới'}</h3>
       {selected && <p>#{selected[definition.id]}</p>}
       {editableFields.map(([name, label, kind]) => <label key={name}>{label}<input aria-label={label} type={kind === 'csv' ? 'text' : kind} step={kind === 'datetime-local' ? '0.001' : undefined} value={values[name] ?? ''} onChange={(event) => setValues((current) => ({ ...current, [name]: event.target.value }))} required={!['description', 'phone', 'image', 'endsOn', 'endDate', 'maximumDiscount', 'minimumOrder', 'operatingSince', 'birthDate', 'language', 'subtitle', 'ageRating', 'director', 'posterUrl', 'trailerUrl', 'status'].includes(name)} /></label>)}
-      {active === 'roles' && canGrant && selected && <label>QuyenID cần gán (phân cách dấu phẩy, để trống để gỡ tất cả)<input aria-label="QuyenID cần gán" value={values.permissionIds ?? ''} onChange={(event) => setValues((current) => ({ ...current, permissionIds: event.target.value }))} /></label>}
-      <div className="catalog-actions"><button className="catalog-button" disabled={permissionsLoading}>{permissionsLoading ? 'Đang tải quyền…' : 'Lưu'}</button>{selected && <button className="catalog-button catalog-button--secondary" type="button" onClick={clearForm}>Bỏ chọn</button>}</div>
+      <div className="catalog-actions"><button className="catalog-button">Lưu</button>{selected && <button className="catalog-button catalog-button--secondary" type="button" onClick={clearForm}>Bỏ chọn</button>}</div>
     </form>}
     {active === 'showtimes' && <p>Chọn suất chiếu trong bảng để sửa hoặc dùng nút Hủy; thời gian chồng lấp được kiểm tra trong SQL.</p>}
     {state.status === 'loading' && <LoadingState>Đang tải dữ liệu…</LoadingState>}

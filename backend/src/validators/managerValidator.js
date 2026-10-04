@@ -100,7 +100,7 @@ export function roomUpdate(value) {
 export function seatCreate(value) {
   const body = objectOnly(value, ['row', 'number', 'type']);
   if (typeof body.row !== 'string' || !body.row.trim() || body.row.trim().length > 10
-    || !Number.isInteger(body.number) || body.number <= 0) {
+    || !Number.isInteger(body.number) || body.number <= 0 || body.number > 2147483647) {
     throw new HttpError(400, 'INVALID_REQUEST', 'Seat row or number is invalid.');
   }
   return {
