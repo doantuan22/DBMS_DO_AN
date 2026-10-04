@@ -15,6 +15,7 @@ function orderSummaryDto(row) {
     ticketTotal: number(row.TongTienVe), productTotal: number(row.TongTienDoAn),
     discountTotal: number(row.TienGiamGia), total: number(row.TongTienThanhToan),
     status: row.TrangThaiDon, promotionCode: row.MaKhuyenMai, ticketCount: row.SoLuongVe,
+    cancellationReason: row.LyDoHuy ?? null, cancellationNotice: row.ThongBaoHuy ?? null,
     latestPaymentStatus: row.TrangThaiThanhToanMoiNhat,
   };
 }
@@ -40,6 +41,7 @@ function detailDto(result) {
     ageRating: row.DoTuoi, durationMinutes: row.ThoiLuong, promotionDescription: row.MoTaKhuyenMai,
     seatLabels: row.DanhSachGhe, ticketCodes: row.DanhSachMaVe,
     tickets: rowOf(result, 1).map(ticketDto), products: rowOf(result, 2).map(productDto), payments: rowOf(result, 3).map(paymentDto),
+    compensation: row.DiemBoiThuong == null ? null : { points: number(row.DiemBoiThuong), creditedAt: row.NgayBoiThuong },
   };
 }
 
@@ -63,6 +65,7 @@ function mapOrderError(error) {
     case 50111: throw new HttpError(409, 'ORDER_HOLD_EXPIRED', 'The payment hold has expired.');
     case 50114: throw new HttpError(400, 'INVALID_PAYMENT_RESULT', 'Payment result is invalid.');
     case 50115: throw new HttpError(409, 'PAYMENT_FINALIZED', 'Payment attempt already has a final result.');
+    case 50121: throw new HttpError(409, 'SHOWTIME_NOT_PAYABLE', 'This showtime is no longer available for payment.');
     default: throw error;
   }
 }

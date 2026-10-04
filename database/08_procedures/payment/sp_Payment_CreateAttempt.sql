@@ -11,18 +11,24 @@ BEGIN
     BEGIN TRY
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentCreateAttempt;
         DECLARE @UserID INT, @SuatID INT, @RoomID INT, @ShowStatus NVARCHAR(50), @Starts DATETIME2,
-                @OrderStatus NVARCHAR(50), @Hold DATETIME2, @Amount DECIMAL(18,2), @Now DATETIME2=dbo.fn_BayGio();
+                @OrderStatus NVARCHAR(50), @Hold DATETIME2, @Amount DECIMAL(18,2), @Now DATETIME2;
         SELECT @UserID=NguoiDungID,@SuatID=SuatChieuID FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID;
         IF @UserID IS NULL THROW 50030, N'Đơn đặt vé không tồn tại.', 1;
         DECLARE @LockedUser INT;
         SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;
         SELECT @RoomID=PhongID,@ShowStatus=TrangThai,@Starts=ThoiGianBatDau
         FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;
-        IF @RoomID IS NULL OR @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;
         SELECT @OrderStatus=TrangThai,@Hold=HanGiuCho,@Amount=TongTienVe+TongTienDoAn-TienGiamGia
         FROM dbo.DONDATVE WITH (UPDLOCK,HOLDLOCK) WHERE DonDatVeID=@DonDatVeID;
-        IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND @Hold<=@Now) THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;
+        SET @Now=dbo.fn_BayGio(); -- Re-read after waiting for all lifecycle locks.
+        IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND (@Hold IS NULL OR @Hold<=@Now))
+        BEGIN
+            EXEC dbo.sp_Order_ExpirePending @SuatChieuID=@SuatID, @TraVeKetQua=0;
+            IF @OwnTran=1 COMMIT TRANSACTION;
+            THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;
+        END;
         IF @OrderStatus<>N'Chờ thanh toán' THROW 50031, N'Đơn hàng không ở trạng thái Chờ thanh toán.', 1;
+        IF @RoomID IS NULL OR @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;
         SET @MaGiaoDich=CONCAT('TXN-',FORMAT(@Now,'yyyyMMddHHmmss'),'-',CAST(@DonDatVeID AS VARCHAR(10)),'-',LEFT(REPLACE(CONVERT(VARCHAR(36),NEWID()),'-',''),6));
         INSERT dbo.THANHTOAN(DonDatVeID,PhuongThuc,SoTien,NgayTao,MaGiaoDich,TrangThai) VALUES(@DonDatVeID,@PhuongThuc,@Amount,@Now,@MaGiaoDich,N'Đang xử lý');
         SET @ThanhToanID=SCOPE_IDENTITY();

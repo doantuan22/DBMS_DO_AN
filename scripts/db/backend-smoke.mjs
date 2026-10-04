@@ -16,6 +16,7 @@ const server=createApp().listen(0,'127.0.0.1');
 await new Promise(resolve=>server.once('listening',resolve));
 const base=`http://127.0.0.1:${server.address().port}/api`;
 const results=[];
+const skipped=[];
 async function request(route,{token,body}={}) {
  const response=await fetch(base+route,{method:body?'POST':'GET',headers:{...(body?{'Content-Type':'application/json'}:{}),...(token?{Authorization:`Bearer ${token}`}:{})},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(15000)});
  const data=await response.json();
@@ -33,9 +34,14 @@ try {
  const movie=movies[0];
  await request(`/movies/${movie.id}`);
  const {showtimes:shows}=await request(`/movies/${movie.id}/showtimes`);
- assert.ok(shows.length>0,'SeedDate must supply future shows.');
- await request(`/showtimes/${shows[0].id}`);
- await request(`/showtimes/${shows[0].id}/seats`);
+ if (shows.length>0) {
+  await request(`/showtimes/${shows[0].id}`);
+  await request(`/showtimes/${shows[0].id}/seats`);
+ } else {
+  assert.ok(process.argv.includes('--allow-no-future-shows'),'SeedDate must supply future shows.');
+  skipped.push({checks:['showtime detail','showtime seats'],reason:'Existing database has no future shows for the selected movie.'});
+  console.log('SKIP future showtime detail/seats: existing data has no future shows for the selected movie');
+ }
  await request('/cinemas');await request('/genres');await request('/products');
  for(const [role,email] of [['customer','khachhang1@gmail.com'],['manager','manager.q1@cinemadb.vn'],['support','cskh@cinemadb.vn'],['admin','admin@cinemadb.vn']]) {
   const login=await request('/auth/login',{body:{Email:email,MatKhau:'123456'}});
@@ -57,7 +63,7 @@ try {
   write(path.join(audit,`concurrency-${database}.json`),stress);
   assert.ok(stress.every(s=>s.code===0),'Concurrency check failed; see saved report.');
  }
- write(path.join(audit,`backend-smoke-${database}.json`),{status:'PASS',database,connectionUser:env.DB_USER,health,requests:results,at:new Date().toISOString(),note:'Read-only HTTP integration. SQL write flows tested with rollback in 11_tests/procedures/smoke.sql.'});
+ write(path.join(audit,`backend-smoke-${database}.json`),{status:'PASS',database,connectionUser:env.DB_USER,health,requests:results,skipped,at:new Date().toISOString(),note:'Read-only HTTP integration. SQL write flows tested with rollback in 11_tests/procedures/smoke.sql.'});
  console.log(`PASS HTTP backend smoke: ${results.length} requests; login=${env.DB_USER}; database=${database}`);
 } catch(error) {
  write(path.join(audit,`backend-smoke-${database}.json`),{status:'FAIL',database,connectionUser:env.DB_USER,requests:results,error:error.message,at:new Date().toISOString()});

@@ -20,6 +20,11 @@ before(async () => {
 
 after(async () => { await vite?.close(); });
 
+test('R2 held-order cancellation conflicts explain the waiting reason in Vietnamese', () => {
+  assert.match(limits.bookingErrorMessage({ code: 'SHOWTIME_HAS_HELD_ORDERS' }), /còn đơn giữ ghế\/chờ thanh toán còn hiệu lực/);
+  assert.match(limits.bookingErrorMessage({ code: 'ORDER_HOLD_EXPIRED' }), /hết thời gian giữ ghế/);
+});
+
 test('the limits are the agreed ones and live in one constants module', () => {
   assert.deepEqual({ ...constants }, { MAX_SEATS_PER_ORDER: 10, MAX_PRODUCT_QUANTITY: 10, MAX_HOLDING_ORDERS: 3, HOLD_MINUTES: 5 });
 });

@@ -29,14 +29,6 @@
       "status": 200
     },
     {
-      "route": "/showtimes/2",
-      "status": 200
-    },
-    {
-      "route": "/showtimes/2/seats",
-      "status": 200
-    },
-    {
       "route": "/cinemas",
       "status": 200
     },
@@ -141,6 +133,15 @@
       "status": 200
     }
   ],
-  "at": "2026-10-03T15:56:22.887Z",
+  "skipped": [
+    {
+      "checks": [
+        "showtime detail",
+        "showtime seats"
+      ],
+      "reason": "Existing database has no future shows for the selected movie."
+    }
+  ],
+  "at": "2026-10-04T09:18:26.434Z",
   "note": "Read-only HTTP integration. SQL write flows tested with rollback in 11_tests/procedures/smoke.sql."
 }

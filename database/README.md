@@ -1,4 +1,38 @@
-# CinemaBookingDB — reproducible baseline (R0 + R1)
+# CinemaBookingDB — reproducible baseline (R0 + R1 + R2 + R2-FIX)
+
+R2-FIX hiện hành: **27 tables, 6 views, 21 functions, 7 triggers, 124 procedures,
+63 indexes, 161 constraints**. Thanh toán mô phỏng chỉ được xác nhận khi DB
+còn giữ ghế; hủy suất có đơn giữ hợp lệ trả 409. Đơn đã thanh toán được bồi
+thường điểm phần vé, giữ nguyên payment history. Bảng `BOITHUONG_HUYSUAT`
+chỉ lưu `BoiThuongID` (identity PK), `DonDatVeID` (UNIQUE, FK),
+`DiemBoiThuong`, `NgayBoiThuong`, `GhiChu` audit. Khách, suất và snapshot tiền
+đọc từ DONDATVE, không lặp trong ledger; điểm sự kiện không tính lại.
+Xem [R2-FIX report](../audit/remediation/r2fix/R2_FIX_REPORT.md) và
+[R2 report lịch sử](../audit/remediation/r2/R2_REPORT.md).
+
+Đối với database đã có bảng R2 cũ, chuyển tại chỗ và deploy hai SP liên quan
+trong cùng transaction (không drop/recreate bảng, không cộng lại điểm):
+
+```powershell
+npm.cmd run r2fix:migrate -- --database=CinemaBookingDB --apply
+```
+
+Migration từ chối schema không rõ nguồn, điểm lịch sử ngoài INT, hoặc snapshot
+trùng không khớp DONDATVE; các record không bị tự sửa. Có COPY_ONLY backup và
+RESTORE VERIFYONLY trước khi áp dụng vào `CinemaBookingDB`. Physical column IDs
+được giữ khi ALTER; verify bỏ so sánh thứ tự cột riêng bảng này, vẫn kiểm tra
+đầy đủ tên/type/nullability/identity/keys/FK/CHECK và definition các module.
+
+Kiểm thử R2 trên database riêng, giữ dữ liệu ứng dụng hiện hữu:
+
+```powershell
+npm.cmd run db:reset -- --database=CinemaBookingDB_R0_R1_R2_Test
+npm.cmd run r2:checks -- --database=CinemaBookingDB_R0_R1_R2_Test
+```
+
+Các mô tả/counts R0 và R1 bên dưới là lịch sử trước R2. Contract timezone R1
+và RBAC vẫn giữ nguyên. `db:reset` không có `--database` sẽ reset database
+được cấu hình trong backend `.env`; dùng tên database riêng cho regression.
 
 R1 timezone contract hiện hành: **26 tables, 6 views, 20 functions, 7 triggers,
 124 procedures, 61 indexes, 157 constraints**. Ba function mới chỉ tập trung

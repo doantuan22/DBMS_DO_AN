@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "provenance": "Rebuilt exclusively from source: 2026-10-03T14:56:22.939Z",
+  "provenance": "Rebuilt exclusively from source: 2026-10-04T06:57:37.878Z",
   "steps": [
     "00_database/002_create_database.sql",
     "00_database/003_database_options.sql",
@@ -35,6 +35,7 @@
     "03_constraints/002_foreign_keys.sql",
     "03_constraints/003_check_constraints.sql",
     "03_constraints/004_defaults.sql",
+    "02_tables/boithuong_huysuat.sql",
     "04_indexes/banggia.sql",
     "04_indexes/chitietve.sql",
     "04_indexes/dondatve.sql",
@@ -49,6 +50,7 @@
     "04_indexes/thanhtoan.sql",
     "04_indexes/xuly_khieunai.sql",
     "05_functions/fn_BayGio.sql",
+    "05_functions/fn_TinhBoiThuongVe.sql",
     "05_functions/fn_DonDangGiuGhe.sql",
     "05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql",
     "05_functions/fn_GioiHanDonDangGiu.sql",
@@ -210,6 +212,7 @@
   ],
   "modules": {
     "fn_BayGio": "05_functions/fn_BayGio.sql",
+    "fn_TinhBoiThuongVe": "05_functions/fn_TinhBoiThuongVe.sql",
     "fn_DonDangGiuGhe": "05_functions/fn_DonDangGiuGhe.sql",
     "fn_GheCoVeHieuLucSuatTuongLai": "05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql",
     "fn_GioiHanDonDangGiu": "05_functions/fn_GioiHanDonDangGiu.sql",
@@ -370,7 +373,7 @@
   "expected": {
     "environment": [
       {
-        "databaseName": "CinemaBookingDB_R0_R1_Manifest20261003",
+        "databaseName": "CinemaBookingDB_R0_R2Fix_Baseline20261004",
         "version": "17.0.1000.7",
         "collation_name": "Vietnamese_CI_AS",
         "compatibility_level": 170,
@@ -429,6 +432,15 @@
       {
         "schemaName": "dbo",
         "name": "CK_BANGGIA_TrangThai",
+        "type": "C ",
+        "type_desc": "CHECK_CONSTRAINT",
+        "definition": null,
+        "uses_ansi_nulls": null,
+        "uses_quoted_identifier": null
+      },
+      {
+        "schemaName": "dbo",
+        "name": "CK_BOITHUONG_HUYSUAT_Diem",
         "type": "C ",
         "type_desc": "CHECK_CONSTRAINT",
         "definition": null,
@@ -1211,6 +1223,15 @@
       },
       {
         "schemaName": "dbo",
+        "name": "FK_BOITHUONG_HUYSUAT_Don",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT",
+        "definition": null,
+        "uses_ansi_nulls": null,
+        "uses_quoted_identifier": null
+      },
+      {
+        "schemaName": "dbo",
         "name": "FK_CHITIETDOAN_DonDatVe",
         "type": "F ",
         "type_desc": "FOREIGN_KEY_CONSTRAINT",
@@ -1647,6 +1668,15 @@
         "type": "IF",
         "type_desc": "SQL_INLINE_TABLE_VALUED_FUNCTION",
         "definition": "-- Baseline: functions/02_functions.sql:203 (dbo.fn_DanhSachGheSuatChieu)\r\nCREATE   FUNCTION dbo.fn_DanhSachGheSuatChieu\r\n(\r\n    @SuatChieuID INT\r\n)\r\nRETURNS TABLE\r\nAS\r\nRETURN\r\n(\r\n    WITH GhePhong AS (\r\n        SELECT\r\n            g.GheID,\r\n            g.PhongID,\r\n            g.HangGhe,\r\n            g.SoGhe,\r\n            (g.HangGhe + CAST(g.SoGhe AS VARCHAR(10))) AS TenGhe,\r\n            g.LoaiGhe,\r\n            g.TrangThai AS TrangThaiGheVatLy\r\n        FROM dbo.SUATCHIEU sc\r\n        INNER JOIN dbo.GHE g ON sc.PhongID = g.PhongID\r\n        WHERE sc.SuatChieuID = @SuatChieuID\r\n    ),\r\n    GheChiemCho AS (\r\n        -- Mức 2 = đã bán (đơn đã thanh toán), mức 1 = đang giữ chỗ chờ thanh toán\r\n        SELECT\r\n            cv.GheID,\r\n            MAX(CASE WHEN ddv.TrangThai = N'Chờ thanh toán' THEN 1 ELSE 2 END) AS Muc\r\n        FROM dbo.CHITIETVE cv\r\n        INNER JOIN dbo.DONDATVE ddv ON cv.DonDatVeID = ddv.DonDatVeID\r\n        WHERE ddv.SuatChieuID = @SuatChieuID\r\n          AND cv.TrangThai <> N'Đã hủy'\r\n          AND dbo.fn_DonDangGiuGhe(ddv.TrangThai, ddv.HanGiuCho, dbo.fn_BayGio()) = 1\r\n        GROUP BY cv.GheID\r\n    )\r\n    SELECT\r\n        gp.GheID,\r\n        gp.PhongID,\r\n        gp.HangGhe,\r\n        gp.SoGhe,\r\n        gp.TenGhe,\r\n        gp.LoaiGhe,\r\n        dbo.fn_TinhGiaVe(@SuatChieuID, gp.GheID) AS GiaVe,\r\n        CASE\r\n            WHEN gp.TrangThaiGheVatLy <> N'Hoạt động' THEN N'Bảo trì'\r\n            WHEN gdd.Muc = 2 THEN N'Đã đặt'\r\n            WHEN gdd.Muc = 1 THEN N'Đang giữ'\r\n            ELSE N'Trống'\r\n        END AS TrangThaiGhe\r\n    FROM GhePhong gp\r\n    LEFT JOIN GheChiemCho gdd ON gp.GheID = gdd.GheID\r\n);\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "fn_TinhBoiThuongVe",
+        "type": "IF",
+        "type_desc": "SQL_INLINE_TABLE_VALUED_FUNCTION",
+        "definition": "CREATE   FUNCTION dbo.fn_TinhBoiThuongVe (\n    @TongTienVe DECIMAL(18,2), @TongTienDoAn DECIMAL(18,2), @TienGiamGia DECIMAL(18,2)\n)\nRETURNS TABLE\nAS RETURN (\n    -- Proportional allocation: Ve - Giam * Ve / (Ve + DoAn).\n    -- Integer cents are exact DECIMAL values, not a monetary rounding step.\n    -- Use the remainder to avoid division rounding a sub-point value up before FLOOR.\n    SELECT CAST(ISNULL(n.TuSo / NULLIF(c.TongCent * CAST(100 AS DECIMAL(3,0)), 0), 0) AS DECIMAL(38,6)) AS TienVeThucTra,\n           CAST(FLOOR(ISNULL((n.TuSo - n.TuSo % NULLIF(p.MauDiem, 0)) / NULLIF(p.MauDiem, 0), 0)) AS BIGINT) AS DiemCong\n    FROM (SELECT CAST(ISNULL(@TongTienVe,0) * 100 AS DECIMAL(19,0)) AS VeCent,\n                 CAST((ISNULL(@TongTienVe,0) + ISNULL(@TongTienDoAn,0)) * 100 AS DECIMAL(19,0)) AS TongCent,\n                 CAST(ISNULL(@TienGiamGia,0) * 100 AS DECIMAL(19,0)) AS GiamCent) c\n    CROSS APPLY (SELECT CAST(CASE WHEN c.TongCent <= c.GiamCent OR c.VeCent <= 0 THEN 0\n                           ELSE c.VeCent * (c.TongCent - c.GiamCent) END AS DECIMAL(38,0)) AS TuSo) n\n    CROSS APPLY (SELECT CAST(c.TongCent * CAST(100000 AS DECIMAL(6,0)) AS DECIMAL(25,0)) AS MauDiem) p\n);\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2285,7 +2315,7 @@
         "name": "sp_Order_ExpirePending",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "-- Baseline: procedures/system/system_procedures.sql:38 (dbo.sp_Order_ExpirePending)\r\nCREATE   PROCEDURE dbo.sp_Order_ExpirePending\r\n(\r\n    @SuatChieuID INT = NULL,\r\n    @TraVeKetQua BIT = 1   -- 0 khi gọi lồng trong thủ tục khác (không trả recordset)\r\n)\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n\r\n    DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;\r\n    DECLARE @Het TABLE (DonDatVeID INT PRIMARY KEY, KhuyenMaiID INT NULL);\r\n    DECLARE @SoDon INT = 0;\r\n\r\n    BEGIN TRY\r\n        IF @TuMoTran = 1\r\n            BEGIN TRANSACTION;\r\n        ELSE\r\n            SAVE TRANSACTION sp_Order_ExpirePending;\r\n\r\n        UPDATE d\r\n        SET d.TrangThai = N'Hết hạn'\r\n        OUTPUT inserted.DonDatVeID, inserted.KhuyenMaiID INTO @Het (DonDatVeID, KhuyenMaiID)\r\n        FROM dbo.DONDATVE d\r\n        WHERE d.TrangThai = N'Chờ thanh toán'\r\n          AND d.HanGiuCho <= dbo.fn_BayGio()\r\n          AND (@SuatChieuID IS NULL OR d.SuatChieuID = @SuatChieuID);\r\n\r\n        SET @SoDon = @@ROWCOUNT;\r\n\r\n        IF @SoDon > 0\r\n        BEGIN\r\n            UPDATE cv\r\n            SET cv.TrangThai = N'Đã hủy'\r\n            FROM dbo.CHITIETVE cv\r\n            INNER JOIN @Het h ON h.DonDatVeID = cv.DonDatVeID\r\n            WHERE cv.TrangThai <> N'Đã hủy';\r\n\r\n            UPDATE km\r\n            SET km.SoLuongDaDung = CASE WHEN km.SoLuongDaDung >= x.SoLan THEN km.SoLuongDaDung - x.SoLan ELSE 0 END\r\n            FROM dbo.KHUYENMAI km\r\n            INNER JOIN (SELECT KhuyenMaiID, COUNT(*) AS SoLan FROM @Het WHERE KhuyenMaiID IS NOT NULL GROUP BY KhuyenMaiID) x\r\n                ON x.KhuyenMaiID = km.KhuyenMaiID;\r\n        END\r\n\r\n        IF @TuMoTran = 1\r\n            COMMIT TRANSACTION;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE() = -1\r\n            ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE() = 1\r\n        BEGIN\r\n            IF @TuMoTran = 1\r\n                ROLLBACK TRANSACTION;\r\n            ELSE\r\n                ROLLBACK TRANSACTION sp_Order_ExpirePending;\r\n        END\r\n        ;THROW;\r\n    END CATCH\r\n\r\n    IF @TraVeKetQua = 1\r\n        SELECT @SoDon AS SoDonHetHan;\r\nEND;\n",
+        "definition": "-- Baseline: procedures/system/system_procedures.sql:38 (dbo.sp_Order_ExpirePending)\r\nCREATE   PROCEDURE dbo.sp_Order_ExpirePending\r\n(\r\n    @SuatChieuID INT = NULL,\r\n    @TraVeKetQua BIT = 1   -- 0 khi gọi lồng trong thủ tục khác (không trả recordset)\r\n)\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n\r\n    DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;\r\n    DECLARE @Het TABLE (DonDatVeID INT PRIMARY KEY, KhuyenMaiID INT NULL);\r\n    DECLARE @SoDon INT = 0;\r\n\r\n    BEGIN TRY\r\n        IF @TuMoTran = 1\r\n            BEGIN TRANSACTION;\r\n        ELSE\r\n            SAVE TRANSACTION sp_Order_ExpirePending;\r\n\r\n        UPDATE d\r\n        SET d.TrangThai = N'Hết hạn'\r\n        OUTPUT inserted.DonDatVeID, inserted.KhuyenMaiID INTO @Het (DonDatVeID, KhuyenMaiID)\r\n        FROM dbo.DONDATVE d\r\n        WHERE d.TrangThai = N'Chờ thanh toán'\r\n          AND (d.HanGiuCho IS NULL OR d.HanGiuCho <= dbo.fn_BayGio())\n          AND (@SuatChieuID IS NULL OR d.SuatChieuID = @SuatChieuID);\r\n\r\n        SET @SoDon = @@ROWCOUNT;\r\n\r\n        IF @SoDon > 0\r\n        BEGIN\r\n            UPDATE cv\r\n            SET cv.TrangThai = N'Đã hủy'\r\n            FROM dbo.CHITIETVE cv\r\n            INNER JOIN @Het h ON h.DonDatVeID = cv.DonDatVeID\r\n            WHERE cv.TrangThai <> N'Đã hủy';\r\n\r\n            UPDATE km\r\n            SET km.SoLuongDaDung = CASE WHEN km.SoLuongDaDung >= x.SoLan THEN km.SoLuongDaDung - x.SoLan ELSE 0 END\r\n            FROM dbo.KHUYENMAI km\r\n            INNER JOIN (SELECT KhuyenMaiID, COUNT(*) AS SoLan FROM @Het WHERE KhuyenMaiID IS NOT NULL GROUP BY KhuyenMaiID) x\r\n                ON x.KhuyenMaiID = km.KhuyenMaiID;\r\n        END\r\n\r\n        IF @TuMoTran = 1\r\n            COMMIT TRANSACTION;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE() = -1\r\n            ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE() = 1\r\n        BEGIN\r\n            IF @TuMoTran = 1\r\n                ROLLBACK TRANSACTION;\r\n            ELSE\r\n                ROLLBACK TRANSACTION sp_Order_ExpirePending;\r\n        END\r\n        ;THROW;\r\n    END CATCH\r\n\r\n    IF @TraVeKetQua = 1\r\n        SELECT @SoDon AS SoDonHetHan;\r\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2294,7 +2324,7 @@
         "name": "sp_Order_GetDetailByCustomer",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.sp_Order_GetDetailByCustomer @NguoiDungID INT, @DonDatVeID INT\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    IF NOT EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID AND NguoiDungID=@NguoiDungID)\r\n        THROW 50033, N'Đơn đặt vé không tồn tại hoặc bạn không có quyền xem đơn này.', 1;\r\n    SELECT v.[DonDatVeID], v.[NguoiDungID], v.[HoTenKhachHang], v.[Email], v.[SoDienThoai], v.[SuatChieuID], v.[PhimID], v.[TenPhim], v.[PosterURL], v.[DoTuoi], v.[ThoiLuong], v.[RapID], v.[TenRap], v.[DiaChiRap], v.[PhongID], v.[TenPhong], v.[LoaiPhong], v.[ThoiGianBatDau], v.[ThoiGianKetThuc], v.[DinhDang], v.[NgayDat], v.[TongTienVe], v.[TongTienDoAn], v.[TienGiamGia], v.[TongTienThanhToan], v.[TrangThaiDon], v.[HanGiuCho], v.[MaKhuyenMai], v.[MoTaKhuyenMai], v.[DanhSachGhe], v.[DanhSachMaVe],d.LyDoHuy,d.ThongBaoHuy\r\n    FROM dbo.vw_ChiTietDonDatVe v INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=v.DonDatVeID WHERE v.DonDatVeID=@DonDatVeID;\r\n    SELECT cv.VeID,cv.MaVe,g.GheID,g.HangGhe,g.SoGhe,(g.HangGhe+CAST(g.SoGhe AS VARCHAR(10))) AS TenGhe,g.LoaiGhe,cv.GiaVe,cv.TrangThai AS TrangThaiVe\r\n    FROM dbo.CHITIETVE cv INNER JOIN dbo.GHE g ON g.GheID=cv.GheID WHERE cv.DonDatVeID=@DonDatVeID;\r\n    SELECT cda.ChiTietDoAnID,sp.SanPhamID,sp.TenSanPham,sp.LoaiSanPham,cda.SoLuong,cda.DonGia,cda.SoLuong*cda.DonGia AS ThanhTien\r\n    FROM dbo.CHITIETDOAN cda INNER JOIN dbo.SANPHAM sp ON sp.SanPhamID=cda.SanPhamID WHERE cda.DonDatVeID=@DonDatVeID;\r\n    SELECT ThanhToanID,PhuongThuc,SoTien,NgayTao,NgayThanhToan,MaGiaoDich,TrangThai,GhiChu FROM dbo.THANHTOAN WHERE DonDatVeID=@DonDatVeID ORDER BY ThanhToanID;\r\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.sp_Order_GetDetailByCustomer @NguoiDungID INT, @DonDatVeID INT\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    IF NOT EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID AND NguoiDungID=@NguoiDungID)\r\n        THROW 50033, N'Đơn đặt vé không tồn tại hoặc bạn không có quyền xem đơn này.', 1;\n    DECLARE @SuatID INT = (SELECT SuatChieuID FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID);\n    EXEC dbo.sp_Order_ExpirePending @SuatChieuID=@SuatID, @TraVeKetQua=0;\n    SELECT v.[DonDatVeID], v.[NguoiDungID], v.[HoTenKhachHang], v.[Email], v.[SoDienThoai], v.[SuatChieuID], v.[PhimID], v.[TenPhim], v.[PosterURL], v.[DoTuoi], v.[ThoiLuong], v.[RapID], v.[TenRap], v.[DiaChiRap], v.[PhongID], v.[TenPhong], v.[LoaiPhong], v.[ThoiGianBatDau], v.[ThoiGianKetThuc], v.[DinhDang], v.[NgayDat], v.[TongTienVe], v.[TongTienDoAn], v.[TienGiamGia], v.[TongTienThanhToan], v.[TrangThaiDon], v.[HanGiuCho], v.[MaKhuyenMai], v.[MoTaKhuyenMai], v.[DanhSachGhe], v.[DanhSachMaVe],d.LyDoHuy,d.ThongBaoHuy\r\n        ,b.DiemBoiThuong,b.NgayBoiThuong\n    FROM dbo.vw_ChiTietDonDatVe v INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=v.DonDatVeID\n    LEFT JOIN dbo.BOITHUONG_HUYSUAT b ON b.DonDatVeID=d.DonDatVeID WHERE v.DonDatVeID=@DonDatVeID;\n    SELECT cv.VeID,cv.MaVe,g.GheID,g.HangGhe,g.SoGhe,(g.HangGhe+CAST(g.SoGhe AS VARCHAR(10))) AS TenGhe,g.LoaiGhe,cv.GiaVe,cv.TrangThai AS TrangThaiVe\r\n    FROM dbo.CHITIETVE cv INNER JOIN dbo.GHE g ON g.GheID=cv.GheID WHERE cv.DonDatVeID=@DonDatVeID;\r\n    SELECT cda.ChiTietDoAnID,sp.SanPhamID,sp.TenSanPham,sp.LoaiSanPham,cda.SoLuong,cda.DonGia,cda.SoLuong*cda.DonGia AS ThanhTien\r\n    FROM dbo.CHITIETDOAN cda INNER JOIN dbo.SANPHAM sp ON sp.SanPhamID=cda.SanPhamID WHERE cda.DonDatVeID=@DonDatVeID;\r\n    SELECT ThanhToanID,PhuongThuc,SoTien,NgayTao,NgayThanhToan,MaGiaoDich,TrangThai,GhiChu FROM dbo.THANHTOAN WHERE DonDatVeID=@DonDatVeID ORDER BY ThanhToanID;\r\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2312,7 +2342,7 @@
         "name": "sp_Payment_CreateAttempt",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:257 (dbo.sp_Payment_CreateAttempt)\r\nCREATE   PROCEDURE dbo.sp_Payment_CreateAttempt\r\n    @DonDatVeID INT, @PhuongThuc NVARCHAR(50), @ThanhToanID INT OUTPUT, @MaGiaoDich VARCHAR(100) OUTPUT\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentCreateAttempt;\r\n        DECLARE @UserID INT, @SuatID INT, @RoomID INT, @ShowStatus NVARCHAR(50), @Starts DATETIME2,\r\n                @OrderStatus NVARCHAR(50), @Hold DATETIME2, @Amount DECIMAL(18,2), @Now DATETIME2=dbo.fn_BayGio();\r\n        SELECT @UserID=NguoiDungID,@SuatID=SuatChieuID FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID;\r\n        IF @UserID IS NULL THROW 50030, N'Đơn đặt vé không tồn tại.', 1;\r\n        DECLARE @LockedUser INT;\r\n        SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;\r\n        SELECT @RoomID=PhongID,@ShowStatus=TrangThai,@Starts=ThoiGianBatDau\r\n        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;\r\n        IF @RoomID IS NULL OR @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;\r\n        SELECT @OrderStatus=TrangThai,@Hold=HanGiuCho,@Amount=TongTienVe+TongTienDoAn-TienGiamGia\r\n        FROM dbo.DONDATVE WITH (UPDLOCK,HOLDLOCK) WHERE DonDatVeID=@DonDatVeID;\r\n        IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND @Hold<=@Now) THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;\r\n        IF @OrderStatus<>N'Chờ thanh toán' THROW 50031, N'Đơn hàng không ở trạng thái Chờ thanh toán.', 1;\r\n        SET @MaGiaoDich=CONCAT('TXN-',FORMAT(@Now,'yyyyMMddHHmmss'),'-',CAST(@DonDatVeID AS VARCHAR(10)),'-',LEFT(REPLACE(CONVERT(VARCHAR(36),NEWID()),'-',''),6));\r\n        INSERT dbo.THANHTOAN(DonDatVeID,PhuongThuc,SoTien,NgayTao,MaGiaoDich,TrangThai) VALUES(@DonDatVeID,@PhuongThuc,@Amount,@Now,@MaGiaoDich,N'Đang xử lý');\r\n        SET @ThanhToanID=SCOPE_IDENTITY();\r\n        IF @OwnTran=1 COMMIT TRANSACTION;\r\n        SELECT tt.ThanhToanID,tt.DonDatVeID,tt.PhuongThuc,tt.SoTien,tt.NgayTao,tt.MaGiaoDich,tt.TrangThai,d.HanGiuCho\r\n        FROM dbo.THANHTOAN tt INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=tt.DonDatVeID WHERE tt.ThanhToanID=@ThanhToanID;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION PaymentCreateAttempt; END\r\n        ;THROW;\r\n    END CATCH\r\nEND;\n",
+        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:257 (dbo.sp_Payment_CreateAttempt)\r\nCREATE   PROCEDURE dbo.sp_Payment_CreateAttempt\r\n    @DonDatVeID INT, @PhuongThuc NVARCHAR(50), @ThanhToanID INT OUTPUT, @MaGiaoDich VARCHAR(100) OUTPUT\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentCreateAttempt;\r\n        DECLARE @UserID INT, @SuatID INT, @RoomID INT, @ShowStatus NVARCHAR(50), @Starts DATETIME2,\r\n                @OrderStatus NVARCHAR(50), @Hold DATETIME2, @Amount DECIMAL(18,2), @Now DATETIME2;\n        SELECT @UserID=NguoiDungID,@SuatID=SuatChieuID FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID;\r\n        IF @UserID IS NULL THROW 50030, N'Đơn đặt vé không tồn tại.', 1;\r\n        DECLARE @LockedUser INT;\r\n        SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;\r\n        SELECT @RoomID=PhongID,@ShowStatus=TrangThai,@Starts=ThoiGianBatDau\r\n        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;\r\n        SELECT @OrderStatus=TrangThai,@Hold=HanGiuCho,@Amount=TongTienVe+TongTienDoAn-TienGiamGia\r\n        FROM dbo.DONDATVE WITH (UPDLOCK,HOLDLOCK) WHERE DonDatVeID=@DonDatVeID;\r\n        SET @Now=dbo.fn_BayGio(); -- Re-read after waiting for all lifecycle locks.\n        IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND (@Hold IS NULL OR @Hold<=@Now))\n        BEGIN\n            EXEC dbo.sp_Order_ExpirePending @SuatChieuID=@SuatID, @TraVeKetQua=0;\n            IF @OwnTran=1 COMMIT TRANSACTION;\n            THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;\n        END;\n        IF @OrderStatus<>N'Chờ thanh toán' THROW 50031, N'Đơn hàng không ở trạng thái Chờ thanh toán.', 1;\n        IF @RoomID IS NULL OR @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;\n        SET @MaGiaoDich=CONCAT('TXN-',FORMAT(@Now,'yyyyMMddHHmmss'),'-',CAST(@DonDatVeID AS VARCHAR(10)),'-',LEFT(REPLACE(CONVERT(VARCHAR(36),NEWID()),'-',''),6));\r\n        INSERT dbo.THANHTOAN(DonDatVeID,PhuongThuc,SoTien,NgayTao,MaGiaoDich,TrangThai) VALUES(@DonDatVeID,@PhuongThuc,@Amount,@Now,@MaGiaoDich,N'Đang xử lý');\r\n        SET @ThanhToanID=SCOPE_IDENTITY();\r\n        IF @OwnTran=1 COMMIT TRANSACTION;\r\n        SELECT tt.ThanhToanID,tt.DonDatVeID,tt.PhuongThuc,tt.SoTien,tt.NgayTao,tt.MaGiaoDich,tt.TrangThai,d.HanGiuCho\r\n        FROM dbo.THANHTOAN tt INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=tt.DonDatVeID WHERE tt.ThanhToanID=@ThanhToanID;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION PaymentCreateAttempt; END\r\n        ;THROW;\r\n    END CATCH\r\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2321,7 +2351,7 @@
         "name": "sp_Payment_UpdateResult",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:293 (dbo.sp_Payment_UpdateResult)\r\nCREATE   PROCEDURE dbo.sp_Payment_UpdateResult\r\n    @ThanhToanID INT, @TrangThaiThanhToan NVARCHAR(50), @MaGiaoDichNgoai VARCHAR(100)=NULL, @GhiChu NVARCHAR(255)=NULL\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @TrangThaiThanhToan NOT IN (N'Thành công',N'Thất bại') THROW 50114, N'Kết quả thanh toán phải là Thành công hoặc Thất bại.', 1;\r\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentUpdateResult;\r\n        DECLARE @UserID INT,@SuatID INT,@LockedUser INT,@ShowStatus NVARCHAR(50),@Starts DATETIME2,@DonID INT,\r\n            @Amount DECIMAL(18,2),@CurrentPayment NVARCHAR(50),@OrderStatus NVARCHAR(50),@Hold DATETIME2,\r\n            @PromoID INT,@Now DATETIME2=dbo.fn_BayGio();\r\n        SELECT @UserID=d.NguoiDungID,@SuatID=d.SuatChieuID FROM dbo.THANHTOAN t INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n        IF @UserID IS NULL THROW 50032, N'Giao dịch thanh toán không tồn tại.', 1;\r\n        SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;\r\n        SELECT @ShowStatus=TrangThai,@Starts=ThoiGianBatDau FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;\r\n        SELECT @DonID=t.DonDatVeID,@Amount=t.SoTien,@CurrentPayment=t.TrangThai,@OrderStatus=d.TrangThai,@Hold=d.HanGiuCho,@PromoID=d.KhuyenMaiID\r\n        FROM dbo.THANHTOAN t WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.DONDATVE d WITH (UPDLOCK,HOLDLOCK) ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n        IF @CurrentPayment=@TrangThaiThanhToan\r\n        BEGIN\r\n            IF @OwnTran=1 COMMIT TRANSACTION;\r\n            SELECT d.DonDatVeID,d.TrangThai AS TrangThaiDon,t.ThanhToanID,t.MaGiaoDich,t.TrangThai AS TrangThaiThanhToan,t.NgayThanhToan FROM dbo.DONDATVE d JOIN dbo.THANHTOAN t ON t.DonDatVeID=d.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n            RETURN;\r\n        END\r\n        IF @CurrentPayment<>N'Đang xử lý' THROW 50115, N'Giao dịch đã có kết quả cuối cùng, không thể đổi.', 1;\r\n        IF @TrangThaiThanhToan=N'Thành công'\r\n        BEGIN\r\n            IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND @Hold<=@Now)\r\n                THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;\r\n            IF @OrderStatus<>N'Chờ thanh toán' THROW 50113, N'Đơn hàng không còn ở trạng thái có thể thanh toán.', 1;\r\n            IF @Hold IS NULL THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;\r\n            IF @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;\r\n            UPDATE dbo.THANHTOAN SET TrangThai=N'Thành công',NgayThanhToan=@Now,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;\r\n            UPDATE dbo.DONDATVE SET TrangThai=N'Đã thanh toán',HanGiuCho=NULL WHERE DonDatVeID=@DonID;\r\n            DECLARE @Points INT=CAST(@Amount/1000 AS INT);\r\n            IF @Points>0 UPDATE dbo.HOSOKHACHHANG SET DiemTichLuy=DiemTichLuy+@Points WHERE NguoiDungID=@UserID;\r\n        END\r\n        ELSE\r\n        BEGIN\r\n            UPDATE dbo.THANHTOAN SET TrangThai=N'Thất bại',NgayThanhToan=NULL,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;\r\n        END\r\n        IF @OwnTran=1 COMMIT TRANSACTION;\r\n        SELECT d.DonDatVeID,d.TrangThai AS TrangThaiDon,d.HanGiuCho,t.ThanhToanID,t.MaGiaoDich,t.TrangThai AS TrangThaiThanhToan,t.NgayThanhToan\r\n        FROM dbo.DONDATVE d JOIN dbo.THANHTOAN t ON t.DonDatVeID=d.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION PaymentUpdateResult; END\r\n        ;THROW;\r\n    END CATCH\r\nEND;\n",
+        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:293 (dbo.sp_Payment_UpdateResult)\r\nCREATE   PROCEDURE dbo.sp_Payment_UpdateResult\r\n    @ThanhToanID INT, @TrangThaiThanhToan NVARCHAR(50), @MaGiaoDichNgoai VARCHAR(100)=NULL, @GhiChu NVARCHAR(255)=NULL\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @TrangThaiThanhToan NOT IN (N'Thành công',N'Thất bại') THROW 50114, N'Kết quả thanh toán phải là Thành công hoặc Thất bại.', 1;\r\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentUpdateResult;\r\n        DECLARE @UserID INT,@SuatID INT,@LockedUser INT,@ShowStatus NVARCHAR(50),@Starts DATETIME2,@DonID INT,\r\n            @Amount DECIMAL(18,2),@CurrentPayment NVARCHAR(50),@OrderStatus NVARCHAR(50),@Hold DATETIME2,\r\n            @Now DATETIME2;\n        SELECT @UserID=d.NguoiDungID,@SuatID=d.SuatChieuID FROM dbo.THANHTOAN t INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n        IF @UserID IS NULL THROW 50032, N'Giao dịch thanh toán không tồn tại.', 1;\r\n        SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;\r\n        SELECT @ShowStatus=TrangThai,@Starts=ThoiGianBatDau FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;\r\n        SELECT @DonID=t.DonDatVeID,@Amount=t.SoTien,@CurrentPayment=t.TrangThai,@OrderStatus=d.TrangThai,@Hold=d.HanGiuCho\n        FROM dbo.THANHTOAN t WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.DONDATVE d WITH (UPDLOCK,HOLDLOCK) ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n        IF @CurrentPayment=@TrangThaiThanhToan\r\n        BEGIN\r\n            IF @OwnTran=1 COMMIT TRANSACTION;\r\n            SELECT d.DonDatVeID,d.TrangThai AS TrangThaiDon,t.ThanhToanID,t.MaGiaoDich,t.TrangThai AS TrangThaiThanhToan,t.NgayThanhToan FROM dbo.DONDATVE d JOIN dbo.THANHTOAN t ON t.DonDatVeID=d.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n            RETURN;\r\n        END\r\n        IF @CurrentPayment<>N'Đang xử lý' THROW 50115, N'Giao dịch đã có kết quả cuối cùng, không thể đổi.', 1;\n        SET @Now=dbo.fn_BayGio(); -- A lock wait must never extend the hold deadline.\n        IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND (@Hold IS NULL OR @Hold<=@Now))\n        BEGIN\n            EXEC dbo.sp_Order_ExpirePending @SuatChieuID=@SuatID, @TraVeKetQua=0;\n            IF @OwnTran=1 COMMIT TRANSACTION;\n            THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;\n        END;\n        IF @TrangThaiThanhToan=N'Thành công'\r\n        BEGIN\r\n            IF @OrderStatus<>N'Chờ thanh toán' THROW 50113, N'Đơn hàng không còn ở trạng thái có thể thanh toán.', 1;\n            IF @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;\r\n            UPDATE dbo.THANHTOAN SET TrangThai=N'Thành công',NgayThanhToan=@Now,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;\r\n            UPDATE dbo.DONDATVE SET TrangThai=N'Đã thanh toán',HanGiuCho=NULL WHERE DonDatVeID=@DonID;\r\n            DECLARE @Points INT=CAST(@Amount/1000 AS INT);\r\n            IF @Points>0 UPDATE dbo.HOSOKHACHHANG SET DiemTichLuy=DiemTichLuy+@Points WHERE NguoiDungID=@UserID;\r\n        END\r\n        ELSE\r\n        BEGIN\r\n            UPDATE dbo.THANHTOAN SET TrangThai=N'Thất bại',NgayThanhToan=NULL,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;\r\n        END\r\n        IF @OwnTran=1 COMMIT TRANSACTION;\r\n        SELECT d.DonDatVeID,d.TrangThai AS TrangThaiDon,d.HanGiuCho,t.ThanhToanID,t.MaGiaoDich,t.TrangThai AS TrangThaiThanhToan,t.NgayThanhToan\r\n        FROM dbo.DONDATVE d JOIN dbo.THANHTOAN t ON t.DonDatVeID=d.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION PaymentUpdateResult; END\r\n        ;THROW;\r\n    END CATCH\r\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2393,7 +2423,7 @@
         "name": "sp_Showtime_CancelCascade",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:36 (dbo.sp_Showtime_CancelCascade)\r\nCREATE   PROCEDURE dbo.sp_Showtime_CancelCascade\r\n    @SuatChieuID INT,\r\n    @NguoiDungID INT = NULL,\r\n    @LyDo NVARCHAR(255) = NULL\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    SET XACT_ABORT ON;\r\n    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;\r\n    DECLARE @Status NVARCHAR(50), @StartsAt DATETIME2, @RapID INT, @Now DATETIME2;\r\n    DECLARE @Dummy INT, @Cancelled INT = 0;\r\n    DECLARE @Orders TABLE (DonDatVeID INT PRIMARY KEY, NguoiDungID INT, KhuyenMaiID INT NULL, TrangThai NVARCHAR(50));\r\n    BEGIN TRY\r\n        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ShowtimeCancelCascade;\r\n\r\n        -- Customer-first locking matches sp_Booking_Create and payment procedures.\r\n        -- The serializable scan also prevents a new customer row appearing mid-cancel.\r\n        SELECT @Dummy = MAX(NguoiDungID) FROM dbo.NGUOIDUNG WITH (UPDLOCK, HOLDLOCK);\r\n\r\n        SELECT @Status = sc.TrangThai, @StartsAt = sc.ThoiGianBatDau, @RapID = pc.RapID\r\n        FROM dbo.SUATCHIEU sc WITH (UPDLOCK, HOLDLOCK)\r\n        INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID = sc.PhongID\r\n        WHERE sc.SuatChieuID = @SuatChieuID;\r\n        IF @Status IS NULL THROW 50116, N'Suất chiếu không tồn tại.', 1;\r\n        IF @NguoiDungID IS NOT NULL AND dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0\r\n            THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\r\n        SET @Now = dbo.fn_BayGio();\r\n        IF @Status = N'Đã hủy' OR @Status = N'Hoàn thành' OR @StartsAt <= @Now\r\n            THROW 50119, N'Không thể hủy suất chiếu đã bắt đầu hoặc đã bị hủy.', 1;\r\n\r\n        EXEC dbo.sp_Order_ExpirePending @SuatChieuID = @SuatChieuID, @TraVeKetQua = 0;\r\n\r\n        INSERT @Orders (DonDatVeID, NguoiDungID, KhuyenMaiID, TrangThai)\r\n        SELECT d.DonDatVeID, d.NguoiDungID, d.KhuyenMaiID, d.TrangThai\r\n        FROM dbo.DONDATVE d WITH (UPDLOCK, HOLDLOCK)\r\n        WHERE d.SuatChieuID = @SuatChieuID\r\n          AND d.TrangThai IN (N'Chờ thanh toán', N'Đã thanh toán', N'Hết hạn');\r\n\r\n        -- Release only promo uses still counted (unexpired holds and paid orders).\r\n        UPDATE km\r\n        SET SoLuongDaDung = CASE WHEN km.SoLuongDaDung >= x.SoLan THEN km.SoLuongDaDung - x.SoLan ELSE 0 END\r\n        FROM dbo.KHUYENMAI km\r\n        INNER JOIN (\r\n            SELECT KhuyenMaiID, COUNT(*) AS SoLan FROM @Orders\r\n            WHERE KhuyenMaiID IS NOT NULL AND TrangThai IN (N'Chờ thanh toán', N'Đã thanh toán')\r\n            GROUP BY KhuyenMaiID\r\n        ) x ON x.KhuyenMaiID = km.KhuyenMaiID;\r\n\r\n        -- Withdraw only the points previously granted by successful payments.\r\n        ;WITH RefundPoints AS (\r\n            SELECT o.NguoiDungID, SUM(CAST(tt.SoTien / 1000 AS INT)) AS Points\r\n            FROM @Orders o\r\n            INNER JOIN dbo.THANHTOAN tt ON tt.DonDatVeID = o.DonDatVeID AND tt.TrangThai = N'Thành công'\r\n            WHERE o.TrangThai = N'Đã thanh toán'\r\n            GROUP BY o.NguoiDungID\r\n        )\r\n        UPDATE h SET DiemTichLuy = CASE WHEN h.DiemTichLuy >= p.Points THEN h.DiemTichLuy - p.Points ELSE 0 END\r\n        FROM dbo.HOSOKHACHHANG h INNER JOIN RefundPoints p ON p.NguoiDungID = h.NguoiDungID;\r\n\r\n        UPDATE tt SET TrangThai = N'Đã hoàn tiền', GhiChu = N'Suất chiếu đã bị hủy; hoàn tiền mô phỏng.'\r\n        FROM dbo.THANHTOAN tt INNER JOIN @Orders o ON o.DonDatVeID = tt.DonDatVeID\r\n        WHERE o.TrangThai = N'Đã thanh toán' AND tt.TrangThai = N'Thành công';\r\n\r\n        UPDATE cv SET TrangThai = N'Đã hủy'\r\n        FROM dbo.CHITIETVE cv INNER JOIN @Orders o ON o.DonDatVeID = cv.DonDatVeID\r\n        WHERE cv.TrangThai <> N'Đã hủy';\r\n\r\n        UPDATE d\r\n        SET TrangThai = N'Đã hủy', HanGiuCho = NULL,\r\n            LyDoHuy = @LyDo,\r\n            ThongBaoHuy = N'Suất chiếu đã bị hủy, tiền sẽ được hoàn về thông qua nền tảng thanh toán'\r\n        FROM dbo.DONDATVE d INNER JOIN @Orders o ON o.DonDatVeID = d.DonDatVeID;\r\n        SET @Cancelled = @@ROWCOUNT;\r\n\r\n        UPDATE dbo.SUATCHIEU SET TrangThai = N'Đã hủy' WHERE SuatChieuID = @SuatChieuID;\r\n        IF @OwnTran = 1 COMMIT TRANSACTION;\r\n        SELECT CASE WHEN @NguoiDungID IS NULL THEN N'Đã hủy suất chiếu.' ELSE N'Hủy suất chiếu thành công.' END AS [Message], @Cancelled AS SoDonDaHuy;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE() = 1\r\n        BEGIN\r\n            IF @OwnTran = 1 ROLLBACK TRANSACTION;\r\n            ELSE ROLLBACK TRANSACTION ShowtimeCancelCascade;\r\n        END\r\n        ;THROW;\r\n    END CATCH\r\nEND;\n",
+        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:36 (dbo.sp_Showtime_CancelCascade)\r\nCREATE   PROCEDURE dbo.sp_Showtime_CancelCascade\r\n    @SuatChieuID INT,\r\n    @NguoiDungID INT = NULL,\r\n    @LyDo NVARCHAR(255) = NULL\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    SET XACT_ABORT ON;\r\n    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;\r\n    DECLARE @Status NVARCHAR(50), @StartsAt DATETIME2, @RapID INT, @Now DATETIME2;\r\n    DECLARE @Dummy INT, @Cancelled INT = 0;\r\n    DECLARE @Orders TABLE (DonDatVeID INT PRIMARY KEY, NguoiDungID INT, KhuyenMaiID INT NULL, TrangThai NVARCHAR(50));\n    DECLARE @Credits TABLE (DonDatVeID INT, DiemBoiThuong INT);\n    BEGIN TRY\r\n        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ShowtimeCancelCascade;\r\n\r\n        -- Customer-first locking matches sp_Booking_Create and payment procedures.\r\n        -- The serializable scan also prevents a new customer row appearing mid-cancel.\r\n        SELECT @Dummy = MAX(NguoiDungID) FROM dbo.NGUOIDUNG WITH (UPDLOCK, HOLDLOCK);\r\n\r\n        SELECT @Status = sc.TrangThai, @StartsAt = sc.ThoiGianBatDau, @RapID = pc.RapID\r\n        FROM dbo.SUATCHIEU sc WITH (UPDLOCK, HOLDLOCK)\r\n        INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID = sc.PhongID\r\n        WHERE sc.SuatChieuID = @SuatChieuID;\r\n        IF @Status IS NULL THROW 50116, N'Suất chiếu không tồn tại.', 1;\r\n        IF @NguoiDungID IS NOT NULL AND dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0\r\n            THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\r\n        SET @Now = dbo.fn_BayGio();\r\n        IF @Status = N'Đã hủy'\n        BEGIN\n            IF @OwnTran = 1 COMMIT TRANSACTION;\n            SELECT N'Suất chiếu đã được hủy.' AS [Message], 0 AS SoDonDaHuy;\n            RETURN;\n        END;\n        IF @Status = N'Hoàn thành' OR @StartsAt <= @Now\n            THROW 50119, N'Không thể hủy suất chiếu đã bắt đầu hoặc đã bị hủy.', 1;\n\n        -- The customer/showtime locks serialize booking, payment and concurrent cancellation.\n        IF EXISTS (SELECT 1 FROM dbo.DONDATVE WITH (UPDLOCK, HOLDLOCK)\n                   WHERE SuatChieuID = @SuatChieuID AND TrangThai = N'Chờ thanh toán' AND HanGiuCho > @Now)\n            THROW 50118, N'Không thể hủy suất chiếu vì còn đơn giữ ghế/chờ thanh toán còn hiệu lực.', 1;\n\n        EXEC dbo.sp_Order_ExpirePending @SuatChieuID = @SuatChieuID, @TraVeKetQua = 0;\n\r\n        INSERT @Orders (DonDatVeID, NguoiDungID, KhuyenMaiID, TrangThai)\r\n        SELECT d.DonDatVeID, d.NguoiDungID, d.KhuyenMaiID, d.TrangThai\r\n        FROM dbo.DONDATVE d WITH (UPDLOCK, HOLDLOCK)\r\n        WHERE d.SuatChieuID = @SuatChieuID\r\n          AND d.TrangThai = N'Đã thanh toán';\n\r\n        -- Release only promo uses still counted (unexpired holds and paid orders).\r\n        UPDATE km\r\n        SET SoLuongDaDung = CASE WHEN km.SoLuongDaDung >= x.SoLan THEN km.SoLuongDaDung - x.SoLan ELSE 0 END\r\n        FROM dbo.KHUYENMAI km\r\n        INNER JOIN (\r\n            SELECT KhuyenMaiID, COUNT(*) AS SoLan FROM @Orders\r\n            WHERE KhuyenMaiID IS NOT NULL AND TrangThai IN (N'Chờ thanh toán', N'Đã thanh toán')\r\n            GROUP BY KhuyenMaiID\r\n        ) x ON x.KhuyenMaiID = km.KhuyenMaiID;\r\n\r\n        -- No payment writes and no reversal of previously earned loyalty points.\n        -- Only the actual event points are persisted. Order snapshots stay in DONDATVE.\n        DECLARE @DonID INT, @TongTienVe DECIMAL(18,2), @TongTienDoAn DECIMAL(18,2),\n                @TienGiamGia DECIMAL(18,2), @TongTruocGiam DECIMAL(19,2),\n                @GiamChoVe DECIMAL(38,6), @TienVeThucTra DECIMAL(38,6), @DiemBoiThuong INT;\n        DECLARE CompensationOrders CURSOR LOCAL FAST_FORWARD FOR\n            SELECT d.DonDatVeID, d.TongTienVe, d.TongTienDoAn, d.TienGiamGia\n            FROM dbo.DONDATVE d INNER JOIN @Orders o ON o.DonDatVeID = d.DonDatVeID\n            WHERE EXISTS (SELECT 1 FROM dbo.THANHTOAN t WHERE t.DonDatVeID = d.DonDatVeID AND t.TrangThai = N'Thành công')\n              AND NOT EXISTS (SELECT 1 FROM dbo.BOITHUONG_HUYSUAT b WITH (UPDLOCK, HOLDLOCK) WHERE b.DonDatVeID = d.DonDatVeID);\n        OPEN CompensationOrders;\n        FETCH NEXT FROM CompensationOrders INTO @DonID, @TongTienVe, @TongTienDoAn, @TienGiamGia;\n        WHILE @@FETCH_STATUS = 0\n        BEGIN\n            SET @TongTruocGiam = @TongTienVe + @TongTienDoAn;\n            SET @GiamChoVe = ISNULL(@TienGiamGia * @TongTienVe / NULLIF(@TongTruocGiam, 0), 0);\n            SET @TienVeThucTra = CASE WHEN @TongTruocGiam = 0 OR @GiamChoVe >= @TongTienVe THEN 0\n                                     ELSE @TongTienVe - @GiamChoVe END;\n            -- Preserve R2's exact final FLOOR, including sub-point division boundaries.\n            -- The helper works from DECIMAL cents, so intermediate display precision cannot round points up.\n            SELECT @DiemBoiThuong = CONVERT(INT, c.DiemCong)\n            FROM dbo.fn_TinhBoiThuongVe(@TongTienVe, @TongTienDoAn, @TienGiamGia) c;\n            INSERT dbo.BOITHUONG_HUYSUAT (DonDatVeID, DiemBoiThuong, NgayBoiThuong, GhiChu)\n            OUTPUT inserted.DonDatVeID, inserted.DiemBoiThuong INTO @Credits\n            VALUES (@DonID, @DiemBoiThuong, @Now,\n                    CASE WHEN @NguoiDungID IS NULL THEN NULL ELSE CONCAT(N'Người thực hiện ID: ', @NguoiDungID) END);\n            FETCH NEXT FROM CompensationOrders INTO @DonID, @TongTienVe, @TongTienDoAn, @TienGiamGia;\n        END;\n        CLOSE CompensationOrders;\n        DEALLOCATE CompensationOrders;\n\n        INSERT dbo.HOSOKHACHHANG (NguoiDungID, DiemTichLuy)\n        SELECT DISTINCT o.NguoiDungID, 0 FROM @Credits c INNER JOIN @Orders o ON o.DonDatVeID=c.DonDatVeID\n        WHERE NOT EXISTS (SELECT 1 FROM dbo.HOSOKHACHHANG h WITH (UPDLOCK, HOLDLOCK) WHERE h.NguoiDungID = o.NguoiDungID);\n\n        UPDATE h SET DiemTichLuy = h.DiemTichLuy + c.Points\n        FROM dbo.HOSOKHACHHANG h\n        INNER JOIN (SELECT o.NguoiDungID, SUM(CONVERT(BIGINT, c.DiemBoiThuong)) AS Points\n                    FROM @Credits c INNER JOIN @Orders o ON o.DonDatVeID=c.DonDatVeID GROUP BY o.NguoiDungID) c\n            ON c.NguoiDungID = h.NguoiDungID;\n\r\n        UPDATE cv SET TrangThai = N'Đã hủy'\r\n        FROM dbo.CHITIETVE cv INNER JOIN @Orders o ON o.DonDatVeID = cv.DonDatVeID\r\n        WHERE cv.TrangThai <> N'Đã hủy';\r\n\r\n        UPDATE d\r\n        SET TrangThai = N'Đã hủy', HanGiuCho = NULL,\r\n            LyDoHuy = @LyDo,\r\n            ThongBaoHuy = N'Suất chiếu đã bị hủy. Điểm bồi thường phần vé đã được cộng vào tài khoản (1.000 VNĐ = 1 điểm).'\n        FROM dbo.DONDATVE d INNER JOIN @Orders o ON o.DonDatVeID = d.DonDatVeID;\r\n        SET @Cancelled = @@ROWCOUNT;\r\n\r\n        UPDATE dbo.SUATCHIEU SET TrangThai = N'Đã hủy' WHERE SuatChieuID = @SuatChieuID;\r\n        IF @OwnTran = 1 COMMIT TRANSACTION;\r\n        SELECT CASE WHEN @NguoiDungID IS NULL THEN N'Đã hủy suất chiếu.' ELSE N'Hủy suất chiếu thành công.' END AS [Message], @Cancelled AS SoDonDaHuy;\r\n    END TRY\r\n    BEGIN CATCH\n        IF CURSOR_STATUS('local', 'CompensationOrders') >= 0 CLOSE CompensationOrders;\n        IF CURSOR_STATUS('local', 'CompensationOrders') >= -1 DEALLOCATE CompensationOrders;\n        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE() = 1\r\n        BEGIN\r\n            IF @OwnTran = 1 ROLLBACK TRANSACTION;\r\n            ELSE ROLLBACK TRANSACTION ShowtimeCancelCascade;\r\n        END\r\n        ;THROW;\r\n    END CATCH\r\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2777,6 +2807,15 @@
       },
       {
         "schemaName": "dbo",
+        "name": "PK_BOITHUONG_HUYSUAT",
+        "type": "PK",
+        "type_desc": "PRIMARY_KEY_CONSTRAINT",
+        "definition": null,
+        "uses_ansi_nulls": null,
+        "uses_quoted_identifier": null
+      },
+      {
+        "schemaName": "dbo",
         "name": "PK_CHITIETDOAN",
         "type": "PK",
         "type_desc": "PRIMARY_KEY_CONSTRAINT",
@@ -3074,6 +3113,15 @@
       },
       {
         "schemaName": "dbo",
+        "name": "BOITHUONG_HUYSUAT",
+        "type": "U ",
+        "type_desc": "USER_TABLE",
+        "definition": null,
+        "uses_ansi_nulls": null,
+        "uses_quoted_identifier": null
+      },
+      {
+        "schemaName": "dbo",
         "name": "CHITIETDOAN",
         "type": "U ",
         "type_desc": "USER_TABLE",
@@ -3293,6 +3341,15 @@
         "name": "XULY_KHIEUNAI",
         "type": "U ",
         "type_desc": "USER_TABLE",
+        "definition": null,
+        "uses_ansi_nulls": null,
+        "uses_quoted_identifier": null
+      },
+      {
+        "schemaName": "dbo",
+        "name": "UQ_BOITHUONG_HUYSUAT_Don",
+        "type": "UQ",
+        "type_desc": "UNIQUE_CONSTRAINT",
         "definition": null,
         "uses_ansi_nulls": null,
         "uses_quoted_identifier": null
@@ -3676,6 +3733,106 @@
         "is_persisted": null,
         "defaultName": "DF_BANGGIA_TrangThai",
         "defaultDefinition": "(N'Áp dụng')"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "column_id": 1,
+        "name": "BoiThuongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_nullable": false,
+        "is_identity": true,
+        "is_computed": false,
+        "collation_name": null,
+        "identitySeed": "1",
+        "identityIncrement": "1",
+        "computedDefinition": null,
+        "is_persisted": null,
+        "defaultName": null,
+        "defaultDefinition": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "column_id": 2,
+        "name": "DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_nullable": false,
+        "is_identity": false,
+        "is_computed": false,
+        "collation_name": null,
+        "identitySeed": null,
+        "identityIncrement": null,
+        "computedDefinition": null,
+        "is_persisted": null,
+        "defaultName": null,
+        "defaultDefinition": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "column_id": 3,
+        "name": "DiemBoiThuong",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_nullable": false,
+        "is_identity": false,
+        "is_computed": false,
+        "collation_name": null,
+        "identitySeed": null,
+        "identityIncrement": null,
+        "computedDefinition": null,
+        "is_persisted": null,
+        "defaultName": null,
+        "defaultDefinition": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "column_id": 4,
+        "name": "NgayBoiThuong",
+        "typeName": "datetime2",
+        "max_length": 8,
+        "precision": 27,
+        "scale": 7,
+        "is_nullable": false,
+        "is_identity": false,
+        "is_computed": false,
+        "collation_name": null,
+        "identitySeed": null,
+        "identityIncrement": null,
+        "computedDefinition": null,
+        "is_persisted": null,
+        "defaultName": null,
+        "defaultDefinition": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "column_id": 5,
+        "name": "GhiChu",
+        "typeName": "nvarchar",
+        "max_length": 510,
+        "precision": 0,
+        "scale": 0,
+        "is_nullable": true,
+        "is_identity": false,
+        "is_computed": false,
+        "collation_name": "Vietnamese_CI_AS",
+        "identitySeed": null,
+        "identityIncrement": null,
+        "computedDefinition": null,
+        "is_persisted": null,
+        "defaultName": null,
+        "defaultDefinition": null
       },
       {
         "schemaName": "dbo",
@@ -7152,6 +7309,42 @@
         "max_length": 8,
         "precision": 27,
         "scale": 7,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "fn_TinhBoiThuongVe",
+        "parameter_id": 1,
+        "name": "@TongTienVe",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "fn_TinhBoiThuongVe",
+        "parameter_id": 2,
+        "name": "@TongTienDoAn",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "fn_TinhBoiThuongVe",
+        "parameter_id": 3,
+        "name": "@TienGiamGia",
+        "typeName": "decimal",
+        "max_length": 9,
+        "precision": 18,
+        "scale": 2,
         "is_output": false,
         "has_default_value": false
       },
@@ -12000,6 +12193,12 @@
         "indexName": "PK_BANGGIA"
       },
       {
+        "name": "PK_BOITHUONG_HUYSUAT",
+        "type": "PK",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "indexName": "PK_BOITHUONG_HUYSUAT"
+      },
+      {
         "name": "PK_CHITIETDOAN",
         "type": "PK",
         "tableName": "CHITIETDOAN",
@@ -12150,6 +12349,12 @@
         "indexName": "PK_XULY_KHIEUNAI"
       },
       {
+        "name": "UQ_BOITHUONG_HUYSUAT_Don",
+        "type": "UQ",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "indexName": "UQ_BOITHUONG_HUYSUAT_Don"
+      },
+      {
         "name": "UQ_CHITIETDOAN_Don_SanPham",
         "type": "UQ",
         "tableName": "CHITIETDOAN",
@@ -12217,6 +12422,18 @@
         "parentTable": "RAPCHIEUPHIM",
         "childColumn": "RapID",
         "parentColumn": "RapID",
+        "constraint_column_id": 1,
+        "is_disabled": false,
+        "is_not_trusted": false,
+        "delete_referential_action_desc": "NO_ACTION",
+        "update_referential_action_desc": "NO_ACTION"
+      },
+      {
+        "name": "FK_BOITHUONG_HUYSUAT_Don",
+        "childTable": "BOITHUONG_HUYSUAT",
+        "parentTable": "DONDATVE",
+        "childColumn": "DonDatVeID",
+        "parentColumn": "DonDatVeID",
         "constraint_column_id": 1,
         "is_disabled": false,
         "is_not_trusted": false,
@@ -12612,6 +12829,13 @@
         "name": "CK_BANGGIA_TrangThai",
         "tableName": "BANGGIA",
         "definition": "([TrangThai]=N'Tạm dừng' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Áp dụng')",
+        "is_disabled": false,
+        "is_not_trusted": false
+      },
+      {
+        "name": "CK_BOITHUONG_HUYSUAT_Diem",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "definition": "([DiemBoiThuong]>=(0))",
         "is_disabled": false,
         "is_not_trusted": false
       },
@@ -13115,6 +13339,46 @@
         "allow_row_locks": true,
         "allow_page_locks": true,
         "columnName": "GiaID",
+        "key_ordinal": 1,
+        "is_descending_key": false,
+        "is_included_column": false,
+        "index_column_id": 1
+      },
+      {
+        "tableName": "BOITHUONG_HUYSUAT",
+        "name": "PK_BOITHUONG_HUYSUAT",
+        "type_desc": "CLUSTERED",
+        "is_unique": true,
+        "is_primary_key": true,
+        "is_unique_constraint": false,
+        "is_disabled": false,
+        "filter_definition": null,
+        "fill_factor": 0,
+        "is_padded": false,
+        "ignore_dup_key": false,
+        "allow_row_locks": true,
+        "allow_page_locks": true,
+        "columnName": "BoiThuongID",
+        "key_ordinal": 1,
+        "is_descending_key": false,
+        "is_included_column": false,
+        "index_column_id": 1
+      },
+      {
+        "tableName": "BOITHUONG_HUYSUAT",
+        "name": "UQ_BOITHUONG_HUYSUAT_Don",
+        "type_desc": "NONCLUSTERED",
+        "is_unique": true,
+        "is_primary_key": false,
+        "is_unique_constraint": true,
+        "is_disabled": false,
+        "filter_definition": null,
+        "fill_factor": 0,
+        "is_padded": false,
+        "ignore_dup_key": false,
+        "allow_row_locks": true,
+        "allow_page_locks": true,
+        "columnName": "DonDatVeID",
         "key_ordinal": 1,
         "is_descending_key": false,
         "is_included_column": false,
@@ -15246,6 +15510,15 @@
         "objectName": "CK_BANGGIA_TrangThai",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "BANGGIA",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": true
+      },
+      {
+        "objectName": "CK_BOITHUONG_HUYSUAT_Diem",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "BOITHUONG_HUYSUAT",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -18134,6 +18407,15 @@
       {
         "objectName": "sp_Order_GetDetailByCustomer",
         "referenced_schema_name": "dbo",
+        "referenced_entity_name": "BOITHUONG_HUYSUAT",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Order_GetDetailByCustomer",
+        "referenced_schema_name": "dbo",
         "referenced_entity_name": "CHITIETDOAN",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -18171,6 +18453,15 @@
         "objectName": "sp_Order_GetDetailByCustomer",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "SANPHAM",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Order_GetDetailByCustomer",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_Order_ExpirePending",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -18242,6 +18533,15 @@
       {
         "objectName": "sp_Payment_CreateAttempt",
         "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_Order_ExpirePending",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Payment_CreateAttempt",
+        "referenced_schema_name": "dbo",
         "referenced_entity_name": "SUATCHIEU",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -18288,6 +18588,15 @@
         "objectName": "sp_Payment_UpdateResult",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Payment_UpdateResult",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_Order_ExpirePending",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -18431,6 +18740,15 @@
       {
         "objectName": "sp_Showtime_CancelCascade",
         "referenced_schema_name": "dbo",
+        "referenced_entity_name": "BOITHUONG_HUYSUAT",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Showtime_CancelCascade",
+        "referenced_schema_name": "dbo",
         "referenced_entity_name": "CHITIETVE",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -18459,6 +18777,15 @@
         "objectName": "sp_Showtime_CancelCascade",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "fn_KiemTraQuanLyRapScope",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Showtime_CancelCascade",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_TinhBoiThuongVe",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -21961,6 +22288,10 @@
     "rowcounts": [
       {
         "tableName": "BANGGIA",
+        "rows": 0
+      },
+      {
+        "tableName": "BOITHUONG_HUYSUAT",
         "rows": 0
       },
       {

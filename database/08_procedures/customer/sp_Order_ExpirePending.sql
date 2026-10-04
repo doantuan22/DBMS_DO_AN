@@ -26,7 +26,7 @@ BEGIN
         OUTPUT inserted.DonDatVeID, inserted.KhuyenMaiID INTO @Het (DonDatVeID, KhuyenMaiID)
         FROM dbo.DONDATVE d
         WHERE d.TrangThai = N'Chờ thanh toán'
-          AND d.HanGiuCho <= dbo.fn_BayGio()
+          AND (d.HanGiuCho IS NULL OR d.HanGiuCho <= dbo.fn_BayGio())
           AND (@SuatChieuID IS NULL OR d.SuatChieuID = @SuatChieuID);
 
         SET @SoDon = @@ROWCOUNT;

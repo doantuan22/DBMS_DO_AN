@@ -5,6 +5,11 @@ import { dateRange, roomCreate, seatCreate, showtimeCreate } from '../src/valida
 
 const sqlError = (number) => Object.assign(new Error('SQL'), { number });
 
+test('R2 cancellation with active holds maps to 409 and a stable reason', async () => {
+  const service = createManagerService({ execute: async () => { throw sqlError(50118); } });
+  await assert.rejects(service.cancelShowtime(2, 1), { status: 409, code: 'SHOWTIME_HAS_HELD_ORDERS' });
+});
+
 test('manager services pass the authenticated manager identity to scoped procedures', async () => {
   const calls = [];
   const service = createManagerService({ execute: async (key, params) => { calls.push({ key, params }); return { recordset: [{ PhongID: 8, RapID: 1, TenPhong: 'Room', LoaiPhong: '2D', TrangThai: 'Hoạt động', TongSoGhe: 10 }] }; } });

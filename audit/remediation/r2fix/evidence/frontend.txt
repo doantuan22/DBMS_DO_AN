@@ -1,0 +1,40 @@
+✔ Admin portal exposes the ADM resource work areas, including global cinema resources (201.4154ms)
+✔ cinema image status is chosen from the whitelist, not typed freely (1.1313ms)
+✔ login page renders accessible email and password controls (156.0603ms)
+✔ customer registration renders profile fields without a role selector (2.3129ms)
+✔ initialization restores a user only when a session token exists (1.2768ms)
+✔ login stores one token, loads current user, and logout clears it (0.2124ms)
+✔ failed current-user refresh clears the just-issued token (0.4774ms)
+✔ area routing and navigation require both the expected role and DB-loaded permission (1.1724ms)
+✔ R2 held-order cancellation conflicts explain the waiting reason in Vietnamese (129.1566ms)
+✔ the limits are the agreed ones and live in one constants module (0.6062ms)
+✔ seat selection stops at 10 seats and the 11th seat is refused (0.2392ms)
+✔ product quantity is clamped to 10 and reports when the user asked for more (0.1949ms)
+✔ seat map shows the counter, flags the limit and the notice (7.1753ms)
+✔ product picker caps the input at 10 and says so at the cap (5.3844ms)
+✔ limit and hold errors of the booking flow have friendly Vietnamese messages (0.2685ms)
+✔ home, movie list, and cinema list render loading states (353.4317ms)
+✔ movie cards link to the real movie identifier (1.305ms)
+✔ movie detail and selected-showtime route render loading shells for guests (3.9917ms)
+✔ cinema/date selectors render API-backed choices and showtime selection carries its ID (6.6984ms)
+✔ showtime browser has empty and loading states (1.183ms)
+✔ seat map preserves each database state and only enables empty seats (0.8931ms)
+✔ product picker submits quantities without accepting a product price from the user (0.8104ms)
+✔ guest can render the public movie route without authentication (5.8905ms)
+✔ order history, detail and payment pages render database-backed loading shells (2.4794ms)
+✔ catalog resources represent success, empty results, and errors (1.6006ms)
+✔ showtime filters omit unselected values and use a stable local calendar date (5.8028ms)
+✔ Vietnam datetime-local create/edit roundtrip preserves the instant (10.6603ms)
+✔ near midnight conversion keeps the local date across UTC day boundary (1.6174ms)
+✔ date-only formatting and invalid inputs cannot silently change dates (1.4616ms)
+✔ countdown uses the server deadline at expiry minus/equal/plus one second (0.3336ms)
+✔ display and datetime-local conversion are independent of browser host timezone (234.5447ms)
+✔ CSKH portal renders queue filters and a protected loading state (171.4137ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2826.8877

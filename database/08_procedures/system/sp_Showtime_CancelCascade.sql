@@ -14,6 +14,7 @@ BEGIN
     DECLARE @Status NVARCHAR(50), @StartsAt DATETIME2, @RapID INT, @Now DATETIME2;
     DECLARE @Dummy INT, @Cancelled INT = 0;
     DECLARE @Orders TABLE (DonDatVeID INT PRIMARY KEY, NguoiDungID INT, KhuyenMaiID INT NULL, TrangThai NVARCHAR(50));
+    DECLARE @Credits TABLE (DonDatVeID INT, DiemBoiThuong INT);
     BEGIN TRY
         IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ShowtimeCancelCascade;
 
@@ -29,8 +30,19 @@ BEGIN
         IF @NguoiDungID IS NOT NULL AND dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0
             THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
         SET @Now = dbo.fn_BayGio();
-        IF @Status = N'Đã hủy' OR @Status = N'Hoàn thành' OR @StartsAt <= @Now
+        IF @Status = N'Đã hủy'
+        BEGIN
+            IF @OwnTran = 1 COMMIT TRANSACTION;
+            SELECT N'Suất chiếu đã được hủy.' AS [Message], 0 AS SoDonDaHuy;
+            RETURN;
+        END;
+        IF @Status = N'Hoàn thành' OR @StartsAt <= @Now
             THROW 50119, N'Không thể hủy suất chiếu đã bắt đầu hoặc đã bị hủy.', 1;
+
+        -- The customer/showtime locks serialize booking, payment and concurrent cancellation.
+        IF EXISTS (SELECT 1 FROM dbo.DONDATVE WITH (UPDLOCK, HOLDLOCK)
+                   WHERE SuatChieuID = @SuatChieuID AND TrangThai = N'Chờ thanh toán' AND HanGiuCho > @Now)
+            THROW 50118, N'Không thể hủy suất chiếu vì còn đơn giữ ghế/chờ thanh toán còn hiệu lực.', 1;
 
         EXEC dbo.sp_Order_ExpirePending @SuatChieuID = @SuatChieuID, @TraVeKetQua = 0;
 
@@ -38,7 +50,7 @@ BEGIN
         SELECT d.DonDatVeID, d.NguoiDungID, d.KhuyenMaiID, d.TrangThai
         FROM dbo.DONDATVE d WITH (UPDLOCK, HOLDLOCK)
         WHERE d.SuatChieuID = @SuatChieuID
-          AND d.TrangThai IN (N'Chờ thanh toán', N'Đã thanh toán', N'Hết hạn');
+          AND d.TrangThai = N'Đã thanh toán';
 
         -- Release only promo uses still counted (unexpired holds and paid orders).
         UPDATE km
@@ -50,20 +62,46 @@ BEGIN
             GROUP BY KhuyenMaiID
         ) x ON x.KhuyenMaiID = km.KhuyenMaiID;
 
-        -- Withdraw only the points previously granted by successful payments.
-        ;WITH RefundPoints AS (
-            SELECT o.NguoiDungID, SUM(CAST(tt.SoTien / 1000 AS INT)) AS Points
-            FROM @Orders o
-            INNER JOIN dbo.THANHTOAN tt ON tt.DonDatVeID = o.DonDatVeID AND tt.TrangThai = N'Thành công'
-            WHERE o.TrangThai = N'Đã thanh toán'
-            GROUP BY o.NguoiDungID
-        )
-        UPDATE h SET DiemTichLuy = CASE WHEN h.DiemTichLuy >= p.Points THEN h.DiemTichLuy - p.Points ELSE 0 END
-        FROM dbo.HOSOKHACHHANG h INNER JOIN RefundPoints p ON p.NguoiDungID = h.NguoiDungID;
+        -- No payment writes and no reversal of previously earned loyalty points.
+        -- Only the actual event points are persisted. Order snapshots stay in DONDATVE.
+        DECLARE @DonID INT, @TongTienVe DECIMAL(18,2), @TongTienDoAn DECIMAL(18,2),
+                @TienGiamGia DECIMAL(18,2), @TongTruocGiam DECIMAL(19,2),
+                @GiamChoVe DECIMAL(38,6), @TienVeThucTra DECIMAL(38,6), @DiemBoiThuong INT;
+        DECLARE CompensationOrders CURSOR LOCAL FAST_FORWARD FOR
+            SELECT d.DonDatVeID, d.TongTienVe, d.TongTienDoAn, d.TienGiamGia
+            FROM dbo.DONDATVE d INNER JOIN @Orders o ON o.DonDatVeID = d.DonDatVeID
+            WHERE EXISTS (SELECT 1 FROM dbo.THANHTOAN t WHERE t.DonDatVeID = d.DonDatVeID AND t.TrangThai = N'Thành công')
+              AND NOT EXISTS (SELECT 1 FROM dbo.BOITHUONG_HUYSUAT b WITH (UPDLOCK, HOLDLOCK) WHERE b.DonDatVeID = d.DonDatVeID);
+        OPEN CompensationOrders;
+        FETCH NEXT FROM CompensationOrders INTO @DonID, @TongTienVe, @TongTienDoAn, @TienGiamGia;
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            SET @TongTruocGiam = @TongTienVe + @TongTienDoAn;
+            SET @GiamChoVe = ISNULL(@TienGiamGia * @TongTienVe / NULLIF(@TongTruocGiam, 0), 0);
+            SET @TienVeThucTra = CASE WHEN @TongTruocGiam = 0 OR @GiamChoVe >= @TongTienVe THEN 0
+                                     ELSE @TongTienVe - @GiamChoVe END;
+            -- Preserve R2's exact final FLOOR, including sub-point division boundaries.
+            -- The helper works from DECIMAL cents, so intermediate display precision cannot round points up.
+            SELECT @DiemBoiThuong = CONVERT(INT, c.DiemCong)
+            FROM dbo.fn_TinhBoiThuongVe(@TongTienVe, @TongTienDoAn, @TienGiamGia) c;
+            INSERT dbo.BOITHUONG_HUYSUAT (DonDatVeID, DiemBoiThuong, NgayBoiThuong, GhiChu)
+            OUTPUT inserted.DonDatVeID, inserted.DiemBoiThuong INTO @Credits
+            VALUES (@DonID, @DiemBoiThuong, @Now,
+                    CASE WHEN @NguoiDungID IS NULL THEN NULL ELSE CONCAT(N'Người thực hiện ID: ', @NguoiDungID) END);
+            FETCH NEXT FROM CompensationOrders INTO @DonID, @TongTienVe, @TongTienDoAn, @TienGiamGia;
+        END;
+        CLOSE CompensationOrders;
+        DEALLOCATE CompensationOrders;
 
-        UPDATE tt SET TrangThai = N'Đã hoàn tiền', GhiChu = N'Suất chiếu đã bị hủy; hoàn tiền mô phỏng.'
-        FROM dbo.THANHTOAN tt INNER JOIN @Orders o ON o.DonDatVeID = tt.DonDatVeID
-        WHERE o.TrangThai = N'Đã thanh toán' AND tt.TrangThai = N'Thành công';
+        INSERT dbo.HOSOKHACHHANG (NguoiDungID, DiemTichLuy)
+        SELECT DISTINCT o.NguoiDungID, 0 FROM @Credits c INNER JOIN @Orders o ON o.DonDatVeID=c.DonDatVeID
+        WHERE NOT EXISTS (SELECT 1 FROM dbo.HOSOKHACHHANG h WITH (UPDLOCK, HOLDLOCK) WHERE h.NguoiDungID = o.NguoiDungID);
+
+        UPDATE h SET DiemTichLuy = h.DiemTichLuy + c.Points
+        FROM dbo.HOSOKHACHHANG h
+        INNER JOIN (SELECT o.NguoiDungID, SUM(CONVERT(BIGINT, c.DiemBoiThuong)) AS Points
+                    FROM @Credits c INNER JOIN @Orders o ON o.DonDatVeID=c.DonDatVeID GROUP BY o.NguoiDungID) c
+            ON c.NguoiDungID = h.NguoiDungID;
 
         UPDATE cv SET TrangThai = N'Đã hủy'
         FROM dbo.CHITIETVE cv INNER JOIN @Orders o ON o.DonDatVeID = cv.DonDatVeID
@@ -72,7 +110,7 @@ BEGIN
         UPDATE d
         SET TrangThai = N'Đã hủy', HanGiuCho = NULL,
             LyDoHuy = @LyDo,
-            ThongBaoHuy = N'Suất chiếu đã bị hủy, tiền sẽ được hoàn về thông qua nền tảng thanh toán'
+            ThongBaoHuy = N'Suất chiếu đã bị hủy. Điểm bồi thường phần vé đã được cộng vào tài khoản (1.000 VNĐ = 1 điểm).'
         FROM dbo.DONDATVE d INNER JOIN @Orders o ON o.DonDatVeID = d.DonDatVeID;
         SET @Cancelled = @@ROWCOUNT;
 
@@ -81,6 +119,8 @@ BEGIN
         SELECT CASE WHEN @NguoiDungID IS NULL THEN N'Đã hủy suất chiếu.' ELSE N'Hủy suất chiếu thành công.' END AS [Message], @Cancelled AS SoDonDaHuy;
     END TRY
     BEGIN CATCH
+        IF CURSOR_STATUS('local', 'CompensationOrders') >= 0 CLOSE CompensationOrders;
+        IF CURSOR_STATUS('local', 'CompensationOrders') >= -1 DEALLOCATE CompensationOrders;
         IF XACT_STATE() = -1 ROLLBACK TRANSACTION;
         ELSE IF XACT_STATE() = 1
         BEGIN

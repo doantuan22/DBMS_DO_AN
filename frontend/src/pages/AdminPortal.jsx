@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import CinemaImageManager from '../components/CinemaImageManager';
+import { bookingErrorMessage } from '../utils/bookingLimits';
 
 const sections = [
   ['dashboard', 'Tổng quan'], ['users', 'Tài khoản'], ['roles', 'Vai trò'], ['permissions', 'Quyền'],
@@ -144,7 +145,7 @@ export default function AdminPortal() {
   const cancelShowtime = async (row) => {
     if (!window.confirm('Xác nhận hủy suất chiếu? Đơn đang giữ ghế sẽ khiến thao tác bị từ chối.')) return;
     try { await adminApi.create(`showtimes/${row.SuatChieuID}/cancel`, {}); setNotice({ ok: true, text: 'Đã hủy suất chiếu.' }); await load(); }
-    catch (error) { setNotice({ ok: false, text: error.message }); }
+    catch (error) { setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message }); }
   };
   const openComplaint = async (row) => {
     setSelected(row); setComplaint({ status: 'loading' }); setOrderReference(null);

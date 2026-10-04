@@ -65,3 +65,17 @@ test('numeric overflow while paying maps to 400 and unrelated errors are untouch
   const service = createOrderService({ execute: async () => { throw sqlError(2627); } });
   await assert.rejects(service.getOrderDetail(5, 12), (error) => error.number === 2627);
 });
+
+test('R2 compensation comes from DB and successful payment history is unchanged', async () => {
+  const result = detailResult([{ ThanhToanID: 7, PhuongThuc: 'MOMO', SoTien: 150000, TrangThai: 'Thành công', GhiChu: 'Original' }]);
+  Object.assign(result.recordsets[0][0], { TrangThaiDon: 'Đã hủy', DiemBoiThuong: 90, NgayBoiThuong: '2026-10-04T05:00:00Z', ThongBaoHuy: 'Điểm bồi thường đã cộng.' });
+  const order = await createOrderService({ execute: async () => result }).getOrderDetail(5, 12);
+  assert.deepEqual(order.compensation, { points: 90, creditedAt: '2026-10-04T05:00:00Z' });
+  assert.equal(order.payments[0].status, 'Thành công');
+  assert.equal(order.payments[0].note, 'Original');
+});
+
+test('R2 payment on ineligible showtime maps to a domain conflict', async () => {
+  const service = createOrderService({ execute: async () => detailResult(), executeWithOutputs: async () => { throw sqlError(50121); } });
+  await assert.rejects(service.createPaymentAttempt(5, 12, { paymentMethod: 'MOMO' }), { status: 409, code: 'SHOWTIME_NOT_PAYABLE' });
+});

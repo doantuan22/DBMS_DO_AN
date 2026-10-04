@@ -32,6 +32,7 @@
 :r ./03_constraints/002_foreign_keys.sql
 :r ./03_constraints/003_check_constraints.sql
 :r ./03_constraints/004_defaults.sql
+:r ./02_tables/boithuong_huysuat.sql
 :r ./04_indexes/banggia.sql
 :r ./04_indexes/chitietve.sql
 :r ./04_indexes/dondatve.sql
@@ -46,6 +47,7 @@
 :r ./04_indexes/thanhtoan.sql
 :r ./04_indexes/xuly_khieunai.sql
 :r ./05_functions/fn_BayGio.sql
+:r ./05_functions/fn_TinhBoiThuongVe.sql
 :r ./05_functions/fn_DonDangGiuGhe.sql
 :r ./05_functions/fn_GheCoVeHieuLucSuatTuongLai.sql
 :r ./05_functions/fn_GioiHanDonDangGiu.sql

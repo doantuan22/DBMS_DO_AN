@@ -24,6 +24,9 @@ export function bookingErrorMessage(error) {
     case 'SEAT_LIMIT_EXCEEDED': return SEAT_LIMIT_MESSAGE;
     case 'PRODUCT_QUANTITY_LIMIT_EXCEEDED': return QUANTITY_LIMIT_MESSAGE;
     case 'ORDER_HOLD_EXPIRED': return `Đơn đã hết thời gian giữ ghế (${HOLD_MINUTES} phút). Vui lòng đặt vé lại.`;
+    case 'SHOWTIME_HAS_HELD_ORDERS': return 'Không thể hủy suất chiếu vì còn đơn giữ ghế/chờ thanh toán còn hiệu lực. Hãy chờ các đơn được thanh toán hoặc hết hạn.';
+    case 'SHOWTIME_NOT_CANCELLABLE': return 'Không thể hủy suất chiếu đã bắt đầu hoặc hoàn thành.';
+    case 'SHOWTIME_NOT_PAYABLE': return 'Suất chiếu không còn hợp lệ để thanh toán.';
     default: return null;
   }
 }

@@ -8,7 +8,11 @@ export function generateVerification(metadata) {
 // Named object assertions + metadata equality use SQL Server itself, no backend query API.
 function assertion(name,expected,query,fields) {
  query=query.replace(/\s+ORDER BY[\s\S]*$/i,'');
- const projection=fields.map(([n,t])=>t.startsWith('nvarchar')?`${q(n)} COLLATE DATABASE_DEFAULT AS ${q(n)}`:q(n)).join(',');
+ // In-place ALTER preserves physical column IDs. Their order has no relational meaning;
+ // ignore ordinals only for the migrated compensation table, while comparing all named/type/nullability metadata.
+ const projection=fields.map(([n,t])=>name==='columns'&&n==='column_id'
+   ? `CASE WHEN [tableName]=N'BOITHUONG_HUYSUAT' THEN 0 ELSE [column_id] END AS [column_id]`
+   : t.startsWith('nvarchar')?`${q(n)} COLLATE DATABASE_DEFAULT AS ${q(n)}`:q(n)).join(',');
  const withCols=fields.map(([n,t])=>`${q(n)} ${t} '$.${n}'`).join(',');
  return `SET NOCOUNT ON;\nDECLARE @expected nvarchar(max) = ${literal(JSON.stringify(expected))};\nSELECT ${projection} INTO #Expected_${name} FROM OPENJSON(@expected) WITH (${withCols});\nSELECT ${projection} INTO #Actual_${name} FROM (${query}) actual;\nIF EXISTS (SELECT * FROM #Expected_${name} EXCEPT SELECT * FROM #Actual_${name}) OR EXISTS (SELECT * FROM #Actual_${name} EXCEPT SELECT * FROM #Expected_${name})\nBEGIN\n SELECT 'Missing or changed' AS Difference,* FROM (SELECT * FROM #Expected_${name} EXCEPT SELECT * FROM #Actual_${name}) missing;\n SELECT 'Unexpected or changed' AS Difference,* FROM (SELECT * FROM #Actual_${name} EXCEPT SELECT * FROM #Expected_${name}) extra;\n THROW 51001, 'Verify ${name} failed.', 1;\nEND;\nDROP TABLE #Expected_${name}; DROP TABLE #Actual_${name};\nPRINT 'PASS ${name}';\nGO`;
 }

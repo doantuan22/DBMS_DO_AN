@@ -24,7 +24,8 @@ function managerError(error) {
     case 50110: throw new HttpError(409, 'SEAT_HAS_TICKETS', 'A seat with tickets cannot be deleted.');
     case 50215: throw new HttpError(409, 'PRICING_OVERLAP', 'An active pricing rule with the same conditions already covers part of this period.');
     case 50117: throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
-    case 50118: throw new HttpError(409, 'SHOWTIME_HAS_BOOKINGS', 'Showtime has active bookings and cannot be cancelled.');
+    case 50118: throw new HttpError(409, 'SHOWTIME_HAS_HELD_ORDERS', 'A showtime with held seats cannot be cancelled.');
+    case 50119: throw new HttpError(409, 'SHOWTIME_NOT_CANCELLABLE', 'A showtime that has started or completed cannot be cancelled.');
     default: throw error;
   }
 }

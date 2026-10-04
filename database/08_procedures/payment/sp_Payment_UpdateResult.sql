@@ -13,12 +13,12 @@ BEGIN
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION PaymentUpdateResult;
         DECLARE @UserID INT,@SuatID INT,@LockedUser INT,@ShowStatus NVARCHAR(50),@Starts DATETIME2,@DonID INT,
             @Amount DECIMAL(18,2),@CurrentPayment NVARCHAR(50),@OrderStatus NVARCHAR(50),@Hold DATETIME2,
-            @PromoID INT,@Now DATETIME2=dbo.fn_BayGio();
+            @Now DATETIME2;
         SELECT @UserID=d.NguoiDungID,@SuatID=d.SuatChieuID FROM dbo.THANHTOAN t INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;
         IF @UserID IS NULL THROW 50032, N'Giao dịch thanh toán không tồn tại.', 1;
         SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;
         SELECT @ShowStatus=TrangThai,@Starts=ThoiGianBatDau FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;
-        SELECT @DonID=t.DonDatVeID,@Amount=t.SoTien,@CurrentPayment=t.TrangThai,@OrderStatus=d.TrangThai,@Hold=d.HanGiuCho,@PromoID=d.KhuyenMaiID
+        SELECT @DonID=t.DonDatVeID,@Amount=t.SoTien,@CurrentPayment=t.TrangThai,@OrderStatus=d.TrangThai,@Hold=d.HanGiuCho
         FROM dbo.THANHTOAN t WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.DONDATVE d WITH (UPDLOCK,HOLDLOCK) ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;
         IF @CurrentPayment=@TrangThaiThanhToan
         BEGIN
@@ -27,12 +27,16 @@ BEGIN
             RETURN;
         END
         IF @CurrentPayment<>N'Đang xử lý' THROW 50115, N'Giao dịch đã có kết quả cuối cùng, không thể đổi.', 1;
+        SET @Now=dbo.fn_BayGio(); -- A lock wait must never extend the hold deadline.
+        IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND (@Hold IS NULL OR @Hold<=@Now))
+        BEGIN
+            EXEC dbo.sp_Order_ExpirePending @SuatChieuID=@SuatID, @TraVeKetQua=0;
+            IF @OwnTran=1 COMMIT TRANSACTION;
+            THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;
+        END;
         IF @TrangThaiThanhToan=N'Thành công'
         BEGIN
-            IF @OrderStatus=N'Hết hạn' OR (@OrderStatus=N'Chờ thanh toán' AND @Hold<=@Now)
-                THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;
             IF @OrderStatus<>N'Chờ thanh toán' THROW 50113, N'Đơn hàng không còn ở trạng thái có thể thanh toán.', 1;
-            IF @Hold IS NULL THROW 50111, N'Đơn đã hết thời gian giữ ghế. Vui lòng đặt vé lại.', 1;
             IF @ShowStatus<>N'Mở bán' OR @Starts<=@Now THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;
             UPDATE dbo.THANHTOAN SET TrangThai=N'Thành công',NgayThanhToan=@Now,MaGiaoDich=ISNULL(@MaGiaoDichNgoai,MaGiaoDich),GhiChu=@GhiChu WHERE ThanhToanID=@ThanhToanID;
             UPDATE dbo.DONDATVE SET TrangThai=N'Đã thanh toán',HanGiuCho=NULL WHERE DonDatVeID=@DonID;

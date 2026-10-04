@@ -1,0 +1,642 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_Final20261004",
+  "checks": [
+    {
+      "name": "one live hold blocks admin cancellation with HTTP 409",
+      "status": "PASS"
+    },
+    {
+      "name": "multiple live holds block manager cancellation with HTTP 409",
+      "status": "PASS"
+    },
+    {
+      "name": "blocked cancellation rolls back expiry and keeps the showtime open",
+      "status": "PASS"
+    },
+    {
+      "name": "expired holds release seats and cancellation preserves expired order state",
+      "status": "PASS"
+    },
+    {
+      "name": "payment after expiry rejected, retry rejected, no points, seat released",
+      "status": "PASS"
+    },
+    {
+      "name": "both payment SP entry points persist expiry and ticket release before domain rejection",
+      "status": "PASS"
+    },
+    {
+      "name": "payment before expiry succeeds and repeats safely",
+      "status": "PASS"
+    },
+    {
+      "name": "paid-only cancellation: 120/120/90/100/0 points per customer, food excluded",
+      "status": "PASS"
+    },
+    {
+      "name": "12 concurrent cancels plus retry: one audit entry/order and no double-credit",
+      "status": "PASS"
+    },
+    {
+      "name": "all successful payment columns/history unchanged; no refund",
+      "status": "PASS"
+    },
+    {
+      "name": "caller rollback restores show, orders, audit and points; multiple paid orders/customer sum once",
+      "status": "PASS"
+    },
+    {
+      "name": "compensation write failure rolls back cancellation atomically",
+      "status": "PASS"
+    },
+    {
+      "name": "payment starts before expiry but waits past deadline: DB rejects after locks",
+      "status": "PASS"
+    },
+    {
+      "name": "booking/cancellation race has only valid serialized outcomes",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/rooms",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/admin/showtimes/8/cancel",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/showtimes/8/cancel",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "route": "/admin/showtimes/8/cancel",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "route": "/admin/showtimes/8/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/6/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/6/payments/2/result",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "route": "/orders/6/payments",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "route": "/showtimes/9/seats",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/9/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/admin/showtimes/10/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/8/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/admin/showtimes/11/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/9/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/9/payments/4/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/9/payments/4/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/10/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/10/payments/5/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/10/payments/5/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/11/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/11/payments/6/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/11/payments/6/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/12/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/12/payments/7/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/12/payments/7/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/13/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/13/payments/8/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/13/payments/8/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/12/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/9",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/orders/10",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/orders/11",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/orders/12",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/orders/13",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/14/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/14/payments/9/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/orders/15/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/15/payments/10/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/13/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/16/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/16/payments/11/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes/14/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/17/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/admin/showtimes/15/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    }
+  ],
+  "audit": [
+    {
+      "DonDatVeID": 9,
+      "SuatChieuID": 12,
+      "NguoiDungID": 10,
+      "TongTienVe": 120000,
+      "TongTienDoAn": 0,
+      "TienGiamGia": 0,
+      "TienVeThucTra": 120000,
+      "DiemCong": "120",
+      "NgayBoiThuong": "2026-10-04T06:42:54.260Z",
+      "NguoiThucHienID": null
+    },
+    {
+      "DonDatVeID": 10,
+      "SuatChieuID": 12,
+      "NguoiDungID": 11,
+      "TongTienVe": 120000,
+      "TongTienDoAn": 80000,
+      "TienGiamGia": 0,
+      "TienVeThucTra": 120000,
+      "DiemCong": "120",
+      "NgayBoiThuong": "2026-10-04T06:42:54.260Z",
+      "NguoiThucHienID": null
+    },
+    {
+      "DonDatVeID": 11,
+      "SuatChieuID": 12,
+      "NguoiDungID": 12,
+      "TongTienVe": 120000,
+      "TongTienDoAn": 80000,
+      "TienGiamGia": 50000,
+      "TienVeThucTra": 90000,
+      "DiemCong": "90",
+      "NgayBoiThuong": "2026-10-04T06:42:54.260Z",
+      "NguoiThucHienID": null
+    },
+    {
+      "DonDatVeID": 12,
+      "SuatChieuID": 12,
+      "NguoiDungID": 13,
+      "TongTienVe": 120000,
+      "TongTienDoAn": 0,
+      "TienGiamGia": 20000,
+      "TienVeThucTra": 100000,
+      "DiemCong": "100",
+      "NgayBoiThuong": "2026-10-04T06:42:54.260Z",
+      "NguoiThucHienID": null
+    },
+    {
+      "DonDatVeID": 13,
+      "SuatChieuID": 12,
+      "NguoiDungID": 14,
+      "TongTienVe": 0,
+      "TongTienDoAn": 80000,
+      "TienGiamGia": 0,
+      "TienVeThucTra": 0,
+      "DiemCong": "0",
+      "NgayBoiThuong": "2026-10-04T06:42:54.260Z",
+      "NguoiThucHienID": null
+    }
+  ],
+  "at": "2026-10-04T06:42:57.488Z"
+}

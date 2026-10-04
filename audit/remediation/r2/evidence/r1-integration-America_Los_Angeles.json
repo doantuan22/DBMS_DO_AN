@@ -1,0 +1,260 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_Final20261004",
+  "timezone": "America/Los_Angeles",
+  "checks": [
+    {
+      "name": "SQL-generated registration instant",
+      "status": "PASS"
+    },
+    {
+      "name": "showtime HTTP create/read -> SQL -> driver -> DTO -> JSON -> UI epoch roundtrip",
+      "status": "PASS"
+    },
+    {
+      "name": "showtime edit datetime-local preserves 19:45",
+      "status": "PASS"
+    },
+    {
+      "name": "HTTP explicit offset input is equivalent to canonical UTC",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing overlap rule and ambiguous request validation",
+      "status": "PASS"
+    },
+    {
+      "name": "near-midnight list/filter uses cinema date, not UTC calendar date",
+      "status": "PASS"
+    },
+    {
+      "name": "promotion datetime2 API create/read uses UTC instant semantics",
+      "status": "PASS"
+    },
+    {
+      "name": "real SQL DATE -> driver metadata -> all current DTO paths",
+      "status": "PASS"
+    },
+    {
+      "name": "hold deadline uses UTC and original five-minute duration",
+      "status": "PASS"
+    },
+    {
+      "name": "payment-generated timestamps have UTC serialization and unchanged lifecycle",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/rooms",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/rooms/11/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/showtimes/25",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 400
+    },
+    {
+      "route": "/admin/showtimes",
+      "method": "POST",
+      "status": 400
+    },
+    {
+      "route": "/manager/showtimes/25",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes/25",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 409
+    },
+    {
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/movies/1/showtimes?date=2026-11-03",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/showtimes?fromDate=2026-11-03&toDate=2026-11-03",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/admin/showtimes?fromDate=2026-11-03&toDate=2026-11-03",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/admin/promotions",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/admin/promotions",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/auth/me",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "route": "/admin/actors",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/admin/movies",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/pricing",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/showtimes/25/seats",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/1021",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "route": "/orders/1021/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "route": "/orders/1021/payments/1015/result",
+      "method": "POST",
+      "status": 200
+    }
+  ],
+  "trace": [
+    {
+      "layer": "Frontend datetime-local",
+      "raw": "2026-11-03T19:30:00",
+      "zone": "Asia/Ho_Chi_Minh",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "HTTP request",
+      "raw": "2026-11-03T12:30:00.000Z",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "Backend/mssql typed Date",
+      "raw": "2026-11-03T12:30:00.000Z",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "SQL create SP -> stored datetime2",
+      "raw": "2026-11-03T12:30:00",
+      "zone": "UTC components",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "SQL read SP -> mssql JS Date",
+      "raw": "2026-11-03T12:30:00.000Z",
+      "epoch": 1793709000000,
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "Procedure Client/DTO",
+      "raw": "2026-11-03T12:30:00.000Z",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "HTTP JSON",
+      "raw": "2026-11-03T12:30:00.000Z",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "React parse instant",
+      "epoch": 1793709000000,
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    },
+    {
+      "layer": "React business display",
+      "raw": "19:30 03/11/2026",
+      "zone": "Asia/Ho_Chi_Minh",
+      "expectedEpoch": 1793709000000,
+      "deltaMs": 0
+    }
+  ],
+  "booking": {
+    "id": 1021,
+    "bookedAt": "2026-10-04T06:43:13.734Z",
+    "holdExpiresAt": "2026-10-04T06:48:13.734Z"
+  },
+  "note": "All fixture writes are in the explicitly named disposable database. No credentials/tokens are recorded."
+}

@@ -34,6 +34,8 @@ export function mapAdminProcedureError(error) {
       throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'Seats with ticket history cannot be changed or deleted.');
     case 50118:
       throw new HttpError(409, 'SHOWTIME_HAS_HELD_ORDERS', 'A showtime with held seats cannot be cancelled.');
+    case 50119:
+      throw new HttpError(409, 'SHOWTIME_NOT_CANCELLABLE', 'A showtime that has started or completed cannot be cancelled.');
     case 50071:
       throw new HttpError(400, 'ASSIGNMENT_MANAGER_REQUIRED', 'The assigned user must have the manager role.');
     case 50200:

@@ -6,6 +6,12 @@ Kế hoạch triển khai hiện hành: [Roadmap V2 DBMS-first](KeHoach_PhatTrie
 
 Kiến trúc **DBMS-first**: SQL Server giữ toàn vẹn dữ liệu và nghiệp vụ; backend chỉ điều phối; frontend chỉ hiển thị. Xem [docs/architecture.md](docs/architecture.md).
 
+Policy R2: xác nhận thanh toán mô phỏng trong hạn giữ ghế; chặn hủy suất có
+đơn giữ hợp lệ; bồi thường điểm phần vé khi hủy suất đã có khách thanh toán.
+Xem [báo cáo R2 và kiểm thử](audit/remediation/r2/R2_REPORT.md).
+Ledger bồi thường đã chuẩn hóa theo
+[R2-FIX 3NF](audit/remediation/r2fix/R2_FIX_REPORT.md), giữ nguyên policy R2.
+
 ```
 React.js -> REST -> Express (Route > Middleware > Controller > Service)
          -> DB Procedure Client (mssql) -> EXEC Stored Procedure -> SQL Server

@@ -2,6 +2,21 @@
 
 All endpoints require a JWT belonging to role `KHACH_HANG`. The backend receives the caller identity only from the JWT and calls the existing SQL Server stored procedures through the procedure whitelist.
 
+R2 supersedes the historical lifecycle notes below. The payment page has one
+“Xác nhận thanh toán” action: it creates an attempt, then synchronously confirms
+success using the existing two endpoints. There is no gateway or asynchronous
+callback. Expired orders return `409 ORDER_HOLD_EXPIRED`; DB expires the order
+and releases tickets. `409 SHOWTIME_NOT_PAYABLE` covers showtime eligibility.
+The result endpoint still accepts failure for compatibility, but the UI does not
+offer a failure simulation action.
+
+Order detail now returns `cancellationReason`, `cancellationNotice`, and
+`compensation: { points, creditedAt }` (or `null`). R2-FIX removes the intermediate
+`ticketAmount` field; no frontend behavior relies on it. Compensation
+values come from SQL Server. A cancelled paid order keeps its original successful
+payments. No refund is created. Admin/manager cancellation with live holds returns
+`409 SHOWTIME_HAS_HELD_ORDERS`. See [R2 report](../audit/remediation/r2/R2_REPORT.md).
+
 ## Endpoints
 
 | Method | Endpoint | Body | Database contract |
@@ -34,8 +49,9 @@ There is no `sp_Order_GetPaymentStatus` in the database baseline. The order deta
 | Classification | Object | Observation |
 | --- | --- | --- |
 | CHANGED (migration 012) | `sp_Payment_CreateAttempt` | creates a `THANHTOAN` attempt and derives the amount from `DONDATVE`. It no longer extends the hold: `HanGiuCho` is set once at order creation (5 minutes) and no payment action moves it. |
-| STRONGER THAN DESIGN | `sp_Payment_UpdateResult` | locks payment and order, is idempotent for an identical callback, rejects a conflicting final result, and protects late-payment seat availability. |
+| R2 | `sp_Payment_UpdateResult` | rechecks the DB clock after lifecycle locks, rejects expired confirmations, releases expired holds, preserves idempotent success and rejects conflicting final results. |
 | MATCH | `sp_Order_GetDetailByCustomer` | SQL checks customer ownership and returns order, tickets, products and all payment attempts. |
 | IMPLEMENTATION DETAIL | payment status endpoint | no dedicated `sp_Order_GetPaymentStatus` exists; the existing detail procedure already supplies the needed payment state. |
 
-No SQL file, schema object, stored procedure, view, function, trigger, constraint, migration or seed was changed by Phase 5.
+Phase 5 originally made no SQL changes. R2 updates the lifecycle procedures and
+adds a compensation function/audit table to the reproducible baseline.
