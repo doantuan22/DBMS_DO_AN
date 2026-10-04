@@ -10,7 +10,7 @@ export default function AreaLayout({ title, links = [] }) {
       <header className="area__header">
         <strong>{title}</strong>
         <nav>
-          {links.map((l) => (
+          {links.filter((link) => !link.role || user?.role === link.role).map((l) => (
             <NavLink key={l.to} to={l.to} end>{l.label}</NavLink>
           ))}
           {user && <NavLink to="/profile">Hồ sơ</NavLink>}

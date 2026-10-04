@@ -29,9 +29,9 @@ BEGIN TRY
  EXEC dbo.sp_Booking_Create @NguoiDungID=@User,@SuatChieuID=@Show,@DanhSachGheId=@SeatList,@NewDonDatVeID=@Order OUTPUT;
  IF @Order IS NULL OR NOT EXISTS(SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID=@Order AND HanGiuCho IS NOT NULL AND TongTienVe>0)
   THROW 51011, 'Booking output/amount/hold contract failed.', 1;
- EXEC dbo.sp_Payment_CreateAttempt @DonDatVeID=@Order,@PhuongThuc=N'VNPAY',@ThanhToanID=@Payment OUTPUT,@MaGiaoDich=@Reference OUTPUT;
+ EXEC dbo.sp_Payment_CreateAttempt @NguoiDungID=@User,@DonDatVeID=@Order,@PhuongThuc=N'VNPAY',@ThanhToanID=@Payment OUTPUT,@MaGiaoDich=@Reference OUTPUT;
  IF @Payment IS NULL OR @Reference IS NULL THROW 51011, 'Payment output parameters missing.', 1;
- EXEC dbo.sp_Payment_UpdateResult @ThanhToanID=@Payment,@TrangThaiThanhToan=N'Thành công';
+ EXEC dbo.sp_Payment_UpdateResult @NguoiDungID=@User,@ThanhToanID=@Payment,@TrangThaiThanhToan=N'Thành công';
  IF NOT EXISTS(SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID=@Order AND TrangThai=N'Đã thanh toán') THROW 51011, 'Successful payment order contract failed.', 1;
  EXEC dbo.sp_Order_ListByCustomer @NguoiDungID=@User;
  EXEC dbo.sp_Order_GetDetailByCustomer @NguoiDungID=@User,@DonDatVeID=@Order;
@@ -46,9 +46,10 @@ BEGIN TRY
  EXEC dbo.sp_Manager_Showtime_List @NguoiDungID=@Manager,@RapID=@Cinema;
  EXEC dbo.sp_Manager_Dashboard @NguoiDungID=@Manager,@RapID=@Cinema;
  EXEC dbo.sp_Manager_Revenue @NguoiDungID=@Manager,@RapID=@Cinema;
- EXEC dbo.sp_Admin_User_List;
- EXEC dbo.sp_Admin_Dashboard;
- EXEC dbo.sp_Admin_Report_Revenue;
+ DECLARE @Admin INT=(SELECT TOP(1) nd.NguoiDungID FROM dbo.NGUOIDUNG nd JOIN dbo.VAITRO vt ON vt.VaiTroID=nd.VaiTroID WHERE vt.MaVaiTro='ADMIN');
+ EXEC dbo.sp_Admin_User_List @ActorID=@Admin;
+ EXEC dbo.sp_Admin_Dashboard @ActorID=@Admin;
+ EXEC dbo.sp_Admin_Report_Revenue @ActorID=@Admin;
  -- Separate legitimate watched fixture, not imported historical/audit data.
  DECLARE @PastShow int=(SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU WHERE TrangThai=N'Hoàn thành' ORDER BY SuatChieuID);
  DECLARE @PastRoom int=(SELECT PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@PastShow);

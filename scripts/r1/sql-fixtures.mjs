@@ -60,7 +60,8 @@ try {
  IF NOT EXISTS(SELECT 1 FROM @Revenue WHERE Ngay='2026-10-03' AND SoDon=2 AND DoanhThuThucTe=160000)
  THROW 51021,'Manager revenue local-day range failed.',1;
  SELECT 'manager report includes local midnight/excludes next midnight' AS Test,'PASS' AS Status;
- EXEC dbo.sp_Admin_Report_Revenue @TuNgay='2026-10-03',@DenNgay='2026-10-03',@RapID=@Cinema;
+ DECLARE @Admin INT=(SELECT TOP(1) nd.NguoiDungID FROM dbo.NGUOIDUNG nd JOIN dbo.VAITRO vt ON vt.VaiTroID=nd.VaiTroID WHERE vt.MaVaiTro='ADMIN');
+ EXEC dbo.sp_Admin_Report_Revenue @ActorID=@Admin,@TuNgay='2026-10-03',@DenNgay='2026-10-03',@RapID=@Cinema;
  SELECT 'admin revenue fixture' AS Test,'PASS' AS Status;
  -- Saturday in Vietnam is still Friday on the UTC calendar.
  INSERT dbo.BANGGIA(RapID,LoaiGhe,LoaiNgay,DinhDang,PhuThu,NgayBatDau,TrangThai)

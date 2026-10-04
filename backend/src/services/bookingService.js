@@ -88,7 +88,7 @@ export function createBookingService({ execute = executeProcedure, executeWithOu
     return (result.recordset ?? []).map(productDto);
   }
 
-  async function validatePromotion(input) {
+  async function validatePromotion(userId, input) {
     // Values supplied to this procedure are derived only from current DB procedure
     // responses. They are a preview; sp_Booking_Create recalculates and revalidates.
     const [seats, availableProducts] = await Promise.all([listSeats(input.showtimeId), listProducts()]);
@@ -103,6 +103,7 @@ export function createBookingService({ execute = executeProcedure, executeWithOu
     const provisionalTotal = selectedSeats.reduce((total, seat) => total + Number(seat.price), 0)
       + selectedProducts.reduce((total, item) => total + (Number(item.product.price) * item.quantity), 0);
     const result = await executeWithOutputs('PROMOTION_VALIDATE', {
+      NguoiDungID: { type: DbTypes.Int, value: userId },
       MaCode: { type: DbTypes.VarChar(50), value: input.promotionCode },
       TongTienDon: { type: DbTypes.Decimal(18, 2), value: provisionalTotal },
     }, {

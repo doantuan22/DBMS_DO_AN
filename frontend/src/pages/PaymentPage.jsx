@@ -1,3 +1,5 @@
+import { useAuth } from '../context/AuthContext';
+import { userCanAct } from '../utils/authorization';
 import HoldDeadline from '../components/HoldDeadline';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -10,6 +12,8 @@ const METHODS = ['VNPAY', 'MOMO', 'ZALOPAY', 'THE_NOI_DIA', 'THE_QUOC_TE', 'TIEN
 const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(value ?? 0);
 
 export default function PaymentPage() {
+  const { user } = useAuth();
+  const canPay = userCanAct(user, 'KHACH_HANG', 'THANH_TOAN');
   const { orderId } = useParams();
   const [resource, setResource] = useState({ status: 'loading' });
   const [method, setMethod] = useState(METHODS[0]);
@@ -57,13 +61,14 @@ export default function PaymentPage() {
   if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;
   const order = resource.data;
   const payable = order.status === 'Chờ thanh toán';
-  const canConfirm = payable && Boolean(order.holdExpiresAt) && elapsedDeadline !== order.holdExpiresAt && Date.parse(order.holdExpiresAt) > now;
+  const canConfirm = canPay && payable && Boolean(order.holdExpiresAt) && elapsedDeadline !== order.holdExpiresAt && Date.parse(order.holdExpiresAt) > now;
   return <section className="catalog-page"><p className="catalog-eyebrow">THANH TOÁN MÔ PHỎNG</p><h1>Đơn #{order.id}</h1>
     <p>{order.movieTitle} · {order.cinemaName}</p><p>Database chốt tổng thanh toán: <strong>{money(order.total)}</strong></p><p>Trạng thái đơn: {order.status}</p>
     <p className="catalog-muted">Thanh toán mô phỏng. Bấm xác nhận trong thời gian giữ ghế để hoàn tất đơn.</p>
     {payable && <HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} />}
+    {payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}
     {payable && <><label>Phương thức <select value={method} disabled={busy || !canConfirm} onChange={(event) => setMethod(event.target.value)}>{METHODS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label><button type="button" onClick={confirmPayment} disabled={busy || !canConfirm}>{busy ? 'Đang xác nhận…' : 'Xác nhận thanh toán'}</button></>}
-    {payable && !canConfirm && <p role="status">Đang kiểm tra hạn giữ ghế với máy chủ…</p>}
+    {payable && canPay && !canConfirm && <p role="status">Đang kiểm tra hạn giữ ghế với máy chủ…</p>}
     {order.status === 'Hết hạn' && <p role="alert">Đơn đã hết thời gian giữ ghế. Ghế đã được giải phóng; vui lòng đặt vé lại.</p>}
     {order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}
     {order.compensation && <p>Điểm bồi thường đã cộng: {order.compensation.points}.</p>}

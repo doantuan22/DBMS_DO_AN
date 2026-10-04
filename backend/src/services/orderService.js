@@ -93,6 +93,7 @@ export function createOrderService({ execute = executeProcedure, executeWithOutp
       // the database-owned ownership check; the SP then locks and revalidates state.
       await getOrderDetail(userId, id);
       const result = await executeWithOutputs('PAYMENT_CREATE_ATTEMPT', {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
         DonDatVeID: { type: DbTypes.Int, value: id }, PhuongThuc: { type: DbTypes.NVarChar(50), value: input.paymentMethod },
       }, { ThanhToanID: DbTypes.Int, MaGiaoDich: DbTypes.VarChar(100) });
       return paymentAttemptDto(result);
@@ -106,6 +107,7 @@ export function createOrderService({ execute = executeProcedure, executeWithOutp
         throw new HttpError(404, 'PAYMENT_NOT_FOUND', 'Payment attempt was not found.');
       }
       await execute('PAYMENT_UPDATE_RESULT', {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
         ThanhToanID: { type: DbTypes.Int, value: attemptId },
         TrangThaiThanhToan: { type: DbTypes.NVarChar(50), value: input.status },
       });

@@ -33,10 +33,11 @@ for(const [area,service] of Object.entries(services))for(const method of Object.
     if(method==='rolePermissions'||method==='cinemaImages')args=[1];
     if(method==='setMovieActors')args=[1,[{actorId:1,role:'AUDIT'}]];
     if(method==='setUserStatus')args=[1,'Hoạt động'];
+    args.unshift(1);
   }else if(area==='manager'){args=['createShowtime'].includes(method)?[1,input]:['cancelShowtime'].includes(method)?[1,1,'AUDIT']:[1,1,input];}
   else if(area==='auth'){args=['registerCustomer','login'].includes(method)?[input]:method==='updateProfile'?[1,input]:[1];}
   else if(area==='catalog'){args=['listMovies','listCinemas','listShowtimes'].includes(method)?[input]:[1];}
-  else if(area==='booking'){args=method==='validatePromotion'?[input]:method==='createBooking'?[1,input]:[1];}
+  else if(area==='booking'){args=method==='validatePromotion'?[1,input]:method==='createBooking'?[1,input]:[1];}
   else if(area==='order'){args=method==='createPaymentAttempt'?[1,1,input]:method==='updatePaymentResult'?[1,1,1,{status:'Thành công'}]:[1,1];}
   else if(area==='feedback'){args=method==='createReview'?[1,1,input]:method==='createComplaint'?[1,input]:[1,1];}
   else if(area==='support'){args=method==='list'?[1,input]:[1,1,input];}

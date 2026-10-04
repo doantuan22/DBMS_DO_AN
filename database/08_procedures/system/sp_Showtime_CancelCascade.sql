@@ -4,7 +4,7 @@ GO
 -- Baseline: migrations/014_showtime_lifecycle.sql:36 (dbo.sp_Showtime_CancelCascade)
 CREATE OR ALTER PROCEDURE dbo.sp_Showtime_CancelCascade
     @SuatChieuID INT,
-    @NguoiDungID INT = NULL,
+    @NguoiDungID INT,
     @LyDo NVARCHAR(255) = NULL
 AS
 BEGIN
@@ -21,13 +21,23 @@ BEGIN
         -- Customer-first locking matches sp_Booking_Create and payment procedures.
         -- The serializable scan also prevents a new customer row appearing mid-cancel.
         SELECT @Dummy = MAX(NguoiDungID) FROM dbo.NGUOIDUNG WITH (UPDLOCK, HOLDLOCK);
+    -- R3B: current account, actor eligibility, then every required permission.
+    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')
+        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
+    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('ADMIN', 'QUAN_LY_RAP'))
+        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_SUAT_CHIEU') = 0
+        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
+
 
         SELECT @Status = sc.TrangThai, @StartsAt = sc.ThoiGianBatDau, @RapID = pc.RapID
         FROM dbo.SUATCHIEU sc WITH (UPDLOCK, HOLDLOCK)
         INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID = sc.PhongID
         WHERE sc.SuatChieuID = @SuatChieuID;
         IF @Status IS NULL THROW 50116, N'Suất chiếu không tồn tại.', 1;
-        IF @NguoiDungID IS NOT NULL AND dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0
+        IF EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd JOIN dbo.VAITRO vt ON vt.VaiTroID=nd.VaiTroID WHERE nd.NguoiDungID=@NguoiDungID AND vt.MaVaiTro='QUAN_LY_RAP')
+           AND dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0
             THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
         SET @Now = dbo.fn_BayGio();
         IF @Status = N'Đã hủy'

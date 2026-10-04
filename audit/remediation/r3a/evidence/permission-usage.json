@@ -1,0 +1,576 @@
+[
+  {
+    "id": 1,
+    "code": "XEM_PHIM",
+    "name": "Xem thông tin phim và lịch chiếu",
+    "description": "Khách hàng xem danh mục phim, lịch chiếu",
+    "roles": [
+      "ADMIN",
+      "CSKH",
+      "KHACH_HANG",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [],
+    "expectedRoutes": [],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 2,
+    "code": "DAT_VE",
+    "name": "Đặt vé xem phim",
+    "description": "Chọn ghế, áp dụng khuyến mãi, tạo đơn đặt vé",
+    "roles": [
+      "ADMIN",
+      "KHACH_HANG",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [],
+    "expectedRoutes": [
+      "POST /api/promotions/validate",
+      "POST /api/bookings"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": true,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 3,
+    "code": "THANH_TOAN",
+    "name": "Thanh toán đơn hàng",
+    "description": "Thực hiện thanh toán trực tuyến cho vé và đồ ăn",
+    "roles": [
+      "ADMIN",
+      "KHACH_HANG",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [],
+    "expectedRoutes": [
+      "POST /api/orders/:orderId/payments",
+      "POST /api/orders/:orderId/payments/:paymentId/result"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 4,
+    "code": "DANH_GIA",
+    "name": "Đánh giá phim đã xem",
+    "description": "Gửi số sao và nhận xét cho phim đã xem",
+    "roles": [
+      "ADMIN",
+      "KHACH_HANG"
+    ],
+    "backendRoutes": [],
+    "expectedRoutes": [
+      "POST /api/movies/:movieId/reviews"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 5,
+    "code": "GUI_KHIEU_NAI",
+    "name": "Gửi khiếu nại",
+    "description": "Tạo khiếu nại gửi bộ phận chăm sóc khách hàng",
+    "roles": [
+      "ADMIN",
+      "KHACH_HANG"
+    ],
+    "backendRoutes": [],
+    "expectedRoutes": [
+      "POST /api/complaints"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 6,
+    "code": "QL_PHONG",
+    "name": "Quản lý phòng chiếu rạp",
+    "description": "Thêm, sửa phòng chiếu thuộc rạp phân công",
+    "roles": [
+      "ADMIN",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/rooms",
+      "POST /api/manager/cinemas/:cinemaId/rooms",
+      "PUT /api/manager/rooms/:roomId",
+      "DELETE /api/manager/rooms/:roomId",
+      "GET /api/admin/rooms",
+      "POST /api/admin/rooms",
+      "PUT /api/admin/rooms/:roomId",
+      "DELETE /api/admin/rooms/:roomId"
+    ],
+    "expectedRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/rooms",
+      "POST /api/manager/cinemas/:cinemaId/rooms",
+      "PUT /api/manager/rooms/:roomId",
+      "DELETE /api/manager/rooms/:roomId",
+      "GET /api/admin/rooms",
+      "POST /api/admin/rooms",
+      "PUT /api/admin/rooms/:roomId",
+      "DELETE /api/admin/rooms/:roomId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": true,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 7,
+    "code": "QL_GHE",
+    "name": "Quản lý sơ đồ ghế rạp",
+    "description": "Thêm, sửa sơ đồ ghế thuộc phòng chiếu",
+    "roles": [
+      "ADMIN",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [
+      "GET /api/manager/rooms/:roomId/seats",
+      "POST /api/manager/rooms/:roomId/seats",
+      "PUT /api/manager/seats/:seatId",
+      "DELETE /api/manager/seats/:seatId",
+      "GET /api/admin/seats",
+      "POST /api/admin/seats",
+      "PUT /api/admin/seats/:seatId",
+      "DELETE /api/admin/seats/:seatId"
+    ],
+    "expectedRoutes": [
+      "GET /api/manager/rooms/:roomId/seats",
+      "POST /api/manager/rooms/:roomId/seats",
+      "PUT /api/manager/seats/:seatId",
+      "DELETE /api/manager/seats/:seatId",
+      "GET /api/admin/seats",
+      "POST /api/admin/seats",
+      "PUT /api/admin/seats/:seatId",
+      "DELETE /api/admin/seats/:seatId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 8,
+    "code": "QL_SUAT_CHIEU",
+    "name": "Quản lý suất chiếu rạp",
+    "description": "Lập lịch, điều chỉnh, hủy suất chiếu rạp",
+    "roles": [
+      "ADMIN",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/showtimes",
+      "POST /api/manager/showtimes",
+      "PUT /api/manager/showtimes/:showtimeId",
+      "POST /api/manager/showtimes/:showtimeId/cancel",
+      "GET /api/admin/showtimes",
+      "POST /api/admin/showtimes",
+      "PUT /api/admin/showtimes/:showtimeId",
+      "POST /api/admin/showtimes/:showtimeId/cancel"
+    ],
+    "expectedRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/showtimes",
+      "POST /api/manager/showtimes",
+      "PUT /api/manager/showtimes/:showtimeId",
+      "POST /api/manager/showtimes/:showtimeId/cancel",
+      "GET /api/admin/showtimes",
+      "POST /api/admin/showtimes",
+      "PUT /api/admin/showtimes/:showtimeId",
+      "POST /api/admin/showtimes/:showtimeId/cancel"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 9,
+    "code": "QL_BANG_GIA",
+    "name": "Cấu hình bảng giá rạp",
+    "description": "Cài đặt phụ thu bảng giá rạp",
+    "roles": [
+      "ADMIN",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/pricing",
+      "POST /api/manager/cinemas/:cinemaId/pricing",
+      "PUT /api/manager/pricing/:pricingId",
+      "GET /api/admin/pricing",
+      "POST /api/admin/pricing",
+      "PUT /api/admin/pricing/:pricingId"
+    ],
+    "expectedRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/pricing",
+      "POST /api/manager/cinemas/:cinemaId/pricing",
+      "PUT /api/manager/pricing/:pricingId",
+      "GET /api/admin/pricing",
+      "POST /api/admin/pricing",
+      "PUT /api/admin/pricing/:pricingId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 10,
+    "code": "XEM_BAO_CAO_RAP",
+    "name": "Xem báo cáo doanh thu rạp",
+    "description": "Xem thống kê doanh thu rạp phân công",
+    "roles": [
+      "ADMIN",
+      "QUAN_LY_RAP"
+    ],
+    "backendRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/dashboard",
+      "GET /api/manager/cinemas/:cinemaId/revenue"
+    ],
+    "expectedRoutes": [
+      "GET /api/manager/cinemas/:cinemaId/dashboard",
+      "GET /api/manager/cinemas/:cinemaId/revenue"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 11,
+    "code": "QL_KHIEUNAI",
+    "name": "Xem danh sách khiếu nại",
+    "description": "Truy cập hàng đợi khiếu nại",
+    "roles": [
+      "ADMIN",
+      "CSKH"
+    ],
+    "backendRoutes": [
+      "GET /api/support/complaints",
+      "GET /api/support/complaints/:complaintId",
+      "GET /api/support/complaints/:complaintId/order-reference",
+      "GET /api/admin/complaints",
+      "GET /api/admin/complaints/:complaintId",
+      "GET /api/admin/complaints/:complaintId/order-reference"
+    ],
+    "expectedRoutes": [
+      "GET /api/support/complaints",
+      "GET /api/support/complaints/:complaintId",
+      "GET /api/admin/complaints",
+      "GET /api/admin/complaints/:complaintId"
+    ],
+    "databasePermissionChecks": [
+      "sp_Support_Complaint_GetDetail",
+      "sp_Support_Complaint_GetOrderReference",
+      "sp_Support_Complaint_List"
+    ],
+    "feAreaGates": true,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 12,
+    "code": "XULY_KHIEUNAI",
+    "name": "Ghi nhận xử lý khiếu nại",
+    "description": "Ghi nhận tiến trình và đổi trạng thái khiếu nại",
+    "roles": [
+      "ADMIN",
+      "CSKH"
+    ],
+    "backendRoutes": [
+      "POST /api/support/complaints/:complaintId/processings",
+      "PUT /api/support/complaints/:complaintId/status",
+      "POST /api/admin/complaints/:complaintId/processings",
+      "PUT /api/admin/complaints/:complaintId/status"
+    ],
+    "expectedRoutes": [
+      "POST /api/support/complaints/:complaintId/processings",
+      "PUT /api/support/complaints/:complaintId/status",
+      "POST /api/admin/complaints/:complaintId/processings",
+      "PUT /api/admin/complaints/:complaintId/status"
+    ],
+    "databasePermissionChecks": [
+      "sp_Support_Complaint_AddProcessing",
+      "sp_Support_Complaint_GetDetail",
+      "sp_Support_Complaint_GetOrderReference",
+      "sp_Support_Complaint_List",
+      "sp_Support_Complaint_UpdateStatus"
+    ],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 13,
+    "code": "TRA_CUU_DON",
+    "name": "Tra cứu đơn tham chiếu",
+    "description": "Xem thông tin đơn đặt vé liên quan đến khiếu nại",
+    "roles": [
+      "ADMIN",
+      "CSKH"
+    ],
+    "backendRoutes": [],
+    "expectedRoutes": [
+      "GET /api/support/complaints/:complaintId/order-reference",
+      "GET /api/admin/complaints/:complaintId/order-reference"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 14,
+    "code": "QL_NGUOIDUNG",
+    "name": "Quản lý tài khoản",
+    "description": "Xem, khóa, mở khóa, tạo tài khoản",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/users",
+      "POST /api/admin/users",
+      "PUT /api/admin/users/:userId/status"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/users",
+      "POST /api/admin/users",
+      "PUT /api/admin/users/:userId/status"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": true,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 15,
+    "code": "QL_VAITRO",
+    "name": "Quản lý vai trò",
+    "description": "Thêm, sửa danh mục vai trò",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/roles",
+      "POST /api/admin/roles",
+      "PUT /api/admin/roles/:roleId",
+      "DELETE /api/admin/roles/:roleId"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/roles",
+      "POST /api/admin/roles",
+      "PUT /api/admin/roles/:roleId",
+      "DELETE /api/admin/roles/:roleId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 16,
+    "code": "QL_QUYEN",
+    "name": "Quản lý quyền",
+    "description": "Quản lý danh mục quyền và gán quyền",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/roles/:roleId/permissions",
+      "GET /api/admin/permissions",
+      "POST /api/admin/permissions",
+      "PUT /api/admin/permissions/:permissionId",
+      "DELETE /api/admin/permissions/:permissionId",
+      "PUT /api/admin/roles/:roleId/permissions"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/roles/:roleId/permissions",
+      "GET /api/admin/permissions",
+      "POST /api/admin/permissions",
+      "PUT /api/admin/permissions/:permissionId",
+      "DELETE /api/admin/permissions/:permissionId",
+      "PUT /api/admin/roles/:roleId/permissions"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 17,
+    "code": "PHANCONG_RAP",
+    "name": "Phân công quản lý rạp",
+    "description": "Gán rạp quản lý cho tài khoản quản lý rạp",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/assignments",
+      "POST /api/admin/assignments",
+      "PUT /api/admin/assignments/:assignmentId"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/assignments",
+      "POST /api/admin/assignments",
+      "PUT /api/admin/assignments/:assignmentId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 18,
+    "code": "QL_RAP",
+    "name": "Quản lý rạp chiếu phim",
+    "description": "Thêm, sửa rạp trên toàn hệ thống",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/cinemas",
+      "POST /api/admin/cinemas",
+      "PUT /api/admin/cinemas/:cinemaId",
+      "DELETE /api/admin/cinemas/:cinemaId",
+      "GET /api/admin/cinemas/:cinemaId/images",
+      "POST /api/admin/cinemas/:cinemaId/images",
+      "PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/cinemas",
+      "POST /api/admin/cinemas",
+      "PUT /api/admin/cinemas/:cinemaId",
+      "DELETE /api/admin/cinemas/:cinemaId",
+      "GET /api/admin/cinemas/:cinemaId/images",
+      "POST /api/admin/cinemas/:cinemaId/images",
+      "PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 19,
+    "code": "QL_DANHMUC_PHIM",
+    "name": "Quản lý phim",
+    "description": "Thêm, sửa, xóa danh mục phim và diễn viên",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/movies",
+      "POST /api/admin/movies",
+      "PUT /api/admin/movies/:movieId",
+      "DELETE /api/admin/movies/:movieId",
+      "PUT /api/admin/movies/:movieId/actors",
+      "GET /api/admin/actors",
+      "POST /api/admin/actors",
+      "PUT /api/admin/actors/:actorId",
+      "DELETE /api/admin/actors/:actorId"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/movies",
+      "POST /api/admin/movies",
+      "PUT /api/admin/movies/:movieId",
+      "DELETE /api/admin/movies/:movieId",
+      "PUT /api/admin/movies/:movieId/actors",
+      "GET /api/admin/actors",
+      "POST /api/admin/actors",
+      "PUT /api/admin/actors/:actorId",
+      "DELETE /api/admin/actors/:actorId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 20,
+    "code": "QL_THELOAI",
+    "name": "Quản lý thể loại",
+    "description": "Thêm, sửa thể loại phim",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/genres",
+      "POST /api/admin/genres",
+      "PUT /api/admin/genres/:genreId",
+      "DELETE /api/admin/genres/:genreId"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/genres",
+      "POST /api/admin/genres",
+      "PUT /api/admin/genres/:genreId",
+      "DELETE /api/admin/genres/:genreId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 21,
+    "code": "QL_SANPHAM",
+    "name": "Quản lý sản phẩm đồ ăn",
+    "description": "Thêm, sửa giá sản phẩm ăn uống",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/products",
+      "POST /api/admin/products",
+      "PUT /api/admin/products/:productId",
+      "DELETE /api/admin/products/:productId"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/products",
+      "POST /api/admin/products",
+      "PUT /api/admin/products/:productId",
+      "DELETE /api/admin/products/:productId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 22,
+    "code": "QL_KHUYENMAI",
+    "name": "Quản lý khuyến mãi",
+    "description": "Tạo và cấu hình mã giảm giá",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/promotions",
+      "POST /api/admin/promotions",
+      "PUT /api/admin/promotions/:promotionId",
+      "DELETE /api/admin/promotions/:promotionId"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/promotions",
+      "POST /api/admin/promotions",
+      "PUT /api/admin/promotions/:promotionId",
+      "DELETE /api/admin/promotions/:promotionId"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  },
+  {
+    "id": 23,
+    "code": "XEM_BAO_CAO_TOANHE",
+    "name": "Báo cáo doanh thu toàn hệ thống",
+    "description": "Xem doanh thu toàn chuỗi rạp",
+    "roles": [
+      "ADMIN"
+    ],
+    "backendRoutes": [
+      "GET /api/admin/dashboard",
+      "GET /api/admin/reports/revenue"
+    ],
+    "expectedRoutes": [
+      "GET /api/admin/dashboard",
+      "GET /api/admin/reports/revenue"
+    ],
+    "databasePermissionChecks": [],
+    "feAreaGates": false,
+    "source": "database/10_seed/002_reference.sql"
+  }
+]

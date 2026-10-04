@@ -11,19 +11,6 @@ AS
 BEGIN
     DECLARE @HopLe BIT = 0;
 
-    -- Kiểm tra nếu là ADMIN thì có toàn quyền
-    IF EXISTS (
-        SELECT 1
-        FROM dbo.NGUOIDUNG nd
-        INNER JOIN dbo.VAITRO vt ON nd.VaiTroID = vt.VaiTroID
-        WHERE nd.NguoiDungID = @NguoiDungID
-          AND vt.MaVaiTro = 'ADMIN'
-          AND nd.TrangThai = N'Hoạt động'
-    )
-    BEGIN
-        RETURN 1;
-    END
-
     -- Kiểm tra quyền cụ thể qua bảng nối VAITRO_QUYEN
     IF EXISTS (
         SELECT 1

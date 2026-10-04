@@ -1,14 +1,20 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function AccessErrorHandler() {
-  const navigate = useNavigate();
+  const { refreshCurrentUser } = useAuth();
 
   useEffect(() => {
-    const onForbidden = () => navigate('/forbidden', { replace: true });
+    let refreshing = false;
+    const onForbidden = async () => {
+      if (refreshing) return;
+      refreshing = true;
+      try { await refreshCurrentUser(); } catch { /* The operation error remains visible. */ }
+      finally { refreshing = false; }
+    };
     window.addEventListener('auth:forbidden', onForbidden);
     return () => window.removeEventListener('auth:forbidden', onForbidden);
-  }, [navigate]);
+  }, [refreshCurrentUser]);
 
   return null;
 }

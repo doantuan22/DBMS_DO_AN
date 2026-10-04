@@ -1,0 +1,398 @@
+{
+  "database": "CinemaBookingDB_R0_R1_R2_R3B20261004",
+  "status": "PASS",
+  "startedAt": "2026-10-04T12:20:41.478Z",
+  "deployedFiles": [
+    "05_functions/fn_KiemTraQuanLyRapScope.sql",
+    "05_functions/fn_KiemTraQuyenNguoiDung.sql",
+    "08_procedures/admin/sp_Admin_Actor_Create.sql",
+    "08_procedures/admin/sp_Admin_Actor_Delete.sql",
+    "08_procedures/admin/sp_Admin_Actor_List.sql",
+    "08_procedures/admin/sp_Admin_Actor_Update.sql",
+    "08_procedures/admin/sp_Admin_Assignment_Create.sql",
+    "08_procedures/admin/sp_Admin_Assignment_List.sql",
+    "08_procedures/admin/sp_Admin_Cinema_Create.sql",
+    "08_procedures/admin/sp_Admin_Cinema_Delete.sql",
+    "08_procedures/admin/sp_Admin_Cinema_Update.sql",
+    "08_procedures/admin/sp_Admin_Dashboard.sql",
+    "08_procedures/admin/sp_Admin_Genre_Create.sql",
+    "08_procedures/admin/sp_Admin_Genre_Delete.sql",
+    "08_procedures/admin/sp_Admin_Genre_Update.sql",
+    "08_procedures/admin/sp_Admin_Movie_Create.sql",
+    "08_procedures/admin/sp_Admin_Movie_Delete.sql",
+    "08_procedures/admin/sp_Admin_Movie_Update.sql",
+    "08_procedures/admin/sp_Admin_MovieActor_Set.sql",
+    "08_procedures/admin/sp_Admin_Permission_Create.sql",
+    "08_procedures/admin/sp_Admin_Permission_Delete.sql",
+    "08_procedures/admin/sp_Admin_Permission_List.sql",
+    "08_procedures/admin/sp_Admin_Permission_Update.sql",
+    "08_procedures/admin/sp_Admin_Product_Create.sql",
+    "08_procedures/admin/sp_Admin_Product_Delete.sql",
+    "08_procedures/admin/sp_Admin_Product_Update.sql",
+    "08_procedures/admin/sp_Admin_Promotion_Create.sql",
+    "08_procedures/admin/sp_Admin_Promotion_Delete.sql",
+    "08_procedures/admin/sp_Admin_Promotion_List.sql",
+    "08_procedures/admin/sp_Admin_Promotion_Update.sql",
+    "08_procedures/admin/sp_Admin_Report_Revenue.sql",
+    "08_procedures/admin/sp_Admin_Role_Create.sql",
+    "08_procedures/admin/sp_Admin_Role_Delete.sql",
+    "08_procedures/admin/sp_Admin_Role_List.sql",
+    "08_procedures/admin/sp_Admin_Role_Update.sql",
+    "08_procedures/admin/sp_Admin_RolePermission_Set.sql",
+    "08_procedures/admin/sp_Admin_User_Create.sql",
+    "08_procedures/admin/sp_Admin_User_List.sql",
+    "08_procedures/admin/sp_Admin_User_UpdateStatus.sql",
+    "08_procedures/booking/sp_Booking_Create.sql",
+    "08_procedures/customer/sp_Complaint_Create.sql",
+    "08_procedures/customer/sp_Complaint_GetByCustomer.sql",
+    "08_procedures/customer/sp_Complaint_ListByCustomer.sql",
+    "08_procedures/manager/sp_Manager_Dashboard.sql",
+    "08_procedures/manager/sp_Manager_ListAssignedCinemas.sql",
+    "08_procedures/manager/sp_Manager_Pricing_Create.sql",
+    "08_procedures/manager/sp_Manager_Pricing_List.sql",
+    "08_procedures/manager/sp_Manager_Pricing_Update.sql",
+    "08_procedures/manager/sp_Manager_Revenue.sql",
+    "08_procedures/manager/sp_Manager_Room_Create.sql",
+    "08_procedures/manager/sp_Manager_Room_Delete.sql",
+    "08_procedures/manager/sp_Manager_Room_List.sql",
+    "08_procedures/manager/sp_Manager_Room_Update.sql",
+    "08_procedures/manager/sp_Manager_Seat_BatchCreate.sql",
+    "08_procedures/manager/sp_Manager_Seat_Create.sql",
+    "08_procedures/manager/sp_Manager_Seat_Delete.sql",
+    "08_procedures/manager/sp_Manager_Seat_ListByRoom.sql",
+    "08_procedures/manager/sp_Manager_Seat_Update.sql",
+    "08_procedures/manager/sp_Manager_Showtime_Cancel.sql",
+    "08_procedures/manager/sp_Manager_Showtime_Create.sql",
+    "08_procedures/manager/sp_Manager_Showtime_List.sql",
+    "08_procedures/manager/sp_Manager_Showtime_Update.sql",
+    "08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+    "08_procedures/customer/sp_Order_ListByCustomer.sql",
+    "08_procedures/payment/sp_Payment_CreateAttempt.sql",
+    "08_procedures/payment/sp_Payment_UpdateResult.sql",
+    "08_procedures/public/sp_Promotion_Validate.sql",
+    "08_procedures/system/sp_PhanCongQuanLyRap.sql",
+    "08_procedures/customer/sp_Review_Create.sql",
+    "08_procedures/system/sp_Showtime_CancelCascade.sql",
+    "08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+    "08_procedures/support/sp_Support_Complaint_GetDetail.sql",
+    "08_procedures/support/sp_Support_Complaint_GetOrderReference.sql",
+    "08_procedures/support/sp_Support_Complaint_List.sql",
+    "08_procedures/support/sp_Support_Complaint_UpdateStatus.sql",
+    "08_procedures/payment/sp_XuLyThanhToan.sql",
+    "08_procedures/admin/usp_Admin_Assignment_Update.sql",
+    "08_procedures/admin/usp_Admin_Cinema_List.sql",
+    "08_procedures/admin/usp_Admin_CinemaImage_Create.sql",
+    "08_procedures/admin/usp_Admin_CinemaImage_Delete.sql",
+    "08_procedures/admin/usp_Admin_CinemaImage_List.sql",
+    "08_procedures/admin/usp_Admin_CinemaImage_SetCover.sql",
+    "08_procedures/admin/usp_Admin_CinemaImage_Update.sql",
+    "08_procedures/admin/usp_Admin_Movie_List.sql",
+    "08_procedures/admin/usp_Admin_Pricing_Create.sql",
+    "08_procedures/admin/usp_Admin_Pricing_List.sql",
+    "08_procedures/admin/usp_Admin_Pricing_Update.sql",
+    "08_procedures/admin/usp_Admin_Product_List.sql",
+    "08_procedures/admin/usp_Admin_RolePermission_List.sql",
+    "08_procedures/admin/usp_Admin_Room_Create.sql",
+    "08_procedures/admin/usp_Admin_Room_Delete.sql",
+    "08_procedures/admin/usp_Admin_Room_List.sql",
+    "08_procedures/admin/usp_Admin_Room_Update.sql",
+    "08_procedures/admin/usp_Admin_Seat_Create.sql",
+    "08_procedures/admin/usp_Admin_Seat_Delete.sql",
+    "08_procedures/admin/usp_Admin_Seat_List.sql",
+    "08_procedures/admin/usp_Admin_Seat_Update.sql",
+    "08_procedures/admin/usp_Admin_Showtime_Cancel.sql",
+    "08_procedures/admin/usp_Admin_Showtime_Create.sql",
+    "08_procedures/admin/usp_Admin_Showtime_List.sql",
+    "08_procedures/admin/usp_Admin_Showtime_Update.sql",
+    "08_procedures/admin/sp_Admin_Genre_List.sql"
+  ],
+  "before": {
+    "modulesSha256": "059615ed50b26e4ba1e7916d78f41b1c8cd18131eac44d7242427f25f8793934",
+    "schemaSha256": "0cdf70d3dc5d13a8d7a5976f254a72a0a944b80d79a4985ec3387457f3047fcc",
+    "dbPermissionsSha256": "90979166e3444df5af523c878351ce734dceecf5a6390d092b40a0e6d26d43ca",
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 13,
+        "sha256": "5b78239f45712e95776cf3ff9b39225da18951e4553ced318ea268e935c14ac4"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 8,
+        "sha256": "62dacd00901cefa58c64648ef085447abf67298bda34c21e5be32600e9904d3c"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 37,
+        "sha256": "028cf7d3cf8beaecc042f12e8b5fb4f6ac67be3f0f624875ba1b47681bc134ae"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "4ae432661390c65f79cbd858e4b95404cf54c3c90ab157fd8a741504e0bcc60f"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 33,
+        "sha256": "d270c63be0ee8f52201ae88d64d9cdd575654d6b62400ee1958da8482e887605"
+      },
+      {
+        "table": "GHE",
+        "rows": 255,
+        "sha256": "3ed16507d643721f45caf2b272fcc08d8f0af1c32d66ec76f2d2ee27211ddcce"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "e83695120ddf2ebb09d9d7fb588d73b0447b49da2b441aed39c12855f74af49c"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 20,
+        "sha256": "7da8ea2bec50155935cfa062196ff2118a8c0711f9751b129647fb3566dc2619"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 6,
+        "sha256": "f5b2238e2cd85aa45e7ff10119b1de3e5cf0f0d7b97b7de7d317aefb9b47bac6"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 24,
+        "sha256": "31c536fc5c629147e01d699e44b62e2d0bfc6a7decee58c314920761a8cfa7df"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "7c3c1f9e444223349a06043a6bd8dfec87a309b186de132af7a4144d706453be"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "12d540231aebdceae0a25339a5d4a4c3b340efb784aef4125fd7b52783d7e299"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "18390dc798f842acca06ffe3306c6bfa361d7e9a4467847196fe042d0cb1aa6e"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "a45965ce9ccd8f6d0ceff312b0d76696e6ce3ae7f4360151c59144b99363d95c"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 10,
+        "sha256": "26148a0d9c598208d3b56daa2d157e25860ecc34d49910e0c27a95e9d42b548d"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "f5536acf74daf99d2a76332c8b429679232f1dee023e6f47737893f40f00eaec"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 4,
+        "sha256": "2aaa2cb3b212642f864991b8fe6614ae70bd5bcbea343e4070965d5117629bbb"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "853b8887a96c874ab1ef53fc77fbc0944b71819d23754c567637ffc8c7a90e14"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 21,
+        "sha256": "fae6b465fdc73e7090b8ea426f2700c7f3d8dec9bd8ccb718625870db4ebddbb"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 14,
+        "sha256": "fae5bf4a057d82bb376c61ce2d14c354bcc84c704ddc9aea96d0daf366d37f21"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "76a05074ea0246044522c05670b33bdd1a253e883d23008579b33ef696509801"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "9e18c0e1feaf8660ae444ae1a1fc8456f557bb1825e5bbc77ab526ffea3f8054"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "e20dc77ddd0a032eab0bd63e8c35206569a63e607ee4f26f1cfa6c1a1d5efb46"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ]
+  },
+  "preflightModules": 159,
+  "modulesVerified": 159,
+  "after": {
+    "modulesSha256": "059615ed50b26e4ba1e7916d78f41b1c8cd18131eac44d7242427f25f8793934",
+    "schemaSha256": "0cdf70d3dc5d13a8d7a5976f254a72a0a944b80d79a4985ec3387457f3047fcc",
+    "dbPermissionsSha256": "90979166e3444df5af523c878351ce734dceecf5a6390d092b40a0e6d26d43ca",
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 13,
+        "sha256": "5b78239f45712e95776cf3ff9b39225da18951e4553ced318ea268e935c14ac4"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 8,
+        "sha256": "62dacd00901cefa58c64648ef085447abf67298bda34c21e5be32600e9904d3c"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 37,
+        "sha256": "028cf7d3cf8beaecc042f12e8b5fb4f6ac67be3f0f624875ba1b47681bc134ae"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "4ae432661390c65f79cbd858e4b95404cf54c3c90ab157fd8a741504e0bcc60f"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 33,
+        "sha256": "d270c63be0ee8f52201ae88d64d9cdd575654d6b62400ee1958da8482e887605"
+      },
+      {
+        "table": "GHE",
+        "rows": 255,
+        "sha256": "3ed16507d643721f45caf2b272fcc08d8f0af1c32d66ec76f2d2ee27211ddcce"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "e83695120ddf2ebb09d9d7fb588d73b0447b49da2b441aed39c12855f74af49c"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 20,
+        "sha256": "7da8ea2bec50155935cfa062196ff2118a8c0711f9751b129647fb3566dc2619"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 6,
+        "sha256": "f5b2238e2cd85aa45e7ff10119b1de3e5cf0f0d7b97b7de7d317aefb9b47bac6"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 24,
+        "sha256": "31c536fc5c629147e01d699e44b62e2d0bfc6a7decee58c314920761a8cfa7df"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "7c3c1f9e444223349a06043a6bd8dfec87a309b186de132af7a4144d706453be"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "12d540231aebdceae0a25339a5d4a4c3b340efb784aef4125fd7b52783d7e299"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "18390dc798f842acca06ffe3306c6bfa361d7e9a4467847196fe042d0cb1aa6e"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "a45965ce9ccd8f6d0ceff312b0d76696e6ce3ae7f4360151c59144b99363d95c"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 10,
+        "sha256": "26148a0d9c598208d3b56daa2d157e25860ecc34d49910e0c27a95e9d42b548d"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "f5536acf74daf99d2a76332c8b429679232f1dee023e6f47737893f40f00eaec"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 4,
+        "sha256": "2aaa2cb3b212642f864991b8fe6614ae70bd5bcbea343e4070965d5117629bbb"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "853b8887a96c874ab1ef53fc77fbc0944b71819d23754c567637ffc8c7a90e14"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 21,
+        "sha256": "fae6b465fdc73e7090b8ea426f2700c7f3d8dec9bd8ccb718625870db4ebddbb"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 14,
+        "sha256": "fae5bf4a057d82bb376c61ce2d14c354bcc84c704ddc9aea96d0daf366d37f21"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "76a05074ea0246044522c05670b33bdd1a253e883d23008579b33ef696509801"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "9e18c0e1feaf8660ae444ae1a1fc8456f557bb1825e5bbc77ab526ffea3f8054"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "e20dc77ddd0a032eab0bd63e8c35206569a63e607ee4f26f1cfa6c1a1d5efb46"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ]
+  },
+  "dataPreserved": true,
+  "tableCount": 27,
+  "finishedAt": "2026-10-04T12:20:44.617Z"
+}

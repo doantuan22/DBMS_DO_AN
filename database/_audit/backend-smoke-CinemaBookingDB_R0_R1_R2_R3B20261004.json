@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_R3B20261004",
+  "connectionUser": "sa",
+  "health": {
+    "procedure": "dbo.sp_System_HealthCheck",
+    "ok": true,
+    "database": "CinemaBookingDB_R0_R1_R2_R3B20261004"
+  },
+  "requests": [
+    {
+      "route": "/health",
+      "status": 200
+    },
+    {
+      "route": "/health/db",
+      "status": 200
+    },
+    {
+      "route": "/movies",
+      "status": 200
+    },
+    {
+      "route": "/movies/1",
+      "status": 200
+    },
+    {
+      "route": "/movies/1/showtimes",
+      "status": 200
+    },
+    {
+      "route": "/showtimes/2",
+      "status": 200
+    },
+    {
+      "route": "/showtimes/2/seats",
+      "status": 200
+    },
+    {
+      "route": "/cinemas",
+      "status": 200
+    },
+    {
+      "route": "/genres",
+      "status": 200
+    },
+    {
+      "route": "/products",
+      "status": 200
+    },
+    {
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "route": "/auth/me",
+      "status": 200
+    },
+    {
+      "route": "/orders",
+      "status": 200
+    },
+    {
+      "route": "/complaints",
+      "status": 200
+    },
+    {
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "route": "/auth/me",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/rooms",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/showtimes",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/dashboard",
+      "status": 200
+    },
+    {
+      "route": "/manager/cinemas/1/revenue",
+      "status": 200
+    },
+    {
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "route": "/auth/me",
+      "status": 200
+    },
+    {
+      "route": "/support/complaints",
+      "status": 200
+    },
+    {
+      "route": "/auth/login",
+      "status": 200
+    },
+    {
+      "route": "/auth/me",
+      "status": 200
+    },
+    {
+      "route": "/admin/dashboard",
+      "status": 200
+    },
+    {
+      "route": "/admin/users",
+      "status": 200
+    },
+    {
+      "route": "/admin/roles",
+      "status": 200
+    },
+    {
+      "route": "/admin/permissions",
+      "status": 200
+    },
+    {
+      "route": "/admin/cinemas",
+      "status": 200
+    },
+    {
+      "route": "/admin/movies",
+      "status": 200
+    },
+    {
+      "route": "/admin/reports/revenue",
+      "status": 200
+    }
+  ],
+  "skipped": [],
+  "at": "2026-10-04T12:19:12.783Z",
+  "note": "Read-only HTTP integration. SQL write flows tested with rollback in 11_tests/procedures/smoke.sql."
+}

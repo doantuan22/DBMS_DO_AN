@@ -79,8 +79,8 @@ const wrapSupport = (action) => async (req, res, next) => {
 };
 router.get('/complaints', requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => ({ complaints: await supportService.list(req.user.userId, validators.listFilters(req.query)) })));
 router.get('/complaints/:complaintId', requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.detail(req.user.userId, complaintId(req)) })));
-router.get('/complaints/:complaintId/order-reference', requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => supportService.orderReference(req.user.userId, complaintId(req))));
-router.post('/complaints/:complaintId/processings', requirePermission('XULY_KHIEUNAI'), wrapSupport(async (req) => ({ processing: await supportService.addProcessing(req.user.userId, complaintId(req), validators.processing(req.body)) })));
-router.put('/complaints/:complaintId/status', requirePermission('XULY_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.updateStatus(req.user.userId, complaintId(req), validators.statusUpdate(req.body)) })));
+router.get('/complaints/:complaintId/order-reference', requirePermission('QL_KHIEUNAI', 'TRA_CUU_DON'), wrapSupport(async (req) => supportService.orderReference(req.user.userId, complaintId(req))));
+router.post('/complaints/:complaintId/processings', requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'), wrapSupport(async (req) => ({ processing: await supportService.addProcessing(req.user.userId, complaintId(req), validators.processing(req.body)) })));
+router.put('/complaints/:complaintId/status', requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.updateStatus(req.user.userId, complaintId(req), validators.statusUpdate(req.body)) })));
 
 export default router;

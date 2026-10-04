@@ -12,17 +12,17 @@ router.get('/complaints', requirePermission('QL_KHIEUNAI'), controller.list);
 router.get('/complaints/:complaintId', requirePermission('QL_KHIEUNAI'), controller.detail);
 router.get(
   '/complaints/:complaintId/order-reference',
-  requirePermission('QL_KHIEUNAI'),
+  requirePermission('QL_KHIEUNAI', 'TRA_CUU_DON'),
   controller.orderReference,
 );
 router.post(
   '/complaints/:complaintId/processings',
-  requirePermission('XULY_KHIEUNAI'),
+  requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'),
   controller.addProcessing,
 );
 router.put(
   '/complaints/:complaintId/status',
-  requirePermission('XULY_KHIEUNAI'),
+  requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'),
   controller.updateStatus,
 );
 

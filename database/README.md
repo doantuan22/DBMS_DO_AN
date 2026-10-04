@@ -1,6 +1,30 @@
-# CinemaBookingDB — reproducible baseline (R0 + R1 + R2 + R2-FIX)
+# CinemaBookingDB — reproducible baseline (R0 + R1 + R2 + R2-FIX + R3B)
 
-R2-FIX hiện hành: **27 tables, 6 views, 21 functions, 7 triggers, 124 procedures,
+R3B hiện hành: **27 tables, 6 views, 21 functions, 7 triggers, 125 procedures,
+63 indexes, 161 constraints; 159 SQL modules**. Không thêm bảng, role hay mã
+permission. Mọi operation protected dùng active account → actor role → exact
+current permissions (AND) → ownership/scope. Admin cũng phải có grant hiện tại;
+`fn_KiemTraQuanLyRapScope` chỉ dành cho Manager có PHANCONG_RAP còn hiệu lực.
+Admin SP nhận `@ActorID` riêng với ID của resource/target user. Alias phân công
+cũng truyền actor; payment/promotion SP nhận `@NguoiDungID` của khách đã xác thực.
+Public `sp_Genre_List` giữ nguyên, Admin dùng `sp_Admin_Genre_List` riêng.
+XEM_PHIM còn trong catalog, **NOT ENFORCED** trên public APIs.
+
+Customer own order/complaint GET không cần write permission; Manager bootstrap
+không cần functional permission. Support/Admin complaint read cần QL_KHIEUNAI,
+process/status cần thêm XULY_KHIEUNAI, order-reference cần thêm TRA_CUU_DON.
+SQL authorization errors 50300/50301/50302 map lần lượt 401/403/403; foreign
+resource giữ 404, business conflict giữ 409. JWT giữ sub/iat/exp, không cache grant.
+
+Migration tại chỗ: [13_migrations/r3b_authorization_contract.sql](13_migrations/r3b_authorization_contract.sql),
+được áp dụng atomically bằng `node scripts/r3b/deploy.mjs --database=CinemaBookingDB --apply`
+từ repo root. Script kiểm tra evidence PASS, backup COPY_ONLY/CHECKSUM và
+RESTORE VERIFYONLY, khóa/đối chiếu fingerprint cả 27 bảng, giữ nguyên table
+schema và execution grants. Baseline reset tiếp tục dùng canonical modules.
+Xem [R3B report](../audit/remediation/r3b/R3B_REPORT.md) và
+[permission matrix](../audit/remediation/r3b/PERMISSION_MATRIX.md).
+
+Baseline R2-FIX trước R3B: **27 tables, 6 views, 21 functions, 7 triggers, 124 procedures,
 63 indexes, 161 constraints**. Thanh toán mô phỏng chỉ được xác nhận khi DB
 còn giữ ghế; hủy suất có đơn giữ hợp lệ trả 409. Đơn đã thanh toán được bồi
 thường điểm phần vé, giữ nguyên payment history. Bảng `BOITHUONG_HUYSUAT`

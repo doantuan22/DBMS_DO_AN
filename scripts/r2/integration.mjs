@@ -94,7 +94,7 @@ try {
     const s = await show(), id = await book(s, customers[0]);
     const paymentId = mode === 'confirm' ? await attempt(id, customers[0]) : null;
     await expire(id);
-    const req = pool.request();
+    const req = pool.request().input('NguoiDungID', sql.Int, customers[0].user.userId);
     if (mode === 'create') req.input('DonDatVeID', sql.Int, id).input('PhuongThuc', sql.NVarChar(50), 'MOMO').output('ThanhToanID', sql.Int).output('MaGiaoDich', sql.VarChar(100));
     else req.input('ThanhToanID', sql.Int, paymentId).input('TrangThaiThanhToan', sql.NVarChar(50), 'Thành công');
     await assert.rejects(req.execute(`dbo.sp_Payment_${mode === 'create' ? 'CreateAttempt' : 'UpdateResult'}`), e => e.number === 50111);
@@ -141,7 +141,7 @@ try {
   const rollbackTx = new sql.Transaction(pool);
   await rollbackTx.begin();
   try {
-    await new sql.Request(rollbackTx).input('SuatChieuID', sql.Int, rollbackShow).execute('dbo.sp_Showtime_CancelCascade');
+    await new sql.Request(rollbackTx).input('SuatChieuID', sql.Int, rollbackShow).input('NguoiDungID', sql.Int, admin.user.userId).execute('dbo.sp_Showtime_CancelCascade');
     const inside = await new sql.Request(rollbackTx).input('ID', sql.Int, rollbackShow).query('SELECT COUNT(*) AS C FROM dbo.BOITHUONG_HUYSUAT b JOIN dbo.DONDATVE d ON d.DonDatVeID=b.DonDatVeID WHERE d.SuatChieuID=@ID');
     assert.equal(inside.recordset[0].C, 2);
     await rollbackTx.rollback();
@@ -160,7 +160,7 @@ try {
   const normalPoints = await points(customers[0]);
   await query('UPDATE dbo.HOSOKHACHHANG SET DiemTichLuy=2147483647 WHERE NguoiDungID=@ID', customers[0].user.userId);
   try {
-    await assert.rejects(procedure('dbo.sp_Showtime_CancelCascade', { SuatChieuID: overflowShow }), e => e.number === 8115);
+    await assert.rejects(procedure('dbo.sp_Showtime_CancelCascade', { SuatChieuID: overflowShow, NguoiDungID: admin.user.userId }), e => e.number === 8115);
     assert.equal((await query('SELECT TrangThai FROM dbo.SUATCHIEU WHERE SuatChieuID=@ID', overflowShow)).recordset[0].TrangThai, 'Mở bán');
     assert.equal((await query('SELECT COUNT(*) AS C FROM dbo.BOITHUONG_HUYSUAT b JOIN dbo.DONDATVE d ON d.DonDatVeID=b.DonDatVeID WHERE d.SuatChieuID=@ID', overflowShow)).recordset[0].C, 0);
     assert.equal((await query('SELECT TrangThai FROM dbo.DONDATVE WHERE DonDatVeID=@ID', overflowOrder)).recordset[0].TrangThai, 'Đã thanh toán');
@@ -178,7 +178,7 @@ try {
   let waitResult;
   try {
     await new sql.Request(waitLock).input('ID', sql.Int, waitOrder).query("UPDATE dbo.DONDATVE SET HanGiuCho=DATEADD(SECOND,2,dbo.fn_BayGio()) WHERE DonDatVeID=@ID; SELECT u.NguoiDungID FROM dbo.NGUOIDUNG u WITH (UPDLOCK,HOLDLOCK) JOIN dbo.DONDATVE d ON d.NguoiDungID=u.NguoiDungID WHERE d.DonDatVeID=@ID;");
-    const delayed = pool.request().input('ThanhToanID', sql.Int, waitAttempt).input('TrangThaiThanhToan', sql.NVarChar(50), 'Thành công').execute('dbo.sp_Payment_UpdateResult').catch(e => e);
+    const delayed = pool.request().input('NguoiDungID', sql.Int, customers[0].user.userId).input('ThanhToanID', sql.Int, waitAttempt).input('TrangThaiThanhToan', sql.NVarChar(50), 'Thành công').execute('dbo.sp_Payment_UpdateResult').catch(e => e);
     await new Promise(resolve => setTimeout(resolve, 3000));
     await waitLock.commit();
     waitResult = await delayed;

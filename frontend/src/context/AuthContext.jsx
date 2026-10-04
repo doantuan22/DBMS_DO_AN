@@ -3,7 +3,8 @@ import * as authApi from '../api/authApi';
 import { authTokenStorage } from '../api/authToken';
 import { createAuthSession } from '../services/authSession';
 
-const AuthContext = createContext(null);
+// eslint-disable-next-line react-refresh/only-export-components
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [session] = useState(() => createAuthSession({ api: authApi, storage: authTokenStorage }));

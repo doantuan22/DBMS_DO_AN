@@ -13,7 +13,7 @@ export async function listProducts(req, res, next) {
 }
 
 export async function validatePromotion(req, res, next) {
-  try { res.json({ promotion: await bookingService.validatePromotion(validatePromotionBody(req.body)) }); } catch (error) { next(error); }
+  try { res.json({ promotion: await bookingService.validatePromotion(req.user.userId, validatePromotionBody(req.body)) }); } catch (error) { next(error); }
 }
 
 export async function createBooking(req, res, next) {

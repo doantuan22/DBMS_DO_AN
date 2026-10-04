@@ -3,10 +3,21 @@ SET QUOTED_IDENTIFIER ON;
 GO
 -- Baseline: migrations/014_showtime_lifecycle.sql:293 (dbo.sp_Payment_UpdateResult)
 CREATE OR ALTER PROCEDURE dbo.sp_Payment_UpdateResult
+
+    @NguoiDungID INT,
     @ThanhToanID INT, @TrangThaiThanhToan NVARCHAR(50), @MaGiaoDichNgoai VARCHAR(100)=NULL, @GhiChu NVARCHAR(255)=NULL
 AS
 BEGIN
     SET NOCOUNT ON;
+    -- R3B: current account, actor eligibility, then every required permission.
+    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')
+        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
+    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('KHACH_HANG'))
+        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'THANH_TOAN') = 0
+        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
+
     DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
     BEGIN TRY
         IF @TrangThaiThanhToan NOT IN (N'Thành công',N'Thất bại') THROW 50114, N'Kết quả thanh toán phải là Thành công hoặc Thất bại.', 1;
@@ -16,6 +27,7 @@ BEGIN
             @Now DATETIME2;
         SELECT @UserID=d.NguoiDungID,@SuatID=d.SuatChieuID FROM dbo.THANHTOAN t INNER JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;
         IF @UserID IS NULL THROW 50032, N'Giao dịch thanh toán không tồn tại.', 1;
+        IF @UserID <> @NguoiDungID THROW 50033, N'Đơn đặt vé không tồn tại.', 1;
         SELECT @LockedUser=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@UserID;
         SELECT @ShowStatus=TrangThai,@Starts=ThoiGianBatDau FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatID;
         SELECT @DonID=t.DonDatVeID,@Amount=t.SoTien,@CurrentPayment=t.TrangThai,@OrderStatus=d.TrangThai,@Hold=d.HanGiuCho

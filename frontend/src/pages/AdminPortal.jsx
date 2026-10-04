@@ -1,3 +1,5 @@
+import { useAuth } from '../context/AuthContext';
+import { userCanAct, ADMIN_SECTION_PERMISSIONS } from '../utils/authorization';
 import { instantToBusinessLocal, businessLocalToInstant, formatApiValue } from '../utils/dateTime';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
@@ -67,7 +69,13 @@ const toBody = (values, fields) => Object.fromEntries(fields.map(([name, , kind]
 }));
 
 export default function AdminPortal() {
-  const [active, setActive] = useState('dashboard');
+  const { user } = useAuth();
+  const allowedSections = sections.filter(([key]) => userCanAct(user, 'ADMIN', ADMIN_SECTION_PERMISSIONS[key]));
+  const [selectedSection, setActive] = useState('dashboard');
+  const active = String(allowedSections.some(([key]) => key === selectedSection) ? selectedSection : allowedSections[0]?.[0] ?? '');
+  const canGrant = userCanAct(user, 'ADMIN', 'QL_QUYEN');
+  const canProcess = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'XULY_KHIEUNAI');
+  const canReference = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'TRA_CUU_DON');
   const [state, setState] = useState({ status: 'loading' });
   const [selected, setSelected] = useState(null);
   const [values, setValues] = useState({});
@@ -79,7 +87,20 @@ export default function AdminPortal() {
   const [processingForm, setProcessingForm] = useState({ content: '', nextStatus: 'Đang xử lý' });
   const [reportInput, setReportInput] = useState({ fromDate: '', toDate: '' });
   const [reportRange, setReportRange] = useState({});
+  const [grantRoleId, setGrantRoleId] = useState('');
+  const [grantIds, setGrantIds] = useState('');
+  const readGrants = async () => {
+    if (!canGrant || !grantRoleId) return;
+    try { const result = await adminApi.rolePermissions(grantRoleId); setGrantIds(result.permissions.map(item => item.QuyenID).join(',')); }
+    catch (error) { setNotice({ ok: false, text: error.message }); }
+  };
+  const saveGrants = async (event) => {
+    event.preventDefault(); if (!canGrant) return;
+    try { await adminApi.update(`roles/${grantRoleId}/permissions`, { permissionIds: grantIds.split(',').filter(value => value.trim()).map(Number) }); setNotice({ ok: true, text: 'Đã cập nhật quyền của vai trò.' }); }
+    catch (error) { setNotice({ ok: false, text: error.message }); }
+  };
   const load = useCallback(async () => {
+    if (!active) { setState({ status: 'idle' }); return; }
     setState({ status: 'loading' });
     try { setState({ status: 'success', data: await loaders[active](adminApi, reportRange) }); }
     catch (error) { setState({ status: 'error', error }); }
@@ -96,7 +117,7 @@ export default function AdminPortal() {
       rowValues.castJson = row.DanhSachDienVienJson || '[]';
     }
     setValues(rowValues);
-    if (active === 'roles') {
+    if (active === 'roles' && canGrant) {
       const requestId = ++permissionRequest.current;
       setPermissionsLoading(true);
       try {
@@ -115,7 +136,7 @@ export default function AdminPortal() {
   const submit = async (event) => {
     event.preventDefault(); setNotice(null);
     try {
-      if (active === 'roles' && values.permissionIds !== undefined) {
+      if (active === 'roles' && canGrant && values.permissionIds !== undefined) {
         const permissionIds = (values.permissionIds ?? '').split(',').map((item) => Number(item.trim())).filter(Number.isSafeInteger);
         await adminApi.update(`roles/${selected.VaiTroID}/permissions`, { permissionIds });
       } else {
@@ -150,14 +171,15 @@ export default function AdminPortal() {
   const openComplaint = async (row) => {
     setSelected(row); setComplaint({ status: 'loading' }); setOrderReference(null);
     try {
-      const [detail, reference] = await Promise.all([adminApi.complaint(row.id), adminApi.complaintOrderReference(row.id)]);
+      const detail = await adminApi.complaint(row.id);
+      const reference = canReference ? await adminApi.complaintOrderReference(row.id).catch((error) => ({ message: error.message })) : { message: 'Bạn chưa được cấp quyền tra cứu đơn.' };
       setComplaint({ status: 'success', data: detail.complaint }); setOrderReference(reference);
       const status = detail.complaint.status === 'Mới' ? 'Đang xử lý' : detail.complaint.status;
       setProcessingForm((current) => ({ ...current, nextStatus: status || current.nextStatus }));
     } catch (error) { setComplaint({ status: 'error', error }); }
   };
   const writeComplaint = async (event, action) => {
-    event.preventDefault();
+    event.preventDefault(); if (!canProcess) return;
     try {
       if (action === 'processing') await adminApi.addComplaintProcessing(selected.id, processingForm);
       else await adminApi.updateComplaintStatus(selected.id, { status: processingForm.nextStatus });
@@ -174,10 +196,11 @@ export default function AdminPortal() {
     } catch { setNotice({ ok: false, text: 'Không thể lưu danh sách diễn viên. Kiểm tra JSON và mã diễn viên.' }); }
   };
 
+  if (!active) return <EmptyState>Bạn chưa được cấp quyền quản trị chức năng nào.</EmptyState>;
   if (active === 'cinemaImages') return <section className="catalog-section" aria-label="Quản lý ảnh rạp">
     <h1>Quản trị hệ thống</h1>
     <nav className="catalog-actions" aria-label="Phân hệ quản trị">
-      {sections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); }}>{label}</button>)}
+      {allowedSections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); }}>{label}</button>)}
     </nav>
     <h2>Ảnh rạp</h2><CinemaImageManager />
   </section>;
@@ -185,21 +208,25 @@ export default function AdminPortal() {
   return <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
     <h1>Quản trị hệ thống</h1>
     <nav className="catalog-actions" aria-label="Phân hệ quản trị">
-      {sections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); setComplaint(null); setOrderReference(null); }}>{label}</button>)}
+      {allowedSections.map(([key, label]) => <button key={key} type="button" aria-pressed={active === key} className="catalog-button" onClick={() => { permissionRequest.current += 1; setActive(key); setSelected(null); setValues({}); setPermissionsLoading(false); setNotice(null); setComplaint(null); setOrderReference(null); }}>{label}</button>)}
     </nav>
     <h2>{sections.find(([key]) => key === active)?.[1]}</h2>
+    {active === 'permissions' && canGrant && <form className="catalog-form" onSubmit={saveGrants}>
+      <h3>Gán quyền cho vai trò</h3><label>Mã vai trò<input aria-label="Mã vai trò nhận quyền" type="number" min="1" required value={grantRoleId} onChange={event => setGrantRoleId(event.target.value)} /></label>
+      <button type="button" onClick={() => void readGrants()}>Đọc quyền hiện tại</button><label>QuyenID (phân cách dấu phẩy)<input value={grantIds} onChange={event => setGrantIds(event.target.value)} /></label><button className="catalog-button">Lưu quyền vai trò</button>
+    </form>}
     {active === 'revenue' && <form className="catalog-actions" onSubmit={(event) => { event.preventDefault(); setReportRange(reportInput); }}><label>Từ ngày<input type="date" value={reportInput.fromDate} onChange={(event) => setReportInput((v) => ({ ...v, fromDate: event.target.value }))} /></label><label>Đến ngày<input type="date" value={reportInput.toDate} onChange={(event) => setReportInput((v) => ({ ...v, toDate: event.target.value }))} /></label><button className="catalog-button">Lọc doanh thu</button></form>}
     {active === 'movies' && selected && <form className="catalog-form" onSubmit={writeCast}><h3>Diễn viên phim #{selected.PhimID}</h3><label>Danh sách JSON (actorId, role)<textarea aria-label="Danh sách diễn viên phim" value={values.castJson ?? '[]'} onChange={(event) => setValues((current) => ({ ...current, castJson: event.target.value }))} /></label><button className="catalog-button">Lưu diễn viên</button></form>}
     {active === 'complaints' && <ul className="catalog-list">{rows.map((row) => <li key={row.id}><button type="button" className="catalog-button catalog-button--secondary" onClick={() => void openComplaint(row)}>Mở khiếu nại #{row.id} · {row.title}</button></li>)}</ul>}
     {active === 'complaints' && complaint?.status === 'loading' && <LoadingState>Đang tải hồ sơ khiếu nại…</LoadingState>}
     {active === 'complaints' && complaint?.status === 'error' && <ErrorState error={complaint.error} onRetry={() => selected && void openComplaint(selected)} />}
-    {active === 'complaints' && complaint?.status === 'success' && <section className="catalog-section"><h3>#{complaint.data.id} · {complaint.data.title}</h3><p>{complaint.data.senderName} · {complaint.data.type} · {complaint.data.status}</p><p>{complaint.data.content}</p><h4>Đơn hàng liên quan</h4><p>{orderReference?.message ?? (orderReference?.order ? formatApiValue(orderReference.order) : 'Không có đơn hàng liên quan.')}</p><h4>Lịch sử xử lý</h4><ol>{complaint.data.processings.map((item) => <li key={item.id}>{item.processorName} · {item.status} · {item.content}</li>)}</ol><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'processing')}><label>Nội dung xử lý<textarea required value={processingForm.content} onChange={(event) => setProcessingForm((v) => ({ ...v, content: event.target.value }))} /></label><label>Trạng thái sau xử lý<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button">Ghi diễn biến</button></form><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'status')}><label>Trạng thái khiếu nại<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button">Cập nhật trạng thái</button></form></section>}
+    {active === 'complaints' && complaint?.status === 'success' && <section className="catalog-section"><h3>#{complaint.data.id} · {complaint.data.title}</h3><p>{complaint.data.senderName} · {complaint.data.type} · {complaint.data.status}</p><p>{complaint.data.content}</p><h4>Đơn hàng liên quan</h4><p>{orderReference?.message ?? (orderReference?.order ? formatApiValue(orderReference.order) : 'Không có đơn hàng liên quan.')}</p><h4>Lịch sử xử lý</h4><ol>{complaint.data.processings.map((item) => <li key={item.id}>{item.processorName} · {item.status} · {item.content}</li>)}</ol>{canProcess && <><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'processing')}><label>Nội dung xử lý<textarea required value={processingForm.content} onChange={(event) => setProcessingForm((v) => ({ ...v, content: event.target.value }))} /></label><label>Trạng thái sau xử lý<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button">Ghi diễn biến</button></form><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'status')}><label>Trạng thái khiếu nại<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button">Cập nhật trạng thái</button></form></>}</section>}
     {notice && <p role={notice.ok ? 'status' : 'alert'}>{notice.text}</p>}
     {definition && <form className="catalog-form" onSubmit={submit}>
       <h3>{selected ? 'Cập nhật' : 'Tạo mới'}</h3>
       {selected && <p>#{selected[definition.id]}</p>}
       {editableFields.map(([name, label, kind]) => <label key={name}>{label}<input aria-label={label} type={kind === 'csv' ? 'text' : kind} step={kind === 'datetime-local' ? '0.001' : undefined} value={values[name] ?? ''} onChange={(event) => setValues((current) => ({ ...current, [name]: event.target.value }))} required={!['description', 'phone', 'image', 'endsOn', 'endDate', 'maximumDiscount', 'minimumOrder', 'operatingSince', 'birthDate', 'language', 'subtitle', 'ageRating', 'director', 'posterUrl', 'trailerUrl', 'status'].includes(name)} /></label>)}
-      {active === 'roles' && selected && <label>QuyenID cần gán (phân cách dấu phẩy, để trống để gỡ tất cả)<input aria-label="QuyenID cần gán" value={values.permissionIds ?? ''} onChange={(event) => setValues((current) => ({ ...current, permissionIds: event.target.value }))} /></label>}
+      {active === 'roles' && canGrant && selected && <label>QuyenID cần gán (phân cách dấu phẩy, để trống để gỡ tất cả)<input aria-label="QuyenID cần gán" value={values.permissionIds ?? ''} onChange={(event) => setValues((current) => ({ ...current, permissionIds: event.target.value }))} /></label>}
       <div className="catalog-actions"><button className="catalog-button" disabled={permissionsLoading}>{permissionsLoading ? 'Đang tải quyền…' : 'Lưu'}</button>{selected && <button className="catalog-button catalog-button--secondary" type="button" onClick={clearForm}>Bỏ chọn</button>}</div>
     </form>}
     {active === 'showtimes' && <p>Chọn suất chiếu trong bảng để sửa hoặc dùng nút Hủy; thời gian chồng lấp được kiểm tra trong SQL.</p>}

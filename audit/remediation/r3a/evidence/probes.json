@@ -1,0 +1,4892 @@
+{
+  "database": "CinemaBookingDB_R0_R3A_Audit20261004",
+  "at": "2026-10-04T09:58:19.025Z",
+  "status": "PASS",
+  "requests": [
+    {
+      "name": "no JWT: GET /api/auth/me",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/auth/me",
+      "method": "PUT",
+      "route": "/auth/me",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/auth/permissions",
+      "method": "GET",
+      "route": "/auth/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/movies/:movieId/reviews",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/promotions/validate",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/bookings",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/orders",
+      "method": "GET",
+      "route": "/orders",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/orders/:orderId",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/orders/:orderId/payments",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/orders/:orderId/payments/:paymentId/result",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/complaints",
+      "method": "GET",
+      "route": "/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/complaints",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/complaints/:complaintId",
+      "method": "GET",
+      "route": "/complaints/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/rooms",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/manager/cinemas/:cinemaId/rooms",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/manager/rooms/:roomId",
+      "method": "PUT",
+      "route": "/manager/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/manager/rooms/:roomId",
+      "method": "DELETE",
+      "route": "/manager/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/rooms/:roomId/seats",
+      "method": "GET",
+      "route": "/manager/rooms/1/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/manager/rooms/:roomId/seats",
+      "method": "POST",
+      "route": "/manager/rooms/1/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/manager/seats/:seatId",
+      "method": "PUT",
+      "route": "/manager/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/manager/seats/:seatId",
+      "method": "DELETE",
+      "route": "/manager/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/showtimes",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/manager/showtimes",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/manager/showtimes/:showtimeId",
+      "method": "PUT",
+      "route": "/manager/showtimes/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/manager/showtimes/:showtimeId/cancel",
+      "method": "POST",
+      "route": "/manager/showtimes/1/cancel",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/pricing",
+      "method": "GET",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/manager/cinemas/:cinemaId/pricing",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/manager/pricing/:pricingId",
+      "method": "PUT",
+      "route": "/manager/pricing/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/dashboard",
+      "method": "GET",
+      "route": "/manager/cinemas/1/dashboard",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/revenue",
+      "method": "GET",
+      "route": "/manager/cinemas/1/revenue",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/support/complaints",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/support/complaints/:complaintId",
+      "method": "GET",
+      "route": "/support/complaints/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/support/complaints/:complaintId/order-reference",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/support/complaints/:complaintId/processings",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/support/complaints/:complaintId/status",
+      "method": "PUT",
+      "route": "/support/complaints/1/status",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/dashboard",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/users",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/users",
+      "method": "POST",
+      "route": "/admin/users",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/users/:userId/status",
+      "method": "PUT",
+      "route": "/admin/users/1/status",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/roles",
+      "method": "GET",
+      "route": "/admin/roles",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/roles/:roleId/permissions",
+      "method": "GET",
+      "route": "/admin/roles/1/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/roles",
+      "method": "POST",
+      "route": "/admin/roles",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/roles/:roleId",
+      "method": "PUT",
+      "route": "/admin/roles/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/roles/:roleId",
+      "method": "DELETE",
+      "route": "/admin/roles/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/permissions",
+      "method": "GET",
+      "route": "/admin/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/permissions",
+      "method": "POST",
+      "route": "/admin/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/permissions/:permissionId",
+      "method": "PUT",
+      "route": "/admin/permissions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/permissions/:permissionId",
+      "method": "DELETE",
+      "route": "/admin/permissions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/roles/:roleId/permissions",
+      "method": "PUT",
+      "route": "/admin/roles/1/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/assignments",
+      "method": "GET",
+      "route": "/admin/assignments",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/assignments",
+      "method": "POST",
+      "route": "/admin/assignments",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/assignments/:assignmentId",
+      "method": "PUT",
+      "route": "/admin/assignments/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/cinemas",
+      "method": "GET",
+      "route": "/admin/cinemas",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/cinemas",
+      "method": "POST",
+      "route": "/admin/cinemas",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/cinemas/:cinemaId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/cinemas/:cinemaId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/cinemas/:cinemaId/images",
+      "method": "GET",
+      "route": "/admin/cinemas/1/images",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/cinemas/:cinemaId/images",
+      "method": "POST",
+      "route": "/admin/cinemas/1/images",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover",
+      "method": "PATCH",
+      "route": "/admin/cinemas/1/images/1/cover",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/rooms",
+      "method": "GET",
+      "route": "/admin/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/rooms",
+      "method": "POST",
+      "route": "/admin/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/rooms/:roomId",
+      "method": "PUT",
+      "route": "/admin/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/rooms/:roomId",
+      "method": "DELETE",
+      "route": "/admin/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/seats",
+      "method": "GET",
+      "route": "/admin/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/seats",
+      "method": "POST",
+      "route": "/admin/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/seats/:seatId",
+      "method": "PUT",
+      "route": "/admin/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/seats/:seatId",
+      "method": "DELETE",
+      "route": "/admin/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/pricing",
+      "method": "GET",
+      "route": "/admin/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/pricing",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/pricing/:pricingId",
+      "method": "PUT",
+      "route": "/admin/pricing/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/showtimes",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/showtimes",
+      "method": "POST",
+      "route": "/admin/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/showtimes/:showtimeId",
+      "method": "PUT",
+      "route": "/admin/showtimes/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/showtimes/:showtimeId/cancel",
+      "method": "POST",
+      "route": "/admin/showtimes/1/cancel",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/movies",
+      "method": "GET",
+      "route": "/admin/movies",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/movies",
+      "method": "POST",
+      "route": "/admin/movies",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/movies/:movieId",
+      "method": "PUT",
+      "route": "/admin/movies/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/movies/:movieId",
+      "method": "DELETE",
+      "route": "/admin/movies/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/movies/:movieId/actors",
+      "method": "PUT",
+      "route": "/admin/movies/1/actors",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/genres",
+      "method": "GET",
+      "route": "/admin/genres",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/genres",
+      "method": "POST",
+      "route": "/admin/genres",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/genres/:genreId",
+      "method": "PUT",
+      "route": "/admin/genres/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/genres/:genreId",
+      "method": "DELETE",
+      "route": "/admin/genres/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/actors",
+      "method": "GET",
+      "route": "/admin/actors",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/actors",
+      "method": "POST",
+      "route": "/admin/actors",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/actors/:actorId",
+      "method": "PUT",
+      "route": "/admin/actors/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/actors/:actorId",
+      "method": "DELETE",
+      "route": "/admin/actors/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/products",
+      "method": "GET",
+      "route": "/admin/products",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/products",
+      "method": "POST",
+      "route": "/admin/products",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/products/:productId",
+      "method": "PUT",
+      "route": "/admin/products/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/products/:productId",
+      "method": "DELETE",
+      "route": "/admin/products/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/promotions",
+      "method": "GET",
+      "route": "/admin/promotions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/promotions",
+      "method": "POST",
+      "route": "/admin/promotions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/promotions/:promotionId",
+      "method": "PUT",
+      "route": "/admin/promotions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/promotions/:promotionId",
+      "method": "DELETE",
+      "route": "/admin/promotions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/reports/revenue",
+      "method": "GET",
+      "route": "/admin/reports/revenue",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/complaints",
+      "method": "GET",
+      "route": "/admin/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/complaints/:complaintId",
+      "method": "GET",
+      "route": "/admin/complaints/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: GET /api/admin/complaints/:complaintId/order-reference",
+      "method": "GET",
+      "route": "/admin/complaints/1/order-reference",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: POST /api/admin/complaints/:complaintId/processings",
+      "method": "POST",
+      "route": "/admin/complaints/1/processings",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "no JWT: PUT /api/admin/complaints/:complaintId/status",
+      "method": "PUT",
+      "route": "/admin/complaints/1/status",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "fixture login: customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "fixture login: customer2",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "fixture login: manager",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "fixture login: support",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "fixture login: admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "manager: own assigned cinemas",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "manager: permission + correct cinema",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "manager: permission + foreign cinema",
+      "method": "GET",
+      "route": "/manager/cinemas/2/rooms",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "name": "fixture room",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "fixture seat 1",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "fixture seat 2",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "fixture seat 3",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "fixture seat 4",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "fixture seat 5",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "fixture showtime",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Customer DAT_VE present: booking",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Customer own order detail",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Customer foreign order denied",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_NOT_FOUND"
+    },
+    {
+      "name": "old customer JWT loads revoked DAT_VE",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "BUG-019: booking after DAT_VE revoked",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "context": "DAT_VE revoked; same JWT"
+    },
+    {
+      "name": "BUG-019: promotion preview after DAT_VE revoked",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Customer order history without DAT_VE",
+      "method": "GET",
+      "route": "/orders",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "context": "Permission mapping for own history remains a review decision"
+    },
+    {
+      "name": "old customer JWT loads revoked THANH_TOAN",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "BUG-019: payment attempt after permission revoked",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "BUG-019: payment result after permission revoked",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Foreign payment attempt still denied",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_NOT_FOUND"
+    },
+    {
+      "name": "Foreign payment result still denied",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_NOT_FOUND"
+    },
+    {
+      "name": "fixture second customer booking",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer2",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Customer THANH_TOAN present: attempt",
+      "method": "POST",
+      "route": "/orders/3/payments",
+      "actor": "customer2",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Customer THANH_TOAN present: result",
+      "method": "POST",
+      "route": "/orders/3/payments/2/result",
+      "actor": "customer2",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Customer DANH_GIA present: eligible review",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "BUG-019: review after DANH_GIA revoked",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "customer2",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Unwatched eligibility remains enforced",
+      "method": "POST",
+      "route": "/movies/2/reviews",
+      "actor": "customer2",
+      "status": 403,
+      "errorCode": "REVIEW_NOT_ELIGIBLE"
+    },
+    {
+      "name": "Customer GUI_KHIEU_NAI present",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "BUG-019: complaint after GUI_KHIEU_NAI revoked",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Complaint foreign order reference denied",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_REFERENCE_INVALID"
+    },
+    {
+      "name": "Customer foreign complaint denied",
+      "method": "GET",
+      "route": "/complaints/1",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "COMPLAINT_NOT_FOUND"
+    },
+    {
+      "name": "Customer only GUI_KHIEU_NAI current profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Customer only GUI_KHIEU_NAI can create",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "Manager old JWT permission revoked",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Manager old JWT current assignments after revoke",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Manager old JWT scope revoked",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "name": "Manager only QL_SUAT_CHIEU profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Manager legitimate showtime API under partial grants",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Manager only QL_PHONG profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: showtimes",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: pricing",
+      "method": "GET",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: dashboard",
+      "method": "GET",
+      "route": "/manager/cinemas/1/dashboard",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: revenue",
+      "method": "GET",
+      "route": "/manager/cinemas/1/revenue",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Manager holds DAT_VE but role blocks Customer API",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "CUSTOMER_REQUIRED"
+    },
+    {
+      "name": "CSKH permission present",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "CSKH XULY present: processing",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "support",
+      "status": 201,
+      "errorCode": null
+    },
+    {
+      "name": "CSKH old JWT QL revoked",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "CSKH old JWT XULY revoked",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "MISMATCH: order reference without TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "support",
+      "status": 200,
+      "errorCode": null,
+      "context": "QL only; no TRA_CUU_DON"
+    },
+    {
+      "name": "CSKH QL only can read detail",
+      "method": "GET",
+      "route": "/support/complaints/1",
+      "actor": "support",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "MISMATCH: TRA_CUU_DON alone rejected",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "CSKH all permissions revoked",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin permission present",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Admin old JWT current permissions empty",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/dashboard",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/users",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/users",
+      "method": "POST",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/users/:userId/status",
+      "method": "PUT",
+      "route": "/admin/users/1/status",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/roles",
+      "method": "GET",
+      "route": "/admin/roles",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/roles/:roleId/permissions",
+      "method": "GET",
+      "route": "/admin/roles/1/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/roles",
+      "method": "POST",
+      "route": "/admin/roles",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/roles/:roleId",
+      "method": "PUT",
+      "route": "/admin/roles/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/roles/:roleId",
+      "method": "DELETE",
+      "route": "/admin/roles/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/permissions",
+      "method": "GET",
+      "route": "/admin/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/permissions",
+      "method": "POST",
+      "route": "/admin/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/permissions/:permissionId",
+      "method": "PUT",
+      "route": "/admin/permissions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/permissions/:permissionId",
+      "method": "DELETE",
+      "route": "/admin/permissions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/roles/:roleId/permissions",
+      "method": "PUT",
+      "route": "/admin/roles/1/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/assignments",
+      "method": "GET",
+      "route": "/admin/assignments",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/assignments",
+      "method": "POST",
+      "route": "/admin/assignments",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/assignments/:assignmentId",
+      "method": "PUT",
+      "route": "/admin/assignments/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/cinemas",
+      "method": "GET",
+      "route": "/admin/cinemas",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/cinemas",
+      "method": "POST",
+      "route": "/admin/cinemas",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/cinemas/:cinemaId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/cinemas/:cinemaId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/cinemas/:cinemaId/images",
+      "method": "GET",
+      "route": "/admin/cinemas/1/images",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/cinemas/:cinemaId/images",
+      "method": "POST",
+      "route": "/admin/cinemas/1/images",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover",
+      "method": "PATCH",
+      "route": "/admin/cinemas/1/images/1/cover",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/rooms",
+      "method": "GET",
+      "route": "/admin/rooms",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/rooms",
+      "method": "POST",
+      "route": "/admin/rooms",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/rooms/:roomId",
+      "method": "PUT",
+      "route": "/admin/rooms/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/rooms/:roomId",
+      "method": "DELETE",
+      "route": "/admin/rooms/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/seats",
+      "method": "GET",
+      "route": "/admin/seats",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/seats",
+      "method": "POST",
+      "route": "/admin/seats",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/seats/:seatId",
+      "method": "PUT",
+      "route": "/admin/seats/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/seats/:seatId",
+      "method": "DELETE",
+      "route": "/admin/seats/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/pricing",
+      "method": "GET",
+      "route": "/admin/pricing",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/pricing",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/pricing/:pricingId",
+      "method": "PUT",
+      "route": "/admin/pricing/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/showtimes",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/showtimes",
+      "method": "POST",
+      "route": "/admin/showtimes",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/showtimes/:showtimeId",
+      "method": "PUT",
+      "route": "/admin/showtimes/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/showtimes/:showtimeId/cancel",
+      "method": "POST",
+      "route": "/admin/showtimes/1/cancel",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/movies",
+      "method": "GET",
+      "route": "/admin/movies",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/movies",
+      "method": "POST",
+      "route": "/admin/movies",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/movies/:movieId",
+      "method": "PUT",
+      "route": "/admin/movies/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/movies/:movieId",
+      "method": "DELETE",
+      "route": "/admin/movies/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/movies/:movieId/actors",
+      "method": "PUT",
+      "route": "/admin/movies/1/actors",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/genres",
+      "method": "GET",
+      "route": "/admin/genres",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/genres",
+      "method": "POST",
+      "route": "/admin/genres",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/genres/:genreId",
+      "method": "PUT",
+      "route": "/admin/genres/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/genres/:genreId",
+      "method": "DELETE",
+      "route": "/admin/genres/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/actors",
+      "method": "GET",
+      "route": "/admin/actors",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/actors",
+      "method": "POST",
+      "route": "/admin/actors",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/actors/:actorId",
+      "method": "PUT",
+      "route": "/admin/actors/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/actors/:actorId",
+      "method": "DELETE",
+      "route": "/admin/actors/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/products",
+      "method": "GET",
+      "route": "/admin/products",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/products",
+      "method": "POST",
+      "route": "/admin/products",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/products/:productId",
+      "method": "PUT",
+      "route": "/admin/products/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/products/:productId",
+      "method": "DELETE",
+      "route": "/admin/products/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/promotions",
+      "method": "GET",
+      "route": "/admin/promotions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/promotions",
+      "method": "POST",
+      "route": "/admin/promotions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/promotions/:promotionId",
+      "method": "PUT",
+      "route": "/admin/promotions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/promotions/:promotionId",
+      "method": "DELETE",
+      "route": "/admin/promotions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/reports/revenue",
+      "method": "GET",
+      "route": "/admin/reports/revenue",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/complaints",
+      "method": "GET",
+      "route": "/admin/complaints",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/complaints/:complaintId",
+      "method": "GET",
+      "route": "/admin/complaints/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/complaints/:complaintId/order-reference",
+      "method": "GET",
+      "route": "/admin/complaints/1/order-reference",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/complaints/:complaintId/processings",
+      "method": "POST",
+      "route": "/admin/complaints/1/processings",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/complaints/:complaintId/status",
+      "method": "PUT",
+      "route": "/admin/complaints/1/status",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Admin report-only current profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Admin report-only legitimate API",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Admin user-only current profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "name": "Admin default dashboard blocked under user-only grants",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN"
+    },
+    {
+      "name": "Permission granted but support hardcode role rejects",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "SUPPORT_REQUIRED"
+    },
+    {
+      "name": "Locked account old JWT rejected: customer",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "Locked account old JWT rejected: manager",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "Locked account old JWT rejected: support",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "support",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "Locked account old JWT rejected: admin",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED"
+    },
+    {
+      "name": "Role change affects old manager JWT",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "MANAGER_REQUIRED"
+    }
+  ],
+  "observations": [
+    {
+      "name": "no JWT: GET /api/auth/me",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/auth/me",
+      "method": "PUT",
+      "route": "/auth/me",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/auth/permissions",
+      "method": "GET",
+      "route": "/auth/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/movies/:movieId/reviews",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/promotions/validate",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/bookings",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/orders",
+      "method": "GET",
+      "route": "/orders",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/orders/:orderId",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/orders/:orderId/payments",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/orders/:orderId/payments/:paymentId/result",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/complaints",
+      "method": "GET",
+      "route": "/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/complaints",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/complaints/:complaintId",
+      "method": "GET",
+      "route": "/complaints/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/rooms",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/manager/cinemas/:cinemaId/rooms",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/manager/rooms/:roomId",
+      "method": "PUT",
+      "route": "/manager/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/manager/rooms/:roomId",
+      "method": "DELETE",
+      "route": "/manager/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/rooms/:roomId/seats",
+      "method": "GET",
+      "route": "/manager/rooms/1/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/manager/rooms/:roomId/seats",
+      "method": "POST",
+      "route": "/manager/rooms/1/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/manager/seats/:seatId",
+      "method": "PUT",
+      "route": "/manager/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/manager/seats/:seatId",
+      "method": "DELETE",
+      "route": "/manager/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/showtimes",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/manager/showtimes",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/manager/showtimes/:showtimeId",
+      "method": "PUT",
+      "route": "/manager/showtimes/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/manager/showtimes/:showtimeId/cancel",
+      "method": "POST",
+      "route": "/manager/showtimes/1/cancel",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/pricing",
+      "method": "GET",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/manager/cinemas/:cinemaId/pricing",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/manager/pricing/:pricingId",
+      "method": "PUT",
+      "route": "/manager/pricing/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/dashboard",
+      "method": "GET",
+      "route": "/manager/cinemas/1/dashboard",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/manager/cinemas/:cinemaId/revenue",
+      "method": "GET",
+      "route": "/manager/cinemas/1/revenue",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/support/complaints",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/support/complaints/:complaintId",
+      "method": "GET",
+      "route": "/support/complaints/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/support/complaints/:complaintId/order-reference",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/support/complaints/:complaintId/processings",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/support/complaints/:complaintId/status",
+      "method": "PUT",
+      "route": "/support/complaints/1/status",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/dashboard",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/users",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/users",
+      "method": "POST",
+      "route": "/admin/users",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/users/:userId/status",
+      "method": "PUT",
+      "route": "/admin/users/1/status",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/roles",
+      "method": "GET",
+      "route": "/admin/roles",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/roles/:roleId/permissions",
+      "method": "GET",
+      "route": "/admin/roles/1/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/roles",
+      "method": "POST",
+      "route": "/admin/roles",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/roles/:roleId",
+      "method": "PUT",
+      "route": "/admin/roles/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/roles/:roleId",
+      "method": "DELETE",
+      "route": "/admin/roles/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/permissions",
+      "method": "GET",
+      "route": "/admin/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/permissions",
+      "method": "POST",
+      "route": "/admin/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/permissions/:permissionId",
+      "method": "PUT",
+      "route": "/admin/permissions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/permissions/:permissionId",
+      "method": "DELETE",
+      "route": "/admin/permissions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/roles/:roleId/permissions",
+      "method": "PUT",
+      "route": "/admin/roles/1/permissions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/assignments",
+      "method": "GET",
+      "route": "/admin/assignments",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/assignments",
+      "method": "POST",
+      "route": "/admin/assignments",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/assignments/:assignmentId",
+      "method": "PUT",
+      "route": "/admin/assignments/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/cinemas",
+      "method": "GET",
+      "route": "/admin/cinemas",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/cinemas",
+      "method": "POST",
+      "route": "/admin/cinemas",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/cinemas/:cinemaId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/cinemas/:cinemaId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/cinemas/:cinemaId/images",
+      "method": "GET",
+      "route": "/admin/cinemas/1/images",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/cinemas/:cinemaId/images",
+      "method": "POST",
+      "route": "/admin/cinemas/1/images",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover",
+      "method": "PATCH",
+      "route": "/admin/cinemas/1/images/1/cover",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/rooms",
+      "method": "GET",
+      "route": "/admin/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/rooms",
+      "method": "POST",
+      "route": "/admin/rooms",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/rooms/:roomId",
+      "method": "PUT",
+      "route": "/admin/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/rooms/:roomId",
+      "method": "DELETE",
+      "route": "/admin/rooms/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/seats",
+      "method": "GET",
+      "route": "/admin/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/seats",
+      "method": "POST",
+      "route": "/admin/seats",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/seats/:seatId",
+      "method": "PUT",
+      "route": "/admin/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/seats/:seatId",
+      "method": "DELETE",
+      "route": "/admin/seats/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/pricing",
+      "method": "GET",
+      "route": "/admin/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/pricing",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/pricing/:pricingId",
+      "method": "PUT",
+      "route": "/admin/pricing/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/showtimes",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/showtimes",
+      "method": "POST",
+      "route": "/admin/showtimes",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/showtimes/:showtimeId",
+      "method": "PUT",
+      "route": "/admin/showtimes/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/showtimes/:showtimeId/cancel",
+      "method": "POST",
+      "route": "/admin/showtimes/1/cancel",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/movies",
+      "method": "GET",
+      "route": "/admin/movies",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/movies",
+      "method": "POST",
+      "route": "/admin/movies",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/movies/:movieId",
+      "method": "PUT",
+      "route": "/admin/movies/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/movies/:movieId",
+      "method": "DELETE",
+      "route": "/admin/movies/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/movies/:movieId/actors",
+      "method": "PUT",
+      "route": "/admin/movies/1/actors",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/genres",
+      "method": "GET",
+      "route": "/admin/genres",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/genres",
+      "method": "POST",
+      "route": "/admin/genres",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/genres/:genreId",
+      "method": "PUT",
+      "route": "/admin/genres/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/genres/:genreId",
+      "method": "DELETE",
+      "route": "/admin/genres/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/actors",
+      "method": "GET",
+      "route": "/admin/actors",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/actors",
+      "method": "POST",
+      "route": "/admin/actors",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/actors/:actorId",
+      "method": "PUT",
+      "route": "/admin/actors/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/actors/:actorId",
+      "method": "DELETE",
+      "route": "/admin/actors/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/products",
+      "method": "GET",
+      "route": "/admin/products",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/products",
+      "method": "POST",
+      "route": "/admin/products",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/products/:productId",
+      "method": "PUT",
+      "route": "/admin/products/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/products/:productId",
+      "method": "DELETE",
+      "route": "/admin/products/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/promotions",
+      "method": "GET",
+      "route": "/admin/promotions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/promotions",
+      "method": "POST",
+      "route": "/admin/promotions",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/promotions/:promotionId",
+      "method": "PUT",
+      "route": "/admin/promotions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: DELETE /api/admin/promotions/:promotionId",
+      "method": "DELETE",
+      "route": "/admin/promotions/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/reports/revenue",
+      "method": "GET",
+      "route": "/admin/reports/revenue",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/complaints",
+      "method": "GET",
+      "route": "/admin/complaints",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/complaints/:complaintId",
+      "method": "GET",
+      "route": "/admin/complaints/1",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: GET /api/admin/complaints/:complaintId/order-reference",
+      "method": "GET",
+      "route": "/admin/complaints/1/order-reference",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: POST /api/admin/complaints/:complaintId/processings",
+      "method": "POST",
+      "route": "/admin/complaints/1/processings",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "no JWT: PUT /api/admin/complaints/:complaintId/status",
+      "method": "PUT",
+      "route": "/admin/complaints/1/status",
+      "actor": "ANONYMOUS",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "fixture login: customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "JWT claim names: customer",
+      "claims": [
+        "sub",
+        "iat",
+        "exp"
+      ],
+      "containsPermissions": false,
+      "containsRole": false
+    },
+    {
+      "name": "fixture login: customer2",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "JWT claim names: customer2",
+      "claims": [
+        "sub",
+        "iat",
+        "exp"
+      ],
+      "containsPermissions": false,
+      "containsRole": false
+    },
+    {
+      "name": "fixture login: manager",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "JWT claim names: manager",
+      "claims": [
+        "sub",
+        "iat",
+        "exp"
+      ],
+      "containsPermissions": false,
+      "containsRole": false
+    },
+    {
+      "name": "fixture login: support",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "JWT claim names: support",
+      "claims": [
+        "sub",
+        "iat",
+        "exp"
+      ],
+      "containsPermissions": false,
+      "containsRole": false
+    },
+    {
+      "name": "fixture login: admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "actor": "ANONYMOUS",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": false
+    },
+    {
+      "name": "JWT claim names: admin",
+      "claims": [
+        "sub",
+        "iat",
+        "exp"
+      ],
+      "containsPermissions": false,
+      "containsRole": false
+    },
+    {
+      "name": "manager: own assigned cinemas",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "manager: permission + correct cinema",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "manager: permission + foreign cinema",
+      "method": "GET",
+      "route": "/manager/cinemas/2/rooms",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "MANAGER_CINEMA_FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture room",
+      "method": "POST",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture seat 1",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture seat 2",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture seat 3",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture seat 4",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture seat 5",
+      "method": "POST",
+      "route": "/manager/rooms/7/seats",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture showtime",
+      "method": "POST",
+      "route": "/manager/showtimes",
+      "actor": "manager",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer DAT_VE present: booking",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer own order detail",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer foreign order denied",
+      "method": "GET",
+      "route": "/orders/1",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_NOT_FOUND",
+      "targetExpectedStatus": 404,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "old customer JWT loads revoked DAT_VE",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "BUG-019: booking after DAT_VE revoked",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "context": "DAT_VE revoked; same JWT",
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "BUG-019: promotion preview after DAT_VE revoked",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer order history without DAT_VE",
+      "method": "GET",
+      "route": "/orders",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "context": "Permission mapping for own history remains a review decision",
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "old customer JWT loads revoked THANH_TOAN",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "BUG-019: payment attempt after permission revoked",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "BUG-019: payment result after permission revoked",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Foreign payment attempt still denied",
+      "method": "POST",
+      "route": "/orders/1/payments",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_NOT_FOUND",
+      "targetExpectedStatus": 404,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Foreign payment result still denied",
+      "method": "POST",
+      "route": "/orders/1/payments/1/result",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_NOT_FOUND",
+      "targetExpectedStatus": 404,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "fixture second customer booking",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "customer2",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer THANH_TOAN present: attempt",
+      "method": "POST",
+      "route": "/orders/3/payments",
+      "actor": "customer2",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer THANH_TOAN present: result",
+      "method": "POST",
+      "route": "/orders/3/payments/2/result",
+      "actor": "customer2",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer DANH_GIA present: eligible review",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "BUG-019: review after DANH_GIA revoked",
+      "method": "POST",
+      "route": "/movies/1/reviews",
+      "actor": "customer2",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Unwatched eligibility remains enforced",
+      "method": "POST",
+      "route": "/movies/2/reviews",
+      "actor": "customer2",
+      "status": 403,
+      "errorCode": "REVIEW_NOT_ELIGIBLE",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer GUI_KHIEU_NAI present",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "BUG-019: complaint after GUI_KHIEU_NAI revoked",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Complaint foreign order reference denied",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "ORDER_REFERENCE_INVALID",
+      "targetExpectedStatus": 404,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer foreign complaint denied",
+      "method": "GET",
+      "route": "/complaints/1",
+      "actor": "customer2",
+      "status": 404,
+      "errorCode": "COMPLAINT_NOT_FOUND",
+      "targetExpectedStatus": 404,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer only GUI_KHIEU_NAI current profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Customer only GUI_KHIEU_NAI can create",
+      "method": "POST",
+      "route": "/complaints",
+      "actor": "customer",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager old JWT permission revoked",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager SP checks scope only, not QL_PHONG",
+      "directProcedure": "dbo.sp_Manager_Room_List",
+      "errorNumber": null,
+      "rowsReturned": 4,
+      "context": {
+        "QL_PHONG": false,
+        "assigned": true
+      }
+    },
+    {
+      "name": "Manager old JWT current assignments after revoke",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager old JWT scope revoked",
+      "method": "GET",
+      "route": "/manager/cinemas/1/rooms",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "MANAGER_CINEMA_FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager direct SP scope revoked",
+      "directProcedure": "dbo.sp_Manager_Room_List",
+      "errorNumber": 50050,
+      "rowsReturned": 0,
+      "context": {}
+    },
+    {
+      "name": "Manager only QL_SUAT_CHIEU profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager legitimate showtime API under partial grants",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager only QL_PHONG profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: showtimes",
+      "method": "GET",
+      "route": "/manager/cinemas/1/showtimes",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: pricing",
+      "method": "GET",
+      "route": "/manager/cinemas/1/pricing",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: dashboard",
+      "method": "GET",
+      "route": "/manager/cinemas/1/dashboard",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "ManagerPortal composite fetch lacks permission: revenue",
+      "method": "GET",
+      "route": "/manager/cinemas/1/revenue",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Manager holds DAT_VE but role blocks Customer API",
+      "method": "POST",
+      "route": "/bookings",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "CUSTOMER_REQUIRED",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CSKH permission present",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CSKH XULY present: processing",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "support",
+      "status": 201,
+      "errorCode": null,
+      "targetExpectedStatus": 201,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CSKH old JWT QL revoked",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "DB read permits XULY alone while HTTP requires QL",
+      "directProcedure": "dbo.sp_Support_Complaint_List",
+      "errorNumber": null,
+      "rowsReturned": 3,
+      "context": {
+        "QL_KHIEUNAI": false,
+        "XULY_KHIEUNAI": true
+      }
+    },
+    {
+      "name": "CSKH old JWT XULY revoked",
+      "method": "POST",
+      "route": "/support/complaints/1/processings",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CSKH direct DB XULY revoked",
+      "directProcedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "errorNumber": 50060,
+      "rowsReturned": 0,
+      "context": {}
+    },
+    {
+      "name": "MISMATCH: order reference without TRA_CUU_DON",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "support",
+      "status": 200,
+      "errorCode": null,
+      "context": "QL only; no TRA_CUU_DON",
+      "targetExpectedStatus": 403,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CSKH QL only can read detail",
+      "method": "GET",
+      "route": "/support/complaints/1",
+      "actor": "support",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "MISMATCH: TRA_CUU_DON alone rejected",
+      "method": "GET",
+      "route": "/support/complaints/1/order-reference",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 200,
+      "policyConformant": false,
+      "oldTokenReused": true
+    },
+    {
+      "name": "DB also ignores TRA_CUU_DON",
+      "directProcedure": "dbo.sp_Support_Complaint_GetOrderReference",
+      "errorNumber": 50060,
+      "rowsReturned": 0,
+      "context": {}
+    },
+    {
+      "name": "CSKH all permissions revoked",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "support",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CSKH direct DB all permissions revoked",
+      "directProcedure": "dbo.sp_Support_Complaint_List",
+      "errorNumber": 50060,
+      "rowsReturned": 0,
+      "context": {}
+    },
+    {
+      "name": "Admin permission present",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin old JWT current permissions empty",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/dashboard",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/users",
+      "method": "GET",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/users",
+      "method": "POST",
+      "route": "/admin/users",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/users/:userId/status",
+      "method": "PUT",
+      "route": "/admin/users/1/status",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/roles",
+      "method": "GET",
+      "route": "/admin/roles",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/roles/:roleId/permissions",
+      "method": "GET",
+      "route": "/admin/roles/1/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/roles",
+      "method": "POST",
+      "route": "/admin/roles",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/roles/:roleId",
+      "method": "PUT",
+      "route": "/admin/roles/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/roles/:roleId",
+      "method": "DELETE",
+      "route": "/admin/roles/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/permissions",
+      "method": "GET",
+      "route": "/admin/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/permissions",
+      "method": "POST",
+      "route": "/admin/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/permissions/:permissionId",
+      "method": "PUT",
+      "route": "/admin/permissions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/permissions/:permissionId",
+      "method": "DELETE",
+      "route": "/admin/permissions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/roles/:roleId/permissions",
+      "method": "PUT",
+      "route": "/admin/roles/1/permissions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/assignments",
+      "method": "GET",
+      "route": "/admin/assignments",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/assignments",
+      "method": "POST",
+      "route": "/admin/assignments",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/assignments/:assignmentId",
+      "method": "PUT",
+      "route": "/admin/assignments/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/cinemas",
+      "method": "GET",
+      "route": "/admin/cinemas",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/cinemas",
+      "method": "POST",
+      "route": "/admin/cinemas",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/cinemas/:cinemaId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/cinemas/:cinemaId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/cinemas/:cinemaId/images",
+      "method": "GET",
+      "route": "/admin/cinemas/1/images",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/cinemas/:cinemaId/images",
+      "method": "POST",
+      "route": "/admin/cinemas/1/images",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "PUT",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "method": "DELETE",
+      "route": "/admin/cinemas/1/images/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover",
+      "method": "PATCH",
+      "route": "/admin/cinemas/1/images/1/cover",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/rooms",
+      "method": "GET",
+      "route": "/admin/rooms",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/rooms",
+      "method": "POST",
+      "route": "/admin/rooms",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/rooms/:roomId",
+      "method": "PUT",
+      "route": "/admin/rooms/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/rooms/:roomId",
+      "method": "DELETE",
+      "route": "/admin/rooms/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/seats",
+      "method": "GET",
+      "route": "/admin/seats",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/seats",
+      "method": "POST",
+      "route": "/admin/seats",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/seats/:seatId",
+      "method": "PUT",
+      "route": "/admin/seats/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/seats/:seatId",
+      "method": "DELETE",
+      "route": "/admin/seats/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/pricing",
+      "method": "GET",
+      "route": "/admin/pricing",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/pricing",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/pricing/:pricingId",
+      "method": "PUT",
+      "route": "/admin/pricing/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/showtimes",
+      "method": "GET",
+      "route": "/admin/showtimes",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/showtimes",
+      "method": "POST",
+      "route": "/admin/showtimes",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/showtimes/:showtimeId",
+      "method": "PUT",
+      "route": "/admin/showtimes/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/showtimes/:showtimeId/cancel",
+      "method": "POST",
+      "route": "/admin/showtimes/1/cancel",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/movies",
+      "method": "GET",
+      "route": "/admin/movies",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/movies",
+      "method": "POST",
+      "route": "/admin/movies",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/movies/:movieId",
+      "method": "PUT",
+      "route": "/admin/movies/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/movies/:movieId",
+      "method": "DELETE",
+      "route": "/admin/movies/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/movies/:movieId/actors",
+      "method": "PUT",
+      "route": "/admin/movies/1/actors",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/genres",
+      "method": "GET",
+      "route": "/admin/genres",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/genres",
+      "method": "POST",
+      "route": "/admin/genres",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/genres/:genreId",
+      "method": "PUT",
+      "route": "/admin/genres/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/genres/:genreId",
+      "method": "DELETE",
+      "route": "/admin/genres/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/actors",
+      "method": "GET",
+      "route": "/admin/actors",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/actors",
+      "method": "POST",
+      "route": "/admin/actors",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/actors/:actorId",
+      "method": "PUT",
+      "route": "/admin/actors/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/actors/:actorId",
+      "method": "DELETE",
+      "route": "/admin/actors/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/products",
+      "method": "GET",
+      "route": "/admin/products",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/products",
+      "method": "POST",
+      "route": "/admin/products",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/products/:productId",
+      "method": "PUT",
+      "route": "/admin/products/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/products/:productId",
+      "method": "DELETE",
+      "route": "/admin/products/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/promotions",
+      "method": "GET",
+      "route": "/admin/promotions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/promotions",
+      "method": "POST",
+      "route": "/admin/promotions",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/promotions/:promotionId",
+      "method": "PUT",
+      "route": "/admin/promotions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: DELETE /api/admin/promotions/:promotionId",
+      "method": "DELETE",
+      "route": "/admin/promotions/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/reports/revenue",
+      "method": "GET",
+      "route": "/admin/reports/revenue",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/complaints",
+      "method": "GET",
+      "route": "/admin/complaints",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/complaints/:complaintId",
+      "method": "GET",
+      "route": "/admin/complaints/1",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: GET /api/admin/complaints/:complaintId/order-reference",
+      "method": "GET",
+      "route": "/admin/complaints/1/order-reference",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: POST /api/admin/complaints/:complaintId/processings",
+      "method": "POST",
+      "route": "/admin/complaints/1/processings",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin no permissions: PUT /api/admin/complaints/:complaintId/status",
+      "method": "PUT",
+      "route": "/admin/complaints/1/status",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "CONFLICT-005: Admin DB bypass with no permissions",
+      "MissingPermissionAllowed": true,
+      "UnknownPermissionAllowed": true,
+      "UnassignedCinemaAllowed": true,
+      "targetExpectedPermissionAllowed": false,
+      "policyConformant": false
+    },
+    {
+      "name": "Admin actor-less SP executable without grant",
+      "directProcedure": "dbo.sp_Admin_User_List",
+      "errorNumber": null,
+      "rowsReturned": 8,
+      "context": {
+        "adminRolePermissions": []
+      }
+    },
+    {
+      "name": "Admin direct support read bypass",
+      "directProcedure": "dbo.sp_Support_Complaint_List",
+      "errorNumber": null,
+      "rowsReturned": 3,
+      "context": {
+        "adminRolePermissions": []
+      }
+    },
+    {
+      "name": "Admin direct support write bypass",
+      "directProcedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "errorNumber": null,
+      "rowsReturned": 1,
+      "context": {
+        "XULY_KHIEUNAI": false
+      }
+    },
+    {
+      "name": "Admin direct Manager scope bypass",
+      "directProcedure": "dbo.sp_Manager_Room_List",
+      "errorNumber": null,
+      "rowsReturned": 2,
+      "context": {
+        "QL_PHONG": false,
+        "assigned": false
+      }
+    },
+    {
+      "name": "Admin report-only current profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin report-only legitimate API",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin user-only current profile",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 200,
+      "errorCode": null,
+      "targetExpectedStatus": 200,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Admin default dashboard blocked under user-only grants",
+      "method": "GET",
+      "route": "/admin/dashboard",
+      "actor": "admin",
+      "status": 403,
+      "errorCode": "FORBIDDEN",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Permission granted but support hardcode role rejects",
+      "method": "GET",
+      "route": "/support/complaints",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "SUPPORT_REQUIRED",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Processing trigger rejects non-CSKH/Admin despite XULY grant",
+      "directProcedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "errorNumber": 50005,
+      "rowsReturned": 0,
+      "context": {}
+    },
+    {
+      "name": "Locked account old JWT rejected: customer",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "customer",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Locked account old JWT rejected: manager",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "manager",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Locked account old JWT rejected: support",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "support",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Locked account old JWT rejected: admin",
+      "method": "GET",
+      "route": "/auth/me",
+      "actor": "admin",
+      "status": 401,
+      "errorCode": "UNAUTHENTICATED",
+      "targetExpectedStatus": 401,
+      "policyConformant": true,
+      "oldTokenReused": true
+    },
+    {
+      "name": "Role change affects old manager JWT",
+      "method": "GET",
+      "route": "/manager/cinemas",
+      "actor": "manager",
+      "status": 403,
+      "errorCode": "MANAGER_REQUIRED",
+      "targetExpectedStatus": 403,
+      "policyConformant": true,
+      "oldTokenReused": true
+    }
+  ],
+  "frontend": [
+    {
+      "name": "BUG-020: old current customer profile denied orders area by DAT_VE",
+      "role": "KHACH_HANG",
+      "gatePermission": "DAT_VE",
+      "heldPermissions": [
+        "XEM_PHIM",
+        "THANH_TOAN",
+        "DANH_GIA",
+        "GUI_KHIEU_NAI"
+      ],
+      "allowed": false,
+      "visibleAreas": []
+    },
+    {
+      "name": "BUG-020: legitimate complaint permission hidden by DAT_VE",
+      "role": "KHACH_HANG",
+      "gatePermission": "DAT_VE",
+      "heldPermissions": [
+        "GUI_KHIEU_NAI"
+      ],
+      "allowed": false,
+      "visibleAreas": []
+    },
+    {
+      "name": "BUG-020: QL_SUAT_CHIEU hidden by QL_PHONG portal",
+      "role": "QUAN_LY_RAP",
+      "gatePermission": "QL_PHONG",
+      "heldPermissions": [
+        "QL_SUAT_CHIEU"
+      ],
+      "allowed": false,
+      "visibleAreas": []
+    },
+    {
+      "name": "Manager partial grants enters portal",
+      "role": "QUAN_LY_RAP",
+      "gatePermission": "QL_PHONG",
+      "heldPermissions": [
+        "QL_PHONG"
+      ],
+      "allowed": true,
+      "visibleAreas": [
+        {
+          "role": "QUAN_LY_RAP",
+          "path": "/manager"
+        }
+      ]
+    },
+    {
+      "name": "BUG-020: report-only Admin hidden by QL_NGUOIDUNG",
+      "role": "ADMIN",
+      "gatePermission": "QL_NGUOIDUNG",
+      "heldPermissions": [
+        "XEM_BAO_CAO_TOANHE"
+      ],
+      "allowed": false,
+      "visibleAreas": []
+    },
+    {
+      "name": "Admin user-only enters portal",
+      "role": "ADMIN",
+      "gatePermission": "QL_NGUOIDUNG",
+      "heldPermissions": [
+        "QL_NGUOIDUNG"
+      ],
+      "allowed": true,
+      "visibleAreas": [
+        {
+          "role": "ADMIN",
+          "path": "/admin"
+        }
+      ]
+    },
+    {
+      "name": "Menu shows foreign areas for full Admin; role still blocks their routes",
+      "role": "KHACH_HANG",
+      "gatePermission": "DAT_VE",
+      "heldPermissions": [
+        "XEM_PHIM",
+        "DAT_VE",
+        "THANH_TOAN",
+        "DANH_GIA",
+        "GUI_KHIEU_NAI",
+        "QL_PHONG",
+        "QL_GHE",
+        "QL_SUAT_CHIEU",
+        "QL_BANG_GIA",
+        "XEM_BAO_CAO_RAP",
+        "QL_KHIEUNAI",
+        "XULY_KHIEUNAI",
+        "TRA_CUU_DON",
+        "QL_NGUOIDUNG",
+        "QL_VAITRO",
+        "QL_QUYEN",
+        "PHANCONG_RAP",
+        "QL_RAP",
+        "QL_DANHMUC_PHIM",
+        "QL_THELOAI",
+        "QL_SANPHAM",
+        "QL_KHUYENMAI",
+        "XEM_BAO_CAO_TOANHE"
+      ],
+      "allowed": false,
+      "visibleAreas": [
+        {
+          "role": "KHACH_HANG",
+          "path": "/account"
+        },
+        {
+          "role": "QUAN_LY_RAP",
+          "path": "/manager"
+        },
+        {
+          "role": "CSKH",
+          "path": "/support"
+        },
+        {
+          "role": "ADMIN",
+          "path": "/admin"
+        }
+      ]
+    }
+  ],
+  "note": "PASS means source-derived behavior was reproduced; policyConformant=false is an audit finding, not repaired behavior. Tokens/credentials/private response bodies are never saved.",
+  "anonymousProtectedEndpointsChecked": 104,
+  "adminNoPermissionEndpointsChecked": 68,
+  "catalogRolesAndPermissionsUnchanged": true,
+  "finishedAt": "2026-10-04T09:58:22.006Z"
+}

@@ -1,0 +1,437 @@
+[
+  {
+    "id": "KH-01",
+    "name": "Đăng ký tài khoản",
+    "source": "Phân Tích _ Thiết Kế.md:77",
+    "endpoints": [
+      "POST /api/auth/register"
+    ]
+  },
+  {
+    "id": "KH-02",
+    "name": "Đăng nhập hệ thống",
+    "source": "Phân Tích _ Thiết Kế.md:87",
+    "endpoints": [
+      "POST /api/auth/login"
+    ]
+  },
+  {
+    "id": "KH-03",
+    "name": "Xem và cập nhật thông tin cá nhân",
+    "source": "Phân Tích _ Thiết Kế.md:97",
+    "endpoints": [
+      "GET /api/auth/me",
+      "PUT /api/auth/me"
+    ]
+  },
+  {
+    "id": "KH-04",
+    "name": "Xem danh sách phim và chi tiết phim",
+    "source": "Phân Tích _ Thiết Kế.md:107",
+    "endpoints": [
+      "GET /api/movies",
+      "GET /api/movies/:movieId",
+      "GET /api/genres"
+    ]
+  },
+  {
+    "id": "KH-05",
+    "name": "Xem lịch chiếu theo rạp/suất chiếu",
+    "source": "Phân Tích _ Thiết Kế.md:117",
+    "endpoints": [
+      "GET /api/movies/:movieId/showtimes",
+      "GET /api/cinemas",
+      "GET /api/cinemas/:cinemaId/images",
+      "GET /api/showtimes/:showtimeId"
+    ]
+  },
+  {
+    "id": "KH-06",
+    "name": "Chọn ghế theo suất chiếu",
+    "source": "Phân Tích _ Thiết Kế.md:127",
+    "endpoints": [
+      "GET /api/showtimes/:showtimeId/seats"
+    ]
+  },
+  {
+    "id": "KH-07",
+    "name": "Đặt vé",
+    "source": "Phân Tích _ Thiết Kế.md:137",
+    "endpoints": [
+      "POST /api/bookings"
+    ]
+  },
+  {
+    "id": "KH-08",
+    "name": "Mua đồ ăn/thức uống kèm vé",
+    "source": "Phân Tích _ Thiết Kế.md:147",
+    "endpoints": [
+      "GET /api/products",
+      "POST /api/bookings"
+    ]
+  },
+  {
+    "id": "KH-09",
+    "name": "Áp dụng mã khuyến mãi",
+    "source": "Phân Tích _ Thiết Kế.md:157",
+    "endpoints": [
+      "POST /api/promotions/validate",
+      "POST /api/bookings"
+    ]
+  },
+  {
+    "id": "KH-10",
+    "name": "Thanh toán đơn đặt vé",
+    "source": "Phân Tích _ Thiết Kế.md:167",
+    "endpoints": [
+      "POST /api/orders/:orderId/payments",
+      "POST /api/orders/:orderId/payments/:paymentId/result"
+    ]
+  },
+  {
+    "id": "KH-11",
+    "name": "Xem lịch sử đặt vé",
+    "source": "Phân Tích _ Thiết Kế.md:177",
+    "endpoints": [
+      "GET /api/orders"
+    ]
+  },
+  {
+    "id": "KH-12",
+    "name": "Xem chi tiết đơn đặt vé",
+    "source": "Phân Tích _ Thiết Kế.md:187",
+    "endpoints": [
+      "GET /api/orders/:orderId"
+    ]
+  },
+  {
+    "id": "KH-13",
+    "name": "Đánh giá phim đã xem",
+    "source": "Phân Tích _ Thiết Kế.md:197",
+    "endpoints": [
+      "GET /api/movies/:movieId/reviews",
+      "POST /api/movies/:movieId/reviews"
+    ]
+  },
+  {
+    "id": "KH-14",
+    "name": "Gửi khiếu nại",
+    "source": "Phân Tích _ Thiết Kế.md:207",
+    "endpoints": [
+      "GET /api/complaints",
+      "POST /api/complaints",
+      "GET /api/complaints/:complaintId"
+    ]
+  },
+  {
+    "id": "QLR-01",
+    "name": "Đăng nhập hệ thống",
+    "source": "Phân Tích _ Thiết Kế.md:219",
+    "endpoints": [
+      "POST /api/auth/login",
+      "GET /api/manager/cinemas"
+    ]
+  },
+  {
+    "id": "QLR-02",
+    "name": "Quản lý phòng chiếu thuộc rạp được phân công",
+    "source": "Phân Tích _ Thiết Kế.md:229",
+    "endpoints": [
+      "GET /api/manager/cinemas/:cinemaId/rooms",
+      "POST /api/manager/cinemas/:cinemaId/rooms",
+      "PUT /api/manager/rooms/:roomId",
+      "DELETE /api/manager/rooms/:roomId"
+    ]
+  },
+  {
+    "id": "QLR-03",
+    "name": "Quản lý sơ đồ ghế thuộc rạp được phân công",
+    "source": "Phân Tích _ Thiết Kế.md:239",
+    "endpoints": [
+      "GET /api/manager/rooms/:roomId/seats",
+      "POST /api/manager/rooms/:roomId/seats",
+      "PUT /api/manager/seats/:seatId",
+      "DELETE /api/manager/seats/:seatId"
+    ]
+  },
+  {
+    "id": "QLR-04",
+    "name": "Tạo suất chiếu",
+    "source": "Phân Tích _ Thiết Kế.md:249",
+    "endpoints": [
+      "GET /api/manager/cinemas/:cinemaId/showtimes",
+      "POST /api/manager/showtimes"
+    ]
+  },
+  {
+    "id": "QLR-05",
+    "name": "Sửa suất chiếu",
+    "source": "Phân Tích _ Thiết Kế.md:259",
+    "endpoints": [
+      "PUT /api/manager/showtimes/:showtimeId"
+    ]
+  },
+  {
+    "id": "QLR-06",
+    "name": "Hủy suất chiếu",
+    "source": "Phân Tích _ Thiết Kế.md:269",
+    "endpoints": [
+      "POST /api/manager/showtimes/:showtimeId/cancel"
+    ]
+  },
+  {
+    "id": "QLR-07",
+    "name": "Cấu hình bảng giá cho rạp được phân công",
+    "source": "Phân Tích _ Thiết Kế.md:279",
+    "endpoints": [
+      "GET /api/manager/cinemas/:cinemaId/pricing",
+      "POST /api/manager/cinemas/:cinemaId/pricing",
+      "PUT /api/manager/pricing/:pricingId"
+    ]
+  },
+  {
+    "id": "QLR-08",
+    "name": "Theo dõi hoạt động rạp được phân công",
+    "source": "Phân Tích _ Thiết Kế.md:289",
+    "endpoints": [
+      "GET /api/manager/cinemas/:cinemaId/dashboard"
+    ]
+  },
+  {
+    "id": "QLR-09",
+    "name": "Xem báo cáo doanh thu rạp được phân công",
+    "source": "Phân Tích _ Thiết Kế.md:299",
+    "endpoints": [
+      "GET /api/manager/cinemas/:cinemaId/revenue"
+    ]
+  },
+  {
+    "id": "CSKH-01",
+    "name": "Đăng nhập hệ thống",
+    "source": "Phân Tích _ Thiết Kế.md:311",
+    "endpoints": [
+      "POST /api/auth/login"
+    ]
+  },
+  {
+    "id": "CSKH-02",
+    "name": "Xem danh sách khiếu nại",
+    "source": "Phân Tích _ Thiết Kế.md:321",
+    "endpoints": [
+      "GET /api/support/complaints"
+    ]
+  },
+  {
+    "id": "CSKH-03",
+    "name": "Tra cứu chi tiết khiếu nại",
+    "source": "Phân Tích _ Thiết Kế.md:331",
+    "endpoints": [
+      "GET /api/support/complaints/:complaintId"
+    ]
+  },
+  {
+    "id": "CSKH-04",
+    "name": "Xem đơn đặt vé tham chiếu (nếu có)",
+    "source": "Phân Tích _ Thiết Kế.md:341",
+    "endpoints": [
+      "GET /api/support/complaints/:complaintId/order-reference"
+    ]
+  },
+  {
+    "id": "CSKH-05",
+    "name": "Ghi nhận lần xử lý khiếu nại",
+    "source": "Phân Tích _ Thiết Kế.md:351",
+    "endpoints": [
+      "POST /api/support/complaints/:complaintId/processings"
+    ]
+  },
+  {
+    "id": "CSKH-06",
+    "name": "Cập nhật trạng thái khiếu nại",
+    "source": "Phân Tích _ Thiết Kế.md:361",
+    "endpoints": [
+      "PUT /api/support/complaints/:complaintId/status"
+    ]
+  },
+  {
+    "id": "ADM-01",
+    "name": "Đăng nhập hệ thống",
+    "source": "Phân Tích _ Thiết Kế.md:373",
+    "endpoints": [
+      "POST /api/auth/login"
+    ]
+  },
+  {
+    "id": "ADM-02",
+    "name": "Quản lý tài khoản người dùng (khóa/mở tài khoản)",
+    "source": "Phân Tích _ Thiết Kế.md:383",
+    "endpoints": [
+      "GET /api/admin/users",
+      "POST /api/admin/users",
+      "PUT /api/admin/users/:userId/status"
+    ]
+  },
+  {
+    "id": "ADM-03",
+    "name": "Quản lý vai trò",
+    "source": "Phân Tích _ Thiết Kế.md:393",
+    "endpoints": [
+      "GET /api/admin/roles",
+      "POST /api/admin/roles",
+      "PUT /api/admin/roles/:roleId",
+      "DELETE /api/admin/roles/:roleId"
+    ]
+  },
+  {
+    "id": "ADM-04",
+    "name": "Quản lý danh mục quyền",
+    "source": "Phân Tích _ Thiết Kế.md:403",
+    "endpoints": [
+      "GET /api/admin/permissions",
+      "POST /api/admin/permissions",
+      "PUT /api/admin/permissions/:permissionId",
+      "DELETE /api/admin/permissions/:permissionId"
+    ]
+  },
+  {
+    "id": "ADM-05",
+    "name": "Gán quyền cho vai trò",
+    "source": "Phân Tích _ Thiết Kế.md:413",
+    "endpoints": [
+      "GET /api/admin/roles/:roleId/permissions",
+      "PUT /api/admin/roles/:roleId/permissions"
+    ]
+  },
+  {
+    "id": "ADM-06",
+    "name": "Phân công quản lý rạp",
+    "source": "Phân Tích _ Thiết Kế.md:423",
+    "endpoints": [
+      "GET /api/admin/assignments",
+      "POST /api/admin/assignments",
+      "PUT /api/admin/assignments/:assignmentId"
+    ]
+  },
+  {
+    "id": "ADM-07",
+    "name": "Quản lý rạp chiếu phim (toàn hệ thống)",
+    "source": "Phân Tích _ Thiết Kế.md:433",
+    "endpoints": [
+      "GET /api/admin/cinemas",
+      "POST /api/admin/cinemas",
+      "PUT /api/admin/cinemas/:cinemaId",
+      "DELETE /api/admin/cinemas/:cinemaId",
+      "GET /api/admin/cinemas/:cinemaId/images",
+      "POST /api/admin/cinemas/:cinemaId/images",
+      "PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+      "DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+      "PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover"
+    ]
+  },
+  {
+    "id": "ADM-08",
+    "name": "Quản lý phòng chiếu và ghế (toàn hệ thống)",
+    "source": "Phân Tích _ Thiết Kế.md:443",
+    "endpoints": [
+      "GET /api/admin/rooms",
+      "POST /api/admin/rooms",
+      "PUT /api/admin/rooms/:roomId",
+      "DELETE /api/admin/rooms/:roomId",
+      "GET /api/admin/seats",
+      "POST /api/admin/seats",
+      "PUT /api/admin/seats/:seatId",
+      "DELETE /api/admin/seats/:seatId"
+    ]
+  },
+  {
+    "id": "ADM-09",
+    "name": "Quản lý danh mục phim",
+    "source": "Phân Tích _ Thiết Kế.md:453",
+    "endpoints": [
+      "GET /api/admin/movies",
+      "POST /api/admin/movies",
+      "PUT /api/admin/movies/:movieId",
+      "DELETE /api/admin/movies/:movieId",
+      "PUT /api/admin/movies/:movieId/actors",
+      "GET /api/admin/actors",
+      "POST /api/admin/actors",
+      "PUT /api/admin/actors/:actorId",
+      "DELETE /api/admin/actors/:actorId"
+    ]
+  },
+  {
+    "id": "ADM-10",
+    "name": "Quản lý thể loại phim",
+    "source": "Phân Tích _ Thiết Kế.md:463",
+    "endpoints": [
+      "GET /api/admin/genres",
+      "POST /api/admin/genres",
+      "PUT /api/admin/genres/:genreId",
+      "DELETE /api/admin/genres/:genreId"
+    ]
+  },
+  {
+    "id": "ADM-11",
+    "name": "Quản lý sản phẩm ăn uống",
+    "source": "Phân Tích _ Thiết Kế.md:473",
+    "endpoints": [
+      "GET /api/admin/products",
+      "POST /api/admin/products",
+      "PUT /api/admin/products/:productId",
+      "DELETE /api/admin/products/:productId"
+    ]
+  },
+  {
+    "id": "ADM-12",
+    "name": "Quản lý chương trình khuyến mãi",
+    "source": "Phân Tích _ Thiết Kế.md:483",
+    "endpoints": [
+      "GET /api/admin/promotions",
+      "POST /api/admin/promotions",
+      "PUT /api/admin/promotions/:promotionId",
+      "DELETE /api/admin/promotions/:promotionId"
+    ]
+  },
+  {
+    "id": "ADM-13",
+    "name": "Quản lý bảng giá (toàn hệ thống)",
+    "source": "Phân Tích _ Thiết Kế.md:493",
+    "endpoints": [
+      "GET /api/admin/pricing",
+      "POST /api/admin/pricing",
+      "PUT /api/admin/pricing/:pricingId"
+    ]
+  },
+  {
+    "id": "ADM-14",
+    "name": "Quản lý suất chiếu (toàn hệ thống)",
+    "source": "Phân Tích _ Thiết Kế.md:503",
+    "endpoints": [
+      "GET /api/admin/showtimes",
+      "POST /api/admin/showtimes",
+      "PUT /api/admin/showtimes/:showtimeId",
+      "POST /api/admin/showtimes/:showtimeId/cancel"
+    ]
+  },
+  {
+    "id": "ADM-15",
+    "name": "Xử lý khiếu nại",
+    "source": "Phân Tích _ Thiết Kế.md:513",
+    "endpoints": [
+      "GET /api/admin/complaints",
+      "GET /api/admin/complaints/:complaintId",
+      "GET /api/admin/complaints/:complaintId/order-reference",
+      "POST /api/admin/complaints/:complaintId/processings",
+      "PUT /api/admin/complaints/:complaintId/status"
+    ]
+  },
+  {
+    "id": "ADM-16",
+    "name": "Xem báo cáo doanh thu toàn hệ thống",
+    "source": "Phân Tích _ Thiết Kế.md:523",
+    "endpoints": [
+      "GET /api/admin/dashboard",
+      "GET /api/admin/reports/revenue"
+    ]
+  }
+]

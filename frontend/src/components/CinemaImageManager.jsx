@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 import { CINEMA_IMAGE_STATUSES } from '../constants/cinemaImageStatuses';
+import { useAuth } from '../context/AuthContext';
+import { userCanAct } from '../utils/authorization';
 
 const blank = () => ({ url: '', description: '', displayOrder: 0, status: 'Hoạt động', cover: false });
 
 export default function CinemaImageManager() {
+  const { user } = useAuth();
+  const canManage = userCanAct(user, 'ADMIN', 'QL_RAP');
   const [cinemas, setCinemas] = useState([]);
   const [cinemaId, setCinemaId] = useState('');
   const [images, setImages] = useState([]);
@@ -16,10 +20,12 @@ export default function CinemaImageManager() {
   const [form, setForm] = useState(blank);
 
   useEffect(() => {
+    if (!canManage) return;
     adminApi.cinemas().then((result) => setCinemas(result.cinemas ?? [])).catch(setError).finally(() => setLoading(false));
-  }, []);
+  }, [canManage]);
 
   const loadImages = async (id = cinemaId) => {
+    if (!canManage) return;
     if (!id) { setImages([]); return; }
     setLoading(true); setError(null);
     try { setImages((await adminApi.cinemaImages(id)).images ?? []); }
@@ -38,7 +44,7 @@ export default function CinemaImageManager() {
   };
 
   const submit = async (event) => {
-    event.preventDefault(); setNotice(null);
+    event.preventDefault(); if (!canManage) return; setNotice(null);
     try {
       const payload = { ...form, displayOrder: Number(form.displayOrder) };
       if (selected) await adminApi.updateCinemaImage(cinemaId, selected.HinhAnhRapID, payload);
@@ -48,16 +54,19 @@ export default function CinemaImageManager() {
   };
 
   const remove = async (image) => {
+    if (!canManage) return;
     if (!window.confirm('Xác nhận xóa ảnh rạp?')) return;
     try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
     catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
   };
 
   const setCover = async (image) => {
+    if (!canManage) return;
     try { await adminApi.setCinemaImageCover(cinemaId, image.HinhAnhRapID); setNotice({ ok: true, text: 'Đã chọn ảnh đại diện.' }); await loadImages(); }
     catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
   };
 
+  if (!canManage) return <EmptyState>Bạn chưa được cấp quyền quản lý ảnh rạp.</EmptyState>;
   return <section className="catalog-section">
     <label>Rạp<select aria-label="Chọn rạp" value={cinemaId} onChange={chooseCinema}><option value="">Chọn rạp</option>{cinemas.map((cinema) => <option key={cinema.RapID} value={cinema.RapID}>{cinema.TenRap}</option>)}</select></label>
     {notice && <p role={notice.ok ? 'status' : 'alert'}>{notice.text}</p>}

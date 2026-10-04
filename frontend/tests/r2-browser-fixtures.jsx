@@ -7,6 +7,8 @@ export async function testR2Pages() {
   ]);
   const { createRoot } = client.default ?? client;
   const { MemoryRouter, Routes, Route } = router;
+  const { AuthContext } = await import('/src/context/AuthContext.jsx');
+  const authorize = (role, element) => React.createElement(AuthContext.Provider, { value: { user: { role, permissions: ['THANH_TOAN', 'QL_PHONG', 'QL_GHE', 'QL_SUAT_CHIEU', 'QL_BANG_GIA', 'XEM_BAO_CAO_RAP', 'XEM_BAO_CAO_TOANHE'].map(code => ({ code })) } } }, element);
   const originalFetch = window.fetch, originalConfirm = window.confirm;
   const container = document.createElement('div'); document.body.append(container);
   const root = createRoot(container), calls = [];
@@ -38,7 +40,7 @@ export async function testR2Pages() {
   const paymentPage = key => React.createElement(MemoryRouter, { key, initialEntries: ['/orders/1/payment'] },
     React.createElement(Routes, null, React.createElement(Route, { path: '/orders/:orderId/payment', element: React.createElement(Payment) })));
   try {
-    root.render(paymentPage('expiry'));
+    root.render(authorize('KHACH_HANG', paymentPage('expiry')));
     await wait(() => button('Xác nhận thanh toán'));
     if (button('Xác nhận thanh toán').disabled) throw Error('Live hold cannot be confirmed');
     await wait(() => button('Xác nhận thanh toán')?.disabled && container.innerText.includes('kiểm tra hạn giữ ghế'));
@@ -51,7 +53,7 @@ export async function testR2Pages() {
     const expiry = { disabledAtCountdown: true, serverAuthoritative: true, orderRefreshed: true, seatsRefreshed: true };
 
     serverExpired = false; order.holdExpiresAt = new Date(Date.now() + 60000).toISOString();
-    root.render(paymentPage('confirm'));
+    root.render(authorize('KHACH_HANG', paymentPage('confirm')));
     await wait(() => button('Xác nhận thanh toán') && !button('Xác nhận thanh toán').disabled);
     button('Xác nhận thanh toán').click();
     await wait(() => container.innerText.includes('Đã xác nhận thanh toán thành công'));
@@ -59,11 +61,11 @@ export async function testR2Pages() {
     if (writes.length !== 2 || writes[1].body.status !== 'Thành công') throw Error('Single confirmation did not complete simulation');
     if (container.innerText.includes('Mô phỏng thất bại') || container.innerText.includes('hoàn tiền')) throw Error('Unexpected payment/refund controls');
 
-    root.render(React.createElement(Manager));
+    root.render(authorize('QUAN_LY_RAP', React.createElement(Manager)));
     await wait(() => button('Hủy')); button('Hủy').click();
     await wait(() => container.innerText.includes('còn đơn giữ ghế/chờ thanh toán còn hiệu lực'));
     window.confirm = () => true;
-    root.render(React.createElement(Admin));
+    root.render(authorize('ADMIN', React.createElement(Admin)));
     await wait(() => button('Suất chiếu')); button('Suất chiếu').click();
     await wait(() => button('Hủy')); button('Hủy').click();
     await wait(() => container.innerText.includes('còn đơn giữ ghế/chờ thanh toán còn hiệu lực'));

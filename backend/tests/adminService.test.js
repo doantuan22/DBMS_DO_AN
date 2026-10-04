@@ -24,11 +24,11 @@ test('admin service uses fixed whitelisted procedures and typed parameters', asy
     calls.push({ key, params });
     return { recordsets: [[{ id: 3 }], [{ total: 4 }]] };
   } });
-  assert.deepEqual(await service.users({ roleId: 2, status: 'active', search: 'Mai' }), [{ id: 3 }]);
+  assert.deepEqual(await service.users(1, { roleId: 2, status: 'active', search: 'Mai' }), [{ id: 3 }]);
   assert.equal(calls[0].key, 'ADMIN_USER_LIST');
   assert.equal(calls[0].params.VaiTroID.value, 2);
   assert.equal(calls[0].params.SearchTerm.value, 'Mai');
-  assert.deepEqual(await service.revenue({ fromDate: '2026-01-01', toDate: '2026-01-31' }), {
+  assert.deepEqual(await service.revenue(1, { fromDate: '2026-01-01', toDate: '2026-01-31' }), {
     cinemas: [{ id: 3 }], totals: { total: 4 },
   });
   assert.equal(calls[1].key, 'ADMIN_REPORT_REVENUE');
@@ -58,35 +58,35 @@ test('admin writes bind only fixed procedures and hash staff passwords', async (
   const service = createAdminService({ execute: async (key, params) => {
     calls.push({ key, params }); return { recordset: [{ result: true }] };
   } });
-  await service.createUser({ name: 'Portal Test', email: 'portal-test@example.invalid', password: 'StrongPass1!', phone: null, roleId: 2 });
+  await service.createUser(1, { name: 'Portal Test', email: 'portal-test@example.invalid', password: 'StrongPass1!', phone: null, roleId: 2 });
   assert.equal(calls[0].key, 'ADMIN_USER_CREATE');
   assert.notEqual(calls[0].params.MatKhauHash.value, 'StrongPass1!');
   assert.match(calls[0].params.MatKhauHash.value, /^\$2[aby]\$/);
-  await service.setRolePermissions(2, [14, 15]);
+  await service.setRolePermissions(1, 2, [14, 15]);
   assert.equal(calls[1].key, 'ADMIN_ROLE_PERMISSION_SET');
   assert.equal(calls[1].params.QuyenIdList.value, '14,15');
-  await service.rooms({ cinemaId: 99 });
+  await service.rooms(1, { cinemaId: 99 });
   assert.equal(calls[2].key, 'ADMIN_ROOM_LIST');
   assert.equal(calls[2].params.RapID.value, 99);
 });
 
 test('admin maps seat history, held showtime, and assignment role SQL errors to business HTTP errors', async () => {
   const service = createAdminService({ execute: async () => { throw { number: 50207 }; } });
-  await assert.rejects(service.deleteSeat(1), (error) => error.status === 409 && error.code === 'SEAT_HAS_TICKET_HISTORY');
+  await assert.rejects(service.deleteSeat(1, 1), (error) => error.status === 409 && error.code === 'SEAT_HAS_TICKET_HISTORY');
 
   const heldShowtimeService = createAdminService({ execute: async () => { throw { originalError: { info: { number: 50118 } } }; } });
-  await assert.rejects(heldShowtimeService.cancelShowtime(1), (error) => error.status === 409 && error.code === 'SHOWTIME_HAS_HELD_ORDERS');
+  await assert.rejects(heldShowtimeService.cancelShowtime(1, 1), (error) => error.status === 409 && error.code === 'SHOWTIME_HAS_HELD_ORDERS');
 
   const assignmentService = createAdminService({ execute: async () => { throw { number: 50071 }; } });
-  await assert.rejects(assignmentService.createAssignment({ userId: 5, cinemaId: 1 }), (error) => error.status === 400 && error.code === 'ASSIGNMENT_MANAGER_REQUIRED');
+  await assert.rejects(assignmentService.createAssignment(1, { userId: 5, cinemaId: 1 }), (error) => error.status === 400 && error.code === 'ASSIGNMENT_MANAGER_REQUIRED');
 });
 
 test('cinema image writes use route-scoped, typed stored-procedure parameters', async () => {
   const calls = [];
   const service = createAdminService({ execute: async (key, params) => { calls.push({ key, params }); return { recordset: [{ HinhAnhRapID: 6 }] }; } });
   const input = cinemaImageWrite({ url: '/uploads/cinema.jpg', description: '', cover: true, displayOrder: 0, status: 'Hoạt động' }, true);
-  await service.createCinemaImage(7, input);
-  await service.setCinemaImageCover(7, 6, true);
+  await service.createCinemaImage(1, 7, input);
+  await service.setCinemaImageCover(1, 7, 6, true);
   assert.equal(calls[0].key, 'ADMIN_CINEMA_IMAGE_CREATE');
   assert.equal(calls[0].params.RapID.value, 7);
   assert.equal(calls[0].params.LaAnhDaiDien.value, true);
@@ -96,23 +96,25 @@ test('cinema image writes use route-scoped, typed stored-procedure parameters', 
   assert.throws(() => cinemaImageWrite({ url: 'https://example.invalid/a.jpg', displayOrder: -1, status: 'Hoạt động' }), HttpError);
 });
 
-test('BUG-001: admin cinema list binds no parameters, matching usp_Admin_Cinema_List', async () => {
+test('BUG-001/R3B: admin cinema list binds only the authenticated ActorID', async () => {
   const cinema = { RapID: 1, TenRap: 'Cinema', DiaChi: 'Address', ThanhPho: 'City', SoDienThoai: null, MoTa: null, NgayHoatDong: null, TrangThai: 'Hoạt động' };
   const service = createAdminService({ execute: async (key, params) => {
-    // The procedure declares no parameters; binding any of them makes SQL Server reject the call.
-    if (key === 'ADMIN_CINEMA_LIST' && params && Object.keys(params).length > 0) throw new Error('too many arguments specified');
+    if (key === 'ADMIN_CINEMA_LIST') {
+      assert.deepEqual(Object.keys(params), ['ActorID']);
+      assert.equal(params.ActorID.value, 1);
+    }
     return { recordsets: [[cinema]] };
   } });
-  assert.deepEqual(await service.cinemas(), [cinema]);
+  assert.deepEqual(await service.cinemas(1), [cinema]);
 });
 
 test('BUG-003: image create and set-cover return the final image row of their procedure', async () => {
   const image = (id, cover) => ({ HinhAnhRapID: id, RapID: 7, URL: 'https://example.invalid/a.jpg', MoTa: null, LaAnhDaiDien: cover, ThuTuHienThi: 0, TrangThai: 'Hoạt động', NgayTao: 'now' });
   const service = createAdminService({ execute: async (key) => ({ recordsets: [[key === 'ADMIN_CINEMA_IMAGE_CREATE' ? image(21, true) : image(22, true)]] }) });
-  const created = await service.createCinemaImage(7, cinemaImageWrite({ url: 'https://example.invalid/a.jpg', cover: true, displayOrder: 0 }, true));
+  const created = await service.createCinemaImage(1, 7, cinemaImageWrite({ url: 'https://example.invalid/a.jpg', cover: true, displayOrder: 0 }, true));
   assert.deepEqual(Object.keys(created), ['HinhAnhRapID', 'RapID', 'URL', 'MoTa', 'LaAnhDaiDien', 'ThuTuHienThi', 'TrangThai', 'NgayTao']);
   assert.equal(created.HinhAnhRapID, 21);
-  assert.equal((await service.setCinemaImageCover(7, 22, true)).HinhAnhRapID, 22);
+  assert.equal((await service.setCinemaImageCover(1, 7, 22, true)).HinhAnhRapID, 22);
 });
 
 test('BUG-003: write() reads the first result set, so image procedures must emit only the final DTO', () => {
@@ -145,6 +147,7 @@ test('BUG-002: cinema image status must be in the whitelist for create and updat
 
 // SQL error number -> [HTTP status, error code] for every business error an admin procedure can throw.
 const ADMIN_ERROR_TABLE = {
+  50300: [401, 'ACCOUNT_UNAVAILABLE'], 50301: [403, 'FORBIDDEN'], 50302: [403, 'FORBIDDEN'],
   50001: [409, 'SHOWTIME_OVERLAP'], 50056: [404, 'ROOM_NOT_FOUND'], 50058: [404, 'SHOWTIME_NOT_FOUND'],
   50070: [409, 'EMAIL_ALREADY_EXISTS'], 50071: [400, 'ASSIGNMENT_MANAGER_REQUIRED'], 50072: [409, 'PROMOTION_CODE_EXISTS'],
   50090: [404, 'ROLE_NOT_FOUND'], 50091: [409, 'ROLE_IN_USE'], 50092: [409, 'PERMISSION_CODE_EXISTS'],
@@ -203,15 +206,15 @@ test('regression guard: every error number thrown by an admin SQL source is mapp
 
 test('set movie cast maps procedure errors to business HTTP errors', async () => {
   const missing = createAdminService({ execute: async () => { throw { number: 50102 }; } });
-  await assert.rejects(missing.setMovieActors(9, []), (error) => error.status === 404 && error.code === 'MOVIE_NOT_FOUND');
+  await assert.rejects(missing.setMovieActors(1, 9, []), (error) => error.status === 404 && error.code === 'MOVIE_NOT_FOUND');
   const invalid = createAdminService({ execute: async () => { throw { number: 50103 }; } });
-  await assert.rejects(invalid.setMovieActors(9, []), (error) => error.status === 400 && error.code === 'MOVIE_CAST_INVALID');
+  await assert.rejects(invalid.setMovieActors(1, 9, []), (error) => error.status === 400 && error.code === 'MOVIE_CAST_INVALID');
 });
 
 test('cinema deletion blockers are business errors, not 500s', async () => {
   for (const [number, status, code] of [[50095, 404, 'CINEMA_NOT_FOUND'], [50096, 409, 'CINEMA_HAS_DEPENDENCIES']]) {
     const service = createAdminService({ execute: async () => { throw { number }; } });
-    await assert.rejects(service.deleteCinema(1), (error) => error.status === status && error.code === code);
+    await assert.rejects(service.deleteCinema(1, 1), (error) => error.status === status && error.code === code);
   }
 });
 
@@ -219,12 +222,12 @@ test('showtime create and update map procedure errors and keep the success resul
   const input = { movieId: 1, roomId: 2, startsAt: '2031-01-01T10:00:00Z', endsAt: '2031-01-01T12:00:00Z', format: '2D', basePrice: 50000, status: 'Mở bán' };
   const result = { recordsets: [[{ SuatChieuID: 5 }]] };
   const ok = createAdminService({ execute: async () => result });
-  assert.equal(await ok.createShowtime(input), result);
-  assert.equal(await ok.updateShowtime(5, input), result);
+  assert.equal(await ok.createShowtime(1, input), result);
+  assert.equal(await ok.updateShowtime(1, 5, input), result);
   for (const [number, status, code] of [[50001, 409, 'SHOWTIME_OVERLAP'], [50056, 404, 'ROOM_NOT_FOUND'], [50058, 404, 'SHOWTIME_NOT_FOUND'], [50211, 400, 'SHOWTIME_TIME_INVALID']]) {
     const failing = createAdminService({ execute: async () => { throw { number }; } });
-    await assert.rejects(failing.createShowtime(input), (error) => error.status === status && error.code === code);
-    await assert.rejects(failing.updateShowtime(5, input), (error) => error.status === status && error.code === code);
+    await assert.rejects(failing.createShowtime(1, input), (error) => error.status === status && error.code === code);
+    await assert.rejects(failing.updateShowtime(1, 5, input), (error) => error.status === status && error.code === code);
   }
 });
 
@@ -262,10 +265,10 @@ test('writes that bypass write() still get constraint errors mapped', async () =
   const fk = { number: 547, message: 'The INSERT statement conflicted with the FOREIGN KEY constraint "FK_VAITRO_QUYEN_QUYEN".' };
   const service = createAdminService({ execute: async () => { throw fk; }, executeWithOutputs: async () => { throw fk; } });
   const movie = { title: 'T', durationMinutes: 90, releaseDate: '2031-01-01', genreIds: [999999] };
-  await assert.rejects(service.setRolePermissions(1, [999999]), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
-  await assert.rejects(service.createMovie(movie), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
-  await assert.rejects(service.updateMovie(1, { ...movie, status: 'Đang chiếu' }), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
-  await assert.rejects(createAdminService({ execute: async () => { throw { number: 2627 }; } }).createUser({ name: 'N', email: 'a@b.invalid', password: 'StrongPass1!', roleId: 2 }), (error) => error.status === 409 && error.code === 'DUPLICATE_RECORD');
+  await assert.rejects(service.setRolePermissions(1, 1, [999999]), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
+  await assert.rejects(service.createMovie(1, movie), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
+  await assert.rejects(service.updateMovie(1, 1, { ...movie, status: 'Đang chiếu' }), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
+  await assert.rejects(createAdminService({ execute: async () => { throw { number: 2627 }; } }).createUser(1, { name: 'N', email: 'a@b.invalid', password: 'StrongPass1!', roleId: 2 }), (error) => error.status === 409 && error.code === 'DUPLICATE_RECORD');
 });
 
 test('promotion validator: percent discounts are limited to (0, 99], fixed discounts only need to be positive', () => {

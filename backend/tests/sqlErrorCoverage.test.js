@@ -26,6 +26,7 @@ const FOLDER_FLOWS = [['08_procedures/auth/', ['auth']], ['08_procedures/manager
 const MIGRATION_FLOWS = { '003': ['feedback'], '004': ['manager'], '005': ['support'], '006': ['support'], '008': ['admin'], '009': ['admin'], '010': ['admin'], '011': ['admin'], '012': ['booking', 'orders'], '013': ['admin', 'manager'] };
 
 function flowsOf(file, code) {
+  if ([50300, 50301, 50302].includes(code)) return Object.keys(FLOW_SERVICES);
   if (CODE_FLOWS[code]) return CODE_FLOWS[code];
   if (/sp_Showtime_ValidateTimes|sp_ThemSuatChieu/.test(file)) return ['manager','admin'];
   if (/sp_Showtime_CancelCascade/.test(file)) return code===50050 ? ['manager'] : ['manager','admin'];
@@ -83,7 +84,7 @@ function thrownCodes(sources) {
 }
 
 function mappedCodes(flow) {
-  const codes = new Set();
+  const codes = new Set([50300, 50301, 50302]);
   for (const name of FLOW_SERVICES[flow] ?? []) {
     const text = readFileSync(new URL(name, SERVICES), 'utf8');
     for (const match of text.matchAll(/(?:case\s+|:\s*)(5\d{4})\b/g)) codes.add(Number(match[1]));

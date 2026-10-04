@@ -5,6 +5,8 @@ export async function testPortalForms() {
     import('/src/pages/ManagerPortal.jsx'), import('/src/pages/AdminPortal.jsx'),
   ]);
   const { createRoot } = clientModule.default ?? clientModule;
+  const { AuthContext } = await import('/src/context/AuthContext.jsx');
+  const authorize = (role, element) => React.createElement(AuthContext.Provider, { value: { user: { role, permissions: ['QL_PHONG', 'QL_GHE', 'QL_SUAT_CHIEU', 'QL_BANG_GIA', 'QL_KHUYENMAI', 'XEM_BAO_CAO_RAP', 'XEM_BAO_CAO_TOANHE'].map(code => ({ code })) } } }, element);
   const writes = [];
   const showtime = { SuatChieuID: 1, PhimID: 1, PhongID: 1, ThoiGianBatDau: '2026-10-03T12:30:00.123Z', ThoiGianKetThuc: '2026-10-03T14:30:00.123Z', DinhDang: '2D', GiaVeCoBan: 80000, TrangThai: 'Chưa chiếu' };
   const promotion = { KhuyenMaiID: 1, MoTa: 'R1 fixture', LoaiGiamGia: 'Phần trăm', GiaTriGiam: 10, DonHangToiThieu: 0, GiamToiDa: 10000, NgayBatDau: '2026-10-03T12:30:00.123Z', NgayKetThuc: '2026-10-03T14:30:00.123Z', SoLuong: 100, TrangThai: 'Hoạt động' };
@@ -35,7 +37,7 @@ export async function testPortalForms() {
   };
   const button = text => [...container.querySelectorAll('button')].find(b => b.textContent === text);
   try {
-    root.render(React.createElement(Manager));
+    root.render(authorize('QUAN_LY_RAP', React.createElement(Manager)));
     await wait(() => container.querySelector('input[placeholder="Movie ID"]'));
     const defaultLocal = container.querySelector('input[type="datetime-local"]').value;
     await set(container.querySelector('input[placeholder="Movie ID"]'), '1');
@@ -47,7 +49,7 @@ export async function testPortalForms() {
     container.querySelector('input[placeholder="Movie ID"]').closest('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     await wait(() => writes.some(w => w.route === '/api/manager/showtimes'));
     const manager = writes.find(w => w.route === '/api/manager/showtimes').body;
-    root.render(React.createElement(Admin));
+    root.render(authorize('ADMIN', React.createElement(Admin)));
     await wait(() => button('Suất chiếu')); button('Suất chiếu').click();
     await wait(() => button('Sửa')); button('Sửa').click();
     await wait(() => container.querySelector('input[type="datetime-local"]')?.value.endsWith('30:00.123'));

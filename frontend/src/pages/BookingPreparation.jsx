@@ -1,3 +1,4 @@
+import { userCanAct } from '../utils/authorization';
 import { formatDateTime, formatTime } from '../utils/dateTime';
 import HoldDeadline from '../components/HoldDeadline';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -20,6 +21,7 @@ function toProducts(quantities) {
 export default function BookingPreparation() {
   const { showtimeId } = useParams();
   const { user } = useAuth();
+  const canBook = userCanAct(user, 'KHACH_HANG', 'DAT_VE');
   const [state, setState] = useState({ status: 'loading' });
   const [seats, setSeats] = useState([]);
   const [seatsState, setSeatsState] = useState({ status: 'loading' });
@@ -78,6 +80,7 @@ export default function BookingPreparation() {
   }
 
   async function applyPromotion() {
+    if (!canBook) return;
     if (selectedSeatIds.length === 0) {
       setPromotion({ isValid: false, message: 'Hãy chọn ít nhất một ghế trước khi áp dụng khuyến mãi.' });
       return;
@@ -92,6 +95,7 @@ export default function BookingPreparation() {
   }
 
   async function submitBooking() {
+    if (!canBook) return;
     if (selectedSeatIds.length === 0) {
       setBookingState({ status: 'error', message: 'Hãy chọn ít nhất một ghế.' });
       return;
@@ -135,7 +139,7 @@ export default function BookingPreparation() {
         <label>Mã khuyến mãi
           <input value={promotionCode} maxLength="50" onChange={(event) => { setPromotionCode(event.target.value); setPromotion(null); }} />
         </label>
-        <button type="button" onClick={applyPromotion} disabled={promotionBusy || !user}>{promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}</button>
+        <button type="button" onClick={applyPromotion} disabled={promotionBusy || !canBook}>{promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}</button>
         {promotion && <p role="status">{promotion.message}{promotion.isValid ? ` Giảm tạm tính: ${money(promotion.discountAmount)}.` : ''}</p>}
       </section>
 
@@ -148,8 +152,8 @@ export default function BookingPreparation() {
         {user && user.role !== 'KHACH_HANG' && <p role="alert">Chỉ tài khoản khách hàng được đặt vé.</p>}
         {bookingState.status === 'conflict' && <p className="form-error" role="alert">{bookingState.message} Sơ đồ ghế đã được làm mới.</p>}
         {bookingState.status === 'error' && <p className="form-error" role="alert">{bookingState.message}</p>}
-        {bookingState.status === 'success' && <div className="form-success" role="status">Đặt vé thành công. Mã đơn: {bookingState.booking.id}. Tổng thanh toán do DB chốt: {money(bookingState.booking.total)}. <HoldDeadline deadline={bookingState.booking.holdExpiresAt} />. <Link to={`/orders/${bookingState.booking.id}/payment`}>Thanh toán đơn này</Link></div>}
-        <button type="button" onClick={submitBooking} disabled={bookingState.status === 'loading' || !user || user.role !== 'KHACH_HANG'}>{bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}</button>
+        {bookingState.status === 'success' && <div className="form-success" role="status">Đặt vé thành công. Mã đơn: {bookingState.booking.id}. Tổng thanh toán do DB chốt: {money(bookingState.booking.total)}. <HoldDeadline deadline={bookingState.booking.holdExpiresAt} />. {userCanAct(user, 'KHACH_HANG', 'THANH_TOAN') && <Link to={`/orders/${bookingState.booking.id}/payment`}>Thanh toán đơn này</Link>}</div>}
+        <button type="button" onClick={submitBooking} disabled={bookingState.status === 'loading' || !canBook}>{bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}</button>
       </section>
       <Link className="catalog-button catalog-button--secondary" to={`/movies/${showtime.movieId}`}>Quay lại lịch chiếu</Link>
     </section>

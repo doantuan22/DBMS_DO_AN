@@ -3,6 +3,7 @@ import { DbTypes, executeProcedure, executeProcedureWithOutputs } from '../db/pr
 import { hashPassword } from '../utils/password.js';
 import { HttpError } from '../utils/httpError.js';
 import { logger } from '../utils/logger.js';
+import { authorizationError } from '../utils/authorizationErrors.js';
 
 const int = (value) => ({ type: DbTypes.Int, value: value ?? null });
 const text = (length, value) => ({ type: DbTypes.NVarChar(length), value: value ?? null });
@@ -27,6 +28,7 @@ function mapConstraintError(number, error) {
 // Every business error number thrown by an admin procedure must be listed here
 // (tests/adminService.test.js scans the admin SQL sources and fails on an unmapped one).
 export function mapAdminProcedureError(error) {
+  error = authorizationError(error);
   if (error instanceof HttpError) throw error;
   const number = error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
   switch (number) {
@@ -133,104 +135,106 @@ export function mapAdminProcedureError(error) {
 }
 
 export function createAdminService({ execute = executeProcedure, executeWithOutputs = executeProcedureWithOutputs } = {}) {
+  const executeFor = (actorId, key, params = {}) => execute(key, { ...params, ActorID: int(actorId) });
+  const executeOutputsFor = (actorId, key, params, outputs) => executeWithOutputs(key, { ...params, ActorID: int(actorId) }, outputs);
   return {
-    async write(key, params) {
-      try { return rows(await execute(key, params))[0] ?? null; } catch (error) { mapAdminProcedureError(error); }
+    async write(actorId, key, params) {
+      try { return rows(await executeFor(actorId, key, params))[0] ?? null; } catch (error) { mapAdminProcedureError(error); }
     },
-    async dashboard() {
-      return rows(await execute('ADMIN_DASHBOARD'))[0] ?? {};
+    async dashboard(actorId) {
+      return rows(await executeFor(actorId, 'ADMIN_DASHBOARD'))[0] ?? {};
     },
-    async users(filters = {}) {
-      return rows(await execute('ADMIN_USER_LIST', {
+    async users(actorId, filters = {}) {
+      return rows(await executeFor(actorId, 'ADMIN_USER_LIST', {
         VaiTroID: int(filters.roleId), TrangThai: text(50, filters.status), SearchTerm: text(100, filters.search),
       }));
     },
-    async roles() { return rows(await execute('ADMIN_ROLE_LIST')); },
-    async permissions() { return rows(await execute('ADMIN_PERMISSION_LIST')); },
-    async assignments(filters = {}) {
-      return rows(await execute('ADMIN_ASSIGNMENT_LIST', { RapID: int(filters.cinemaId), NguoiDungID: int(filters.userId) }));
+    async roles(actorId) { return rows(await executeFor(actorId, 'ADMIN_ROLE_LIST')); },
+    async permissions(actorId) { return rows(await executeFor(actorId, 'ADMIN_PERMISSION_LIST')); },
+    async assignments(actorId, filters = {}) {
+      return rows(await executeFor(actorId, 'ADMIN_ASSIGNMENT_LIST', { RapID: int(filters.cinemaId), NguoiDungID: int(filters.userId) }));
     },
-    async cinemas() { return rows(await execute('ADMIN_CINEMA_LIST')); },
-    async movies(filters = {}) {
-      return rows(await execute('ADMIN_MOVIE_LIST', {
+    async cinemas(actorId) { return rows(await executeFor(actorId, 'ADMIN_CINEMA_LIST')); },
+    async movies(actorId, filters = {}) {
+      return rows(await executeFor(actorId, 'ADMIN_MOVIE_LIST', {
         TrangThai: text(50, filters.status), TheLoaiID: int(filters.genreId), SearchTerm: text(100, filters.search),
       }));
     },
-    async genres() { return rows(await execute('ADMIN_GENRE_LIST')); },
-    async actors() { return rows(await execute('ADMIN_ACTOR_LIST')); },
-    async products() { return rows(await execute('ADMIN_PRODUCT_LIST')); },
-    async promotions() { return rows(await execute('ADMIN_PROMOTION_LIST')); },
-    async revenue(filters = {}) {
-      const result = await execute('ADMIN_REPORT_REVENUE', {
+    async genres(actorId) { return rows(await executeFor(actorId, 'ADMIN_GENRE_LIST')); },
+    async actors(actorId) { return rows(await executeFor(actorId, 'ADMIN_ACTOR_LIST')); },
+    async products(actorId) { return rows(await executeFor(actorId, 'ADMIN_PRODUCT_LIST')); },
+    async promotions(actorId) { return rows(await executeFor(actorId, 'ADMIN_PROMOTION_LIST')); },
+    async revenue(actorId, filters = {}) {
+      const result = await executeFor(actorId, 'ADMIN_REPORT_REVENUE', {
         TuNgay: date(filters.fromDate), DenNgay: date(filters.toDate), RapID: int(filters.cinemaId),
       });
       return { cinemas: rows(result), totals: rows(result, 1)[0] ?? {} };
     },
-    async createUser(input) {
-      return this.write('ADMIN_USER_CREATE', {
+    async createUser(actorId, input) {
+      return this.write(actorId, 'ADMIN_USER_CREATE', {
         HoTen: text(100, input.name), Email: { type: DbTypes.VarChar(150), value: input.email },
         MatKhauHash: { type: DbTypes.VarChar(255), value: await hashPassword(input.password) },
         SoDienThoai: { type: DbTypes.VarChar(20), value: input.phone ?? null }, VaiTroID: int(input.roleId),
       });
     },
-    async setUserStatus(userId, status) { return this.write('ADMIN_USER_UPDATE_STATUS', { NguoiDungID: int(userId), TrangThai: text(50, status) }); },
-    async createRole(input) { return this.write('ADMIN_ROLE_CREATE', { MaVaiTro: { type: DbTypes.VarChar(50), value: input.code }, TenVaiTro: text(100, input.name), MoTa: text(255, input.description) }); },
-    async updateRole(id, input) { return this.write('ADMIN_ROLE_UPDATE', { VaiTroID: int(id), TenVaiTro: text(100, input.name), MoTa: text(255, input.description) }); },
-    async deleteRole(id) { return this.write('ADMIN_ROLE_DELETE', { VaiTroID: int(id) }); },
-    async createPermission(input) { return this.write('ADMIN_PERMISSION_CREATE', { MaQuyen: { type: DbTypes.VarChar(50), value: input.code }, TenQuyen: text(100, input.name), MoTa: text(255, input.description) }); },
-    async updatePermission(id, input) { return this.write('ADMIN_PERMISSION_UPDATE', { QuyenID: int(id), TenQuyen: text(100, input.name), MoTa: text(255, input.description) }); },
-    async deletePermission(id) { return this.write('ADMIN_PERMISSION_DELETE', { QuyenID: int(id) }); },
-    async setRolePermissions(roleId, permissionIds) {
-      try { return rows(await execute('ADMIN_ROLE_PERMISSION_SET', { VaiTroID: int(roleId), QuyenIdList: { type: DbTypes.VarChar(DbTypes.MAX), value: permissionIds.join(',') } })); } catch (error) { mapAdminProcedureError(error); }
+    async setUserStatus(actorId, userId, status) { return this.write(actorId, 'ADMIN_USER_UPDATE_STATUS', { NguoiDungID: int(userId), TrangThai: text(50, status) }); },
+    async createRole(actorId, input) { return this.write(actorId, 'ADMIN_ROLE_CREATE', { MaVaiTro: { type: DbTypes.VarChar(50), value: input.code }, TenVaiTro: text(100, input.name), MoTa: text(255, input.description) }); },
+    async updateRole(actorId, id, input) { return this.write(actorId, 'ADMIN_ROLE_UPDATE', { VaiTroID: int(id), TenVaiTro: text(100, input.name), MoTa: text(255, input.description) }); },
+    async deleteRole(actorId, id) { return this.write(actorId, 'ADMIN_ROLE_DELETE', { VaiTroID: int(id) }); },
+    async createPermission(actorId, input) { return this.write(actorId, 'ADMIN_PERMISSION_CREATE', { MaQuyen: { type: DbTypes.VarChar(50), value: input.code }, TenQuyen: text(100, input.name), MoTa: text(255, input.description) }); },
+    async updatePermission(actorId, id, input) { return this.write(actorId, 'ADMIN_PERMISSION_UPDATE', { QuyenID: int(id), TenQuyen: text(100, input.name), MoTa: text(255, input.description) }); },
+    async deletePermission(actorId, id) { return this.write(actorId, 'ADMIN_PERMISSION_DELETE', { QuyenID: int(id) }); },
+    async setRolePermissions(actorId, roleId, permissionIds) {
+      try { return rows(await executeFor(actorId, 'ADMIN_ROLE_PERMISSION_SET', { VaiTroID: int(roleId), QuyenIdList: { type: DbTypes.VarChar(DbTypes.MAX), value: permissionIds.join(',') } })); } catch (error) { mapAdminProcedureError(error); }
     },
-    async rolePermissions(roleId) { return rows(await execute('ADMIN_ROLE_PERMISSION_LIST', { VaiTroID: int(roleId) })); },
-    async createAssignment(input) { return this.write('ADMIN_ASSIGNMENT_CREATE', { NguoiDungID: int(input.userId), RapID: int(input.cinemaId), NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn) }); },
-    async updateAssignment(id, input) { return this.write('ADMIN_ASSIGNMENT_UPDATE', { PhanCongID: int(id), NguoiDungID: int(input.userId), RapID: int(input.cinemaId), NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn), TrangThai: text(50, input.status) }); },
-    async createCinema(input) { return this.write('ADMIN_CINEMA_CREATE', { TenRap: text(150, input.name), DiaChi: text(255, input.address), ThanhPho: text(100, input.city), SoDienThoai: { type: DbTypes.VarChar(20), value: input.phone ?? null }, MoTa: text(500, input.description), NgayHoatDong: date(input.operatingSince) }); },
-    async updateCinema(id, input) { return this.write('ADMIN_CINEMA_UPDATE', { RapID: int(id), TenRap: text(150, input.name), DiaChi: text(255, input.address), ThanhPho: text(100, input.city), SoDienThoai: { type: DbTypes.VarChar(20), value: input.phone ?? null }, MoTa: text(500, input.description), TrangThai: text(50, input.status) }); },
-    async deleteCinema(id) { return this.write('ADMIN_CINEMA_DELETE', { RapID: int(id) }); },
-    async cinemaImages(cinemaId) { return rows(await execute('ADMIN_CINEMA_IMAGE_LIST', { RapID: int(cinemaId) })); },
-    async createCinemaImage(cinemaId, input) {
-      return this.write('ADMIN_CINEMA_IMAGE_CREATE', { RapID: int(cinemaId), URL: text(500, input.url), MoTa: text(255, input.description), LaAnhDaiDien: { type: DbTypes.Bit, value: input.cover ?? false }, ThuTuHienThi: int(input.displayOrder), TrangThai: text(50, input.status ?? 'Hoạt động') });
+    async rolePermissions(actorId, roleId) { return rows(await executeFor(actorId, 'ADMIN_ROLE_PERMISSION_LIST', { VaiTroID: int(roleId) })); },
+    async createAssignment(actorId, input) { return this.write(actorId, 'ADMIN_ASSIGNMENT_CREATE', { NguoiDungID: int(input.userId), RapID: int(input.cinemaId), NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn) }); },
+    async updateAssignment(actorId, id, input) { return this.write(actorId, 'ADMIN_ASSIGNMENT_UPDATE', { PhanCongID: int(id), NguoiDungID: int(input.userId), RapID: int(input.cinemaId), NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn), TrangThai: text(50, input.status) }); },
+    async createCinema(actorId, input) { return this.write(actorId, 'ADMIN_CINEMA_CREATE', { TenRap: text(150, input.name), DiaChi: text(255, input.address), ThanhPho: text(100, input.city), SoDienThoai: { type: DbTypes.VarChar(20), value: input.phone ?? null }, MoTa: text(500, input.description), NgayHoatDong: date(input.operatingSince) }); },
+    async updateCinema(actorId, id, input) { return this.write(actorId, 'ADMIN_CINEMA_UPDATE', { RapID: int(id), TenRap: text(150, input.name), DiaChi: text(255, input.address), ThanhPho: text(100, input.city), SoDienThoai: { type: DbTypes.VarChar(20), value: input.phone ?? null }, MoTa: text(500, input.description), TrangThai: text(50, input.status) }); },
+    async deleteCinema(actorId, id) { return this.write(actorId, 'ADMIN_CINEMA_DELETE', { RapID: int(id) }); },
+    async cinemaImages(actorId, cinemaId) { return rows(await executeFor(actorId, 'ADMIN_CINEMA_IMAGE_LIST', { RapID: int(cinemaId) })); },
+    async createCinemaImage(actorId, cinemaId, input) {
+      return this.write(actorId, 'ADMIN_CINEMA_IMAGE_CREATE', { RapID: int(cinemaId), URL: text(500, input.url), MoTa: text(255, input.description), LaAnhDaiDien: { type: DbTypes.Bit, value: input.cover ?? false }, ThuTuHienThi: int(input.displayOrder), TrangThai: text(50, input.status ?? 'Hoạt động') });
     },
-    async updateCinemaImage(cinemaId, imageId, input) {
-      return this.write('ADMIN_CINEMA_IMAGE_UPDATE', { RapID: int(cinemaId), HinhAnhRapID: int(imageId), URL: text(500, input.url), MoTa: text(255, input.description), ThuTuHienThi: int(input.displayOrder), TrangThai: text(50, input.status) });
+    async updateCinemaImage(actorId, cinemaId, imageId, input) {
+      return this.write(actorId, 'ADMIN_CINEMA_IMAGE_UPDATE', { RapID: int(cinemaId), HinhAnhRapID: int(imageId), URL: text(500, input.url), MoTa: text(255, input.description), ThuTuHienThi: int(input.displayOrder), TrangThai: text(50, input.status) });
     },
-    async deleteCinemaImage(cinemaId, imageId) { return this.write('ADMIN_CINEMA_IMAGE_DELETE', { RapID: int(cinemaId), HinhAnhRapID: int(imageId) }); },
-    async setCinemaImageCover(cinemaId, imageId, cover) {
+    async deleteCinemaImage(actorId, cinemaId, imageId) { return this.write(actorId, 'ADMIN_CINEMA_IMAGE_DELETE', { RapID: int(cinemaId), HinhAnhRapID: int(imageId) }); },
+    async setCinemaImageCover(actorId, cinemaId, imageId, cover) {
       if (!cover) throw new HttpError(400, 'INVALID_REQUEST', 'Set cover to true; use the image lifecycle controls to remove a cover.');
-      return this.write('ADMIN_CINEMA_IMAGE_SET_COVER', { RapID: int(cinemaId), HinhAnhRapID: int(imageId) });
+      return this.write(actorId, 'ADMIN_CINEMA_IMAGE_SET_COVER', { RapID: int(cinemaId), HinhAnhRapID: int(imageId) });
     },
-    async rooms(filters = {}) { return rows(await execute('ADMIN_ROOM_LIST', { RapID: int(filters.cinemaId) })); },
-    async createRoom(input) { return this.write('ADMIN_ROOM_CREATE', { RapID: int(input.cinemaId), TenPhong: text(100, input.name), LoaiPhong: text(50, input.type) }); },
-    async updateRoom(id, input) { return this.write('ADMIN_ROOM_UPDATE', { PhongID: int(id), TenPhong: text(100, input.name), LoaiPhong: text(50, input.type), TrangThai: text(50, input.status) }); },
-    async deleteRoom(id) { return this.write('ADMIN_ROOM_DELETE', { PhongID: int(id) }); },
-    async seats(filters = {}) { return rows(await execute('ADMIN_SEAT_LIST', { PhongID: int(filters.roomId) })); },
-    async createSeat(input) { return this.write('ADMIN_SEAT_CREATE', { PhongID: int(input.roomId), HangGhe: { type: DbTypes.VarChar(10), value: input.row }, SoGhe: int(input.number), LoaiGhe: text(50, input.type) }); },
-    async updateSeat(id, input) { return this.write('ADMIN_SEAT_UPDATE', { GheID: int(id), LoaiGhe: text(50, input.type), TrangThai: text(50, input.status) }); },
-    async deleteSeat(id) { return this.write('ADMIN_SEAT_DELETE', { GheID: int(id) }); },
-    async pricing(filters = {}) { return rows(await execute('ADMIN_PRICING_LIST', { RapID: int(filters.cinemaId) })); },
-    async createPricing(input) { return this.write('ADMIN_PRICING_CREATE', { RapID: int(input.cinemaId), LoaiGhe: text(50, input.seatType), LoaiNgay: text(50, input.dayType), DinhDang: text(50, input.format), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn) }); },
-    async updatePricing(id, input) { return this.write('ADMIN_PRICING_UPDATE', { GiaID: int(id), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, TrangThai: text(50, input.status) }); },
-    async showtimes(filters = {}) { return rows(await execute('ADMIN_SHOWTIME_LIST', { RapID: int(filters.cinemaId), TuNgay: date(filters.fromDate), DenNgay: date(filters.toDate) })); },
-    async createShowtime(input) {
-      try { return await execute('ADMIN_SHOWTIME_CREATE', { PhimID: int(input.movieId), PhongID: int(input.roomId), ThoiGianBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, DinhDang: text(50, input.format), GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice } }); } catch (error) { mapAdminProcedureError(error); }
+    async rooms(actorId, filters = {}) { return rows(await executeFor(actorId, 'ADMIN_ROOM_LIST', { RapID: int(filters.cinemaId) })); },
+    async createRoom(actorId, input) { return this.write(actorId, 'ADMIN_ROOM_CREATE', { RapID: int(input.cinemaId), TenPhong: text(100, input.name), LoaiPhong: text(50, input.type) }); },
+    async updateRoom(actorId, id, input) { return this.write(actorId, 'ADMIN_ROOM_UPDATE', { PhongID: int(id), TenPhong: text(100, input.name), LoaiPhong: text(50, input.type), TrangThai: text(50, input.status) }); },
+    async deleteRoom(actorId, id) { return this.write(actorId, 'ADMIN_ROOM_DELETE', { PhongID: int(id) }); },
+    async seats(actorId, filters = {}) { return rows(await executeFor(actorId, 'ADMIN_SEAT_LIST', { PhongID: int(filters.roomId) })); },
+    async createSeat(actorId, input) { return this.write(actorId, 'ADMIN_SEAT_CREATE', { PhongID: int(input.roomId), HangGhe: { type: DbTypes.VarChar(10), value: input.row }, SoGhe: int(input.number), LoaiGhe: text(50, input.type) }); },
+    async updateSeat(actorId, id, input) { return this.write(actorId, 'ADMIN_SEAT_UPDATE', { GheID: int(id), LoaiGhe: text(50, input.type), TrangThai: text(50, input.status) }); },
+    async deleteSeat(actorId, id) { return this.write(actorId, 'ADMIN_SEAT_DELETE', { GheID: int(id) }); },
+    async pricing(actorId, filters = {}) { return rows(await executeFor(actorId, 'ADMIN_PRICING_LIST', { RapID: int(filters.cinemaId) })); },
+    async createPricing(actorId, input) { return this.write(actorId, 'ADMIN_PRICING_CREATE', { RapID: int(input.cinemaId), LoaiGhe: text(50, input.seatType), LoaiNgay: text(50, input.dayType), DinhDang: text(50, input.format), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn) }); },
+    async updatePricing(actorId, id, input) { return this.write(actorId, 'ADMIN_PRICING_UPDATE', { GiaID: int(id), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, TrangThai: text(50, input.status) }); },
+    async showtimes(actorId, filters = {}) { return rows(await executeFor(actorId, 'ADMIN_SHOWTIME_LIST', { RapID: int(filters.cinemaId), TuNgay: date(filters.fromDate), DenNgay: date(filters.toDate) })); },
+    async createShowtime(actorId, input) {
+      try { return await executeFor(actorId, 'ADMIN_SHOWTIME_CREATE', { PhimID: int(input.movieId), PhongID: int(input.roomId), ThoiGianBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, DinhDang: text(50, input.format), GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice } }); } catch (error) { mapAdminProcedureError(error); }
     },
-    async updateShowtime(id, input) {
-      try { return await execute('ADMIN_SHOWTIME_UPDATE', { SuatChieuID: int(id), PhimID: int(input.movieId), ThoiGianBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, DinhDang: text(50, input.format), GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice }, TrangThai: text(50, input.status) }); } catch (error) { mapAdminProcedureError(error); }
+    async updateShowtime(actorId, id, input) {
+      try { return await executeFor(actorId, 'ADMIN_SHOWTIME_UPDATE', { SuatChieuID: int(id), PhimID: int(input.movieId), ThoiGianBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, DinhDang: text(50, input.format), GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice }, TrangThai: text(50, input.status) }); } catch (error) { mapAdminProcedureError(error); }
     },
-    async cancelShowtime(id) { return this.write('ADMIN_SHOWTIME_CANCEL', { SuatChieuID: int(id) }); },
-    async createGenre(input) { return this.write('ADMIN_GENRE_CREATE', { TenTheLoai: text(100, input.name) }); },
-    async updateGenre(id, input) { return this.write('ADMIN_GENRE_UPDATE', { TheLoaiID: int(id), TenTheLoai: text(100, input.name) }); },
-    async deleteGenre(id) { return this.write('ADMIN_GENRE_DELETE', { TheLoaiID: int(id) }); },
-    async createActor(input) { return this.write('ADMIN_ACTOR_CREATE', { HoTen: text(150, input.name), NgaySinh: date(input.birthDate), QuocTich: text(100, input.nationality) }); },
-    async updateActor(id, input) { return this.write('ADMIN_ACTOR_UPDATE', { DienVienID: int(id), HoTen: text(150, input.name), NgaySinh: date(input.birthDate), QuocTich: text(100, input.nationality) }); },
-    async deleteActor(id) { return this.write('ADMIN_ACTOR_DELETE', { DienVienID: int(id) }); },
-    async deleteMovie(id) { return this.write('ADMIN_MOVIE_DELETE', { PhimID: int(id) }); },
-    async createMovie(input) {
+    async cancelShowtime(actorId, id) { return this.write(actorId, 'ADMIN_SHOWTIME_CANCEL', { SuatChieuID: int(id) }); },
+    async createGenre(actorId, input) { return this.write(actorId, 'ADMIN_GENRE_CREATE', { TenTheLoai: text(100, input.name) }); },
+    async updateGenre(actorId, id, input) { return this.write(actorId, 'ADMIN_GENRE_UPDATE', { TheLoaiID: int(id), TenTheLoai: text(100, input.name) }); },
+    async deleteGenre(actorId, id) { return this.write(actorId, 'ADMIN_GENRE_DELETE', { TheLoaiID: int(id) }); },
+    async createActor(actorId, input) { return this.write(actorId, 'ADMIN_ACTOR_CREATE', { HoTen: text(150, input.name), NgaySinh: date(input.birthDate), QuocTich: text(100, input.nationality) }); },
+    async updateActor(actorId, id, input) { return this.write(actorId, 'ADMIN_ACTOR_UPDATE', { DienVienID: int(id), HoTen: text(150, input.name), NgaySinh: date(input.birthDate), QuocTich: text(100, input.nationality) }); },
+    async deleteActor(actorId, id) { return this.write(actorId, 'ADMIN_ACTOR_DELETE', { DienVienID: int(id) }); },
+    async deleteMovie(actorId, id) { return this.write(actorId, 'ADMIN_MOVIE_DELETE', { PhimID: int(id) }); },
+    async createMovie(actorId, input) {
       let result;
       try {
-        result = await executeWithOutputs('ADMIN_MOVIE_CREATE', {
+        result = await executeOutputsFor(actorId, 'ADMIN_MOVIE_CREATE', {
           TenPhim: text(255, input.title), ThoiLuong: int(input.durationMinutes), NgayKhoiChieu: date(input.releaseDate),
           NgayKetThuc: date(input.endDate), NgonNgu: text(100, input.language), PhuDe: text(100, input.subtitle),
           DoTuoi: text(20, input.ageRating), DaoDien: text(150, input.director), MoTa: text(DbTypes.MAX, input.description),
@@ -240,9 +244,9 @@ export function createAdminService({ execute = executeProcedure, executeWithOutp
       } catch (error) { mapAdminProcedureError(error); }
       return { movieId: result.output?.NewPhimID, detail: rows(result) };
     },
-    async updateMovie(id, input) {
+    async updateMovie(actorId, id, input) {
       try {
-        return await execute('ADMIN_MOVIE_UPDATE', {
+        return await executeFor(actorId, 'ADMIN_MOVIE_UPDATE', {
           PhimID: int(id), TenPhim: text(255, input.title), ThoiLuong: int(input.durationMinutes), NgayKhoiChieu: date(input.releaseDate),
           NgayKetThuc: date(input.endDate), NgonNgu: text(100, input.language), PhuDe: text(100, input.subtitle),
           DoTuoi: text(20, input.ageRating), DaoDien: text(150, input.director), MoTa: text(DbTypes.MAX, input.description),
@@ -251,15 +255,15 @@ export function createAdminService({ execute = executeProcedure, executeWithOutp
         });
       } catch (error) { mapAdminProcedureError(error); }
     },
-    async setMovieActors(id, cast) {
-      try { return rows(await execute('ADMIN_MOVIE_ACTOR_SET', { PhimID: int(id), DanhSachJson: text(DbTypes.MAX, JSON.stringify(cast.map((actor) => ({ DienVienID: actor.actorId, VaiDien: actor.role })))) })); } catch (error) { mapAdminProcedureError(error); }
+    async setMovieActors(actorId, id, cast) {
+      try { return rows(await executeFor(actorId, 'ADMIN_MOVIE_ACTOR_SET', { PhimID: int(id), DanhSachJson: text(DbTypes.MAX, JSON.stringify(cast.map((actor) => ({ DienVienID: actor.actorId, VaiDien: actor.role })))) })); } catch (error) { mapAdminProcedureError(error); }
     },
-    async createProduct(input) { return this.write('ADMIN_PRODUCT_CREATE', { TenSanPham: text(150, input.name), LoaiSanPham: text(50, input.type), Gia: { type: DbTypes.Decimal(18, 2), value: input.price }, MoTa: text(255, input.description), HinhAnh: text(500, input.image) }); },
-    async updateProduct(id, input) { return this.write('ADMIN_PRODUCT_UPDATE', { SanPhamID: int(id), TenSanPham: text(150, input.name), LoaiSanPham: text(50, input.type), Gia: { type: DbTypes.Decimal(18, 2), value: input.price }, MoTa: text(255, input.description), HinhAnh: text(500, input.image), TrangThai: text(50, input.status) }); },
-    async deleteProduct(id) { return this.write('ADMIN_PRODUCT_DELETE', { SanPhamID: int(id) }); },
-    async createPromotion(input) { return this.write('ADMIN_PROMOTION_CREATE', { MaCode: { type: DbTypes.VarChar(50), value: input.code }, MoTa: text(255, input.description), LoaiGiamGia: text(20, input.discountType), GiaTriGiam: { type: DbTypes.Decimal(18, 2), value: input.discountValue }, DonHangToiThieu: { type: DbTypes.Decimal(18, 2), value: input.minimumOrder ?? 0 }, GiamToiDa: { type: DbTypes.Decimal(18, 2), value: input.maximumDiscount }, NgayBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, NgayKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, SoLuong: int(input.quantity) }); },
-    async updatePromotion(id, input) { return this.write('ADMIN_PROMOTION_UPDATE', { KhuyenMaiID: int(id), MoTa: text(255, input.description), LoaiGiamGia: text(20, input.discountType), GiaTriGiam: { type: DbTypes.Decimal(18, 2), value: input.discountValue }, DonHangToiThieu: { type: DbTypes.Decimal(18, 2), value: input.minimumOrder ?? 0 }, GiamToiDa: { type: DbTypes.Decimal(18, 2), value: input.maximumDiscount }, NgayBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, NgayKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, SoLuong: int(input.quantity), TrangThai: text(50, input.status) }); },
-    async deletePromotion(id) { return this.write('ADMIN_PROMOTION_DELETE', { KhuyenMaiID: int(id) }); },
+    async createProduct(actorId, input) { return this.write(actorId, 'ADMIN_PRODUCT_CREATE', { TenSanPham: text(150, input.name), LoaiSanPham: text(50, input.type), Gia: { type: DbTypes.Decimal(18, 2), value: input.price }, MoTa: text(255, input.description), HinhAnh: text(500, input.image) }); },
+    async updateProduct(actorId, id, input) { return this.write(actorId, 'ADMIN_PRODUCT_UPDATE', { SanPhamID: int(id), TenSanPham: text(150, input.name), LoaiSanPham: text(50, input.type), Gia: { type: DbTypes.Decimal(18, 2), value: input.price }, MoTa: text(255, input.description), HinhAnh: text(500, input.image), TrangThai: text(50, input.status) }); },
+    async deleteProduct(actorId, id) { return this.write(actorId, 'ADMIN_PRODUCT_DELETE', { SanPhamID: int(id) }); },
+    async createPromotion(actorId, input) { return this.write(actorId, 'ADMIN_PROMOTION_CREATE', { MaCode: { type: DbTypes.VarChar(50), value: input.code }, MoTa: text(255, input.description), LoaiGiamGia: text(20, input.discountType), GiaTriGiam: { type: DbTypes.Decimal(18, 2), value: input.discountValue }, DonHangToiThieu: { type: DbTypes.Decimal(18, 2), value: input.minimumOrder ?? 0 }, GiamToiDa: { type: DbTypes.Decimal(18, 2), value: input.maximumDiscount }, NgayBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, NgayKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, SoLuong: int(input.quantity) }); },
+    async updatePromotion(actorId, id, input) { return this.write(actorId, 'ADMIN_PROMOTION_UPDATE', { KhuyenMaiID: int(id), MoTa: text(255, input.description), LoaiGiamGia: text(20, input.discountType), GiaTriGiam: { type: DbTypes.Decimal(18, 2), value: input.discountValue }, DonHangToiThieu: { type: DbTypes.Decimal(18, 2), value: input.minimumOrder ?? 0 }, GiamToiDa: { type: DbTypes.Decimal(18, 2), value: input.maximumDiscount }, NgayBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, NgayKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, SoLuong: int(input.quantity), TrangThai: text(50, input.status) }); },
+    async deletePromotion(actorId, id) { return this.write(actorId, 'ADMIN_PROMOTION_DELETE', { KhuyenMaiID: int(id) }); },
   };
 }
 

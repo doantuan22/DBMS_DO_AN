@@ -9,6 +9,8 @@ GO
 -- set reaches the client. Validation order, error numbers/messages, the "disabling
 -- an image clears its cover flag" rule and the single DTO result set are unchanged.
 CREATE OR ALTER PROCEDURE dbo.usp_Admin_CinemaImage_Update
+
+    @ActorID INT,
     @RapID INT,
     @HinhAnhRapID INT,
     @URL NVARCHAR(500),
@@ -18,6 +20,15 @@ CREATE OR ALTER PROCEDURE dbo.usp_Admin_CinemaImage_Update
 AS
 BEGIN
     SET NOCOUNT ON;
+    -- R3B: current account, actor eligibility, then every required permission.
+    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')
+        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
+    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))
+        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_RAP') = 0
+        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
+
     IF LEN(LTRIM(RTRIM(ISNULL(@URL, N'')))) = 0 THROW 50220, N'URL ảnh không được để trống.', 1;
     IF @ThuTuHienThi < 0 THROW 50221, N'Thứ tự hiển thị phải lớn hơn hoặc bằng 0.', 1;
     DECLARE @OwnTransaction BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;

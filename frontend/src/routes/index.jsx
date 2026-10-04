@@ -34,7 +34,7 @@ const protectedArea = (role, area, title) => (
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }, { to: '/orders', label: 'Đơn của tôi' }]} />}>
+      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }]} />}>
         <Route index element={<><Home /><DatabaseHealth /></>} />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetail />} />
@@ -51,8 +51,8 @@ export default function AppRoutes() {
         </Route>
       </Route>
 
-      <Route element={<RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />}>
-        <Route path="/orders" element={<AreaLayout title="Đơn đặt vé" links={[{ to: '/', label: 'Trang chủ' }, { to: '/orders', label: 'Đơn của tôi' }]} />}>
+      <Route element={<RequireRole role={ROLES.CUSTOMER} />}>
+        <Route path="/orders" element={<AreaLayout title="Đơn đặt vé" links={[{ to: '/', label: 'Trang chủ' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }]} />}>
           <Route index element={<Orders />} />
           <Route path=":orderId" element={<OrderDetail />} />
           <Route path=":orderId/payment" element={<PaymentPage />} />
@@ -63,7 +63,7 @@ export default function AppRoutes() {
         </Route>
       </Route>
 
-      <Route element={<RequireRole role={ROLES.MANAGER} permission={ROLE_AREAS[ROLES.MANAGER].permission} />}>
+      <Route element={<RequireRole role={ROLES.MANAGER} />}>
         <Route path="/manager" element={<AreaLayout title="Quản lý rạp" links={[{ to: '/', label: 'Trang chủ' }, { to: '/manager', label: 'Dashboard' }]} />}>
           <Route index element={<ManagerPortal />} />
         </Route>
@@ -76,7 +76,7 @@ export default function AppRoutes() {
       </Route>
 
       {protectedArea(ROLES.CUSTOMER, ROLE_AREAS[ROLES.CUSTOMER], 'Customer area')}
-      <Route element={<RequireRole role={ROLES.ADMIN} permission={ROLE_AREAS[ROLES.ADMIN].permission} />}>
+      <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<AreaLayout title="Quản trị hệ thống" links={[{ to: '/', label: 'Trang chủ' }, { to: '/admin', label: 'Admin' }]} />}>
           <Route index element={<AdminPortal />} />
         </Route>

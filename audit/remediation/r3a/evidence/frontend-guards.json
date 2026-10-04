@@ -1,0 +1,172 @@
+[
+  {
+    "file": "frontend/src/api/httpClient.js",
+    "line": 22,
+    "text": "if (response.status === 403 && typeof window !== 'undefined') window.dispatchEvent(new Event('auth:forbidden'));"
+  },
+  {
+    "file": "frontend/src/components/AccessErrorHandler.jsx",
+    "line": 9,
+    "text": "window.addEventListener('auth:forbidden', onForbidden);"
+  },
+  {
+    "file": "frontend/src/components/AccessErrorHandler.jsx",
+    "line": 10,
+    "text": "return () => window.removeEventListener('auth:forbidden', onForbidden);"
+  },
+  {
+    "file": "frontend/src/constants/roles.js",
+    "line": 18,
+    "text": "export const ROLE_AREAS = Object.freeze({"
+  },
+  {
+    "file": "frontend/src/context/AuthContext.jsx",
+    "line": 13,
+    "text": "const refreshCurrentUser = useCallback(async () => {"
+  },
+  {
+    "file": "frontend/src/context/AuthContext.jsx",
+    "line": 70,
+    "text": "refreshCurrentUser,"
+  },
+  {
+    "file": "frontend/src/context/AuthContext.jsx",
+    "line": 72,
+    "text": "}), [user, initializing, login, register, logout, refreshCurrentUser, updateProfile]);"
+  },
+  {
+    "file": "frontend/src/layouts/AreaLayout.jsx",
+    "line": 3,
+    "text": "import { visibleAreasFor } from '../utils/authorization';"
+  },
+  {
+    "file": "frontend/src/layouts/AreaLayout.jsx",
+    "line": 7,
+    "text": "const allowedAreas = visibleAreasFor(user);"
+  },
+  {
+    "file": "frontend/src/pages/BookingPreparation.jsx",
+    "line": 148,
+    "text": "{user && user.role !== 'KHACH_HANG' && <p role=\"alert\">Chỉ tài khoản khách hàng được đặt vé.</p>}"
+  },
+  {
+    "file": "frontend/src/pages/BookingPreparation.jsx",
+    "line": 152,
+    "text": "<button type=\"button\" onClick={submitBooking} disabled={bookingState.status === 'loading' || !user || user.role !== 'KHACH_HANG'}>{bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}</button>"
+  },
+  {
+    "file": "frontend/src/pages/auth/Login.jsx",
+    "line": 4,
+    "text": "import { ROLE_AREAS, ROLES } from '../../constants/roles';"
+  },
+  {
+    "file": "frontend/src/pages/auth/Login.jsx",
+    "line": 20,
+    "text": "navigate(user.role === ROLES.CUSTOMER ? '/' : (ROLE_AREAS[user.role]?.path ?? '/'), { replace: true });"
+  },
+  {
+    "file": "frontend/src/pages/auth/Profile.jsx",
+    "line": 42,
+    "text": "<label>Vai trò<input value={user.roleName} readOnly /></label>"
+  },
+  {
+    "file": "frontend/src/routes/RequireAuth.jsx",
+    "line": 4,
+    "text": "export default function RequireAuth() {"
+  },
+  {
+    "file": "frontend/src/routes/RequireRole.jsx",
+    "line": 3,
+    "text": "import { userCanEnterArea } from '../utils/authorization';"
+  },
+  {
+    "file": "frontend/src/routes/RequireRole.jsx",
+    "line": 6,
+    "text": "export default function RequireRole({ role, permission }) {"
+  },
+  {
+    "file": "frontend/src/routes/RequireRole.jsx",
+    "line": 11,
+    "text": "if (!userCanEnterArea(user, role, permission)) return <Navigate to=\"/forbidden\" replace />;"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 5,
+    "text": "import RequireRole from './RequireRole';"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 6,
+    "text": "import RequireAuth from './RequireAuth';"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 24,
+    "text": "import { ROLE_AREAS, ROLES } from '../constants/roles';"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 27,
+    "text": "<Route key={role} element={<RequireRole role={role} permission={area.permission} />}>"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 48,
+    "text": "<Route element={<RequireAuth />}>"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 54,
+    "text": "<Route element={<RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />}>"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 66,
+    "text": "<Route element={<RequireRole role={ROLES.MANAGER} permission={ROLE_AREAS[ROLES.MANAGER].permission} />}>"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 72,
+    "text": "<Route element={<RequireRole role={ROLES.SUPPORT} permission={ROLE_AREAS[ROLES.SUPPORT].permission} />}>"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 78,
+    "text": "{protectedArea(ROLES.CUSTOMER, ROLE_AREAS[ROLES.CUSTOMER], 'Customer area')}"
+  },
+  {
+    "file": "frontend/src/routes/index.jsx",
+    "line": 79,
+    "text": "<Route element={<RequireRole role={ROLES.ADMIN} permission={ROLE_AREAS[ROLES.ADMIN].permission} />}>"
+  },
+  {
+    "file": "frontend/src/utils/authorization.js",
+    "line": 1,
+    "text": "import { ROLE_AREAS } from '../constants/roles.js';"
+  },
+  {
+    "file": "frontend/src/utils/authorization.js",
+    "line": 3,
+    "text": "export const userHasPermission = (user, permission) =>"
+  },
+  {
+    "file": "frontend/src/utils/authorization.js",
+    "line": 6,
+    "text": "export const userCanEnterArea = (user, role, permission) =>"
+  },
+  {
+    "file": "frontend/src/utils/authorization.js",
+    "line": 7,
+    "text": "Boolean(user && user.role === role && (!permission || userHasPermission(user, permission)));"
+  },
+  {
+    "file": "frontend/src/utils/authorization.js",
+    "line": 9,
+    "text": "export const visibleAreasFor = (user) => user"
+  },
+  {
+    "file": "frontend/src/utils/authorization.js",
+    "line": 10,
+    "text": "? Object.entries(ROLE_AREAS).filter(([, area]) => userHasPermission(user, area.permission))"
+  }
+]

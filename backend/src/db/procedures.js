@@ -57,7 +57,7 @@ export const PROCEDURES = Object.freeze({
   ADMIN_MOVIE_UPDATE: 'dbo.sp_Admin_Movie_Update',
   ADMIN_MOVIE_DELETE: 'dbo.sp_Admin_Movie_Delete',
   ADMIN_MOVIE_ACTOR_SET: 'dbo.sp_Admin_MovieActor_Set',
-  ADMIN_GENRE_LIST: 'dbo.sp_Genre_List',
+  ADMIN_GENRE_LIST: 'dbo.sp_Admin_Genre_List',
   ADMIN_GENRE_CREATE: 'dbo.sp_Admin_Genre_Create',
   ADMIN_GENRE_UPDATE: 'dbo.sp_Admin_Genre_Update',
   ADMIN_GENRE_DELETE: 'dbo.sp_Admin_Genre_Delete',
