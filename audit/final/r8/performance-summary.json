@@ -1,0 +1,284 @@
+{
+  "status": "PASS",
+  "environment": "Local SQL Server / disposable fixture; three repetitions; HTTP includes authentication and DB overhead",
+  "samples": [
+    {
+      "name": "Movie list",
+      "method": "GET",
+      "route": "/movies",
+      "repeated": [
+        {
+          "ms": 26.5,
+          "arrayRows": 5,
+          "status": "PASS"
+        },
+        {
+          "ms": 3.27,
+          "arrayRows": 5,
+          "status": "PASS"
+        },
+        {
+          "ms": 2.9,
+          "arrayRows": 5,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Movie detail",
+      "method": "GET",
+      "route": "/movies/5",
+      "repeated": [
+        {
+          "ms": 14.3,
+          "arrayRows": 4,
+          "status": "PASS"
+        },
+        {
+          "ms": 2.92,
+          "arrayRows": 4,
+          "status": "PASS"
+        },
+        {
+          "ms": 2.44,
+          "arrayRows": 4,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Showtime list",
+      "method": "GET",
+      "route": "/movies/5/showtimes",
+      "repeated": [
+        {
+          "ms": 35.73,
+          "arrayRows": 1,
+          "status": "PASS"
+        },
+        {
+          "ms": 2.7,
+          "arrayRows": 1,
+          "status": "PASS"
+        },
+        {
+          "ms": 2.13,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Seat availability",
+      "method": "GET",
+      "route": "/showtimes/8/seats",
+      "repeated": [
+        {
+          "ms": 22.92,
+          "arrayRows": 16,
+          "status": "PASS"
+        },
+        {
+          "ms": 4.59,
+          "arrayRows": 16,
+          "status": "PASS"
+        },
+        {
+          "ms": 4.63,
+          "arrayRows": 16,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Manager dashboard",
+      "method": "GET",
+      "route": "/manager/cinemas/5/dashboard",
+      "repeated": [
+        {
+          "ms": 70.82,
+          "arrayRows": 0,
+          "status": "PASS"
+        },
+        {
+          "ms": 6.69,
+          "arrayRows": 0,
+          "status": "PASS"
+        },
+        {
+          "ms": 6.93,
+          "arrayRows": 0,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Manager revenue",
+      "method": "GET",
+      "route": "/manager/cinemas/5/revenue?fromDate=2026-10-05&toDate=2026-10-05",
+      "repeated": [
+        {
+          "ms": 33.79,
+          "arrayRows": 1,
+          "status": "PASS"
+        },
+        {
+          "ms": 6.41,
+          "arrayRows": 1,
+          "status": "PASS"
+        },
+        {
+          "ms": 7.07,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Complaint queue",
+      "method": "GET",
+      "route": "/support/complaints",
+      "repeated": [
+        {
+          "ms": 30.22,
+          "arrayRows": 4,
+          "status": "PASS"
+        },
+        {
+          "ms": 4.75,
+          "arrayRows": 4,
+          "status": "PASS"
+        },
+        {
+          "ms": 4.55,
+          "arrayRows": 4,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Complaint order reference",
+      "method": "GET",
+      "route": "/support/complaints/3/order-reference",
+      "repeated": [
+        {
+          "ms": 51.6,
+          "arrayRows": 0,
+          "status": "PASS"
+        },
+        {
+          "ms": 4.83,
+          "arrayRows": 0,
+          "status": "PASS"
+        },
+        {
+          "ms": 4.16,
+          "arrayRows": 0,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Admin revenue",
+      "method": "GET",
+      "route": "/admin/reports/revenue?fromDate=2026-10-05&toDate=2026-10-05",
+      "repeated": [
+        {
+          "ms": 43.42,
+          "arrayRows": 5,
+          "status": "PASS"
+        },
+        {
+          "ms": 5.24,
+          "arrayRows": 5,
+          "status": "PASS"
+        },
+        {
+          "ms": 5,
+          "arrayRows": 5,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "method": "POST",
+      "route": "/bookings",
+      "repeated": [
+        {
+          "ms": 116.85,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Own order detail",
+      "method": "GET",
+      "route": "/orders/:orderId",
+      "repeated": [
+        {
+          "ms": 48.82,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "method": "POST",
+      "route": "/bookings",
+      "repeated": [
+        {
+          "ms": 6.26,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Own order detail",
+      "method": "GET",
+      "route": "/orders/:orderId",
+      "repeated": [
+        {
+          "ms": 4.71,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "method": "POST",
+      "route": "/bookings",
+      "repeated": [
+        {
+          "ms": 7.68,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "Own order detail",
+      "method": "GET",
+      "route": "/orders/:orderId",
+      "repeated": [
+        {
+          "ms": 4,
+          "arrayRows": 1,
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "p50Ms": 6.26,
+  "p95Ms": 70.82,
+  "maxMs": 116.85,
+  "logicalReadsEvidence": "performance-logical-reads.txt",
+  "actualPlanEvidence": "performance-actual-plan.xml",
+  "publicPlanCount": 1,
+  "optimization": "NO CHANGE",
+  "note": "Sanity only; no enterprise scale or latency SLO inferred. Plan/reads collected for public movie SP; other operations measured through HTTP."
+}

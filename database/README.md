@@ -1,4 +1,10 @@
-# CinemaBookingDB — reproducible baseline (R0 + R1 + R2 + R2-FIX + R3B)
+# Current release baseline R7 / verified by R8
+
+**27 tables, 125 SP, 6 views, 21 functions, 7 triggers, 159 SQL modules, 63 indexes, 161 constraints.** Canonical source and baseline-manifest.json are authoritative. R8 makes no SQL/schema/manifest change. See [release guide](../docs/RELEASE_READINESS.md) for current build, reset, migration, backup/restore and security instructions. Main verification is read-only; never reset main for a regression.
+
+The phase-specific deployment descriptions below are historical workflows. Do not rerun an old remediation deploy over a later baseline. Apply only the reviewed pending source delta; retain schema-bound functions that have not changed. Demo seed assertions belong to a clean baseline and must not overwrite legitimate current RBAC grants.
+
+## Historical baseline workflows
 
 R3B hiện hành: **27 tables, 6 views, 21 functions, 7 triggers, 125 procedures,
 63 indexes, 161 constraints; 159 SQL modules**. Không thêm bảng, role hay mã

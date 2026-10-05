@@ -2,7 +2,7 @@
 
 Ứng dụng web đặt vé xem phim cho chuỗi rạp: xem phim và lịch chiếu, chọn ghế, mua đồ ăn, khuyến mãi, thanh toán, đánh giá, khiếu nại. Bốn vai trò: `KHACH_HANG`, `QUAN_LY_RAP`, `CSKH`, `ADMIN`. Thiết kế chi tiết: `Phân Tích _ Thiết Kế.md`.
 
-Kế hoạch triển khai hiện hành: [Roadmap V2 DBMS-first](KeHoach_PhatTrien_DuAn_DatVeXemPhim_DBMS_First_v2%20(1).md).
+Kế hoạch triển khai hiện hành: [Roadmap V2 DBMS-first](KeHoach_PhatTrien_DuAn_DatVeXemPhim_DBMS_First_v2%20%281%29.md).
 
 Kiến trúc **DBMS-first**: SQL Server giữ toàn vẹn dữ liệu và nghiệp vụ; backend chỉ điều phối; frontend chỉ hiển thị. Xem [docs/architecture.md](docs/architecture.md).
 
@@ -53,7 +53,7 @@ npm run build
 
 Biến môi trường backend: `PORT`, `NODE_ENV`, `DB_SERVER`, `DB_PORT`, `DB_DATABASE`, `DB_USER`, `DB_PASSWORD`, `DB_ENCRYPT`, `DB_TRUST_SERVER_CERTIFICATE`, `FRONTEND_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`. Không commit file `.env`.
 
-Database R0: điền `DB_USER=sa` và password riêng trong DEV, `DB_DATABASE=CinemaBookingDB`, chạy `npm run db:reset` từ root trước khi start backend. Lệnh DROP/CREATE toàn bộ DB, seed và verify; không cần SSMS hoặc backup để dựng project. Kiểm tra bằng `npm run db:test`, `npm run db:verify`, `npm run db:smoke`. Hướng dẫn cấu trúc, SQLCMD và bảo trì: [database/README.md](database/README.md). Production vẫn dùng application login EXECUTE-only.
+Dựng DEV từ source bằng `npm.cmd run db:build -- --database=CinemaBookingDB_R0_R8Clean`, rồi kiểm tra bằng `db:verify`, `db:test`, `db:smoke` với cùng target. `db:reset` DROP/CREATE toàn bộ target; chỉ dùng trên DB fixture có tên rõ ràng, không reset/seed DB chính đã có dữ liệu. Backend DEV phải trỏ DB_DATABASE vào target muốn chạy. Cấu trúc, SQLCMD và migration: [database/README.md](database/README.md); backup/restore và deployment: [release guide](docs/RELEASE_READINESS.md). Production dùng application login EXECUTE-only.
 
 Auth dùng Bearer JWT, thời hạn mặc định `1h`; token chỉ lưu trong `sessionStorage` của tab trình duyệt. Tạo secret tối thiểu 32 byte cho `JWT_SECRET` bằng lệnh trong `backend/.env.example`. Đăng ký thành công tạo khách hàng và chuyển về màn hình đăng nhập; profile chỉ sửa họ tên, điện thoại, ngày sinh và giới tính.
 
@@ -75,4 +75,6 @@ Phase 3 public catalog dùng dữ liệu SQL thật qua Stored Procedure: `GET /
 
 ## Trạng thái
 
-Database baseline đã có schema, constraints, procedures, seed và SQL verification scripts; không triển khai lại schema từ ứng dụng. Phase 2 Authentication/RBAC và Phase 3 public movie/cinema/showtime catalog đã được triển khai ở Backend/Frontend. SeatMap, booking và các portal nghiệp vụ vẫn thuộc các phase tiếp theo. Mỗi môi trường local cần tự cấu hình `JWT_SECRET` và account demo theo quy trình Database đã được nhóm phê duyệt.
+R0–R7 đã hoàn thành; phạm vi nghiệm thu hiện hành là **45 UC: Customer 14, Manager 9, CSKH 6, Admin 16**. SeatMap, booking/payment, khiếu nại và cả ba portal đã có trong source. R8 kiểm tra bản build production với API/SQL thật trên DB fixture; không thêm nghiệp vụ.
+
+Hướng dẫn bàn giao: [Release readiness](docs/RELEASE_READINESS.md). Kết quả cuối: [R8 acceptance](audit/final/r8/FINAL_ACCEPTANCE_REPORT.md), [45 UC](audit/final/r8/UC_TRACEABILITY_FINAL.md), [permission matrix](audit/final/r8/PERMISSION_MATRIX.md). Các báo cáo audit cũ là evidence lịch sử, không đại diện trạng thái release hiện tại.

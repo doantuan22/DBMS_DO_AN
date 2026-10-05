@@ -1,0 +1,967 @@
+{
+  "database": "CinemaBookingDB_R0_R1_R2_R5R7R8Regression",
+  "status": "PASS",
+  "requests": [
+    {
+      "bug": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/cinemas/1/rooms",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/showtimes/31",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/showtimes/31",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/showtimes/31",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/showtimes/31",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-003",
+      "route": "/manager/showtimes/31",
+      "method": "PUT",
+      "status": 409,
+      "error": "SHOWTIME_CANCEL_ROUTE_REQUIRED"
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/rooms/14",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/rooms/14",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/rooms/14",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/manager/rooms/14",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/admin/movies?status=S%E1%BA%AFp%20chi%E1%BA%BFu",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/movies?status=S%E1%BA%AFp%20chi%E1%BA%BFu",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/admin/movies?status=%C4%90ang%20chi%E1%BA%BFu",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/movies?status=%C4%90ang%20chi%E1%BA%BFu",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/admin/movies?status=Ng%E1%BB%ABng%20chi%E1%BA%BFu",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/movies?status=Ng%E1%BB%ABng%20chi%E1%BA%BFu",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-002",
+      "route": "/movies?status=invalid",
+      "method": "GET",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-008",
+      "route": "/admin/roles",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-008",
+      "route": "/admin/permissions",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-008",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-008",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-008",
+      "route": "/admin/roles/7/permissions",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/roles/7/permissions",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-010",
+      "route": "/manager/rooms/14/seats",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/cinemas/2147483648",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-009",
+      "route": "/admin/rooms?cinemaId=2147483648",
+      "method": "GET",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-011",
+      "route": "/admin/actors",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-011",
+      "route": "/admin/actors",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-011",
+      "route": "/admin/cinemas",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-011",
+      "route": "/admin/products",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/cinemas/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "CINEMA_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/cinemas/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "CINEMA_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/roles/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "ROLE_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/roles/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "ROLE_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/permissions/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "PERMISSION_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/permissions/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "PERMISSION_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/rooms/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "ROOM_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/rooms/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "ROOM_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/seats/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "SEAT_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/genres/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "GENRE_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/genres/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "GENRE_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/actors/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "ACTOR_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/actors/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "ACTOR_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/products/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "PRODUCT_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/products/2147483647",
+      "method": "DELETE",
+      "status": 404,
+      "error": "PRODUCT_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/admin/users/2147483647/status",
+      "method": "PUT",
+      "status": 404,
+      "error": "USER_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-012",
+      "route": "/movies/2147483647",
+      "method": "GET",
+      "status": 404,
+      "error": "MOVIE_NOT_FOUND"
+    },
+    {
+      "bug": "BUG-003",
+      "route": "/admin/cinemas/1",
+      "method": "DELETE",
+      "status": 409,
+      "error": "CINEMA_HAS_DEPENDENCIES"
+    },
+    {
+      "bug": "BUG-003",
+      "route": "/admin/cinemas",
+      "method": "GET",
+      "status": 403,
+      "error": "ADMIN_REQUIRED"
+    },
+    {
+      "bug": "BUG-003",
+      "route": "/admin/cinemas",
+      "method": "GET",
+      "status": 401,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "bug": "BUG-013",
+      "route": "/admin/actors",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-013",
+      "route": "/admin/actors/7",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-013",
+      "route": "/auth/register",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-013",
+      "route": "/auth/me",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-015",
+      "route": "/admin/users",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-015",
+      "route": "/admin/users",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-015",
+      "route": "/admin/users",
+      "method": "POST",
+      "status": 500,
+      "error": "EREQUEST"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments/5",
+      "method": "PUT",
+      "status": 409,
+      "error": "ASSIGNMENT_DUPLICATE"
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments/4",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-017",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/admin/products",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_PRODUCT"
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 400,
+      "error": "DUPLICATE_PRODUCT"
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 400,
+      "error": "INVALID_PRODUCT"
+    },
+    {
+      "bug": "BUG-016",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-003",
+      "route": "/manager/showtimes/31",
+      "method": "PUT",
+      "status": 409,
+      "error": "SHOWTIME_HAS_ORDERS"
+    },
+    {
+      "bug": "BUG-003",
+      "route": "/admin/showtimes/31/cancel",
+      "method": "POST",
+      "status": 409,
+      "error": "SHOWTIME_HAS_HELD_ORDERS"
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/admin/movies",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/admin/movies/5/actors",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/movies/5",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/movies?search=r5-a691ded4",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/movies/5",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/movies?search=r5-a691ded4",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/movies/5",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "bug": "BUG-018",
+      "route": "/movies?search=r5-a691ded4",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "checks": [
+    {
+      "bug": "BUG-002",
+      "name": "Persisted valid Đóng bán",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-002",
+      "name": "Persisted valid Hoàn thành",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-002",
+      "name": "Persisted valid Mở bán",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-008",
+      "name": "Empty grant set DB + API reload",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-011",
+      "name": "Actor boundary persisted without truncation",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-013",
+      "name": "DB authoritative DOB actor create",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-013",
+      "name": "DB authoritative DOB actor update",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-013",
+      "name": "DB authoritative DOB register",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-013",
+      "name": "DB authoritative DOB profile",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-015",
+      "name": "Customer profile exists exactly once, defaults NULL/0",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-015",
+      "name": "Internal account has no customer profile",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-015",
+      "name": "Profile failure rolls back account",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-015",
+      "name": "Caller rollback removes account and profile",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-017",
+      "name": "16 equivalent concurrent creates: one success, fifteen 409",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-017",
+      "name": "Different period/status remain allowed",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: {}",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: not-json",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: [null]",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: [{\"SanPhamID\":1,\"SoLuong\":1.5}]",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: [{\"SanPhamID\":1,\"SoLuong\":\"1\"}]",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: [{\"SanPhamID\":2147483648,\"SoLuong\":1}]",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Invalid direct-SP JSON rollback: [{\"SanPhamID\":1,\"SanPhamID\":2,\"SoLuong\":1}]",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "All invalid products preserve order/ticket/food/promotion/payment/compensation hashes",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Valid items all saved",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-016",
+      "name": "Existing direct-SP duplicate aggregation remains quantity3",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-018",
+      "name": "0 reviews, 4 shows, 2 genres, 2 actors correct in view/list/detail",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-018",
+      "name": "1 reviews, 4 shows, 2 genres, 2 actors correct in view/list/detail",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-018",
+      "name": "2 reviews, 4 shows, 2 genres, 2 actors correct in view/list/detail",
+      "status": "PASS"
+    },
+    {
+      "bug": "BUG-018",
+      "name": "Before8 -> after2 on identical nonzero review data",
+      "status": "PASS"
+    }
+  ],
+  "reviewBeforeAfter": {
+    "oldCount": 8,
+    "newCount": 2,
+    "shows": 4
+  },
+  "bugs": [
+    "BUG-002",
+    "BUG-003",
+    "BUG-008",
+    "BUG-009",
+    "BUG-010",
+    "BUG-011",
+    "BUG-012",
+    "BUG-013",
+    "BUG-015",
+    "BUG-016",
+    "BUG-017",
+    "BUG-018"
+  ]
+}

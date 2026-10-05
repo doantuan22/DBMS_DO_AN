@@ -1,0 +1,124 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_R5R7R8Flows",
+  "configuredDevelopmentCredentialMode": "DEV administrative login; unchanged",
+  "restrictedAppLoginTested": true,
+  "restrictedLoginRemoved": true,
+  "checks": [
+    {
+      "name": "Restricted actual SQL login",
+      "status": "PASS",
+      "evidence": "Non-sysadmin/non-db_owner; db_executor member"
+    },
+    {
+      "name": "Restricted login executes allowed SP",
+      "status": "PASS",
+      "evidence": "Actual SQL authentication connection; wrapper SP/view chain succeeds"
+    },
+    {
+      "name": "Direct business SELECT denied",
+      "status": "PASS",
+      "evidence": "SQL error 229; no data written"
+    },
+    {
+      "name": "Direct business INSERT denied",
+      "status": "PASS",
+      "evidence": "SQL error 229; no data written"
+    },
+    {
+      "name": "Direct business UPDATE denied",
+      "status": "PASS",
+      "evidence": "SQL error 229; no data written"
+    },
+    {
+      "name": "Direct business DELETE denied",
+      "status": "PASS",
+      "evidence": "SQL error 229; no data written"
+    },
+    {
+      "name": "Production start and restricted DB health",
+      "status": "PASS",
+      "evidence": "Production server.js startup and real EXECUTE-only DB connection"
+    },
+    {
+      "name": "Helmet security headers",
+      "status": "PASS",
+      "evidence": "Helmet middleware"
+    },
+    {
+      "name": "Configured CORS",
+      "status": "PASS",
+      "evidence": "Configured allowed frontend origin"
+    },
+    {
+      "name": "Protected endpoint without JWT",
+      "status": "PASS",
+      "evidence": "Live production HTTP"
+    },
+    {
+      "name": "Identity-only JWT",
+      "status": "PASS",
+      "evidence": "Only claim names exported; token never saved"
+    },
+    {
+      "name": "Restricted SP write chain",
+      "status": "PASS",
+      "evidence": "Customer/profile creation works through SP while direct table DML denied"
+    },
+    {
+      "name": "Request payload limit",
+      "status": "PASS",
+      "evidence": "Express JSON 100KB default and standardized envelope"
+    },
+    {
+      "name": "No unhandled process rejection",
+      "status": "PASS",
+      "evidence": "Production child logs checked in memory; secrets not exported"
+    },
+    {
+      "name": "Missing JWT environment validation",
+      "status": "PASS",
+      "evidence": "Refuses issuing token when secret is absent"
+    },
+    {
+      "name": "No unhandled process rejection",
+      "status": "PASS",
+      "evidence": "Production child logs checked in memory; secrets not exported"
+    },
+    {
+      "name": "HTTP stays available on DB failure",
+      "status": "PASS",
+      "evidence": "Lazy pool connection"
+    },
+    {
+      "name": "Graceful DB connection failure",
+      "status": "PASS",
+      "evidence": "No unhandled rejection; no credential exported"
+    },
+    {
+      "name": "No unhandled process rejection",
+      "status": "PASS",
+      "evidence": "Production child logs checked in memory; secrets not exported"
+    },
+    {
+      "name": "Application source secret/log scan",
+      "status": "PASS",
+      "evidence": {
+        "filesScanned": 65,
+        "hardcodedSecretMatches": [],
+        "secretLoggingMatches": []
+      }
+    },
+    {
+      "name": ".env is not tracked",
+      "status": "PASS",
+      "evidence": "git ls-files"
+    }
+  ],
+  "authorizationEvidence": [
+    "r3/probes.json",
+    "r3/partial-grants-browser.json",
+    "legacy-reruns/integration.json"
+  ],
+  "credentialsExported": false
+}

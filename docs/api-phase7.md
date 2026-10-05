@@ -17,10 +17,12 @@ All endpoints require an authenticated `QUAN_LY_RAP` user. The backend reloads r
 - Room create: `{ "name", "type" }`; update adds `status`.
 - Seat create: `{ "row", "number", "type" }`; update: `{ "type", "status" }`.
 - Showtime create: `{ "movieId", "roomId", "startsAt", "endsAt", "format", "basePrice" }`; update has the same fields except `roomId`, plus `status`.
-- Pricing create: `{ "seatType", "dayType", "format", "surcharge", "startsOn", "endsOn": null }`; update: `{ "surcharge", "status" }`.
+- Pricing create: `{ "seatType", "dayType", "format", "surcharge", "startsOn", "endsOn": null }`; update: `{ "seatType", "dayType", "format", "surcharge", "startsOn", "endsOn": null, "status" }`. Minimal updates containing surcharge/status remain supported; omitted conditions retain their current values. Date fields are DATE_ONLY.
 
 `fromDate`/`toDate` are optional `YYYY-MM-DD` values and must be chronological. The server validates shape; database constraints, triggers and procedures own business integrity. No endpoint accepts manager identity, assignment identity, or an arbitrary procedure name.
 
-## SQL change: DBR-02
+Showtime room is immutable during update. Cancellation uses its dedicated action; closed/cancelled/historical bookings remain guarded by SQL. Current exact authorization and routes: [R8 matrix](../audit/final/r8/PERMISSION_MATRIX.md).
+
+## Historical SQL change: DBR-02
 
 `database/migrations/004_manager_showtime_list.sql` adds `dbo.sp_Manager_Showtime_List`. The baseline had manager-scoped showtime writes but no scoped list procedure, which would otherwise force a prohibited backend query. The procedure checks assignment scope before selecting showtimes for one cinema and optional date range.

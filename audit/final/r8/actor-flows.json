@@ -1,0 +1,1312 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_R5R7R8Flows",
+  "requests": [
+    {
+      "uc": "ADM-01",
+      "route": "/auth/login",
+      "method": "POST",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 400.04
+    },
+    {
+      "uc": "QLR-01",
+      "route": "/auth/login",
+      "method": "POST",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 85.58
+    },
+    {
+      "uc": "CSKH-01",
+      "route": "/auth/login",
+      "method": "POST",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 82.62
+    },
+    {
+      "uc": "KH-01",
+      "route": "/auth/register",
+      "method": "POST",
+      "actor": "public",
+      "status": 201,
+      "expected": 201,
+      "ms": 103.39
+    },
+    {
+      "uc": "KH-02",
+      "route": "/auth/login",
+      "method": "POST",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 70.18
+    },
+    {
+      "uc": "KH-03",
+      "route": "/auth/me",
+      "method": "PUT",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 23.78
+    },
+    {
+      "uc": "KH-03",
+      "route": "/auth/me",
+      "method": "GET",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.96
+    },
+    {
+      "uc": "SECURITY",
+      "route": "/admin/users",
+      "method": "GET",
+      "actor": "public",
+      "status": 401,
+      "expected": 401,
+      "ms": 3.57,
+      "error": "UNAUTHENTICATED"
+    },
+    {
+      "uc": "SECURITY",
+      "route": "/admin/users",
+      "method": "GET",
+      "actor": "customer",
+      "status": 403,
+      "expected": 403,
+      "ms": 6.51,
+      "error": "ADMIN_REQUIRED"
+    },
+    {
+      "uc": "SECURITY",
+      "route": "/orders",
+      "method": "GET",
+      "actor": "admin",
+      "status": 403,
+      "expected": 403,
+      "ms": 7.07,
+      "error": "CUSTOMER_REQUIRED"
+    },
+    {
+      "uc": "SECURITY",
+      "route": "/support/complaints",
+      "method": "GET",
+      "actor": "manager",
+      "status": 403,
+      "expected": 403,
+      "ms": 8.34,
+      "error": "SUPPORT_REQUIRED"
+    },
+    {
+      "uc": "KH-01",
+      "route": "/auth/register",
+      "method": "POST",
+      "actor": "public",
+      "status": 409,
+      "expected": 409,
+      "ms": 86.95,
+      "error": "EMAIL_IN_USE"
+    },
+    {
+      "uc": "KH-02",
+      "route": "/auth/login",
+      "method": "POST",
+      "actor": "public",
+      "status": 401,
+      "expected": 401,
+      "ms": 74.45,
+      "error": "INVALID_CREDENTIALS"
+    },
+    {
+      "uc": "ADM-03",
+      "route": "/admin/roles",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 12.1
+    },
+    {
+      "uc": "ADM-04",
+      "route": "/admin/permissions",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 12.15
+    },
+    {
+      "uc": "ADM-03",
+      "route": "/admin/roles",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 12.88
+    },
+    {
+      "uc": "ADM-03",
+      "route": "/admin/roles/5",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.85
+    },
+    {
+      "uc": "ADM-04",
+      "route": "/admin/permissions",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.54
+    },
+    {
+      "uc": "ADM-04",
+      "route": "/admin/permissions/24",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.32
+    },
+    {
+      "uc": "ADM-05",
+      "route": "/admin/roles/5/permissions",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 17.14
+    },
+    {
+      "uc": "ADM-05",
+      "route": "/admin/roles/5/permissions",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.43
+    },
+    {
+      "uc": "ADM-05",
+      "route": "/admin/roles/5/permissions",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.56
+    },
+    {
+      "uc": "ADM-05",
+      "route": "/admin/roles/5/permissions",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 4.66
+    },
+    {
+      "uc": "ADM-02",
+      "route": "/admin/users",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 86.59
+    },
+    {
+      "uc": "ADM-02",
+      "route": "/admin/users/10/status",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 16.26
+    },
+    {
+      "uc": "ADM-02",
+      "route": "/admin/users/10/status",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.72
+    },
+    {
+      "uc": "ADM-02",
+      "route": "/admin/users",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 18.24
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.36
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas/5",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.01
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 10.34
+    },
+    {
+      "uc": "ADM-06",
+      "route": "/admin/assignments",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 23.28
+    },
+    {
+      "uc": "ADM-06",
+      "route": "/admin/assignments/3",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 24.65
+    },
+    {
+      "uc": "ADM-06",
+      "route": "/admin/assignments",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.01
+    },
+    {
+      "uc": "QLR-01",
+      "route": "/manager/cinemas",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.97
+    },
+    {
+      "uc": "QLR-02",
+      "route": "/manager/cinemas/5/rooms",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.64
+    },
+    {
+      "uc": "QLR-02",
+      "route": "/manager/rooms/8",
+      "method": "PUT",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 6.46
+    },
+    {
+      "uc": "QLR-02",
+      "route": "/manager/cinemas/5/rooms",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 6.29
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.66
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.09
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.77
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 9.12
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 9.57
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.37
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 7.88
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.98
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.32
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 6.19
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.99
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.95
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.25
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.41
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.82
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.13
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/seats/259",
+      "method": "PUT",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 6.4
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/8/seats",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 7.02
+    },
+    {
+      "uc": "ADM-10",
+      "route": "/admin/genres",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.99
+    },
+    {
+      "uc": "ADM-10",
+      "route": "/admin/genres/8",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 19.27
+    },
+    {
+      "uc": "ADM-10",
+      "route": "/admin/genres",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 12.87
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/actors",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 14.03
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/actors/7",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.15
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/actors",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 9.5
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/movies",
+      "method": "POST",
+      "actor": "admin",
+      "status": 201,
+      "expected": 201,
+      "ms": 27.64
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/movies/5",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 17.54
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/movies/5/actors",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 19.18
+    },
+    {
+      "uc": "ADM-09",
+      "route": "/admin/movies",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 23.45
+    },
+    {
+      "uc": "KH-04",
+      "route": "/movies",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 32.1
+    },
+    {
+      "uc": "KH-04",
+      "route": "/movies/5",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 3.03
+    },
+    {
+      "uc": "ADM-11",
+      "route": "/admin/products",
+      "method": "POST",
+      "actor": "admin",
+      "status": 201,
+      "expected": 201,
+      "ms": 12.5
+    },
+    {
+      "uc": "ADM-11",
+      "route": "/admin/products/6",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.4
+    },
+    {
+      "uc": "ADM-11",
+      "route": "/admin/products",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 11.25
+    },
+    {
+      "uc": "KH-08",
+      "route": "/products",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.16
+    },
+    {
+      "uc": "ADM-12",
+      "route": "/admin/promotions",
+      "method": "POST",
+      "actor": "admin",
+      "status": 201,
+      "expected": 201,
+      "ms": 16.82
+    },
+    {
+      "uc": "ADM-12",
+      "route": "/admin/promotions/4",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.81
+    },
+    {
+      "uc": "ADM-12",
+      "route": "/admin/promotions",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 10.34
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas/5/images",
+      "method": "POST",
+      "actor": "admin",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.44
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas/5/images/7",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 16.4
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas/5/images/7/cover",
+      "method": "PATCH",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 22.63
+    },
+    {
+      "uc": "ADM-07",
+      "route": "/admin/cinemas/5/images",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 12.55
+    },
+    {
+      "uc": "PUBLIC-GALLERY",
+      "route": "/cinemas/5/images",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 2.97
+    },
+    {
+      "uc": "QLR-04",
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 28.01
+    },
+    {
+      "uc": "QLR-05",
+      "route": "/manager/showtimes/8",
+      "method": "PUT",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 7.07
+    },
+    {
+      "uc": "QLR-05",
+      "route": "/manager/cinemas/5/showtimes",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.51
+    },
+    {
+      "uc": "KH-05",
+      "route": "/movies/5/showtimes",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 40.67
+    },
+    {
+      "uc": "KH-06",
+      "route": "/showtimes/8/seats",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 18.2
+    },
+    {
+      "uc": "KH-05",
+      "route": "/showtimes/8",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 3.18
+    },
+    {
+      "uc": "QLR-07",
+      "route": "/manager/cinemas/5/pricing",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 8.88
+    },
+    {
+      "uc": "QLR-07",
+      "route": "/manager/pricing/10",
+      "method": "PUT",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 8.84
+    },
+    {
+      "uc": "QLR-07",
+      "route": "/manager/cinemas/5/pricing",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 6.06
+    },
+    {
+      "uc": "KH-09",
+      "route": "/promotions/validate",
+      "method": "POST",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 17.03
+    },
+    {
+      "uc": "KH-07",
+      "route": "/bookings",
+      "method": "POST",
+      "actor": "customer",
+      "status": 201,
+      "expected": 201,
+      "ms": 7.91
+    },
+    {
+      "uc": "KH-10",
+      "route": "/orders/3/payments",
+      "method": "POST",
+      "actor": "customer",
+      "status": 201,
+      "expected": 201,
+      "ms": 9.11
+    },
+    {
+      "uc": "KH-10",
+      "route": "/orders/3/payments/3/result",
+      "method": "POST",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 10
+    },
+    {
+      "uc": "KH-12",
+      "route": "/orders/3",
+      "method": "GET",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 5.45
+    },
+    {
+      "uc": "KH-11",
+      "route": "/orders",
+      "method": "GET",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 30.16
+    },
+    {
+      "uc": "KH-12",
+      "route": "/orders/3",
+      "method": "GET",
+      "actor": "manager",
+      "status": 403,
+      "expected": 403,
+      "ms": 3.42,
+      "error": "CUSTOMER_REQUIRED"
+    },
+    {
+      "uc": "KH-06",
+      "route": "/showtimes/8/seats",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 3.82
+    },
+    {
+      "uc": "KH-14",
+      "route": "/complaints",
+      "method": "POST",
+      "actor": "customer",
+      "status": 201,
+      "expected": 201,
+      "ms": 4.62
+    },
+    {
+      "uc": "KH-14",
+      "route": "/complaints",
+      "method": "GET",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 10.9
+    },
+    {
+      "uc": "KH-14",
+      "route": "/complaints/3",
+      "method": "GET",
+      "actor": "customer",
+      "status": 200,
+      "expected": 200,
+      "ms": 13.91
+    },
+    {
+      "uc": "CSKH-02",
+      "route": "/support/complaints",
+      "method": "GET",
+      "actor": "support",
+      "status": 200,
+      "expected": 200,
+      "ms": 29.35
+    },
+    {
+      "uc": "CSKH-03",
+      "route": "/support/complaints/3",
+      "method": "GET",
+      "actor": "support",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.35
+    },
+    {
+      "uc": "CSKH-04",
+      "route": "/support/complaints/3/order-reference",
+      "method": "GET",
+      "actor": "support",
+      "status": 200,
+      "expected": 200,
+      "ms": 4.54
+    },
+    {
+      "uc": "CSKH-05",
+      "route": "/support/complaints/3/processings",
+      "method": "POST",
+      "actor": "support",
+      "status": 201,
+      "expected": 201,
+      "ms": 24.24
+    },
+    {
+      "uc": "CSKH-06",
+      "route": "/support/complaints/3/status",
+      "method": "PUT",
+      "actor": "support",
+      "status": 200,
+      "expected": 200,
+      "ms": 16.37
+    },
+    {
+      "uc": "ADM-15",
+      "route": "/admin/complaints",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 20.09
+    },
+    {
+      "uc": "ADM-15",
+      "route": "/admin/complaints/3",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 6.25
+    },
+    {
+      "uc": "ADM-15",
+      "route": "/admin/complaints/3/order-reference",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 4.9
+    },
+    {
+      "uc": "ADM-15",
+      "route": "/admin/complaints/3/processings",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 4.57
+    },
+    {
+      "uc": "ADM-15",
+      "route": "/admin/complaints/3/status",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 4.47
+    },
+    {
+      "uc": "QLR-08",
+      "route": "/manager/cinemas/5/dashboard",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 33.75
+    },
+    {
+      "uc": "QLR-09",
+      "route": "/manager/cinemas/5/revenue?fromDate=2026-10-05&toDate=2026-10-05",
+      "method": "GET",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 6.12
+    },
+    {
+      "uc": "ADM-16",
+      "route": "/admin/reports/revenue?fromDate=2026-10-04&toDate=2026-10-06",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 40.72
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/rooms",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.17
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/seats",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 14.66
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/rooms/9",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.84
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/seats/260",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.06
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/rooms",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 14.55
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/seats",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 23.78
+    },
+    {
+      "uc": "ADM-13",
+      "route": "/admin/pricing",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 16.24
+    },
+    {
+      "uc": "ADM-13",
+      "route": "/admin/pricing/11",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 14.99
+    },
+    {
+      "uc": "ADM-13",
+      "route": "/admin/pricing",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 12.22
+    },
+    {
+      "uc": "QLR-04",
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.88
+    },
+    {
+      "uc": "ADM-14",
+      "route": "/admin/showtimes/9",
+      "method": "PUT",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 18.41
+    },
+    {
+      "uc": "ADM-14",
+      "route": "/admin/showtimes",
+      "method": "GET",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 24.64
+    },
+    {
+      "uc": "QLR-06",
+      "route": "/manager/showtimes/9/cancel",
+      "method": "POST",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 44.91
+    },
+    {
+      "uc": "ADM-14",
+      "route": "/admin/showtimes",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 14
+    },
+    {
+      "uc": "ADM-14",
+      "route": "/admin/showtimes/10/cancel",
+      "method": "POST",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 9.84
+    },
+    {
+      "uc": "QLR-02",
+      "route": "/manager/cinemas/5/rooms",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.35
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/rooms/10/seats",
+      "method": "POST",
+      "actor": "manager",
+      "status": 201,
+      "expected": 201,
+      "ms": 5.94
+    },
+    {
+      "uc": "QLR-03",
+      "route": "/manager/seats/261",
+      "method": "DELETE",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 15.76
+    },
+    {
+      "uc": "QLR-02",
+      "route": "/manager/rooms/10",
+      "method": "DELETE",
+      "actor": "manager",
+      "status": 200,
+      "expected": 200,
+      "ms": 19.06
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/seats/260",
+      "method": "DELETE",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 14.32
+    },
+    {
+      "uc": "ADM-08",
+      "route": "/admin/rooms/9",
+      "method": "DELETE",
+      "actor": "admin",
+      "status": 200,
+      "expected": 200,
+      "ms": 18.24
+    },
+    {
+      "uc": "KH-13",
+      "route": "/movies/5/reviews",
+      "method": "POST",
+      "actor": "customer",
+      "status": 403,
+      "expected": 403,
+      "ms": 26.15,
+      "error": "REVIEW_NOT_ELIGIBLE"
+    },
+    {
+      "uc": "KH-13",
+      "route": "/movies/5/reviews",
+      "method": "POST",
+      "actor": "customer",
+      "status": 201,
+      "expected": 201,
+      "ms": 4.59
+    },
+    {
+      "uc": "KH-13",
+      "route": "/movies/5/reviews",
+      "method": "GET",
+      "actor": "public",
+      "status": 200,
+      "expected": 200,
+      "ms": 9.16
+    }
+  ],
+  "checks": [
+    {
+      "uc": "KH-03",
+      "name": "Profile DB/API persisted",
+      "status": "PASS"
+    },
+    {
+      "uc": "ADM-05",
+      "name": "Role grant list persists",
+      "status": "PASS"
+    },
+    {
+      "uc": "ADM-05",
+      "name": "Empty grants persisted",
+      "status": "PASS"
+    },
+    {
+      "uc": "QLR-01",
+      "name": "Current assignment is visible with prior JWT",
+      "status": "PASS"
+    },
+    {
+      "uc": "KH-04",
+      "name": "Movie detail includes assigned genre/cast",
+      "status": "PASS"
+    },
+    {
+      "uc": "KH-12",
+      "name": "Order totals, tickets, foods, payment history",
+      "status": "PASS"
+    },
+    {
+      "uc": "CSKH-04",
+      "name": "Reference resolves full order",
+      "status": "PASS"
+    }
+  ],
+  "fixtureIDs": {
+    "role": 5,
+    "permission": 24,
+    "managedUser": 10,
+    "cinema": 5,
+    "assignment": 3,
+    "room": 8,
+    "seats": [
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259
+    ],
+    "genre": 8,
+    "actor": 7,
+    "movie": 5,
+    "product": 6,
+    "promotion": 4,
+    "promotionCode": "R8-70317616",
+    "image": 7,
+    "show": 8,
+    "pricing": 10,
+    "order": 3,
+    "complaint": 3
+  }
+}

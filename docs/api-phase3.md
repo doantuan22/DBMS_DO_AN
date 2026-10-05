@@ -33,4 +33,4 @@ All endpoints are public and do not require a Bearer token. Backend calls only t
 
 The movie list procedure supports status, genre, and title/director search, but does not support pagination. Cinema list filters out cinemas that are not active. Showtime list filters to future showtimes in the database's `Mở bán` state and accepts cinema/date filters. The detail procedure returns its row without applying those list filters; later booking procedures must enforce current eligibility. Movie actors come from recordset 3 of `sp_Movie_GetDetail`; there is no separate actor-list procedure in the current SQL baseline.
 
-Selecting a showtime navigates to `/booking/:showtimeId`. Phase 3 confirms and displays the selected showtime context only; it does not load seats or create a booking.
+Selecting a showtime navigates to `/booking/:showtimeId`, which now loads seats/products, previews promotion and creates a booking. The earlier Phase 3 context-only implementation is historical. Public cinema detail/gallery uses active images from `GET /api/cinemas/:cinemaId/images`; current source/route inventory is in [R8 traceability](../audit/final/r8/UC_TRACEABILITY_FINAL.md).

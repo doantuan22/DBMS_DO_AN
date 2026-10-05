@@ -1,0 +1,810 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_R5R7R8Regression",
+  "forms": [
+    {
+      "key": "users",
+      "id": 33,
+      "fields": [
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "NguoiDungID": 33,
+        "HoTen": "R4 register",
+        "Email": "r4-5-register-2@example.test",
+        "SoDienThoai": null,
+        "NgayTao": "2026-10-05T09:14:50.847Z",
+        "TrangThai": "Hoạt động",
+        "VaiTroID": 4,
+        "MaVaiTro": "KHACH_HANG",
+        "TenVaiTro": "Khách hàng",
+        "DiemTichLuy": 0
+      },
+      "payload": {
+        "status": "Hoạt động"
+      },
+      "persistedPayload": {
+        "status": "Bị khóa"
+      },
+      "route": "/admin/users/33/status",
+      "status": "PASS"
+    },
+    {
+      "key": "roles",
+      "id": 1,
+      "fields": [
+        [
+          "name",
+          "Tên vai trò",
+          "text",
+          "TenVaiTro"
+        ],
+        [
+          "description",
+          "Mô tả",
+          "text",
+          "MoTa"
+        ]
+      ],
+      "row": {
+        "VaiTroID": 1,
+        "MaVaiTro": "ADMIN",
+        "TenVaiTro": "Quản trị viên",
+        "MoTa": "Toàn quyền quản trị hệ thống, tài khoản, cấu hình và báo cáo"
+      },
+      "payload": {
+        "name": "Quản trị viên",
+        "description": "Toàn quyền quản trị hệ thống, tài khoản, cấu hình và báo cáo"
+      },
+      "persistedPayload": {
+        "name": "Quản trị viên R4",
+        "description": "Toàn quyền quản trị hệ thống, tài khoản, cấu hình và báo cáo"
+      },
+      "route": "/admin/roles/1",
+      "status": "PASS"
+    },
+    {
+      "key": "permissions",
+      "id": 4,
+      "fields": [
+        [
+          "name",
+          "Tên quyền",
+          "text",
+          "TenQuyen"
+        ],
+        [
+          "description",
+          "Mô tả",
+          "text",
+          "MoTa"
+        ]
+      ],
+      "row": {
+        "QuyenID": 4,
+        "MaQuyen": "DANH_GIA",
+        "TenQuyen": "Đánh giá phim đã xem",
+        "MoTa": "Gửi số sao và nhận xét cho phim đã xem"
+      },
+      "payload": {
+        "name": "Đánh giá phim đã xem",
+        "description": "Gửi số sao và nhận xét cho phim đã xem"
+      },
+      "persistedPayload": {
+        "name": "Đánh giá phim đã xem R4",
+        "description": "Gửi số sao và nhận xét cho phim đã xem"
+      },
+      "route": "/admin/permissions/4",
+      "status": "PASS"
+    },
+    {
+      "key": "assignments",
+      "id": 1,
+      "fields": [
+        [
+          "userId",
+          "Mã quản lý",
+          "number",
+          "NguoiDungID"
+        ],
+        [
+          "cinemaId",
+          "Mã rạp",
+          "number",
+          "RapID"
+        ],
+        [
+          "startsOn",
+          "Ngày bắt đầu",
+          "date",
+          "NgayBatDau"
+        ],
+        [
+          "endsOn",
+          "Ngày kết thúc",
+          "date",
+          "NgayKetThuc"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "PhanCongID": 1,
+        "NguoiDungID": 2,
+        "TenQuanLy": "Nguyễn Văn Quản Lý 1",
+        "Email": "manager.q1@cinemadb.vn",
+        "RapID": 1,
+        "TenRap": "Cinema Star Hai Bà Trưng",
+        "ThanhPho": "Hồ Chí Minh",
+        "NgayBatDau": "2026-09-05",
+        "NgayKetThuc": "2028-10-05",
+        "TrangThai": "Hiệu lực"
+      },
+      "payload": {
+        "userId": 2,
+        "cinemaId": 1,
+        "startsOn": "2026-09-05",
+        "endsOn": "2028-10-05",
+        "status": "Hiệu lực"
+      },
+      "persistedPayload": {
+        "userId": 2,
+        "cinemaId": 1,
+        "startsOn": "2026-09-05",
+        "endsOn": "2028-10-05",
+        "status": "Hiệu lực"
+      },
+      "route": "/admin/assignments/1",
+      "status": "PASS"
+    },
+    {
+      "key": "cinemas",
+      "id": 3,
+      "fields": [
+        [
+          "name",
+          "Tên rạp",
+          "text",
+          "TenRap"
+        ],
+        [
+          "address",
+          "Địa chỉ",
+          "text",
+          "DiaChi"
+        ],
+        [
+          "city",
+          "Thành phố",
+          "text",
+          "ThanhPho"
+        ],
+        [
+          "phone",
+          "Điện thoại",
+          "text",
+          "SoDienThoai"
+        ],
+        [
+          "description",
+          "Mô tả",
+          "text",
+          "MoTa"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "RapID": 3,
+        "TenRap": "Cinema Star Times City",
+        "DiaChi": "458 Minh Khai, Vĩnh Tuy, Hai Bà Trưng",
+        "ThanhPho": "Hà Nội",
+        "SoDienThoai": "02438220003",
+        "MoTa": "Cụm rạp tiêu chuẩn quốc tế lớn nhất miền Bắc",
+        "NgayHoatDong": "2024-03-01",
+        "TrangThai": "Hoạt động"
+      },
+      "payload": {
+        "name": "Cinema Star Times City",
+        "address": "458 Minh Khai, Vĩnh Tuy, Hai Bà Trưng",
+        "city": "Hà Nội",
+        "phone": "02438220003",
+        "description": "Cụm rạp tiêu chuẩn quốc tế lớn nhất miền Bắc",
+        "status": "Hoạt động"
+      },
+      "persistedPayload": {
+        "name": "Cinema Star Times City R4",
+        "address": "458 Minh Khai, Vĩnh Tuy, Hai Bà Trưng",
+        "city": "Hà Nội",
+        "phone": "02438220003",
+        "description": "Cụm rạp tiêu chuẩn quốc tế lớn nhất miền Bắc",
+        "status": "Hoạt động"
+      },
+      "route": "/admin/cinemas/3",
+      "status": "PASS"
+    },
+    {
+      "key": "rooms",
+      "id": 13,
+      "fields": [
+        [
+          "name",
+          "Tên phòng",
+          "text",
+          "TenPhong"
+        ],
+        [
+          "type",
+          "Loại phòng",
+          "text",
+          "LoaiPhong"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "PhongID": 13,
+        "RapID": 1,
+        "TenRap": "Cinema Star Hai Bà Trưng",
+        "TenPhong": "R4-c6af77e3",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động",
+        "TongSoGhe": 1
+      },
+      "payload": {
+        "name": "R4-c6af77e3",
+        "type": "2D",
+        "status": "Hoạt động"
+      },
+      "persistedPayload": {
+        "name": "R4-c6af77e3 R4",
+        "type": "2D",
+        "status": "Hoạt động"
+      },
+      "route": "/admin/rooms/13",
+      "status": "PASS"
+    },
+    {
+      "key": "seats",
+      "id": 262,
+      "fields": [
+        [
+          "type",
+          "Loại ghế",
+          "text",
+          "LoaiGhe"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "GheID": 262,
+        "PhongID": 13,
+        "RapID": 1,
+        "TenRap": "Cinema Star Hai Bà Trưng",
+        "HangGhe": "R4",
+        "SoGhe": 1,
+        "TenGhe": "R41",
+        "LoaiGhe": "Thường",
+        "TrangThai": "Hoạt động"
+      },
+      "payload": {
+        "type": "Thường",
+        "status": "Hoạt động"
+      },
+      "persistedPayload": {
+        "type": "VIP",
+        "status": "Hoạt động"
+      },
+      "route": "/admin/seats/262",
+      "status": "PASS"
+    },
+    {
+      "key": "movies",
+      "id": 1,
+      "fields": [
+        [
+          "title",
+          "Tên phim",
+          "text",
+          "TenPhim"
+        ],
+        [
+          "durationMinutes",
+          "Thời lượng (phút)",
+          "number",
+          "ThoiLuong"
+        ],
+        [
+          "releaseDate",
+          "Ngày khởi chiếu",
+          "date",
+          "NgayKhoiChieu"
+        ],
+        [
+          "endDate",
+          "Ngày kết thúc",
+          "date",
+          "NgayKetThuc"
+        ],
+        [
+          "language",
+          "Ngôn ngữ",
+          "text",
+          "NgonNgu"
+        ],
+        [
+          "subtitle",
+          "Phụ đề",
+          "text",
+          "PhuDe"
+        ],
+        [
+          "ageRating",
+          "Độ tuổi",
+          "text",
+          "DoTuoi"
+        ],
+        [
+          "director",
+          "Đạo diễn",
+          "text",
+          "DaoDien"
+        ],
+        [
+          "description",
+          "Mô tả",
+          "text",
+          "MoTa"
+        ],
+        [
+          "posterUrl",
+          "Poster URL",
+          "text",
+          "PosterURL"
+        ],
+        [
+          "trailerUrl",
+          "Trailer URL",
+          "text",
+          "TrailerURL"
+        ],
+        [
+          "genreIds",
+          "Mã thể loại (phân cách dấu phẩy)",
+          "csv",
+          ""
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "PhimID": 1,
+        "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+        "ThoiLuong": 166,
+        "NgayKhoiChieu": "2026-09-05",
+        "NgayKetThuc": "2027-10-05",
+        "NgonNgu": "Tiếng Anh",
+        "PhuDe": "Phụ đề Tiếng Việt",
+        "DoTuoi": "T16",
+        "DaoDien": "Denis Villeneuve",
+        "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+        "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+        "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+        "TrangThai": "Đang chiếu",
+        "TheLoaiIdList": "1,2",
+        "DanhSachDienVienJson": null
+      },
+      "payload": {
+        "title": "Dune: Hành Tinh Cát - Phần Hai",
+        "durationMinutes": 166,
+        "releaseDate": "2026-09-05",
+        "endDate": "2027-10-05",
+        "language": "Tiếng Anh",
+        "subtitle": "Phụ đề Tiếng Việt",
+        "ageRating": "T16",
+        "director": "Denis Villeneuve",
+        "description": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+        "posterUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+        "trailerUrl": "https://youtube.com/watch?v=Way9Dexny3w",
+        "genreIds": [
+          1,
+          2
+        ],
+        "status": "Đang chiếu"
+      },
+      "persistedPayload": {
+        "title": "Dune: Hành Tinh Cát - Phần Hai R4",
+        "durationMinutes": 166,
+        "releaseDate": "2026-09-05",
+        "endDate": "2027-10-05",
+        "language": "Tiếng Anh",
+        "subtitle": "Phụ đề Tiếng Việt",
+        "ageRating": "T16",
+        "director": "Denis Villeneuve",
+        "description": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+        "posterUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+        "trailerUrl": "https://youtube.com/watch?v=Way9Dexny3w",
+        "genreIds": [
+          1,
+          2
+        ],
+        "status": "Đang chiếu"
+      },
+      "route": "/admin/movies/1",
+      "status": "PASS"
+    },
+    {
+      "key": "genres",
+      "id": 4,
+      "fields": [
+        [
+          "name",
+          "Tên thể loại",
+          "text",
+          "TenTheLoai"
+        ]
+      ],
+      "row": {
+        "TheLoaiID": 4,
+        "TenTheLoai": "Hài kịch"
+      },
+      "payload": {
+        "name": "Hài kịch"
+      },
+      "persistedPayload": {
+        "name": "Hài kịch R4"
+      },
+      "route": "/admin/genres/4",
+      "status": "PASS"
+    },
+    {
+      "key": "actors",
+      "id": 2,
+      "fields": [
+        [
+          "name",
+          "Họ tên",
+          "text",
+          "HoTen"
+        ],
+        [
+          "birthDate",
+          "Ngày sinh",
+          "date",
+          "NgaySinh"
+        ],
+        [
+          "nationality",
+          "Quốc tịch",
+          "text",
+          "QuocTich"
+        ]
+      ],
+      "row": {
+        "DienVienID": 2,
+        "HoTen": "Cillian Murphy",
+        "NgaySinh": "1976-05-25",
+        "QuocTich": "Ireland"
+      },
+      "payload": {
+        "name": "Cillian Murphy",
+        "birthDate": "1976-05-25",
+        "nationality": "Ireland"
+      },
+      "persistedPayload": {
+        "name": "Cillian Murphy R4",
+        "birthDate": "1976-05-25",
+        "nationality": "Ireland"
+      },
+      "route": "/admin/actors/2",
+      "status": "PASS"
+    },
+    {
+      "key": "products",
+      "id": 2,
+      "fields": [
+        [
+          "name",
+          "Tên sản phẩm",
+          "text",
+          "TenSanPham"
+        ],
+        [
+          "type",
+          "Loại sản phẩm",
+          "text",
+          "LoaiSanPham"
+        ],
+        [
+          "price",
+          "Giá",
+          "number",
+          "Gia"
+        ],
+        [
+          "description",
+          "Mô tả",
+          "text",
+          "MoTa"
+        ],
+        [
+          "image",
+          "Hình ảnh URL",
+          "text",
+          "HinhAnh"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "SanPhamID": 2,
+        "TenSanPham": "Bắp rang bơ Caramel vừa",
+        "LoaiSanPham": "Bắp rang",
+        "Gia": 40000,
+        "MoTa": "Vị ngọt ngào của sốt caramel truyền thống",
+        "HinhAnh": "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=400",
+        "TrangThai": "Đang bán"
+      },
+      "payload": {
+        "name": "Bắp rang bơ Caramel vừa",
+        "type": "Bắp rang",
+        "price": 40000,
+        "description": "Vị ngọt ngào của sốt caramel truyền thống",
+        "image": "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=400",
+        "status": "Đang bán"
+      },
+      "persistedPayload": {
+        "name": "Bắp rang bơ Caramel vừa R4",
+        "type": "Bắp rang",
+        "price": 40000,
+        "description": "Vị ngọt ngào của sốt caramel truyền thống",
+        "image": "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=400",
+        "status": "Đang bán"
+      },
+      "route": "/admin/products/2",
+      "status": "PASS"
+    },
+    {
+      "key": "promotions",
+      "id": 4,
+      "fields": [
+        [
+          "description",
+          "Mô tả",
+          "text",
+          "MoTa"
+        ],
+        [
+          "discountType",
+          "Loại giảm giá",
+          "text",
+          "LoaiGiamGia"
+        ],
+        [
+          "discountValue",
+          "Giá trị giảm",
+          "number",
+          "GiaTriGiam"
+        ],
+        [
+          "minimumOrder",
+          "Đơn tối thiểu",
+          "number",
+          "DonHangToiThieu"
+        ],
+        [
+          "maximumDiscount",
+          "Giảm tối đa",
+          "number",
+          "GiamToiDa"
+        ],
+        [
+          "startsAt",
+          "Bắt đầu (giờ Việt Nam)",
+          "datetime-local",
+          "NgayBatDau"
+        ],
+        [
+          "endsAt",
+          "Kết thúc (giờ Việt Nam)",
+          "datetime-local",
+          "NgayKetThuc"
+        ],
+        [
+          "quantity",
+          "Số lượng",
+          "number",
+          "SoLuong"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "KhuyenMaiID": 4,
+        "MaCode": "R1-0a3664be",
+        "MoTa": "R1 temporal fixture",
+        "LoaiGiamGia": "Phần trăm",
+        "GiaTriGiam": 10,
+        "DonHangToiThieu": 0,
+        "GiamToiDa": 10000,
+        "NgayBatDau": "2026-11-03T17:30:00.000Z",
+        "NgayKetThuc": "2026-11-04T15:16:00.000Z",
+        "SoLuong": 10,
+        "SoLuongDaDung": 0,
+        "TrangThai": "Hoạt động"
+      },
+      "payload": {
+        "description": "R1 temporal fixture",
+        "discountType": "Phần trăm",
+        "discountValue": 10,
+        "minimumOrder": 0,
+        "maximumDiscount": 10000,
+        "startsAt": "2026-11-03T17:30:00.000Z",
+        "endsAt": "2026-11-04T15:16:00.000Z",
+        "quantity": 10,
+        "status": "Hoạt động"
+      },
+      "persistedPayload": {
+        "description": "R4 updated note",
+        "discountType": "Phần trăm",
+        "discountValue": 10,
+        "minimumOrder": 0,
+        "maximumDiscount": 10000,
+        "startsAt": "2026-11-03T17:30:00.000Z",
+        "endsAt": "2026-11-04T15:16:00.000Z",
+        "quantity": 10,
+        "status": "Hoạt động"
+      },
+      "route": "/admin/promotions/4",
+      "status": "PASS"
+    },
+    {
+      "key": "pricing",
+      "id": 18,
+      "fields": [
+        [
+          "surcharge",
+          "Phụ thu",
+          "number",
+          "PhuThu"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "GiaID": 18,
+        "RapID": 5,
+        "TenRap": "AUDIT_STRESS_PRICING_muv19yim",
+        "LoaiGhe": "Đôi",
+        "LoaiNgay": "Ngày lễ",
+        "DinhDang": "ScreenX",
+        "PhuThu": 1000,
+        "NgayBatDau": "2050-02-01",
+        "NgayKetThuc": null,
+        "TrangThai": "Hết hạn"
+      },
+      "payload": {
+        "surcharge": 1000,
+        "status": "Hết hạn"
+      },
+      "persistedPayload": {
+        "surcharge": 1001,
+        "status": "Hết hạn"
+      },
+      "route": "/admin/pricing/18",
+      "status": "PASS"
+    },
+    {
+      "key": "showtimes",
+      "id": 30,
+      "fields": [
+        [
+          "movieId",
+          "Mã phim",
+          "number",
+          "PhimID"
+        ],
+        [
+          "startsAt",
+          "Bắt đầu (giờ Việt Nam)",
+          "datetime-local",
+          "ThoiGianBatDau"
+        ],
+        [
+          "endsAt",
+          "Kết thúc (giờ Việt Nam)",
+          "datetime-local",
+          "ThoiGianKetThuc"
+        ],
+        [
+          "format",
+          "Định dạng",
+          "text",
+          "DinhDang"
+        ],
+        [
+          "basePrice",
+          "Giá vé cơ bản",
+          "number",
+          "GiaVeCoBan"
+        ],
+        [
+          "status",
+          "Trạng thái",
+          "text",
+          "TrangThai"
+        ]
+      ],
+      "row": {
+        "SuatChieuID": 30,
+        "PhimID": 1,
+        "TenPhim": "Dune: Hành Tinh Cát - Phần Hai R4",
+        "PhongID": 13,
+        "TenPhong": "R4-c6af77e3 R4",
+        "RapID": 1,
+        "TenRap": "Cinema Star Hai Bà Trưng",
+        "ThoiGianBatDau": "2026-11-24T09:14:49.493Z",
+        "ThoiGianKetThuc": "2026-11-24T12:00:49.493Z",
+        "DinhDang": "2D",
+        "GiaVeCoBan": 120000,
+        "TrangThai": "Mở bán"
+      },
+      "payload": {
+        "movieId": 1,
+        "startsAt": "2026-11-24T09:14:49.493Z",
+        "endsAt": "2026-11-24T12:00:49.493Z",
+        "format": "2D",
+        "basePrice": 120000,
+        "status": "Mở bán"
+      },
+      "persistedPayload": {
+        "movieId": 1,
+        "startsAt": "2026-11-24T09:14:49.493Z",
+        "endsAt": "2026-11-24T12:00:49.493Z",
+        "format": "2D",
+        "basePrice": 121000,
+        "status": "Mở bán"
+      },
+      "route": "/admin/showtimes/30",
+      "status": "PASS"
+    }
+  ]
+}
