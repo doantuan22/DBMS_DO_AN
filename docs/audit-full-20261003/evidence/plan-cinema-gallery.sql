@@ -1,6 +1,0 @@
-SET SHOWPLAN_XML ON;
-GO
-EXEC dbo.sp_Cinema_GetImages @RapID=40;
-GO
-SET SHOWPLAN_XML OFF;
-GO
