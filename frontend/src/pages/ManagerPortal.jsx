@@ -1,41 +1,144 @@
-import { ROOM_TYPES } from '../../../shared/resourceContract.mjs';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { userCanAct, loadAuthorizedSections } from '../utils/authorization';
-import { businessDate, defaultShowtimeLocal, businessLocalToInstant, formatDateTime, formatDate } from '../utils/dateTime';
-import { useCallback, useEffect, useState } from 'react';
+import { formatDateTime, formatDate } from '../utils/dateTime';
 import * as api from '../api/managerApi';
 import { bookingErrorMessage } from '../utils/bookingLimits';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
-
-const now = businessDate();
-const toDateTime = defaultShowtimeLocal;
+import ManagerResourceForm from '../components/ManagerResourceForm';
+import ManagerRevenue from '../components/ManagerRevenue';
+import { RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
 
 export default function ManagerPortal() {
   const { user } = useAuth();
-  const canRooms = userCanAct(user, 'QUAN_LY_RAP', 'QL_PHONG');
-  const canSeats = userCanAct(user, 'QUAN_LY_RAP', 'QL_GHE');
-  const canShowtimes = userCanAct(user, 'QUAN_LY_RAP', 'QL_SUAT_CHIEU');
-  const canPricing = userCanAct(user, 'QUAN_LY_RAP', 'QL_BANG_GIA');
-  const canReports = userCanAct(user, 'QUAN_LY_RAP', 'XEM_BAO_CAO_RAP');
-  const [cinemas, setCinemas] = useState({ status: 'loading' }); const [cinemaId, setCinemaId] = useState(''); const [data, setData] = useState({ status: 'idle' }); const [notice, setNotice] = useState(null);
-  const [room, setRoom] = useState({ name: '', type: '2D' }); const [seat, setSeat] = useState({ roomId: '', row: 'Z', number: 1, type: 'Thường' }); const [showtime, setShowtime] = useState({ movieId: '', roomId: '', startsAt: toDateTime(30, '10:00'), endsAt: toDateTime(30, '12:00'), format: '2D', basePrice: 80000 }); const [pricing, setPricing] = useState({ seatType: 'Thường', dayType: 'Ngày thường', format: '2D', surcharge: 0, startsOn: now, endsOn: '' });
-  useEffect(() => { void api.getAssignedCinemas().then((result) => { setCinemas({ status: 'success', rows: result.cinemas }); setCinemaId(String(result.cinemas[0]?.id ?? '')); }).catch((error) => setCinemas({ status: 'error', error })); }, [user?.cinemaAssignments]);
+  const [cinemas, setCinemas] = useState({ status: 'loading' });
+  const [cinemaId, setCinemaId] = useState('');
+  useEffect(() => {
+    let active = true;
+    api.getAssignedCinemas().then(result => {
+      if (!active) return;
+      setCinemas({ status: 'success', rows: result.cinemas });
+      setCinemaId(current => result.cinemas.some(cinema => String(cinema.id) === current) ? current : String(result.cinemas[0]?.id ?? ''));
+    }).catch(error => { if (active) setCinemas({ status: 'error', error }); });
+    return () => { active = false; };
+  }, [user?.cinemaAssignments]);
+  if (cinemas.status === 'loading') return <LoadingState>Đang tải rạp được phân công…</LoadingState>;
+  if (cinemas.status === 'error') return <ErrorState error={cinemas.error} />;
+  const assigned = cinemas.rows.filter(cinema => !user?.cinemaAssignments || user.cinemaAssignments.some(assignment => String(assignment.cinemaId) === String(cinema.id)));
+  if (!assigned.length) return <EmptyState>Bạn không có phân công rạp còn hiệu lực.</EmptyState>;
+  const allowedCinema = assigned.some(cinema => String(cinema.id) === cinemaId) ? cinemaId : String(assigned[0].id);
+  const scopeKey = `${allowedCinema}:${user?.userId}:${user?.permissions?.map(permission => permission.code).sort().join(',')}`;
+  return <section className="catalog-page"><p className="catalog-eyebrow">QUẢN LÝ RẠP</p><h1>Manager Portal</h1>
+    <label>Rạp hiện tại<select aria-label="Rạp hiện tại" value={allowedCinema} onChange={event => setCinemaId(event.target.value)}>
+      {assigned.map(cinema => <option key={cinema.id} value={cinema.id}>{cinema.name} · {cinema.city}</option>)}
+    </select></label>
+    <ManagerWorkspace key={scopeKey} cinemaId={allowedCinema} user={user} />
+  </section>;
+}
+
+function ManagerWorkspace({ cinemaId, user }) {
+  const can = permission => userCanAct(user, 'QUAN_LY_RAP', permission);
+  const [data, setData] = useState({ status: 'loading' });
+  const [editing, setEditing] = useState(null);
+  const [notice, setNotice] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [refresh, setRefresh] = useState(0);
+  const [roomId, setRoomId] = useState('');
+  const [seats, setSeats] = useState({ status: 'idle', rows: [] });
+  const [pricingStatus, setPricingStatus] = useState('');
+  const generation = useRef(0);
+  const seatGeneration = useRef(0);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const load = useCallback(async () => {
-    if (!cinemaId) return;
-    if (user?.cinemaAssignments && !user.cinemaAssignments.some(assignment => String(assignment.cinemaId) === String(cinemaId))) { setData({ status: 'idle' }); return; }
+    const current = ++generation.current;
     setData({ status: 'loading' });
-    const sectionResults = await loadAuthorizedSections(user, 'QUAN_LY_RAP', {
+    const sections = await loadAuthorizedSections(user, 'QUAN_LY_RAP', {
       rooms: { permission: 'QL_PHONG', load: () => api.getRooms(cinemaId) },
       showtimes: { permission: 'QL_SUAT_CHIEU', load: () => api.getManagerShowtimes(cinemaId) },
       pricing: { permission: 'QL_BANG_GIA', load: () => api.getPricing(cinemaId) },
       dashboard: { permission: 'XEM_BAO_CAO_RAP', load: () => api.getDashboard(cinemaId) },
-      revenue: { permission: 'XEM_BAO_CAO_RAP', load: () => api.getRevenue(cinemaId) },
     });
-    setData({ status: 'success', sections: sectionResults, rooms: sectionResults.rooms?.data.rooms ?? [], showtimes: sectionResults.showtimes?.data.showtimes ?? [], pricing: sectionResults.pricing?.data.pricing ?? [], dashboard: sectionResults.dashboard?.data.dashboard, revenue: sectionResults.revenue?.data.revenue ?? [], seats: [] });
+    if (mounted.current && current === generation.current) setData({ status: 'success', sections });
   }, [cinemaId, user]);
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
-  const run = async (action, success) => { setNotice(null); try { await action(); setNotice({ ok: true, text: success }); await load(); } catch (error) { setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message }); } };
-  const loadSeats = async (roomId) => { if (!canSeats) return; try { const result = await api.getSeats(roomId); setData((current) => ({ ...current, seats: result.seats, selectedRoomId: roomId })); setSeat((current) => ({ ...current, roomId: String(roomId) })); } catch (error) { setNotice({ ok: false, text: error.message }); } };
-  if (cinemas.status === 'loading') return <LoadingState>Đang tải rạp được phân công…</LoadingState>; if (cinemas.status === 'error') return <ErrorState error={cinemas.error} />; if (!cinemas.rows.length) return <EmptyState>Bạn không có phân công rạp còn hiệu lực.</EmptyState>;
-  return <section className="catalog-page"><p className="catalog-eyebrow">QUẢN LÝ RẠP</p><h1>Manager Portal</h1><label>Rạp hiện tại <select value={cinemaId} onChange={(e) => setCinemaId(e.target.value)}>{cinemas.rows.map((c) => <option key={c.id} value={c.id}>{c.name} · {c.city}</option>)}</select></label>{notice && <p role={notice.ok ? 'status' : 'alert'}>{notice.text}</p>}{data.status === 'loading' && <LoadingState>Đang tải dữ liệu quản lý…</LoadingState>}{data.status === 'error' && <ErrorState error={data.error} onRetry={load} />}{data.status === 'success' && <>{Object.entries(data.sections ?? {}).filter(([, value]) => value.status === 'error').map(([key, value]) => <ErrorState key={key} error={value.error} />)}{canReports && <section className="catalog-section"><h2>Dashboard</h2><p>Phòng hoạt động: {data.dashboard?.activeRooms ?? 0} · Ghế: {data.dashboard?.activeSeats ?? 0} · Suất hôm nay: {data.dashboard?.showtimesToday ?? 0} · Đơn đã thanh toán hôm nay: {data.dashboard?.paidOrdersToday ?? 0}</p></section>}{canRooms && <section className="catalog-section"><h2>Phòng chiếu</h2><form className="catalog-form" onSubmit={(e) => { e.preventDefault(); void run(() => api.createRoom(cinemaId, room), 'Đã tạo phòng.'); }}><input placeholder="Tên phòng" value={room.name} onChange={(e) => setRoom({ ...room, name: e.target.value })} required /><select value={room.type} onChange={(e) => setRoom({ ...room, type: e.target.value })}>{ROOM_TYPES.map((x) => <option key={x}>{x}</option>)}</select><button className="catalog-button">Tạo phòng</button></form><ul>{data.rooms.map((r) => <li key={r.id}>{r.name} · {r.type} · {r.status} · {r.seatCount} ghế {canSeats && <button type="button" onClick={() => void loadSeats(r.id)}>Ghế</button>} <button type="button" onClick={() => void run(() => api.updateRoom(r.id, { name: r.name, type: r.type, status: r.status === 'Hoạt động' ? 'Bảo trì' : 'Hoạt động' }), 'Đã cập nhật phòng.')}>Đổi trạng thái</button> <button type="button" onClick={() => void run(() => api.deleteRoom(r.id), 'Đã xóa phòng.')}>Xóa</button></li>)}</ul></section>}{canSeats && <section className="catalog-section"><h2>Ghế {data.selectedRoomId ? `phòng #${data.selectedRoomId}` : ''}</h2><label>Mã phòng<input aria-label="Mã phòng xem ghế" type="number" min="1" value={seat.roomId} onChange={(e) => setSeat({ ...seat, roomId: e.target.value })} /></label><button type="button" onClick={() => void loadSeats(seat.roomId)}>Tải ghế</button>{data.selectedRoomId && <><form className="catalog-form" onSubmit={(e) => { e.preventDefault(); void run(() => api.createSeat(data.selectedRoomId, { row: seat.row, number: Number(seat.number), type: seat.type }), 'Đã tạo ghế.'); }}><input value={seat.row} onChange={(e) => setSeat({ ...seat, row: e.target.value })} required /><input type="number" min="1" value={seat.number} onChange={(e) => setSeat({ ...seat, number: e.target.value })} required /><button className="catalog-button">Tạo ghế</button></form><ul>{data.seats.map((s) => <li key={s.id}>{s.label} · {s.type} · {s.status} <button type="button" onClick={() => void run(() => api.updateSeat(s.id, { type: s.type, status: s.status === 'Hoạt động' ? 'Bảo trì' : 'Hoạt động' }), 'Đã cập nhật ghế.')}>Đổi trạng thái</button> <button type="button" onClick={() => void run(() => api.deleteSeat(s.id), 'Đã xóa ghế.')}>Xóa</button></li>)}</ul></>}</section>}{canShowtimes && <section className="catalog-section"><h2>Suất chiếu</h2><form className="catalog-form" onSubmit={(e) => { e.preventDefault(); void run(() => api.createManagerShowtime({ ...showtime, startsAt: businessLocalToInstant(showtime.startsAt), endsAt: businessLocalToInstant(showtime.endsAt), movieId: Number(showtime.movieId), roomId: Number(showtime.roomId), basePrice: Number(showtime.basePrice) }), 'Đã tạo suất chiếu.'); }}><input placeholder="Movie ID" type="number" min="1" value={showtime.movieId} onChange={(e) => setShowtime({ ...showtime, movieId: e.target.value })} required /><input aria-label="Mã phòng suất chiếu" placeholder="Mã phòng" type="number" min="1" value={showtime.roomId} onChange={(e) => setShowtime({ ...showtime, roomId: e.target.value })} required />{canRooms && <select value={showtime.roomId} onChange={(e) => setShowtime({ ...showtime, roomId: e.target.value })} required><option value="">Chọn phòng</option>{data.rooms.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}</select>}<input type="datetime-local" value={showtime.startsAt} onChange={(e) => setShowtime({ ...showtime, startsAt: e.target.value })} required /><input type="datetime-local" value={showtime.endsAt} onChange={(e) => setShowtime({ ...showtime, endsAt: e.target.value })} required /><input type="number" min="0" value={showtime.basePrice} onChange={(e) => setShowtime({ ...showtime, basePrice: e.target.value })} required /><button className="catalog-button">Tạo suất</button></form><ul>{data.showtimes.map((s) => <li key={s.id}>{s.movieTitle} · {s.roomName} · {formatDateTime(s.startsAt)} · {s.status} <button type="button" onClick={() => void run(() => api.cancelManagerShowtime(s.id), 'Đã hủy suất chiếu.')}>Hủy</button></li>)}</ul></section>}{canPricing && <section className="catalog-section"><h2>Bảng giá</h2><form className="catalog-form" onSubmit={(e) => { e.preventDefault(); void run(() => api.createPricing(cinemaId, { ...pricing, surcharge: Number(pricing.surcharge), endsOn: pricing.endsOn || null }), 'Đã tạo bảng giá.'); }}><select value={pricing.seatType} onChange={(e) => setPricing({ ...pricing, seatType: e.target.value })}>{['Thường', 'VIP', 'Sweetbox', 'Đôi', 'Tất cả'].map((x) => <option key={x}>{x}</option>)}</select><input type="number" min="0" value={pricing.surcharge} onChange={(e) => setPricing({ ...pricing, surcharge: e.target.value })} /><input type="date" value={pricing.startsOn} onChange={(e) => setPricing({ ...pricing, startsOn: e.target.value })} required /><button className="catalog-button">Tạo giá</button></form><ul>{data.pricing.map((p) => <li key={p.id}>{p.seatType} · {p.dayType} · {p.format} · {p.surcharge} · {p.status} <button type="button" onClick={() => void run(() => api.updatePricing(p.id, { surcharge: p.surcharge, status: p.status === 'Áp dụng' ? 'Tạm dừng' : 'Áp dụng' }), 'Đã cập nhật bảng giá.')}>Đổi trạng thái</button></li>)}</ul></section>}{canReports && <section className="catalog-section"><h2>Doanh thu</h2>{data.revenue.length ? <ul>{data.revenue.map((r) => <li key={r.date}>{formatDate(r.date)}: {r.totalRevenue} ({r.orderCount} đơn)</li>)}</ul> : <EmptyState>Không có doanh thu trong khoảng mặc định.</EmptyState>}</section>}</>}</section>;
+  const loadSeats = async id => {
+    if (!can('QL_GHE')) return;
+    const current = ++seatGeneration.current;
+    setSeats({ status: 'loading', rows: [] });
+    try {
+      const result = await api.getSeats(id);
+      if (mounted.current && current === seatGeneration.current) {
+        setSeats({ status: 'success', rows: result.seats, roomId: id }); setRoomId(String(id));
+        setEditing(selection => selection?.kind === 'seat' ? null : selection);
+      }
+    } catch (error) { if (mounted.current && current === seatGeneration.current) setSeats({ status: 'error', rows: [], error }); }
+  };
+  const run = async (action, success, reloadSeats = false) => {
+    if (busy) return;
+    setBusy(true); setNotice(null);
+    try {
+      await action();
+      if (!mounted.current) return;
+      setEditing(null); setNotice({ ok: true, text: success });
+      await load(); setRefresh(value => value + 1);
+      if (reloadSeats && seats.roomId) await loadSeats(seats.roomId);
+    } catch (error) {
+      if (mounted.current) setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message });
+      throw error;
+    } finally { if (mounted.current) setBusy(false); }
+  };
+  const action = (fn, text, refreshSeats) => { void run(fn, text, refreshSeats).catch(() => {}); };
+  const list = section => data.sections?.[section]?.data?.[section] ?? [];
+  const form = (kind, create, update) => {
+    const row = editing?.kind === kind ? editing.row : null;
+    return <ManagerResourceForm key={`${kind}:${row?.id ?? 'create'}`} kind={kind} row={row} busy={busy} onCancel={() => setEditing(null)}
+      onSave={body => run(() => row ? update(row.id, body) : create(body), row ? 'Đã cập nhật.' : 'Đã tạo.', kind === 'seat')} />;
+  };
+  return <>
+    {notice && <p role={notice.ok ? 'status' : 'alert'}>{notice.text}</p>}
+    {data.status === 'loading' && <LoadingState>Đang tải dữ liệu quản lý…</LoadingState>}
+    {data.status === 'success' && <>
+      {Object.entries(data.sections).filter(([, section]) => section.status === 'error').map(([name, section]) => <ErrorState key={name} error={section.error} onRetry={load} />)}
+      {can('XEM_BAO_CAO_RAP') && data.sections.dashboard?.status === 'success' && <section className="catalog-section"><h2>Dashboard</h2>
+        <p>Phòng hoạt động: {data.sections.dashboard.data.dashboard?.activeRooms ?? 0} · Ghế: {data.sections.dashboard.data.dashboard?.activeSeats ?? 0} · Suất hôm nay: {data.sections.dashboard.data.dashboard?.showtimesToday ?? 0} · Đơn đã thanh toán hôm nay: {data.sections.dashboard.data.dashboard?.paidOrdersToday ?? 0}</p>
+      </section>}
+      {can('QL_PHONG') && <section className="catalog-section" aria-label="Phòng chiếu"><h2>Phòng chiếu</h2>
+        {form('room', body => api.createRoom(cinemaId, body), api.updateRoom)}
+        {data.sections.rooms?.status === 'success' && (list('rooms').length ? <ul>{list('rooms').map(room => <li key={room.id}>{room.name} · {room.type} · {room.status} · {room.seatCount} ghế
+          {can('QL_GHE') && <button type="button" onClick={() => void loadSeats(room.id)}>Ghế</button>}
+          <button type="button" disabled={busy} onClick={() => setEditing({ kind: 'room', row: room })}>Sửa phòng</button>
+          <button type="button" disabled={busy} onClick={() => action(() => api.deleteRoom(room.id), 'Đã xóa phòng.')}>Xóa</button>
+        </li>)}</ul> : <EmptyState>Chưa có phòng chiếu.</EmptyState>)}
+      </section>}
+      {can('QL_GHE') && <section className="catalog-section" aria-label="Ghế"><h2>Ghế {seats.roomId ? `phòng #${seats.roomId}` : ''}</h2>
+        <label>Mã phòng<input aria-label="Mã phòng xem ghế" type="number" min="1" value={roomId} onChange={event => setRoomId(event.target.value)} /></label>
+        <button type="button" disabled={busy} onClick={() => void loadSeats(roomId)}>Tải ghế</button>
+        {seats.status === 'loading' && <LoadingState>Đang tải ghế…</LoadingState>}
+        {seats.status === 'error' && <ErrorState error={seats.error} onRetry={() => void loadSeats(roomId)} />}
+        {seats.status === 'success' && <>
+          {form('seat', body => api.createSeat(seats.roomId, body), api.updateSeat)}
+          {seats.rows?.length ? <ul>{seats.rows.map(seat => <li key={seat.id}>{seat.label} · {seat.type} · {seat.status}
+            <button type="button" disabled={busy} onClick={() => setEditing({ kind: 'seat', row: seat })}>Sửa ghế</button>
+            <button type="button" disabled={busy} onClick={() => action(() => api.deleteSeat(seat.id), 'Đã xóa ghế.', true)}>Xóa</button>
+          </li>)}</ul> : <EmptyState>Chưa có ghế trong phòng.</EmptyState>}
+        </>}
+      </section>}
+      {can('QL_SUAT_CHIEU') && <section className="catalog-section" aria-label="Suất chiếu"><h2>Suất chiếu</h2>
+        {form('showtime', api.createManagerShowtime, api.updateManagerShowtime)}
+        {data.sections.showtimes?.status === 'success' && (list('showtimes').length ? <ul>{list('showtimes').map(showtime => <li key={showtime.id}>{showtime.movieTitle} · {showtime.roomName} · {formatDateTime(showtime.startsAt)} · {showtime.format} · {showtime.basePrice} · {showtime.status}
+          <button type="button" disabled={busy} onClick={() => setEditing({ kind: 'showtime', row: showtime })}>Sửa suất</button>
+          <button type="button" disabled={busy} onClick={() => action(() => api.cancelManagerShowtime(showtime.id), 'Đã hủy suất chiếu.')}>Hủy</button>
+        </li>)}</ul> : <EmptyState>Chưa có suất chiếu.</EmptyState>)}
+      </section>}
+      {can('QL_BANG_GIA') && <section className="catalog-section" aria-label="Bảng giá"><h2>Bảng giá</h2>
+        {form('pricing', body => api.createPricing(cinemaId, body), api.updatePricing)}
+        <label>Lọc trạng thái bảng giá<select aria-label="Lọc trạng thái bảng giá" value={pricingStatus} onChange={event => setPricingStatus(event.target.value)}><option value="">Tất cả</option>{RESOURCE_STATUSES.pricing.map(status => <option key={status}>{status}</option>)}</select></label>
+        {data.sections.pricing?.status === 'success' && (list('pricing').filter(row => !pricingStatus || row.status === pricingStatus).length ? <ul>{list('pricing').filter(row => !pricingStatus || row.status === pricingStatus).map(pricing => <li key={pricing.id}>{pricing.seatType} · {pricing.dayType} · {pricing.format} · {pricing.surcharge} · {formatDate(pricing.startsOn)} — {formatDate(pricing.endsOn)} · {pricing.status}
+          <button type="button" disabled={busy} onClick={() => setEditing({ kind: 'pricing', row: pricing })}>Sửa giá</button>
+        </li>)}</ul> : <EmptyState>Không có bảng giá phù hợp.</EmptyState>)}
+      </section>}
+    </>}
+    {can('XEM_BAO_CAO_RAP') && <ManagerRevenue cinemaId={cinemaId} refresh={refresh} />}
+  </>;
 }

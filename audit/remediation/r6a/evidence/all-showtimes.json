@@ -1,0 +1,80 @@
+{
+  "query": "SELECT s.SuatChieuID,s.PhimID,s.PhongID,s.TrangThai,s.ThoiGianBatDau,s.ThoiGianKetThuc,\n    CONVERT(varchar(10),dbo.fn_NgayKinhDoanh(s.ThoiGianBatDau),23) AS businessDate,\n    p.ThoiLuong,CONVERT(varchar(10),p.NgayKhoiChieu,23) AS releaseDate,CONVERT(varchar(10),p.NgayKetThuc,23) AS endDate,\n    CASE WHEN s.ThoiGianKetThuc<=@AuditNow THEN 'PAST' WHEN s.ThoiGianBatDau<=@AuditNow THEN 'CURRENT' ELSE 'FUTURE' END AS timeClass,\n    DATEDIFF(MINUTE,s.ThoiGianBatDau,s.ThoiGianKetThuc) AS durationMinutes,\n    (SELECT COUNT(*) FROM dbo.DONDATVE d WHERE d.SuatChieuID=s.SuatChieuID) AS bookingCount\n    FROM dbo.SUATCHIEU s JOIN dbo.PHIM p ON p.PhimID=s.PhimID ORDER BY s.SuatChieuID",
+  "rows": [
+    {
+      "SuatChieuID": 1,
+      "PhimID": 1,
+      "PhongID": 1,
+      "TrangThai": "Hoàn thành",
+      "ThoiGianBatDau": "2026-10-01T11:00:00.000Z",
+      "ThoiGianKetThuc": "2026-10-01T13:46:00.000Z",
+      "businessDate": "2026-10-01",
+      "ThoiLuong": 166,
+      "releaseDate": "2026-09-03",
+      "endDate": "2027-10-03",
+      "timeClass": "PAST",
+      "durationMinutes": 166,
+      "bookingCount": 0
+    },
+    {
+      "SuatChieuID": 2,
+      "PhimID": 1,
+      "PhongID": 1,
+      "TrangThai": "Mở bán",
+      "ThoiGianBatDau": "2026-10-03T19:00:00.000Z",
+      "ThoiGianKetThuc": "2026-10-03T21:46:00.000Z",
+      "businessDate": "2026-10-04",
+      "ThoiLuong": 166,
+      "releaseDate": "2026-09-03",
+      "endDate": "2027-10-03",
+      "timeClass": "PAST",
+      "durationMinutes": 166,
+      "bookingCount": 0
+    },
+    {
+      "SuatChieuID": 3,
+      "PhimID": 1,
+      "PhongID": 2,
+      "TrangThai": "Mở bán",
+      "ThoiGianBatDau": "2026-10-03T22:00:00.000Z",
+      "ThoiGianKetThuc": "2026-10-04T00:46:00.000Z",
+      "businessDate": "2026-10-04",
+      "ThoiLuong": 166,
+      "releaseDate": "2026-09-03",
+      "endDate": "2027-10-03",
+      "timeClass": "PAST",
+      "durationMinutes": 166,
+      "bookingCount": 0
+    },
+    {
+      "SuatChieuID": 4,
+      "PhimID": 2,
+      "PhongID": 4,
+      "TrangThai": "Mở bán",
+      "ThoiGianBatDau": "2026-10-03T20:00:00.000Z",
+      "ThoiGianKetThuc": "2026-10-03T22:11:00.000Z",
+      "businessDate": "2026-10-04",
+      "ThoiLuong": 131,
+      "releaseDate": "2026-09-03",
+      "endDate": "2027-10-03",
+      "timeClass": "PAST",
+      "durationMinutes": 131,
+      "bookingCount": 0
+    },
+    {
+      "SuatChieuID": 5,
+      "PhimID": 4,
+      "PhongID": 6,
+      "TrangThai": "Mở bán",
+      "ThoiGianBatDau": "2026-10-03T21:00:00.000Z",
+      "ThoiGianKetThuc": "2026-10-03T22:50:00.000Z",
+      "businessDate": "2026-10-04",
+      "ThoiLuong": 110,
+      "releaseDate": "2026-09-03",
+      "endDate": "2027-10-03",
+      "timeClass": "PAST",
+      "durationMinutes": 110,
+      "bookingCount": 0
+    }
+  ]
+}

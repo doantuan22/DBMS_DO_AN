@@ -156,8 +156,15 @@ export function pricingCreate(value) {
 }
 
 export function pricingUpdate(value) {
-  const body = objectOnly(value, ['surcharge', 'status']);
+  const dimensions = ['seatType', 'dayType', 'format', 'startsOn', 'endsOn'];
+  const body = objectOnly(value, ['surcharge', 'status', ...dimensions]);
+  // Existing surcharge/status updates remain valid. A full condition edit carries
+  // the complete date range, including an explicit null for an open end date.
+  const conditions = dimensions.some((field) => Object.hasOwn(body, field))
+    ? pricingCreate(Object.fromEntries([...dimensions, 'surcharge'].map((field) => [field, body[field]])))
+    : {};
   return {
+    ...conditions,
     surcharge: nonNegative(body.surcharge, 'surcharge'),
     status: enumValue(body.status, 'status', PRICING_STATUSES),
   };

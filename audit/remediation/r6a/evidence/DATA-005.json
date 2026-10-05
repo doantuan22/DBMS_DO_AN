@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "finding": "DATA-005",
+  "database": "CinemaBookingDB",
+  "auditNow": "2026-10-05T05:16:27.677Z",
+  "businessDate": "2026-10-05",
+  "query": "scripts/r6a/queries/DATA-005.sql",
+  "querySha256": "c9935781f5e1a1e76468573d5de5813ba0e7ae398e4cd13d149b84cd9392dc0a",
+  "results": {
+    "futureProfiles": [],
+    "originalUsers": [
+      {
+        "NguoiDungID": 17,
+        "originalAccountState": "ABSENT",
+        "originalProfileState": "ABSENT",
+        "futureDOB": null
+      },
+      {
+        "NguoiDungID": 26,
+        "originalAccountState": "ABSENT",
+        "originalProfileState": "ABSENT",
+        "futureDOB": null
+      }
+    ],
+    "nullableDOB": [
+      {
+        "tableName": "HOSOKHACHHANG",
+        "columnName": "NgaySinh",
+        "is_nullable": true
+      }
+    ]
+  }
+}

@@ -29,9 +29,25 @@ BEGIN
         SELECT N'Khiếu nại này không gắn với đơn đặt vé tham chiếu cụ thể nào.' AS [Message];
         RETURN;
     END;
-    SELECT DonDatVeID, NguoiDungID, HoTenKhachHang, Email, SoDienThoai, TenPhim, TenRap,
-           TenPhong, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, NgayDat, TongTienVe,
-           TongTienDoAn, TienGiamGia, TongTienThanhToan, TrangThaiDon, DanhSachGhe, DanhSachMaVe
-    FROM dbo.vw_ChiTietDonDatVe WHERE DonDatVeID = @DonDatVeID;
+    -- Resolve the order only from this complaint; there is no caller-supplied order ID.
+    IF NOT EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID = @DonDatVeID)
+        THROW 50030, N'Đơn tham chiếu không tồn tại.', 1;
+    SELECT v.*, d.LyDoHuy, d.ThongBaoHuy, b.DiemBoiThuong, b.NgayBoiThuong
+    FROM dbo.vw_ChiTietDonDatVe v
+    INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = v.DonDatVeID
+    LEFT JOIN dbo.BOITHUONG_HUYSUAT b ON b.DonDatVeID = v.DonDatVeID
+    WHERE v.DonDatVeID = @DonDatVeID;
+    -- Preserve cancelled tickets and every payment attempt in the read contract.
+    SELECT cv.VeID, cv.MaVe, g.GheID, g.HangGhe, g.SoGhe,
+           g.HangGhe + CAST(g.SoGhe AS VARCHAR(10)) AS TenGhe, g.LoaiGhe,
+           cv.GiaVe, cv.TrangThai AS TrangThaiVe
+    FROM dbo.CHITIETVE cv INNER JOIN dbo.GHE g ON g.GheID = cv.GheID
+    WHERE cv.DonDatVeID = @DonDatVeID ORDER BY cv.VeID;
+    SELECT cda.ChiTietDoAnID, sp.SanPhamID, sp.TenSanPham, sp.LoaiSanPham,
+           cda.SoLuong, cda.DonGia, cda.SoLuong * cda.DonGia AS ThanhTien
+    FROM dbo.CHITIETDOAN cda INNER JOIN dbo.SANPHAM sp ON sp.SanPhamID = cda.SanPhamID
+    WHERE cda.DonDatVeID = @DonDatVeID ORDER BY cda.ChiTietDoAnID;
+    SELECT ThanhToanID, PhuongThuc, SoTien, NgayTao, NgayThanhToan, MaGiaoDich, TrangThai, GhiChu
+    FROM dbo.THANHTOAN WHERE DonDatVeID = @DonDatVeID ORDER BY ThanhToanID;
 END;
 GO

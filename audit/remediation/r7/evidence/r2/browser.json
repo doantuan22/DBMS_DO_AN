@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "engine": "Dedicated headless Chrome; real React pages with isolated HTTP fixtures",
+  "result": {
+    "expiry": {
+      "disabledAtCountdown": true,
+      "serverAuthoritative": true,
+      "orderRefreshed": true,
+      "seatsRefreshed": true
+    },
+    "singleConfirmation": true,
+    "paymentHistoryVisible": true,
+    "noRefundControls": true,
+    "manager409Reason": true,
+    "admin409Reason": true,
+    "calls": [
+      {
+        "route": "/api/orders/1",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/orders/1",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/showtimes/1/seats",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/orders/1",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/orders/1/payments",
+        "method": "POST",
+        "body": {
+          "paymentMethod": "VNPAY"
+        }
+      },
+      {
+        "route": "/api/orders/1/payments/10/result",
+        "method": "POST",
+        "body": {
+          "status": "Thành công"
+        }
+      },
+      {
+        "route": "/api/manager/cinemas",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/manager/cinemas/1/revenue",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/manager/cinemas/1/rooms",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/manager/cinemas/1/showtimes",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/manager/cinemas/1/pricing",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/manager/cinemas/1/dashboard",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/manager/showtimes/1/cancel",
+        "method": "POST",
+        "body": {}
+      },
+      {
+        "route": "/api/admin/dashboard",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/admin/showtimes",
+        "method": "GET",
+        "body": null
+      },
+      {
+        "route": "/api/admin/showtimes/1/cancel",
+        "method": "POST",
+        "body": {}
+      }
+    ]
+  }
+}

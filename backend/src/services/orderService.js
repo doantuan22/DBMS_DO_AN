@@ -32,7 +32,7 @@ function paymentDto(row) {
   return { id: row.ThanhToanID, method: row.PhuongThuc, amount: number(row.SoTien), createdAt: row.NgayTao, paidAt: row.NgayThanhToan, transactionCode: row.MaGiaoDich, status: row.TrangThai, note: row.GhiChu };
 }
 
-function detailDto(result) {
+export function detailDto(result) {
   const row = rowOf(result, 0)[0];
   if (!row) throw new HttpError(500, 'ORDER_RESPONSE_INVALID', 'Order procedure did not return the order.');
   return {

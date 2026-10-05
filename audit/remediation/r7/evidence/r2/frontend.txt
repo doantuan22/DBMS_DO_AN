@@ -1,0 +1,48 @@
+✔ Admin portal exposes the ADM resource work areas, including global cinema resources (220.932ms)
+✔ cinema image status is chosen from the whitelist, not typed freely (1.0489ms)
+✔ login page renders accessible email and password controls (158.3636ms)
+✔ customer registration renders profile fields without a role selector (2.3495ms)
+✔ initialization restores a user only when a session token exists (1.4212ms)
+✔ login stores one token, loads current user, and logout clears it (0.2519ms)
+✔ failed current-user refresh clears the just-issued token (0.5131ms)
+✔ area routing and navigation require both the expected role and DB-loaded permission (1.1596ms)
+✔ R2 held-order cancellation conflicts explain the waiting reason in Vietnamese (132.2653ms)
+✔ the limits are the agreed ones and live in one constants module (0.6729ms)
+✔ seat selection stops at 10 seats and the 11th seat is refused (0.3242ms)
+✔ product quantity is clamped to 10 and reports when the user asked for more (0.3425ms)
+✔ seat map shows the counter, flags the limit and the notice (7.8465ms)
+✔ product picker caps the input at 10 and says so at the cap (5.9192ms)
+✔ limit and hold errors of the booking flow have friendly Vietnamese messages (0.2404ms)
+✔ home, movie list, and cinema list render loading states (373.2793ms)
+✔ movie cards link to the real movie identifier (1.2271ms)
+✔ movie detail and selected-showtime route render loading shells for guests (3.7492ms)
+✔ cinema/date selectors render API-backed choices and showtime selection carries its ID (7.0235ms)
+✔ showtime browser has empty and loading states (1.0083ms)
+✔ seat map preserves each database state and only enables empty seats (0.7926ms)
+✔ product picker submits quantities without accepting a product price from the user (0.6799ms)
+✔ guest can render the public movie route without authentication (5.5127ms)
+✔ order history, detail and payment pages render database-backed loading shells (2.2899ms)
+✔ catalog resources represent success, empty results, and errors (1.2977ms)
+✔ showtime filters omit unselected values and use a stable local calendar date (5.5284ms)
+✔ Vietnam datetime-local create/edit roundtrip preserves the instant (10.3663ms)
+✔ near midnight conversion keeps the local date across UTC day boundary (2.0576ms)
+✔ date-only formatting and invalid inputs cannot silently change dates (1.798ms)
+✔ countdown uses the server deadline at expiry minus/equal/plus one second (0.2709ms)
+✔ display and datetime-local conversion are independent of browser host timezone (222.7723ms)
+✔ own Customer history and Manager/Admin areas do not require a representative write permission (1.3557ms)
+✔ the same permission never makes a foreign role eligible and every Support combination is required (0.2357ms)
+✔ partial-grant loads skip unauthorized APIs and an API failure cannot discard other sections (0.3989ms)
+✔ R5 BUG008: empty CSV permissions/genres stay empty; invalid IDs are not silently dropped (1.3369ms)
+✔ R5 BUG002: all status-bearing Admin forms have shared DB enum options (0.2868ms)
+✔ R7 edit hydration roundtrips UTC and DATE_ONLY, excluding immutable IDs/room and hidden fields (181.7162ms)
+✔ R7 gallery excludes inactive images, sorts cover first then display order, and has accessible empty/single/multi output (7.1254ms)
+✔ R7 reference shows financial totals and every payment attempt plus compensation (4.5805ms)
+✔ CSKH portal renders queue filters and a protected loading state (190.9758ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3439.7215

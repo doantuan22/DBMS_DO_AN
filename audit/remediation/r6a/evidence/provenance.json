@@ -1,0 +1,650 @@
+{
+  "status": "PASS",
+  "seed": {
+    "users": {
+      "file": "database/10_seed/004_reference.sql",
+      "sha256": "f9f73ed94627277f59fe0225850b35cd89ab5a095919ad11af427d37ed73d7b7"
+    },
+    "userRoleChecks": [
+      {
+        "NguoiDungID": 1,
+        "VaiTroID": 1
+      },
+      {
+        "NguoiDungID": 2,
+        "VaiTroID": 2
+      },
+      {
+        "NguoiDungID": 3,
+        "VaiTroID": 2
+      },
+      {
+        "NguoiDungID": 4,
+        "VaiTroID": 3
+      },
+      {
+        "NguoiDungID": 5,
+        "VaiTroID": 4
+      },
+      {
+        "NguoiDungID": 6,
+        "VaiTroID": 4
+      },
+      {
+        "NguoiDungID": 7,
+        "VaiTroID": 4
+      },
+      {
+        "NguoiDungID": 8,
+        "VaiTroID": 4
+      }
+    ],
+    "profileChecks": [
+      {
+        "NguoiDungID": 5,
+        "seedProfilePresent": true,
+        "dateMatchesSeed": true,
+        "pointsMatchSeed": true
+      },
+      {
+        "NguoiDungID": 6,
+        "seedProfilePresent": true,
+        "dateMatchesSeed": true,
+        "pointsMatchSeed": true
+      },
+      {
+        "NguoiDungID": 7,
+        "seedProfilePresent": true,
+        "dateMatchesSeed": true,
+        "pointsMatchSeed": true
+      },
+      {
+        "NguoiDungID": 8,
+        "seedProfilePresent": true,
+        "dateMatchesSeed": true,
+        "pointsMatchSeed": true
+      }
+    ],
+    "assignments": {
+      "file": "database/10_seed/006_reference.sql",
+      "sha256": "d11705477c2a3422c8b715758a95ea870fa0cddfcdafebaf48690585f981c94f"
+    },
+    "showtimes": {
+      "file": "database/10_seed/014_reference.sql",
+      "sha256": "b2e0f8541068dd44d51de384f3e3373e7cfbc74d12452c113f34fadc15a5e34c"
+    },
+    "inferredSeedDay": "2026-10-03",
+    "seedDayEvidence": "All five showtimes match the seed schedule for this business day; this is an inference, not an execution log.",
+    "showChecks": [
+      {
+        "SuatChieuID": 1,
+        "matchesSeedSchedule": true
+      },
+      {
+        "SuatChieuID": 2,
+        "matchesSeedSchedule": true
+      },
+      {
+        "SuatChieuID": 3,
+        "matchesSeedSchedule": true
+      },
+      {
+        "SuatChieuID": 4,
+        "matchesSeedSchedule": true
+      },
+      {
+        "SuatChieuID": 5,
+        "matchesSeedSchedule": true
+      }
+    ],
+    "promotions": {
+      "file": "database/10_seed/016_reference.sql",
+      "sha256": "d355ec46862264516941a4e2849416bd45583e68ffd29d8e740bb7b069b3fea1"
+    },
+    "promotionSeedCounters": [
+      {
+        "KhuyenMaiID": 1,
+        "counter": 0
+      },
+      {
+        "KhuyenMaiID": 2,
+        "counter": 0
+      },
+      {
+        "KhuyenMaiID": 3,
+        "counter": 0
+      }
+    ]
+  },
+  "r1": {
+    "evidence": {
+      "file": "audit/remediation/evidence/migration-CinemaBookingDB.json",
+      "sha256": "35d6546e56fd4117544fb5c36c4e482934bb9b67501f5a28d42b788be8f31991"
+    },
+    "status": "PASS",
+    "provenance": {
+      "r0Commit": "9867d15ba93f73dd8afcd618f99ab1c226289e11",
+      "all26BeforeMatch": true,
+      "all26AfterMatch": true,
+      "origin": "Exact immutable R0 seed; SQL-local seed literals/default clock, no API-generated rows"
+    },
+    "dateOnlyChanged": 0,
+    "ambiguousHistoricalRowsModified": 0,
+    "preMigrationInventory": {
+      "evidence": {
+        "file": "audit/remediation/evidence/historical-data-pre-migration-check.json",
+        "sha256": "fefd484b2486c63b2543c008329523119697748501c9c6d0edbcb16fc153e526"
+      },
+      "tables": [
+        {
+          "table": "DANHGIAPHIM",
+          "rows": 0,
+          "modified": 0
+        },
+        {
+          "table": "DONDATVE",
+          "rows": 0,
+          "modified": 0
+        },
+        {
+          "table": "HINHANH_RAPCHIEUPHIM",
+          "rows": 3,
+          "modified": 0
+        },
+        {
+          "table": "KHIEUNAI",
+          "rows": 0,
+          "modified": 0
+        },
+        {
+          "table": "KHUYENMAI",
+          "rows": 3,
+          "modified": 0
+        },
+        {
+          "table": "NGUOIDUNG",
+          "rows": 8,
+          "modified": 0
+        },
+        {
+          "table": "SUATCHIEU",
+          "rows": 5,
+          "modified": 0
+        },
+        {
+          "table": "THANHTOAN",
+          "rows": 0,
+          "modified": 0
+        },
+        {
+          "table": "VAITRO_QUYEN",
+          "rows": 40,
+          "modified": 0
+        },
+        {
+          "table": "XULY_KHIEUNAI",
+          "rows": 0,
+          "modified": 0
+        }
+      ]
+    },
+    "meaning": "Main was already the exact immutable R0 seed before R1; bookings/payments were absent then. R1 converted proven seed timestamps only. The event that removed pre-R0 records is not established by these files."
+  },
+  "r5": {
+    "evidence": {
+      "file": "audit/remediation/r5/evidence/main-after.json",
+      "sha256": "5dfe1e5744dfabf9089aebeb64c0b25adbf6d9e0322ff5736c843133f4a0a3d6"
+    },
+    "dataVersusR5": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "matchesR5": true
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "matchesR5": true
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "matchesR5": true
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "matchesR5": true
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "matchesR5": true
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "matchesR5": true
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "matchesR5": true
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "matchesR5": true
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "matchesR5": true
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "matchesR5": true
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "matchesR5": true
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "matchesR5": true
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "matchesR5": true
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "matchesR5": true
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "matchesR5": true
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "matchesR5": true
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "matchesR5": true
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "matchesR5": true
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "matchesR5": true
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "matchesR5": true
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "matchesR5": true
+      }
+    ],
+    "moduleMatch": true,
+    "schemaMatch": true,
+    "grantsMatch": true
+  },
+  "historicalOriginUnproven": [
+    "order20",
+    "orders26/27/28 and show34",
+    "old short/outside-window shows",
+    "user17",
+    "user21",
+    "old cancelled assignment group user3/cinema3",
+    "old promotion counter event history"
+  ],
+  "sourceReferences": [
+    {
+      "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "sha256": "537dd34c1f7e298575bc2590a2b6b682a74869fa811f9d5cbba033e4b15c7c92",
+      "references": [
+        {
+          "line": 78,
+          "text": "IF @TrangThaiSuatChieu <> N'Mở bán' OR @ThoiGianBatDau <= dbo.fn_BayGio()"
+        },
+        {
+          "line": 80,
+          "text": ";THROW 50022, N'Suất chiếu đã kết thúc, đã đóng bán hoặc bị hủy.', 1;"
+        },
+        {
+          "line": 242,
+          "text": "SET SoLuongDaDung = SoLuongDaDung + 1"
+        },
+        {
+          "line": 303,
+          "text": "COMMIT TRANSACTION;"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/customer/sp_Order_Cancel.sql",
+      "sha256": "8cf33b4daa434af63e3c27a9b283fe42864dfd0661fab7d4a1abfc3213f4807a",
+      "references": [
+        {
+          "line": 29,
+          "text": "IF @TrangThai <> N'Chờ thanh toán'"
+        },
+        {
+          "line": 31,
+          "text": ";THROW 50035, N'Chỉ có thể hủy đơn khi đang ở trạng thái Chờ thanh toán.', 1;"
+        },
+        {
+          "line": 48,
+          "text": "SET SoLuongDaDung = CASE WHEN SoLuongDaDung > 0 THEN SoLuongDaDung - 1 ELSE 0 END"
+        },
+        {
+          "line": 52,
+          "text": "COMMIT TRANSACTION;"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/customer/sp_Order_ExpirePending.sql",
+      "sha256": "81287b0a490a9ef58502757f04ac08d8b1fd9dc869ac9095c93f88ff2fde9372",
+      "references": [
+        {
+          "line": 26,
+          "text": "OUTPUT inserted.DonDatVeID, inserted.KhuyenMaiID INTO @Het (DonDatVeID, KhuyenMaiID)"
+        },
+        {
+          "line": 29,
+          "text": "AND (d.HanGiuCho IS NULL OR d.HanGiuCho <= dbo.fn_BayGio())"
+        },
+        {
+          "line": 43,
+          "text": "SET km.SoLuongDaDung = CASE WHEN km.SoLuongDaDung >= x.SoLan THEN km.SoLuongDaDung - x.SoLan ELSE 0 END"
+        },
+        {
+          "line": 50,
+          "text": "COMMIT TRANSACTION;"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/system/sp_Showtime_CancelCascade.sql",
+      "sha256": "c9eb4f0ca6fb9a703d573b12cf9ce7fb874cae38ed5ebc3c41ba9492d61ee57a",
+      "references": [
+        {
+          "line": 45,
+          "text": "IF @OwnTran = 1 COMMIT TRANSACTION;"
+        },
+        {
+          "line": 50,
+          "text": "THROW 50119, N'Không thể hủy suất chiếu đã bắt đầu hoặc đã bị hủy.', 1;"
+        },
+        {
+          "line": 55,
+          "text": "THROW 50118, N'Không thể hủy suất chiếu vì còn đơn giữ ghế/chờ thanh toán còn hiệu lực.', 1;"
+        },
+        {
+          "line": 67,
+          "text": "SET SoLuongDaDung = CASE WHEN km.SoLuongDaDung >= x.SoLan THEN km.SoLuongDaDung - x.SoLan ELSE 0 END"
+        },
+        {
+          "line": 75,
+          "text": "-- No payment writes and no reversal of previously earned loyalty points."
+        },
+        {
+          "line": 84,
+          "text": "AND NOT EXISTS (SELECT 1 FROM dbo.BOITHUONG_HUYSUAT b WITH (UPDLOCK, HOLDLOCK) WHERE b.DonDatVeID = d.DonDatVeID);"
+        },
+        {
+          "line": 96,
+          "text": "FROM dbo.fn_TinhBoiThuongVe(@TongTienVe, @TongTienDoAn, @TienGiamGia) c;"
+        },
+        {
+          "line": 97,
+          "text": "INSERT dbo.BOITHUONG_HUYSUAT (DonDatVeID, DiemBoiThuong, NgayBoiThuong, GhiChu)"
+        },
+        {
+          "line": 110,
+          "text": "UPDATE h SET DiemTichLuy = h.DiemTichLuy + c.Points"
+        },
+        {
+          "line": 128,
+          "text": "IF @OwnTran = 1 COMMIT TRANSACTION;"
+        }
+      ]
+    },
+    {
+      "file": "database/05_functions/fn_TinhBoiThuongVe.sql",
+      "sha256": "3b656f6804f1645af0fcc026666a844cb271f4d11a4c53921064e88dadc71ce9",
+      "references": [
+        {
+          "line": 9,
+          "text": "-- Proportional allocation: Ve - Giam * Ve / (Ve + DoAn)."
+        },
+        {
+          "line": 11,
+          "text": "-- Use the remainder to avoid division rounding a sub-point value up before FLOOR."
+        },
+        {
+          "line": 13,
+          "text": "CAST(FLOOR(ISNULL((n.TuSo - n.TuSo % NULLIF(p.MauDiem, 0)) / NULLIF(p.MauDiem, 0), 0)) AS BIGINT) AS DiemCong"
+        },
+        {
+          "line": 19,
+          "text": "CROSS APPLY (SELECT CAST(c.TongCent * CAST(100000 AS DECIMAL(6,0)) AS DECIMAL(25,0)) AS MauDiem) p"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/public/sp_Promotion_Validate.sql",
+      "sha256": "c0e6dcccaddae9904361b5c8d9a01977c75842aa01f1473337aaae65ec577765",
+      "references": [
+        {
+          "line": 38,
+          "text": "DECLARE @SoLuong INT;"
+        },
+        {
+          "line": 39,
+          "text": "DECLARE @SoLuongDaDung INT;"
+        },
+        {
+          "line": 50,
+          "text": "@SoLuong = SoLuong,"
+        },
+        {
+          "line": 51,
+          "text": "@SoLuongDaDung = SoLuongDaDung,"
+        },
+        {
+          "line": 74,
+          "text": "IF @SoLuongDaDung >= @SoLuong"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/public/sp_Showtime_ListByMovie.sql",
+      "sha256": "cd3b200dfea86aa9e80edcaef80103af52a22ec93a626cf7b63e6f2690613699",
+      "references": [
+        {
+          "line": 44,
+          "text": "AND TrangThaiSuatChieu = N'Mở bán'"
+        },
+        {
+          "line": 45,
+          "text": "AND ThoiGianBatDau > dbo.fn_BayGio()"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "sha256": "33a3505de813ce18c6d15c07dcb3fed66afd48516af395d08551ea0105977cb4",
+      "references": [
+        {
+          "line": 36,
+          "text": "UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,"
+        },
+        {
+          "line": 37,
+          "text": "DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "sha256": "48475e5b8b33ee3dff99eff9a41a04424047137151307d166cbc15969f8c7a8a",
+      "references": [
+        {
+          "line": 37,
+          "text": "UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,"
+        },
+        {
+          "line": 38,
+          "text": "DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;"
+        }
+      ]
+    },
+    {
+      "file": "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+      "sha256": "beb19a6b4f6da1a455329d3b080dd7b387a9f3d5289c0006f8ecb7e54f952518",
+      "references": [
+        {
+          "line": 10,
+          "text": "DECLARE @Span DECIMAL(20,7)=DATEDIFF_BIG(SECOND,@ThoiGianBatDau,@ThoiGianKetThuc)"
+        },
+        {
+          "line": 14,
+          "text": "OR @ThoiGianBatDau < dbo.fn_BayGio() OR @ThoiGianKetThuc <= @ThoiGianBatDau"
+        },
+        {
+          "line": 17,
+          "text": "(@Span < CONVERT(BIGINT,@ThoiLuong)*60 OR @Span > (CONVERT(BIGINT,@ThoiLuong)+120)*60))"
+        }
+      ]
+    },
+    {
+      "file": "database/05_functions/fn_HomNay.sql",
+      "sha256": "6d47655108d6cf873cc45a344ee867f225ae4e7b72dc13cd3d4e4596ddde74b6",
+      "references": [
+        {
+          "line": 8,
+          "text": "RETURN dbo.fn_NgayKinhDoanh(dbo.fn_BayGio());"
+        }
+      ]
+    },
+    {
+      "file": "database/05_functions/fn_NgayKinhDoanh.sql",
+      "sha256": "f43590a621911953e93ff81866b37951326251a481d0fe8fe9d9ad95a1e9673c",
+      "references": [
+        {
+          "line": 8,
+          "text": "RETURN CONVERT(DATE, dbo.fn_GioRap(@UtcInstant));"
+        }
+      ]
+    },
+    {
+      "file": "backend/src/jobs/expirePendingOrders.js",
+      "sha256": "6942b5a3f518acb2207dba1ba1b27c1067c495d0aeb4021674f64622fbedf651",
+      "references": [
+        {
+          "line": 15,
+          "text": "const result = await execute('EXPIRE_PENDING_ORDERS');"
+        },
+        {
+          "line": 25,
+          "text": "const timer = setInterval(tick, intervalMs);"
+        }
+      ]
+    },
+    {
+      "file": "shared/resourceContract.mjs",
+      "sha256": "36da8fba44b2747a5deed1119e8f0bc8d2ccaf50702ab343cb5d6b1844f28cdf",
+      "references": [
+        {
+          "line": 14,
+          "text": "showtimes: ['Mở bán', 'Đóng bán', 'Đã hủy', 'Hoàn thành'],"
+        }
+      ]
+    },
+    {
+      "file": "frontend/src/pages/MovieDetail.jsx",
+      "sha256": "aa5d4c46bbee103cf7c20b72271f983f01e445759b6256fd3151d29af809d138",
+      "references": [
+        {
+          "line": 3,
+          "text": "import { getCinemas, getMovieDetail, getShowtimes } from '../api/catalogApi';"
+        },
+        {
+          "line": 5,
+          "text": "import ShowtimeBrowser from '../components/ShowtimeBrowser';"
+        },
+        {
+          "line": 32,
+          "text": "loadResource(() => getShowtimes(movieId, showtimeFilters(cinemaId, date), { signal: controller.signal })).then((result) => {"
+        },
+        {
+          "line": 70,
+          "text": "{!cinemaError && <ShowtimeBrowser cinemas={cinemas} cinemaId={cinemaId} date={date} onCinemaChange={setCinemaId} onDateChange={setDate} state={showtimeResource} />}"
+        }
+      ]
+    },
+    {
+      "file": "frontend/src/components/ShowtimeBrowser.jsx",
+      "sha256": "c607edfca00e7c0e02cb42c825bb18de96c4756ea01380f86848568a8f81b5c9",
+      "references": [
+        {
+          "line": 13,
+          "text": "{state.data.map((showtime) => ("
+        },
+        {
+          "line": 21,
+          "text": "<Link className=\"catalog-button\" to={`/booking/${showtime.id}`}>Chọn suất này</Link>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "status": "PASS",
+  "database": "CinemaBookingDB_R0_R1_R2_R5R7Evidence",
+  "requests": [
+    {
+      "gap": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": null,
+      "route": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/cinemas/1/rooms",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/cinemas/1/rooms",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7/seats",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/seats/241",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/seats/241",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7/seats",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/4",
+      "method": "PUT",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/seats/121",
+      "method": "PUT",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7/seats",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/seats/242",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7",
+      "method": "PUT",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/rooms/7",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/seats/242",
+      "method": "PUT",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/cinemas/1/showtimes",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 400,
+      "error": "UNKNOWN_REQUEST_FIELD"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/4",
+      "method": "PUT",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 400,
+      "error": "SHOWTIME_TIME_INVALID"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 409,
+      "error": "SHOWTIME_OVERLAP"
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/cinemas/1/pricing",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/8",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/cinemas/2/pricing",
+      "method": "POST",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/8",
+      "method": "PUT",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-001",
+      "route": "/manager/showtimes/6",
+      "method": "PUT",
+      "status": 409,
+      "error": "SHOWTIME_HAS_ORDERS"
+    },
+    {
+      "gap": "GAP-002",
+      "route": "/manager/seats/241",
+      "method": "PUT",
+      "status": 409,
+      "error": "SEAT_HAS_TICKET_HISTORY"
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/8",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/cinemas/1/pricing",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/8",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/cinemas/1/pricing",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/bookings",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/cinemas/1/pricing",
+      "method": "POST",
+      "status": 409,
+      "error": "PRICING_OVERLAP"
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/6",
+      "method": "PUT",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/2147483647",
+      "method": "PUT",
+      "status": 404,
+      "error": "MANAGER_RESOURCE_NOT_FOUND"
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/pricing/8",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "gap": "GAP-003",
+      "route": "/manager/cinemas/1/pricing",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/orders/1/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/orders/1/payments/1/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/orders/1/payments",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/orders/1/payments/2/result",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/complaints",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/complaints",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/complaints",
+      "method": "POST",
+      "status": 404,
+      "error": "ORDER_REFERENCE_INVALID"
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/1/order-reference",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/2/order-reference",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/2147483647/order-reference",
+      "method": "GET",
+      "status": 404,
+      "error": "COMPLAINT_NOT_FOUND"
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/orders/1",
+      "method": "GET",
+      "status": 404,
+      "error": "NOT_FOUND"
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/1/order-reference",
+      "method": "GET",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/1/order-reference",
+      "method": "GET",
+      "status": 403,
+      "error": "FORBIDDEN"
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/admin/complaints/1/order-reference",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/1/order-reference",
+      "method": "GET",
+      "status": 403,
+      "error": "SUPPORT_REQUIRED"
+    },
+    {
+      "gap": "GAP-004",
+      "route": "/manager/cinemas/1/revenue",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-004",
+      "route": "/manager/cinemas/1/revenue?fromDate=2026-10-05&toDate=2026-10-05",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-004",
+      "route": "/manager/cinemas/1/revenue?fromDate=2000-01-01&toDate=2026-10-05",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-004",
+      "route": "/manager/cinemas/1/revenue?fromDate=2027-01-02&toDate=2027-01-01",
+      "method": "GET",
+      "status": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "gap": "GAP-004",
+      "route": "/manager/cinemas/2/revenue",
+      "method": "GET",
+      "status": 403,
+      "error": "MANAGER_CINEMA_FORBIDDEN"
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/manager/showtimes/6/cancel",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": "GAP-005",
+      "route": "/support/complaints/1/order-reference",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/admin/cinemas",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/cinemas/4/images",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/admin/cinemas/4/images",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/cinemas/4/images",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/admin/cinemas/4/images",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/admin/cinemas/4/images",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "gap": "GAP-006",
+      "route": "/cinemas/4/images",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "checks": [
+    {
+      "gap": "GAP-002",
+      "name": "Room name/type/status persist on API and DB reload",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-002",
+      "name": "Seat type/status persist without moving seat",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-001",
+      "name": "Full allowed showtime edit persists exact UTC instant and immutable room",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-003",
+      "name": "Every pricing dimension/date actually changes and reloads",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-003",
+      "name": "Dimensions, surcharge, effective DATE_ONLY and status persist",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-003",
+      "name": "Old order and ticket snapshots unchanged after full pricing edit",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-003",
+      "name": "New booking uses current pricing function result",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-003",
+      "name": "Explicit null reopens end range and status remains hydrated",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-005",
+      "name": "Complaint-only reference includes full summary/tickets/food/payment attempts",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-005",
+      "name": "No password/hash or authority data exported",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-005",
+      "name": "Unlinked complaint returns null order",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-005",
+      "name": "Reference reads preserve every payment history row",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-004",
+      "name": "One-day API revenue equals scoped SP business-date aggregate",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-005",
+      "name": "Cancelled ticket history and event compensation are visible with paid attempts intact",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-005",
+      "name": "R2 cancellation/reference do not alter payment history",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-006",
+      "name": "Zero image gallery API",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-006",
+      "name": "Single public active cover",
+      "status": "PASS"
+    },
+    {
+      "gap": "GAP-006",
+      "name": "Public API returns only active images in display order and one cover",
+      "status": "PASS"
+    }
+  ],
+  "fixtureIDs": {
+    "room": 7,
+    "showtime": 6,
+    "pricing": 8,
+    "orders": [
+      1,
+      2
+    ],
+    "complaints": [
+      1,
+      2
+    ],
+    "galleryCinema": 4
+  }
+}

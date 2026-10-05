@@ -9,6 +9,7 @@ const number = (value) => value == null ? null : Number(value);
 function managerError(error) {
   if (error instanceof HttpError) throw error;
   switch (sqlError(error)) {
+    case 50209: throw new HttpError(400, 'PRICING_INVALID', 'The pricing conditions or date range are invalid.');
     case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ORDERS', 'A showtime with active orders cannot change its film, times or format.');
     case 50123: throw new HttpError(409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Use the separate showtime cancellation operation.');
     case 50216: throw new HttpError(400, 'SHOWTIME_TIME_INVALID', 'Showtime times violate the existing duration or start-time contract.');
@@ -82,7 +83,18 @@ export function createManagerService({ execute = executeProcedure } = {}) {
     async cancelShowtime(userId, id, reason) { await call('MANAGER_SHOWTIME_CANCEL', { NguoiDungID: { type: DbTypes.Int, value: userId }, SuatChieuID: { type: DbTypes.Int, value: id }, LyDo: { type: DbTypes.NVarChar(255), value: reason ?? null } }); },
     async listPricing(userId, cinemaId) { return rows(await call('MANAGER_PRICING_LIST', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId } })).map(pricingDto); },
     async createPricing(userId, cinemaId, input) { return pricingDto(rows(await call('MANAGER_PRICING_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.seatType }, LoaiNgay: { type: DbTypes.NVarChar(50), value: input.dayType }, DinhDang: { type: DbTypes.NVarChar(50), value: input.format }, PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, NgayBatDau: { type: DbTypes.Date, value: input.startsOn }, NgayKetThuc: { type: DbTypes.Date, value: input.endsOn } }))[0]); },
-    async updatePricing(userId, id, input) { return pricingDto(rows(await call('MANAGER_PRICING_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GiaID: { type: DbTypes.Int, value: id }, PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
+    async updatePricing(userId, id, input) {
+      const conditions = input.seatType === undefined ? {} : {
+        LoaiGhe: text(50, input.seatType), LoaiNgay: text(50, input.dayType),
+        DinhDang: text(50, input.format), NgayBatDau: date(input.startsOn),
+        NgayKetThuc: date(input.endsOn), CapNhatDieuKien: { type: DbTypes.Bit, value: true },
+      };
+      return pricingDto(rows(await call('MANAGER_PRICING_UPDATE', {
+        NguoiDungID: int(userId), GiaID: int(id),
+        PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge },
+        TrangThai: text(50, input.status), ...conditions,
+      }))[0]);
+    },
     async dashboard(userId, cinemaId) { const r = rows(await call('MANAGER_DASHBOARD', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId } }))[0]; return r && { cinemaId: r.RapID, cinemaName: r.TenRap, city: r.ThanhPho, activeRooms: r.TongPhongChieu, activeSeats: r.TongGhe, showtimesToday: r.SuatChieuHomNay, paidOrdersToday: r.DonDatVeHomNay }; },
     async revenue(userId, cinemaId, range) { return rows(await call('MANAGER_REVENUE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TuNgay: { type: DbTypes.Date, value: range.fromDate }, DenNgay: { type: DbTypes.Date, value: range.toDate } })).map((r) => ({ date: serializeDateOnly(r.Ngay), orderCount: r.SoDon, ticketCount: r.SoVeBan, ticketRevenue: number(r.DoanhThuVe), productRevenue: number(r.DoanhThuDoAn), discount: number(r.TienGiamGia), totalRevenue: number(r.DoanhThuThucTe) })); },
   };

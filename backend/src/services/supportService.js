@@ -1,5 +1,6 @@
 import { DbTypes, executeProcedure } from '../db/procedureClient.js';
 import { HttpError } from '../utils/httpError.js';
+import { detailDto } from './orderService.js';
 
 const SQL_ERROR = Object.freeze({
   SUPPORT_FORBIDDEN: 50060,
@@ -22,6 +23,8 @@ function rethrowMappedError(error) {
   if (error instanceof HttpError) throw error;
 
   switch (getSqlErrorNumber(error)) {
+    case 50030:
+      throw new HttpError(404, 'ORDER_NOT_FOUND', 'Referenced order was not found.');
     case SQL_ERROR.SUPPORT_FORBIDDEN:
       throw new HttpError(403, 'SUPPORT_FORBIDDEN', 'Support permission is required.');
     case SQL_ERROR.COMPLAINT_NOT_FOUND:
@@ -105,7 +108,7 @@ export function createSupportService({ execute = executeProcedure } = {}) {
       const reference = getRows(result)[0];
       return reference?.Message
         ? { order: null, message: reference.Message }
-        : { order: reference ?? null };
+        : { order: reference ? detailDto(result) : null };
     },
 
     async addProcessing(userId, complaintId, input) {

@@ -12,6 +12,7 @@ import Home from '../pages/Home';
 import Movies from '../pages/Movies';
 import MovieDetail from '../pages/MovieDetail';
 import Cinemas from '../pages/Cinemas';
+import CinemaDetail from '../pages/CinemaDetail';
 import BookingPreparation from '../pages/BookingPreparation';
 import Orders from '../pages/Orders';
 import OrderDetail from '../pages/OrderDetail';
@@ -39,6 +40,7 @@ export default function AppRoutes() {
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetail />} />
         <Route path="cinemas" element={<Cinemas />} />
+        <Route path="cinemas/:cinemaId" element={<CinemaDetail />} />
         <Route path="booking/:showtimeId" element={<BookingPreparation />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

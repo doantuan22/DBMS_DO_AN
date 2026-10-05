@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "provenance": "Rebuilt exclusively from source: 2026-10-04T14:50:30.620Z",
+  "provenance": "Rebuilt exclusively from source: 2026-10-05T06:16:40.580Z",
   "steps": [
     "00_database/002_create_database.sql",
     "00_database/003_database_options.sql",
@@ -375,7 +375,7 @@
   "expected": {
     "environment": [
       {
-        "databaseName": "CinemaBookingDB_R0_R1_R2_R5ManifestFinal",
+        "databaseName": "CinemaBookingDB_R0_R1_R2_R5R7Manifest",
         "version": "17.0.1000.7",
         "collation_name": "Vietnamese_CI_AS",
         "compatibility_level": 170,
@@ -2164,7 +2164,7 @@
         "name": "sp_Manager_Pricing_Update",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.sp_Manager_Pricing_Update\n(\n    @NguoiDungID INT,\n    @GiaID INT,\n    @PhuThu DECIMAL(18,2),\n    @TrangThai NVARCHAR(50)\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_BANG_GIA') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n\n    DECLARE @RapID INT;\n    SELECT @RapID = RapID FROM dbo.BANGGIA WHERE GiaID = @GiaID;\n\n    IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0\n    BEGIN\n        ;THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\n    END\n\n    UPDATE dbo.BANGGIA\n    SET PhuThu = @PhuThu,\n        TrangThai = @TrangThai\n    WHERE GiaID = @GiaID;\n\n    SELECT GiaID, RapID, LoaiGhe, LoaiNgay, DinhDang, PhuThu, NgayBatDau, NgayKetThuc, TrangThai\n    FROM dbo.BANGGIA\n    WHERE GiaID = @GiaID;\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.sp_Manager_Pricing_Update\n(\n    @NguoiDungID INT,\n    @GiaID INT,\n    @PhuThu DECIMAL(18,2),\n    @TrangThai NVARCHAR(50),\n    @LoaiGhe NVARCHAR(50) = NULL,\n    @LoaiNgay NVARCHAR(50) = NULL,\n    @DinhDang NVARCHAR(50) = NULL,\n    @NgayBatDau DATE = NULL,\n    @NgayKetThuc DATE = NULL,\n    @CapNhatDieuKien BIT = 0\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_BANG_GIA') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n\n    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerPricingUpdate;\n        DECLARE @RapID INT;\n        SELECT @RapID = RapID FROM dbo.BANGGIA WITH (UPDLOCK, HOLDLOCK) WHERE GiaID = @GiaID;\n        IF @RapID IS NULL THROW 50116, N'Bảng giá không tồn tại.', 1;\n        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0\n            THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\n        IF @CapNhatDieuKien = 1 AND\n           (@LoaiGhe IS NULL OR @LoaiNgay IS NULL OR @DinhDang IS NULL OR @NgayBatDau IS NULL\n            OR (@NgayKetThuc IS NOT NULL AND @NgayKetThuc < @NgayBatDau))\n            THROW 50209, N'Điều kiện hoặc khoảng ngày bảng giá không hợp lệ.', 1;\n        -- Keep RapID immutable, existing trigger/CHECK semantics, and order snapshots.\n        UPDATE dbo.BANGGIA\n        SET PhuThu = @PhuThu, TrangThai = @TrangThai,\n            LoaiGhe = CASE WHEN @CapNhatDieuKien = 1 THEN @LoaiGhe ELSE LoaiGhe END,\n            LoaiNgay = CASE WHEN @CapNhatDieuKien = 1 THEN @LoaiNgay ELSE LoaiNgay END,\n            DinhDang = CASE WHEN @CapNhatDieuKien = 1 THEN @DinhDang ELSE DinhDang END,\n            NgayBatDau = CASE WHEN @CapNhatDieuKien = 1 THEN @NgayBatDau ELSE NgayBatDau END,\n            NgayKetThuc = CASE WHEN @CapNhatDieuKien = 1 THEN @NgayKetThuc ELSE NgayKetThuc END\n        WHERE GiaID = @GiaID;\n        IF @OwnTran = 1 COMMIT TRANSACTION;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE() = 1\n        BEGIN\n            IF @OwnTran = 1 ROLLBACK TRANSACTION;\n            ELSE ROLLBACK TRANSACTION ManagerPricingUpdate;\n        END;\n        THROW;\n    END CATCH;\n\n    SELECT GiaID, RapID, LoaiGhe, LoaiNgay, DinhDang, PhuThu, NgayBatDau, NgayKetThuc, TrangThai\n    FROM dbo.BANGGIA\n    WHERE GiaID = @GiaID;\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2488,7 +2488,7 @@
         "name": "sp_Support_Complaint_GetOrderReference",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.sp_Support_Complaint_GetOrderReference\n(\n    @NguoiDungID INT,\n    @KhieuNaiID INT\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('CSKH', 'ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_KHIEUNAI') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'TRA_CUU_DON') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)\n        THROW 50061, N'Khiếu nại không tồn tại.', 1;\n    DECLARE @DonDatVeID INT;\n    SELECT @DonDatVeID = DonDatVeID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID;\n    IF @DonDatVeID IS NULL\n    BEGIN\n        SELECT N'Khiếu nại này không gắn với đơn đặt vé tham chiếu cụ thể nào.' AS [Message];\n        RETURN;\n    END;\n    SELECT DonDatVeID, NguoiDungID, HoTenKhachHang, Email, SoDienThoai, TenPhim, TenRap,\n           TenPhong, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, NgayDat, TongTienVe,\n           TongTienDoAn, TienGiamGia, TongTienThanhToan, TrangThaiDon, DanhSachGhe, DanhSachMaVe\n    FROM dbo.vw_ChiTietDonDatVe WHERE DonDatVeID = @DonDatVeID;\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.sp_Support_Complaint_GetOrderReference\n(\n    @NguoiDungID INT,\n    @KhieuNaiID INT\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('CSKH', 'ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_KHIEUNAI') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'TRA_CUU_DON') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    IF NOT EXISTS (SELECT 1 FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID)\n        THROW 50061, N'Khiếu nại không tồn tại.', 1;\n    DECLARE @DonDatVeID INT;\n    SELECT @DonDatVeID = DonDatVeID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @KhieuNaiID;\n    IF @DonDatVeID IS NULL\n    BEGIN\n        SELECT N'Khiếu nại này không gắn với đơn đặt vé tham chiếu cụ thể nào.' AS [Message];\n        RETURN;\n    END;\n    -- Resolve the order only from this complaint; there is no caller-supplied order ID.\n    IF NOT EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID = @DonDatVeID)\n        THROW 50030, N'Đơn tham chiếu không tồn tại.', 1;\n    SELECT v.*, d.LyDoHuy, d.ThongBaoHuy, b.DiemBoiThuong, b.NgayBoiThuong\n    FROM dbo.vw_ChiTietDonDatVe v\n    INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = v.DonDatVeID\n    LEFT JOIN dbo.BOITHUONG_HUYSUAT b ON b.DonDatVeID = v.DonDatVeID\n    WHERE v.DonDatVeID = @DonDatVeID;\n    -- Preserve cancelled tickets and every payment attempt in the read contract.\n    SELECT cv.VeID, cv.MaVe, g.GheID, g.HangGhe, g.SoGhe,\n           g.HangGhe + CAST(g.SoGhe AS VARCHAR(10)) AS TenGhe, g.LoaiGhe,\n           cv.GiaVe, cv.TrangThai AS TrangThaiVe\n    FROM dbo.CHITIETVE cv INNER JOIN dbo.GHE g ON g.GheID = cv.GheID\n    WHERE cv.DonDatVeID = @DonDatVeID ORDER BY cv.VeID;\n    SELECT cda.ChiTietDoAnID, sp.SanPhamID, sp.TenSanPham, sp.LoaiSanPham,\n           cda.SoLuong, cda.DonGia, cda.SoLuong * cda.DonGia AS ThanhTien\n    FROM dbo.CHITIETDOAN cda INNER JOIN dbo.SANPHAM sp ON sp.SanPhamID = cda.SanPhamID\n    WHERE cda.DonDatVeID = @DonDatVeID ORDER BY cda.ChiTietDoAnID;\n    SELECT ThanhToanID, PhuongThuc, SoTien, NgayTao, NgayThanhToan, MaGiaoDich, TrangThai, GhiChu\n    FROM dbo.THANHTOAN WHERE DonDatVeID = @DonDatVeID ORDER BY ThanhToanID;\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -10043,6 +10043,78 @@
         "typeName": "nvarchar",
         "max_length": 100,
         "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 5,
+        "name": "@LoaiGhe",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 6,
+        "name": "@LoaiNgay",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 7,
+        "name": "@DinhDang",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 8,
+        "name": "@NgayBatDau",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 9,
+        "name": "@NgayKetThuc",
+        "typeName": "date",
+        "max_length": 3,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_Manager_Pricing_Update",
+        "parameter_id": 10,
+        "name": "@CapNhatDieuKien",
+        "typeName": "bit",
+        "max_length": 1,
+        "precision": 1,
         "scale": 0,
         "is_output": false,
         "has_default_value": false
@@ -21493,7 +21565,52 @@
       {
         "objectName": "sp_Support_Complaint_GetOrderReference",
         "referenced_schema_name": "dbo",
+        "referenced_entity_name": "BOITHUONG_HUYSUAT",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETDOAN",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "DONDATVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
         "referenced_entity_name": "fn_KiemTraQuyenNguoiDung",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "GHE",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -21512,6 +21629,24 @@
         "objectName": "sp_Support_Complaint_GetOrderReference",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "SANPHAM",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Support_Complaint_GetOrderReference",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "THANHTOAN",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
