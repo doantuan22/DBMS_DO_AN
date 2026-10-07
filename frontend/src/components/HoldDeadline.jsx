@@ -16,5 +16,12 @@ export default function HoldDeadline({ deadline, onElapsed }) {
   }, [deadline, now, onElapsed]);
   if (!deadline) return null;
   const seconds = remainingHoldSeconds(deadline, now);
-  return <span>Giữ ghế đến: {formatDateTime(deadline)} · Còn {String(Math.floor(seconds / 60)).padStart(2, '0')}:{String(seconds % 60).padStart(2, '0')}</span>;
+  return (
+    <span className="hold-deadline">
+      ⏱ Giữ ghế đến: {formatDateTime(deadline)} · Còn{' '}
+      <strong>
+        {String(Math.floor(seconds / 60)).padStart(2, '0')}:{String(seconds % 60).padStart(2, '0')}
+      </strong>
+    </span>
+  );
 }

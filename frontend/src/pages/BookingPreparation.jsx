@@ -139,7 +139,7 @@ export default function BookingPreparation() {
         <label>Mã khuyến mãi
           <input value={promotionCode} maxLength="50" onChange={(event) => { setPromotionCode(event.target.value); setPromotion(null); }} />
         </label>
-        <button type="button" onClick={applyPromotion} disabled={promotionBusy || !canBook}>{promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}</button>
+        <button type="button" className="catalog-button catalog-button--secondary" onClick={applyPromotion} disabled={promotionBusy || !canBook}>{promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}</button>
         {promotion && <p role="status">{promotion.message}{promotion.isValid ? ` Giảm tạm tính: ${money(promotion.discountAmount)}.` : ''}</p>}
       </section>
 
@@ -153,7 +153,7 @@ export default function BookingPreparation() {
         {bookingState.status === 'conflict' && <p className="form-error" role="alert">{bookingState.message} Sơ đồ ghế đã được làm mới.</p>}
         {bookingState.status === 'error' && <p className="form-error" role="alert">{bookingState.message}</p>}
         {bookingState.status === 'success' && <div className="form-success" role="status">Đặt vé thành công. Mã đơn: {bookingState.booking.id}. Tổng thanh toán do DB chốt: {money(bookingState.booking.total)}. <HoldDeadline deadline={bookingState.booking.holdExpiresAt} />. {userCanAct(user, 'KHACH_HANG', 'THANH_TOAN') && <Link to={`/orders/${bookingState.booking.id}/payment`}>Thanh toán đơn này</Link>}</div>}
-        <button type="button" onClick={submitBooking} disabled={bookingState.status === 'loading' || !canBook}>{bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}</button>
+        <button type="button" className="catalog-button" style={{ minHeight: '3rem', fontSize: '1.05rem', marginTop: '1rem' }} onClick={submitBooking} disabled={bookingState.status === 'loading' || !canBook}>{bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}</button>
       </section>
       <Link className="catalog-button catalog-button--secondary" to={`/movies/${showtime.movieId}`}>Quay lại lịch chiếu</Link>
     </section>

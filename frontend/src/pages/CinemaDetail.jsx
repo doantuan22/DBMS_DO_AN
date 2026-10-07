@@ -25,7 +25,7 @@ export default function CinemaDetail() {
   const key = `${cinemaId}:${attempt}`;
   const currentCinema = cinema.key === key ? cinema : { status: 'loading' };
   const currentGallery = gallery.key === key ? gallery : { status: 'loading' };
-  return <section className="catalog-page"><Link to="/cinemas">Danh sách rạp</Link>
+  return <section className="catalog-page"><Link className="catalog-back" to="/cinemas">← Danh sách rạp</Link>
     {currentCinema.status === 'loading' && <LoadingState>Đang tải rạp…</LoadingState>}
     {currentCinema.status === 'error' && <ErrorState error={currentCinema.error} onRetry={() => setAttempt(value => value + 1)} />}
     {currentCinema.status === 'success' && <><p className="catalog-eyebrow">{currentCinema.data.city}</p><h1>{currentCinema.data.name}</h1>

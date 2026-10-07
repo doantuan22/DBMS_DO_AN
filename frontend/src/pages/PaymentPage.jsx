@@ -67,7 +67,15 @@ export default function PaymentPage() {
     <p className="catalog-muted">Thanh toán mô phỏng. Bấm xác nhận trong thời gian giữ ghế để hoàn tất đơn.</p>
     {payable && <HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} />}
     {payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}
-    {payable && <><label>Phương thức <select value={method} disabled={busy || !canConfirm} onChange={(event) => setMethod(event.target.value)}>{METHODS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label><button type="button" onClick={confirmPayment} disabled={busy || !canConfirm}>{busy ? 'Đang xác nhận…' : 'Xác nhận thanh toán'}</button></>}
+    {payable && <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', margin: '1.5rem 0' }}>
+      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
+        Phương thức:
+        <select value={method} disabled={busy || !canConfirm} onChange={(event) => setMethod(event.target.value)} style={{ padding: '0.5rem 0.75rem', borderRadius: '0.375rem', border: '1px solid #cbd5e1' }}>
+          {METHODS.map((item) => <option key={item} value={item}>{item}</option>)}
+        </select>
+      </label>
+      <button type="button" className="catalog-button" onClick={confirmPayment} disabled={busy || !canConfirm}>{busy ? 'Đang xác nhận…' : 'Xác nhận thanh toán'}</button>
+    </div>}
     {payable && canPay && !canConfirm && <p role="status">Đang kiểm tra hạn giữ ghế với máy chủ…</p>}
     {order.status === 'Hết hạn' && <p role="alert">Đơn đã hết thời gian giữ ghế. Ghế đã được giải phóng; vui lòng đặt vé lại.</p>}
     {order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}
