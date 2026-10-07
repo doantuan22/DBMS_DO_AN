@@ -1,0 +1,1961 @@
+[
+  {
+    "method": "GET",
+    "url": "/api/health",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "healthController.getHealth",
+    "service": "—",
+    "procedures": [],
+    "frontend": "— (wrapper chưa có consumer)",
+    "status": "UNUSED",
+    "verification": "FE; API đọc hoạt động",
+    "file": "backend/src/routes/healthRoutes.js",
+    "line": 5
+  },
+  {
+    "method": "GET",
+    "url": "/api/health/db",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "healthController.getDatabaseHealth",
+    "service": "healthService.checkDatabase",
+    "procedures": [
+      "sp_System_HealthCheck"
+    ],
+    "frontend": "DatabaseHealth / healthApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/healthRoutes.js",
+    "line": 6
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/register",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "authController.register",
+    "service": "authService.registerCustomer",
+    "procedures": [
+      "sp_Auth_RegisterCustomer"
+    ],
+    "frontend": "Register / authApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 6
+  },
+  {
+    "method": "POST",
+    "url": "/api/auth/login",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "authController.login",
+    "service": "authService.login",
+    "procedures": [
+      "sp_Auth_Login"
+    ],
+    "frontend": "Login + AuthContext/authSession / authApi",
+    "status": "WORKING",
+    "verification": "4 role đăng nhập thực tế",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 7
+  },
+  {
+    "method": "GET",
+    "url": "/api/auth/me",
+    "actor": "Mọi role hoạt động",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "authController.currentUser",
+    "service": "authService.getCurrentUser",
+    "procedures": [
+      "sp_User_GetCurrent",
+      "sp_RBAC_GetPermissionsByUser",
+      "sp_Manager_ListAssignedCinemas"
+    ],
+    "frontend": "AuthContext/authSession, Profile / authApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 8
+  },
+  {
+    "method": "PUT",
+    "url": "/api/auth/me",
+    "actor": "Mọi role hoạt động",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "authController.updateCurrentUser",
+    "service": "authService.updateProfile",
+    "procedures": [
+      "sp_User_UpdateProfile"
+    ],
+    "frontend": "AuthContext/authSession, Profile / authApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 9
+  },
+  {
+    "method": "GET",
+    "url": "/api/auth/permissions",
+    "actor": "Mọi role hoạt động",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "authController.currentPermissions",
+    "service": "authService.getCurrentUser",
+    "procedures": [
+      "sp_User_GetCurrent",
+      "sp_RBAC_GetPermissionsByUser",
+      "sp_Manager_ListAssignedCinemas"
+    ],
+    "frontend": "— (wrapper chưa có consumer)",
+    "status": "UNUSED",
+    "verification": "FE; API đọc hoạt động",
+    "file": "backend/src/routes/authRoutes.js",
+    "line": 10
+  },
+  {
+    "method": "GET",
+    "url": "/api/movies",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.listMovies",
+    "service": "catalogService.listMovies",
+    "procedures": [
+      "sp_Movie_List"
+    ],
+    "frontend": "Home, Movies / catalogApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 9
+  },
+  {
+    "method": "GET",
+    "url": "/api/movies/:movieId/showtimes",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.listShowtimes",
+    "service": "catalogService.listShowtimes",
+    "procedures": [
+      "sp_Showtime_ListByMovie"
+    ],
+    "frontend": "MovieDetail → ShowtimeBrowser / catalogApi",
+    "status": "PARTIAL",
+    "verification": "I-10, lịch quá khứ",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 10
+  },
+  {
+    "method": "GET",
+    "url": "/api/movies/:movieId/reviews",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "feedbackController.listReviews",
+    "service": "feedbackService.listReviews",
+    "procedures": [
+      "sp_Review_ListByMovie"
+    ],
+    "frontend": "MovieReviews / feedbackApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 11
+  },
+  {
+    "method": "POST",
+    "url": "/api/movies/:movieId/reviews",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "DANH_GIA",
+    "controller": "feedbackController.createReview",
+    "service": "feedbackService.createReview",
+    "procedures": [
+      "sp_Review_Create"
+    ],
+    "frontend": "MovieReviews / feedbackApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 12
+  },
+  {
+    "method": "GET",
+    "url": "/api/movies/:movieId",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.getMovieDetail",
+    "service": "catalogService.getMovieDetail",
+    "procedures": [
+      "sp_Movie_GetDetail"
+    ],
+    "frontend": "MovieDetail / catalogApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/movieRoutes.js",
+    "line": 13
+  },
+  {
+    "method": "GET",
+    "url": "/api/cinemas",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.listCinemas",
+    "service": "catalogService.listCinemas",
+    "procedures": [
+      "sp_Cinema_List"
+    ],
+    "frontend": "Cinemas, CinemaDetail, MovieDetail → ShowtimeBrowser / catalogApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/cinemaRoutes.js",
+    "line": 5
+  },
+  {
+    "method": "GET",
+    "url": "/api/cinemas/:cinemaId/images",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.listCinemaImages",
+    "service": "catalogService.listCinemaImages",
+    "procedures": [
+      "sp_Cinema_GetImages"
+    ],
+    "frontend": "CinemaDetail → CinemaGallery / catalogApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/cinemaRoutes.js",
+    "line": 6
+  },
+  {
+    "method": "GET",
+    "url": "/api/genres",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.listGenres",
+    "service": "catalogService.listGenres",
+    "procedures": [
+      "sp_Genre_List"
+    ],
+    "frontend": "Movies / catalogApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/genreRoutes.js",
+    "line": 5
+  },
+  {
+    "method": "GET",
+    "url": "/api/showtimes/:showtimeId/seats",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "bookingController.listSeats",
+    "service": "bookingService.listSeats",
+    "procedures": [
+      "sp_Seat_ListByShowtime"
+    ],
+    "frontend": "BookingPreparation → SeatMap; PaymentPage expiry refresh / catalogApi",
+    "status": "PARTIAL",
+    "verification": "I-10, lịch quá khứ",
+    "file": "backend/src/routes/showtimeRoutes.js",
+    "line": 6
+  },
+  {
+    "method": "GET",
+    "url": "/api/showtimes/:showtimeId",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "catalogController.getShowtimeDetail",
+    "service": "catalogService.getShowtimeDetail",
+    "procedures": [
+      "sp_Showtime_GetDetail"
+    ],
+    "frontend": "BookingPreparation / catalogApi",
+    "status": "PARTIAL",
+    "verification": "I-10, lịch quá khứ",
+    "file": "backend/src/routes/showtimeRoutes.js",
+    "line": 7
+  },
+  {
+    "method": "GET",
+    "url": "/api/products",
+    "actor": "PUBLIC",
+    "auth": "Không",
+    "permission": "—",
+    "controller": "bookingController.listProducts",
+    "service": "bookingService.listProducts",
+    "procedures": [
+      "sp_Product_ListActive"
+    ],
+    "frontend": "BookingPreparation → ProductPicker / catalogApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/productRoutes.js",
+    "line": 5
+  },
+  {
+    "method": "POST",
+    "url": "/api/promotions/validate",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "DAT_VE",
+    "controller": "bookingController.validatePromotion",
+    "service": "bookingService.validatePromotion",
+    "procedures": [
+      "sp_Seat_ListByShowtime",
+      "sp_Product_ListActive",
+      "sp_Promotion_Validate"
+    ],
+    "frontend": "BookingPreparation / catalogApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/promotionRoutes.js",
+    "line": 8
+  },
+  {
+    "method": "POST",
+    "url": "/api/bookings",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "DAT_VE",
+    "controller": "bookingController.createBooking",
+    "service": "bookingService.createBooking",
+    "procedures": [
+      "sp_Booking_Create"
+    ],
+    "frontend": "BookingPreparation / catalogApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/bookingRoutes.js",
+    "line": 8
+  },
+  {
+    "method": "GET",
+    "url": "/api/orders",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "orderController.listOrders",
+    "service": "orderService.listOrders",
+    "procedures": [
+      "sp_Order_ListByCustomer"
+    ],
+    "frontend": "Orders; Complaints linked-order choices / ordersApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 9
+  },
+  {
+    "method": "GET",
+    "url": "/api/orders/:orderId",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "orderController.getOrder",
+    "service": "orderService.getOrderDetail",
+    "procedures": [
+      "sp_Order_GetDetailByCustomer"
+    ],
+    "frontend": "OrderDetail, PaymentPage / ordersApi",
+    "status": "PARTIAL",
+    "verification": "thiếu fixture dương",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 10
+  },
+  {
+    "method": "POST",
+    "url": "/api/orders/:orderId/payments",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "THANH_TOAN",
+    "controller": "orderController.createPayment",
+    "service": "orderService.createPaymentAttempt",
+    "procedures": [
+      "sp_Payment_CreateAttempt"
+    ],
+    "frontend": "PaymentPage / ordersApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 11
+  },
+  {
+    "method": "POST",
+    "url": "/api/orders/:orderId/payments/:paymentId/result",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "THANH_TOAN",
+    "controller": "orderController.updatePayment",
+    "service": "orderService.updatePaymentResult",
+    "procedures": [
+      "sp_Payment_UpdateResult"
+    ],
+    "frontend": "PaymentPage / ordersApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/orderRoutes.js",
+    "line": 12
+  },
+  {
+    "method": "GET",
+    "url": "/api/complaints",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "feedbackController.listComplaints",
+    "service": "feedbackService.listComplaints",
+    "procedures": [
+      "sp_Complaint_ListByCustomer"
+    ],
+    "frontend": "Complaints, ComplaintDetail / feedbackApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/complaintRoutes.js",
+    "line": 9
+  },
+  {
+    "method": "POST",
+    "url": "/api/complaints",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "GUI_KHIEU_NAI",
+    "controller": "feedbackController.createComplaint",
+    "service": "feedbackService.createComplaint",
+    "procedures": [
+      "sp_Complaint_Create"
+    ],
+    "frontend": "Complaints, ComplaintDetail / feedbackApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/complaintRoutes.js",
+    "line": 10
+  },
+  {
+    "method": "GET",
+    "url": "/api/complaints/:complaintId",
+    "actor": "KHACH_HANG",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "feedbackController.getComplaint",
+    "service": "feedbackService.getComplaint",
+    "procedures": [
+      "sp_Complaint_GetByCustomer"
+    ],
+    "frontend": "Complaints, ComplaintDetail / feedbackApi",
+    "status": "PARTIAL",
+    "verification": "thiếu fixture dương",
+    "file": "backend/src/routes/complaintRoutes.js",
+    "line": 11
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/cinemas",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "—",
+    "controller": "managerController.listCinemas",
+    "service": "managerService.listCinemas",
+    "procedures": [
+      "sp_Manager_ListAssignedCinemas"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 9
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/cinemas/:cinemaId/rooms",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "managerController.listRooms",
+    "service": "managerService.listRooms",
+    "procedures": [
+      "sp_Manager_Room_List"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 10
+  },
+  {
+    "method": "POST",
+    "url": "/api/manager/cinemas/:cinemaId/rooms",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "managerController.createRoom",
+    "service": "managerService.createRoom",
+    "procedures": [
+      "sp_Manager_Room_Create"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 11
+  },
+  {
+    "method": "PUT",
+    "url": "/api/manager/rooms/:roomId",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "managerController.updateRoom",
+    "service": "managerService.updateRoom",
+    "procedures": [
+      "sp_Manager_Room_Update"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 12
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/manager/rooms/:roomId",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "managerController.deleteRoom",
+    "service": "managerService.deleteRoom",
+    "procedures": [
+      "sp_Manager_Room_Delete"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "BROKEN",
+    "verification": "I-02, phân tích tĩnh",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 13
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/rooms/:roomId/seats",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "managerController.listSeats",
+    "service": "managerService.listSeats",
+    "procedures": [
+      "sp_Manager_Seat_ListByRoom"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 14
+  },
+  {
+    "method": "POST",
+    "url": "/api/manager/rooms/:roomId/seats",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "managerController.createSeat",
+    "service": "managerService.createSeat",
+    "procedures": [
+      "sp_Manager_Seat_Create"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 15
+  },
+  {
+    "method": "PUT",
+    "url": "/api/manager/seats/:seatId",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "managerController.updateSeat",
+    "service": "managerService.updateSeat",
+    "procedures": [
+      "sp_Manager_Seat_Update"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 16
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/manager/seats/:seatId",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "managerController.deleteSeat",
+    "service": "managerService.deleteSeat",
+    "procedures": [
+      "sp_Manager_Seat_Delete"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 17
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/cinemas/:cinemaId/showtimes",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "managerController.listShowtimes",
+    "service": "managerService.listShowtimes",
+    "procedures": [
+      "sp_Manager_Showtime_List"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 18
+  },
+  {
+    "method": "POST",
+    "url": "/api/manager/showtimes",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "managerController.createShowtime",
+    "service": "managerService.createShowtime",
+    "procedures": [
+      "sp_Manager_Showtime_Create"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "BROKEN",
+    "verification": "I-03, rủi ro concurrency",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 19
+  },
+  {
+    "method": "PUT",
+    "url": "/api/manager/showtimes/:showtimeId",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "managerController.updateShowtime",
+    "service": "managerService.updateShowtime",
+    "procedures": [
+      "sp_Manager_Showtime_Update"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "BROKEN",
+    "verification": "I-03, rủi ro concurrency",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 20
+  },
+  {
+    "method": "POST",
+    "url": "/api/manager/showtimes/:showtimeId/cancel",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "managerController.cancelShowtime",
+    "service": "managerService.cancelShowtime",
+    "procedures": [
+      "sp_Manager_Showtime_Cancel"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 21
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/cinemas/:cinemaId/pricing",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_BANG_GIA",
+    "controller": "managerController.listPricing",
+    "service": "managerService.listPricing",
+    "procedures": [
+      "sp_Manager_Pricing_List"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 22
+  },
+  {
+    "method": "POST",
+    "url": "/api/manager/cinemas/:cinemaId/pricing",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_BANG_GIA",
+    "controller": "managerController.createPricing",
+    "service": "managerService.createPricing",
+    "procedures": [
+      "sp_Manager_Pricing_Create"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 23
+  },
+  {
+    "method": "PUT",
+    "url": "/api/manager/pricing/:pricingId",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "QL_BANG_GIA",
+    "controller": "managerController.updatePricing",
+    "service": "managerService.updatePricing",
+    "procedures": [
+      "sp_Manager_Pricing_Update"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 24
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/cinemas/:cinemaId/dashboard",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "XEM_BAO_CAO_RAP",
+    "controller": "managerController.dashboard",
+    "service": "managerService.dashboard",
+    "procedures": [
+      "sp_Manager_Dashboard"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 25
+  },
+  {
+    "method": "GET",
+    "url": "/api/manager/cinemas/:cinemaId/revenue",
+    "actor": "QUAN_LY_RAP",
+    "auth": "JWT + account live",
+    "permission": "XEM_BAO_CAO_RAP",
+    "controller": "managerController.revenue",
+    "service": "managerService.revenue",
+    "procedures": [
+      "sp_Manager_Revenue"
+    ],
+    "frontend": "ManagerPortal / managerApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/managerRoutes.js",
+    "line": 26
+  },
+  {
+    "method": "GET",
+    "url": "/api/support/complaints",
+    "actor": "CSKH",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI",
+    "controller": "supportController.list",
+    "service": "supportService.list",
+    "procedures": [
+      "sp_Support_Complaint_List"
+    ],
+    "frontend": "SupportPortal / supportApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 11
+  },
+  {
+    "method": "GET",
+    "url": "/api/support/complaints/:complaintId",
+    "actor": "CSKH",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI",
+    "controller": "supportController.detail",
+    "service": "supportService.detail",
+    "procedures": [
+      "sp_Support_Complaint_GetDetail"
+    ],
+    "frontend": "SupportPortal / supportApi",
+    "status": "PARTIAL",
+    "verification": "thiếu fixture dương",
+    "file": "backend/src/routes/supportRoutes.js",
+    "line": 12
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/dashboard",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "XEM_BAO_CAO_TOANHE",
+    "controller": "adminController.dashboard",
+    "service": "adminService.dashboard",
+    "procedures": [
+      "sp_Admin_Dashboard"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 11
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/users",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_NGUOIDUNG",
+    "controller": "adminController.users",
+    "service": "adminService.users",
+    "procedures": [
+      "sp_Admin_User_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 12
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/users",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_NGUOIDUNG",
+    "controller": "adminController.createUser",
+    "service": "adminService.createUser",
+    "procedures": [
+      "sp_Admin_User_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 13
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/users/:userId/status",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_NGUOIDUNG",
+    "controller": "adminController.updateUserStatus",
+    "service": "adminService.setUserStatus",
+    "procedures": [
+      "sp_Admin_User_UpdateStatus"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 14
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/roles",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_VAITRO",
+    "controller": "adminController.roles",
+    "service": "adminService.roles",
+    "procedures": [
+      "sp_Admin_Role_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 15
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/roles/:roleId/permissions",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_QUYEN",
+    "controller": "adminController.rolePermissions",
+    "service": "adminService.rolePermissions",
+    "procedures": [
+      "usp_Admin_RolePermission_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 16
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/roles",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_VAITRO",
+    "controller": "adminController.createRole",
+    "service": "adminService.createRole",
+    "procedures": [
+      "sp_Admin_Role_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 17
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/roles/:roleId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_VAITRO",
+    "controller": "adminController.updateRole",
+    "service": "adminService.updateRole",
+    "procedures": [
+      "sp_Admin_Role_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 18
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/roles/:roleId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_VAITRO",
+    "controller": "adminController.deleteRole",
+    "service": "adminService.deleteRole",
+    "procedures": [
+      "sp_Admin_Role_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 19
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/permissions",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_QUYEN",
+    "controller": "adminController.permissions",
+    "service": "adminService.permissions",
+    "procedures": [
+      "sp_Admin_Permission_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 20
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/permissions",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_QUYEN",
+    "controller": "adminController.createPermission",
+    "service": "adminService.createPermission",
+    "procedures": [
+      "sp_Admin_Permission_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 21
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/permissions/:permissionId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_QUYEN",
+    "controller": "adminController.updatePermission",
+    "service": "adminService.updatePermission",
+    "procedures": [
+      "sp_Admin_Permission_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 22
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/permissions/:permissionId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_QUYEN",
+    "controller": "adminController.deletePermission",
+    "service": "adminService.deletePermission",
+    "procedures": [
+      "sp_Admin_Permission_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 23
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/roles/:roleId/permissions",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_QUYEN",
+    "controller": "adminController.setRolePermissions",
+    "service": "adminService.setRolePermissions",
+    "procedures": [
+      "sp_Admin_RolePermission_Set"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 24
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/assignments",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "PHANCONG_RAP",
+    "controller": "adminController.assignments",
+    "service": "adminService.assignments",
+    "procedures": [
+      "sp_Admin_Assignment_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 25
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/assignments",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "PHANCONG_RAP",
+    "controller": "adminController.createAssignment",
+    "service": "adminService.createAssignment",
+    "procedures": [
+      "sp_Admin_Assignment_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 26
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/assignments/:assignmentId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "PHANCONG_RAP",
+    "controller": "adminController.updateAssignment",
+    "service": "adminService.updateAssignment",
+    "procedures": [
+      "usp_Admin_Assignment_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 27
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/cinemas",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.cinemas",
+    "service": "adminService.cinemas",
+    "procedures": [
+      "usp_Admin_Cinema_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 28
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/cinemas",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.createCinema",
+    "service": "adminService.createCinema",
+    "procedures": [
+      "sp_Admin_Cinema_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 29
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/cinemas/:cinemaId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.updateCinema",
+    "service": "adminService.updateCinema",
+    "procedures": [
+      "sp_Admin_Cinema_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 30
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/cinemas/:cinemaId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.deleteCinema",
+    "service": "adminService.deleteCinema",
+    "procedures": [
+      "sp_Admin_Cinema_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 31
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/cinemas/:cinemaId/images",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.cinemaImages",
+    "service": "adminService.cinemaImages",
+    "procedures": [
+      "usp_Admin_CinemaImage_List"
+    ],
+    "frontend": "AdminPortal / adminApi; CinemaImageManager",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 32
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/cinemas/:cinemaId/images",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.createCinemaImage",
+    "service": "adminService.createCinemaImage",
+    "procedures": [
+      "usp_Admin_CinemaImage_Create"
+    ],
+    "frontend": "AdminPortal / adminApi; CinemaImageManager",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 33
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/cinemas/:cinemaId/images/:imageId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.updateCinemaImage",
+    "service": "adminService.updateCinemaImage",
+    "procedures": [
+      "usp_Admin_CinemaImage_Update"
+    ],
+    "frontend": "AdminPortal / adminApi; CinemaImageManager",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 34
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/cinemas/:cinemaId/images/:imageId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.deleteCinemaImage",
+    "service": "adminService.deleteCinemaImage",
+    "procedures": [
+      "usp_Admin_CinemaImage_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi; CinemaImageManager",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 35
+  },
+  {
+    "method": "PATCH",
+    "url": "/api/admin/cinemas/:cinemaId/images/:imageId/cover",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_RAP",
+    "controller": "adminController.setCinemaImageCover",
+    "service": "adminService.setCinemaImageCover",
+    "procedures": [
+      "usp_Admin_CinemaImage_SetCover"
+    ],
+    "frontend": "AdminPortal / adminApi; CinemaImageManager",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 36
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/rooms",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "adminController.rooms",
+    "service": "adminService.rooms",
+    "procedures": [
+      "usp_Admin_Room_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 37
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/rooms",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "adminController.createRoom",
+    "service": "adminService.createRoom",
+    "procedures": [
+      "usp_Admin_Room_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 38
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/rooms/:roomId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "adminController.updateRoom",
+    "service": "adminService.updateRoom",
+    "procedures": [
+      "usp_Admin_Room_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 39
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/rooms/:roomId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_PHONG",
+    "controller": "adminController.deleteRoom",
+    "service": "adminService.deleteRoom",
+    "procedures": [
+      "usp_Admin_Room_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 40
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/seats",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "adminController.seats",
+    "service": "adminService.seats",
+    "procedures": [
+      "usp_Admin_Seat_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 41
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/seats",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "adminController.createSeat",
+    "service": "adminService.createSeat",
+    "procedures": [
+      "usp_Admin_Seat_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 42
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/seats/:seatId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "adminController.updateSeat",
+    "service": "adminService.updateSeat",
+    "procedures": [
+      "usp_Admin_Seat_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 43
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/seats/:seatId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_GHE",
+    "controller": "adminController.deleteSeat",
+    "service": "adminService.deleteSeat",
+    "procedures": [
+      "usp_Admin_Seat_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 44
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/pricing",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_BANG_GIA",
+    "controller": "adminController.pricing",
+    "service": "adminService.pricing",
+    "procedures": [
+      "usp_Admin_Pricing_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 45
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/pricing",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_BANG_GIA",
+    "controller": "adminController.createPricing",
+    "service": "adminService.createPricing",
+    "procedures": [
+      "usp_Admin_Pricing_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 46
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/pricing/:pricingId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_BANG_GIA",
+    "controller": "adminController.updatePricing",
+    "service": "adminService.updatePricing",
+    "procedures": [
+      "usp_Admin_Pricing_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 47
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/showtimes",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "adminController.showtimes",
+    "service": "adminService.showtimes",
+    "procedures": [
+      "usp_Admin_Showtime_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 48
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/showtimes",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "adminController.createShowtime",
+    "service": "adminService.createShowtime",
+    "procedures": [
+      "usp_Admin_Showtime_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "BROKEN",
+    "verification": "I-03, rủi ro concurrency",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 49
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/showtimes/:showtimeId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "adminController.updateShowtime",
+    "service": "adminService.updateShowtime",
+    "procedures": [
+      "usp_Admin_Showtime_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "BROKEN",
+    "verification": "I-03, rủi ro concurrency",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 50
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/showtimes/:showtimeId/cancel",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SUAT_CHIEU",
+    "controller": "adminController.cancelShowtime",
+    "service": "adminService.cancelShowtime",
+    "procedures": [
+      "usp_Admin_Showtime_Cancel"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 51
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/movies",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.movies",
+    "service": "adminService.movies",
+    "procedures": [
+      "usp_Admin_Movie_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 52
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/movies",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.createMovie",
+    "service": "adminService.createMovie",
+    "procedures": [
+      "sp_Admin_Movie_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 53
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/movies/:movieId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.updateMovie",
+    "service": "adminService.updateMovie",
+    "procedures": [
+      "sp_Admin_Movie_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 54
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/movies/:movieId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.deleteMovie",
+    "service": "adminService.deleteMovie",
+    "procedures": [
+      "sp_Admin_Movie_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 55
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/movies/:movieId/actors",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.setMovieActors",
+    "service": "adminService.setMovieActors",
+    "procedures": [
+      "sp_Admin_MovieActor_Set"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "BROKEN",
+    "verification": "I-08",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 56
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/genres",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_THELOAI",
+    "controller": "adminController.genres",
+    "service": "adminService.genres",
+    "procedures": [
+      "sp_Admin_Genre_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 57
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/genres",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_THELOAI",
+    "controller": "adminController.createGenre",
+    "service": "adminService.createGenre",
+    "procedures": [
+      "sp_Admin_Genre_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 58
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/genres/:genreId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_THELOAI",
+    "controller": "adminController.updateGenre",
+    "service": "adminService.updateGenre",
+    "procedures": [
+      "sp_Admin_Genre_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 59
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/genres/:genreId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_THELOAI",
+    "controller": "adminController.deleteGenre",
+    "service": "adminService.deleteGenre",
+    "procedures": [
+      "sp_Admin_Genre_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 60
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/actors",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.actors",
+    "service": "adminService.actors",
+    "procedures": [
+      "sp_Admin_Actor_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 61
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/actors",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.createActor",
+    "service": "adminService.createActor",
+    "procedures": [
+      "sp_Admin_Actor_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 62
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/actors/:actorId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.updateActor",
+    "service": "adminService.updateActor",
+    "procedures": [
+      "sp_Admin_Actor_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 63
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/actors/:actorId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_DANHMUC_PHIM",
+    "controller": "adminController.deleteActor",
+    "service": "adminService.deleteActor",
+    "procedures": [
+      "sp_Admin_Actor_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 64
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/products",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SANPHAM",
+    "controller": "adminController.products",
+    "service": "adminService.products",
+    "procedures": [
+      "usp_Admin_Product_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 65
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/products",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SANPHAM",
+    "controller": "adminController.createProduct",
+    "service": "adminService.createProduct",
+    "procedures": [
+      "sp_Admin_Product_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 66
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/products/:productId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SANPHAM",
+    "controller": "adminController.updateProduct",
+    "service": "adminService.updateProduct",
+    "procedures": [
+      "sp_Admin_Product_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 67
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/products/:productId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_SANPHAM",
+    "controller": "adminController.deleteProduct",
+    "service": "adminService.deleteProduct",
+    "procedures": [
+      "sp_Admin_Product_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 68
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/promotions",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHUYENMAI",
+    "controller": "adminController.promotions",
+    "service": "adminService.promotions",
+    "procedures": [
+      "sp_Admin_Promotion_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 69
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/promotions",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHUYENMAI",
+    "controller": "adminController.createPromotion",
+    "service": "adminService.createPromotion",
+    "procedures": [
+      "sp_Admin_Promotion_Create"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 70
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/promotions/:promotionId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHUYENMAI",
+    "controller": "adminController.updatePromotion",
+    "service": "adminService.updatePromotion",
+    "procedures": [
+      "sp_Admin_Promotion_Update"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 71
+  },
+  {
+    "method": "DELETE",
+    "url": "/api/admin/promotions/:promotionId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHUYENMAI",
+    "controller": "adminController.deletePromotion",
+    "service": "adminService.deletePromotion",
+    "procedures": [
+      "sp_Admin_Promotion_Delete"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 72
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/reports/revenue",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "XEM_BAO_CAO_TOANHE",
+    "controller": "adminController.revenue",
+    "service": "adminService.revenue",
+    "procedures": [
+      "sp_Admin_Report_Revenue"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "I-13, thiếu theo phim",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 73
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/complaints",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI",
+    "controller": "adminRoutes.wrapSupport",
+    "service": "supportService.list",
+    "procedures": [
+      "sp_Support_Complaint_List"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "WORKING",
+    "verification": "đọc thực tế",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 80
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/complaints/:complaintId",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI",
+    "controller": "adminRoutes.wrapSupport",
+    "service": "supportService.detail",
+    "procedures": [
+      "sp_Support_Complaint_GetDetail"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "thiếu fixture dương",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 81
+  },
+  {
+    "method": "GET",
+    "url": "/api/admin/complaints/:complaintId/order-reference",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI + TRA_CUU_DON",
+    "controller": "adminRoutes.wrapSupport",
+    "service": "supportService.orderReference",
+    "procedures": [
+      "sp_Support_Complaint_GetOrderReference"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "thiếu fixture dương",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 82
+  },
+  {
+    "method": "POST",
+    "url": "/api/admin/complaints/:complaintId/processings",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI + XULY_KHIEUNAI",
+    "controller": "adminRoutes.wrapSupport",
+    "service": "supportService.addProcessing",
+    "procedures": [
+      "sp_Support_Complaint_AddProcessing"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 83
+  },
+  {
+    "method": "PUT",
+    "url": "/api/admin/complaints/:complaintId/status",
+    "actor": "ADMIN",
+    "auth": "JWT + account live",
+    "permission": "QL_KHIEUNAI + XULY_KHIEUNAI",
+    "controller": "adminRoutes.wrapSupport",
+    "service": "supportService.updateStatus",
+    "procedures": [
+      "sp_Support_Complaint_UpdateStatus"
+    ],
+    "frontend": "AdminPortal / adminApi",
+    "status": "PARTIAL",
+    "verification": "chưa chạy ghi",
+    "file": "backend/src/routes/adminRoutes.js",
+    "line": 84
+  }
+]

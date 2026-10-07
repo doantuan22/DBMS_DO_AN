@@ -1,0 +1,35 @@
+SYSTEM AUDIT COMPLETE
+
+Database: 70.7%
+Backend: 94.6%
+Frontend: 56.5%
+Integration: 51.1%
+
+Use Cases: 46
+PASS: 7
+PARTIAL: 33
+MISSING: 1
+BROKEN: 5
+
+Critical: 3
+High: 7
+Medium: 12
+Low: 4
+
+No-SQL Backend Audit: PASS
+Architecture: PARTIAL
+
+Top 10 issues:
+1. I-01 CRITICAL: Runtime DB là sa/sysadmin
+2. I-02 CRITICAL: Manager xóa phòng có thể partial commit
+3. I-03 CRITICAL: Rủi ro concurrent overlapping showtimes dưới RCSI
+4. I-04 HIGH: GRANT schema EXECUTE rộng hơn gateway cần thiết
+5. I-05 HIGH: Rule Ngày lễ không bao giờ được tính giá
+6. I-06 HIGH: Book/show bán không enforce trạng thái parent
+7. I-07 HIGH: Promotion validate và consume policy chưa atomic
+8. I-08 HIGH: Set cast silently mất association khi actor ID không tồn tại
+9. I-09 HIGH: Historical monetary snapshots có, metadata còn mutable
+10. I-11 HIGH: Admin complaint detail có thể lệch selected ID
+
+Report: docs/FULL_SYSTEM_AUDIT.md
+No production source edits. No persistent database data changes.

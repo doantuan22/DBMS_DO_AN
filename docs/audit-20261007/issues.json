@@ -1,0 +1,218 @@
+{
+  "issues": [
+    {
+      "id": "I-01",
+      "severity": "CRITICAL",
+      "title": "Runtime DB là sa/sysadmin",
+      "evidence": "LIVE; backend/.env DB_USER; config/database.js; connection.json",
+      "problem": "Application principal có mọi quyền table/server; execute-only role tồn tại nhưng runtime không dùng.",
+      "impact": "Backend compromise/credential leak có thể sửa/xóa/đọc trực tiếp dữ liệu. Dev exception được tài liệu hóa, vẫn FAIL mục tiêu user application execute-only."
+    },
+    {
+      "id": "I-02",
+      "severity": "CRITICAL",
+      "title": "Manager xóa phòng có thể partial commit",
+      "evidence": "STATIC; database/08_procedures/manager/sp_Manager_Room_Delete.sql:30,35,36",
+      "problem": "A check room chưa có show; B tạo show cùng room commit; A DELETE GHE autocommit; A DELETE PHONGCHIEU bị FK SUATCHIEU chặn. Không BEGIN TRAN/CATCH/room serialization.",
+      "impact": "Room còn nhưng mất toàn bộ seats. Không tái hiện ghi. Expected all-or-nothing TX + parent coordination; AdminRoomDelete đã có TX khác."
+    },
+    {
+      "id": "I-03",
+      "severity": "CRITICAL",
+      "title": "Rủi ro concurrent overlapping showtimes dưới RCSI",
+      "evidence": "STATIC + LIVE RCSI; database/07_triggers/TRG_SuatChieu_KiemTraTrungLich.sql:15; manager sp_Manager_Showtime_Create.sql:56; admin usp_Admin_Showtime_Create.sql:30; update paths",
+      "problem": "Hai transaction ghi row khác cùng phòng; AFTER trigger SELECT range không room UPDLOCK/HOLDLOCK hoặc exclusion invariant, mỗi statement snapshot có thể thiếu uncommitted row kia. Single statement multirow check không giải parallel sessions.",
+      "impact": "Có thể commit overlapping lịch phòng; chưa exploit/stress current. Expected serialize per-room create/update invariant. Current SELECT overlap0 không phủ future race."
+    },
+    {
+      "id": "I-04",
+      "severity": "HIGH",
+      "title": "GRANT schema EXECUTE rộng hơn gateway cần thiết",
+      "evidence": "LIVE grants + STATIC; database/09_security/001_execute_role.sql:3; database/08_procedures/auth/sp_User_ChangePassword.sql:23; customer/sp_Order_Cancel.sql",
+      "problem": "db_executor executes all dbo SP, kể cả change password chỉ active userId+newhash, không old-password/actor entitlement. OrderCancel trusts supplied owner. Không HTTP consumer nên API không expose exploit này.",
+      "impact": "Nếu có app DB credential có thể gọi helpers thay flow auth; use selective grants/internal boundaries. Main CancelCascade có guard, không đánh nhầm bypass."
+    },
+    {
+      "id": "I-05",
+      "severity": "HIGH",
+      "title": "Rule Ngày lễ không bao giờ được tính giá",
+      "evidence": "STATIC; database/05_functions/fn_TinhGiaVe.sql:55; 03_constraints/003_check_constraints.sql:5; shared/resourceContract.mjs",
+      "problem": "Ngày lễ là giá trị được chấp nhận nhưng fn chỉ set Cuối tuần/Ngày thường; không holiday calendar.",
+      "impact": "Bảng giá lễ lưu thành công nhưng giá bán thiếu phụ thu lễ theo cấu hình. Không hiện holiday transaction để đối soát; expected calendar/type calculation hoặc contract loại option."
+    },
+    {
+      "id": "I-06",
+      "severity": "HIGH",
+      "title": "Book/show bán không enforce trạng thái parent",
+      "evidence": "STATIC; database/08_procedures/booking/sp_Booking_Create.sql:76; public/sp_Showtime_ListByMovie.sql; system/sp_Showtime_ValidateTimes.sql; show create paths",
+      "problem": "Booking chỉ check open/future show và active physical seats; không check cinema/room/movie operational status. Public view không mang cinema/room status để filter; CreateTimes không validate release-window/status/format compatibility.",
+      "impact": "Future open show ở cinema đóng/room bảo trì/movie ngừng vẫn có thể được đặt nếu active seats. Business policy cần chốt, enforced database. Current dataset không có case đó."
+    },
+    {
+      "id": "I-07",
+      "severity": "HIGH",
+      "title": "Promotion validate và consume policy chưa atomic",
+      "evidence": "STATIC; database/08_procedures/public/sp_Promotion_Validate.sql:49; booking/sp_Booking_Create.sql:216,241,248; CK_KHUYENMAI_SoLuong",
+      "problem": "Read coupon without lock rồi tăng used under lock; concurrent Admin config update có thể đổi policy sau validation. Last-quota collision bị CHECK abort, generic547. Invalid provided code bị set NULL/discount0 rồi vẫn tạo order.",
+      "impact": "Không claim quota oversubscription commit: CHECK protects. Rủi ro stale discount/full-price ngoài preview expectation và lỗi không domain-specific. Expected atomic coupon policy and clear reconfirm/reject contract."
+    },
+    {
+      "id": "I-08",
+      "severity": "HIGH",
+      "title": "Set cast silently mất association khi actor ID không tồn tại",
+      "evidence": "STATIC; database/08_procedures/admin/sp_Admin_MovieActor_Set.sql:37,43; backend/src/validators/adminValidator.js cast rule",
+      "problem": "Sau DELETE current PHIM_DIENVIEN, INSERT INNER JOIN DIENVIEN silently excludes unknown IDs; valid API shape/positive integer không đảm bảo existence. All-unknown set commits empty.",
+      "impact": "API success nhưng cast cũ bị xóa khi request có lỗi reference. Expected validate entire IDs before replace and rollback/reject; no mutation test run."
+    },
+    {
+      "id": "I-09",
+      "severity": "HIGH",
+      "title": "Historical monetary snapshots có, metadata còn mutable",
+      "evidence": "STATIC; database/06_views/vw_LichSuDatVe.sql; vw_ChiTietDonDatVe.sql; manager/sp_Manager_Showtime_Update.sql:36; manager/sp_Manager_Seat_Update.sql:28; admin equivalents",
+      "problem": "Views/details JOIN live movie/seat/product descriptors. Show metadata change only blocked paid/current holds; completed/canceled/expired history không đủ bảo vệ. Seat type change only guards future active tickets.",
+      "impact": "History movie/time/seat type/product descriptions có thể đổi về sau dù GiaVe/DonGia/totals giữ. Expected historical metadata snapshot hoặc mutation policy bảo toàn; real old orders0."
+    },
+    {
+      "id": "I-10",
+      "severity": "MEDIUM",
+      "title": "Dataset hiện không thể chạy booking tích cực",
+      "evidence": "LIVE data-scans; staleOpenShows IDs2..5; publicShowAvailability0; database/10_seed",
+      "problem": "4 show đã kết thúc vẫn Mở bán từ seed ngày03/10; không show future mở bán tại07/10. Public list filter future đúng → []. Direct detail/seats past still200.",
+      "impact": "Booking demo/46UC positive fixture unavailable; chronology/status stale. Không reseed audit. Expected disposable/current demo fixture and lifecycle policy."
+    },
+    {
+      "id": "I-11",
+      "severity": "HIGH",
+      "title": "Admin complaint detail có thể lệch selected ID",
+      "evidence": "STATIC; frontend/src/pages/AdminPortal.jsx:132,137,145",
+      "problem": "Open A rồi B; selected=B nhưng response A muộn setComplaint(A), không generation guard; write action dùng selected.id=B. Current loadRequest guard cho resource lists không bảo vệ openComplaint.",
+      "impact": "Admin thấy nội dung A và ghi xử lý B; DB role/permission không ngăn operator intent mismatch. Expected resource-bound detail/write state. Data0 nên không current browser repro."
+    },
+    {
+      "id": "I-12",
+      "severity": "MEDIUM",
+      "title": "Backend suite không tái chạy xanh từ checkout",
+      "evidence": "TEST; backend/tests/adminService.test.js:204; sqlErrorCoverage.test.js:106",
+      "problem": "Đọc database/_audit/known-contract-gaps.json thiếu; ENOENT gây 2failed items, cả sqlErrorCoverage suite chưa execute cases.",
+      "impact": "Không có full green release gate/error-map proof. Expected versioned/generated reproducible dependency; không tạo fake evidence để sửa audit."
+    },
+    {
+      "id": "I-13",
+      "severity": "MEDIUM",
+      "title": "Admin report thiếu breakdown phim và thời gian",
+      "evidence": "STATIC + LIVE200; Phân Tích _ Thiết Kế.md ADM-16:523; database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "problem": "2 sets per-cinema summary + period total, không movie aggregation/day series ở Admin. Manager daily revenue không thay Admin cross-system movie/time requirement.",
+      "impact": "ADM-16 PARTIAL; report source money snapshots có nhưng financial positive0. Expected criteria/aggregations đầy đủ qua SP/API/UI."
+    },
+    {
+      "id": "I-14",
+      "severity": "MEDIUM",
+      "title": "Admin pricing edit thiếu điều kiện/date",
+      "evidence": "STATIC; backend/src/validators/adminValidator.js pricingWrite; database/08_procedures/admin/usp_Admin_Pricing_Update.sql; frontend/src/utils/adminForms.js",
+      "problem": "Create có tuple seat/day/format/date; update chỉ surcharge/status. Thiết kế ADM-13 yêu cầu sửa rule gồm dimensions/time. Manager R7 edit đủ hơn.",
+      "impact": "Admin phải tạo rule mới/disable workaround, UC edit chưa MATCH. Expected full update contract và overlap tests."
+    },
+    {
+      "id": "I-15",
+      "severity": "MEDIUM",
+      "title": "Support queue cũ overwrite filter mới",
+      "evidence": "STATIC; frontend/src/pages/SupportPortal.jsx:26..29,42",
+      "problem": "loadQueue mỗi đổi filter và submit, không abort/request generation; promise cũ luôn setQueue. Detail có guard riêng nên không kết luận toàn Support thiếu guards.",
+      "impact": "Danh sách hiển thị không khớp filter mới. Expected queue request identity; no browser runtime proof."
+    },
+    {
+      "id": "I-16",
+      "severity": "MEDIUM",
+      "title": "Bulk processing cùng complaint không deterministic",
+      "evidence": "STATIC; database/07_triggers/TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai.sql:14",
+      "problem": "UPDATE JOIN INSERTED nếu nhiều row same KhieuNaiID với status khác không order/TOP/latest. Bộ test multirow hiện chỉ seat-room/show-overlap, không case processing winner.",
+      "impact": "KHIEUNAI status có thể lệch last timeline. HTTP SP hiện single-row TX hợp lý; broad DB surface vẫn cho bulk. Expected deterministic event ordering/reject duplicates."
+    },
+    {
+      "id": "I-17",
+      "severity": "MEDIUM",
+      "title": "Backend strict map-only boundary bị mở rộng",
+      "evidence": "STATIC; backend/src/services/bookingService.js:104; validators/bookingValidator.js:13; validators/adminValidator.js MAX_PERCENT; frontend/src/constants/bookingLimits.js",
+      "problem": "Preview subtotal number arithmetic và mirrored business limits10/10/99 ở nhiều layers. Authoritative booking/discount/total vẫn DB.",
+      "impact": "Strict instruction chỉ typed execute/map chưa trọn vẹn; có drift/rounding preview risk, không raw SQL violation. Expected tập trung policy/preview contract hoặc document allowed exception."
+    },
+    {
+      "id": "I-18",
+      "severity": "MEDIUM",
+      "title": "Auth thiếu rate policy và server revocation",
+      "evidence": "STATIC; backend/src/app.js; routes/authRoutes.js; utils/jwt.js; frontend/src/services/authSession.js",
+      "problem": "Login/register không rate limiter; logout chỉ xóa session token; JWT còn hiệu lực đến exp (default1h), không tokenVersion/denylist/password logout revocation.",
+      "impact": "Brute force/internet exposure và stolen token replay risk. Live account/permission reload có nên locked user bị reject; không claim revoked-role bypass. Expected auth policy trước deploy."
+    },
+    {
+      "id": "I-19",
+      "severity": "MEDIUM",
+      "title": "Booking UI giữ context hoặc response cũ",
+      "evidence": "STATIC; frontend/src/pages/BookingPreparation.jsx:30..35,49,90,106",
+      "problem": "Param showtime change refresh abort reads nhưng không reset booking success/quantities/code/promo; old promotion result không generation-bound selection. Seat IDs có pruning sau fetch, không hoàn toàn thiếu guard.",
+      "impact": "Preview/link/order notice có thể từ show/selection trước. DB recheck ngăn client set money; UI intent mismatch cần state keyed resource + stale response guard."
+    },
+    {
+      "id": "I-20",
+      "severity": "MEDIUM",
+      "title": "Profile mọi role tạo HOSOKHACHHANG",
+      "evidence": "STATIC; backend/src/routes/authRoutes.js:9; database/08_procedures/auth/sp_User_UpdateProfile.sql:42; frontend/routes/index.jsx Profile",
+      "problem": "All authenticated roles can PUT/me; SP INSERT customer profile if missing regardless role.",
+      "impact": "Staff/admin có thể tạo customer-specific profile/points container; currently profiles4 for4customers nên chưa data pollution. Expected explicit all-role/customer profile model policy."
+    },
+    {
+      "id": "I-21",
+      "severity": "MEDIUM",
+      "title": "Complaint linked-order lookup che lỗi",
+      "evidence": "STATIC; frontend/src/pages/Complaints.jsx:22",
+      "problem": "getOrders catch(()=>applyOrders([])) biến network/auth/database error thành không có order.",
+      "impact": "Người dùng mất ability link order, không biết nguyên nhân; API business data vẫn thật. Expected visible error/retry/partial state, không fake empty."
+    },
+    {
+      "id": "I-22",
+      "severity": "MEDIUM",
+      "title": "GET order detail có persistent side effects",
+      "evidence": "STATIC; database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql; backend/src/services/orderService.js",
+      "problem": "Detail gọi expire pending có thể update order/tickets/coupon; tooling/read monitors không thuần read khi có expired order.",
+      "impact": "Query semantics/cache/retries khó quản lý; strict audit cần avoid even GET có write. Snapshot hiện all0 nên no changes. Expected separate/explicit expiry command boundary."
+    },
+    {
+      "id": "I-23",
+      "severity": "LOW",
+      "title": "Docs/setup/evidence lifecycle chưa rõ",
+      "evidence": "STATIC; README.md trống; database/README.md links docs RELEASE_READINESS/DATETIME_CONTRACT, old audit dirs; scripts r1..r8",
+      "problem": "Current expected reports/evidence không tồn tại, scope count25/26/27 và45/46 lệch; old scripts có deploy/mutation assumptions.",
+      "impact": "Reviewer/clean clone khó reproduce; expected supported run/test/deploy docs và archived versioned contracts."
+    },
+    {
+      "id": "I-24",
+      "severity": "LOW",
+      "title": "Frontend bundle warning",
+      "evidence": "TEST; docs/audit-20261007/frontend-build.txt",
+      "problem": "Single JS chunk533.30kB minified/156.30kB gzip; Vite warning>500k.",
+      "impact": "Potential initial load cost; không chứng minh performance failure. Expected measure then split portal routes if useful."
+    },
+    {
+      "id": "I-25",
+      "severity": "LOW",
+      "title": "Unused wrappers/SQL helpers và stale comment",
+      "evidence": "STATIC; frontend/src/api/healthApi.js:3; authApi.js:7; backend/src/services/orderService.js:92; SQL dependencies; adminRoutes.js:77",
+      "problem": "Unused FE consumers/legacy SP aliases/functions/view; wrong payment-user comment; Admin inline controller exception.",
+      "impact": "Maintenance/caller confusion; no deletion authorized. Expected decide compatibility surfaces after caller review, correct docs in fix phase."
+    },
+    {
+      "id": "I-26",
+      "severity": "LOW",
+      "title": "Pagination và observability chưa đủ chứng cứ scale",
+      "evidence": "STATIC; list SP/services/portals; backend/src/utils/logger.js",
+      "problem": "Lists unpaginated, auth reads multiple SP per request, cancellation locks all user rows; no correlation ID/business audit events/metrics.",
+      "impact": "Large data latency/memory/diagnosis risk; no current load failure. Expected bounded list contracts, query/load measurement and traceability."
+    }
+  ],
+  "severity": {
+    "CRITICAL": 3,
+    "HIGH": 7,
+    "MEDIUM": 12,
+    "LOW": 4
+  }
+}

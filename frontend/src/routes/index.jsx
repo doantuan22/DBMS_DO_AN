@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
-import Placeholder from '../pages/Placeholder';
 import DatabaseHealth from '../components/DatabaseHealth';
 import RequireRole from './RequireRole';
 import RequireAuth from './RequireAuth';
@@ -8,6 +7,8 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Profile from '../pages/auth/Profile';
 import Forbidden from '../pages/Forbidden';
+import NotFound from '../pages/NotFound';
+import CustomerArea from '../pages/CustomerArea';
 import Home from '../pages/Home';
 import Movies from '../pages/Movies';
 import MovieDetail from '../pages/MovieDetail';
@@ -24,18 +25,12 @@ import SupportPortal from '../pages/SupportPortal';
 import AdminPortal from '../pages/AdminPortal';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
-const protectedArea = (role, area, title) => (
-  <Route key={role} element={<RequireRole role={role} permission={area.permission} />}>
-    <Route path={area.path} element={<AreaLayout title={area.label} />}>
-      <Route index element={<Placeholder title={title} />} />
-    </Route>
-  </Route>
-);
+const PUBLIC_LINKS = [{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }];
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<AreaLayout title="Đặt vé xem phim" links={[{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }]} />}>
+      <Route path="/" element={<AreaLayout links={PUBLIC_LINKS} />}>
         <Route index element={<><Home /><DatabaseHealth /></>} />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetail />} />
@@ -45,6 +40,7 @@ export default function AppRoutes() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="forbidden" element={<Forbidden />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       <Route element={<RequireAuth />}>
@@ -77,14 +73,16 @@ export default function AppRoutes() {
         </Route>
       </Route>
 
-      {protectedArea(ROLES.CUSTOMER, ROLE_AREAS[ROLES.CUSTOMER], 'Customer area')}
+      <Route element={<RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />}>
+        <Route path={ROLE_AREAS[ROLES.CUSTOMER].path} element={<AreaLayout title={ROLE_AREAS[ROLES.CUSTOMER].label} />}>
+          <Route index element={<CustomerArea />} />
+        </Route>
+      </Route>
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<AreaLayout title="Quản trị hệ thống" links={[{ to: '/', label: 'Trang chủ' }, { to: '/admin', label: 'Admin' }]} />}>
           <Route index element={<AdminPortal />} />
         </Route>
       </Route>
-
-      <Route path="*" element={<Placeholder title="404 - Không tìm thấy trang" />} />
     </Routes>
   );
 }

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { createPaymentAttempt, getOrder, submitPaymentResult } from '../api/ordersApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
+import StatusBadge from '../components/primitives/StatusBadge';
 import { bookingErrorMessage } from '../utils/bookingLimits';
 import { getSeats } from '../api/catalogApi';
 
@@ -63,11 +64,16 @@ export default function PaymentPage() {
   const payable = order.status === 'Chờ thanh toán';
   const canConfirm = canPay && payable && Boolean(order.holdExpiresAt) && elapsedDeadline !== order.holdExpiresAt && Date.parse(order.holdExpiresAt) > now;
   return <section className="catalog-page"><p className="catalog-eyebrow">THANH TOÁN MÔ PHỎNG</p><h1>Đơn #{order.id}</h1>
-    <p>{order.movieTitle} · {order.cinemaName}</p><p>Database chốt tổng thanh toán: <strong>{money(order.total)}</strong></p><p>Trạng thái đơn: {order.status}</p>
+    <p>{order.movieTitle} · {order.cinemaName}</p><p>Database chốt tổng thanh toán: <strong>{money(order.total)}</strong></p><p>Trạng thái đơn: <StatusBadge status={order.status} /></p>
     <p className="catalog-muted">Thanh toán mô phỏng. Bấm xác nhận trong thời gian giữ ghế để hoàn tất đơn.</p>
     {payable && <HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} />}
     {payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}
-    {payable && <><label>Phương thức <select value={method} disabled={busy || !canConfirm} onChange={(event) => setMethod(event.target.value)}>{METHODS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label><button type="button" onClick={confirmPayment} disabled={busy || !canConfirm}>{busy ? 'Đang xác nhận…' : 'Xác nhận thanh toán'}</button></>}
+    {payable && <div className="payment-actions">
+      <label>Phương thức
+        <select value={method} disabled={busy || !canConfirm} onChange={(event) => setMethod(event.target.value)}>{METHODS.map((item) => <option key={item} value={item}>{item}</option>)}</select>
+      </label>
+      <button type="button" className="catalog-button" onClick={confirmPayment} disabled={busy || !canConfirm}>{busy ? 'Đang xác nhận…' : 'Xác nhận thanh toán'}</button>
+    </div>}
     {payable && canPay && !canConfirm && <p role="status">Đang kiểm tra hạn giữ ghế với máy chủ…</p>}
     {order.status === 'Hết hạn' && <p role="alert">Đơn đã hết thời gian giữ ghế. Ghế đã được giải phóng; vui lòng đặt vé lại.</p>}
     {order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}
