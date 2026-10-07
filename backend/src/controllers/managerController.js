@@ -43,10 +43,7 @@ export const updateRoom = handle(async (req) => ({
   ),
 }));
 
-export const deleteRoom = handle(async (req) => {
-  await managerService.deleteRoom(req.user.userId, validators.roomId(req.params.roomId));
-  return { deleted: true };
-});
+export const deleteRoom = handle(async (req) => managerService.deleteRoom(req.user.userId, validators.roomId(req.params.roomId)));
 
 export const listSeats = handle(async (req) => ({
   seats: await managerService.listSeats(req.user.userId, validators.roomId(req.params.roomId)),

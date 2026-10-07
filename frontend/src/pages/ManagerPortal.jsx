@@ -78,9 +78,9 @@ function ManagerWorkspace({ cinemaId, user }) {
     if (busy) return;
     setBusy(true); setNotice(null);
     try {
-      await action();
+      const result = await action();
       if (!mounted.current) return;
-      setEditing(null); setNotice({ ok: true, text: success });
+      setEditing(null); setNotice({ ok: true, text: typeof success === 'function' ? success(result) : success });
       await load(); setRefresh(value => value + 1);
       if (reloadSeats && seats.roomId) await loadSeats(seats.roomId);
     } catch (error) {
@@ -108,7 +108,7 @@ function ManagerWorkspace({ cinemaId, user }) {
         {data.sections.rooms?.status === 'success' && (list('rooms').length ? <ul>{list('rooms').map(room => <li key={room.id}>{room.name} · {room.type} · {room.status} · {room.seatCount} ghế
           {can('QL_GHE') && <button type="button" onClick={() => void loadSeats(room.id)}>Ghế</button>}
           <button type="button" disabled={busy} onClick={() => setEditing({ kind: 'room', row: room })}>Sửa phòng</button>
-          <button type="button" disabled={busy} onClick={() => action(() => api.deleteRoom(room.id), 'Đã xóa phòng.')}>Xóa</button>
+          <button type="button" disabled={busy} onClick={() => action(() => api.deleteRoom(room.id), result => result.message)}>Xóa</button>
         </li>)}</ul> : <EmptyState>Chưa có phòng chiếu.</EmptyState>)}
       </section>}
       {can('QL_GHE') && <section className="catalog-section" aria-label="Ghế"><h2>Ghế {seats.roomId ? `phòng #${seats.roomId}` : ''}</h2>

@@ -1,5 +1,9 @@
 # FULL SYSTEM AUDIT
 
+**Cập nhật Task 3 / R1.2:** I-03 đã được xử lý; overlap safety qua SQL gateway PASS với26 scenario cases,125 race và overlap count0. QLR-04/QLR-05/ADM-14 không còn BROKEN vì I-03, hiện PARTIAL; các policy khác vẫn chưa nghiệm thu. R1.1 giữ nguyên và regression PASS. Xem [báo cáo R1.2](evidence/R1_SHOWTIME_CONCURRENCY.md), [trạng thái hiện hành](evidence/r12/current-audit-status.json). Không triển khai R2.
+
+**Cập nhật sau nghiệm thu R0 — Task 2 / R1.1:** I-02 đã được xử lý và kiểm chứng SQL/REST/concurrency thật. QLR-02 hiện **PARTIAL**, không còn BROKEN vì room-delete atomicity; chưa nghiệm thu toàn bộ Room CRUD. Các bảng dưới đây giữ baseline R0 để đối chiếu lịch sử. Trạng thái tại nghiệm thu R1.1 và bằng chứng: [báo cáo R1.1](evidence/R1_ROOM_DELETE.md), [matrix cập nhật riêng R1.1](evidence/r11/current-audit-status.json). R1.2/I-03 chưa triển khai tại thời điểm R1.1.
+
 Ngày audit: **07/10/2026 (Asia/Saigon)**. Repository: `D:\DBMS_DO_AN`. Đối tượng: working tree hiện tại, **bao gồm các thay đổi frontend chưa commit của người dùng**, và SQL Server thực tế `localhost:1433 / CinemaBookingDB`.
 
 Phạm vi thực hiện: đọc source, đối chiếu thiết kế, SELECT metadata/dữ liệu, gọi API đọc và login chỉ đọc, chạy test hiện có, build/lint frontend. Không chạy migration/reset/seed/job hết hạn, không gọi API ghi nghiệp vụ, không chạy SQL test dù có ROLLBACK, không sửa production. Các file mới chỉ là báo cáo/evidence trong `docs/`. SQL dùng trong helper audit là công cụ kiểm tra độc lập, không thuộc backend và không được import vào runtime.

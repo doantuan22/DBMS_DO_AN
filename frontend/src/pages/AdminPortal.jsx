@@ -112,7 +112,7 @@ export default function AdminPortal() {
   };
   const remove = async (row) => {
     if (!definition || !window.confirm('Xác nhận xóa mục này? Ràng buộc nghiệp vụ sẽ từ chối xóa dữ liệu đang được sử dụng.')) return;
-    try { await adminApi.remove(`${definition.path}/${row[definition.id]}`); setNotice({ ok: true, text: 'Đã xóa.' }); await load(); }
+    try { const response = await adminApi.remove(`${definition.path}/${row[definition.id]}`); setNotice({ ok: true, text: active === 'rooms' ? response.result.Message : 'Đã xóa.' }); await load(); }
     catch (error) { setNotice({ ok: false, text: error.message }); }
   };
   const changeUserStatus = async (row) => {

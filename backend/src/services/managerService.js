@@ -21,11 +21,13 @@ function managerError(error) {
     case 50054: throw new HttpError(409, 'SEAT_POSITION_CONFLICT', 'This seat position already exists in the room.');
     case 50055: throw new HttpError(409, 'SEAT_LAYOUT_LOCKED', 'The room has ticket history.');
     case 50057: throw new HttpError(400, 'SHOWTIME_TIME_INVALID', 'Showtime end must be after its start.');
-    case 50052:
-    case 50056:
+    case 50052: throw new HttpError(404, 'ROOM_NOT_FOUND', 'Room was not found.');
+    case 50217: throw new HttpError(409, 'ROOM_DELETE_CONFLICT', 'Room deletion conflicted with another operation. Reload and retry.');
+    case 50056: throw new HttpError(404, 'ROOM_NOT_FOUND', 'Room was not found.');
     case 50058:
+    case 50116: throw new HttpError(404, 'SHOWTIME_NOT_FOUND', 'Showtime was not found.');
     case 50109:
-    case 50116: throw new HttpError(404, 'MANAGER_RESOURCE_NOT_FOUND', 'Manager resource was not found.');
+      throw new HttpError(404, 'MANAGER_RESOURCE_NOT_FOUND', 'Manager resource was not found.');
     case 50110: throw new HttpError(409, 'SEAT_HAS_TICKETS', 'A seat with tickets cannot be deleted.');
     case 50215: throw new HttpError(409, 'PRICING_OVERLAP', 'An active pricing rule with the same conditions already covers part of this period.');
     case 50117: throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
@@ -72,7 +74,10 @@ export function createManagerService({ execute = executeProcedure } = {}) {
     },
     async createRoom(userId, cinemaId, input) { return roomDto(rows(await call('MANAGER_ROOM_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, RapID: { type: DbTypes.Int, value: cinemaId }, TenPhong: { type: DbTypes.NVarChar(100), value: input.name }, LoaiPhong: { type: DbTypes.NVarChar(50), value: input.type } }))[0]); },
     async updateRoom(userId, id, input) { return roomDto(rows(await call('MANAGER_ROOM_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: id }, TenPhong: { type: DbTypes.NVarChar(100), value: input.name }, LoaiPhong: { type: DbTypes.NVarChar(50), value: input.type }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },
-    async deleteRoom(userId, id) { await call('MANAGER_ROOM_DELETE', { NguoiDungID: int(userId), PhongID: int(id) }); },
+    async deleteRoom(userId, id) {
+      const result = rows(await call('MANAGER_ROOM_DELETE', { NguoiDungID: int(userId), PhongID: int(id) }))[0];
+      return { deleted: Boolean(result.Deleted), deactivated: Boolean(result.Deactivated), roomId: result.PhongID, status: result.TrangThai, message: result.Message };
+    },
     async listSeats(userId, id) { return rows(await call('MANAGER_SEAT_LIST_BY_ROOM', { NguoiDungID: int(userId), PhongID: int(id) })).map(seatDto); },
     async createSeat(userId, roomId, input) { return seatDto(rows(await call('MANAGER_SEAT_CREATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, PhongID: { type: DbTypes.Int, value: roomId }, HangGhe: { type: DbTypes.VarChar(10), value: input.row }, SoGhe: { type: DbTypes.Int, value: input.number }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.type } }))[0]); },
     async updateSeat(userId, id, input) { return seatDto(rows(await call('MANAGER_SEAT_UPDATE', { NguoiDungID: { type: DbTypes.Int, value: userId }, GheID: { type: DbTypes.Int, value: id }, LoaiGhe: { type: DbTypes.NVarChar(50), value: input.type }, TrangThai: { type: DbTypes.NVarChar(50), value: input.status } }))[0]); },

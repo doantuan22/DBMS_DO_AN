@@ -8,6 +8,7 @@ CREATE OR ALTER PROCEDURE dbo.sp_Manager_Showtime_Update
 AS
 BEGIN
     SET NOCOUNT ON;
+    SET XACT_ABORT ON;
     -- R3B: current account, actor eligibility, then every required permission.
     IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
@@ -21,11 +22,13 @@ BEGIN
     BEGIN TRY
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerShowtimeUpdate;
         DECLARE @RapID INT, @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldRoom INT, @OldFormat NVARCHAR(50), @OldStatus NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();
-        SELECT @RapID = pc.RapID, @OldPhim = sc.PhimID, @OldStart = sc.ThoiGianBatDau, @OldEnd = sc.ThoiGianKetThuc,
-               @OldRoom = sc.PhongID, @OldFormat = sc.DinhDang, @OldStatus = sc.TrangThai
-        FROM dbo.SUATCHIEU sc WITH (UPDLOCK, HOLDLOCK)
-        INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID = sc.PhongID WHERE sc.SuatChieuID = @SuatChieuID;
+        -- Discovery only (RCSI read); no child update lock before the room mutex.
+        SELECT @OldRoom=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;
+        SELECT @RapID=RapID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@OldRoom;
         IF @RapID IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;
+        SELECT @OldPhim=PhimID,@OldStart=ThoiGianBatDau,@OldEnd=ThoiGianKetThuc,@OldFormat=DinhDang,@OldStatus=TrangThai
+        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@OldRoom;
+        IF @OldPhim IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;
         IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
         IF @TrangThai = N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;
         IF EXISTS (SELECT 1 FROM dbo.DONDATVE d WHERE d.SuatChieuID = @SuatChieuID AND
@@ -33,7 +36,8 @@ BEGIN
            AND (@PhimID <> @OldPhim OR @ThoiGianBatDau <> @OldStart OR @ThoiGianKetThuc <> @OldEnd OR @DinhDang <> @OldFormat)
             THROW 50120, N'Suất chiếu đã có đơn; không thể đổi phim, giờ, phòng hoặc định dạng.', 1;
         IF @ThoiGianKetThuc <= @ThoiGianBatDau THROW 50057, N'Thời gian suất chiếu không hợp lệ.', 1;
-        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,@ThoiGianKetThuc=@ThoiGianKetThuc;
+        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,
+            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@OldRoom,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;
         UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,
             DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;
         IF @OwnTran=1 COMMIT TRANSACTION;
@@ -42,6 +46,7 @@ BEGIN
     BEGIN CATCH
         IF XACT_STATE()=-1 ROLLBACK TRANSACTION;
         ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerShowtimeUpdate; END
+        SET XACT_ABORT OFF;
         ;THROW;
     END CATCH
 END;

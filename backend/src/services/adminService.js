@@ -103,6 +103,8 @@ export function mapAdminProcedureError(error) {
       throw new HttpError(404, 'ROOM_NOT_FOUND', 'Room was not found.');
     case 50203:
       throw new HttpError(409, 'ROOM_HAS_SHOWTIMES', 'A room with showtime history cannot be deleted; change its status instead.');
+    case 50217:
+      throw new HttpError(409, 'ROOM_DELETE_CONFLICT', 'Room deletion conflicted with another operation. Reload and retry.');
     case 50205:
       throw new HttpError(409, 'SEAT_POSITION_CONFLICT', 'This seat position already exists in the room.');
     case 50206:

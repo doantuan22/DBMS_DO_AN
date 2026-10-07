@@ -1,0 +1,66 @@
+{
+  "database": "CinemaBookingDB_R0_R11_20261007_01",
+  "startedAt": "2026-10-07T15:53:22.684Z",
+  "checks": [
+    {
+      "name": "backend",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node --test tests/**/*.test.js",
+      "tests": 124,
+      "skipped": 0
+    },
+    {
+      "name": "frontend",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node --test --test-concurrency=1 tests/*.test.js",
+      "tests": 49,
+      "skipped": 0
+    },
+    {
+      "name": "no-sql",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/audit-no-sql.mjs"
+    },
+    {
+      "name": "frontend-lint",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node node_modules/oxlint/bin/oxlint"
+    },
+    {
+      "name": "frontend-build",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node node_modules/vite/bin/vite.js build"
+    },
+    {
+      "name": "procedure-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/db/contract-check.mjs"
+    },
+    {
+      "name": "sql-regression",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/db/run.mjs test --database=CinemaBookingDB_R0_R11_20261007_01"
+    },
+    {
+      "name": "sql-verification",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_R11_20261007_01"
+    },
+    {
+      "name": "room-concurrency",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node database/11_tests/concurrency/room-delete-vs-showtime.mjs --database=CinemaBookingDB_R0_R11_20261007_01"
+    }
+  ],
+  "status": "PASS",
+  "completedAt": "2026-10-07T15:53:48.481Z"
+}

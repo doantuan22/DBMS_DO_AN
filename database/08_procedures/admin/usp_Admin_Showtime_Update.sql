@@ -10,6 +10,7 @@ CREATE OR ALTER PROCEDURE dbo.usp_Admin_Showtime_Update
 AS
 BEGIN
     SET NOCOUNT ON;
+    SET XACT_ABORT ON;
     -- R3B: current account, actor eligibility, then every required permission.
     IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
@@ -22,9 +23,13 @@ BEGIN
     DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
     BEGIN TRY
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminShowtimeUpdate;
-        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();
+        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @PhongID INT, @LockedPhongID INT, @Now DATETIME2 = dbo.fn_BayGio();
+        -- Discover the immutable room, lock parent, then re-read/lock the current child.
+        SELECT @PhongID=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;
+        SELECT @LockedPhongID=PhongID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@PhongID;
+        IF @LockedPhongID IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;
         SELECT @OldPhim=PhimID, @OldStart=ThoiGianBatDau, @OldEnd=ThoiGianKetThuc, @OldFormat=DinhDang
-        FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK) WHERE SuatChieuID=@SuatChieuID;
+        FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@PhongID;
         IF @OldPhim IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;
         IF @TrangThai=N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;
         IF EXISTS (SELECT 1 FROM dbo.DONDATVE d WHERE d.SuatChieuID=@SuatChieuID AND
@@ -32,7 +37,8 @@ BEGIN
            AND (@PhimID<>@OldPhim OR @ThoiGianBatDau<>@OldStart OR @ThoiGianKetThuc<>@OldEnd OR @DinhDang<>@OldFormat)
             THROW 50120, N'Suất chiếu đã có đơn; không thể đổi phim, giờ, phòng hoặc định dạng.', 1;
         IF @ThoiGianKetThuc<=@ThoiGianBatDau THROW 50211, N'Thời gian suất chiếu không hợp lệ.', 1;
-        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,@ThoiGianKetThuc=@ThoiGianKetThuc;
+        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,
+            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@PhongID,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;
         UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,
             DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;
         IF @OwnTran=1 COMMIT TRANSACTION;
@@ -41,6 +47,7 @@ BEGIN
     BEGIN CATCH
         IF XACT_STATE()=-1 ROLLBACK TRANSACTION;
         ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminShowtimeUpdate; END
+        SET XACT_ABORT OFF;
         ;THROW;
     END CATCH
 END;

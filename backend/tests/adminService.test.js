@@ -147,6 +147,7 @@ test('BUG-002: cinema image status must be in the whitelist for create and updat
 
 // SQL error number -> [HTTP status, error code] for every business error an admin procedure can throw.
 const ADMIN_ERROR_TABLE = {
+  50217: [409, 'ROOM_DELETE_CONFLICT'],
   50120: [409, 'SHOWTIME_HAS_ORDERS'], 50123: [409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED'], 50216: [400, 'SHOWTIME_TIME_INVALID'],
   50400: [400, 'INVALID_BIRTH_DATE'], 50401: [409, 'ASSIGNMENT_DUPLICATE'], 50403: [404, 'USER_NOT_FOUND'],
   50300: [401, 'ACCOUNT_UNAVAILABLE'], 50301: [403, 'FORBIDDEN'], 50302: [403, 'FORBIDDEN'],
