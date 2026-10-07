@@ -43,6 +43,7 @@ export default function OrderDetail() {
     <h2>Đồ ăn</h2>{order.products.length ? <ul>{order.products.map((product) => <li key={product.id}>{product.quantity} × {product.name} · {money(product.total)}</li>)}</ul> : <p>Không có đồ ăn.</p>}
     <h2>Lịch sử thanh toán</h2>{order.payments.length ? <ul>{order.payments.map((payment) => <li key={payment.id}>#{payment.id} · {payment.method} · {money(payment.amount)} · {payment.status} · {payment.transactionCode}</li>)}</ul> : <p>Chưa có giao dịch thanh toán.</p>}
     {userCanAct(user, 'KHACH_HANG', 'THANH_TOAN') && order.status === 'Chờ thanh toán' && elapsedDeadline !== order.holdExpiresAt && Date.parse(order.holdExpiresAt) > now && <Link className="catalog-button" to={`/orders/${order.id}/payment`}>Thanh toán đơn này</Link>}
+    {user && <Link className="catalog-button catalog-button--secondary" to={`/complaints?orderId=${order.id}`}>Gửi khiếu nại về đơn này</Link>}
     <Link className="catalog-button catalog-button--secondary" to="/orders">Quay lại đơn của tôi</Link>
   </section>;
 }

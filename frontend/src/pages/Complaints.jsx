@@ -1,7 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { userCanAct } from '../utils/authorization';
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { createComplaint, getComplaints } from '../api/feedbackApi';
 import { getOrders } from '../api/ordersApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
@@ -10,8 +10,10 @@ const initialForm = { type: '', title: '', content: '', orderId: '' };
 
 export default function Complaints() {
   const { user } = useAuth();
+  const [searchParams] = useSearchParams();
+  const queryOrderId = searchParams.get('orderId') || '';
   const canCreate = userCanAct(user, 'KHACH_HANG', 'GUI_KHIEU_NAI');
-  const [resource, setResource] = useState({ status: 'loading' }); const [orders, setOrders] = useState([]); const [form, setForm] = useState(initialForm); const [submit, setSubmit] = useState({ status: 'idle' });
+  const [resource, setResource] = useState({ status: 'loading' }); const [orders, setOrders] = useState([]); const [form, setForm] = useState(() => ({ ...initialForm, orderId: queryOrderId })); const [submit, setSubmit] = useState({ status: 'idle' });
   const load = useCallback(async () => { setResource({ status: 'loading' }); try { setResource({ status: 'success', data: (await getComplaints()).complaints }); } catch (error) { setResource({ status: 'error', error }); } }, []);
   useEffect(() => { void Promise.resolve().then(load); Promise.resolve().then(getOrders).then((result) => setOrders(result.orders)).catch(() => setOrders([])); }, [load]);
   const update = (key) => (event) => setForm((current) => ({ ...current, [key]: event.target.value }));

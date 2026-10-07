@@ -39,7 +39,8 @@ export default function Profile() {
       <h1>Hồ sơ cá nhân</h1>
       <form onSubmit={submit}>
         <label>Email<input type="email" value={user.email} readOnly /></label>
-        <label>Vai trò<input value={user.roleName} readOnly /></label>
+        <label>Vai trò<input value={user.roleName || user.role} readOnly /></label>
+        {user.points != null && <label>Điểm tích lũy<input value={`${user.points} điểm`} readOnly /></label>}
         <label>Họ tên<input required maxLength="100" value={form.HoTen} onChange={(event) => update('HoTen', event.target.value)} /></label>
         <label>Số điện thoại<input type="tel" maxLength="20" value={form.SoDienThoai} onChange={(event) => update('SoDienThoai', event.target.value)} /></label>
         <label>Ngày sinh<input type="date" value={form.NgaySinh} onChange={(event) => update('NgaySinh', event.target.value)} /></label>
