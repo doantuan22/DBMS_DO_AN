@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { userCanAct, ADMIN_SECTION_PERMISSIONS } from '../utils/authorization';
 import { formatApiValue } from '../utils/dateTime';
 import { adminForms as forms, formFields, inputValue, toBody } from '../utils/adminForms';
-import { RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
+import { DAY_TYPES, RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
@@ -188,7 +188,9 @@ export default function AdminPortal() {
       {selected && <p>#{selected[definition.id]}</p>}
       {editableFields.map(([name, label, kind]) => <label key={name}>{label}{name === 'status' && RESOURCE_STATUSES[active]
         ? <select aria-label={label} required value={values[name] ?? ''} onChange={event => setValues(current => ({ ...current, [name]: event.target.value }))}><option value="">Chọn trạng thái</option>{RESOURCE_STATUSES[active].filter(status => active !== 'assignments' || selected || status === 'Hiệu lực').map(status => <option key={status}>{status}</option>)}</select>
-        : <input aria-label={label} type={kind === 'csv' ? 'text' : kind} step={kind === 'datetime-local' ? '0.001' : undefined} value={values[name] ?? ''} onChange={(event) => setValues((current) => ({ ...current, [name]: event.target.value }))} required={!['description', 'phone', 'image', 'endsOn', 'endDate', 'maximumDiscount', 'minimumOrder', 'operatingSince', 'birthDate', 'language', 'subtitle', 'ageRating', 'director', 'posterUrl', 'trailerUrl', 'status'].includes(name)} />}</label>)}
+        : active === 'pricing' && name === 'dayType'
+          ? <select aria-label={label} required value={values[name] ?? ''} onChange={event => setValues(current => ({ ...current, [name]: event.target.value }))}><option value="">Chọn loại ngày</option>{DAY_TYPES.map(day => <option key={day}>{day}</option>)}</select>
+          : <input aria-label={label} type={kind === 'csv' ? 'text' : kind} step={kind === 'datetime-local' ? '0.001' : undefined} value={values[name] ?? ''} onChange={(event) => setValues((current) => ({ ...current, [name]: event.target.value }))} required={!['description', 'phone', 'image', 'endsOn', 'endDate', 'maximumDiscount', 'minimumOrder', 'operatingSince', 'birthDate', 'language', 'subtitle', 'ageRating', 'director', 'posterUrl', 'trailerUrl', 'status'].includes(name)} />}</label>)}
       <div className="catalog-actions"><button className="catalog-button">Lưu</button>{selected && <button className="catalog-button catalog-button--secondary" type="button" onClick={clearForm}>Bỏ chọn</button>}</div>
     </form>}
     {active === 'showtimes' && <p>Chọn suất chiếu trong bảng để sửa hoặc dùng nút Hủy; thời gian chồng lấp được kiểm tra trong SQL.</p>}

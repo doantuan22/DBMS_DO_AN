@@ -2,7 +2,7 @@ ALTER TABLE dbo.[BANGGIA] WITH CHECK ADD CONSTRAINT [CK_BANGGIA_DinhDang] CHECK 
 GO
 ALTER TABLE dbo.[BANGGIA] WITH CHECK ADD CONSTRAINT [CK_BANGGIA_LoaiGhe] CHECK ([LoaiGhe]=N'Tất cả' OR [LoaiGhe]=N'Đôi' OR [LoaiGhe]=N'Sweetbox' OR [LoaiGhe]=N'VIP' OR [LoaiGhe]=N'Thường');
 GO
-ALTER TABLE dbo.[BANGGIA] WITH CHECK ADD CONSTRAINT [CK_BANGGIA_LoaiNgay] CHECK ([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Ngày lễ' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường');
+ALTER TABLE dbo.[BANGGIA] WITH CHECK ADD CONSTRAINT [CK_BANGGIA_LoaiNgay] CHECK ([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường');
 GO
 ALTER TABLE dbo.[BANGGIA] WITH CHECK ADD CONSTRAINT [CK_BANGGIA_PhuThu] CHECK ([PhuThu]>=(0));
 GO

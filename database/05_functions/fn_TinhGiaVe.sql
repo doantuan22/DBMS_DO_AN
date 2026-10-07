@@ -49,6 +49,7 @@ BEGIN
     ELSE
         SET @LoaiNgay = N'Ngày thường';
 
+    -- R0: Ngày thường / Cuối tuần / Tất cả. SQL remains the authoritative price calculator.
     -- All matching surcharges are added (migration 012)
     SELECT @PhuThu = ISNULL(SUM(PhuThu), 0)
     FROM dbo.BANGGIA bg

@@ -96,7 +96,7 @@ try {
   await api('GAP-001', `/manager/showtimes/${show.id}`, { method: 'PUT', body: { ...edited, status: 'Mở bán', startsAt: new Date(+start + 7200000).toISOString(), endsAt: new Date(+start + 7200000 + 166 * 60000).toISOString() }, status: 409 });
   await api('GAP-002', `/manager/seats/${seats[0].id}`, { method: 'PUT', body: { type: 'Thường', status: 'Hỏng' }, status: 409 });
   const fullPricing = { ...conditions, seatType: 'Thường', surcharge: 12345, endsOn: showDay, status: 'Áp dụng' };
-  const changedDimensions = { ...conditions, seatType: 'Đôi', dayType: 'Ngày lễ', format: '3D', surcharge: 54321,
+  const changedDimensions = { ...conditions, seatType: 'Đôi', dayType: 'Tất cả', format: '3D', surcharge: 54321,
     startsOn: '2034-03-01', endsOn: '2034-12-31', status: 'Tạm dừng' };
   await api('GAP-003', `/manager/pricing/${pricing.id}`, { method: 'PUT', body: changedDimensions });
   const dimensionsReload = (await api('GAP-003', '/manager/cinemas/1/pricing')).pricing.find(row => row.id === pricing.id);

@@ -1,4 +1,5 @@
 import { instantToBusinessLocal, businessLocalToInstant } from './dateTime.js';
+import { DAY_TYPES } from '../../../shared/resourceContract.mjs';
 
 export const adminForms = {
   users: { path: 'users', id: 'NguoiDungID', fields: [['name', 'Họ tên', 'text', 'HoTen'], ['email', 'Email', 'email', 'Email'], ['phone', 'Điện thoại', 'text', 'SoDienThoai'], ['roleId', 'Mã vai trò', 'number', 'VaiTroID']], createOnly: [['password', 'Mật khẩu ban đầu', 'password', '']], editFields: [['status', 'Trạng thái', 'text', 'TrangThai']] },
@@ -31,6 +32,7 @@ export const inputValue = (value, kind) => {
 };
 export const toBody = (values, fields) => Object.fromEntries(fields.map(([name, , kind]) => {
   const value = values[name];
+  if (name === 'dayType' && !DAY_TYPES.includes(value)) throw new Error('Loại ngày không hợp lệ.');
   if (kind === 'csv' && (value === '' || value === undefined || value === null)) return [name, []];
   if (value === '' || value === undefined) return [name, null];
   if (kind === 'datetime-local') return [name, businessLocalToInstant(value)];

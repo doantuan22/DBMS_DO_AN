@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "provenance": "Rebuilt exclusively from source: 2026-10-05T06:16:40.580Z",
+  "provenance": "Rebuilt exclusively from source: 2026-10-07T14:52:09.476Z",
   "steps": [
     "00_database/002_create_database.sql",
     "00_database/003_database_options.sql",
@@ -375,7 +375,7 @@
   "expected": {
     "environment": [
       {
-        "databaseName": "CinemaBookingDB_R0_R1_R2_R5R7Manifest",
+        "databaseName": "CinemaBookingDB_R0_Task1_20261007_1500",
         "version": "17.0.1000.7",
         "collation_name": "Vietnamese_CI_AS",
         "compatibility_level": 170,
@@ -1606,7 +1606,7 @@
         "name": "fn_TinhGiaVe",
         "type": "FN",
         "type_desc": "SQL_SCALAR_FUNCTION",
-        "definition": "-- ---------------------------------------------------------------------------------------------\r\n-- (2) Weekend independent of configuration.\r\n-- Rule kept exactly as before: Saturday and Sunday are \"Cuối tuần\" (DATEPART(dw) IN (1, 7) under the default\r\n-- DATEFIRST 7 / us_english). 1900-01-01 was a Monday, so DATEDIFF(DAY, '19000101', date) % 7 is 0 = Monday ...\r\n-- 5 = Saturday, 6 = Sunday, whatever DATEFIRST or the language is (style 112 is language independent too).\r\n-- Everything else in the function is unchanged from migration 012.\r\n-- ---------------------------------------------------------------------------------------------\r\nCREATE   FUNCTION dbo.fn_TinhGiaVe\r\n(\r\n    @SuatChieuID INT,\r\n    @GheID INT\r\n)\r\nRETURNS DECIMAL(18,2)\r\nAS\r\nBEGIN\r\n    DECLARE @GiaVeCoBan DECIMAL(18,2) = 0;\r\n    DECLARE @RapID INT;\r\n    DECLARE @DinhDang NVARCHAR(50);\r\n    DECLARE @ThoiGianBatDau DATETIME2;\r\n    DECLARE @LoaiGhe NVARCHAR(50);\r\n    DECLARE @LoaiNgay NVARCHAR(50);\r\n    DECLARE @NgayChieu DATE;\r\n    DECLARE @PhuThu DECIMAL(18,2) = 0;\r\n\r\n    SELECT\r\n        @GiaVeCoBan = sc.GiaVeCoBan,\r\n        @DinhDang = sc.DinhDang,\r\n        @ThoiGianBatDau = sc.ThoiGianBatDau,\r\n        @RapID = pc.RapID,\r\n        @NgayChieu = dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau)\n    FROM dbo.SUATCHIEU sc\r\n    INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID\r\n    WHERE sc.SuatChieuID = @SuatChieuID;\r\n\r\n    IF @GiaVeCoBan IS NULL RETURN 0;\r\n\r\n    SELECT @LoaiGhe = LoaiGhe\r\n    FROM dbo.GHE\r\n    WHERE GheID = @GheID;\r\n\r\n    IF @LoaiGhe IS NULL SET @LoaiGhe = N'Thường';\r\n\r\n    -- 5 = Saturday, 6 = Sunday counted from a Monday (independent of DATEFIRST and language)\r\n    IF DATEDIFF(DAY, CONVERT(DATE, '19000101', 112), @NgayChieu) % 7 IN (5, 6)\r\n        SET @LoaiNgay = N'Cuối tuần';\r\n    ELSE\r\n        SET @LoaiNgay = N'Ngày thường';\r\n\r\n    -- All matching surcharges are added (migration 012)\r\n    SELECT @PhuThu = ISNULL(SUM(PhuThu), 0)\r\n    FROM dbo.BANGGIA bg\r\n    WHERE bg.RapID = @RapID\r\n      AND bg.TrangThai = N'Áp dụng'\r\n      AND @NgayChieu >= bg.NgayBatDau\r\n      AND (@NgayChieu <= bg.NgayKetThuc OR bg.NgayKetThuc IS NULL)\r\n      AND (bg.LoaiGhe = @LoaiGhe OR bg.LoaiGhe = N'Tất cả')\r\n      AND (bg.LoaiNgay = @LoaiNgay OR bg.LoaiNgay = N'Tất cả')\r\n      AND (bg.DinhDang = @DinhDang OR bg.DinhDang = N'Tất cả');\r\n\r\n    RETURN (@GiaVeCoBan + ISNULL(@PhuThu, 0));\r\nEND;\n",
+        "definition": "-- ---------------------------------------------------------------------------------------------\r\n-- (2) Weekend independent of configuration.\r\n-- Rule kept exactly as before: Saturday and Sunday are \"Cuối tuần\" (DATEPART(dw) IN (1, 7) under the default\r\n-- DATEFIRST 7 / us_english). 1900-01-01 was a Monday, so DATEDIFF(DAY, '19000101', date) % 7 is 0 = Monday ...\r\n-- 5 = Saturday, 6 = Sunday, whatever DATEFIRST or the language is (style 112 is language independent too).\r\n-- Everything else in the function is unchanged from migration 012.\r\n-- ---------------------------------------------------------------------------------------------\r\nCREATE   FUNCTION dbo.fn_TinhGiaVe\r\n(\r\n    @SuatChieuID INT,\r\n    @GheID INT\r\n)\r\nRETURNS DECIMAL(18,2)\r\nAS\r\nBEGIN\r\n    DECLARE @GiaVeCoBan DECIMAL(18,2) = 0;\r\n    DECLARE @RapID INT;\r\n    DECLARE @DinhDang NVARCHAR(50);\r\n    DECLARE @ThoiGianBatDau DATETIME2;\r\n    DECLARE @LoaiGhe NVARCHAR(50);\r\n    DECLARE @LoaiNgay NVARCHAR(50);\r\n    DECLARE @NgayChieu DATE;\r\n    DECLARE @PhuThu DECIMAL(18,2) = 0;\r\n\r\n    SELECT\r\n        @GiaVeCoBan = sc.GiaVeCoBan,\r\n        @DinhDang = sc.DinhDang,\r\n        @ThoiGianBatDau = sc.ThoiGianBatDau,\r\n        @RapID = pc.RapID,\r\n        @NgayChieu = dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau)\n    FROM dbo.SUATCHIEU sc\r\n    INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID\r\n    WHERE sc.SuatChieuID = @SuatChieuID;\r\n\r\n    IF @GiaVeCoBan IS NULL RETURN 0;\r\n\r\n    SELECT @LoaiGhe = LoaiGhe\r\n    FROM dbo.GHE\r\n    WHERE GheID = @GheID;\r\n\r\n    IF @LoaiGhe IS NULL SET @LoaiGhe = N'Thường';\r\n\r\n    -- 5 = Saturday, 6 = Sunday counted from a Monday (independent of DATEFIRST and language)\r\n    IF DATEDIFF(DAY, CONVERT(DATE, '19000101', 112), @NgayChieu) % 7 IN (5, 6)\r\n        SET @LoaiNgay = N'Cuối tuần';\r\n    ELSE\r\n        SET @LoaiNgay = N'Ngày thường';\r\n\r\n    -- R0: Ngày thường / Cuối tuần / Tất cả. SQL remains the authoritative price calculator.\n    -- All matching surcharges are added (migration 012)\n    SELECT @PhuThu = ISNULL(SUM(PhuThu), 0)\r\n    FROM dbo.BANGGIA bg\r\n    WHERE bg.RapID = @RapID\r\n      AND bg.TrangThai = N'Áp dụng'\r\n      AND @NgayChieu >= bg.NgayBatDau\r\n      AND (@NgayChieu <= bg.NgayKetThuc OR bg.NgayKetThuc IS NULL)\r\n      AND (bg.LoaiGhe = @LoaiGhe OR bg.LoaiGhe = N'Tất cả')\r\n      AND (bg.LoaiNgay = @LoaiNgay OR bg.LoaiNgay = N'Tất cả')\r\n      AND (bg.DinhDang = @DinhDang OR bg.DinhDang = N'Tất cả');\r\n\r\n    RETURN (@GiaVeCoBan + ISNULL(@PhuThu, 0));\r\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -13706,7 +13706,7 @@
       {
         "name": "CK_BANGGIA_LoaiNgay",
         "tableName": "BANGGIA",
-        "definition": "([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Ngày lễ' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường')",
+        "definition": "([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường')",
         "is_disabled": false,
         "is_not_trusted": false
       },

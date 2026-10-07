@@ -28,6 +28,7 @@ export function initialManagerValues(kind, row) {
   }[kind];
 }
 export function managerBody(kind, values, editing = false) {
+  if (kind === 'pricing' && !DAY_TYPES.includes(values.dayType)) throw new Error('Loại ngày không hợp lệ.');
   if (kind === 'pricing' && values.endsOn && values.endsOn < values.startsOn) throw new Error('Ngày kết thúc không được trước ngày áp dụng.');
   return Object.fromEntries(fieldsFor(kind, editing).map(({ name, type }) => [name,
     type === 'number' ? Number(values[name]) : type === 'datetime-local' ? businessLocalToInstant(values[name])

@@ -3,6 +3,7 @@ USE CinemaBookingDB;
 GO
 :r ./11_tests/procedures/smoke.sql
 :r ./11_tests/timezone/contract.sql
+:r ./11_tests/pricing/contract.sql
 :r ./11_tests/payment/compensation.sql
 :r ./11_tests/payment/compensation_schema.sql
 :r ./11_tests/triggers/multirow.sql

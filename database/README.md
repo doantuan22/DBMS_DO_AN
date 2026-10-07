@@ -204,3 +204,10 @@ npm run db:refresh-manifest -- --database=CinemaBookingDB_R0_Manifest01
 Lệnh fail nếu target tồn tại, dựng objects từ source rồi ghi manifest và SQL verification. Review diff, clean reset, verify/test/smoke. generate-baseline.mjs/generate-seed.mjs chỉ là extraction R0 từ snapshot lịch sử, không dùng để bảo trì thường ngày vì sẽ ghi đè baseline.
 
 Không sửa DB thủ công rồi quên commit SQL. Không include _audit/_legacy_snapshot vào build. Clone mới chỉ cần source, environment, SQL Server/sqlcmd và Node, không export SQL riêng hay .bak.
+# Phase R0 / TASK 1 hiện hành
+
+Baseline toàn hệ thống **45 UC (14 KH / 9 QLR / 6 CSKH / 16 Admin)**. I-01 dùng `sa` local là **ACCEPTED PROJECT CONSTRAINT**, không đại diện cấu hình production; Backend vẫn Stored-Procedure-Only. Pricing chỉ có **Ngày thường / Cuối tuần / Tất cả**.
+
+Migration tại chỗ: [13_migrations/r0_remove_holiday_pricing.sql](13_migrations/r0_remove_holiday_pricing.sql); precondition xuất dữ liệu legacy và THROW 51000 trước DDL, không chuyển/xóa dòng. Constraint canonical, manifest và verification đã đồng bộ từ source-build disposable, không nhận drift bằng cách chép DB main. `fn_TinhGiaVe` giữ SQL authoritative, rule additive và ngày kinh doanh; test mới được include trong [11_tests/test-all.sql](11_tests/test-all.sql).
+
+[Cách chạy và kiểm tra](../README.md), [baseline 45 UC](../docs/USE_CASE_BASELINE_45.md), [accepted constraints](../docs/PROJECT_ACCEPTED_CONSTRAINTS.md), [R0 report/evidence](../docs/R0_TASK_1_REPORT.md). Phần bên dưới giữ mô tả các baseline lịch sử, không phải chỉ dẫn chuyển sang phase R1 trở đi.

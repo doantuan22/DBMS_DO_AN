@@ -4,27 +4,31 @@ Ngày audit: **07/10/2026 (Asia/Saigon)**. Repository: `D:\DBMS_DO_AN`. Đối t
 
 Phạm vi thực hiện: đọc source, đối chiếu thiết kế, SELECT metadata/dữ liệu, gọi API đọc và login chỉ đọc, chạy test hiện có, build/lint frontend. Không chạy migration/reset/seed/job hết hạn, không gọi API ghi nghiệp vụ, không chạy SQL test dù có ROLLBACK, không sửa production. Các file mới chỉ là báo cáo/evidence trong `docs/`. SQL dùng trong helper audit là công cụ kiểm tra độc lập, không thuộc backend và không được import vào runtime.
 
+
+**Chuẩn hóa Phase R0 theo roadmap:** phạm vi hiện hành 45 UC; I-01 accepted; pricing chỉ có ba loại ngày. Phần probe/dataset và raw evidence dưới đây ghi nhận audit gốc trước R0. Kết quả triển khai/test R0 nằm trong [báo cáo R0](R0_TASK_1_REPORT.md) và [evidence mới](r0-20261007/README.md). Các grade ngoài R0 giữ nguyên.
+
 ## 1. Executive Summary
 
-**Hệ thống có nền tảng DBMS-first và chuỗi SP gateway đầy đủ, nhưng chưa đủ bằng chứng hoặc điều kiện để nghiệm thu toàn bộ 46 use case.** Các rủi ro transaction, concurrency lịch chiếu và tài khoản DB cần xử lý trước. Không phát hiện backend dùng SQL nghiệp vụ trực tiếp.
+**Hệ thống có nền tảng DBMS-first và chuỗi SP gateway đầy đủ, nhưng chưa đủ bằng chứng để nghiệm thu toàn bộ 45 use case.** Rủi ro transaction/concurrency ngoài R0 vẫn còn. I-01 là ACCEPTED PROJECT CONSTRAINT; không phát hiện backend dùng SQL nghiệp vụ trực tiếp.
 
 | Chỉ tiêu | Kết quả |
 | --- | --- |
-| Database | 70.7% |
-| Backend | 94.6% |
-| Frontend | 56.5% |
-| Integration | 51.1% |
-| Use Case | 7/46 PASS; 33 PARTIAL; 1 MISSING; 5 BROKEN |
-| Architecture compliance | PARTIAL |
+| Database | 72.2% |
+| Backend | 96.7% |
+| Frontend | 57.8% |
+| Integration | 52.2% |
+| Use Case | 7/45 PASS; 33 PARTIAL; 0 MISSING; 5 BROKEN |
+| Architecture compliance | PARTIAL: các boundary ngoài R0 chưa xác minh |
 | No-SQL Backend | PASS |
-| Findings | 3 CRITICAL / 7 HIGH / 12 MEDIUM / 4 LOW |
+| Findings đang mở | 2 CRITICAL / 6 HIGH / 11 MEDIUM / 4 LOW |
+| I-01 | ACCEPTED PROJECT CONSTRAINT |
 
 
-Các tỷ lệ trên là **chỉ số đáp ứng theo 46 UC**, có chấm điểm PARTIAL; không phải code coverage, xác suất an toàn hoặc tỷ lệ E2E thành công. Cách tính và toàn bộ điểm gốc ở mục 17. PASS chỉ áp dụng cho chuỗi có source/contract hợp lý và bằng chứng đọc/login hiện tại; thao tác ghi chưa chạy không được tự nâng thành PASS.
+Các tỷ lệ trên là **chỉ số đáp ứng theo 45 UC**, có chấm điểm PARTIAL; không phải code coverage, xác suất an toàn hoặc tỷ lệ E2E thành công. Cách tính và toàn bộ điểm gốc ở mục 17. PASS chỉ áp dụng cho chuỗi có source/contract hợp lý và bằng chứng đọc/login hiện tại; thao tác ghi chưa chạy không được tự nâng thành PASS.
 
 SQL Server thực tế: version `17.0.1000.7`, compatibility `170`, collation `Vietnamese_CI_AS`, `READ_COMMITTED_SNAPSHOT=ON`. Có **27 tables, 125 SP, 21 functions, 6 views, 7 triggers, 63 indexes**. Toàn bộ 159 module có definition trùng source chuẩn sau normalization; cột, parameters, keys, FK, CHECK, indexes, trigger metadata trùng baseline-manifest. Đây là bằng chứng parity, không chứng minh mọi thuật toán đúng.
 
-Bằng chứng chạy: backend **107/109 đạt, 2 lỗi**; frontend **45/45 đạt**, lint đạt, build đạt với cảnh báo bundle. **64 probe** gồm 59 GET, 4 login và 1 middleware unit: 53 kết quả 200, 1 kết quả 401, 7 kết quả 403, 3 kết quả 404; đều đúng kỳ vọng đã hiệu chỉnh theo dữ liệu scope thực tế. Các tài khoản demo được lấy từ DB và không ghi email/token/password vào evidence.
+Bằng chứng của lần audit gốc: backend 107/109 (2 lỗi artifact), frontend 45/45; 64 probe đọc/login đúng kỳ vọng. Evidence gốc được giữ nguyên. **R0 hiện tại: backend 122/122, frontend 49/49, 0 skip; no-SQL/lint/build/SQL regression/verify PASS; 47 request pricing HTTP và migration được kiểm chứng.** Xem [checks mới](r0-20261007/checks.json); không dùng kết quả cũ làm chứng nhận mới.
 
 Giới hạn quan trọng: tất cả bảng order/ticket/food-detail/payment/review/complaint/processing/compensation đều có **0 dòng**. Chỉ có 5 suất chiếu, 4 suất còn “Mở bán” nhưng đã kết thúc; **không có suất tương lai mở bán**. Chưa chạy positive ownership đối với một đơn có thật, thanh toán nhiều lần, concurrency ghi, rollback hoặc browser E2E hiện tại. Headless Chrome đã thử nhưng CDP timeout ở `Page.enable`; không tính là test frontend thành công hay lỗi ứng dụng.
 
@@ -120,7 +124,7 @@ Không phân tích execution plan/load production vì dataset rất nhỏ. Các 
 | FK FK_BANGGIA_Rap | RapID → RAPCHIEUPHIM.RapID; DELETE NO_ACTION; UPDATE NO_ACTION; trusted=true, enabled=true |
 | CHECK CK_BANGGIA_DinhDang | ([DinhDang]=N'Tất cả' OR [DinhDang]=N'ScreenX' OR [DinhDang]=N'4DX' OR [DinhDang]=N'IMAX' OR [DinhDang]=N'3D' OR [DinhDang]=N'2D'); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_LoaiGhe | ([LoaiGhe]=N'Tất cả' OR [LoaiGhe]=N'Đôi' OR [LoaiGhe]=N'Sweetbox' OR [LoaiGhe]=N'VIP' OR [LoaiGhe]=N'Thường'); trusted=true, enabled=true |
-| CHECK CK_BANGGIA_LoaiNgay | ([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Ngày lễ' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường'); trusted=true, enabled=true |
+| CHECK CK_BANGGIA_LoaiNgay | ([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường'); trusted=true, enabled=true; R0 main evidence |
 | CHECK CK_BANGGIA_PhuThu | ([PhuThu]>=(0)); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_ThoiGian | ([NgayKetThuc] IS NULL OR [NgayKetThuc]>=[NgayBatDau]); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_TrangThai | ([TrangThai]=N'Tạm dừng' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Áp dụng'); trusted=true, enabled=true |
@@ -790,7 +794,7 @@ Views đi qua SP; backend không SELECT trực tiếp. `vw_DoanhThuTheoRap` hi�
 | [fn_KiemTraQuanLyRapScope](../database/05_functions/fn_KiemTraQuanLyRapScope.sql) | Active Manager assigned cinema, effective business-date period/status | sp_Manager_Dashboard, sp_Manager_Pricing_Create, sp_Manager_Pricing_List, sp_Manager_Pricing_Update, sp_Manager_Revenue, sp_Manager_Room_Create, sp_Manager_Room_Delete, sp_Manager_Room_List (+10; full metadata) |
 | [fn_KiemTraQuyenNguoiDung](../database/05_functions/fn_KiemTraQuyenNguoiDung.sql) | Current role permission lookup | sp_Admin_Actor_Create, sp_Admin_Actor_Delete, sp_Admin_Actor_List, sp_Admin_Actor_Update, sp_Admin_Assignment_Create, sp_Admin_Assignment_List, sp_Admin_Cinema_Create, sp_Admin_Cinema_Delete (+85; full metadata) |
 | [fn_NgayKinhDoanh](../database/05_functions/fn_NgayKinhDoanh.sql) | Local DATE from UTC | fn_HomNay, fn_TinhGiaVe, sp_Admin_Dashboard, sp_Admin_Report_Revenue, sp_Manager_Dashboard, sp_Manager_Revenue, sp_Manager_Showtime_List, usp_Admin_Showtime_List (+1; full metadata) |
-| [fn_TinhGiaVe](../database/05_functions/fn_TinhGiaVe.sql) | Base + all matching surcharges; holiday gap I-05 | fn_DanhSachGheSuatChieu, sp_Booking_Create |
+| [fn_TinhGiaVe](../database/05_functions/fn_TinhGiaVe.sql) | Base + matching surcharges; 3 loại ngày chính thức, R0 SQL tests PASS | fn_DanhSachGheSuatChieu, sp_Booking_Create |
 | [fn_TinhTongTienDoAn](../database/05_functions/fn_TinhTongTienDoAn.sql) | SUM quantity × saved unit price | Không SQL module caller; external tooling chưa loại trừ |
 | [fn_TinhTongTienDon](../database/05_functions/fn_TinhTongTienDon.sql) | Saved order totals minus saved discount | Không SQL module caller; external tooling chưa loại trừ |
 | [fn_TinhTongTienVe](../database/05_functions/fn_TinhTongTienVe.sql) | SUM saved ticket snapshots | Không SQL module caller; external tooling chưa loại trừ |
@@ -801,7 +805,7 @@ Views đi qua SP; backend không SELECT trực tiếp. `vw_DoanhThuTheoRap` hi�
 | [fn_TinhBoiThuongVe](../database/05_functions/fn_TinhBoiThuongVe.sql) | Inline exact decimal cents/FLOOR loyalty compensation from ticket proportion | sp_Showtime_CancelCascade |
 
 
-`fn_TinhGiaVe` lấy base price, seat type và business date, cộng **tất cả** surcharge matching, hỗ trợ rule “Tất cả” như các lớp phụ thu có chủ ý. Cuối tuần được xác định bằng DATEDIFF từ thứ Hai, không phụ thuộc DATEFIRST. “Ngày lễ” có enum/UI nhưng không có nhánh xác định ngày lễ hoặc lịch lễ: rule ngày lễ không thể được chọn (I-05). Các hàm `fn_TinhTongTien*` tồn tại nhưng không có caller SQL module hiện tại; booking tính SUM bên trong SP để lưu snapshot. Đây là duplication trong DB cần quyết định contract, không phải backend raw SQL.
+`fn_TinhGiaVe` lấy base price, seat type và business date, cộng **tất cả** surcharge matching. Contract chỉ có Ngày thường / Cuối tuần / Tất cả; thứ Bảy và Chủ nhật dùng Cuối tuần, độc lập DATEFIRST. R0 SQL tests kiểm cả local midnight, range/status/seat/format và giá additive. Các hàm `fn_TinhTongTien*` chưa có caller SQL module là duplication DB ngoài R0; không phải backend raw SQL.
 
 Time contract nhất quán theo source: instant UTC trong SQL/API, business date/hiển thị Asia/Ho_Chi_Minh, DATE_ONLY không đổi ngày qua timezone. Các kiểm thử timezone ở BE/FE đạt; không chạy mutation fixtures timezone trong DB.
 
@@ -823,7 +827,7 @@ Time contract nhất quán theo source: instant UTC trong SQL/API, business date
 
 Input/output types lấy từ `sys.parameters`; default parameter chính xác và projection đầy đủ xem source link của mỗi SP (metadata T-SQL không luôn thể hiện default). Cột tables/view/function gồm dependency gián tiếp để trace sâu; trigger liệt kê theo bảng bị DML trong SP/callers. Cột transaction mô tả **transaction trực tiếp của SP đó**; delegate có contract riêng. Cột endpoint là caller service trực tiếp; guard auth chung ở mục 5, các SP nội bộ/alias/tooling được phân biệt ở mục 14. Projection rút gọn của SP CRUD không thay thế source contract; các SP quan trọng đa-recordset/OUTPUT được mô tả riêng.
 
-Module được phủ: Auth, User/Profile, RBAC, Movie, Cinema, Showtime, Seat, Product, Promotion, Booking, Payment, Order, Review, Complaint, Manager, CSKH, Admin, Report, System. **Config: không có SP quản trị cấu hình**, ADM-17 MISSING. Constants/functions kỹ thuật không được coi là admin Config CRUD.
+Module được phủ: Auth, User/Profile, RBAC, Movie, Cinema, Showtime, Seat, Product, Promotion, Booking, Payment, Order, Review, Complaint, Manager, CSKH, Admin, Report, System. Cấu hình hệ thống không nằm trong baseline.
 
 
 #### Stored Procedures — admin
@@ -1014,7 +1018,7 @@ Concurrency kết luận từ mã nguồn và cấu hình thực tế; không c�
 
 ### 4.7 Database security và integrity
 
-`CinemaAppUser` tồn tại, member `db_executor`; role GRANT EXECUTE trên schema dbo, DENY SELECT/INSERT/UPDATE/DELETE trên schema dbo. Tuy nhiên backend `.env` hiện kết nối **sa, sysadmin=1** (chỉ ghi tên cấu hình, không secret). Execute-only role không có tác dụng giới hạn tài khoản runtime này (I-01). Schema-wide EXECUTE cũng mở SP không cần cho HTTP như change-password/order-cancel; cần allowlist grant theo gateway, đặc biệt helper tin `NguoiDungID` (I-04). `sp_Showtime_CancelCascade` **có đầy đủ active/role/permission guard**; không báo nhầm nó là bypass role.
+`CinemaAppUser` tồn tại, member `db_executor`, có DENY DML và GRANT EXECUTE. Backend local dùng **sa, sysadmin=1** theo I-01 = **ACCEPTED PROJECT CONSTRAINT** ([phạm vi](PROJECT_ACCEPTED_CONSTRAINTS.md)); không đại diện production và không thay SP-only gateway. Schema-wide EXECUTE/helper surface là I-04 riêng, DEFER theo roadmap cho đồ án/local, không phải điều kiện buộc đổi sa trong R0. `sp_Showtime_CancelCascade` có active/role/permission guard.
 
 31 FK orphan checks đều trả 0. Không thấy duplicate seat-position, overlap hiện hữu, assignment role sai hoặc manager active chưa phân công. Các kiểm tra tài chính/order ownership/review/complaint đều không có bất thường, **nhưng bảng nguồn trống**, nên chỉ là kết quả rỗng, không phải bằng chứng nghiệp vụ từng giao dịch đúng. Chi tiết mục 10.
 
@@ -1196,11 +1200,11 @@ API frontend gọi đều có route backend tương ứng, gồm dynamic admin c
 | PUT /api/admin/complaints/:complaintId/status | ADMIN; JWT + account live | QL_KHIEUNAI + XULY_KHIEUNAI | adminRoutes.wrapSupport ([route 84](../backend/src/routes/adminRoutes.js)) | supportService.updateStatus | sp_Support_Complaint_UpdateStatus | AdminPortal / adminApi | PARTIAL | chưa chạy ghi |
 
 
-Không có endpoint nghiệp vụ hiện hữu thiếu SP. `/health` cố ý không DB. Những endpoint “MISSING” theo requirement, không phải route có thật: Config ADM-17; report breakdown theo phim và theo thời gian cho Admin; edit đầy đủ điều kiện/date của Admin pricing. Không thêm route giả vào 115 route có thật.
+Không có endpoint nghiệp vụ hiện hữu thiếu SP. `/health` cố ý không DB. Các phần contract còn thiếu trong UC hiện hữu: Admin report breakdown phim/thời gian và edit đầy đủ điều kiện/date của Admin pricing; không thêm UC ngoài 45 hoặc route giả vào 115 route hiện hữu.
 
 ## 8. Use Case Matrix
 
-Nguồn mã/tên UC: thiết kế + bảng §13 kế hoạch v2. Kế hoạch có **45 UC (ADM-01..16)**; user yêu cầu **46 UC**, thêm **ADM-17 Cấu hình hệ thống** theo actor feature list và yêu cầu audit. Không gộp actor để giảm mẫu số; Actor CRUD diễn viên nằm ADM-09 theo tài liệu, không tách thành UC thứ47.
+Nguồn mã/tên UC: thiết kế + kế hoạch v2 + roadmap bắt buộc. Baseline chính thức **45 UC: KH14, QLR9, CSKH6, Admin16**. Xem [baseline](USE_CASE_BASELINE_45.md).
 
 `DB` chấm schema + invariants của module; `SP` ghi gateway thực cùng đánh giá của DB logic. `BE` chấm API/typed contract/guards; `FE` chấm integration/state/form với bằng chứng hiện có. `Integration` PASS chỉ read/login chain đã probe+contract; PARTIAL là read/contract có nhưng write/positive fixtures chưa được xác minh. BROKEN có một đường lỗi tĩnh cụ thể ở mục16, **không nghĩa đã execute phá DB**. `Chưa ghi` không đồng nghĩa code thiếu.
 
@@ -1226,7 +1230,7 @@ Nguồn mã/tên UC: thiết kế + bảng §13 kế hoạch v2. Kế hoạch c�
 | QLR-04 | Tạo suất chiếu | BROKEN | BROKEN: sp_Manager_Showtime_Create; sp_Showtime_ValidateTimes | PASS: managerController.createShowtime / managerService.createShowtime | PARTIAL: ManagerPortal showtime create | BROKEN | BROKEN | I-03 overlap concurrency rủi ro tĩnh; I-06 operational parents |
 | QLR-05 | Sửa suất chiếu | BROKEN | BROKEN: sp_Manager_Showtime_Update | PASS: managerController.updateShowtime / managerService.updateShowtime | PARTIAL: ManagerPortal showtime edit | BROKEN | BROKEN | I-03 shared-room invariant; I-09 completed/expired metadata |
 | QLR-06 | Hủy suất chiếu | PASS | PASS: sp_Manager_Showtime_Cancel; sp_Showtime_CancelCascade | PASS: managerController.cancelShowtime / managerService.cancelShowtime | PARTIAL: ManagerPortal cancel action | PARTIAL | PARTIAL | Guards/TX/compensation/history có; không future paid/held fixture |
-| QLR-07 | Cấu hình bảng giá | PARTIAL | PARTIAL: sp_Manager_Pricing_List/Create/Update; fn_TinhGiaVe | PASS: managerController / managerService | PARTIAL: ManagerPortal pricing forms | PARTIAL | PARTIAL | R7 dimensions/date edit có; I-05 holiday chưa áp dụng; stress chưa chạy |
+| QLR-07 | Cấu hình bảng giá | PARTIAL | PARTIAL: sp_Manager_Pricing_List/Create/Update; fn_TinhGiaVe | PASS: managerController / managerService | PARTIAL: ManagerPortal pricing forms | PARTIAL | PARTIAL | R0 pricing 3 loại ngày đã kiểm SQL/HTTP/form; giữ PARTIAL của audit toàn UC; chưa chứng nhận mọi concurrency/write scenario |
 | QLR-08 | Dashboard hoạt động rạp | PASS | PASS: sp_Manager_Dashboard | PASS: managerController.dashboard / managerService.dashboard | PASS: ManagerPortal dashboard | PASS | PASS | Scoped read200; no client-authoritative aggregation |
 | QLR-09 | Doanh thu rạp | PASS | PASS: sp_Manager_Revenue | PASS: managerController.revenue / managerService.revenue | PARTIAL: ManagerRevenue | PARTIAL | PARTIAL | Scoped read200; day/range source hợp lý; positive finance rows0 |
 | CSKH-01 | Đăng nhập | PASS | PASS: sp_Auth_Login | PASS: authController.login / authService.login | PASS: Login, RequireRole | PASS | PASS | Real roleCSKH200; frontend auth/permission contract đạt |
@@ -1247,11 +1251,10 @@ Nguồn mã/tên UC: thiết kế + bảng §13 kế hoạch v2. Kế hoạch c�
 | ADM-10 | Thể loại | PASS | PASS: sp_Admin_Genre_List/Create/Update/Delete | PASS: adminController / adminService | PARTIAL: AdminPortal genres | PARTIAL | PARTIAL | Read200; UQ/references source; writes unverified |
 | ADM-11 | Sản phẩm đồ ăn | PASS | PASS: usp_Admin_Product_List; sp_Admin_Product_Create/Update/Delete | PASS: adminController / adminService | PARTIAL: AdminPortal products | PARTIAL | PARTIAL | Read200; no client authoritative price; writes/old snapshots unverified |
 | ADM-12 | Chương trình khuyến mãi | PARTIAL | PARTIAL: sp_Admin_Promotion_List/Create/Update/Delete | PASS: adminController / adminService | PARTIAL: AdminPortal promotions | PARTIAL | PARTIAL | Read200; quota/check/99%source; concurrent update policy I-07 |
-| ADM-13 | Bảng giá toàn hệ | PARTIAL | PARTIAL: usp_Admin_Pricing_List/Create/Update | PARTIAL: adminController / adminService | PARTIAL: AdminPortal pricing | PARTIAL | PARTIAL | I-14 edit lacks conditions/dates; I-05 holiday |
+| ADM-13 | Bảng giá toàn hệ | PARTIAL | PARTIAL: usp_Admin_Pricing_List/Create/Update | PARTIAL: adminController / adminService | PARTIAL: AdminPortal pricing | PARTIAL | PARTIAL | R0 contract 3 loại ngày; I-14 edit thiếu conditions/dates vẫn ngoài scope |
 | ADM-14 | Suất chiếu toàn hệ | BROKEN | BROKEN: usp_Admin_Showtime_List/Create/Update/Cancel | PASS: adminController / adminService | PARTIAL: AdminPortal showtimes | BROKEN | BROKEN | I-03 concurrent overlap; sourceguard/cancelTX có; writes unverified |
 | ADM-15 | Xử lý khiếu nại | PARTIAL | PARTIAL: sp_Support_Complaint_* (Admin guards allowed) | PASS: adminRoutes.wrapSupport / supportService | PARTIAL: AdminPortal complaints | PARTIAL | PARTIAL | Reuse MATCH; queue[]200; I-11 wrong selected/detail risk; I-16 bulk |
 | ADM-16 | Báo cáo toàn hệ | PARTIAL | PARTIAL: sp_Admin_Report_Revenue; sp_Admin_Dashboard | PARTIAL: adminController.revenue/dashboard / adminService | PARTIAL: AdminPortal revenue/dashboard | PARTIAL | PARTIAL | Read200; I-13 lacks movie/time breakdown; positive finance0 |
-| ADM-17 | Cấu hình hệ thống | MISSING | MISSING: Không có Config SP | MISSING: Không route/controller/service Config | MISSING: Không Config page/client | MISSING | MISSING | User yêu cầu46; baseline45 chưa triển khai Config; constants không thay feature |
 
 
 ## 9. E2E Flow Audit
@@ -1282,7 +1285,7 @@ Tại mọi bước customer write identity là `req.user.userId`, không nhận
 | Room → list/form | GET/POST cinema/:id/rooms; PUT/DELETE room/:id / managerController → managerService | sp_Manager_Room_* → PHONGCHIEU/GHE/SUATCHIEU, scope function → room DTO/deleted | Read200; delete **I-02 CRITICAL**, không thử ghi |
 | Seat → map/form | GET/POST room/:id/seats; PUT/DELETE seat/:id / managerController → managerService | sp_Manager_Seat_* → GHE/room; UQ position; future-ticket guard → seat DTO | Room4 thuộc cinema2 bị403; Room3 vẫn cinema1, không báo nhầm scope. Snapshot metadata I-09 |
 | Showtime → create/edit/cancel | GET cinema/:id/showtimes; POST/PUT/cancel / managerController → managerService | sp_Manager_Showtime_* → ValidateTimes, overlap trigger, cancel cascade → showtime DTO/message | Guards thực có; create/edit **I-03**, cancel source TX có compensation |
-| Pricing → rule forms | GET/POST cinema/:id/pricing; PUT pricing/:id / managerController → managerService | sp_Manager_Pricing_* → BANGGIA + overlap trigger → rule DTO | Scope DB; R7 edit đầy đủ điều kiện/date; “Ngày lễ” không có pricing effect I-05 |
+| Pricing → rule forms | API manager pricing → controller/service | SP → BANGGIA + overlap trigger → DTO | R0: enum/validator/form/CHECK/function tests PASS; grade toàn UC giữ PARTIAL |
 | Dashboard → counts | GET cinema/:id/dashboard / managerController.dashboard → managerService.dashboard | sp_Manager_Dashboard → scoped aggregation → DTO | Read200; số liệu lấy DB |
 | Revenue → date range/table | GET cinema/:id/revenue / managerController.revenue → managerService.revenue | sp_Manager_Revenue → paid/successful snapshots theo ngày local → DTO | Read200 nhưng giao dịch0: positive revenue totals chưa đối soát |
 
@@ -1309,10 +1312,9 @@ Login actual200 → /admin RequireRole → AdminPortal permission sections → a
 | Room/seat | generic forms → /admin/rooms,/seats → Room/Seat SP → resource tables | AdminRoomDelete có TX/room lock; không gộp với bug ManagerRoomDelete; historical metadata I-09 |
 | Movie/genre/actor | forms + cast JSON → movies/genres/actors/actors-set → Movie/Genre/Actor SP → PHIM, joins, actor | I-08 unknown cast silently dropped sau DELETE; dates/association writes chưa chạy |
 | Product/promotion | forms → products/promotions → Product/Promotion SP → catalog/coupon | Monetary snapshots downstream giữ; quota validation I-07 |
-| Pricing/showtime | forms → pricing/showtimes/cancel → global SP → BANGGIA/SUATCHIEU | I-14 edit pricing thiếu dimensions/date; I-05 holiday; I-03 overlap concurrency |
+| Pricing/showtime | forms → pricing/showtimes/cancel → SP | R0 contract đã đồng bộ; I-14 edit conditions/date và I-03 overlap concurrency còn ngoài scope |
 | Complaint | adminApi complaint chain → inline wrapSupport → supportService/SP → complaint/history/order | Intentional reuse MATCH; I-11 stale detail/selectedId và I-16 bulk trigger |
 | Report | range/cinema → /admin/dashboard,/reports/revenue → Dashboard/Report SP → database aggregates → state table | Có per-cinema/totals; thiếu breakdown movie/time I-13; positive financial rows0 |
-| Config | Không page/client/route/service/SP/table config | **ADM-17 MISSING**, chuỗi dừng hoàn toàn |
 
 ## 10. Data Audit
 
@@ -1386,7 +1388,7 @@ Historical monetary snapshots **MATCH ở schema/source**: `CHITIETVE.GiaVe`, `C
 | Complaint ownership / order-link ownership | authenticated user passed SP, relation checked DB | Missing detail404 live; service/validator unit PASS; positive link chưa chạy |
 | Identity/price injection | Body allowlist reject userId/price/total/role; SP names whitelist; typed parameters | Unit PASS; no raw SQL / dynamic SP name |
 | Account/permission change while JWT active | Reload DB on mỗi request; SQL guard active/actor/permission | Source + unit PASS; mutation/revoke integration chưa chạy |
-| DB direct DML | Intended DENY role vs actual sa sysadmin | **FAIL current runtime; I-01**, execute-only role tồn tại không sửa current account |
+| DB account local | Backend sa; Stored-Procedure-Only vẫn bắt buộc | I-01 = ACCEPTED PROJECT CONSTRAINT; [giới hạn đồ án](PROJECT_ACCEPTED_CONSTRAINTS.md) |
 | Least privilege SP surface | GRANT schema EXECUTE gồm unused/helper SP | PARTIAL I-04, userId trust là app boundary; chưa có selective grants |
 
 Authentication không trả bcrypt hash/token vào logs của audit. New passwords có salted bcrypt, UTF-8 byte-boundaries được test; demo mật khẩu 123456 được tài liệu hóa và vẫn hợp lệ để login, **không phù hợp internet-facing deployment**. JWT expiry/HS256/signature validation có; không token revocation sau logout/password-change, không rate limit/backoff ở login/register (I-18). SessionStorage tránh persistent token qua đóng phiên nhưng XSS vẫn có thể lấy token; không có XSS exploit được chứng minh trong audit.
@@ -1399,7 +1401,6 @@ SPs chính Admin/Manager/Support/Booking/Payment/Promotion có guard SQL current
 
 | Severity / issue | File và vị trí | Problem | Expected architecture | Impact |
 | --- | --- | --- | --- | --- |
-| CRITICAL I-01 | `backend/.env` DB_USER; `backend/src/config/database.js`; `database/09_security` | Runtime sa/sysadmin dù execute-only role có sẵn | Application account chỉ execute gateway được phép | Một backend compromise/credential leak có thể đọc/ghi trực tiếp toàn DB; không phải phát hiện raw SQL call |
 | HIGH I-04 | `database/09_security/001_execute_role.sql` (script quyền thực tế); `database/08_procedures/auth/sp_User_ChangePassword.sql:23` | Schema-wide EXECUTE mở cả SP phụ không được HTTP consume, helper trust userId | Grant riêng necessary public gateway; internal surface hạn chế | Bypass bước auth ứng dụng khi có application DB credential; không claim HTTP escalation |
 | MEDIUM I-17 | `backend/src/services/bookingService.js:104`; `backend/src/validators/bookingValidator.js:13`; `backend/src/validators/adminValidator.js` MAX_PERCENT | Provisional subtotal computation + business constants lặp backend/FE/DB | Backend strict pool/typed execute/map; price/policy preview cũng có DB contract tập trung nếu áp dụng nghiêm yêu cầu | Chênh preview/rounding/policy khi đổi business limit; **không authoritative payment total từ client** |
 | MEDIUM I-22 | `database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql`; `backend/src/services/orderService.js` | GET detail có thể expire order/ticket/promotion usage trong DB | Read effects minh bạch hoặc command/job quản lý riêng; gateway vẫn SP | Retry/cache/read monitoring có thể đổi persistent status; audit phải tránh positive detail có expired holds |
@@ -1412,10 +1413,10 @@ SPs chính Admin/Manager/Support/Booking/Payment/Promotion có guard SQL current
 | Requirement / tài liệu | Hiện tại | Classification |
 | --- | --- | --- |
 | 25 bảng cốt lõi; gallery ADM-07; compensation baseline | 25 core + images + compensation; tổng27 | MATCH core; EXTRA hợp lý; con số tổng quan tài liệu PARTIAL |
-| 46 UC theo user; kế hoạch45 | ADM-01..16 có chuỗi; ADM-17 Config không có API/SP/UI | **MISSING ADM-17**; discrepancy count ghi rõ |
+| Baseline 45 UC theo roadmap | KH14, QLR9, CSKH6, Admin16 | MATCH phạm vi; mức hoàn thành thực tế ở matrix |
 | BR01 chống trùng lịch dưới request đồng thời | Set-based trigger không shared room lock, live RCSI | INCORRECT I-03 |
 | Room delete atomicity | Manager delete seats và room hai autocommit statement | INCORRECT I-02; Admin version có TX |
-| Giá theo loại ngày gồm ngày lễ | Enum/UI accepts Ngày lễ, function chỉ thường/cuối tuần | INCORRECT/PARTIAL I-05 |
+| Pricing ba loại ngày | Ngày thường / Cuối tuần / Tất cả, SQL authoritative | R0 PASS theo evidence mới |
 | Bảng giá Admin sửa điều kiện/date (thiết kế ADM-13) | Update chỉ surcharge+status; Manager edit đầy đủ hơn | PARTIAL I-14 |
 | Reports Admin theo rạp/phim/thời gian (thiết kế ADM-16) | Per-cinema summary + total theo range, không movie/day breakdown Admin | PARTIAL I-13 |
 | Catalog operational status | Show booking không kiểm cinema/room/movie status; parent activation không đủ enforce | PARTIAL I-06 |
@@ -1424,8 +1425,8 @@ SPs chính Admin/Manager/Support/Booking/Payment/Promotion có guard SQL current
 | Cinema images | CRUD/cover APIs/SP/UI/public gallery thật, active status filtering | MATCH source+read; write/stress chưa chứng minh |
 | Real payment gateway | Explicitly ngoài scope thiết kế1.3; PaymentPage simulation | MATCH demo; **BLOCKER cho production real money** |
 | Staff user management | Create/list/change status có; đổi role của existing user không có dedicated API | PARTIAL nếu “quản lý tài khoản” yêu cầu reassignment; tài liệu cần chốt policy, không tự tạo requirement |
-| Password change/customer cancel order | Có SP nhưng không HTTP/UI | PARTIAL chức năng phụ; không tính UC mandatory mới ngoài46 |
-| Test repeatability | 2 BE failures vì thiếu known-contract-gaps artifact; historical scripts dependencies thiếu | INCORRECT release evidence I-12 |
+| Password change/customer cancel order | Có SP nhưng không HTTP/UI | PARTIAL chức năng phụ; không tính UC mandatory mới ngoài45 |
+| Test repeatability | Guard dựa SQL source/service; không đọc file audit sinh trước | I-12 RESOLVED R0 TEST PREREQUISITE |
 | Readiness/recovery | Có backup/build/verify tooling, chưa chạy clean clone/restore/load/internet security | PARTIAL chứng cứ deployment; không dựa tên script để PASS |
 
 ## 14. Dead / Duplicate / Legacy Code
@@ -1452,18 +1453,18 @@ SQL dependency evidence là current sys catalog cộng source calls; “không c
 
 | Nhóm | Test hiện có / lệnh được chạy | Kết quả audit / giới hạn |
 | --- | --- | --- |
-| Backend | 25 `.test.js`, `npm.cmd --prefix backend test`; node:test service/validators/JWT/typed-client/authorization/dateTime + app HTTP | **109 items,107 pass,2 fail**; includes failed test-file item. Services dùng injected execute, không positive DB integration |
+| Backend | node --test tests/**/*.test.js | R0 **122/122 PASS, 0 skip**; [log](r0-20261007/backend.txt) |
 | Backend app integration | app.test.js 7 tests: health/404, auth/body roles, catalog invalid filters, anonymous booking/order/review/manager guards | HTTP stack thật, đa số reject trước DB; không gọi positive business writes |
-| Frontend | 13 `.test.js`, `npm.cmd --prefix frontend test`; renderToStaticMarkup/util/authSession injected clients | **45/45**; JSX browser fixtures không mặc nhiên được npm test chạy |
-| Frontend lint/build | `npm.cmd --prefix frontend run lint`; build outDir vào docs/audit frontend-build | PASS/PASS; JS bundle533.30kB warning500k; không build vào production dist |
-| No-SQL | `node scripts/audit-no-sql.mjs` + manual actual client/services review | 90 files19 reviewed keyword matches, PASS |
-| Database | test-all includes procedure smoke/timezone/compensation/schema/multirow/constraints/execute-only; 10 SQL test files total (incl tamper/restore) | **Không chạy**: INSERT/UPDATE/CREATE USER/trigger tamper kể cả rollback không đáp ứng yêu cầu không đổi DB |
+| Frontend | node --test --test-concurrency=1 tests/*.test.js | R0 **49/49 PASS, 0 skip**; [log](r0-20261007/frontend.txt) |
+| Frontend lint/build | oxlint + vite build | R0 PASS; build mới trong frontend/dist, bundle warning vẫn ngoài scope |
+| No-SQL | node scripts/audit-no-sql.mjs | R0 PASS; [log mới](r0-20261007/no-sql.txt) |
+| Database | SQL test-all/verify trên source-built disposable | R0 PASS: smoke/timezone/pricing/compensation/schema/multirow/constraints/execute-only; [evidence](r0-20261007/checks.json) |
 | Concurrency | 3 `.mjs`: booking-stress, pricing-overlap-stress, cinema-image-lock-stress; disposable DB required | Source scenarios có; không chạy. Showtime race cũ script tồn tại nhưng old signatures; không có current test result |
 | R1–R8 integration/browser/security/performance | Scripts có fixture mutations, deploy, cleanup; nhiều historical evidence missing | Không reuse previous PASS; không chạy trên DB hiện tại |
 | Live audit probes | 59 GET + 4 actual demo login + 1 missing-permission middleware unit | **64 đúng kỳ vọng**; createApp không expiry job. Anonymous/foreign-role/scope live checks, foreign existing order chưa có |
 | Browser E2E attempt | Isolated headless Chrome, app guard cho GET/login only | **BLOCKED/UNVERIFIED: CDP timeout Page.enable**, 0 page result; không tính pass/fail ứng dụng |
 
-Hai lỗi BE là regression guard trong `adminService.test.js:204` và import `sqlErrorCoverage.test.js:106` đọc `database/_audit/known-contract-gaps.json` không tồn tại. Test suite sqlErrorCoverage chưa chạy cases bên trong; không báo là tất cả error mappings đã test PASS. Không tạo file giả hoặc sửa test để làm xanh (I-12).
+Trong audit gốc, hai guard lỗi vì thiếu artifact. R0 đã bỏ dependency đó và yêu cầu mapping đầy đủ từ SQL source/service: **122 tests PASS, 0 skip** ([log mới](r0-20261007/backend.txt)). Không thêm artifact giả hoặc bỏ test.
 
 | Case quan trọng | Source tests có | Bằng chứng hiện tại / còn thiếu |
 | --- | --- | --- |
@@ -1485,18 +1486,18 @@ Không có coverage instrumented `% statements/branches` trong output; không th
 
 | ID / Severity | Issue | Evidence + file/location | Problem / đường lỗi | Impact / expected |
 | --- | --- | --- | --- | --- |
-| I-01 CRITICAL | Runtime DB là sa/sysadmin | LIVE; backend/.env DB_USER; config/database.js; connection.json | Application principal có mọi quyền table/server; execute-only role tồn tại nhưng runtime không dùng. | Backend compromise/credential leak có thể sửa/xóa/đọc trực tiếp dữ liệu. Dev exception được tài liệu hóa, vẫn FAIL mục tiêu user application execute-only. |
+| I-01 ACCEPTED PROJECT CONSTRAINT | Backend sa trong đồ án/local | Roadmap §2.2 / R0; docs/PROJECT_ACCEPTED_CONSTRAINTS.md; R0 no-SQL PASS | Backend sử dụng sa để kết nối SQL Server trong phạm vi đồ án/local, được chấp nhận cho môi trường học tập. | Không đại diện cho cấu hình production. Không tính vào defect/blocker của đồ án. DBMS-first và Stored-Procedure-Only vẫn bắt buộc. |
 | I-02 CRITICAL | Manager xóa phòng có thể partial commit | STATIC; database/08_procedures/manager/sp_Manager_Room_Delete.sql:30,35,36 | A check room chưa có show; B tạo show cùng room commit; A DELETE GHE autocommit; A DELETE PHONGCHIEU bị FK SUATCHIEU chặn. Không BEGIN TRAN/CATCH/room serialization. | Room còn nhưng mất toàn bộ seats. Không tái hiện ghi. Expected all-or-nothing TX + parent coordination; AdminRoomDelete đã có TX khác. |
 | I-03 CRITICAL | Rủi ro concurrent overlapping showtimes dưới RCSI | STATIC + LIVE RCSI; database/07_triggers/TRG_SuatChieu_KiemTraTrungLich.sql:15; manager sp_Manager_Showtime_Create.sql:56; admin usp_Admin_Showtime_Create.sql:30; update paths | Hai transaction ghi row khác cùng phòng; AFTER trigger SELECT range không room UPDLOCK/HOLDLOCK hoặc exclusion invariant, mỗi statement snapshot có thể thiếu uncommitted row kia. Single statement multirow check không giải parallel sessions. | Có thể commit overlapping lịch phòng; chưa exploit/stress current. Expected serialize per-room create/update invariant. Current SELECT overlap0 không phủ future race. |
 | I-04 HIGH | GRANT schema EXECUTE rộng hơn gateway cần thiết | LIVE grants + STATIC; database/09_security/001_execute_role.sql:3; database/08_procedures/auth/sp_User_ChangePassword.sql:23; customer/sp_Order_Cancel.sql | db_executor executes all dbo SP, kể cả change password chỉ active userId+newhash, không old-password/actor entitlement. OrderCancel trusts supplied owner. Không HTTP consumer nên API không expose exploit này. | Nếu có app DB credential có thể gọi helpers thay flow auth; use selective grants/internal boundaries. Main CancelCascade có guard, không đánh nhầm bypass. |
-| I-05 HIGH | Rule Ngày lễ không bao giờ được tính giá | STATIC; database/05_functions/fn_TinhGiaVe.sql:55; 03_constraints/003_check_constraints.sql:5; shared/resourceContract.mjs | Ngày lễ là giá trị được chấp nhận nhưng fn chỉ set Cuối tuần/Ngày thường; không holiday calendar. | Bảng giá lễ lưu thành công nhưng giá bán thiếu phụ thu lễ theo cấu hình. Không hiện holiday transaction để đối soát; expected calendar/type calculation hoặc contract loại option. |
+| I-05 RESOLVED R0 | Pricing chỉ còn ba loại ngày chính thức | docs/r0-20261007/{database-contract,migration-precondition,pricing-api,main-migration,checks}.json | Constant, validators, dropdown/payload và CHECK chỉ chấp nhận Ngày thường / Cuối tuần / Tất cả; dữ liệu legacy làm migration dừng. | SQL authoritative pricing đã được kiểm tra; không thêm calendar, không đổi/xóa dữ liệu có sẵn. |
 | I-06 HIGH | Book/show bán không enforce trạng thái parent | STATIC; database/08_procedures/booking/sp_Booking_Create.sql:76; public/sp_Showtime_ListByMovie.sql; system/sp_Showtime_ValidateTimes.sql; show create paths | Booking chỉ check open/future show và active physical seats; không check cinema/room/movie operational status. Public view không mang cinema/room status để filter; CreateTimes không validate release-window/status/format compatibility. | Future open show ở cinema đóng/room bảo trì/movie ngừng vẫn có thể được đặt nếu active seats. Business policy cần chốt, enforced database. Current dataset không có case đó. |
 | I-07 HIGH | Promotion validate và consume policy chưa atomic | STATIC; database/08_procedures/public/sp_Promotion_Validate.sql:49; booking/sp_Booking_Create.sql:216,241,248; CK_KHUYENMAI_SoLuong | Read coupon without lock rồi tăng used under lock; concurrent Admin config update có thể đổi policy sau validation. Last-quota collision bị CHECK abort, generic547. Invalid provided code bị set NULL/discount0 rồi vẫn tạo order. | Không claim quota oversubscription commit: CHECK protects. Rủi ro stale discount/full-price ngoài preview expectation và lỗi không domain-specific. Expected atomic coupon policy and clear reconfirm/reject contract. |
 | I-08 HIGH | Set cast silently mất association khi actor ID không tồn tại | STATIC; database/08_procedures/admin/sp_Admin_MovieActor_Set.sql:37,43; backend/src/validators/adminValidator.js cast rule | Sau DELETE current PHIM_DIENVIEN, INSERT INNER JOIN DIENVIEN silently excludes unknown IDs; valid API shape/positive integer không đảm bảo existence. All-unknown set commits empty. | API success nhưng cast cũ bị xóa khi request có lỗi reference. Expected validate entire IDs before replace and rollback/reject; no mutation test run. |
 | I-09 HIGH | Historical monetary snapshots có, metadata còn mutable | STATIC; database/06_views/vw_LichSuDatVe.sql; vw_ChiTietDonDatVe.sql; manager/sp_Manager_Showtime_Update.sql:36; manager/sp_Manager_Seat_Update.sql:28; admin equivalents | Views/details JOIN live movie/seat/product descriptors. Show metadata change only blocked paid/current holds; completed/canceled/expired history không đủ bảo vệ. Seat type change only guards future active tickets. | History movie/time/seat type/product descriptions có thể đổi về sau dù GiaVe/DonGia/totals giữ. Expected historical metadata snapshot hoặc mutation policy bảo toàn; real old orders0. |
-| I-10 MEDIUM | Dataset hiện không thể chạy booking tích cực | LIVE data-scans; staleOpenShows IDs2..5; publicShowAvailability0; database/10_seed | 4 show đã kết thúc vẫn Mở bán từ seed ngày03/10; không show future mở bán tại07/10. Public list filter future đúng → []. Direct detail/seats past still200. | Booking demo/46UC positive fixture unavailable; chronology/status stale. Không reseed audit. Expected disposable/current demo fixture and lifecycle policy. |
+| I-10 MEDIUM | Dataset hiện không thể chạy booking tích cực | LIVE data-scans; staleOpenShows IDs2..5; publicShowAvailability0; database/10_seed | 4 show đã kết thúc vẫn Mở bán từ seed ngày03/10; không show future mở bán tại07/10. Public list filter future đúng → []. Direct detail/seats past still200. | Booking demo/45UC positive fixture unavailable; chronology/status stale. Không reseed audit. Expected disposable/current demo fixture and lifecycle policy. |
 | I-11 HIGH | Admin complaint detail có thể lệch selected ID | STATIC; frontend/src/pages/AdminPortal.jsx:132,137,145 | Open A rồi B; selected=B nhưng response A muộn setComplaint(A), không generation guard; write action dùng selected.id=B. Current loadRequest guard cho resource lists không bảo vệ openComplaint. | Admin thấy nội dung A và ghi xử lý B; DB role/permission không ngăn operator intent mismatch. Expected resource-bound detail/write state. Data0 nên không current browser repro. |
-| I-12 MEDIUM | Backend suite không tái chạy xanh từ checkout | TEST; backend/tests/adminService.test.js:204; sqlErrorCoverage.test.js:106 | Đọc database/_audit/known-contract-gaps.json thiếu; ENOENT gây 2failed items, cả sqlErrorCoverage suite chưa execute cases. | Không có full green release gate/error-map proof. Expected versioned/generated reproducible dependency; không tạo fake evidence để sửa audit. |
+| I-12 RESOLVED R0 TEST PREREQUISITE | Backend regression guards không phụ thuộc audit artifact | docs/r0-20261007/backend.txt | Hai guard đọc trực tiếp SQL source/service mapping và yêu cầu không còn lỗi thiếu mapping; dependency file audit bị thiếu đã bỏ. | 122/122 tests PASS, 0 skip. Chỉ sửa prerequisite để R0 test được, không triển khai R4. |
 | I-13 MEDIUM | Admin report thiếu breakdown phim và thời gian | STATIC + LIVE200; Phân Tích _ Thiết Kế.md ADM-16:523; database/08_procedures/admin/sp_Admin_Report_Revenue.sql | 2 sets per-cinema summary + period total, không movie aggregation/day series ở Admin. Manager daily revenue không thay Admin cross-system movie/time requirement. | ADM-16 PARTIAL; report source money snapshots có nhưng financial positive0. Expected criteria/aggregations đầy đủ qua SP/API/UI. |
 | I-14 MEDIUM | Admin pricing edit thiếu điều kiện/date | STATIC; backend/src/validators/adminValidator.js pricingWrite; database/08_procedures/admin/usp_Admin_Pricing_Update.sql; frontend/src/utils/adminForms.js | Create có tuple seat/day/format/date; update chỉ surcharge/status. Thiết kế ADM-13 yêu cầu sửa rule gồm dimensions/time. Manager R7 edit đủ hơn. | Admin phải tạo rule mới/disable workaround, UC edit chưa MATCH. Expected full update contract và overlap tests. |
 | I-15 MEDIUM | Support queue cũ overwrite filter mới | STATIC; frontend/src/pages/SupportPortal.jsx:26..29,42 | loadQueue mỗi đổi filter và submit, không abort/request generation; promise cũ luôn setQueue. Detail có guard riêng nên không kết luận toàn Support thiếu guards. | Danh sách hiển thị không khớp filter mới. Expected queue request identity; no browser runtime proof. |
@@ -1507,38 +1508,38 @@ Không có coverage instrumented `% statements/branches` trong output; không th
 | I-20 MEDIUM | Profile mọi role tạo HOSOKHACHHANG | STATIC; backend/src/routes/authRoutes.js:9; database/08_procedures/auth/sp_User_UpdateProfile.sql:42; frontend/routes/index.jsx Profile | All authenticated roles can PUT/me; SP INSERT customer profile if missing regardless role. | Staff/admin có thể tạo customer-specific profile/points container; currently profiles4 for4customers nên chưa data pollution. Expected explicit all-role/customer profile model policy. |
 | I-21 MEDIUM | Complaint linked-order lookup che lỗi | STATIC; frontend/src/pages/Complaints.jsx:22 | getOrders catch(()=>applyOrders([])) biến network/auth/database error thành không có order. | Người dùng mất ability link order, không biết nguyên nhân; API business data vẫn thật. Expected visible error/retry/partial state, không fake empty. |
 | I-22 MEDIUM | GET order detail có persistent side effects | STATIC; database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql; backend/src/services/orderService.js | Detail gọi expire pending có thể update order/tickets/coupon; tooling/read monitors không thuần read khi có expired order. | Query semantics/cache/retries khó quản lý; strict audit cần avoid even GET có write. Snapshot hiện all0 nên no changes. Expected separate/explicit expiry command boundary. |
-| I-23 LOW | Docs/setup/evidence lifecycle chưa rõ | STATIC; README.md trống; database/README.md links docs RELEASE_READINESS/DATETIME_CONTRACT, old audit dirs; scripts r1..r8 | Current expected reports/evidence không tồn tại, scope count25/26/27 và45/46 lệch; old scripts có deploy/mutation assumptions. | Reviewer/clean clone khó reproduce; expected supported run/test/deploy docs và archived versioned contracts. |
+| I-23 LOW | Docs/setup/evidence lifecycle chưa rõ | STATIC; README.md trống; database/README.md links docs RELEASE_READINESS/DATETIME_CONTRACT, old audit dirs; scripts r1..r8 | Current expected reports/evidence không tồn tại, scope tài liệu bảng lịch sử chưa rõ; baseline UC hiện đã thống nhất 45; old scripts có deploy/mutation assumptions. | Reviewer/clean clone khó reproduce; expected supported run/test/deploy docs và archived versioned contracts. |
 | I-24 LOW | Frontend bundle warning | TEST; docs/audit-20261007/frontend-build.txt | Single JS chunk533.30kB minified/156.30kB gzip; Vite warning>500k. | Potential initial load cost; không chứng minh performance failure. Expected measure then split portal routes if useful. |
 | I-25 LOW | Unused wrappers/SQL helpers và stale comment | STATIC; frontend/src/api/healthApi.js:3; authApi.js:7; backend/src/services/orderService.js:92; SQL dependencies; adminRoutes.js:77 | Unused FE consumers/legacy SP aliases/functions/view; wrong payment-user comment; Admin inline controller exception. | Maintenance/caller confusion; no deletion authorized. Expected decide compatibility surfaces after caller review, correct docs in fix phase. |
 | I-26 LOW | Pagination và observability chưa đủ chứng cứ scale | STATIC; list SP/services/portals; backend/src/utils/logger.js | Lists unpaginated, auth reads multiple SP per request, cancellation locks all user rows; no correlation ID/business audit events/metrics. | Large data latency/memory/diagnosis risk; no current load failure. Expected bounded list contracts, query/load measurement and traceability. |
 
 
-Severity là mức ảnh hưởng nếu đường lỗi xảy ra; “STATIC” chỉ ra source/interleaving, “LIVE” là probe/catalog/data hiện tại, “TEST” là output chạy thực. Không gọi static risk là exploit đã tái hiện. Các finding tổng hợp vẫn có từng vị trí/path để phase sửa xem trực tiếp. **26 finding baseline: 3 CRITICAL,7 HIGH,12 MEDIUM,4 LOW.** Không nhân nhiều bản sao cùng một root cause theo endpoint/UC.
+Severity chỉ đếm finding đang mở: **23 active (2 CRITICAL, 6 HIGH, 11 MEDIUM, 4 LOW)**. Tổng 26 ID lịch sử gồm 1 accepted (I-01), 2 resolved và các finding còn lại. STATIC vẫn là source risk; không tuyên bố đã tái hiện exploit.
 
 **Production-only blocker ngoài số đếm baseline:** simulated payment cho phép customer tự submit Thành công; nếu dùng thu tiền thật có thể đánh paid mà không giao dịch ngân hàng. Source `frontend/src/pages/PaymentPage.jsx`, `backend/src/validators/orderValidator.js`, payment routes/SP. Thiết kế loại PSP khỏi scope nên không gán baseline financial exploit/UC MISSING; cần chặn production rollout cho đến khi có trust boundary payment provider. Demo passwords/encryption/dev config cũng cần production policy trước expose internet.
 
 ## 17. Current System Completion
 
-| Layer | PASS | PARTIAL | MISSING | BROKEN | Điểm /46 | % |
+| Layer | PASS | PARTIAL | MISSING | BROKEN | Điểm /45 | % |
 | --- | --- | --- | --- | --- | --- | --- |
-| DB | 25 | 15 | 1 | 5 | 32.5 | 70.7 |
-| BE | 42 | 3 | 1 | 0 | 43.5 | 94.6 |
-| FE | 7 | 38 | 1 | 0 | 26 | 56.5 |
-| INTEGRATION | 7 | 33 | 1 | 5 | 23.5 | 51.1 |
+| DB | 25 | 15 | 0 | 5 | 32.5 | 72.2 |
+| BE | 42 | 3 | 0 | 0 | 43.5 | 96.7 |
+| FE | 7 | 38 | 0 | 0 | 26 | 57.8 |
+| INTEGRATION | 7 | 33 | 0 | 5 | 23.5 | 52.2 |
 
-| 46 Use Cases | Count |
+| 45 Use Cases | Count |
 | --- | --- |
-| PARTIAL | 33 |
 | PASS | 7 |
+| PARTIAL | 33 |
+| MISSING | 0 |
 | BROKEN | 5 |
-| MISSING | 1 |
 
 
-Phương pháp: mỗi UC có bốn điểm **DB (gồm SP correctness), BE, FE, Integration**. PASS=1, PARTIAL=0.5, MISSING/BROKEN=0. Chỉ số layer = tổng điểm/46×100, làm tròn1 chữ số. SP ghi riêng trong matrix để trace, không tính lần hai vào DB. “PASS layer BE” nghĩa API binding/guard hợp lý; không bỏ qua bug SP downstream hoặc test suite đỏ, nên overall UC vẫn có thể BROKEN/PARTIAL. FE PARTIAL ở form động chưa đủ bằng chứng runtime, dù render/unit/build đạt. Integration PARTIAL không phải đã thành công positive write; chỉ ghi nhận chain/contract/read ở phần liên quan.
+Phương pháp: mỗi UC có bốn điểm **DB (gồm SP correctness), BE, FE, Integration**. PASS=1, PARTIAL=0.5, MISSING/BROKEN=0. Chỉ số layer = tổng điểm/45×100, làm tròn1 chữ số. SP ghi riêng trong matrix để trace, không tính lần hai vào DB. “PASS layer BE” nghĩa API binding/guard hợp lý; không bỏ qua bug SP downstream hoặc test suite đỏ, nên overall UC vẫn có thể BROKEN/PARTIAL. FE PARTIAL ở form động chưa đủ bằng chứng runtime, dù render/unit/build đạt. Integration PARTIAL không phải đã thành công positive write; chỉ ghi nhận chain/contract/read ở phần liên quan.
 
 Overall UC: PASS khi bốn cột PASS và không known material issue; BROKEN khi có đường lỗi rõ gây invariant/data/state sai; MISSING khi chain mandatory không có; còn lại PARTIAL. 7 PASS là KH-02,KH-04,KH-11,QLR-01,QLR-08,CSKH-01,ADM-01; các PASS read/list vẫn có giới hạn dataset nhỏ/empty nói ở từng mục. PASS không bao gồm payment/booking/showtime CRUD dựa vào file tồn tại.
 
-Các tỷ lệ là **ước lượng có quy tắc và conservative theo evidence phiên này**, không số đo throughput/coverage. Không dùng số bảng/SP nhiều để nâng completion. Kiến trúc PARTIAL do current DB principal và strict business-boundary exceptions; No-SQL PASS chỉ kiểm business SQL runtime. Nghiệm thu toàn hệ thống hiện chưa đạt; cần disposable fixture + E2E/concurrency chứng minh trước khi tăng UC PASS.
+Các tỷ lệ giữ grade của audit gốc cho UC trong phạm vi và chia mẫu số 45. R0 chỉ xác minh contract pricing/baseline và regression hiện có, không chứng nhận lại toàn bộ flow. Kiến trúc PARTIAL ở boundary ngoài R0 (ví dụ side effects GET/layer consistency); tài khoản sa được accepted và không phải nguyên nhân Fail. No-SQL PASS xác minh backend không thêm SQL nghiệp vụ.
 
 ## 18. Recommended Next Actions
 
@@ -1546,14 +1547,14 @@ Chỉ đề xuất; **chưa triển khai hành động nào bên dưới**.
 
 | Priority | Hành động đề xuất | Bằng chứng nghiệm thu cần có |
 | --- | --- | --- |
-| P0 | Chuyển runtime khỏi sa sang principal least-privilege và GRANT riêng necessary SP; hạn chế helper/password surface (I-01/I-04) | Login/app bằng account thực; execute required SP thành công; SELECT/INSERT/UPDATE/DELETE và unnecessary helper bị DENY; không thay grants trong audit |
+| DEFER local / HARDEN trước production | I-04 selective SP grants/helper surface theo roadmap; I-01 đã accepted | Giữ Stored-Procedure-Only; không đổi tài khoản đồ án trong R0 |
 | P0 | Atomic Manager room delete, lock parent/resource và xử lý FK concurrent show creation (I-02) | Disposable two-session create-show vs delete-room: thành công toàn bộ hoặc rollback toàn bộ, không empty surviving room |
 | P0 | Serialize overlap create/update theo phòng với invariant kiểm tra đúng dưới RCSI (I-03) | Parallel INSERT+INSERT, UPDATE+INSERT, UPDATE+UPDATE và multirow: không có overlapping committed shows; map409 rõ |
 | P0 nếu production thu tiền | Thay payment simulation bằng trusted PSP verification, replay/idempotency/amount reconciliation; giữ mode demo explicit | Không thể customer tự đánh paid; signed callback và wrong-amount/replay/double callback tests |
-| P1 | Chốt holiday pricing/calendar, validate cinema/room/movie operational policy, promotion validation+usage atomic và preview/booking confirmation (I-05..07) | Holiday vs weekday/weekend price; inactive parent reject; coupon quota/config races; không silently full-price ngoài policy |
+| P1 | Validate operational parent policy và promotion validation/usage atomic (I-06/I-07) | Inactive parent reject; coupon quota/config races; giữ pricing contract 3 loại ngày đã chốt ở R0 |
 | P1 | Validate toàn bộ casting IDs trước replace; historical metadata immutability; fix Admin selected complaint async race (I-08/I-09/I-11) | Invalid one cast ID không xóa cast cũ; old order descriptions/time/type ổn định; responses out of order không ghi nhầm complaint |
-| P1 | Khôi phục reproducible test evidence source; tạo disposable fresh future-show + transaction fixtures; chạy full write E2E/security/rollback/load (I-10/I-12) | BE suite xanh từ checkout clean; actor positive/negative chain46 có evidence; snapshot/attempt/ownership/compensation assertions và DB teardown rõ |
-| P1 | Hoàn thiện ADM-17 Config theo yêu cầu46; Admin pricing edit dimensions/date và report movie/time breakdown (I-13/I-14) | SP gateway/API/UI/permission + positive/negative tests cho từng contract; không tự coi constants là feature Config |
+| P1 | Dataset future-show/transaction và full write E2E/security/rollback/load (I-10) | Positive/negative chain45, snapshot/attempt/ownership/compensation; prerequisite test backend I-12 đã xử lý để chạy R0 |
+| P1 | Admin pricing edit conditions/date và report movie/time breakdown (I-13/I-14) | Positive/negative tests trong các UC Admin hiện hữu |
 | P1 | Deterministic complaint bulk semantics; guard async support queue/booking context và thông báo lỗi order lookup (I-15/I-16/I-19/I-21) | Bulk history same complaint deterministic; reversed network responses giữ resource đúng; lỗi lookup hiển thị và retry được |
 | P2 | Tập trung preview/limit contract, rõ side-effect GET, clarify all-role profile/customer data, token/rate policy (I-17/I-18/I-20/I-22) | Boundary tài liệu+contract tests; expiry command/query semantics; policy login/logout/revocation measurable |
 | P2 | Chuẩn hóa supported setup/deploy/test docs, bỏ dependency evidence ngầm; correlation/audit logs, pagination/performance measurement (I-23/I-26) | Clean clone/run instructions; request tracking; load p95/query plans/backup restore evidence |

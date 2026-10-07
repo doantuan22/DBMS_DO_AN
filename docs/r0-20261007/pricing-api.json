@@ -1,0 +1,441 @@
+{
+  "database": "CinemaBookingDB_R0_Task1_20261007_1500",
+  "startedAt": "2026-10-07T15:17:20.011Z",
+  "status": "PASS",
+  "requests": [
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Ngày thường",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/59",
+      "dayType": "Ngày thường",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/59",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/59",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/59",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/59",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Cuối tuần",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/60",
+      "dayType": "Cuối tuần",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/60",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/60",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/60",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/60",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Tất cả",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/61",
+      "dayType": "Tất cả",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/61",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/61",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/61",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/manager/cinemas/1/pricing",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "method": "PUT",
+      "route": "/manager/pricing/61",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Ngày thường",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Cuối tuần",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Tất cả",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Ngày lễ",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "Holiday",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "dayType": "HOLIDAY",
+      "status": 400,
+      "expected": 400,
+      "error": "INVALID_REQUEST"
+    }
+  ],
+  "createdRuleIds": [
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+  ],
+  "rejectedRequestsPreservePricing": true,
+  "stressFixtureCleanup": {
+    "cinemaId": 7,
+    "affected": [
+      6,
+      1
+    ]
+  },
+  "pricingStress": {
+    "status": "PASS",
+    "exitCode": 0,
+    "rounds": 4,
+    "parallel": 2
+  },
+  "fixtureCleanupPreservesPricing": true,
+  "completedAt": "2026-10-07T15:17:22.097Z"
+}

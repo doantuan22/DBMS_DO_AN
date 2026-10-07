@@ -39,7 +39,7 @@ const cinemaId = (await call('POST', '/admin/cinemas', admin, { name: `AUDIT_STR
 if (!cinemaId) { console.error('Could not create the stress cinema'); process.exit(2); }
 console.log(`cinema ${cinemaId} (run ${runId}), ${rounds} rounds x ${parallel} parallel creates`);
 
-const SEATS = ['Thường', 'VIP', 'Sweetbox', 'Đôi'], DAYS = ['Ngày thường', 'Cuối tuần', 'Ngày lễ'], FORMATS = ['2D', '3D', 'IMAX', '4DX', 'ScreenX'];
+const SEATS = ['Thường', 'VIP', 'Sweetbox', 'Đôi'], DAYS = ['Ngày thường', 'Cuối tuần', 'Tất cả'], FORMATS = ['2D', '3D', 'IMAX', '4DX', 'ScreenX'];
 const create = (body) => call('POST', '/admin/pricing', admin, { cinemaId, surcharge: 1000, ...body });
 const overlaps = (a, b) => a.PhuThu !== undefined && a.LoaiGhe === b.LoaiGhe && a.LoaiNgay === b.LoaiNgay && a.DinhDang === b.DinhDang
   && a.NgayBatDau.slice(0, 10) <= (b.NgayKetThuc?.slice(0, 10) ?? '9999-12-31') && b.NgayBatDau.slice(0, 10) <= (a.NgayKetThuc?.slice(0, 10) ?? '9999-12-31');
@@ -64,7 +64,7 @@ let pairs = 0; for (let i = 0; i < active.length; i++) for (let j = i + 1; j < a
 expect(pairs === 0 && active.length === rounds, `${active.length} active rules for ${rounds} rounds, ${pairs} overlapping pair(s)`);
 
 // reference semantics once: an adjacent range and an expired duplicate are allowed
-const base = { seatType: 'Đôi', dayType: 'Ngày lễ', format: 'ScreenX' };
+const base = { seatType: 'Đôi', dayType: 'Tất cả', format: 'ScreenX' };
 const a = await create({ ...base, startsOn: '2050-01-01', endsOn: '2050-01-31' });
 const adjacent = await create({ ...base, startsOn: '2050-02-01', endsOn: null });
 const touching = await create({ ...base, startsOn: '2050-01-31', endsOn: '2050-02-02' });

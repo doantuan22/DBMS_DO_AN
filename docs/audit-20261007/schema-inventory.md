@@ -19,7 +19,7 @@
 | FK FK_BANGGIA_Rap | RapID → RAPCHIEUPHIM.RapID; DELETE NO_ACTION; UPDATE NO_ACTION; trusted=true, enabled=true |
 | CHECK CK_BANGGIA_DinhDang | ([DinhDang]=N'Tất cả' OR [DinhDang]=N'ScreenX' OR [DinhDang]=N'4DX' OR [DinhDang]=N'IMAX' OR [DinhDang]=N'3D' OR [DinhDang]=N'2D'); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_LoaiGhe | ([LoaiGhe]=N'Tất cả' OR [LoaiGhe]=N'Đôi' OR [LoaiGhe]=N'Sweetbox' OR [LoaiGhe]=N'VIP' OR [LoaiGhe]=N'Thường'); trusted=true, enabled=true |
-| CHECK CK_BANGGIA_LoaiNgay | ([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Ngày lễ' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường'); trusted=true, enabled=true |
+| CHECK CK_BANGGIA_LoaiNgay | ([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường'); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_PhuThu | ([PhuThu]>=(0)); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_ThoiGian | ([NgayKetThuc] IS NULL OR [NgayKetThuc]>=[NgayBatDau]); trusted=true, enabled=true |
 | CHECK CK_BANGGIA_TrangThai | ([TrangThai]=N'Tạm dừng' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Áp dụng'); trusted=true, enabled=true |

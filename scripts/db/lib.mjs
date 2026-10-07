@@ -39,6 +39,12 @@ export function sqlcmd(sql, { database = 'CinemaBookingDB', integrated = false, 
   try {
     result = spawnSync('sqlcmd', [...args, ...(file ? ['-i', temporary] : ['-Q', sql])], { cwd: dbRoot, env: { ...process.env, SQLCMDPASSWORD: env.DB_PASSWORD || '' }, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   } finally { if (temporary) fs.unlinkSync(temporary); }
+  // Some local Windows ODBC clients cannot initialize TLS even when the project disables encryption.
+  // The failure occurs before SQL is executed. Reuse mssql for offline build/test tooling only.
+  if (!integrated && result.status !== 0 && /Encryption not supported on the client/.test(result.stderr || '')) {
+    result = spawnSync(process.execPath, [path.join(root, 'scripts/db/mssql-runner.mjs'), database, json ? 'json' : 'text'],
+      { cwd: dbRoot, env: { ...process.env, ...env }, input: sql, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  }
   if (result.status !== 0) throw new Error(`sqlcmd failed (${result.status}): ${result.stdout}\n${result.stderr}`);
   return json ? result.stdout : result.stdout + result.stderr;
 }

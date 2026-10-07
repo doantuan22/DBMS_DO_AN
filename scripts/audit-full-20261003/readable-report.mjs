@@ -36,7 +36,7 @@ ${e('live-environment.json')}, ${e('environment-redacted.json')}, ${e('browser-v
 
 KH: 14, QLR: 9, CSKH: 6, Admin: 16 — tổng **45 UC**. Hình ảnh rạp là phần mở rộng ADM-07, không phải UC mới.
 
-**ADM-17 ABSENT trong DB/SP/API/UI.** Actor overview §2.1 của thiết kế vẫn có “Cấu hình hệ thống”: đây là mục tài liệu lỗi thời. Các đoạn giải thích ADM-17 đã bị gỡ không được xem là regression. Actual database có 26 bảng sau extension ảnh rạp; phần kiến trúc cũ nói 25 bảng còn ERD nói 26.
+**Baseline chính thức 45 UC: KH14, QLR9, CSKH6, Admin16.** Cấu hình hệ thống không thuộc phạm vi. Root actor overview được chuẩn hóa ở R0; mô tả số bảng của audit 03/10 là lịch sử và không thay baseline source hiện hành.
 
 ## 4. Traceability Matrix
 
@@ -240,7 +240,7 @@ ${s([['Can two customers buy same seat?','NO trong race đã thử: một winner
 
 **FIX-P2:** Đồng bộ enum/error mapping; validation int/length/future DOB; missing-resource 404; profile đầy đủ; unknown product phải báo lỗi; assignment uniqueness; review COUNT; permission UI và các GAP chức năng.
 
-**FIX-P3:** Đồng bộ tài liệu 45 UC/ADM-17/phase, giải thích counter/history và stale status; sửa scanner false positives; bổ sung test fixture qua SP và cleanup có phạm vi. Performance changes chỉ sau đo actual plan/IO/load.
+**FIX-P3:** Giữ tài liệu và scoring baseline 45 UC; giải thích counter/history và stale status; sửa scanner false positives; bổ sung test fixture qua SP và cleanup có phạm vi. Performance changes chỉ sau đo actual plan/IO/load.
 
 Mỗi fix cần regression FE → API → SP → final DB, negative/concurrency và cross-module như đề xuất trong [FINDINGS](./FINDINGS.md). **Không áp dụng fix trong task này.**
 

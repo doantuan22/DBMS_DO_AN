@@ -268,7 +268,7 @@
       "bePath": "managerController / managerService",
       "fePath": "ManagerPortal pricing forms",
       "integration": "PARTIAL",
-      "issue": "R7 dimensions/date edit có; I-05 holiday chưa áp dụng; stress chưa chạy",
+      "issue": "R0 pricing 3 loại ngày đã kiểm SQL/HTTP/form; giữ PARTIAL của audit toàn UC; chưa chứng nhận mọi concurrency/write scenario",
       "be": "PASS",
       "fe": "PARTIAL",
       "status": "PARTIAL"
@@ -541,7 +541,7 @@
       "bePath": "adminController / adminService",
       "fePath": "AdminPortal pricing",
       "integration": "PARTIAL",
-      "issue": "I-14 edit lacks conditions/dates; I-05 holiday",
+      "issue": "R0 contract 3 loại ngày; I-14 edit thiếu conditions/dates vẫn ngoài scope",
       "be": "PARTIAL",
       "fe": "PARTIAL",
       "status": "PARTIAL"
@@ -584,19 +584,6 @@
       "be": "PARTIAL",
       "fe": "PARTIAL",
       "status": "PARTIAL"
-    },
-    {
-      "uc": "ADM-17",
-      "name": "Cấu hình hệ thống",
-      "db": "MISSING",
-      "sp": "Không có Config SP",
-      "bePath": "Không route/controller/service Config",
-      "fePath": "Không Config page/client",
-      "integration": "MISSING",
-      "issue": "User yêu cầu46; baseline45 chưa triển khai Config; constants không thay feature",
-      "be": "MISSING",
-      "fe": "MISSING",
-      "status": "MISSING"
     }
   ],
   "metrics": {
@@ -604,45 +591,52 @@
       "counts": {
         "PASS": 25,
         "PARTIAL": 15,
-        "BROKEN": 5,
-        "MISSING": 1
+        "BROKEN": 5
       },
       "points": 32.5,
-      "percent": 70.7
+      "percent": 72.2
     },
     "be": {
       "counts": {
         "PASS": 42,
-        "PARTIAL": 3,
-        "MISSING": 1
+        "PARTIAL": 3
       },
       "points": 43.5,
-      "percent": 94.6
+      "percent": 96.7
     },
     "fe": {
       "counts": {
         "PARTIAL": 38,
-        "PASS": 7,
-        "MISSING": 1
+        "PASS": 7
       },
       "points": 26,
-      "percent": 56.5
+      "percent": 57.8
     },
     "integration": {
       "counts": {
         "PARTIAL": 33,
         "PASS": 7,
-        "BROKEN": 5,
-        "MISSING": 1
+        "BROKEN": 5
       },
       "points": 23.5,
-      "percent": 51.1
+      "percent": 52.2
     }
   },
   "statuses": {
-    "PARTIAL": 33,
     "PASS": 7,
-    "BROKEN": 5,
-    "MISSING": 1
+    "PARTIAL": 33,
+    "MISSING": 0,
+    "BROKEN": 5
+  },
+  "baseline": {
+    "total": 45,
+    "actors": {
+      "KH": 14,
+      "QLR": 9,
+      "CSKH": 6,
+      "ADM": 16
+    },
+    "source": "ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md",
+    "note": "Original in-scope grades preserved; R0 only normalizes scope/denominator and issue notes, not full system acceptance."
   }
 }

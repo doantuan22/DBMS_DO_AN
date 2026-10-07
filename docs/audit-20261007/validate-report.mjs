@@ -33,6 +33,8 @@ const validation={
  brokenLinks,sourceFiles:before.length,sourceChanged,placeholdersRemaining:/\{\{\w+\}\}/.test(report),
  reportBytes:Buffer.byteLength(report),checkedAt:new Date().toISOString(),
 };
-const errors=validation.sections!==18||!validation.sequentialSections||validation.apiRows!==115||validation.uniqueMethodPaths!==115||validation.unresolvedSpMapping.length||validation.invalidApiStatus.length||validation.spRows!==125||validation.uniqueSpNames!==125||validation.ucRows!==46||brokenLinks.length||sourceChanged.length||validation.placeholdersRemaining;
+validation.sourceSnapshotScope='Historical pre-R0 audit; sourceChanged is expected after the authorized R0 implementation. Raw preservation-check.json remains unchanged.';
+validation.baseline=45;
+const errors=validation.sections!==18||!validation.sequentialSections||validation.apiRows!==115||validation.uniqueMethodPaths!==115||validation.unresolvedSpMapping.length||validation.invalidApiStatus.length||validation.spRows!==125||validation.uniqueSpNames!==125||validation.ucRows!==45||brokenLinks.length||validation.placeholdersRemaining||uc.rows.some(row=>row.uc==='ADM-17')||issues.issues.find(issue=>issue.id==='I-01')?.status!=='ACCEPTED PROJECT CONSTRAINT';
 validation.pass=!errors;fs.writeFileSync(`${out}/report-validation.json`,JSON.stringify(validation,null,2));
 console.log(JSON.stringify(validation,null,2));if(errors)process.exitCode=1;

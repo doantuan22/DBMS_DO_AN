@@ -201,9 +201,7 @@ test('regression guard: every error number thrown by an admin SQL source is mapp
   }
   assert.ok(thrown.size >= 40, 'expected to find the admin error numbers in the SQL sources');
   const unmapped = [...thrown].filter((number) => !(number in ADMIN_ERROR_TABLE) || !(mapped({ number }) instanceof HttpError));
-  const known = JSON.parse(readFileSync(new URL('../../database/_audit/known-contract-gaps.json', import.meta.url), 'utf8'))
-    .filter(gap=>gap.flow==='admin' && [50120,50123].includes(gap.code)).map(gap=>gap.code);
-  assert.deepEqual(unmapped.sort(), known.sort(), `new admin mapping gap; reviewed pre-existing R0 gaps are recorded separately: ${unmapped.join(', ')}`);
+  assert.deepEqual(unmapped, [], `unmapped admin SQL errors: ${unmapped.join(', ')}`);
 });
 
 test('set movie cast maps procedure errors to business HTTP errors', async () => {

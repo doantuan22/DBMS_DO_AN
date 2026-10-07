@@ -1,0 +1,88 @@
+{
+  "startedAt": "2026-10-07T15:22:47.985Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "baseline",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "audit-validation",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "name": "scope-scan",
+      "status": "PASS",
+      "runtimeViolations": 0,
+      "backendRuntimeFilesChanged": 0,
+      "frontendStyleFilesChanged": 0,
+      "unexpectedBusinessSqlChanges": 0
+    }
+  ],
+  "exitCriteria": [
+    {
+      "criterion": "Baseline = 45 UC",
+      "status": "PASS",
+      "evidence": "baseline-checks.txt"
+    },
+    {
+      "criterion": "Official Admin16 only in completion/audit/regression",
+      "status": "PASS",
+      "evidence": "baseline-checks.txt"
+    },
+    {
+      "criterion": "I-01 = ACCEPTED PROJECT CONSTRAINT",
+      "status": "PASS",
+      "evidence": "baseline-checks.txt"
+    },
+    {
+      "criterion": "No legacy day type in runtime pricing",
+      "status": "PASS",
+      "evidence": "scope-scan.json"
+    },
+    {
+      "criterion": "Only three official day types",
+      "status": "PASS",
+      "evidence": "database-contract.json"
+    },
+    {
+      "criterion": "Migration precondition preserves existing legacy data",
+      "status": "PASS",
+      "evidence": "migration-precondition.json"
+    },
+    {
+      "criterion": "fn_TinhGiaVe synchronized",
+      "status": "PASS",
+      "evidence": "database-contract.json"
+    },
+    {
+      "criterion": "Backend validators synchronized",
+      "status": "PASS",
+      "evidence": "backend.txt"
+    },
+    {
+      "criterion": "Frontend pricing options synchronized",
+      "status": "PASS",
+      "evidence": "frontend.txt"
+    },
+    {
+      "criterion": "Pricing tests PASS",
+      "status": "PASS",
+      "evidence": "pricing-api.json"
+    },
+    {
+      "criterion": "Existing regressions PASS",
+      "status": "PASS",
+      "evidence": "checks.json"
+    },
+    {
+      "criterion": "Backend Stored-Procedure-Only / no business SQL",
+      "status": "PASS",
+      "evidence": "no-sql.txt"
+    }
+  ],
+  "conclusion": "R0 DONE",
+  "completedAt": "2026-10-07T15:22:48.893Z"
+}

@@ -103,18 +103,11 @@ export function unmappedCodes(extraSources = {}) {
   return problems;
 }
 
-const knownGaps = JSON.parse(readFileSync(new URL('_audit/known-contract-gaps.json', DB), 'utf8'));
-const gapKeys = problems => problems.map(p=>{
-  const code=/^(\d+)/.exec(p)[1];
-  const service=/not mapped by (\w+)Service/.exec(p)?.[1];
-  return `${service==='order'?'orders':service}:${code}`;
-}).sort();
-
-test('SQL error mappings have only the explicitly reported pre-existing R0 contract gaps', () => {
+test('every reachable SQL business error has a service mapping', () => {
   const thrown = thrownCodes(sqlSources());
   assert.ok(thrown.size >= 90, `the scan found only ${thrown.size} flow/code pairs; the SQL sources were not read`);
   for (const flow of Object.keys(FLOW_SERVICES)) assert.ok([...thrown.keys()].some((key) => key.startsWith(`${flow}:`)), `no codes found for flow ${flow}`);
-  assert.deepEqual(gapKeys(unmappedCodes()), knownGaps.map(g=>`${g.flow}:${g.code}`).sort());
+  assert.deepEqual(unmappedCodes(), []);
 });
 
 test('exemptions are real: each exempt code is still thrown and still unmapped, and carries a reason', () => {
