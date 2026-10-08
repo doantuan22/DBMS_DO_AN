@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "provenance": "Rebuilt exclusively from source: 2026-10-08T03:42:05.672Z",
+  "provenance": "Rebuilt exclusively from source: 2026-10-08T06:32:33.940Z",
   "steps": [
     "00_database/002_create_database.sql",
     "00_database/003_database_options.sql",
@@ -375,7 +375,7 @@
   "expected": {
     "environment": [
       {
-        "databaseName": "CinemaBookingDB_R0_R22_Manifest_20261008_03",
+        "databaseName": "CinemaBookingDB_R0_R33_Manifest_20261008_01",
         "version": "17.0.1000.7",
         "collation_name": "Vietnamese_CI_AS",
         "compatibility_level": 170,
@@ -1696,7 +1696,7 @@
         "name": "sp_Admin_Actor_Delete",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.sp_Admin_Actor_Delete\n(\n    @ActorID INT,\n    @DienVienID INT\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_DANHMUC_PHIM') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    IF NOT EXISTS (SELECT 1 FROM dbo.DIENVIEN WHERE DienVienID = @DienVienID)\n    BEGIN\n        ;THROW 50100, N'Diễn viên không tồn tại.', 1;\n    END\n\n    IF EXISTS (SELECT 1 FROM dbo.PHIM_DIENVIEN WHERE DienVienID = @DienVienID)\n    BEGIN\n        ;THROW 50101, N'Diễn viên đang tham gia phim nên không thể xóa.', 1;\n    END\n\n    DELETE FROM dbo.DIENVIEN WHERE DienVienID = @DienVienID;\n    SELECT N'Đã xóa diễn viên.' AS [Message];\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.sp_Admin_Actor_Delete\n(\n    @ActorID INT,\n    @DienVienID INT\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_DANHMUC_PHIM') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    SET XACT_ABORT ON;\n    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END, @LockedActor INT;\n    BEGIN TRY\n        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminActorDelete;\n        -- X is incompatible with replacement's shared validation lock. Acquire it\n        -- before the association read, preventing check-before-insert cascade races.\n        SELECT @LockedActor = DienVienID FROM dbo.DIENVIEN WITH (XLOCK, HOLDLOCK)\n        WHERE DienVienID = @DienVienID;\n        IF @LockedActor IS NULL THROW 50100, N'Diễn viên không tồn tại.', 1;\n        IF EXISTS (SELECT 1 FROM dbo.PHIM_DIENVIEN WHERE DienVienID = @DienVienID)\n            THROW 50101, N'Diễn viên đang tham gia phim nên không thể xóa.', 1;\n        DELETE FROM dbo.DIENVIEN WHERE DienVienID = @DienVienID;\n        IF @OwnTran = 1 COMMIT TRANSACTION;\n        SELECT N'Đã xóa diễn viên.' AS [Message];\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE() = 1\n        BEGIN\n            IF @OwnTran = 1 ROLLBACK TRANSACTION;\n            ELSE ROLLBACK TRANSACTION AdminActorDelete;\n        END;\n        THROW;\n    END CATCH;\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -1840,7 +1840,7 @@
         "name": "sp_Admin_MovieActor_Set",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.sp_Admin_MovieActor_Set\n(\n    @ActorID INT,\n    @PhimID INT,\n    @DanhSachJson NVARCHAR(MAX)\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_DANHMUC_PHIM') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    SET XACT_ABORT ON;\n\n    IF NOT EXISTS (SELECT 1 FROM dbo.PHIM WHERE PhimID = @PhimID)\n    BEGIN\n        ;THROW 50102, N'Phim không tồn tại.', 1;\n    END\n\n    IF @DanhSachJson IS NULL OR ISJSON(@DanhSachJson) <> 1\n    BEGIN\n        ;THROW 50103, N'Danh sách diễn viên phải là JSON hợp lệ.', 1;\n    END\n\n    BEGIN TRY\n        BEGIN TRANSACTION;\n\n        DELETE FROM dbo.PHIM_DIENVIEN WHERE PhimID = @PhimID;\n\n        INSERT INTO dbo.PHIM_DIENVIEN (PhimID, DienVienID, VaiDien)\n        SELECT @PhimID, j.DienVienID, MAX(j.VaiDien)\n        FROM OPENJSON(@DanhSachJson)\n             WITH (DienVienID INT '$.DienVienID', VaiDien NVARCHAR(150) '$.VaiDien') j\n        INNER JOIN dbo.DIENVIEN dv ON dv.DienVienID = j.DienVienID\n        GROUP BY j.DienVienID;\n\n        COMMIT TRANSACTION;\n\n        SELECT pd.PhimID, dv.DienVienID, dv.HoTen, pd.VaiDien\n        FROM dbo.PHIM_DIENVIEN pd\n        INNER JOIN dbo.DIENVIEN dv ON dv.DienVienID = pd.DienVienID\n        WHERE pd.PhimID = @PhimID;\n    END TRY\n    BEGIN CATCH\n        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;\n        ;THROW;\n    END CATCH\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.sp_Admin_MovieActor_Set\n(\n    @ActorID INT,\n    @PhimID INT,\n    @DanhSachJson NVARCHAR(MAX)\n)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_DANHMUC_PHIM') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    SET XACT_ABORT ON;\n\n    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END,\n        @LockedMovie INT, @Requested INT, @Matched INT;\n    BEGIN TRY\n        IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminMovieActorSet;\n\n        -- Serialize replacements and protect the parent against concurrent deletion.\n        SELECT @LockedMovie = PhimID FROM dbo.PHIM WITH (UPDLOCK, HOLDLOCK)\n        WHERE PhimID = @PhimID;\n        IF @LockedMovie IS NULL THROW 50102, N'Phim không tồn tại.', 1;\n\n        IF @DanhSachJson IS NULL OR ISJSON(@DanhSachJson) <> 1\n            THROW 50103, N'Danh sách diễn viên phải là JSON hợp lệ.', 1;\n        IF LEFT(LTRIM(REPLACE(REPLACE(REPLACE(@DanhSachJson, NCHAR(9), N' '), NCHAR(10), N' '), NCHAR(13), N' ')), 1) <> N'['\n            THROW 50103, N'Danh sách diễn viên phải là JSON array.', 1;\n        IF EXISTS (SELECT 1 FROM OPENJSON(@DanhSachJson) WHERE [type] <> 5)\n            THROW 50103, N'Mỗi diễn viên phải là một JSON object.', 1;\n\n        -- Keep raw values/types/counts until validation, avoiding implicit conversion,\n        -- truncation and silent omission. SQL roles remain nullable as in the schema.\n        DECLARE @Raw TABLE (IDValue NVARCHAR(MAX), IDType INT, IDCount INT,\n            RoleValue NVARCHAR(MAX), RoleType INT, RoleCount INT);\n        INSERT @Raw\n        SELECT p.IDValue, p.IDType, p.IDCount, p.RoleValue, p.RoleType, p.RoleCount\n        FROM OPENJSON(@DanhSachJson) item\n        CROSS APPLY (\n            SELECT MAX(CASE WHEN [key] = N'DienVienID' THEN [value] END) IDValue,\n                MAX(CASE WHEN [key] = N'DienVienID' THEN [type] END) IDType,\n                COUNT(CASE WHEN [key] = N'DienVienID' THEN 1 END) IDCount,\n                MAX(CASE WHEN [key] = N'VaiDien' THEN [value] END) RoleValue,\n                MAX(CASE WHEN [key] = N'VaiDien' THEN [type] END) RoleType,\n                COUNT(CASE WHEN [key] = N'VaiDien' THEN 1 END) RoleCount\n            FROM OPENJSON(item.[value])\n        ) p;\n        IF EXISTS (SELECT 1 FROM @Raw WHERE IDCount <> 1 OR IDType <> 2\n            OR IDValue COLLATE Latin1_General_100_BIN2 LIKE N'%[^0-9]%'\n            OR TRY_CONVERT(INT, IDValue) IS NULL OR TRY_CONVERT(INT, IDValue) < 1\n            OR RoleCount > 1 OR RoleType NOT IN (0, 1) OR DATALENGTH(RoleValue) > 300)\n            THROW 50103, N'Mã hoặc vai diễn không hợp lệ.', 1;\n\n        DECLARE @Cast TABLE (DienVienID INT NOT NULL, VaiDien NVARCHAR(150) NULL);\n        INSERT @Cast SELECT CONVERT(INT, IDValue), CONVERT(NVARCHAR(150), RoleValue) FROM @Raw;\n        IF EXISTS (SELECT 1 FROM @Cast GROUP BY DienVienID HAVING COUNT(*) > 1)\n            THROW 50103, N'Danh sách chứa mã diễn viên trùng lặp.', 1;\n        SELECT @Requested = COUNT(*) FROM @Cast;\n        -- Shared actor key locks live until transaction end. Actor Delete takes X\n        -- on that same parent before checking associations, including under RCSI.\n        SELECT @Matched = COUNT(*) FROM @Cast c\n        INNER JOIN dbo.DIENVIEN dv WITH (HOLDLOCK) ON dv.DienVienID = c.DienVienID;\n        IF @Matched <> @Requested THROW 50100, N'Diễn viên không tồn tại.', 1;\n\n        DELETE FROM dbo.PHIM_DIENVIEN WHERE PhimID = @PhimID;\n        INSERT INTO dbo.PHIM_DIENVIEN (PhimID, DienVienID, VaiDien)\n        SELECT @PhimID, DienVienID, VaiDien FROM @Cast;\n        IF @@ROWCOUNT <> @Requested THROW 50103, N'Danh sách diễn viên chưa được lưu đầy đủ.', 1;\n\n        -- Snapshot this replacement's persisted response while the movie is locked.\n        DECLARE @Result TABLE (PhimID INT, DienVienID INT, HoTen NVARCHAR(150), VaiDien NVARCHAR(150));\n        INSERT @Result\n        SELECT pd.PhimID, dv.DienVienID, dv.HoTen, pd.VaiDien\n        FROM dbo.PHIM_DIENVIEN pd\n        INNER JOIN dbo.DIENVIEN dv ON dv.DienVienID = pd.DienVienID\n        WHERE pd.PhimID = @PhimID;\n        IF (SELECT COUNT(*) FROM @Result) <> @Requested\n            THROW 50103, N'Danh sách diễn viên chưa được lưu đầy đủ.', 1;\n        IF @OwnTran = 1 COMMIT TRANSACTION;\n        SELECT PhimID, DienVienID, HoTen, VaiDien FROM @Result ORDER BY DienVienID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE() = 1\n        BEGIN\n            IF @OwnTran = 1 ROLLBACK TRANSACTION;\n            ELSE ROLLBACK TRANSACTION AdminMovieActorSet;\n        END;\n        THROW;\n    END CATCH\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2254,7 +2254,7 @@
         "name": "sp_Manager_Seat_Update",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.sp_Manager_Seat_Update\n    @NguoiDungID INT, @GheID INT, @LoaiGhe NVARCHAR(50), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_GHE') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerSeatUpdate;\n        DECLARE @RapID INT;\n        SELECT @RapID=pc.RapID FROM dbo.GHE g WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID=g.PhongID WHERE g.GheID=@GheID;\n        IF @RapID IS NULL THROW 50109, N'Ghế không tồn tại.', 1;\n        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID,@RapID)=0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\n        IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;\n        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        SELECT GheID,PhongID,HangGhe,SoGhe,LoaiGhe,TrangThai FROM dbo.GHE WHERE GheID=@GheID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerSeatUpdate; END\n        ;THROW;\n    END CATCH\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.sp_Manager_Seat_Update\n    @NguoiDungID INT, @GheID INT, @LoaiGhe NVARCHAR(50), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_GHE') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    SET XACT_ABORT ON;\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerSeatUpdate;\n        DECLARE @RapID INT,@OldType NVARCHAR(50);\n        SELECT @RapID=pc.RapID,@OldType=g.LoaiGhe FROM dbo.GHE g WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID=g.PhongID WHERE g.GheID=@GheID;\n        IF @RapID IS NULL THROW 50109, N'Ghế không tồn tại.', 1;\n        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID,@RapID)=0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\n        -- Booking retains GHE update locks through ticket insertion/commit. Read\n        -- history after that lock, including cancelled/used tickets, before any write.\n        IF EXISTS (SELECT @LoaiGhe EXCEPT SELECT @OldType)\n           AND EXISTS (SELECT 1 FROM dbo.CHITIETVE WHERE GheID=@GheID)\n            THROW 50207, N'Ghế có lịch sử vé; không thể thay đổi loại ghế.', 1;\n        IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;\n        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        SELECT GheID,PhongID,HangGhe,SoGhe,LoaiGhe,TrangThai FROM dbo.GHE WHERE GheID=@GheID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerSeatUpdate; END\n        ;THROW;\n    END CATCH\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2290,7 +2290,7 @@
         "name": "sp_Manager_Showtime_Update",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:143 (dbo.sp_Manager_Showtime_Update)\nCREATE   PROCEDURE dbo.sp_Manager_Showtime_Update\n    @NguoiDungID INT, @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2,\n    @ThoiGianKetThuc DATETIME2, @DinhDang NVARCHAR(50), @GiaVeCoBan DECIMAL(18,2), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    SET XACT_ABORT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_SUAT_CHIEU') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerShowtimeUpdate;\n        DECLARE @RapID INT, @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldRoom INT, @OldFormat NVARCHAR(50), @OldStatus NVARCHAR(50), @Now DATETIME2 = dbo.fn_BayGio();\n        -- Discovery only (RCSI read); no child update lock before the room mutex.\n        SELECT @OldRoom=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;\n        SELECT @RapID=RapID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@OldRoom;\n        IF @RapID IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;\n        SELECT @OldPhim=PhimID,@OldStart=ThoiGianBatDau,@OldEnd=ThoiGianKetThuc,@OldFormat=DinhDang,@OldStatus=TrangThai\n        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@OldRoom;\n        IF @OldPhim IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;\n        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\n        IF @TrangThai = N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;\n        IF EXISTS (SELECT 1 FROM dbo.DONDATVE d WHERE d.SuatChieuID = @SuatChieuID AND\n                   (d.TrangThai = N'Đã thanh toán' OR (d.TrangThai = N'Chờ thanh toán' AND d.HanGiuCho > @Now)))\n           AND (@PhimID <> @OldPhim OR @ThoiGianBatDau <> @OldStart OR @ThoiGianKetThuc <> @OldEnd OR @DinhDang <> @OldFormat)\n            THROW 50120, N'Suất chiếu đã có đơn; không thể đổi phim, giờ, phòng hoặc định dạng.', 1;\n        IF @ThoiGianKetThuc <= @ThoiGianBatDau THROW 50057, N'Thời gian suất chiếu không hợp lệ.', 1;\n        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,\n            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@OldRoom,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;\n        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,\n            DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        EXEC dbo.sp_Showtime_GetDetail @SuatChieuID = @SuatChieuID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerShowtimeUpdate; END\n        SET XACT_ABORT OFF;\n        ;THROW;\n    END CATCH\nEND;\n",
+        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:143 (dbo.sp_Manager_Showtime_Update)\nCREATE   PROCEDURE dbo.sp_Manager_Showtime_Update\n    @NguoiDungID INT, @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2,\n    @ThoiGianKetThuc DATETIME2, @DinhDang NVARCHAR(50), @GiaVeCoBan DECIMAL(18,2), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    SET XACT_ABORT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_SUAT_CHIEU') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerShowtimeUpdate;\n        DECLARE @RapID INT, @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldRoom INT, @OldFormat NVARCHAR(50), @OldStatus NVARCHAR(50), @OldPrice DECIMAL(18,2);\n        -- Discovery only (RCSI read); no child update lock before the room mutex.\n        SELECT @OldRoom=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;\n        SELECT @RapID=RapID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@OldRoom;\n        IF @RapID IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;\n        SELECT @OldPhim=PhimID,@OldStart=ThoiGianBatDau,@OldEnd=ThoiGianKetThuc,@OldFormat=DinhDang,@OldStatus=TrangThai,@OldPrice=GiaVeCoBan\n        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@OldRoom;\n        IF @OldPhim IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;\n        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;\n        IF @TrangThai = N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;\n        -- R3.2: any persisted order is historical usage, including cancelled/expired.\n        -- Booking holds this same room -> show lock before creating orders. The\n        -- history read happens after waiting; no child lock order is introduced.\n        -- EXCEPT compares actual values with NULL-safe semantics. Room has no edit parameter.\n        IF EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE SuatChieuID = @SuatChieuID)\n           AND EXISTS (SELECT @PhimID,@ThoiGianBatDau,@ThoiGianKetThuc,@DinhDang,@GiaVeCoBan\n                       EXCEPT SELECT @OldPhim,@OldStart,@OldEnd,@OldFormat,@OldPrice)\n            THROW 50120, N'Suất chiếu có lịch sử đơn; không thể đổi phim, phòng, giờ, định dạng hoặc giá vé cơ bản.', 1;\n        IF @ThoiGianKetThuc <= @ThoiGianBatDau THROW 50057, N'Thời gian suất chiếu không hợp lệ.', 1;\n        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,\n            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@OldRoom,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;\n        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,\n            DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        -- Writer returns the persisted row even after closing sales. Public reads\n        -- continue to apply the R2.1 IsBookable filter in sp_Showtime_GetDetail.\n        SELECT SuatChieuID,PhimID,TenPhim,PosterURL,ThoiLuong,DoTuoi,RapID,TenRap,\n            DiaChiRap,ThanhPho,PhongID,TenPhong,LoaiPhong,ThoiGianBatDau,ThoiGianKetThuc,\n            NgayChieu,GioBatDau,GioKetThuc,DinhDang,GiaVeCoBan,TrangThaiSuatChieu,\n            TongSoGhe,SoGheDaDat,(TongSoGhe-SoGheDaDat) AS SoGheConLai\n        FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=@SuatChieuID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerShowtimeUpdate; END\n        SET XACT_ABORT OFF;\n        ;THROW;\n    END CATCH\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2767,7 +2767,7 @@
         "name": "usp_Admin_Seat_Update",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "CREATE   PROCEDURE dbo.usp_Admin_Seat_Update\n\n    @ActorID INT,\n    @GheID INT, @LoaiGhe NVARCHAR(50), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_GHE') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminSeatUpdate;\n        IF NOT EXISTS (SELECT 1 FROM dbo.GHE WITH (UPDLOCK,HOLDLOCK) WHERE GheID=@GheID) THROW 50206, N'Ghế không tồn tại.', 1;\n        IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;\n        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        SELECT GheID,PhongID,HangGhe,SoGhe,LoaiGhe,TrangThai FROM dbo.GHE WHERE GheID=@GheID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminSeatUpdate; END\n        ;THROW;\n    END CATCH\nEND;\n",
+        "definition": "CREATE   PROCEDURE dbo.usp_Admin_Seat_Update\n\n    @ActorID INT,\n    @GheID INT, @LoaiGhe NVARCHAR(50), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_GHE') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    SET XACT_ABORT ON;\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminSeatUpdate;\n        DECLARE @OldType NVARCHAR(50);\n        SELECT @OldType=LoaiGhe FROM dbo.GHE WITH (UPDLOCK,HOLDLOCK) WHERE GheID=@GheID;\n        IF @OldType IS NULL THROW 50206, N'Ghế không tồn tại.', 1;\n        -- Shared canonical seat lock serializes booking; historical type and\n        -- operational future-ticket restrictions are separate conditions.\n        IF EXISTS (SELECT @LoaiGhe EXCEPT SELECT @OldType)\n           AND EXISTS (SELECT 1 FROM dbo.CHITIETVE WHERE GheID=@GheID)\n            THROW 50207, N'Ghế có lịch sử vé; không thể thay đổi loại ghế.', 1;\n        IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;\n        UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        SELECT GheID,PhongID,HangGhe,SoGhe,LoaiGhe,TrangThai FROM dbo.GHE WHERE GheID=@GheID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminSeatUpdate; END\n        ;THROW;\n    END CATCH\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -2803,7 +2803,7 @@
         "name": "usp_Admin_Showtime_Update",
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
-        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:178 (dbo.usp_Admin_Showtime_Update)\nCREATE   PROCEDURE dbo.usp_Admin_Showtime_Update\n\n    @ActorID INT,\n    @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2, @ThoiGianKetThuc DATETIME2,\n    @DinhDang NVARCHAR(50), @GiaVeCoBan DECIMAL(18,2), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    SET XACT_ABORT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_SUAT_CHIEU') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminShowtimeUpdate;\n        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @PhongID INT, @LockedPhongID INT, @Now DATETIME2 = dbo.fn_BayGio();\n        -- Discover the immutable room, lock parent, then re-read/lock the current child.\n        SELECT @PhongID=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;\n        SELECT @LockedPhongID=PhongID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@PhongID;\n        IF @LockedPhongID IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;\n        SELECT @OldPhim=PhimID, @OldStart=ThoiGianBatDau, @OldEnd=ThoiGianKetThuc, @OldFormat=DinhDang\n        FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@PhongID;\n        IF @OldPhim IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;\n        IF @TrangThai=N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;\n        IF EXISTS (SELECT 1 FROM dbo.DONDATVE d WHERE d.SuatChieuID=@SuatChieuID AND\n                   (d.TrangThai=N'Đã thanh toán' OR (d.TrangThai=N'Chờ thanh toán' AND d.HanGiuCho>@Now)))\n           AND (@PhimID<>@OldPhim OR @ThoiGianBatDau<>@OldStart OR @ThoiGianKetThuc<>@OldEnd OR @DinhDang<>@OldFormat)\n            THROW 50120, N'Suất chiếu đã có đơn; không thể đổi phim, giờ, phòng hoặc định dạng.', 1;\n        IF @ThoiGianKetThuc<=@ThoiGianBatDau THROW 50211, N'Thời gian suất chiếu không hợp lệ.', 1;\n        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,\n            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@PhongID,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;\n        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,\n            DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        EXEC dbo.sp_Showtime_GetDetail @SuatChieuID=@SuatChieuID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminShowtimeUpdate; END\n        SET XACT_ABORT OFF;\n        ;THROW;\n    END CATCH\nEND;\n",
+        "definition": "-- Baseline: migrations/014_showtime_lifecycle.sql:178 (dbo.usp_Admin_Showtime_Update)\nCREATE   PROCEDURE dbo.usp_Admin_Showtime_Update\n\n    @ActorID INT,\n    @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2, @ThoiGianKetThuc DATETIME2,\n    @DinhDang NVARCHAR(50), @GiaVeCoBan DECIMAL(18,2), @TrangThai NVARCHAR(50)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    SET XACT_ABORT ON;\n    -- R3B: current account, actor eligibility, then every required permission.\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')\n        THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;\n    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID\n                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))\n        THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_SUAT_CHIEU') = 0\n        THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;\n\n    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminShowtimeUpdate;\n        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @PhongID INT, @LockedPhongID INT, @OldPrice DECIMAL(18,2);\n        -- Discover the immutable room, lock parent, then re-read/lock the current child.\n        SELECT @PhongID=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;\n        SELECT @LockedPhongID=PhongID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@PhongID;\n        IF @LockedPhongID IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;\n        SELECT @OldPhim=PhimID, @OldStart=ThoiGianBatDau, @OldEnd=ThoiGianKetThuc, @OldFormat=DinhDang, @OldPrice=GiaVeCoBan\n        FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@PhongID;\n        IF @OldPhim IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;\n        IF @TrangThai=N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;\n        -- R3.2: history includes all order states; preserve R1/R2 room -> show locks.\n        -- Required structural values are compared NULL-safely, not by field presence.\n        IF EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE SuatChieuID=@SuatChieuID)\n           AND EXISTS (SELECT @PhimID,@ThoiGianBatDau,@ThoiGianKetThuc,@DinhDang,@GiaVeCoBan\n                       EXCEPT SELECT @OldPhim,@OldStart,@OldEnd,@OldFormat,@OldPrice)\n            THROW 50120, N'Suất chiếu có lịch sử đơn; không thể đổi phim, phòng, giờ, định dạng hoặc giá vé cơ bản.', 1;\n        IF @ThoiGianKetThuc<=@ThoiGianBatDau THROW 50211, N'Thời gian suất chiếu không hợp lệ.', 1;\n        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,\n            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@PhongID,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;\n        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,\n            DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;\n        IF @OwnTran=1 COMMIT TRANSACTION;\n        -- Writer returns the persisted row even after closing sales. Public reads\n        -- continue to apply the R2.1 IsBookable filter in sp_Showtime_GetDetail.\n        SELECT SuatChieuID,PhimID,TenPhim,PosterURL,ThoiLuong,DoTuoi,RapID,TenRap,\n            DiaChiRap,ThanhPho,PhongID,TenPhong,LoaiPhong,ThoiGianBatDau,ThoiGianKetThuc,\n            NgayChieu,GioBatDau,GioKetThuc,DinhDang,GiaVeCoBan,TrangThaiSuatChieu,\n            TongSoGhe,SoGheDaDat,(TongSoGhe-SoGheDaDat) AS SoGheConLai\n        FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=@SuatChieuID;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION AdminShowtimeUpdate; END\n        SET XACT_ABORT OFF;\n        ;THROW;\n    END CATCH\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -3100,7 +3100,7 @@
         "name": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
         "type": "TR",
         "type_desc": "SQL_TRIGGER",
-        "definition": "CREATE   TRIGGER dbo.TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai\r\nON dbo.XULY_KHIEUNAI\r\nAFTER INSERT\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n\r\n    UPDATE kn\r\n    SET kn.TrangThai = i.TrangThaiSauXuLy\r\n    FROM dbo.KHIEUNAI kn\r\n    INNER JOIN INSERTED i ON kn.KhieuNaiID = i.KhieuNaiID;\r\nEND;\n",
+        "definition": "CREATE   TRIGGER dbo.TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai\r\nON dbo.XULY_KHIEUNAI\r\nAFTER INSERT\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n\r\n    -- Serialize each affected parent before the separate history read. Identity\n    -- allocation order can differ from trigger/commit order between sessions.\n    DECLARE @AffectedCount INT;\n    SELECT @AffectedCount = COUNT(*)\n    FROM dbo.KHIEUNAI kn WITH (UPDLOCK, HOLDLOCK)\n    INNER JOIN (SELECT DISTINCT KhieuNaiID FROM inserted) affected\n        ON affected.KhieuNaiID = kn.KhieuNaiID;\n\n    ;WITH Affected AS\n    (\n        SELECT DISTINCT KhieuNaiID FROM inserted\n    ), LatestProcessing AS\n    (\n        SELECT xl.KhieuNaiID, xl.TrangThaiSauXuLy,\n            ROW_NUMBER() OVER (PARTITION BY xl.KhieuNaiID ORDER BY xl.XuLyID DESC) AS rn\n        FROM dbo.XULY_KHIEUNAI xl\n        INNER JOIN Affected a ON a.KhieuNaiID = xl.KhieuNaiID\n    )\n    UPDATE kn\n    SET kn.TrangThai = latest.TrangThaiSauXuLy\n    FROM dbo.KHIEUNAI kn\n    INNER JOIN LatestProcessing latest ON latest.KhieuNaiID = kn.KhieuNaiID\n        AND latest.rn = 1;\nEND;\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -20386,6 +20386,15 @@
       {
         "objectName": "sp_Manager_Seat_Update",
         "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Manager_Seat_Update",
+        "referenced_schema_name": "dbo",
         "referenced_entity_name": "fn_GheCoVeHieuLucSuatTuongLai",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -20647,15 +20656,6 @@
       {
         "objectName": "sp_Manager_Showtime_Update",
         "referenced_schema_name": "dbo",
-        "referenced_entity_name": "fn_BayGio",
-        "referenced_database_name": null,
-        "referenced_server_name": null,
-        "is_ambiguous": false,
-        "is_schema_bound_reference": false
-      },
-      {
-        "objectName": "sp_Manager_Showtime_Update",
-        "referenced_schema_name": "dbo",
         "referenced_entity_name": "fn_KiemTraQuanLyRapScope",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -20692,15 +20692,6 @@
       {
         "objectName": "sp_Manager_Showtime_Update",
         "referenced_schema_name": "dbo",
-        "referenced_entity_name": "sp_Showtime_GetDetail",
-        "referenced_database_name": null,
-        "referenced_server_name": null,
-        "is_ambiguous": false,
-        "is_schema_bound_reference": false
-      },
-      {
-        "objectName": "sp_Manager_Showtime_Update",
-        "referenced_schema_name": "dbo",
         "referenced_entity_name": "sp_Showtime_ValidateTimes",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -20720,6 +20711,15 @@
         "objectName": "sp_Manager_Showtime_Update",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "VAITRO",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_Manager_Showtime_Update",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_LichChieuChiTiet",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -22141,7 +22141,7 @@
       {
         "objectName": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
         "referenced_schema_name": null,
-        "referenced_entity_name": "INSERTED",
+        "referenced_entity_name": "inserted",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -22151,6 +22151,15 @@
         "objectName": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "KHIEUNAI",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "XULY_KHIEUNAI",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,
@@ -23059,6 +23068,15 @@
       {
         "objectName": "usp_Admin_Seat_Update",
         "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "usp_Admin_Seat_Update",
+        "referenced_schema_name": "dbo",
         "referenced_entity_name": "fn_GheCoVeHieuLucSuatTuongLai",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -23284,15 +23302,6 @@
       {
         "objectName": "usp_Admin_Showtime_Update",
         "referenced_schema_name": "dbo",
-        "referenced_entity_name": "fn_BayGio",
-        "referenced_database_name": null,
-        "referenced_server_name": null,
-        "is_ambiguous": false,
-        "is_schema_bound_reference": false
-      },
-      {
-        "objectName": "usp_Admin_Showtime_Update",
-        "referenced_schema_name": "dbo",
         "referenced_entity_name": "fn_KiemTraQuyenNguoiDung",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -23320,15 +23329,6 @@
       {
         "objectName": "usp_Admin_Showtime_Update",
         "referenced_schema_name": "dbo",
-        "referenced_entity_name": "sp_Showtime_GetDetail",
-        "referenced_database_name": null,
-        "referenced_server_name": null,
-        "is_ambiguous": false,
-        "is_schema_bound_reference": false
-      },
-      {
-        "objectName": "usp_Admin_Showtime_Update",
-        "referenced_schema_name": "dbo",
         "referenced_entity_name": "sp_Showtime_ValidateTimes",
         "referenced_database_name": null,
         "referenced_server_name": null,
@@ -23348,6 +23348,15 @@
         "objectName": "usp_Admin_Showtime_Update",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "VAITRO",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "usp_Admin_Showtime_Update",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_LichChieuChiTiet",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,

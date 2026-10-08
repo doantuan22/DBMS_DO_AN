@@ -1,0 +1,306 @@
+{
+  "database": "CinemaBookingDB_R0_R31_20261008_02",
+  "startedAt": "2026-10-08T04:23:43.301Z",
+  "checks": [
+    {
+      "name": "backend",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node --test tests/**/*.test.js",
+      "tests": 129,
+      "skipped": 0
+    },
+    {
+      "name": "frontend",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node --test --test-concurrency=1 tests/*.test.js",
+      "tests": 49,
+      "skipped": 0
+    },
+    {
+      "name": "no-sql",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/audit-no-sql.mjs"
+    },
+    {
+      "name": "frontend-lint",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node node_modules/oxlint/bin/oxlint"
+    },
+    {
+      "name": "frontend-build",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node node_modules/vite/bin/vite.js build"
+    },
+    {
+      "name": "procedure-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/db/contract-check.mjs"
+    },
+    {
+      "name": "movie-cast-sql",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/r31/sql-tests.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "movie-cast-http",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/r31/api-tests.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "movie-actor-concurrency",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node database/11_tests/concurrency/movie-actor-replacement.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "movie-cast-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/r31/browser.mjs"
+    },
+    {
+      "name": "r22-regression",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/r31/r22-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "r21-regression",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/r31/r21-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "r1-regression",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/r31/r1-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "sql-regression",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/db/run.mjs test --database=CinemaBookingDB_R0_R31_20261008_02"
+    },
+    {
+      "name": "sql-verification",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": "node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_R31_20261008_02"
+    }
+  ],
+  "history": [
+    {
+      "startedAt": "2026-10-08T04:16:34.171Z",
+      "completedAt": "2026-10-08T04:17:42.587Z",
+      "status": "FAIL",
+      "checks": [
+        {
+          "name": "backend",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node --test tests/**/*.test.js",
+          "tests": 129,
+          "skipped": 0
+        },
+        {
+          "name": "frontend",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node --test --test-concurrency=1 tests/*.test.js",
+          "tests": 49,
+          "skipped": 0
+        },
+        {
+          "name": "no-sql",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/audit-no-sql.mjs"
+        },
+        {
+          "name": "frontend-lint",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node node_modules/oxlint/bin/oxlint"
+        },
+        {
+          "name": "frontend-build",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node node_modules/vite/bin/vite.js build"
+        },
+        {
+          "name": "procedure-contract",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/db/contract-check.mjs"
+        },
+        {
+          "name": "movie-cast-sql",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/sql-tests.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "movie-cast-http",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/api-tests.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "movie-actor-concurrency",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node database/11_tests/concurrency/movie-actor-replacement.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "movie-cast-browser",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/browser.mjs"
+        },
+        {
+          "name": "r22-regression",
+          "status": "FAIL",
+          "exitCode": 1,
+          "command": "node scripts/r31/r22-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "r21-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/r21-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "r1-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/r1-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "sql-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/db/run.mjs test --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "sql-verification",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_R31_20261008_02"
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-10-08T04:18:21.909Z",
+      "completedAt": "2026-10-08T04:18:34.452Z",
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "backend",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node --test tests/**/*.test.js",
+          "tests": 129,
+          "skipped": 0
+        },
+        {
+          "name": "frontend",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node --test --test-concurrency=1 tests/*.test.js",
+          "tests": 49,
+          "skipped": 0
+        },
+        {
+          "name": "no-sql",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/audit-no-sql.mjs"
+        },
+        {
+          "name": "frontend-lint",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node node_modules/oxlint/bin/oxlint"
+        },
+        {
+          "name": "frontend-build",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node node_modules/vite/bin/vite.js build"
+        },
+        {
+          "name": "procedure-contract",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/db/contract-check.mjs"
+        },
+        {
+          "name": "movie-cast-sql",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/sql-tests.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "movie-cast-http",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/api-tests.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "movie-actor-concurrency",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node database/11_tests/concurrency/movie-actor-replacement.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "movie-cast-browser",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/browser.mjs"
+        },
+        {
+          "name": "r22-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/r22-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "r21-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/r21-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "r1-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/r31/r1-regression.mjs --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "sql-regression",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/db/run.mjs test --database=CinemaBookingDB_R0_R31_20261008_02"
+        },
+        {
+          "name": "sql-verification",
+          "status": "PASS",
+          "exitCode": 0,
+          "command": "node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_R31_20261008_02"
+        }
+      ]
+    }
+  ],
+  "status": "PASS",
+  "completedAt": "2026-10-08T04:23:52.936Z"
+}

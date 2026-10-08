@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import path from 'node:path';
+import { root,evidenceRoot,read,write } from './common.mjs';
+const previous=JSON.parse(read(path.join(root,'docs/evidence/r22/current-audit-status.json'))),{matrix,findings}=structuredClone(previous);
+const issue=findings.issues.find(r=>r.id==='I-08');assert.equal(issue.status,'ACTIVE');
+Object.assign(issue,{status:'RESOLVED R3.1',evidence:'docs/evidence/r31/{sql-tests,api-tests,movie-actor-concurrency,checks,main-migration}.json',resolution:'Strict parse/duplicates/all-reference validation precedes DELETE; movie/actor locks; SQL transaction rollback; real committed snapshots, injected failure and two-session races.'});
+const uc=matrix.rows.find(r=>r.uc==='ADM-09');assert.equal(uc.status,'BROKEN');Object.assign(uc,{db:'PARTIAL',integration:'PARTIAL',status:'PARTIAL',issue:'I-08 RESOLVED R3.1 with real SQL/API/rollback/concurrency evidence. Movie/Actor broader acceptance and I-09 historical metadata remain outside scope; no whole-UC PASS claim.',evidence:'docs/evidence/R3_MOVIE_ACTOR_ATOMICITY.md'});
+matrix.baseline.note='Incremental R3.1 after accepted R0/R1/R2; only I-08 resolved. ADM-09 no longer BROKEN due to I-08; broader acceptance remains PARTIAL. Stop before R3.2.';
+findings.severity={CRITICAL:0,HIGH:0,MEDIUM:0,LOW:0};for(const row of findings.issues.filter(r=>r.status==='ACTIVE'))findings.severity[row.severity]++;
+findings.baseline.active=findings.issues.filter(r=>r.status==='ACTIVE').length;findings.baseline.resolved=findings.issues.filter(r=>r.status.startsWith('RESOLVED')).length;
+assert.equal(matrix.rows.length,45);for(const [id,status] of [['I-02','RESOLVED R1.1'],['I-03','RESOLVED R1.2'],['I-06','RESOLVED R2.1'],['I-07','RESOLVED R2.2']])assert.equal(findings.issues.find(r=>r.id===id).status,status);
+write(path.join(evidenceRoot,'current-audit-status.json'),{at:new Date().toISOString(),phase:'R3.1',status:'PASS',base:'Accepted R0/R1/R2 artifacts immutable',changedUseCases:['ADM-09'],resolvedIssues:['I-08'],matrix,findings});
+console.log('PASS current audit: I08 resolved;prior accepted issues remain resolved;ADM09 PARTIAL;stop before R3.2.');

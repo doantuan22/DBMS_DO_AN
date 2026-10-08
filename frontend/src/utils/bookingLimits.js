@@ -19,6 +19,8 @@ export function clampQuantity(value, max = MAX_PRODUCT_QUANTITY) {
 // Friendly Vietnamese text for API errors of the booking and payment flow (null = use the server message).
 export function bookingErrorMessage(error) {
   switch (error?.code) {
+    case 'SHOWTIME_HAS_ORDERS': return 'Suất chiếu đã có lịch sử đơn. Không thể đổi phim, phòng, thời gian, định dạng hoặc giá vé cơ bản; trạng thái vẫn theo quy định vận hành.';
+    case 'SEAT_HAS_TICKET_HISTORY': return 'Không thể đổi loại ghế đã có lịch sử vé. Ghế có vé hiệu lực ở suất tương lai cũng bị hạn chế cập nhật.';
     case 'PROMOTION_NOT_AVAILABLE': return 'Khuyến mãi không còn khả dụng. Vui lòng kiểm tra lại giá và đơn trước khi đặt.';
     case 'SHOWTIME_UNAVAILABLE': return 'Suất chiếu không còn đủ điều kiện đặt vé. Vui lòng quay lại lịch chiếu và chọn suất khác.';
     case 'ACTIVE_ORDER_LIMIT_REACHED':

@@ -1,0 +1,4486 @@
+{
+  "database": "CinemaBookingDB_R0_R31_20261008_02",
+  "startedAt": "2026-10-08T04:12:30.863Z",
+  "status": "FAIL",
+  "requests": [
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 404,
+      "expected": 404,
+      "error": {
+        "code": "ACTOR_NOT_FOUND",
+        "message": "Actor was not found."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 404,
+      "expected": 404,
+      "error": {
+        "code": "ACTOR_NOT_FOUND",
+        "message": "Actor was not found."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "MOVIE_CAST_INVALID",
+        "message": "The cast list must be valid."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/2147483647/actors",
+      "status": 404,
+      "expected": 404,
+      "error": {
+        "code": "MOVIE_NOT_FOUND",
+        "message": "Movie was not found."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is required."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is required."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is invalid."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "actorId must be an integer from 1 to 2147483647."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "actorId must be an integer from 1 to 2147483647."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is invalid."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is invalid."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 403,
+      "expected": 403,
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "none",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 401,
+      "expected": 401,
+      "error": {
+        "code": "UNAUTHENTICATED",
+        "message": "Authentication required."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INTERNAL_ERROR",
+        "message": "Unexpected end of JSON input"
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 403,
+      "expected": 403,
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 500,
+      "expected": 500,
+      "error": {
+        "code": "EREQUEST",
+        "message": "Internal server error"
+      }
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/5/actors",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "none",
+      "method": "GET",
+      "route": "/movies/5",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "GET",
+      "route": "/admin/movies",
+      "status": 200,
+      "expected": 200
+    }
+  ],
+  "cases": [
+    {
+      "name": "valid-replace-three-with-two",
+      "response": {
+        "actors": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "VaiDien": "new4"
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "one-invalid",
+      "response": {
+        "error": {
+          "code": "ACTOR_NOT_FOUND",
+          "message": "Actor was not found."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "all-invalid",
+      "response": {
+        "error": {
+          "code": "ACTOR_NOT_FOUND",
+          "message": "Actor was not found."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate",
+      "response": {
+        "error": {
+          "code": "MOVIE_CAST_INVALID",
+          "message": "The cast list must be valid."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "movie-missing",
+      "response": {
+        "error": {
+          "code": "MOVIE_NOT_FOUND",
+          "message": "Movie was not found."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "null-cast",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "cast is required."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "omitted-cast",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "cast is required."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "object-cast",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "cast is invalid."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "missing-id",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "actorId must be an integer from 1 to 2147483647."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "string-id",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "actorId must be an integer from 1 to 2147483647."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "role-too-long",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "cast is invalid."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "null-role",
+      "response": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "cast is invalid."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "spoof-admin",
+      "response": {
+        "error": {
+          "code": "UNKNOWN_REQUEST_FIELD",
+          "message": "Request contains unsupported fields."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "non-admin",
+      "response": {
+        "error": {
+          "code": "ADMIN_REQUIRED",
+          "message": "Admin access is required."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "unauthenticated",
+      "response": {
+        "error": {
+          "code": "UNAUTHENTICATED",
+          "message": "Authentication required."
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "malformed-http-json",
+      "response": {
+        "error": {
+          "code": "INTERNAL_ERROR",
+          "message": "Unexpected end of JSON input"
+        }
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "admin-missing-live-permission",
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "You do not have permission to perform this action."
+        }
+      },
+      "sqlError": 50302,
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "unexpected-db-failure-safe-response-rollback",
+      "response": {
+        "error": {
+          "code": "EREQUEST",
+          "message": "Internal server error"
+        }
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "reads": {
+        "publicActors": [
+          {
+            "id": 10,
+            "name": "R31 actor4",
+            "nationality": null,
+            "role": "new3"
+          },
+          {
+            "id": 11,
+            "name": "R31 actor5",
+            "nationality": null,
+            "role": "new4"
+          }
+        ],
+        "adminCast": [
+          {
+            "actorId": 10,
+            "role": "new3"
+          },
+          {
+            "actorId": 11,
+            "role": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 5,
+            "DienVienID": 10,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 5,
+            "DienVienID": 11,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 6,
+            "DienVienID": 7,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 5,
+            "TenPhim": "R31 target 4B5D4909-DB6E-424E-B715-251666FF50FF",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 6,
+            "TenPhim": "R31 other 04A382CB-EDF5-4002-A51B-7FB056CE0078",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 7,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 8,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 9,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 10,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 11,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 12,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 13,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 5,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "error": {
+    "message": "Expected values to be strictly deep-equal:\n\nnull !== []\n"
+  },
+  "completedAt": "2026-10-08T04:12:36.566Z"
+}

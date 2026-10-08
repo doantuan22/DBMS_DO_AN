@@ -108,7 +108,7 @@ export default function AdminPortal() {
         : adminApi.create(definition.path, payload));
       if (requestId !== loadRequest.current) return;
       setNotice({ ok: true, text: 'Đã lưu thay đổi.' }); clearForm(); await load();
-    } catch (error) { if (requestId === loadRequest.current) setNotice({ ok: false, text: error.message }); }
+    } catch (error) { if (requestId === loadRequest.current) setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message }); }
   };
   const remove = async (row) => {
     if (!definition || !window.confirm('Xác nhận xóa mục này? Ràng buộc nghiệp vụ sẽ từ chối xóa dữ liệu đang được sử dụng.')) return;
@@ -150,9 +150,9 @@ export default function AdminPortal() {
     } catch (error) { setNotice({ ok: false, text: error.message }); }
   };
   const writeCast = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); setNotice(null);
     try {
-      await adminApi.update(`movies/${selected.PhimID}/actors`, { cast: JSON.parse(values.castJson || '[]') });
+      await adminApi.update(`movies/${selected.PhimID}/actors`, { cast: JSON.parse(values.castJson ?? '') });
       setNotice({ ok: true, text: 'Đã cập nhật danh sách diễn viên.' }); await load();
     } catch { setNotice({ ok: false, text: 'Không thể lưu danh sách diễn viên. Kiểm tra JSON và mã diễn viên.' }); }
   };

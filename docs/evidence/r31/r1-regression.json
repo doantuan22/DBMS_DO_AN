@@ -1,0 +1,48 @@
+{
+  "database": "CinemaBookingDB_R0_R31_20261008_02",
+  "startedAt": "2026-10-08T04:17:12.031Z",
+  "checks": [
+    {
+      "name": "r11-sql",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "scripts/r11/sql-tests.mjs",
+      "originalSha256": "9574d9224e1f17484feb6daa143c7cb42ec8f9aaa1d5ed804cbe6672a3d479bd",
+      "output": "r11-sql.json"
+    },
+    {
+      "name": "r11-concurrency",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "database/11_tests/concurrency/room-delete-vs-showtime.mjs",
+      "originalSha256": "0a11d90661c48938ce7b94c1758daf66132fb10705ec11c8b603519aee9960e2",
+      "output": "r11-concurrency.json"
+    },
+    {
+      "name": "r12-sql",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "scripts/r12/sql-tests.mjs",
+      "originalSha256": "8f1c725d48cbd9622cfe868b1f9961100c71e5d7f2bee54af8e370c55df5051e",
+      "output": "r12-sql.json"
+    },
+    {
+      "name": "r12-nested",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "scripts/r12/nested-tests.mjs",
+      "originalSha256": "ffc82bb6d0d0806eec5035cf6629256968bf40621785ca2695601c0d8ca3782d",
+      "output": "r12-nested.json"
+    },
+    {
+      "name": "r12-concurrency",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "database/11_tests/concurrency/showtime-overlap.mjs",
+      "originalSha256": "ab558bd6bd0dcc1cea0e5f2088817af8984bc2ade138348b224031792b476a90",
+      "output": "r12-concurrency.json"
+    }
+  ],
+  "status": "PASS",
+  "completedAt": "2026-10-08T04:17:26.937Z"
+}

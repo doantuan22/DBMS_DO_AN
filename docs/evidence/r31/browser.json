@@ -1,0 +1,94 @@
+{
+  "status": "PASS",
+  "engine": "Dedicated headless Chrome; actual React page, supplementary controlled HTTP timing",
+  "result": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "editor hydrates persisted cast",
+        "status": "PASS"
+      },
+      {
+        "name": "reject feedback without success",
+        "status": "PASS"
+      },
+      {
+        "name": "invalid input remains editable",
+        "status": "PASS"
+      },
+      {
+        "name": "failed request preserves displayed persisted cast",
+        "status": "PASS"
+      },
+      {
+        "name": "explicit retry succeeds and reloads persisted list",
+        "status": "PASS"
+      },
+      {
+        "name": "blank JSON does not send empty cast",
+        "status": "PASS"
+      },
+      {
+        "name": "malformed JSON does not submit",
+        "status": "PASS"
+      },
+      {
+        "name": "explicit [] clears and reloads",
+        "status": "PASS"
+      }
+    ],
+    "calls": [
+      {
+        "route": "/api/admin/movies",
+        "method": "GET"
+      },
+      {
+        "route": "/api/admin/movies/7/actors",
+        "method": "PUT",
+        "body": {
+          "cast": [
+            {
+              "actorId": 4,
+              "role": "new"
+            },
+            {
+              "actorId": 999,
+              "role": "bad"
+            }
+          ]
+        }
+      },
+      {
+        "route": "/api/admin/movies/7/actors",
+        "method": "PUT",
+        "body": {
+          "cast": [
+            {
+              "actorId": 4,
+              "role": "new"
+            },
+            {
+              "actorId": 5,
+              "role": "support"
+            }
+          ]
+        }
+      },
+      {
+        "route": "/api/admin/movies",
+        "method": "GET"
+      },
+      {
+        "route": "/api/admin/movies/7/actors",
+        "method": "PUT",
+        "body": {
+          "cast": []
+        }
+      },
+      {
+        "route": "/api/admin/movies",
+        "method": "GET"
+      }
+    ]
+  }
+}

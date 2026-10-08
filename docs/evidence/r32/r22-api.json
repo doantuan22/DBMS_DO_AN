@@ -1,0 +1,5953 @@
+{
+  "database": "CinemaBookingDB_R0_R32_20261008_02",
+  "startedAt": "2026-10-08T05:19:09.155Z",
+  "status": "PASS",
+  "requests": [
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "startedAt": "2026-10-08T05:19:09.459Z",
+      "completedAt": "2026-10-08T05:19:09.861Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer2",
+      "method": "POST",
+      "route": "/auth/login",
+      "startedAt": "2026-10-08T05:19:09.861Z",
+      "completedAt": "2026-10-08T05:19:09.932Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "startedAt": "2026-10-08T05:19:09.932Z",
+      "completedAt": "2026-10-08T05:19:09.998Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.005Z",
+      "completedAt": "2026-10-08T05:19:10.081Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.087Z",
+      "completedAt": "2026-10-08T05:19:10.097Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.109Z",
+      "completedAt": "2026-10-08T05:19:10.119Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.123Z",
+      "completedAt": "2026-10-08T05:19:10.130Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.142Z",
+      "completedAt": "2026-10-08T05:19:10.156Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/453",
+      "startedAt": "2026-10-08T05:19:10.162Z",
+      "completedAt": "2026-10-08T05:19:10.181Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.183Z",
+      "completedAt": "2026-10-08T05:19:10.191Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.203Z",
+      "completedAt": "2026-10-08T05:19:10.209Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/454",
+      "startedAt": "2026-10-08T05:19:10.214Z",
+      "completedAt": "2026-10-08T05:19:10.219Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.221Z",
+      "completedAt": "2026-10-08T05:19:10.229Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.244Z",
+      "completedAt": "2026-10-08T05:19:10.288Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/455",
+      "startedAt": "2026-10-08T05:19:10.293Z",
+      "completedAt": "2026-10-08T05:19:10.297Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.298Z",
+      "completedAt": "2026-10-08T05:19:10.305Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.323Z",
+      "completedAt": "2026-10-08T05:19:10.329Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/456",
+      "startedAt": "2026-10-08T05:19:10.333Z",
+      "completedAt": "2026-10-08T05:19:10.338Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.340Z",
+      "completedAt": "2026-10-08T05:19:10.347Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.358Z",
+      "completedAt": "2026-10-08T05:19:10.364Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/457",
+      "startedAt": "2026-10-08T05:19:10.368Z",
+      "completedAt": "2026-10-08T05:19:10.373Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.375Z",
+      "completedAt": "2026-10-08T05:19:10.382Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.393Z",
+      "completedAt": "2026-10-08T05:19:10.437Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/458",
+      "startedAt": "2026-10-08T05:19:10.441Z",
+      "completedAt": "2026-10-08T05:19:10.447Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.449Z",
+      "completedAt": "2026-10-08T05:19:10.455Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.465Z",
+      "completedAt": "2026-10-08T05:19:10.471Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/459",
+      "startedAt": "2026-10-08T05:19:10.476Z",
+      "completedAt": "2026-10-08T05:19:10.480Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.483Z",
+      "completedAt": "2026-10-08T05:19:10.490Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.500Z",
+      "completedAt": "2026-10-08T05:19:10.506Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/460",
+      "startedAt": "2026-10-08T05:19:10.510Z",
+      "completedAt": "2026-10-08T05:19:10.515Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.517Z",
+      "completedAt": "2026-10-08T05:19:10.525Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.535Z",
+      "completedAt": "2026-10-08T05:19:10.541Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/461",
+      "startedAt": "2026-10-08T05:19:10.547Z",
+      "completedAt": "2026-10-08T05:19:10.552Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.554Z",
+      "completedAt": "2026-10-08T05:19:10.561Z",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.571Z",
+      "completedAt": "2026-10-08T05:19:10.577Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.582Z",
+      "completedAt": "2026-10-08T05:19:10.588Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.596Z",
+      "completedAt": "2026-10-08T05:19:10.602Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.605Z",
+      "completedAt": "2026-10-08T05:19:10.611Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.621Z",
+      "completedAt": "2026-10-08T05:19:10.626Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "DELETE",
+      "route": "/admin/promotions/464",
+      "startedAt": "2026-10-08T05:19:10.628Z",
+      "completedAt": "2026-10-08T05:19:10.643Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.645Z",
+      "completedAt": "2026-10-08T05:19:10.651Z",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.666Z",
+      "completedAt": "2026-10-08T05:19:10.679Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer2",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "startedAt": "2026-10-08T05:19:10.666Z",
+      "completedAt": "2026-10-08T05:19:10.679Z",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.682Z",
+      "completedAt": "2026-10-08T05:19:10.691Z",
+      "status": 201,
+      "expected": [
+        201,
+        409
+      ]
+    },
+    {
+      "role": "customer2",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.683Z",
+      "completedAt": "2026-10-08T05:19:10.700Z",
+      "status": 409,
+      "expected": [
+        201,
+        409
+      ],
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer2",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.733Z",
+      "completedAt": "2026-10-08T05:19:10.749Z",
+      "status": 201,
+      "expected": [
+        201,
+        409
+      ]
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.733Z",
+      "completedAt": "2026-10-08T05:19:10.750Z",
+      "status": 201,
+      "expected": [
+        201,
+        409
+      ]
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.733Z",
+      "completedAt": "2026-10-08T05:19:10.757Z",
+      "status": 409,
+      "expected": [
+        201,
+        409
+      ],
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer2",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.733Z",
+      "completedAt": "2026-10-08T05:19:10.763Z",
+      "status": 409,
+      "expected": [
+        201,
+        409
+      ],
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.788Z",
+      "completedAt": "2026-10-08T05:19:10.790Z",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.792Z",
+      "completedAt": "2026-10-08T05:19:10.794Z",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.795Z",
+      "completedAt": "2026-10-08T05:19:10.797Z",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.799Z",
+      "completedAt": "2026-10-08T05:19:10.802Z",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "startedAt": "2026-10-08T05:19:10.803Z",
+      "completedAt": "2026-10-08T05:19:10.805Z",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "valid-fixed",
+      "preview": {
+        "isValid": true,
+        "code": "R21-875D042A-F7C1-49B8-A6C7-6A0380A982DC",
+        "promotionId": 451,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 451,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 888,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 454,
+            "RapID": 451,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 453,
+            "PhimID": 888,
+            "PhongID": 454,
+            "ThoiGianBatDau": "2026-10-18T05:19:09.999Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:09.999Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1973,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1974,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1975,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1976,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 451,
+            "MaCode": "R21-875D042A-F7C1-49B8-A6C7-6A0380A982DC",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:09.999Z",
+            "NgayKetThuc": "2026-10-09T05:19:09.999Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2340,
+          "userId": 5,
+          "showtimeId": 453,
+          "bookedAt": "2026-10-08T05:19:10.095Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 1000,
+          "total": 169000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.095Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 451,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 888,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 454,
+            "RapID": 451,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 453,
+            "PhimID": 888,
+            "PhongID": 454,
+            "ThoiGianBatDau": "2026-10-18T05:19:09.999Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:09.999Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1973,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1974,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1975,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1976,
+            "PhongID": 454,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2340,
+            "NguoiDungID": 5,
+            "SuatChieuID": 453,
+            "KhuyenMaiID": 451,
+            "NgayDat": "2026-10-08T05:19:10.095Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 1000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.095Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 681,
+            "DonDatVeID": 2340,
+            "GheID": 1973,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1973-59CF32",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 682,
+            "DonDatVeID": 2340,
+            "GheID": 1974,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1974-BDFB1F",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 341,
+            "DonDatVeID": 2340,
+            "SanPhamID": 453,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 451,
+            "MaCode": "R21-875D042A-F7C1-49B8-A6C7-6A0380A982DC",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:09.999Z",
+            "NgayKetThuc": "2026-10-09T05:19:09.999Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "no-promotion",
+      "preview": {
+        "isValid": true,
+        "code": "R21-D1092593-2BCE-4FF1-AD44-D2346CDBC4A9",
+        "promotionId": 452,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 452,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 889,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 455,
+            "RapID": 452,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 454,
+            "PhimID": 889,
+            "PhongID": 455,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.106Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.106Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1977,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1978,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1979,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1980,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 452,
+            "MaCode": "R21-D1092593-2BCE-4FF1-AD44-D2346CDBC4A9",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.106Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.106Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2341,
+          "userId": 5,
+          "showtimeId": 454,
+          "bookedAt": "2026-10-08T05:19:10.129Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 0,
+          "total": 170000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.129Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 452,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 889,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 455,
+            "RapID": 452,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 454,
+            "PhimID": 889,
+            "PhongID": 455,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.106Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.106Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1977,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1978,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1979,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1980,
+            "PhongID": 455,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2341,
+            "NguoiDungID": 5,
+            "SuatChieuID": 454,
+            "KhuyenMaiID": null,
+            "NgayDat": "2026-10-08T05:19:10.129Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 0,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.129Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 683,
+            "DonDatVeID": 2341,
+            "GheID": 1977,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1977-2F766B",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 684,
+            "DonDatVeID": 2341,
+            "GheID": 1978,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1978-1EB522",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 342,
+            "DonDatVeID": 2341,
+            "SanPhamID": 454,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 452,
+            "MaCode": "R21-D1092593-2BCE-4FF1-AD44-D2346CDBC4A9",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.106Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.106Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "valid-percent-max",
+      "preview": {
+        "isValid": true,
+        "code": "R21-20B8F323-21B8-4656-A907-F4E61C81A3A2",
+        "promotionId": 453,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 453,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 890,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 456,
+            "RapID": 453,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 455,
+            "PhimID": 890,
+            "PhongID": 456,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.138Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.138Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1981,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1982,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1983,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1984,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 453,
+            "MaCode": "R21-20B8F323-21B8-4656-A907-F4E61C81A3A2",
+            "MoTa": null,
+            "LoaiGiamGia": "PERCENT",
+            "GiaTriGiam": 10,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": 5000,
+            "NgayBatDau": "2026-10-07T05:19:10.138Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.138Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2342,
+          "userId": 5,
+          "showtimeId": 455,
+          "bookedAt": "2026-10-08T05:19:10.189Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 5000,
+          "total": 165000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.189Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 453,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 890,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 456,
+            "RapID": 453,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 455,
+            "PhimID": 890,
+            "PhongID": 456,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.138Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.138Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1981,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1982,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1983,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1984,
+            "PhongID": 456,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2342,
+            "NguoiDungID": 5,
+            "SuatChieuID": 455,
+            "KhuyenMaiID": 453,
+            "NgayDat": "2026-10-08T05:19:10.189Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 5000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.189Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 685,
+            "DonDatVeID": 2342,
+            "GheID": 1981,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1981-01E7BA",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 686,
+            "DonDatVeID": 2342,
+            "GheID": 1982,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1982-5CB36D",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 343,
+            "DonDatVeID": 2342,
+            "SanPhamID": 455,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 453,
+            "MaCode": "R21-20B8F323-21B8-4656-A907-F4E61C81A3A2",
+            "MoTa": null,
+            "LoaiGiamGia": "PERCENT",
+            "GiaTriGiam": 10,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": 5000,
+            "NgayBatDau": "2026-10-07T05:19:10.138Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.138Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "minimum-equality",
+      "preview": {
+        "isValid": true,
+        "code": "R21-69060E5C-82A7-4BE2-9430-4497B7C3B8FC",
+        "promotionId": 454,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 454,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 891,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 457,
+            "RapID": 454,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 456,
+            "PhimID": 891,
+            "PhongID": 457,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.198Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.198Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1985,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1986,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1987,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1988,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 454,
+            "MaCode": "R21-69060E5C-82A7-4BE2-9430-4497B7C3B8FC",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 170000,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.198Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.198Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2343,
+          "userId": 5,
+          "showtimeId": 456,
+          "bookedAt": "2026-10-08T05:19:10.227Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 1000,
+          "total": 169000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.227Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 454,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 891,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 457,
+            "RapID": 454,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 456,
+            "PhimID": 891,
+            "PhongID": 457,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.198Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.198Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1985,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1986,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1987,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1988,
+            "PhongID": 457,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2343,
+            "NguoiDungID": 5,
+            "SuatChieuID": 456,
+            "KhuyenMaiID": 454,
+            "NgayDat": "2026-10-08T05:19:10.227Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 1000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.227Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 687,
+            "DonDatVeID": 2343,
+            "GheID": 1985,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1985-D93438",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 688,
+            "DonDatVeID": 2343,
+            "GheID": 1986,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-1986-4C862C",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 344,
+            "DonDatVeID": 2343,
+            "SanPhamID": 456,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 454,
+            "MaCode": "R21-69060E5C-82A7-4BE2-9430-4497B7C3B8FC",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 170000,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.198Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.198Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-paused",
+      "preview": {
+        "isValid": true,
+        "code": "R21-E4E05F9B-44C7-490B-B7CF-765B40C505EF",
+        "promotionId": 455,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 455,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 892,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 458,
+            "RapID": 455,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 457,
+            "PhimID": 892,
+            "PhongID": 458,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.237Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.237Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1989,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1990,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1991,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1992,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 455,
+            "MaCode": "R21-E4E05F9B-44C7-490B-B7CF-765B40C505EF",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.237Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.237Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Tạm dừng"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 455,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 892,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 458,
+            "RapID": 455,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 457,
+            "PhimID": 892,
+            "PhongID": 458,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.237Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.237Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1989,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1990,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1991,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1992,
+            "PhongID": 458,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 455,
+            "MaCode": "R21-E4E05F9B-44C7-490B-B7CF-765B40C505EF",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.237Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.237Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Tạm dừng"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-expired-time",
+      "preview": {
+        "isValid": true,
+        "code": "R21-D4DD2EEE-6EBA-49E4-BAD5-691E8291E46D",
+        "promotionId": 456,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 456,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 893,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 459,
+            "RapID": 456,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 458,
+            "PhimID": 893,
+            "PhongID": 459,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.318Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.318Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1993,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1994,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1995,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1996,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 456,
+            "MaCode": "R21-D4DD2EEE-6EBA-49E4-BAD5-691E8291E46D",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.318Z",
+            "NgayKetThuc": "2026-10-07T05:19:11.318Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 456,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 893,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 459,
+            "RapID": 456,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 458,
+            "PhimID": 893,
+            "PhongID": 459,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.318Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.318Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1993,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1994,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1995,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1996,
+            "PhongID": 459,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 456,
+            "MaCode": "R21-D4DD2EEE-6EBA-49E4-BAD5-691E8291E46D",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.318Z",
+            "NgayKetThuc": "2026-10-07T05:19:11.318Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-start-in-future",
+      "preview": {
+        "isValid": true,
+        "code": "R21-E3AB2DE2-4B33-4880-829A-90D3ED45BD7C",
+        "promotionId": 457,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 457,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 894,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 460,
+            "RapID": 457,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 459,
+            "PhimID": 894,
+            "PhongID": 460,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.354Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.354Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1997,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1998,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1999,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2000,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 457,
+            "MaCode": "R21-E3AB2DE2-4B33-4880-829A-90D3ED45BD7C",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-09T05:19:09.354Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.354Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 457,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 894,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 460,
+            "RapID": 457,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 459,
+            "PhimID": 894,
+            "PhongID": 460,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.354Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.354Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 1997,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1998,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 1999,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2000,
+            "PhongID": 460,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 457,
+            "MaCode": "R21-E3AB2DE2-4B33-4880-829A-90D3ED45BD7C",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-09T05:19:09.354Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.354Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-minimum",
+      "preview": {
+        "isValid": true,
+        "code": "R21-DC6FC154-B23A-4F91-B38D-0579E6F38DED",
+        "promotionId": 458,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 458,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 895,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 461,
+            "RapID": 458,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 460,
+            "PhimID": 895,
+            "PhongID": 461,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.389Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.389Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2001,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2002,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2003,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2004,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 458,
+            "MaCode": "R21-DC6FC154-B23A-4F91-B38D-0579E6F38DED",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 170000.01,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.389Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.389Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 458,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 895,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 461,
+            "RapID": 458,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 460,
+            "PhimID": 895,
+            "PhongID": 461,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.389Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.389Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2001,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2002,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2003,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2004,
+            "PhongID": 461,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 458,
+            "MaCode": "R21-DC6FC154-B23A-4F91-B38D-0579E6F38DED",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 170000.01,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.389Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.389Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-value-recalculate",
+      "preview": {
+        "isValid": true,
+        "code": "R21-6565CC23-745F-4127-B00C-BAD2EA1EB0A8",
+        "promotionId": 459,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 459,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 896,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 462,
+            "RapID": 459,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 461,
+            "PhimID": 896,
+            "PhongID": 462,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.462Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.462Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2005,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2006,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2007,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2008,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 459,
+            "MaCode": "R21-6565CC23-745F-4127-B00C-BAD2EA1EB0A8",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 2000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.462Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.462Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2344,
+          "userId": 5,
+          "showtimeId": 461,
+          "bookedAt": "2026-10-08T05:19:10.488Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 2000,
+          "total": 168000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.488Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 459,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 896,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 462,
+            "RapID": 459,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 461,
+            "PhimID": 896,
+            "PhongID": 462,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.462Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.462Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2005,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2006,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2007,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2008,
+            "PhongID": 462,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2344,
+            "NguoiDungID": 5,
+            "SuatChieuID": 461,
+            "KhuyenMaiID": 459,
+            "NgayDat": "2026-10-08T05:19:10.488Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 2000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.488Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 689,
+            "DonDatVeID": 2344,
+            "GheID": 2005,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-2005-5F8659",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 690,
+            "DonDatVeID": 2344,
+            "GheID": 2006,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-2006-F80D3C",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 345,
+            "DonDatVeID": 2344,
+            "SanPhamID": 461,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 459,
+            "MaCode": "R21-6565CC23-745F-4127-B00C-BAD2EA1EB0A8",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 2000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.462Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.462Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-type-recalculate",
+      "preview": {
+        "isValid": true,
+        "code": "R21-CC9D7639-8E89-42C8-8E0A-3CA0C4064C71",
+        "promotionId": 460,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 460,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 897,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 463,
+            "RapID": 460,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 462,
+            "PhimID": 897,
+            "PhongID": 463,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.497Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.497Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2009,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2010,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2011,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2012,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 460,
+            "MaCode": "R21-CC9D7639-8E89-42C8-8E0A-3CA0C4064C71",
+            "MoTa": null,
+            "LoaiGiamGia": "PERCENT",
+            "GiaTriGiam": 10,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.497Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.497Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2345,
+          "userId": 5,
+          "showtimeId": 462,
+          "bookedAt": "2026-10-08T05:19:10.523Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 17000,
+          "total": 153000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.523Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 460,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 897,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 463,
+            "RapID": 460,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 462,
+            "PhimID": 897,
+            "PhongID": 463,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.497Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.497Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2009,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2010,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2011,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2012,
+            "PhongID": 463,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2345,
+            "NguoiDungID": 5,
+            "SuatChieuID": 462,
+            "KhuyenMaiID": 460,
+            "NgayDat": "2026-10-08T05:19:10.523Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 17000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.523Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 691,
+            "DonDatVeID": 2345,
+            "GheID": 2009,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-2009-4C41EB",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 692,
+            "DonDatVeID": 2345,
+            "GheID": 2010,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-2010-227DB3",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 346,
+            "DonDatVeID": 2345,
+            "SanPhamID": 462,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 460,
+            "MaCode": "R21-CC9D7639-8E89-42C8-8E0A-3CA0C4064C71",
+            "MoTa": null,
+            "LoaiGiamGia": "PERCENT",
+            "GiaTriGiam": 10,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.497Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.497Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-max-recalculate",
+      "preview": {
+        "isValid": true,
+        "code": "R21-CE40B0DB-4BB8-41A1-81BC-A2FAB18548C7",
+        "promotionId": 461,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 461,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 898,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 464,
+            "RapID": 461,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 463,
+            "PhimID": 898,
+            "PhongID": 464,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.532Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.532Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2013,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2014,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2015,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2016,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 461,
+            "MaCode": "R21-CE40B0DB-4BB8-41A1-81BC-A2FAB18548C7",
+            "MoTa": null,
+            "LoaiGiamGia": "PERCENT",
+            "GiaTriGiam": 10,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": 3000,
+            "NgayBatDau": "2026-10-07T05:19:10.532Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.532Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "booking": {
+          "id": 2346,
+          "userId": 5,
+          "showtimeId": 463,
+          "bookedAt": "2026-10-08T05:19:10.559Z",
+          "ticketTotal": 160000,
+          "productTotal": 10000,
+          "discountTotal": 3000,
+          "total": 167000,
+          "status": "Chờ thanh toán",
+          "holdExpiresAt": "2026-10-08T05:24:10.559Z",
+          "ticketCount": 2
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 461,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 898,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 464,
+            "RapID": 461,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 463,
+            "PhimID": 898,
+            "PhongID": 464,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.532Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.532Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2013,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2014,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2015,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2016,
+            "PhongID": 464,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 2346,
+            "NguoiDungID": 5,
+            "SuatChieuID": 463,
+            "KhuyenMaiID": 461,
+            "NgayDat": "2026-10-08T05:19:10.559Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 3000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T05:24:10.559Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 693,
+            "DonDatVeID": 2346,
+            "GheID": 2013,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-2013-E036DC",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 694,
+            "DonDatVeID": 2346,
+            "GheID": 2014,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008051910-2014-37D251",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 347,
+            "DonDatVeID": 2346,
+            "SanPhamID": 463,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 461,
+            "MaCode": "R21-CE40B0DB-4BB8-41A1-81BC-A2FAB18548C7",
+            "MoTa": null,
+            "LoaiGiamGia": "PERCENT",
+            "GiaTriGiam": 10,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": 3000,
+            "NgayBatDau": "2026-10-07T05:19:10.532Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.532Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "exhausted-quota",
+      "preview": {
+        "isValid": true,
+        "code": "R21-9D8B7599-8C29-4BF0-8846-4BBEBAF86FDE",
+        "promotionId": 462,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 462,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 899,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 465,
+            "RapID": 462,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 464,
+            "PhimID": 899,
+            "PhongID": 465,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.567Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.567Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2017,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2018,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2019,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2020,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 462,
+            "MaCode": "R21-9D8B7599-8C29-4BF0-8846-4BBEBAF86FDE",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.567Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.567Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 100,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 462,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 899,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 465,
+            "RapID": 462,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 464,
+            "PhimID": 899,
+            "PhongID": 465,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.567Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.567Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2017,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2018,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2019,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2020,
+            "PhongID": 465,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 462,
+            "MaCode": "R21-9D8B7599-8C29-4BF0-8846-4BBEBAF86FDE",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.567Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.567Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 100,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "unknown-code",
+      "preview": {
+        "isValid": true,
+        "code": "R21-6E43D8B6-E381-4BD0-A229-3F8FBF13256A",
+        "promotionId": 463,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 463,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 900,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 466,
+            "RapID": 463,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 465,
+            "PhimID": 900,
+            "PhongID": 466,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.594Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.594Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2021,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2022,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2023,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2024,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 463,
+            "MaCode": "R21-6E43D8B6-E381-4BD0-A229-3F8FBF13256A",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.594Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.594Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 463,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 900,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 466,
+            "RapID": 463,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 465,
+            "PhimID": 900,
+            "PhongID": 466,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.594Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.594Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2021,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2022,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2023,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2024,
+            "PhongID": 466,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 463,
+            "MaCode": "R21-6E43D8B6-E381-4BD0-A229-3F8FBF13256A",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T05:19:10.594Z",
+            "NgayKetThuc": "2026-10-09T05:19:10.594Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "preview-stale-deleted",
+      "preview": {
+        "isValid": true,
+        "code": "R21-CB33A289-D661-4C07-9D05-00D4B3FC959D",
+        "promotionId": 464,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 464,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 901,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 467,
+            "RapID": 464,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 466,
+            "PhimID": 901,
+            "PhongID": 467,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.617Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.617Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2025,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2026,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2027,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2028,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "reply": {
+        "error": {
+          "code": "PROMOTION_NOT_AVAILABLE",
+          "message": "The requested promotion is no longer available. Review your order before booking."
+        }
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 464,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 901,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 467,
+            "RapID": 464,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 466,
+            "PhimID": 901,
+            "PhongID": 467,
+            "ThoiGianBatDau": "2026-10-18T05:19:10.617Z",
+            "ThoiGianKetThuc": "2026-10-18T06:49:10.617Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 2025,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2026,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2027,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 2028,
+            "PhongID": 467,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "concurrency": [
+    {
+      "name": "last-quota-two-real-HTTP-requests",
+      "promotionId": 465,
+      "code": "R21-42ED5529-A056-450F-92C4-AC16FC63587E",
+      "customers": [
+        {
+          "NguoiDungID": 1,
+          "Email": "admin@cinemadb.vn"
+        },
+        {
+          "NguoiDungID": 5,
+          "Email": "khachhang1@gmail.com"
+        }
+      ],
+      "previews": [
+        {
+          "isValid": true,
+          "code": "R21-42ED5529-A056-450F-92C4-AC16FC63587E",
+          "promotionId": 465,
+          "discountType": "Số tiền",
+          "discountValue": 1000,
+          "discountAmount": 1000,
+          "message": "Áp dụng mã khuyến mãi thành công.",
+          "provisionalSubtotal": 170000
+        },
+        {
+          "isValid": true,
+          "code": "R21-42ED5529-A056-450F-92C4-AC16FC63587E",
+          "promotionId": 465,
+          "discountType": "Số tiền",
+          "discountValue": 1000,
+          "discountAmount": 1000,
+          "message": "Áp dụng mã khuyến mãi thành công.",
+          "provisionalSubtotal": 170000
+        }
+      ],
+      "initial": {
+        "a": {
+          "cinema": [
+            {
+              "RapID": 465,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 902,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 468,
+              "RapID": 465,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 467,
+              "PhimID": 902,
+              "PhongID": 468,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.657Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.657Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2029,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2030,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2031,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2032,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [],
+          "tickets": [],
+          "foods": [],
+          "promotion": [
+            {
+              "KhuyenMaiID": 465,
+              "MaCode": "R21-42ED5529-A056-450F-92C4-AC16FC63587E",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.657Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.657Z",
+              "SoLuong": 1,
+              "SoLuongDaDung": 0,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        },
+        "b": {
+          "cinema": [
+            {
+              "RapID": 466,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 903,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 469,
+              "RapID": 466,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 468,
+              "PhimID": 903,
+              "PhongID": 469,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.660Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.660Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2033,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2034,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2035,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2036,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [],
+          "tickets": [],
+          "foods": [],
+          "promotion": [
+            {
+              "KhuyenMaiID": 466,
+              "MaCode": "R21-3E99303A-C72F-4E1F-BDAE-4DD0B9E06B1D",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.660Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.660Z",
+              "SoLuong": 100,
+              "SoLuongDaDung": 0,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        }
+      },
+      "replies": [
+        {
+          "status": 201,
+          "data": {
+            "booking": {
+              "id": 2347,
+              "userId": 5,
+              "showtimeId": 467,
+              "bookedAt": "2026-10-08T05:19:10.689Z",
+              "ticketTotal": 160000,
+              "productTotal": 10000,
+              "discountTotal": 1000,
+              "total": 169000,
+              "status": "Chờ thanh toán",
+              "holdExpiresAt": "2026-10-08T05:24:10.689Z",
+              "ticketCount": 2
+            }
+          }
+        },
+        {
+          "status": 409,
+          "data": {
+            "error": {
+              "code": "PROMOTION_NOT_AVAILABLE",
+              "message": "The requested promotion is no longer available. Review your order before booking."
+            }
+          }
+        }
+      ],
+      "final": {
+        "a": {
+          "cinema": [
+            {
+              "RapID": 465,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 902,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 468,
+              "RapID": 465,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 467,
+              "PhimID": 902,
+              "PhongID": 468,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.657Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.657Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2029,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2030,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2031,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2032,
+              "PhongID": 468,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [
+            {
+              "DonDatVeID": 2347,
+              "NguoiDungID": 5,
+              "SuatChieuID": 467,
+              "KhuyenMaiID": 465,
+              "NgayDat": "2026-10-08T05:19:10.689Z",
+              "TongTienVe": 160000,
+              "TongTienDoAn": 10000,
+              "TienGiamGia": 1000,
+              "TrangThai": "Chờ thanh toán",
+              "HanGiuCho": "2026-10-08T05:24:10.689Z",
+              "LyDoHuy": null,
+              "ThongBaoHuy": null
+            }
+          ],
+          "tickets": [
+            {
+              "VeID": 695,
+              "DonDatVeID": 2347,
+              "GheID": 2029,
+              "GiaVe": 80000,
+              "MaVe": "TK-20261008051910-2029-04739E",
+              "TrangThai": "Đã đặt"
+            },
+            {
+              "VeID": 696,
+              "DonDatVeID": 2347,
+              "GheID": 2030,
+              "GiaVe": 80000,
+              "MaVe": "TK-20261008051910-2030-3C45F0",
+              "TrangThai": "Đã đặt"
+            }
+          ],
+          "foods": [
+            {
+              "ChiTietDoAnID": 348,
+              "DonDatVeID": 2347,
+              "SanPhamID": 467,
+              "SoLuong": 1,
+              "DonGia": 10000
+            }
+          ],
+          "promotion": [
+            {
+              "KhuyenMaiID": 465,
+              "MaCode": "R21-42ED5529-A056-450F-92C4-AC16FC63587E",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.657Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.657Z",
+              "SoLuong": 1,
+              "SoLuongDaDung": 1,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        },
+        "b": {
+          "cinema": [
+            {
+              "RapID": 466,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 903,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 469,
+              "RapID": 466,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 468,
+              "PhimID": 903,
+              "PhongID": 469,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.660Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.660Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2033,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2034,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2035,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2036,
+              "PhongID": 469,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [],
+          "tickets": [],
+          "foods": [],
+          "promotion": [
+            {
+              "KhuyenMaiID": 466,
+              "MaCode": "R21-3E99303A-C72F-4E1F-BDAE-4DD0B9E06B1D",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.660Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.660Z",
+              "SoLuong": 100,
+              "SoLuongDaDung": 0,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        }
+      },
+      "session": {
+        "spid": 53,
+        "trancount": 0,
+        "xactState": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "quota-two-four-requests",
+      "quota": 2,
+      "replies": [
+        {
+          "status": 201,
+          "data": {
+            "booking": {
+              "id": 2349,
+              "userId": 5,
+              "showtimeId": 469,
+              "bookedAt": "2026-10-08T05:19:10.747Z",
+              "ticketTotal": 160000,
+              "productTotal": 10000,
+              "discountTotal": 1000,
+              "total": 169000,
+              "status": "Chờ thanh toán",
+              "holdExpiresAt": "2026-10-08T05:24:10.747Z",
+              "ticketCount": 2
+            }
+          }
+        },
+        {
+          "status": 201,
+          "data": {
+            "booking": {
+              "id": 2348,
+              "userId": 6,
+              "showtimeId": 470,
+              "bookedAt": "2026-10-08T05:19:10.747Z",
+              "ticketTotal": 160000,
+              "productTotal": 10000,
+              "discountTotal": 1000,
+              "total": 169000,
+              "status": "Chờ thanh toán",
+              "holdExpiresAt": "2026-10-08T05:24:10.747Z",
+              "ticketCount": 2
+            }
+          }
+        },
+        {
+          "status": 409,
+          "data": {
+            "error": {
+              "code": "PROMOTION_NOT_AVAILABLE",
+              "message": "The requested promotion is no longer available. Review your order before booking."
+            }
+          }
+        },
+        {
+          "status": 409,
+          "data": {
+            "error": {
+              "code": "PROMOTION_NOT_AVAILABLE",
+              "message": "The requested promotion is no longer available. Review your order before booking."
+            }
+          }
+        }
+      ],
+      "final": [
+        {
+          "cinema": [
+            {
+              "RapID": 467,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 904,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 470,
+              "RapID": 467,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 469,
+              "PhimID": 904,
+              "PhongID": 470,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.722Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.722Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2037,
+              "PhongID": 470,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2038,
+              "PhongID": 470,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2039,
+              "PhongID": 470,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2040,
+              "PhongID": 470,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [
+            {
+              "DonDatVeID": 2349,
+              "NguoiDungID": 5,
+              "SuatChieuID": 469,
+              "KhuyenMaiID": 467,
+              "NgayDat": "2026-10-08T05:19:10.747Z",
+              "TongTienVe": 160000,
+              "TongTienDoAn": 10000,
+              "TienGiamGia": 1000,
+              "TrangThai": "Chờ thanh toán",
+              "HanGiuCho": "2026-10-08T05:24:10.747Z",
+              "LyDoHuy": null,
+              "ThongBaoHuy": null
+            }
+          ],
+          "tickets": [
+            {
+              "VeID": 699,
+              "DonDatVeID": 2349,
+              "GheID": 2037,
+              "GiaVe": 80000,
+              "MaVe": "TK-20261008051910-2037-A5E226",
+              "TrangThai": "Đã đặt"
+            },
+            {
+              "VeID": 700,
+              "DonDatVeID": 2349,
+              "GheID": 2038,
+              "GiaVe": 80000,
+              "MaVe": "TK-20261008051910-2038-32F03F",
+              "TrangThai": "Đã đặt"
+            }
+          ],
+          "foods": [
+            {
+              "ChiTietDoAnID": 350,
+              "DonDatVeID": 2349,
+              "SanPhamID": 469,
+              "SoLuong": 1,
+              "DonGia": 10000
+            }
+          ],
+          "promotion": [
+            {
+              "KhuyenMaiID": 467,
+              "MaCode": "R21-096ADF2A-5682-43D5-994A-061690A999D1",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.722Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.722Z",
+              "SoLuong": 2,
+              "SoLuongDaDung": 2,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        },
+        {
+          "cinema": [
+            {
+              "RapID": 468,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 905,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 471,
+              "RapID": 468,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 470,
+              "PhimID": 905,
+              "PhongID": 471,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.725Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.725Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2041,
+              "PhongID": 471,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2042,
+              "PhongID": 471,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2043,
+              "PhongID": 471,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2044,
+              "PhongID": 471,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [
+            {
+              "DonDatVeID": 2348,
+              "NguoiDungID": 6,
+              "SuatChieuID": 470,
+              "KhuyenMaiID": 467,
+              "NgayDat": "2026-10-08T05:19:10.747Z",
+              "TongTienVe": 160000,
+              "TongTienDoAn": 10000,
+              "TienGiamGia": 1000,
+              "TrangThai": "Chờ thanh toán",
+              "HanGiuCho": "2026-10-08T05:24:10.747Z",
+              "LyDoHuy": null,
+              "ThongBaoHuy": null
+            }
+          ],
+          "tickets": [
+            {
+              "VeID": 697,
+              "DonDatVeID": 2348,
+              "GheID": 2041,
+              "GiaVe": 80000,
+              "MaVe": "TK-20261008051910-2041-415935",
+              "TrangThai": "Đã đặt"
+            },
+            {
+              "VeID": 698,
+              "DonDatVeID": 2348,
+              "GheID": 2042,
+              "GiaVe": 80000,
+              "MaVe": "TK-20261008051910-2042-45B740",
+              "TrangThai": "Đã đặt"
+            }
+          ],
+          "foods": [
+            {
+              "ChiTietDoAnID": 349,
+              "DonDatVeID": 2348,
+              "SanPhamID": 470,
+              "SoLuong": 1,
+              "DonGia": 10000
+            }
+          ],
+          "promotion": [
+            {
+              "KhuyenMaiID": 468,
+              "MaCode": "R21-0F853710-ECDC-4E62-A84B-3FC890B1B23E",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.725Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.725Z",
+              "SoLuong": 100,
+              "SoLuongDaDung": 0,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        },
+        {
+          "cinema": [
+            {
+              "RapID": 469,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 906,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 472,
+              "RapID": 469,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 471,
+              "PhimID": 906,
+              "PhongID": 472,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.727Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.727Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2045,
+              "PhongID": 472,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2046,
+              "PhongID": 472,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2047,
+              "PhongID": 472,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2048,
+              "PhongID": 472,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [],
+          "tickets": [],
+          "foods": [],
+          "promotion": [
+            {
+              "KhuyenMaiID": 469,
+              "MaCode": "R21-45149113-81E4-45A4-9C56-2904B91D6F9E",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.727Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.727Z",
+              "SoLuong": 100,
+              "SoLuongDaDung": 0,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        },
+        {
+          "cinema": [
+            {
+              "RapID": 470,
+              "TenRap": "R21 API",
+              "DiaChi": "Fixture",
+              "ThanhPho": "HCM",
+              "SoDienThoai": null,
+              "MoTa": null,
+              "NgayHoatDong": null,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "movie": [
+            {
+              "PhimID": 907,
+              "TenPhim": "R21 API",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "NgonNgu": null,
+              "PhuDe": null,
+              "DoTuoi": null,
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu"
+            }
+          ],
+          "room": [
+            {
+              "PhongID": 473,
+              "RapID": 470,
+              "TenPhong": "R21 API",
+              "LoaiPhong": "2D",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "show": [
+            {
+              "SuatChieuID": 472,
+              "PhimID": 907,
+              "PhongID": 473,
+              "ThoiGianBatDau": "2026-10-18T05:19:10.730Z",
+              "ThoiGianKetThuc": "2026-10-18T06:49:10.730Z",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThai": "Mở bán"
+            }
+          ],
+          "seats": [
+            {
+              "GheID": 2049,
+              "PhongID": 473,
+              "HangGhe": "A",
+              "SoGhe": 1,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2050,
+              "PhongID": 473,
+              "HangGhe": "A",
+              "SoGhe": 2,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2051,
+              "PhongID": 473,
+              "HangGhe": "A",
+              "SoGhe": 3,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            },
+            {
+              "GheID": 2052,
+              "PhongID": 473,
+              "HangGhe": "A",
+              "SoGhe": 4,
+              "LoaiGhe": "Thường",
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "orders": [],
+          "tickets": [],
+          "foods": [],
+          "promotion": [
+            {
+              "KhuyenMaiID": 470,
+              "MaCode": "R21-07AF9FAF-BB79-478F-8597-0D10CE1BF4A3",
+              "MoTa": null,
+              "LoaiGiamGia": "Số tiền",
+              "GiaTriGiam": 1000,
+              "DonHangToiThieu": 0,
+              "GiamToiDa": null,
+              "NgayBatDau": "2026-10-07T05:19:10.730Z",
+              "NgayKetThuc": "2026-10-09T05:19:10.730Z",
+              "SoLuong": 100,
+              "SoLuongDaDung": 0,
+              "TrangThai": "Hoạt động"
+            }
+          ],
+          "availability": [
+            {
+              "IsBookable": true,
+              "NgayChieu": "2026-10-18T00:00:00.000Z",
+              "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+              "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+              "TrangThaiRap": "Hoạt động",
+              "TrangThaiPhong": "Hoạt động",
+              "TrangThaiPhim": "Đang chiếu",
+              "TrangThaiSuatChieu": "Mở bán"
+            }
+          ]
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "before": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "391de840701b1daf2fefb878867f93e8bfcef22bf4191e55ad9ff61e31cbaa57",
+      "objects": "744d759e26b0860a0d3c95ff057e7c9840ac1f8d5659505ff06f52ca13535cdc",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "2147f309238895406fdcbf43d241a6eef0d6c7378c809b8497f713cfd34bdc30",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "a43aa7bbd8740e32ca2a468696499d19e318b247a5953c27be33fa010aeec7a1",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "after": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "391de840701b1daf2fefb878867f93e8bfcef22bf4191e55ad9ff61e31cbaa57",
+      "objects": "744d759e26b0860a0d3c95ff057e7c9840ac1f8d5659505ff06f52ca13535cdc",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "2147f309238895406fdcbf43d241a6eef0d6c7378c809b8497f713cfd34bdc30",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "a43aa7bbd8740e32ca2a468696499d19e318b247a5953c27be33fa010aeec7a1",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "cleanup": "PASS",
+  "completedAt": "2026-10-08T05:19:10.987Z"
+}

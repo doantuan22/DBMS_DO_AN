@@ -23,26 +23,34 @@ BEGIN
     DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
     BEGIN TRY
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminShowtimeUpdate;
-        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @PhongID INT, @LockedPhongID INT, @Now DATETIME2 = dbo.fn_BayGio();
+        DECLARE @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldFormat NVARCHAR(50), @PhongID INT, @LockedPhongID INT, @OldPrice DECIMAL(18,2);
         -- Discover the immutable room, lock parent, then re-read/lock the current child.
         SELECT @PhongID=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;
         SELECT @LockedPhongID=PhongID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@PhongID;
         IF @LockedPhongID IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;
-        SELECT @OldPhim=PhimID, @OldStart=ThoiGianBatDau, @OldEnd=ThoiGianKetThuc, @OldFormat=DinhDang
+        SELECT @OldPhim=PhimID, @OldStart=ThoiGianBatDau, @OldEnd=ThoiGianKetThuc, @OldFormat=DinhDang, @OldPrice=GiaVeCoBan
         FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@PhongID;
         IF @OldPhim IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;
         IF @TrangThai=N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;
-        IF EXISTS (SELECT 1 FROM dbo.DONDATVE d WHERE d.SuatChieuID=@SuatChieuID AND
-                   (d.TrangThai=N'Đã thanh toán' OR (d.TrangThai=N'Chờ thanh toán' AND d.HanGiuCho>@Now)))
-           AND (@PhimID<>@OldPhim OR @ThoiGianBatDau<>@OldStart OR @ThoiGianKetThuc<>@OldEnd OR @DinhDang<>@OldFormat)
-            THROW 50120, N'Suất chiếu đã có đơn; không thể đổi phim, giờ, phòng hoặc định dạng.', 1;
+        -- R3.2: history includes all order states; preserve R1/R2 room -> show locks.
+        -- Required structural values are compared NULL-safely, not by field presence.
+        IF EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE SuatChieuID=@SuatChieuID)
+           AND EXISTS (SELECT @PhimID,@ThoiGianBatDau,@ThoiGianKetThuc,@DinhDang,@GiaVeCoBan
+                       EXCEPT SELECT @OldPhim,@OldStart,@OldEnd,@OldFormat,@OldPrice)
+            THROW 50120, N'Suất chiếu có lịch sử đơn; không thể đổi phim, phòng, giờ, định dạng hoặc giá vé cơ bản.', 1;
         IF @ThoiGianKetThuc<=@ThoiGianBatDau THROW 50211, N'Thời gian suất chiếu không hợp lệ.', 1;
         EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,
             @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@PhongID,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;
         UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,
             DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;
         IF @OwnTran=1 COMMIT TRANSACTION;
-        EXEC dbo.sp_Showtime_GetDetail @SuatChieuID=@SuatChieuID;
+        -- Writer returns the persisted row even after closing sales. Public reads
+        -- continue to apply the R2.1 IsBookable filter in sp_Showtime_GetDetail.
+        SELECT SuatChieuID,PhimID,TenPhim,PosterURL,ThoiLuong,DoTuoi,RapID,TenRap,
+            DiaChiRap,ThanhPho,PhongID,TenPhong,LoaiPhong,ThoiGianBatDau,ThoiGianKetThuc,
+            NgayChieu,GioBatDau,GioKetThuc,DinhDang,GiaVeCoBan,TrangThaiSuatChieu,
+            TongSoGhe,SoGheDaDat,(TongSoGhe-SoGheDaDat) AS SoGheConLai
+        FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=@SuatChieuID;
     END TRY
     BEGIN CATCH
         IF XACT_STATE()=-1 ROLLBACK TRANSACTION;

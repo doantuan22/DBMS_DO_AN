@@ -33,13 +33,13 @@ export function mapAdminProcedureError(error) {
   const number = error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
   switch (number) {
     case 50403: throw new HttpError(404, 'USER_NOT_FOUND', 'User was not found.');
-    case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ORDERS', 'A showtime with active orders cannot change its film, times or format.');
+    case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ORDERS', 'A showtime with order history cannot change its film, room, times, format or base price.');
     case 50123: throw new HttpError(409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Use the separate showtime cancellation operation.');
     case 50216: throw new HttpError(400, 'SHOWTIME_TIME_INVALID', 'Showtime times violate the existing duration or start-time contract.');
     case 50400: throw new HttpError(400, 'INVALID_BIRTH_DATE', 'Birth date must not be in the future.');
     case 50401: throw new HttpError(409, 'ASSIGNMENT_DUPLICATE', 'An identical assignment already exists.');
     case 50207:
-      throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'Seats with ticket history cannot be changed or deleted.');
+      throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'Seat changes conflict with ticket history or active future tickets.');
     case 50118:
       throw new HttpError(409, 'SHOWTIME_HAS_HELD_ORDERS', 'A showtime with held seats cannot be cancelled.');
     case 50119:

@@ -15,13 +15,19 @@ BEGIN
     IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_GHE') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
+    SET XACT_ABORT ON;
     DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
     BEGIN TRY
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerSeatUpdate;
-        DECLARE @RapID INT;
-        SELECT @RapID=pc.RapID FROM dbo.GHE g WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID=g.PhongID WHERE g.GheID=@GheID;
+        DECLARE @RapID INT,@OldType NVARCHAR(50);
+        SELECT @RapID=pc.RapID,@OldType=g.LoaiGhe FROM dbo.GHE g WITH (UPDLOCK,HOLDLOCK) INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID=g.PhongID WHERE g.GheID=@GheID;
         IF @RapID IS NULL THROW 50109, N'Ghế không tồn tại.', 1;
         IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID,@RapID)=0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
+        -- Booking retains GHE update locks through ticket insertion/commit. Read
+        -- history after that lock, including cancelled/used tickets, before any write.
+        IF EXISTS (SELECT @LoaiGhe EXCEPT SELECT @OldType)
+           AND EXISTS (SELECT 1 FROM dbo.CHITIETVE WHERE GheID=@GheID)
+            THROW 50207, N'Ghế có lịch sử vé; không thể thay đổi loại ghế.', 1;
         IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;
         UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;
         IF @OwnTran=1 COMMIT TRANSACTION;

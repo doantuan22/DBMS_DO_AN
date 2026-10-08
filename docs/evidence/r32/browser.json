@@ -1,0 +1,275 @@
+{
+  "status": "PASS",
+  "engine": "Dedicated headless Chrome; actual React page, supplementary controlled HTTP timing",
+  "result": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "admin/show/hydrates persisted values",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/show/friendly rejection without false success",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/show/rejected input remains editable",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/show/persisted display and metadata unchanged",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/show/valid operational retry saves and reloads",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/show/complete payload preserves identity and has no room transfer",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/seat/hydrates persisted values",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/seat/friendly rejection without false success",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/seat/rejected input remains editable",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/seat/persisted display and metadata unchanged",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/seat/valid operational retry saves and reloads",
+        "status": "PASS"
+      },
+      {
+        "name": "admin/seat/complete payload preserves identity and has no room transfer",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/show/hydrates persisted values",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/show/friendly rejection without false success",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/show/rejected input remains editable",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/show/persisted display and metadata unchanged",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/show/valid operational retry saves and reloads",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/show/complete payload preserves identity and has no room transfer",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/seat/hydrates persisted values",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/seat/friendly rejection without false success",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/seat/rejected input remains editable",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/seat/persisted display and metadata unchanged",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/seat/valid operational retry saves and reloads",
+        "status": "PASS"
+      },
+      {
+        "name": "manager/seat/complete payload preserves identity and has no room transfer",
+        "status": "PASS"
+      }
+    ],
+    "calls": [
+      {
+        "role": "admin",
+        "kind": "show",
+        "route": "/api/admin/showtimes",
+        "method": "GET"
+      },
+      {
+        "role": "admin",
+        "kind": "show",
+        "route": "/api/admin/showtimes/7",
+        "method": "PUT",
+        "body": {
+          "movieId": 9,
+          "startsAt": "2035-10-08T05:00:00.123Z",
+          "endsAt": "2035-10-08T06:30:00.123Z",
+          "format": "2D",
+          "basePrice": 90000,
+          "status": "Mở bán"
+        }
+      },
+      {
+        "role": "admin",
+        "kind": "show",
+        "route": "/api/admin/showtimes/7",
+        "method": "PUT",
+        "body": {
+          "movieId": 9,
+          "startsAt": "2035-10-08T05:00:00.123Z",
+          "endsAt": "2035-10-08T06:30:00.123Z",
+          "format": "2D",
+          "basePrice": 80000,
+          "status": "Đóng bán"
+        }
+      },
+      {
+        "role": "admin",
+        "kind": "show",
+        "route": "/api/admin/showtimes",
+        "method": "GET"
+      },
+      {
+        "role": "admin",
+        "kind": "seat",
+        "route": "/api/admin/seats",
+        "method": "GET"
+      },
+      {
+        "role": "admin",
+        "kind": "seat",
+        "route": "/api/admin/seats/4",
+        "method": "PUT",
+        "body": {
+          "type": "Thường",
+          "status": "Hoạt động"
+        }
+      },
+      {
+        "role": "admin",
+        "kind": "seat",
+        "route": "/api/admin/seats/4",
+        "method": "PUT",
+        "body": {
+          "type": "VIP",
+          "status": "Bảo trì"
+        }
+      },
+      {
+        "role": "admin",
+        "kind": "seat",
+        "route": "/api/admin/seats",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "show",
+        "route": "/api/manager/cinemas",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "show",
+        "route": "/api/manager/cinemas/2/showtimes",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "show",
+        "route": "/api/manager/showtimes/7",
+        "method": "PUT",
+        "body": {
+          "movieId": 9,
+          "startsAt": "2035-10-08T05:00:00.123Z",
+          "endsAt": "2035-10-08T06:30:00.123Z",
+          "format": "2D",
+          "basePrice": 90000,
+          "status": "Mở bán"
+        }
+      },
+      {
+        "role": "manager",
+        "kind": "show",
+        "route": "/api/manager/showtimes/7",
+        "method": "PUT",
+        "body": {
+          "movieId": 9,
+          "startsAt": "2035-10-08T05:00:00.123Z",
+          "endsAt": "2035-10-08T06:30:00.123Z",
+          "format": "2D",
+          "basePrice": 80000,
+          "status": "Đóng bán"
+        }
+      },
+      {
+        "role": "manager",
+        "kind": "show",
+        "route": "/api/manager/cinemas/2/showtimes",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/cinemas",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/cinemas/2/rooms",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/rooms/3/seats",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/seats/4",
+        "method": "PUT",
+        "body": {
+          "type": "Thường",
+          "status": "Hoạt động"
+        }
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/seats/4",
+        "method": "PUT",
+        "body": {
+          "type": "VIP",
+          "status": "Bảo trì"
+        }
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/cinemas/2/rooms",
+        "method": "GET"
+      },
+      {
+        "role": "manager",
+        "kind": "seat",
+        "route": "/api/manager/rooms/3/seats",
+        "method": "GET"
+      }
+    ]
+  }
+}

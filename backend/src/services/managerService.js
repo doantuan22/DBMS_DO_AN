@@ -10,10 +10,10 @@ function managerError(error) {
   if (error instanceof HttpError) throw error;
   switch (sqlError(error)) {
     case 50209: throw new HttpError(400, 'PRICING_INVALID', 'The pricing conditions or date range are invalid.');
-    case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ORDERS', 'A showtime with active orders cannot change its film, times or format.');
+    case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ORDERS', 'A showtime with order history cannot change its film, room, times, format or base price.');
     case 50123: throw new HttpError(409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Use the separate showtime cancellation operation.');
     case 50216: throw new HttpError(400, 'SHOWTIME_TIME_INVALID', 'Showtime times violate the existing duration or start-time contract.');
-    case 50207: throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'Seats with ticket history cannot be changed or deleted.');
+    case 50207: throw new HttpError(409, 'SEAT_HAS_TICKET_HISTORY', 'Seat changes conflict with ticket history or active future tickets.');
     case 50050: throw new HttpError(403, 'MANAGER_CINEMA_FORBIDDEN', 'You are not assigned to this cinema.');
     case 50001: throw new HttpError(409, 'SHOWTIME_OVERLAP', 'The room already has an overlapping showtime.');
     case 50051: throw new HttpError(409, 'ROOM_NAME_CONFLICT', 'This room name already exists in the cinema.');

@@ -1,0 +1,40 @@
+{
+  "database": "CinemaBookingDB_R0_R32_20261008_02",
+  "startedAt": "2026-10-08T05:18:44.718Z",
+  "checks": [
+    {
+      "name": "r31-sql",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "scripts/r31/sql-tests.mjs",
+      "originalSha256": "c53f8de9a2662d9cb666ca75c98d9273fd0343bd141c89541939dfcb697e4a21",
+      "output": "r31-sql.json"
+    },
+    {
+      "name": "r31-api",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "scripts/r31/api-tests.mjs",
+      "originalSha256": "30211f7004a56daaf7963d2b3df72836318a2462a23a16ddc077815a80108a9b",
+      "output": "r31-api.json"
+    },
+    {
+      "name": "r31-concurrency",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "database/11_tests/concurrency/movie-actor-replacement.mjs",
+      "originalSha256": "f3a8440e3eff41ca3546084c3e5a9bf1d14bb7b132cfaf518bea87666d659f41",
+      "output": "r31-concurrency.json"
+    },
+    {
+      "name": "r31-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "source": "scripts/r31/browser.mjs",
+      "originalSha256": "c2afd3883ac8006583c6373c13319435f97e6c77dacb6453ffe4dec706b5d789",
+      "output": "r31-browser.json"
+    }
+  ],
+  "status": "PASS",
+  "completedAt": "2026-10-08T05:19:05.881Z"
+}

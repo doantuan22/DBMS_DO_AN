@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createAdminService, mapAdminProcedureError } from '../src/services/adminService.js';
-import { CINEMA_IMAGE_STATUSES, assignmentFilters, promotionWrite, cinemaImageWrite, movieFilters, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
+import { CINEMA_IMAGE_STATUSES, assignmentFilters, promotionWrite, cinemaImageWrite, movieFilters, movieCast, revenueFilters, userFilters } from '../src/validators/adminValidator.js';
 import { HttpError } from '../src/utils/httpError.js';
 import { requireAdmin } from '../src/middleware/requireAdmin.js';
 import { PROCEDURES } from '../src/db/procedures.js';
@@ -203,6 +203,22 @@ test('regression guard: every error number thrown by an admin SQL source is mapp
   assert.ok(thrown.size >= 40, 'expected to find the admin error numbers in the SQL sources');
   const unmapped = [...thrown].filter((number) => !(number in ADMIN_ERROR_TABLE) || !(mapped({ number }) instanceof HttpError));
   assert.deepEqual(unmapped, [], `unmapped admin SQL errors: ${unmapped.join(', ')}`);
+});
+
+test('R3.1 cast validates shape while binding all references to the canonical procedure', async () => {
+  for (const body of [{}, { cast: null }, { cast: {} }, { cast: [null] }, { cast: [{ actorId: '1', role: '' }] }, { cast: [{ actorId: 1, role: 1 }] }, { cast: [{ actorId: 1, role: 'x'.repeat(151) }] }]) assert.throws(() => movieCast(body), HttpError);
+  assert.deepEqual(movieCast({ cast: [] }), { cast: [] });
+  const duplicate = [{ actorId: 4, role: 'a' }, { actorId: 4, role: 'b' }];
+  const calls = [];
+  const service = createAdminService({ execute: async (key, params) => { calls.push({ key, params }); throw { number: 50103 }; } });
+  await assert.rejects(service.setMovieActors(9, 2, movieCast({ cast: duplicate }).cast), e => e.status === 400 && e.code === 'MOVIE_CAST_INVALID');
+  assert.equal(calls.length, 1); assert.equal(calls[0].key, 'ADMIN_MOVIE_ACTOR_SET');
+  assert.equal(calls[0].params.ActorID.value, 9); assert.equal(calls[0].params.PhimID.value, 2);
+  assert.deepEqual(JSON.parse(calls[0].params.DanhSachJson.value), [{ DienVienID: 4, VaiDien: 'a' }, { DienVienID: 4, VaiDien: 'b' }]);
+  for (const [number, status, code] of [[50100, 404, 'ACTOR_NOT_FOUND'], [50102, 404, 'MOVIE_NOT_FOUND'], [50103, 400, 'MOVIE_CAST_INVALID'], [50302, 403, 'FORBIDDEN']]) {
+    const rejected = createAdminService({ execute: async () => { throw { originalError: { info: { number } } }; } });
+    await assert.rejects(rejected.setMovieActors(9, 2, []), e => e.status === status && e.code === code);
+  }
 });
 
 test('set movie cast maps procedure errors to business HTTP errors', async () => {

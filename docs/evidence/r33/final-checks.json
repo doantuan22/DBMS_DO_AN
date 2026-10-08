@@ -1,0 +1,225 @@
+{
+  "at": "2026-10-08T06:49:28.524Z",
+  "database": "CinemaBookingDB_R0_R33_20261008_01",
+  "status": "PASS",
+  "protectedFiles": 1147,
+  "checkGroups": 16,
+  "sqlCases": 29,
+  "sqlPositives": 22,
+  "sqlNegatives": 7,
+  "rollbackCases": 6,
+  "apiRequests": 158,
+  "apiCases": 45,
+  "canonicalAndMixedRaces": 10,
+  "delayedIdentityRaces": 2,
+  "backendTests": 131,
+  "frontendTests": 49,
+  "skipCount": 0,
+  "priorRegression": "R1/R2/R3.1/R3.2 PASS",
+  "sourceParityModules": 159,
+  "tablesPreserved": 27,
+  "backendFrontendSourcesPreserved": "PASS",
+  "mainDataPreserved": "PASS",
+  "credentialsScan": "PASS",
+  "whitespace": "PASS",
+  "exitCriteria": [
+    {
+      "id": 1,
+      "criterion": "Trace mọi complaint processing writer",
+      "evidence": "trace-before.md",
+      "status": "PASS"
+    },
+    {
+      "id": 2,
+      "criterion": "Root cause I-16 xác định",
+      "evidence": "before-concurrency.json",
+      "status": "PASS"
+    },
+    {
+      "id": 3,
+      "criterion": "Trigger set-based",
+      "evidence": "source-changes.patch",
+      "status": "PASS"
+    },
+    {
+      "id": 4,
+      "criterion": "Không cursor",
+      "evidence": "source-changes.patch",
+      "status": "PASS"
+    },
+    {
+      "id": 5,
+      "criterion": "Không WHILE/row-by-row",
+      "evidence": "source-changes.patch",
+      "status": "PASS"
+    },
+    {
+      "id": 6,
+      "criterion": "Không giả định INSERTED một row",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 7,
+      "criterion": "ROW_NUMBER/PARTITION complaint/ORDER BY XuLyID DESC",
+      "evidence": "source-changes.patch",
+      "status": "PASS"
+    },
+    {
+      "id": 8,
+      "criterion": "Một latest row cho mỗi complaint",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 9,
+      "criterion": "Parent bằng latest processing status",
+      "evidence": "complaint-concurrency.json",
+      "status": "PASS"
+    },
+    {
+      "id": 10,
+      "criterion": "Single-row không regression",
+      "evidence": "api-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 11,
+      "criterion": "Multiple complaints một INSERT PASS",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 12,
+      "criterion": "Multiple rows cùng complaint PASS",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 13,
+      "criterion": "Mixed batch PASS",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 14,
+      "criterion": "Các statuses khác nhau chính xác",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 15,
+      "criterion": "Unrelated complaints giữ nguyên",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 16,
+      "criterion": "Existing history giữ nguyên",
+      "evidence": "api-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 17,
+      "criterion": "Rollback phục hồi parent",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 18,
+      "criterion": "Rollback không giữ history mới",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 19,
+      "criterion": "SQL positives PASS",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 20,
+      "criterion": "SQL negatives PASS",
+      "evidence": "sql-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 21,
+      "criterion": "Multi-row SQL integration PASS",
+      "evidence": "api-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 22,
+      "criterion": "CSKH API flow PASS",
+      "evidence": "api-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 23,
+      "criterion": "Customer read/timeline PASS",
+      "evidence": "api-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 24,
+      "criterion": "Permission/authorization giữ nguyên",
+      "evidence": "api-tests.json",
+      "status": "PASS"
+    },
+    {
+      "id": 25,
+      "criterion": "Backend regression PASS",
+      "evidence": "checks.json",
+      "status": "PASS"
+    },
+    {
+      "id": 26,
+      "criterion": "No-SQL PASS",
+      "evidence": "no-sql.txt",
+      "status": "PASS"
+    },
+    {
+      "id": 27,
+      "criterion": "Prior phases regression PASS",
+      "evidence": "checks.json",
+      "status": "PASS"
+    },
+    {
+      "id": 28,
+      "criterion": "Source/schema parity PASS",
+      "evidence": "source-parity.json",
+      "status": "PASS"
+    },
+    {
+      "id": 29,
+      "criterion": "Không thêm bảng",
+      "evidence": "main-migration.json",
+      "status": "PASS"
+    },
+    {
+      "id": 30,
+      "criterion": "Không thêm LastProcessingID column",
+      "evidence": "main-migration.json",
+      "status": "PASS"
+    },
+    {
+      "id": 31,
+      "criterion": "Không redesign Frontend",
+      "evidence": "preserved-before.json",
+      "status": "PASS"
+    },
+    {
+      "id": 32,
+      "criterion": "Evidence final DB states thật",
+      "evidence": "complaint-concurrency.json",
+      "status": "PASS"
+    },
+    {
+      "id": 33,
+      "criterion": "I-16 RESOLVED",
+      "evidence": "current-audit-status.json",
+      "status": "PASS"
+    }
+  ]
+}

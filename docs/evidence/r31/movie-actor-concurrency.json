@@ -1,0 +1,4426 @@
+{
+  "database": "CinemaBookingDB_R0_R31_20261008_02",
+  "startedAt": "2026-10-08T04:16:57.172Z",
+  "status": "PASS",
+  "replacements": [
+    {
+      "name": "A-then-B",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 39,
+            "DienVienID": 126,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 39,
+            "DienVienID": 127,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 39,
+            "DienVienID": 128,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 40,
+            "DienVienID": 126,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 39,
+            "TenPhim": "R31 target B206F709-0797-45DF-9D3F-20FF99E277D9",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 40,
+            "TenPhim": "R31 other 25BC13A7-46D8-4DE9-8D6F-D56D10F7C2CB",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 126,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 127,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 128,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 129,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 130,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 131,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 132,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 39,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "firstInput": [
+        {
+          "DienVienID": 129,
+          "VaiDien": "new3"
+        },
+        {
+          "DienVienID": 130,
+          "VaiDien": "new4"
+        }
+      ],
+      "secondInput": [
+        {
+          "DienVienID": 131,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 132,
+          "VaiDien": "new6"
+        }
+      ],
+      "timeline": [
+        {
+          "at": "2026-10-08T04:16:57.770Z",
+          "event": "first writer complete;caller transaction open"
+        },
+        {
+          "at": "2026-10-08T04:16:57.803Z",
+          "event": "COMMIT"
+        }
+      ],
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 39,
+            "DienVienID": 129,
+            "HoTen": "R31 actor4",
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 39,
+            "DienVienID": 130,
+            "HoTen": "R31 actor5",
+            "VaiDien": "new4"
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:57.799Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_U",
+        "wait_resource": "KEY: 34:72057594049789952 (51b0f67199c7)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(16ec7476dbd8)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(2594d2ca1166)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(efa01fe13ed4)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(c5a0fc45d5da)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(60af0c4c40e8)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(51b0f67199c7)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "WAIT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(51b0f67199c7)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(79d749546158)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(99e367dba5e4)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "insideFirst": {
+        "cast": [
+          {
+            "PhimID": 39,
+            "DienVienID": 129,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 39,
+            "DienVienID": 130,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 40,
+            "DienVienID": 126,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 39,
+            "TenPhim": "R31 target B206F709-0797-45DF-9D3F-20FF99E277D9",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 40,
+            "TenPhim": "R31 other 25BC13A7-46D8-4DE9-8D6F-D56D10F7C2CB",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 126,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 127,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 128,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 129,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 130,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 131,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 132,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 39,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 39,
+            "DienVienID": 131,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 39,
+            "DienVienID": 132,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 39,
+            "DienVienID": 131,
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 39,
+            "DienVienID": 132,
+            "VaiDien": "new6"
+          },
+          {
+            "PhimID": 40,
+            "DienVienID": 126,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 39,
+            "TenPhim": "R31 target B206F709-0797-45DF-9D3F-20FF99E277D9",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 40,
+            "TenPhim": "R31 other 25BC13A7-46D8-4DE9-8D6F-D56D10F7C2CB",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 126,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 127,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 128,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 129,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 130,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 131,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 132,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 39,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "B-then-A",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 41,
+            "DienVienID": 133,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 41,
+            "DienVienID": 134,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 41,
+            "DienVienID": 135,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 42,
+            "DienVienID": 133,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 41,
+            "TenPhim": "R31 target 2E01DB17-AFC2-411F-9ED1-AA75A26AD0D4",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 42,
+            "TenPhim": "R31 other A5F77A5C-7943-4A85-8186-70187224CE16",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 133,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 134,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 135,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 136,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 137,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 138,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 139,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 41,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "firstInput": [
+        {
+          "DienVienID": 138,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 139,
+          "VaiDien": "new6"
+        }
+      ],
+      "secondInput": [
+        {
+          "DienVienID": 136,
+          "VaiDien": "new3"
+        },
+        {
+          "DienVienID": 137,
+          "VaiDien": "new4"
+        }
+      ],
+      "timeline": [
+        {
+          "at": "2026-10-08T04:16:57.833Z",
+          "event": "first writer complete;caller transaction open"
+        },
+        {
+          "at": "2026-10-08T04:16:57.846Z",
+          "event": "COMMIT"
+        }
+      ],
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 41,
+            "DienVienID": 138,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 41,
+            "DienVienID": 139,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:57.842Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_U",
+        "wait_resource": "KEY: 34:72057594049789952 (21fa9863402d)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(94b7e0c641f5)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(6dfb8b51a4f9)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(894628a3926a)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(f90c46b14b80)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(21fa9863402d)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "WAIT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(21fa9863402d)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(6972062c56d6)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(903e6dbbb3da)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(00402d26ae8c)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "insideFirst": {
+        "cast": [
+          {
+            "PhimID": 41,
+            "DienVienID": 138,
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 41,
+            "DienVienID": 139,
+            "VaiDien": "new6"
+          },
+          {
+            "PhimID": 42,
+            "DienVienID": 133,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 41,
+            "TenPhim": "R31 target 2E01DB17-AFC2-411F-9ED1-AA75A26AD0D4",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 42,
+            "TenPhim": "R31 other A5F77A5C-7943-4A85-8186-70187224CE16",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 133,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 134,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 135,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 136,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 137,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 138,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 139,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 41,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 41,
+            "DienVienID": 136,
+            "HoTen": "R31 actor4",
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 41,
+            "DienVienID": 137,
+            "HoTen": "R31 actor5",
+            "VaiDien": "new4"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 41,
+            "DienVienID": 136,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 41,
+            "DienVienID": 137,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 42,
+            "DienVienID": 133,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 41,
+            "TenPhim": "R31 target 2E01DB17-AFC2-411F-9ED1-AA75A26AD0D4",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 42,
+            "TenPhim": "R31 other A5F77A5C-7943-4A85-8186-70187224CE16",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 133,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 134,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 135,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 136,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 137,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 138,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 139,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 41,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "first-rollback",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 43,
+            "DienVienID": 140,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 43,
+            "DienVienID": 141,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 43,
+            "DienVienID": 142,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 44,
+            "DienVienID": 140,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 43,
+            "TenPhim": "R31 target 716AE813-D7EF-473D-BEF5-E00DF724EBB9",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 44,
+            "TenPhim": "R31 other 874858D3-92AF-4814-BB73-9DFFE3396124",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 140,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 141,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 142,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 143,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 144,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 145,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 146,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 43,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "firstInput": [
+        {
+          "DienVienID": 143,
+          "VaiDien": "new3"
+        },
+        {
+          "DienVienID": 144,
+          "VaiDien": "new4"
+        }
+      ],
+      "secondInput": [
+        {
+          "DienVienID": 145,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 146,
+          "VaiDien": "new6"
+        }
+      ],
+      "timeline": [
+        {
+          "at": "2026-10-08T04:16:57.876Z",
+          "event": "first writer complete;caller transaction open"
+        },
+        {
+          "at": "2026-10-08T04:16:57.891Z",
+          "event": "ROLLBACK"
+        }
+      ],
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 43,
+            "DienVienID": 143,
+            "HoTen": "R31 actor4",
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 43,
+            "DienVienID": 144,
+            "HoTen": "R31 actor5",
+            "VaiDien": "new4"
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:57.887Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_U",
+        "wait_resource": "KEY: 34:72057594049789952 (3882dd7b619d)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(93614f6a2023)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(735561e5e49f)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(92c1bdc1564a)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(8a190a720193)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(b44a60fc7a59)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(6a2d24fdc52f)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(b5ea92570c30)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(3882dd7b619d)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "WAIT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(3882dd7b619d)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "insideFirst": {
+        "cast": [
+          {
+            "PhimID": 43,
+            "DienVienID": 143,
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 43,
+            "DienVienID": 144,
+            "VaiDien": "new4"
+          },
+          {
+            "PhimID": 44,
+            "DienVienID": 140,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 43,
+            "TenPhim": "R31 target 716AE813-D7EF-473D-BEF5-E00DF724EBB9",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 44,
+            "TenPhim": "R31 other 874858D3-92AF-4814-BB73-9DFFE3396124",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 140,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 141,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 142,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 143,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 144,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 145,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 146,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 43,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 43,
+            "DienVienID": 145,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 43,
+            "DienVienID": 146,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 43,
+            "DienVienID": 145,
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 43,
+            "DienVienID": 146,
+            "VaiDien": "new6"
+          },
+          {
+            "PhimID": 44,
+            "DienVienID": 140,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 43,
+            "TenPhim": "R31 target 716AE813-D7EF-473D-BEF5-E00DF724EBB9",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 44,
+            "TenPhim": "R31 other 874858D3-92AF-4814-BB73-9DFFE3396124",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 140,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 141,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 142,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 143,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 144,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 145,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 146,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 43,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "clear-then-replace",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 45,
+            "DienVienID": 147,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 45,
+            "DienVienID": 148,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 45,
+            "DienVienID": 149,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 46,
+            "DienVienID": 147,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 45,
+            "TenPhim": "R31 target 00DB20CA-2B43-4A37-88B8-4C11851E9665",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 46,
+            "TenPhim": "R31 other 0FBE2596-FB1D-4D64-8076-268D026A9BF7",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 147,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 148,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 149,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 150,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 151,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 152,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 153,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 45,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "firstInput": [],
+      "secondInput": [
+        {
+          "DienVienID": 152,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 153,
+          "VaiDien": "new6"
+        }
+      ],
+      "timeline": [
+        {
+          "at": "2026-10-08T04:16:57.923Z",
+          "event": "first writer complete;caller transaction open"
+        },
+        {
+          "at": "2026-10-08T04:16:57.939Z",
+          "event": "COMMIT"
+        }
+      ],
+      "first": {
+        "success": true,
+        "rows": []
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:57.934Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_U",
+        "wait_resource": "KEY: 34:72057594049789952 (f9eb8165e8e4)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(8ef86c01b599)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(4f91301f3ce0)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(77b407965095)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(f9eb8165e8e4)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "WAIT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(f9eb8165e8e4)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "insideFirst": {
+        "cast": [
+          {
+            "PhimID": 46,
+            "DienVienID": 147,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 45,
+            "TenPhim": "R31 target 00DB20CA-2B43-4A37-88B8-4C11851E9665",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 46,
+            "TenPhim": "R31 other 0FBE2596-FB1D-4D64-8076-268D026A9BF7",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 147,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 148,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 149,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 150,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 151,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 152,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 153,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 45,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 45,
+            "DienVienID": 152,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 45,
+            "DienVienID": 153,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 45,
+            "DienVienID": 152,
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 45,
+            "DienVienID": 153,
+            "VaiDien": "new6"
+          },
+          {
+            "PhimID": 46,
+            "DienVienID": 147,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 45,
+            "TenPhim": "R31 target 00DB20CA-2B43-4A37-88B8-4C11851E9665",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 46,
+            "TenPhim": "R31 other 0FBE2596-FB1D-4D64-8076-268D026A9BF7",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 147,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 148,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 149,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 150,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 151,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 152,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 153,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 45,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    }
+  ],
+  "actorDelete": [
+    {
+      "name": "replacement-first/COMMIT",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "actorId": 159,
+      "input": [
+        {
+          "DienVienID": 159,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 160,
+          "VaiDien": "new6"
+        }
+      ],
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 47,
+            "DienVienID": 154,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 47,
+            "DienVienID": 155,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 47,
+            "DienVienID": 156,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 48,
+            "DienVienID": 154,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 47,
+            "TenPhim": "R31 target 5B40D918-096E-41EF-9A51-856F0C649475",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 48,
+            "TenPhim": "R31 other 880AB1FD-9AB6-4657-869B-D500FD3351D4",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 154,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 155,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 156,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 157,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 158,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 159,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 160,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 47,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 47,
+            "DienVienID": 159,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 47,
+            "DienVienID": 160,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:57.988Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_X",
+        "wait_resource": "KEY: 34:72057594049200128 (3d4c657946bf)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(8432173ee5a7)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(3d4c657946bf)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "WAIT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(3d4c657946bf)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(94df0bc807d0)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(2da1798fa4c8)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(4cce12ceaf19)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(74eb2547c36c)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(e093c47dc954)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(b58279594a15)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "second": {
+        "success": false,
+        "error": {
+          "number": 50101,
+          "message": "Diễn viên đang tham gia phim nên không thể xóa."
+        }
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 47,
+            "DienVienID": 159,
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 47,
+            "DienVienID": 160,
+            "VaiDien": "new6"
+          },
+          {
+            "PhimID": 48,
+            "DienVienID": 154,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 47,
+            "TenPhim": "R31 target 5B40D918-096E-41EF-9A51-856F0C649475",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 48,
+            "TenPhim": "R31 other 880AB1FD-9AB6-4657-869B-D500FD3351D4",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 154,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 155,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 156,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 157,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 158,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 159,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 160,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 47,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "replacement-first/ROLLBACK",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "actorId": 166,
+      "input": [
+        {
+          "DienVienID": 166,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 167,
+          "VaiDien": "new6"
+        }
+      ],
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 49,
+            "DienVienID": 161,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 49,
+            "DienVienID": 162,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 49,
+            "DienVienID": 163,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 50,
+            "DienVienID": 161,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 49,
+            "TenPhim": "R31 target C240093D-8354-4EA6-A21F-58BCF0E0F270",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 50,
+            "TenPhim": "R31 other 4C06E2DC-939A-493C-BC10-6694D5EE9A75",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 161,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 162,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 163,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 164,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 165,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 166,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 167,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 49,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 49,
+            "DienVienID": 166,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 49,
+            "DienVienID": 167,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:58.034Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_X",
+        "wait_resource": "KEY: 34:72057594049200128 (ecc825912db1)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(187f5d415a31)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(adf216a63657)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(15844e06c8bd)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(75e30fa09e9e)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(8caf64377b92)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(b48a53be17e7)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(54be7d31d35b)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(ecc825912db1)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "WAIT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(ecc825912db1)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "Message": "Đã xóa diễn viên."
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 49,
+            "DienVienID": 161,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 49,
+            "DienVienID": 162,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 49,
+            "DienVienID": 163,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 50,
+            "DienVienID": 161,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 49,
+            "TenPhim": "R31 target C240093D-8354-4EA6-A21F-58BCF0E0F270",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 50,
+            "TenPhim": "R31 other 4C06E2DC-939A-493C-BC10-6694D5EE9A75",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 161,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 162,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 163,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 164,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 165,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 167,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 49,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "delete-first/COMMIT",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "actorId": 173,
+      "input": [
+        {
+          "DienVienID": 173,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 174,
+          "VaiDien": "new6"
+        }
+      ],
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 51,
+            "DienVienID": 168,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 51,
+            "DienVienID": 169,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 51,
+            "DienVienID": 170,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 52,
+            "DienVienID": 168,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 51,
+            "TenPhim": "R31 target A4E6591D-92CE-48A7-B660-17856A750D78",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 52,
+            "TenPhim": "R31 other 7175AC97-ADA2-4CF5-8CF0-6CFDA34828C6",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 168,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 169,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 170,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 171,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 172,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 173,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 174,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 51,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "Message": "Đã xóa diễn viên."
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:58.078Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_S",
+        "wait_resource": "KEY: 34:72057594049200128 (bddf3912b99e)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(bddf3912b99e)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "WAIT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(bddf3912b99e)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(010718597b81)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "second": {
+        "success": false,
+        "error": {
+          "number": 50100,
+          "message": "Diễn viên không tồn tại."
+        }
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 51,
+            "DienVienID": 168,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 51,
+            "DienVienID": 169,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 51,
+            "DienVienID": 170,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 52,
+            "DienVienID": 168,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 51,
+            "TenPhim": "R31 target A4E6591D-92CE-48A7-B660-17856A750D78",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 52,
+            "TenPhim": "R31 other 7175AC97-ADA2-4CF5-8CF0-6CFDA34828C6",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 168,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 169,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 170,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 171,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 172,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 174,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 51,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "delete-first/ROLLBACK",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "actorId": 180,
+      "input": [
+        {
+          "DienVienID": 180,
+          "VaiDien": "new5"
+        },
+        {
+          "DienVienID": 181,
+          "VaiDien": "new6"
+        }
+      ],
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 53,
+            "DienVienID": 175,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 53,
+            "DienVienID": 176,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 53,
+            "DienVienID": 177,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 54,
+            "DienVienID": 175,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 53,
+            "TenPhim": "R31 target B2F8CF6E-1301-420C-9BB8-FDCAE3B645A1",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 54,
+            "TenPhim": "R31 other C99DFF1D-B896-4087-8B4A-90474F2361EB",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 175,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 176,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 177,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 178,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 179,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 180,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 181,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 53,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "Message": "Đã xóa diễn viên."
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:58.121Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_S",
+        "wait_resource": "KEY: 34:72057594049200128 (7d1697a7468e)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(c06e4447f2f8)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(7d1697a7468e)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "WAIT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(7d1697a7468e)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 53,
+            "DienVienID": 180,
+            "HoTen": "R31 actor6",
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 53,
+            "DienVienID": 181,
+            "HoTen": "R31 actor7",
+            "VaiDien": "new6"
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 53,
+            "DienVienID": 180,
+            "VaiDien": "new5"
+          },
+          {
+            "PhimID": 53,
+            "DienVienID": 181,
+            "VaiDien": "new6"
+          },
+          {
+            "PhimID": 54,
+            "DienVienID": 175,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 53,
+            "TenPhim": "R31 target B2F8CF6E-1301-420C-9BB8-FDCAE3B645A1",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 54,
+            "TenPhim": "R31 other C99DFF1D-B896-4087-8B4A-90474F2361EB",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 175,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 176,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 177,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 178,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 179,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 180,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 181,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 53,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    }
+  ],
+  "movieDelete": [
+    {
+      "name": "replacement-first",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 55,
+            "DienVienID": 182,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 55,
+            "DienVienID": 183,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 55,
+            "DienVienID": 184,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 56,
+            "DienVienID": 182,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 55,
+            "TenPhim": "R31 target 93266EC9-36E6-486B-AB70-7ACFC43055BE",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 56,
+            "TenPhim": "R31 other 892877E5-E83D-42FD-A37E-5BA4BA709DD3",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 182,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 183,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 184,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 185,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 186,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 187,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 188,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 55,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "input": [
+        {
+          "DienVienID": 185,
+          "VaiDien": "new3"
+        },
+        {
+          "DienVienID": 186,
+          "VaiDien": "new4"
+        }
+      ],
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "PhimID": 55,
+            "DienVienID": 185,
+            "HoTen": "R31 actor4",
+            "VaiDien": "new3"
+          },
+          {
+            "PhimID": 55,
+            "DienVienID": 186,
+            "HoTen": "R31 actor5",
+            "VaiDien": "new4"
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:58.196Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_X",
+        "wait_resource": "KEY: 34:72057594049789952 (d916015fd348)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IS",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "1:952                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(b06b35cda3ed)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(c0215bdf7a07)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(505f1b426751)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(ed68d73a5bd8)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "S",
+            "request_status": "GRANT",
+            "objectName": "DIENVIEN",
+            "indexName": "PK_DIENVIEN",
+            "resource_description": "(0d5cf9b59f64)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(d916015fd348)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "WAIT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(d916015fd348)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(49275e5a46e1)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(396d30489f0b)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "second": {
+        "success": true,
+        "rows": [
+          {
+            "Message": "Đã xóa phim."
+          }
+        ]
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 56,
+            "DienVienID": 182,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 56,
+            "TenPhim": "R31 other 892877E5-E83D-42FD-A37E-5BA4BA709DD3",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 182,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 183,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 184,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 185,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 186,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 187,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 188,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": []
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "delete-first",
+      "spids": {
+        "a": 64,
+        "b": 65
+      },
+      "initial": {
+        "cast": [
+          {
+            "PhimID": 57,
+            "DienVienID": 189,
+            "VaiDien": "old1"
+          },
+          {
+            "PhimID": 57,
+            "DienVienID": 190,
+            "VaiDien": "old2"
+          },
+          {
+            "PhimID": 57,
+            "DienVienID": 191,
+            "VaiDien": "old3"
+          },
+          {
+            "PhimID": 58,
+            "DienVienID": 189,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 57,
+            "TenPhim": "R31 target 96CA1B9D-71AA-4777-ADFE-17A9746BF6D6",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          },
+          {
+            "PhimID": 58,
+            "TenPhim": "R31 other 8D4571F4-1B2C-4D06-86E6-8F8C62DD755F",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 189,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 190,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 191,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 192,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 193,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 194,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 195,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": [
+          {
+            "PhimID": 57,
+            "TheLoaiID": 1
+          }
+        ]
+      },
+      "input": [
+        {
+          "DienVienID": 192,
+          "VaiDien": "new3"
+        },
+        {
+          "DienVienID": 193,
+          "VaiDien": "new4"
+        }
+      ],
+      "first": {
+        "success": true,
+        "rows": [
+          {
+            "Message": "Đã xóa phim."
+          }
+        ]
+      },
+      "blocking": {
+        "at": "2026-10-08T04:16:58.243Z",
+        "session_id": 65,
+        "blocking_session_id": 64,
+        "wait_type": "LCK_M_U",
+        "wait_resource": "KEY: 34:72057594049789952 (a95c6f4d0aa2)",
+        "status": "suspended",
+        "locks": [
+          {
+            "request_session_id": 65,
+            "resource_type": "PAGE",
+            "request_mode": "IU",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "1:960                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "IX_PHIM_TrangThai",
+            "resource_description": "1:968                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "PAGE",
+            "request_mode": "IX",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "1:984                                                                                                                                                                                                                                                           "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "IX_PHIM_TrangThai",
+            "resource_description": "(957327fbf566)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "RangeX-X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(b9b63fadb5d3)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "RangeX-X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(40fa543a50df)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "X",
+            "request_status": "GRANT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(a95c6f4d0aa2)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 65,
+            "resource_type": "KEY",
+            "request_mode": "U",
+            "request_status": "WAIT",
+            "objectName": "PHIM",
+            "indexName": "PK_PHIM",
+            "resource_description": "(a95c6f4d0aa2)                                                                                                                                                                                                                                                  "
+          },
+          {
+            "request_session_id": 64,
+            "resource_type": "KEY",
+            "request_mode": "RangeX-X",
+            "request_status": "GRANT",
+            "objectName": "PHIM_DIENVIEN",
+            "indexName": "PK_PHIM_DIENVIEN",
+            "resource_description": "(a0ce7ab59463)                                                                                                                                                                                                                                                  "
+          }
+        ]
+      },
+      "second": {
+        "success": false,
+        "error": {
+          "number": 50102,
+          "message": "Phim không tồn tại."
+        }
+      },
+      "final": {
+        "cast": [
+          {
+            "PhimID": 58,
+            "DienVienID": 189,
+            "VaiDien": "other"
+          }
+        ],
+        "movies": [
+          {
+            "PhimID": 58,
+            "TenPhim": "R31 other 8D4571F4-1B2C-4D06-86E6-8F8C62DD755F",
+            "ThoiLuong": 90,
+            "NgayKhoiChieu": "2020-01-01T00:00:00.000Z",
+            "NgayKetThuc": null,
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "actors": [
+          {
+            "DienVienID": 189,
+            "HoTen": "R31 actor1",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 190,
+            "HoTen": "R31 actor2",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 191,
+            "HoTen": "R31 actor3",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 192,
+            "HoTen": "R31 actor4",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 193,
+            "HoTen": "R31 actor5",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 194,
+            "HoTen": "R31 actor6",
+            "NgaySinh": null,
+            "QuocTich": null
+          },
+          {
+            "DienVienID": 195,
+            "HoTen": "R31 actor7",
+            "NgaySinh": null,
+            "QuocTich": null
+          }
+        ],
+        "genres": []
+      },
+      "sessions": {
+        "a": {
+          "spid": 64,
+          "trancount": 0,
+          "xactState": 0
+        },
+        "b": {
+          "spid": 65,
+          "trancount": 0,
+          "xactState": 0
+        }
+      },
+      "status": "PASS"
+    }
+  ],
+  "before": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "8cca9fb0c123ebe632d1cd1c7c4d84c67029a657c4adc8e98a30cf607ae4bb9c",
+      "objects": "6a36a0eb5ab289cc746bf59d1ef0b81b140d00119f80e4e9c4bf9f94e74dcdfd",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "2147f309238895406fdcbf43d241a6eef0d6c7378c809b8497f713cfd34bdc30",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "5beb410e79ec108f2cb6042d402081bd775fe997668473a78b7a6c3c651235d3",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "after": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "8cca9fb0c123ebe632d1cd1c7c4d84c67029a657c4adc8e98a30cf607ae4bb9c",
+      "objects": "6a36a0eb5ab289cc746bf59d1ef0b81b140d00119f80e4e9c4bf9f94e74dcdfd",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "2147f309238895406fdcbf43d241a6eef0d6c7378c809b8497f713cfd34bdc30",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "5beb410e79ec108f2cb6042d402081bd775fe997668473a78b7a6c3c651235d3",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "cleanup": "PASS",
+  "completedAt": "2026-10-08T04:16:58.404Z"
+}
