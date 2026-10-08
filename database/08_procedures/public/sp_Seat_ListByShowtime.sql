@@ -9,6 +9,11 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
+    IF NOT EXISTS (SELECT 1 FROM dbo.SUATCHIEU WHERE SuatChieuID = @SuatChieuID)
+        THROW 50021, N'Suất chiếu không tồn tại.', 1;
+    IF NOT EXISTS (SELECT 1 FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID = @SuatChieuID AND IsBookable = 1)
+        THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.', 1;
+
     SELECT
         GheID,
         PhongID,

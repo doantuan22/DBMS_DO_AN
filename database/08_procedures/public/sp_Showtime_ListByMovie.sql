@@ -41,8 +41,7 @@ BEGIN
     WHERE PhimID = @PhimID
       AND (@RapID IS NULL OR RapID = @RapID)
       AND (@NgayChieu IS NULL OR NgayChieu = @NgayChieu)
-      AND TrangThaiSuatChieu = N'Mở bán'
-      AND ThoiGianBatDau > dbo.fn_BayGio()
+      AND IsBookable = 1
     ORDER BY ThoiGianBatDau ASC;
 END;
 GO

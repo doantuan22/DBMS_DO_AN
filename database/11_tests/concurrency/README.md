@@ -1,5 +1,9 @@
 # Concurrency tests
 
+R2.1 parent-status/booking: `node database/11_tests/concurrency/booking-parent-status.mjs --database=CinemaBookingDB_R0_<disposable>`.
+14 actual races qua existing Manager/Admin parent writers: parent-first reject booking, booking-first giữ parent ổn định đến commit; DMV waits, atomic order/ticket/food/promotion state và cleanup.
+SQL/API/full regression: `node scripts/r21/checks.mjs --database=<disposable>`; ghi evidence mới vào r21, giữ nguyên accepted r11/r12 artifacts. Xem [báo cáo R2.1](../../../docs/evidence/R2_BOOKING_BOOKABILITY.md). Chạy suites tuần tự; không chạy fixtures trên DB chính.
+
 R1.2 showtime overlap: `node database/11_tests/concurrency/showtime-overlap.mjs --database=CinemaBookingDB_R0_<disposable>`.
 26 scenario cases +125 real races (100 có SQL gate/DMV,25 phát request đồng thời), query overlap/state sau từng race; chạy tuần tự với các suite có fixture khác.
 SQL tests: `node scripts/r12/sql-tests.mjs --database=<disposable>`; transaction/savepoint: `scripts/r12/nested-tests.mjs`.

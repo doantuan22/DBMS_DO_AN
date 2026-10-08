@@ -68,6 +68,7 @@ function mapBookingError(error) {
     case 50026: throw new HttpError(400, 'SEAT_LIMIT_EXCEEDED', 'An order can contain at most 10 seats.');
     case 50027: throw new HttpError(400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED', 'Each product quantity must be at most 10.');
     case 50028: throw new HttpError(409, 'ACTIVE_ORDER_LIMIT_REACHED', 'You already hold the maximum number of unpaid orders. Pay for one or wait for it to expire.');
+    case 50029: throw new HttpError(409, 'PROMOTION_NOT_AVAILABLE', 'The requested promotion is no longer available. Review your order before booking.');
     case 50025:
     case 50003: throw new HttpError(409, 'SEAT_CONFLICT', 'One or more selected seats were just booked by another customer.');
     default: throw error;
@@ -80,8 +81,12 @@ function productJson(items) {
 
 export function createBookingService({ execute = executeProcedure, executeWithOutputs = executeProcedureWithOutputs } = {}) {
   async function listSeats(showtimeId) {
-    const result = await execute('SEAT_LIST_BY_SHOWTIME', { SuatChieuID: { type: DbTypes.Int, value: showtimeId } });
-    return (result.recordset ?? []).map(seatDto);
+    try {
+      const result = await execute('SEAT_LIST_BY_SHOWTIME', { SuatChieuID: { type: DbTypes.Int, value: showtimeId } });
+      return (result.recordset ?? []).map(seatDto);
+    } catch (error) {
+      mapBookingError(error);
+    }
   }
 
   async function listProducts() {

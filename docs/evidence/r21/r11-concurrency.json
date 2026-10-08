@@ -1,0 +1,2276 @@
+{
+  "database": "CinemaBookingDB_R0_R21_20261008_02",
+  "startedAt": "2026-10-08T01:44:52.992Z",
+  "status": "PASS",
+  "cases": [
+    {
+      "deleter": "manager",
+      "creator": "manager",
+      "winner": "delete",
+      "room": 119,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.523Z",
+          "session": "A",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.531Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 119,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Xóa phòng chiếu thành công."
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.533Z",
+          "session": "B",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.603Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 89,
+              "blocking_session_id": 88,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (fb8cdde4fb75)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.604Z",
+          "session": "A",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.605Z",
+          "session": "B",
+          "action": "procedure failed",
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 119,
+            "RapID": 1,
+            "TenPhong": "R11 261110DC-8F1F-49AF-8DAD-3E642FA581C7",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 499,
+            "PhongID": 119,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 500,
+            "PhongID": 119,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 119,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Xóa phòng chiếu thành công."
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      },
+      "final": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "manager",
+      "creator": "manager",
+      "winner": "create",
+      "room": 120,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.620Z",
+          "session": "B",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.658Z",
+          "session": "B",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 80,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 120,
+                "TenPhong": "R11 F4B13F8B-E302-4DFF-A103-7A78A15FF9E8",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.622Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.622Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.661Z",
+          "session": "A",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.662Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 88,
+              "blocking_session_id": 89,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (728ad861c793)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.663Z",
+          "session": "B",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.666Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 120,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 120,
+            "RapID": 1,
+            "TenPhong": "R11 F4B13F8B-E302-4DFF-A103-7A78A15FF9E8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 501,
+            "PhongID": 120,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 502,
+            "PhongID": 120,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [
+          {
+            "PhongID": 120,
+            "RapID": 1,
+            "TenPhong": "R11 F4B13F8B-E302-4DFF-A103-7A78A15FF9E8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 501,
+            "PhongID": 120,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 502,
+            "PhongID": 120,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 80,
+            "PhimID": 1,
+            "PhongID": 120,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.622Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.622Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 80,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 120,
+                "TenPhong": "R11 F4B13F8B-E302-4DFF-A103-7A78A15FF9E8",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.622Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.622Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 120,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      },
+      "final": {
+        "rooms": [
+          {
+            "PhongID": 120,
+            "RapID": 1,
+            "TenPhong": "R11 F4B13F8B-E302-4DFF-A103-7A78A15FF9E8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Ngưng hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 501,
+            "PhongID": 120,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 502,
+            "PhongID": 120,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 80,
+            "PhimID": 1,
+            "PhongID": 120,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.622Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.622Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "manager",
+      "creator": "admin",
+      "winner": "delete",
+      "room": 121,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.676Z",
+          "session": "A",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.677Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 121,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Xóa phòng chiếu thành công."
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.679Z",
+          "session": "B",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.741Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 89,
+              "blocking_session_id": 88,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (8bc6b3f6229f)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.742Z",
+          "session": "A",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.742Z",
+          "session": "B",
+          "action": "procedure failed",
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 121,
+            "RapID": 1,
+            "TenPhong": "R11 DBE2EF2D-F92D-45ED-A5B2-5FC347B8EC76",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 503,
+            "PhongID": 121,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 504,
+            "PhongID": 121,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 121,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Xóa phòng chiếu thành công."
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      },
+      "final": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "manager",
+      "creator": "admin",
+      "winner": "create",
+      "room": 122,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.749Z",
+          "session": "B",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.752Z",
+          "session": "B",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 81,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 122,
+                "TenPhong": "R11 EA13281D-A1C0-456D-AE1A-7E72ED87731D",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.750Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.750Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.755Z",
+          "session": "A",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.756Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 88,
+              "blocking_session_id": 89,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (6bf29d79e623)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.757Z",
+          "session": "B",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.758Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 122,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 122,
+            "RapID": 1,
+            "TenPhong": "R11 EA13281D-A1C0-456D-AE1A-7E72ED87731D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 505,
+            "PhongID": 122,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 506,
+            "PhongID": 122,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [
+          {
+            "PhongID": 122,
+            "RapID": 1,
+            "TenPhong": "R11 EA13281D-A1C0-456D-AE1A-7E72ED87731D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 505,
+            "PhongID": 122,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 506,
+            "PhongID": 122,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 81,
+            "PhimID": 1,
+            "PhongID": 122,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.750Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.750Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 81,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 122,
+                "TenPhong": "R11 EA13281D-A1C0-456D-AE1A-7E72ED87731D",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.750Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.750Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 122,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      },
+      "final": {
+        "rooms": [
+          {
+            "PhongID": 122,
+            "RapID": 1,
+            "TenPhong": "R11 EA13281D-A1C0-456D-AE1A-7E72ED87731D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Ngưng hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 505,
+            "PhongID": 122,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 506,
+            "PhongID": 122,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 81,
+            "PhimID": 1,
+            "PhongID": 122,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.750Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.750Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "manager",
+      "creator": "alias",
+      "winner": "delete",
+      "room": 123,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.766Z",
+          "session": "A",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.768Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 123,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Xóa phòng chiếu thành công."
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.772Z",
+          "session": "B",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.775Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 89,
+              "blocking_session_id": 88,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (92bef6ee032f)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.776Z",
+          "session": "A",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.777Z",
+          "session": "B",
+          "action": "procedure failed",
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 123,
+            "RapID": 1,
+            "TenPhong": "R11 7DC11CCF-8D67-46AA-A7B0-238C82F2D73B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 507,
+            "PhongID": 123,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 508,
+            "PhongID": 123,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 123,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Xóa phòng chiếu thành công."
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      },
+      "final": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "manager",
+      "creator": "alias",
+      "winner": "create",
+      "room": 124,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.784Z",
+          "session": "B",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.787Z",
+          "session": "B",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 82,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 124,
+                "TenPhong": "R11 7AEC937A-C2DB-4353-939F-FE9B818856CC",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.786Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.786Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.789Z",
+          "session": "A",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.790Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 88,
+              "blocking_session_id": 89,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (aa9bc1676f5a)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.791Z",
+          "session": "B",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.791Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 124,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 124,
+            "RapID": 1,
+            "TenPhong": "R11 7AEC937A-C2DB-4353-939F-FE9B818856CC",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 509,
+            "PhongID": 124,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 510,
+            "PhongID": 124,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [
+          {
+            "PhongID": 124,
+            "RapID": 1,
+            "TenPhong": "R11 7AEC937A-C2DB-4353-939F-FE9B818856CC",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 509,
+            "PhongID": 124,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 510,
+            "PhongID": 124,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 82,
+            "PhimID": 1,
+            "PhongID": 124,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.786Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.786Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 82,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 124,
+                "TenPhong": "R11 7AEC937A-C2DB-4353-939F-FE9B818856CC",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.786Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.786Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 124,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      },
+      "final": {
+        "rooms": [
+          {
+            "PhongID": 124,
+            "RapID": 1,
+            "TenPhong": "R11 7AEC937A-C2DB-4353-939F-FE9B818856CC",
+            "LoaiPhong": "2D",
+            "TrangThai": "Ngưng hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 509,
+            "PhongID": 124,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 510,
+            "PhongID": 124,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 82,
+            "PhimID": 1,
+            "PhongID": 124,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.786Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.786Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "admin",
+      "creator": "manager",
+      "winner": "delete",
+      "room": 125,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.799Z",
+          "session": "A",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.804Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 125,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Đã xóa phòng."
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.806Z",
+          "session": "B",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.809Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 89,
+              "blocking_session_id": 88,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (53d7aaf08a56)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.810Z",
+          "session": "A",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.810Z",
+          "session": "B",
+          "action": "procedure failed",
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 125,
+            "RapID": 1,
+            "TenPhong": "R11 B5FEA77D-24D5-41DE-A5D1-D12C75A836C6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 511,
+            "PhongID": 125,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 512,
+            "PhongID": 125,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 125,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Đã xóa phòng."
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      },
+      "final": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "admin",
+      "creator": "manager",
+      "winner": "create",
+      "room": 126,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.817Z",
+          "session": "B",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.820Z",
+          "session": "B",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 83,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 126,
+                "TenPhong": "R11 F24819FB-70E2-468C-BB45-B2F2833F9FBD",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.819Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.819Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.822Z",
+          "session": "A",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.823Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 88,
+              "blocking_session_id": 89,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (b3e3847f4eea)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.824Z",
+          "session": "B",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.827Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 126,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 126,
+            "RapID": 1,
+            "TenPhong": "R11 F24819FB-70E2-468C-BB45-B2F2833F9FBD",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 513,
+            "PhongID": 126,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 514,
+            "PhongID": 126,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [
+          {
+            "PhongID": 126,
+            "RapID": 1,
+            "TenPhong": "R11 F24819FB-70E2-468C-BB45-B2F2833F9FBD",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 513,
+            "PhongID": 126,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 514,
+            "PhongID": 126,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 83,
+            "PhimID": 1,
+            "PhongID": 126,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.819Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.819Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 83,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 126,
+                "TenPhong": "R11 F24819FB-70E2-468C-BB45-B2F2833F9FBD",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.819Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.819Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 126,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      },
+      "final": {
+        "rooms": [
+          {
+            "PhongID": 126,
+            "RapID": 1,
+            "TenPhong": "R11 F24819FB-70E2-468C-BB45-B2F2833F9FBD",
+            "LoaiPhong": "2D",
+            "TrangThai": "Ngưng hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 513,
+            "PhongID": 126,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 514,
+            "PhongID": 126,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 83,
+            "PhimID": 1,
+            "PhongID": 126,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.819Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.819Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "admin",
+      "creator": "admin",
+      "winner": "delete",
+      "room": 127,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.835Z",
+          "session": "A",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.836Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 127,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Đã xóa phòng."
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.838Z",
+          "session": "B",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.840Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 89,
+              "blocking_session_id": 88,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (4aafefe8abe6)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.841Z",
+          "session": "A",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.842Z",
+          "session": "B",
+          "action": "procedure failed",
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 127,
+            "RapID": 1,
+            "TenPhong": "R11 A2A2EC71-8492-44C2-BE5B-43CC353B0383",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 515,
+            "PhongID": 127,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 516,
+            "PhongID": 127,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 127,
+                "Deleted": true,
+                "Deactivated": false,
+                "TrangThai": null,
+                "Message": "Đã xóa phòng."
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "ERROR",
+          "number": 50056,
+          "message": "Phòng chiếu không tồn tại."
+        }
+      },
+      "final": {
+        "rooms": [],
+        "seats": [],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    },
+    {
+      "deleter": "admin",
+      "creator": "admin",
+      "winner": "create",
+      "room": 128,
+      "sessionA": 88,
+      "sessionB": 89,
+      "timeline": [
+        {
+          "at": "2026-10-08T01:44:53.848Z",
+          "session": "B",
+          "action": "BEGIN SQL transaction and execute winning procedure"
+        },
+        {
+          "at": "2026-10-08T01:44:53.851Z",
+          "session": "B",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 84,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 128,
+                "TenPhong": "R11 11137AD9-78A5-4CD3-B8C5-ACEA1656B4E6",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.850Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.850Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.853Z",
+          "session": "A",
+          "action": "start competing procedure on independent connection"
+        },
+        {
+          "at": "2026-10-08T01:44:53.854Z",
+          "session": "observer",
+          "action": "confirmed actual SQL lock wait",
+          "rows": [
+            {
+              "session_id": 88,
+              "blocking_session_id": 89,
+              "wait_type": "LCK_M_U",
+              "wait_resource": "KEY: 25:72057594049986560 (3cec97d230d6)",
+              "status": "suspended"
+            }
+          ]
+        },
+        {
+          "at": "2026-10-08T01:44:53.855Z",
+          "session": "B",
+          "action": "COMMIT confirmed"
+        },
+        {
+          "at": "2026-10-08T01:44:53.856Z",
+          "session": "A",
+          "action": "procedure returned",
+          "recordsets": [
+            [
+              {
+                "PhongID": 128,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      ],
+      "initial": {
+        "rooms": [
+          {
+            "PhongID": 128,
+            "RapID": 1,
+            "TenPhong": "R11 11137AD9-78A5-4CD3-B8C5-ACEA1656B4E6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 517,
+            "PhongID": 128,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 518,
+            "PhongID": 128,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [],
+        "orders": [],
+        "tickets": []
+      },
+      "status": "PASS",
+      "beforeWinnerCommit": {
+        "rooms": [
+          {
+            "PhongID": 128,
+            "RapID": 1,
+            "TenPhong": "R11 11137AD9-78A5-4CD3-B8C5-ACEA1656B4E6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 517,
+            "PhongID": 128,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 518,
+            "PhongID": 128,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 84,
+            "PhimID": 1,
+            "PhongID": 128,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.850Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.850Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "transactions": {
+        "winner": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "SuatChieuID": 84,
+                "PhimID": 1,
+                "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+                "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                "ThoiLuong": 166,
+                "DoTuoi": "T16",
+                "RapID": 1,
+                "TenRap": "Cinema Star Hai Bà Trưng",
+                "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+                "ThanhPho": "Hồ Chí Minh",
+                "PhongID": 128,
+                "TenPhong": "R11 11137AD9-78A5-4CD3-B8C5-ACEA1656B4E6",
+                "LoaiPhong": "2D",
+                "ThoiGianBatDau": "2026-10-18T01:44:53.850Z",
+                "ThoiGianKetThuc": "2026-10-18T04:40:53.850Z",
+                "NgayChieu": "2026-10-18T00:00:00.000Z",
+                "GioBatDau": "08:44",
+                "GioKetThuc": "11:40",
+                "DinhDang": "2D",
+                "GiaVeCoBan": 80000,
+                "TrangThaiSuatChieu": "Mở bán",
+                "TongSoGhe": 2,
+                "SoGheDaDat": 0,
+                "SoGheConLai": 2
+              }
+            ]
+          ]
+        },
+        "competitor": {
+          "status": "SUCCESS",
+          "recordsets": [
+            [
+              {
+                "PhongID": 128,
+                "Deleted": false,
+                "Deactivated": true,
+                "TrangThai": "Ngưng hoạt động",
+                "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+              }
+            ]
+          ]
+        }
+      },
+      "final": {
+        "rooms": [
+          {
+            "PhongID": 128,
+            "RapID": 1,
+            "TenPhong": "R11 11137AD9-78A5-4CD3-B8C5-ACEA1656B4E6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Ngưng hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 517,
+            "PhongID": 128,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 518,
+            "PhongID": 128,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 84,
+            "PhimID": 1,
+            "PhongID": 128,
+            "ThoiGianBatDau": "2026-10-18T01:44:53.850Z",
+            "ThoiGianKetThuc": "2026-10-18T04:40:53.850Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [],
+        "tickets": []
+      },
+      "invariant": "PASS"
+    }
+  ],
+  "before": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "f48e5fd874684910e38f33d4ed8d49adf4ae784a452327eb519daef82ddb341f",
+      "objects": "66016e3a12d15859475bc8e5c684d166e9eea21794dbd6450787534d0647e705",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "2147f309238895406fdcbf43d241a6eef0d6c7378c809b8497f713cfd34bdc30",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "5beb410e79ec108f2cb6042d402081bd775fe997668473a78b7a6c3c651235d3",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "after": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "f48e5fd874684910e38f33d4ed8d49adf4ae784a452327eb519daef82ddb341f",
+      "objects": "66016e3a12d15859475bc8e5c684d166e9eea21794dbd6450787534d0647e705",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "2147f309238895406fdcbf43d241a6eef0d6c7378c809b8497f713cfd34bdc30",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "5beb410e79ec108f2cb6042d402081bd775fe997668473a78b7a6c3c651235d3",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "fixtureCleanup": "PASS",
+  "completedAt": "2026-10-08T01:44:53.979Z"
+}

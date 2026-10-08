@@ -21,6 +21,8 @@ before(async () => {
 after(async () => { await vite?.close(); });
 
 test('R2 held-order cancellation conflicts explain the waiting reason in Vietnamese', () => {
+  assert.match(limits.bookingErrorMessage({ code: 'PROMOTION_NOT_AVAILABLE' }), /Khuyến mãi không còn khả dụng.*kiểm tra lại giá/);
+  assert.match(limits.bookingErrorMessage({ code: 'SHOWTIME_UNAVAILABLE' }), /không còn đủ điều kiện đặt vé.*chọn suất khác/);
   assert.match(limits.bookingErrorMessage({ code: 'SHOWTIME_HAS_HELD_ORDERS' }), /còn đơn giữ ghế\/chờ thanh toán còn hiệu lực/);
   assert.match(limits.bookingErrorMessage({ code: 'ORDER_HOLD_EXPIRED' }), /hết thời gian giữ ghế/);
 });

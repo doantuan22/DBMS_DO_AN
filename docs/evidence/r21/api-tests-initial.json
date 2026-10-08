@@ -1,0 +1,394 @@
+{
+  "database": "CinemaBookingDB_R0_R21_20261008_01",
+  "startedAt": "2026-10-08T01:41:12.537Z",
+  "status": "FAIL",
+  "requests": [
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer2",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "manager",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/showtimes/37",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/showtimes/37/seats",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/movies/36/showtimes",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/showtimes/37",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/showtimes/37/seats",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/showtimes/38",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/showtimes/38/seats",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/movies/37",
+      "status": 400,
+      "expected": 200,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "genreIds is required."
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "active-positive",
+      "loadedSelection": {
+        "show": 37,
+        "seats": [
+          334,
+          335
+        ]
+      },
+      "initial": {
+        "cinema": [
+          {
+            "RapID": 35,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 36,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 69,
+            "RapID": 35,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 37,
+            "PhimID": 36,
+            "PhongID": 69,
+            "ThoiGianBatDau": "2026-10-18T01:41:13.533Z",
+            "ThoiGianKetThuc": "2026-10-18T03:11:13.533Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 334,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 335,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 336,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 337,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [],
+        "tickets": [],
+        "foods": [],
+        "promotion": [
+          {
+            "KhuyenMaiID": 34,
+            "MaCode": "R21-F32FCF44-B22E-4BDA-8F1F-A5B617C79DE0",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T01:41:13.533Z",
+            "NgayKetThuc": "2026-10-09T01:41:13.533Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 0,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "final": {
+        "cinema": [
+          {
+            "RapID": 35,
+            "TenRap": "R21 API",
+            "DiaChi": "Fixture",
+            "ThanhPho": "HCM",
+            "SoDienThoai": null,
+            "MoTa": null,
+            "NgayHoatDong": null,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "movie": [
+          {
+            "PhimID": 36,
+            "TenPhim": "R21 API",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "NgonNgu": null,
+            "PhuDe": null,
+            "DoTuoi": null,
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu"
+          }
+        ],
+        "room": [
+          {
+            "PhongID": 69,
+            "RapID": 35,
+            "TenPhong": "R21 API",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "show": [
+          {
+            "SuatChieuID": 37,
+            "PhimID": 36,
+            "PhongID": 69,
+            "ThoiGianBatDau": "2026-10-18T01:41:13.533Z",
+            "ThoiGianKetThuc": "2026-10-18T03:11:13.533Z",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 334,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 335,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 2,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 336,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 3,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "GheID": 337,
+            "PhongID": 69,
+            "HangGhe": "A",
+            "SoGhe": 4,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 13,
+            "NguoiDungID": 5,
+            "SuatChieuID": 37,
+            "KhuyenMaiID": 34,
+            "NgayDat": "2026-10-08T01:41:13.597Z",
+            "TongTienVe": 160000,
+            "TongTienDoAn": 10000,
+            "TienGiamGia": 1000,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T01:46:13.597Z",
+            "LyDoHuy": null,
+            "ThongBaoHuy": null
+          }
+        ],
+        "tickets": [
+          {
+            "VeID": 25,
+            "DonDatVeID": 13,
+            "GheID": 334,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008014113-334-BDB041",
+            "TrangThai": "Đã đặt"
+          },
+          {
+            "VeID": 26,
+            "DonDatVeID": 13,
+            "GheID": 335,
+            "GiaVe": 80000,
+            "MaVe": "TK-20261008014113-335-FC4E4F",
+            "TrangThai": "Đã đặt"
+          }
+        ],
+        "foods": [
+          {
+            "ChiTietDoAnID": 13,
+            "DonDatVeID": 13,
+            "SanPhamID": 37,
+            "SoLuong": 1,
+            "DonGia": 10000
+          }
+        ],
+        "promotion": [
+          {
+            "KhuyenMaiID": 34,
+            "MaCode": "R21-F32FCF44-B22E-4BDA-8F1F-A5B617C79DE0",
+            "MoTa": null,
+            "LoaiGiamGia": "Số tiền",
+            "GiaTriGiam": 1000,
+            "DonHangToiThieu": 0,
+            "GiamToiDa": null,
+            "NgayBatDau": "2026-10-07T01:41:13.533Z",
+            "NgayKetThuc": "2026-10-09T01:41:13.533Z",
+            "SoLuong": 100,
+            "SoLuongDaDung": 1,
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "availability": [
+          {
+            "IsBookable": true,
+            "NgayChieu": "2026-10-18T00:00:00.000Z",
+            "NgayKhoiChieu": "2026-10-17T00:00:00.000Z",
+            "NgayKetThuc": "2026-10-19T00:00:00.000Z",
+            "TrangThaiRap": "Hoạt động",
+            "TrangThaiPhong": "Hoạt động",
+            "TrangThaiPhim": "Đang chiếu",
+            "TrangThaiSuatChieu": "Mở bán"
+          }
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "concurrency": [],
+  "error": {
+    "message": "/admin/movies/37: {\"error\":{\"code\":\"INVALID_REQUEST\",\"message\":\"genreIds is required.\"}}"
+  },
+  "completedAt": "2026-10-08T01:41:13.672Z"
+}

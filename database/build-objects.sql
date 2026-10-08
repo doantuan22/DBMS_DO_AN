@@ -66,12 +66,12 @@
 :r ./05_functions/fn_TinhTongTienVe.sql
 :r ./05_functions/fn_ThoiGianGiaHanThanhToanPhut.sql
 :r ./05_functions/fn_ThoiGianGiuChoPhut.sql
-:r ./05_functions/fn_DanhSachGheSuatChieu.sql
 :r ./03_constraints/005_function_defaults.sql
 :r ./06_views/vw_ChiTietDonDatVe.sql
 :r ./06_views/vw_DanhSachKhieuNai.sql
 :r ./06_views/vw_DoanhThuTheoRap.sql
 :r ./06_views/vw_LichChieuChiTiet.sql
+:r ./05_functions/fn_DanhSachGheSuatChieu.sql
 :r ./06_views/vw_LichSuDatVe.sql
 :r ./06_views/vw_ThongKePhim.sql
 :r ./07_triggers/TRG_BangGia_KiemTraChongLan.sql

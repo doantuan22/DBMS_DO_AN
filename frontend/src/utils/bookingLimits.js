@@ -19,6 +19,8 @@ export function clampQuantity(value, max = MAX_PRODUCT_QUANTITY) {
 // Friendly Vietnamese text for API errors of the booking and payment flow (null = use the server message).
 export function bookingErrorMessage(error) {
   switch (error?.code) {
+    case 'PROMOTION_NOT_AVAILABLE': return 'Khuyến mãi không còn khả dụng. Vui lòng kiểm tra lại giá và đơn trước khi đặt.';
+    case 'SHOWTIME_UNAVAILABLE': return 'Suất chiếu không còn đủ điều kiện đặt vé. Vui lòng quay lại lịch chiếu và chọn suất khác.';
     case 'ACTIVE_ORDER_LIMIT_REACHED':
       return `Bạn đang giữ ${MAX_HOLDING_ORDERS} đơn chưa thanh toán. Hãy thanh toán hoặc chờ đơn cũ hết hạn (${HOLD_MINUTES} phút) rồi đặt tiếp.`;
     case 'SEAT_LIMIT_EXCEEDED': return SEAT_LIMIT_MESSAGE;

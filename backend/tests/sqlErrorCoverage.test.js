@@ -34,6 +34,7 @@ function flowsOf(file, code) {
   if (/sp_XuLyKhieuNai/.test(file)) return ['support'];
   if (/sp_XuLyThanhToan/.test(file)) return ['orders'];
   if (/sp_DatVe/.test(file)) return ['booking'];
+  if (/sp_Seat_ListByShowtime/.test(file)) return ['booking'];
   for (const [prefix, flows] of FOLDER_FLOWS) if (file.startsWith(prefix)) return flows;
   const migration = /^migrations\/(\d{3})_/.exec(file)?.[1];
   if (migration && MIGRATION_FLOWS[migration]) {

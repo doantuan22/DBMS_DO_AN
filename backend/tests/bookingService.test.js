@@ -5,7 +5,7 @@ import { createBookingService } from '../src/services/bookingService.js';
 function fixture() {
   const calls = [];
   const results = new Map();
-  const execute = async (key, params) => { calls.push({ key, params, kind: 'execute' }); return results.get(key); };
+  const execute = async (key, params) => { calls.push({ key, params, kind: 'execute' }); const result = results.get(key); if (result instanceof Error) throw result; return result; };
   const executeWithOutputs = async (key, params, outputs) => { calls.push({ key, params, outputs, kind: 'outputs' }); const result = results.get(key); if (result instanceof Error) throw result; return result; };
   return { calls, results, service: createBookingService({ execute, executeWithOutputs }) };
 }
@@ -42,6 +42,27 @@ test('database seat conflicts become HTTP 409 without exposing SQL details', asy
   await assert.rejects(service.createBooking(5, { showtimeId: 7, seatIds: [11], products: [], promotionCode: null }), {
     status: 409, code: 'SEAT_CONFLICT',
   });
+});
+
+test('a requested promotion rejection returns a safe conflict and never resubmits', async () => {
+  const { service, results, calls } = fixture();
+  const error = new Error('private promotion state'); error.originalError = { info: { number: 50029 } };
+  results.set('BOOKING_CREATE', error);
+  await assert.rejects(service.createBooking(5, { showtimeId:7, seatIds:[11], products:[], promotionCode:'STALE' }),
+    thrown => thrown.status === 409 && thrown.code === 'PROMOTION_NOT_AVAILABLE' && !thrown.message.includes('private'));
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].params.MaKhuyenMai.value, 'STALE');
+});
+
+test('booking and seat reads share safe unavailable and missing-show responses', async () => {
+  for (const [number, status, code] of [[50022, 409, 'SHOWTIME_UNAVAILABLE'], [50021, 404, 'SHOWTIME_NOT_FOUND']]) {
+    const { service, results } = fixture();
+    const error = new Error('private SQL resource/status detail'); error.originalError = { info: { number } };
+    results.set('BOOKING_CREATE', error); results.set('SEAT_LIST_BY_SHOWTIME', error);
+    for (const action of [() => service.listSeats(7), () => service.createBooking(5, { showtimeId:7, seatIds:[11], products:[] })]) {
+      await assert.rejects(action(), thrown => thrown.status === status && thrown.code === code && !thrown.message.includes('private'));
+    }
+  }
 });
 
 test('booking limit errors and numeric overflow map to fixed 4xx responses', async () => {

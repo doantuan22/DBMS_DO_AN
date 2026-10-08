@@ -1,7 +1,7 @@
 import { userCanAct } from '../utils/authorization';
 import { formatDateTime, formatTime } from '../utils/dateTime';
 import HoldDeadline from '../components/HoldDeadline';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { createBooking, getProducts, getSeats, getShowtimeDetail, validatePromotion } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
@@ -32,17 +32,24 @@ export default function BookingPreparation() {
   const [promotionCode, setPromotionCode] = useState('');
   const [promotion, setPromotion] = useState(null);
   const [promotionBusy, setPromotionBusy] = useState(false);
+  const previewVersion = useRef(0);
   const [bookingState, setBookingState] = useState({ status: 'idle' });
   const [seatLimitNotice, setSeatLimitNotice] = useState(null);
 
   const loadSeats = useCallback(async (signal) => {
+    previewVersion.current += 1;
+    setPromotion(null);
     try {
       const rows = await getSeats(showtimeId, { signal });
       setSeats(rows);
       setSelectedSeatIds((previous) => previous.filter((id) => rows.some((seat) => seat.id === id && seat.status === 'Trống')));
       setSeatsState({ status: 'success' });
     } catch (error) {
-      if (error.name !== 'AbortError') setSeatsState({ status: 'error', error });
+      if (error.name !== 'AbortError') {
+        setSeats([]);
+        setSelectedSeatIds([]);
+        setSeatsState({ status: 'error', error });
+      }
     }
   }, [showtimeId]);
 
@@ -67,6 +74,7 @@ export default function BookingPreparation() {
   const selectedProducts = useMemo(() => toProducts(quantities), [quantities]);
 
   function toggleSeat(id) {
+    previewVersion.current += 1;
     setPromotion(null);
     const result = toggleSeatSelection(selectedSeatIds, id);
     setSeatLimitNotice(result.limitReached ? SEAT_LIMIT_MESSAGE : null);
@@ -74,6 +82,7 @@ export default function BookingPreparation() {
   }
 
   function changeQuantity(productId, value) {
+    previewVersion.current += 1;
     const { quantity } = clampQuantity(value);
     setPromotion(null);
     setQuantities((previous) => ({ ...previous, [productId]: quantity }));
@@ -86,11 +95,12 @@ export default function BookingPreparation() {
       return;
     }
     setPromotionBusy(true);
+    const version = ++previewVersion.current;
     try {
       const result = await validatePromotion({ showtimeId: Number(showtimeId), seatIds: selectedSeatIds, products: selectedProducts, promotionCode });
-      setPromotion(result.promotion);
+      if (version === previewVersion.current) setPromotion(result.promotion);
     } catch (error) {
-      setPromotion({ isValid: false, message: error.message });
+      if (version === previewVersion.current) setPromotion({ isValid: false, message: error.message });
     } finally { setPromotionBusy(false); }
   }
 
@@ -101,6 +111,7 @@ export default function BookingPreparation() {
       return;
     }
     setBookingState({ status: 'loading' });
+    previewVersion.current += 1;
     try {
       const result = await createBooking({ showtimeId: Number(showtimeId), seatIds: selectedSeatIds, products: selectedProducts, promotionCode: promotionCode.trim() || undefined });
       setBookingState({ status: 'success', booking: result.booking });
@@ -108,7 +119,15 @@ export default function BookingPreparation() {
       await loadSeats();
     } catch (error) {
       const friendly = bookingErrorMessage(error);
-      if (error.status === 409 && !friendly) {
+      if (error.code === 'PROMOTION_NOT_AVAILABLE') {
+        setPromotion({ isValid: false, message: friendly });
+        setBookingState({ status: 'error', message: friendly });
+      } else if (error.code === 'SHOWTIME_UNAVAILABLE') {
+        setSelectedSeatIds([]);
+        setPromotion(null);
+        setBookingState({ status: 'error', message: friendly });
+        await loadSeats();
+      } else if (error.status === 409 && !friendly) {
         setSelectedSeatIds([]);
         setBookingState({ status: 'conflict', message: error.message });
         await loadSeats();
@@ -137,9 +156,10 @@ export default function BookingPreparation() {
       <section className="booking-section" aria-labelledby="promotion-heading">
         <h2 id="promotion-heading">Khuyến mãi</h2>
         <label>Mã khuyến mãi
-          <input value={promotionCode} maxLength="50" onChange={(event) => { setPromotionCode(event.target.value); setPromotion(null); }} />
+          <input value={promotionCode} maxLength="50" onChange={(event) => { previewVersion.current += 1; setPromotionCode(event.target.value); setPromotion(null); }} />
         </label>
-        <button type="button" className="catalog-button catalog-button--secondary" onClick={applyPromotion} disabled={promotionBusy || !canBook}>{promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}</button>
+        <button type="button" className="catalog-button catalog-button--secondary" onClick={applyPromotion} disabled={promotionBusy || bookingState.status === 'loading' || !canBook}>{promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}</button>
+        <p className="catalog-muted">Kết quả khuyến mãi là tạm tính; mã sẽ được kiểm tra lại khi đặt vé.</p>
         {promotion && <p role="status">{promotion.message}{promotion.isValid ? ` Giảm tạm tính: ${money(promotion.discountAmount)}.` : ''}</p>}
       </section>
 
