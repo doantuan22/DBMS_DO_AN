@@ -1,0 +1,76 @@
+{"executable":"C:\\Program Files\\nodejs\\node.exe","args":["C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js","run","test"],"cwd":"C:\\Users\\Admin\\AppData\\Local\\Temp\\dbms-r47-regression-I4kxWV\\frontend","exitCode":0,"signal":null}
+
+> frontend@0.0.0 test
+> node --test --test-concurrency=1 tests/*.test.js
+
+✔ R4.3 pricing edit exposes all seven fields and keeps cinema immutable (2.2863ms)
+✔ R4.3 existing editor hydration and payload retain selected values without defaults (0.4027ms)
+✔ R4.3 open-ended pricing hydrates blank and clearing end date submits explicit null (0.1627ms)
+✔ R4.3 Admin edit retains the R0 three-day whitelist (0.294ms)
+✔ Admin portal exposes the ADM resource work areas, including global cinema resources (349.8774ms)
+✔ cinema image status is chosen from the whitelist, not typed freely (2.0513ms)
+✔ existing HTTP client preserves real429 error/status and never retries automatically (244.3128ms)
+✔ existing auth session preserves state and makes no repeated requests when login/register rate limited (0.8941ms)
+✔ login page renders accessible email and password controls (238.8227ms)
+✔ customer registration renders profile fields without a role selector (2.3388ms)
+✔ initialization restores a user only when a session token exists (1.2766ms)
+✔ login stores one token, loads current user, and logout clears it (0.2ms)
+✔ failed current-user refresh clears the just-issued token (0.97ms)
+✔ area routing and navigation require both the expected role and DB-loaded permission (1.3349ms)
+✔ R2 held-order cancellation conflicts explain the waiting reason in Vietnamese (221.1926ms)
+✔ the limits are the agreed ones and live in one constants module (0.7307ms)
+✔ seat selection stops at 10 seats and the 11th seat is refused (0.3354ms)
+✔ product quantity is clamped to 10 and reports when the user asked for more (0.2275ms)
+✔ seat map shows the counter, flags the limit and the notice (9.7259ms)
+✔ product picker caps the input at 10 and says so at the cap (5.773ms)
+✔ limit and hold errors of the booking flow have friendly Vietnamese messages (0.3539ms)
+✔ R4.4 UX accepts nine/ten seats and refuses the eleventh without losing selection (164.8682ms)
+✔ R4.4 UX quantity zero means deselection; nine/ten/eleven follow per-product limit (0.2761ms)
+✔ R4.4 current booking and payment pages distinguish preview and authoritative responses (0.5328ms)
+✔ home, movie list, and cinema list render loading states (507.2576ms)
+✔ movie cards link to the real movie identifier (1.2425ms)
+✔ movie detail and selected-showtime route render loading shells for guests (3.7924ms)
+✔ cinema/date selectors render API-backed choices and showtime selection carries its ID (7.0624ms)
+✔ showtime browser has empty and loading states (0.9965ms)
+✔ seat map preserves each database state and only enables empty seats (1.3545ms)
+✔ product picker submits quantities without accepting a product price from the user (0.675ms)
+✔ guest can render the public movie route without authentication (5.8912ms)
+✔ order history, detail and payment pages render database-backed loading shells (2.2673ms)
+✔ catalog resources represent success, empty results, and errors (1.2946ms)
+✔ showtime filters omit unselected values and use a stable local calendar date (5.5145ms)
+✔ Vietnam datetime-local create/edit roundtrip preserves the instant (10.1233ms)
+✔ near midnight conversion keeps the local date across UTC day boundary (1.5609ms)
+✔ date-only formatting and invalid inputs cannot silently change dates (1.401ms)
+✔ countdown uses the server deadline at expiry minus/equal/plus one second (0.2863ms)
+✔ display and datetime-local conversion are independent of browser host timezone (232.0439ms)
+✔ R0 rendered Admin pricing uses a required dropdown with exactly three supported choices (251.9374ms)
+✔ R0 rendered manager pricing forms expose only the three day choices (10.2995ms)
+✔ R0 admin and manager payload builders accept all three official day types (1.9004ms)
+✔ R0 admin and manager payload builders reject obsolete or unknown day types (2.6496ms)
+✔ own Customer history and Manager/Admin areas do not require a representative write permission (1.3514ms)
+✔ the same permission never makes a foreign role eligible and every Support combination is required (0.7617ms)
+✔ partial-grant loads skip unauthorized APIs and an API failure cannot discard other sections (0.363ms)
+✔ R5 BUG008: empty CSV permissions/genres stay empty; invalid IDs are not silently dropped (1.3262ms)
+✔ R5 BUG002: all status-bearing Admin forms have shared DB enum options (0.299ms)
+✔ R7 edit hydration roundtrips UTC and DATE_ONLY, excluding immutable IDs/room and hidden fields (225.8277ms)
+✔ R7 gallery excludes inactive images, sorts cover first then display order, and has accessible empty/single/multi output (7.4015ms)
+✔ R7 reference shows financial totals and every payment attempt plus compensation (4.5885ms)
+✔ profile KHACH_HANG exposes editable fields belonging to current role (202.2504ms)
+✔ profile QUAN_LY_RAP exposes editable fields belonging to current role (1.1152ms)
+✔ profile CSKH exposes editable fields belonging to current role (0.7738ms)
+✔ profile ADMIN exposes editable fields belonging to current role (0.6846ms)
+✔ CSKH portal renders queue filters and a protected loading state (236.8328ms)
+✔ unknown paths show the 404 page inside the public layout (510.7289ms)
+✔ guests see login and register actions in the shared header and the site footer (5.4446ms)
+✔ seat map groups seats by row, orders them numerically and names every seat for assistive tech (1.4079ms)
+✔ seat map still renders rows for seats without row or number fields (0.7922ms)
+✔ status badge maps database statuses to a tone and falls back to neutral (0.9ms)
+ℹ tests 62
+ℹ suites 0
+ℹ pass 62
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8726.0672
+

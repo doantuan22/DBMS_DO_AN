@@ -106,8 +106,11 @@ export function createBookingService({ execute = executeProcedure, executeWithOu
     if (selectedProducts.some((item) => !item.product)) {
       throw new HttpError(400, 'PRODUCT_NOT_AVAILABLE', 'One or more products are unavailable.');
     }
-    const provisionalTotal = selectedSeats.reduce((total, seat) => total + Number(seat.price), 0)
+    const provisionalSum = selectedSeats.reduce((total, seat) => total + Number(seat.price), 0)
       + selectedProducts.reduce((total, item) => total + (Number(item.product.price) * item.quantity), 0);
+    // DB prices are DECIMAL(18,2). Remove binary addition/multiplication noise
+    // at that same scale before the typed preview bind; booking still recalculates.
+    const provisionalTotal = Number(provisionalSum.toFixed(2));
     const result = await executeWithOutputs('PROMOTION_VALIDATE', {
       NguoiDungID: { type: DbTypes.Int, value: userId },
       MaCode: { type: DbTypes.VarChar(50), value: input.promotionCode },

@@ -1,0 +1,4740 @@
+{
+  "database": "CinemaBookingDB_R0_R33_20261008_01",
+  "startedAt": "2026-10-08T08:51:40.112Z",
+  "status": "PASS",
+  "cases": [
+    {
+      "Role": "manager",
+      "TestCase": "create_clear",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1229,
+            "RapID": 1,
+            "TenPhong": "R12 945AF84E-8B97-48FF-8E8E-2D588C396C4F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1230,
+            "RapID": 1,
+            "TenPhong": "R12 F2EB3E84-967C-4452-A687-4E61975479ED",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3343,
+            "PhongID": 1229,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1229,
+            "RapID": 1,
+            "TenPhong": "R12 945AF84E-8B97-48FF-8E8E-2D588C396C4F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1230,
+            "RapID": 1,
+            "TenPhong": "R12 F2EB3E84-967C-4452-A687-4E61975479ED",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3343,
+            "PhongID": 1229,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1051,
+            "PhimID": 4,
+            "PhongID": 1229,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "create_boundary",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1231,
+            "RapID": 1,
+            "TenPhong": "R12 DB4B3E95-20FC-4534-B317-16E3EBD90918",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1232,
+            "RapID": 1,
+            "TenPhong": "R12 E895C779-F675-487D-A610-D3E487F7C55E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3344,
+            "PhongID": 1231,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1052,
+            "PhimID": 4,
+            "PhongID": 1231,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1231,
+            "RapID": 1,
+            "TenPhong": "R12 DB4B3E95-20FC-4534-B317-16E3EBD90918",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1232,
+            "RapID": 1,
+            "TenPhong": "R12 E895C779-F675-487D-A610-D3E487F7C55E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3344,
+            "PhongID": 1231,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1052,
+            "PhimID": 4,
+            "PhongID": 1231,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1053,
+            "PhimID": 4,
+            "PhongID": 1231,
+            "ThoiGianBatDau": "2026-10-18T11:41:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T14:31:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "missing_room",
+      "ErrorNumber": 50056,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1263,
+            "RapID": 1,
+            "TenPhong": "R12 AEE28A21-3346-4A09-9294-E015BBF3D5A6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1264,
+            "RapID": 1,
+            "TenPhong": "R12 219BC695-45BC-4446-80DF-AFE4437C9551",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3360,
+            "PhongID": 1263,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1263,
+            "RapID": 1,
+            "TenPhong": "R12 AEE28A21-3346-4A09-9294-E015BBF3D5A6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1264,
+            "RapID": 1,
+            "TenPhong": "R12 219BC695-45BC-4446-80DF-AFE4437C9551",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3360,
+            "PhongID": 1263,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "invalid_time",
+      "ErrorNumber": 50216,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1269,
+            "RapID": 1,
+            "TenPhong": "R12 37670DBA-25DC-4816-A31F-08A7F98DAE65",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1270,
+            "RapID": 1,
+            "TenPhong": "R12 1BAB1140-961E-4775-9705-6F8501A54C2D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3363,
+            "PhongID": 1269,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1269,
+            "RapID": 1,
+            "TenPhong": "R12 37670DBA-25DC-4816-A31F-08A7F98DAE65",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1270,
+            "RapID": 1,
+            "TenPhong": "R12 1BAB1140-961E-4775-9705-6F8501A54C2D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3363,
+            "PhongID": 1269,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "different_room",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1233,
+            "RapID": 1,
+            "TenPhong": "R12 E4AD4E47-6C8F-496A-BB75-42E8D27F704F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1234,
+            "RapID": 1,
+            "TenPhong": "R12 01F2A214-099F-466C-BD76-CFDB87791CF9",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3345,
+            "PhongID": 1233,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1054,
+            "PhimID": 4,
+            "PhongID": 1233,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1233,
+            "RapID": 1,
+            "TenPhong": "R12 E4AD4E47-6C8F-496A-BB75-42E8D27F704F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1234,
+            "RapID": 1,
+            "TenPhong": "R12 01F2A214-099F-466C-BD76-CFDB87791CF9",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3345,
+            "PhongID": 1233,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1054,
+            "PhimID": 4,
+            "PhongID": 1233,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1055,
+            "PhimID": 4,
+            "PhongID": 1234,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "exact",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1235,
+            "RapID": 1,
+            "TenPhong": "R12 BBA02B91-5F54-4CF8-90E1-B7D25F06C122",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1236,
+            "RapID": 1,
+            "TenPhong": "R12 CFCBA890-1B2E-4DFB-B608-1720BC66EF2A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3346,
+            "PhongID": 1235,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1056,
+            "PhimID": 4,
+            "PhongID": 1235,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1235,
+            "RapID": 1,
+            "TenPhong": "R12 BBA02B91-5F54-4CF8-90E1-B7D25F06C122",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1236,
+            "RapID": 1,
+            "TenPhong": "R12 CFCBA890-1B2E-4DFB-B608-1720BC66EF2A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3346,
+            "PhongID": 1235,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1056,
+            "PhimID": 4,
+            "PhongID": 1235,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "foreign_scope",
+      "ErrorNumber": 50050,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1313,
+            "RapID": 712,
+            "TenPhong": "R12 04D2210F-424D-4CE8-9FF2-E9E2C869867E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1314,
+            "RapID": 1,
+            "TenPhong": "R12 F0D83779-CCA9-4EB9-B1C3-538A4C432B81",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3385,
+            "PhongID": 1313,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1313,
+            "RapID": 712,
+            "TenPhong": "R12 04D2210F-424D-4CE8-9FF2-E9E2C869867E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1314,
+            "RapID": 1,
+            "TenPhong": "R12 F0D83779-CCA9-4EB9-B1C3-538A4C432B81",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3385,
+            "PhongID": 1313,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "inside",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1237,
+            "RapID": 1,
+            "TenPhong": "R12 4560E579-5CF1-44C3-BBBB-806134D7C06F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1238,
+            "RapID": 1,
+            "TenPhong": "R12 21529666-A266-4083-820E-31F372A59B15",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3347,
+            "PhongID": 1237,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1057,
+            "PhimID": 4,
+            "PhongID": 1237,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1237,
+            "RapID": 1,
+            "TenPhong": "R12 4560E579-5CF1-44C3-BBBB-806134D7C06F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1238,
+            "RapID": 1,
+            "TenPhong": "R12 21529666-A266-4083-820E-31F372A59B15",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3347,
+            "PhongID": 1237,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1057,
+            "PhimID": 4,
+            "PhongID": 1237,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "contains",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1239,
+            "RapID": 1,
+            "TenPhong": "R12 5E25AC0C-8466-4AE3-BB21-3B138CF2005B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1240,
+            "RapID": 1,
+            "TenPhong": "R12 ECDA5460-F776-4D2F-9253-81358BE6F088",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3348,
+            "PhongID": 1239,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1058,
+            "PhimID": 4,
+            "PhongID": 1239,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1239,
+            "RapID": 1,
+            "TenPhong": "R12 5E25AC0C-8466-4AE3-BB21-3B138CF2005B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1240,
+            "RapID": 1,
+            "TenPhong": "R12 ECDA5460-F776-4D2F-9253-81358BE6F088",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3348,
+            "PhongID": 1239,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1058,
+            "PhimID": 4,
+            "PhongID": 1239,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "partial_before",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1241,
+            "RapID": 1,
+            "TenPhong": "R12 4F668ABD-8F6F-46C0-8DB8-EDF209D116D8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1242,
+            "RapID": 1,
+            "TenPhong": "R12 52206ADE-F716-4933-AE30-BA1BDE128472",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3349,
+            "PhongID": 1241,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1059,
+            "PhimID": 4,
+            "PhongID": 1241,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1241,
+            "RapID": 1,
+            "TenPhong": "R12 4F668ABD-8F6F-46C0-8DB8-EDF209D116D8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1242,
+            "RapID": 1,
+            "TenPhong": "R12 52206ADE-F716-4933-AE30-BA1BDE128472",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3349,
+            "PhongID": 1241,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1059,
+            "PhimID": 4,
+            "PhongID": 1241,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "partial_after",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1243,
+            "RapID": 1,
+            "TenPhong": "R12 C6FB1539-C065-4345-A06A-D32BBAB0B3F1",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1244,
+            "RapID": 1,
+            "TenPhong": "R12 CB9C706F-CFD8-4316-8757-15F49E9F6D13",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3350,
+            "PhongID": 1243,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1060,
+            "PhimID": 4,
+            "PhongID": 1243,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1243,
+            "RapID": 1,
+            "TenPhong": "R12 C6FB1539-C065-4345-A06A-D32BBAB0B3F1",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1244,
+            "RapID": 1,
+            "TenPhong": "R12 CB9C706F-CFD8-4316-8757-15F49E9F6D13",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3350,
+            "PhongID": 1243,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1060,
+            "PhimID": 4,
+            "PhongID": 1243,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "update_clear",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1245,
+            "RapID": 1,
+            "TenPhong": "R12 7673C1BA-9F90-4BC3-92E6-BB68B039ADD3",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1246,
+            "RapID": 1,
+            "TenPhong": "R12 91007409-7DD5-4BF0-9870-BCBD25E5623A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3351,
+            "PhongID": 1245,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1061,
+            "PhimID": 4,
+            "PhongID": 1245,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1062,
+            "PhimID": 4,
+            "PhongID": 1245,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1245,
+            "RapID": 1,
+            "TenPhong": "R12 7673C1BA-9F90-4BC3-92E6-BB68B039ADD3",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1246,
+            "RapID": 1,
+            "TenPhong": "R12 91007409-7DD5-4BF0-9870-BCBD25E5623A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3351,
+            "PhongID": 1245,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1061,
+            "PhimID": 4,
+            "PhongID": 1245,
+            "ThoiGianBatDau": "2026-10-18T14:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T17:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1062,
+            "PhimID": 4,
+            "PhongID": 1245,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "update_conflict",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1247,
+            "RapID": 1,
+            "TenPhong": "R12 5C3F758A-81FE-4A3A-A464-A2AC6178D280",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1248,
+            "RapID": 1,
+            "TenPhong": "R12 8BF3C813-EE12-4A1E-B213-06EDDE46E1C1",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3352,
+            "PhongID": 1247,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1063,
+            "PhimID": 4,
+            "PhongID": 1247,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1064,
+            "PhimID": 4,
+            "PhongID": 1247,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1247,
+            "RapID": 1,
+            "TenPhong": "R12 5C3F758A-81FE-4A3A-A464-A2AC6178D280",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1248,
+            "RapID": 1,
+            "TenPhong": "R12 8BF3C813-EE12-4A1E-B213-06EDDE46E1C1",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3352,
+            "PhongID": 1247,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1063,
+            "PhimID": 4,
+            "PhongID": 1247,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1064,
+            "PhimID": 4,
+            "PhongID": 1247,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "update_same",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1249,
+            "RapID": 1,
+            "TenPhong": "R12 45232411-EDD7-4678-AD82-A7C130186BFE",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1250,
+            "RapID": 1,
+            "TenPhong": "R12 73FCD3E7-EF6D-4842-B19C-7FB439DE9A39",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3353,
+            "PhongID": 1249,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1065,
+            "PhimID": 4,
+            "PhongID": 1249,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1066,
+            "PhimID": 4,
+            "PhongID": 1249,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1249,
+            "RapID": 1,
+            "TenPhong": "R12 45232411-EDD7-4678-AD82-A7C130186BFE",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1250,
+            "RapID": 1,
+            "TenPhong": "R12 73FCD3E7-EF6D-4842-B19C-7FB439DE9A39",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3353,
+            "PhongID": 1249,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1065,
+            "PhimID": 4,
+            "PhongID": 1249,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1066,
+            "PhimID": 4,
+            "PhongID": 1249,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "update_boundary",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1251,
+            "RapID": 1,
+            "TenPhong": "R12 09D81282-8C7B-4DF3-8F78-8A307F23BF9B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1252,
+            "RapID": 1,
+            "TenPhong": "R12 D37279E2-3A8A-4E86-98FD-B6113BA7C791",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3354,
+            "PhongID": 1251,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1067,
+            "PhimID": 4,
+            "PhongID": 1251,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1068,
+            "PhimID": 4,
+            "PhongID": 1251,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1251,
+            "RapID": 1,
+            "TenPhong": "R12 09D81282-8C7B-4DF3-8F78-8A307F23BF9B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1252,
+            "RapID": 1,
+            "TenPhong": "R12 D37279E2-3A8A-4E86-98FD-B6113BA7C791",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3354,
+            "PhongID": 1251,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1067,
+            "PhimID": 4,
+            "PhongID": 1251,
+            "ThoiGianBatDau": "2026-10-18T18:01:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T20:51:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1068,
+            "PhimID": 4,
+            "PhongID": 1251,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "cancel",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1253,
+            "RapID": 1,
+            "TenPhong": "R12 CFA51E55-5C6D-4801-8872-B10C537FFC9A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1254,
+            "RapID": 1,
+            "TenPhong": "R12 A7B18590-205A-4A66-8353-805E62EB56D3",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3355,
+            "PhongID": 1253,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1069,
+            "PhimID": 4,
+            "PhongID": 1253,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1253,
+            "RapID": 1,
+            "TenPhong": "R12 CFA51E55-5C6D-4801-8872-B10C537FFC9A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1254,
+            "RapID": 1,
+            "TenPhong": "R12 A7B18590-205A-4A66-8353-805E62EB56D3",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3355,
+            "PhongID": 1253,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1069,
+            "PhimID": 4,
+            "PhongID": 1253,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Đã hủy"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "cancel_then_create",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1255,
+            "RapID": 1,
+            "TenPhong": "R12 6D1A23CA-808C-420F-83CD-A9333086433A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1256,
+            "RapID": 1,
+            "TenPhong": "R12 6E0ED403-A311-41AD-A9FF-EEADD868A218",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3356,
+            "PhongID": 1255,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1070,
+            "PhimID": 4,
+            "PhongID": 1255,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1255,
+            "RapID": 1,
+            "TenPhong": "R12 6D1A23CA-808C-420F-83CD-A9333086433A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1256,
+            "RapID": 1,
+            "TenPhong": "R12 6E0ED403-A311-41AD-A9FF-EEADD868A218",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3356,
+            "PhongID": 1255,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1070,
+            "PhimID": 4,
+            "PhongID": 1255,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Đã hủy"
+          },
+          {
+            "SuatChieuID": 1071,
+            "PhimID": 4,
+            "PhongID": 1255,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "cancel_completed",
+      "ErrorNumber": 50119,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1257,
+            "RapID": 1,
+            "TenPhong": "R12 D803E920-17BD-42CC-B807-A7F069E05E20",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1258,
+            "RapID": 1,
+            "TenPhong": "R12 286AF5DF-5A1B-47F3-9FF3-60AEA3B775F6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3357,
+            "PhongID": 1257,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1072,
+            "PhimID": 4,
+            "PhongID": 1257,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1257,
+            "RapID": 1,
+            "TenPhong": "R12 D803E920-17BD-42CC-B807-A7F069E05E20",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1258,
+            "RapID": 1,
+            "TenPhong": "R12 286AF5DF-5A1B-47F3-9FF3-60AEA3B775F6",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3357,
+            "PhongID": 1257,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1072,
+            "PhimID": 4,
+            "PhongID": 1257,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "cancel_held",
+      "ErrorNumber": 50118,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1259,
+            "RapID": 1,
+            "TenPhong": "R12 0B305A13-24F1-423F-B5AC-782AC7F81BBC",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1260,
+            "RapID": 1,
+            "TenPhong": "R12 8E59D7E7-EB63-4087-B0FD-8E3E51C9753B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3358,
+            "PhongID": 1259,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1073,
+            "PhimID": 4,
+            "PhongID": 1259,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6530,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1073,
+            "NgayDat": "2026-10-08T08:51:40.6159028",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.6159028"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1259,
+            "RapID": 1,
+            "TenPhong": "R12 0B305A13-24F1-423F-B5AC-782AC7F81BBC",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1260,
+            "RapID": 1,
+            "TenPhong": "R12 8E59D7E7-EB63-4087-B0FD-8E3E51C9753B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3358,
+            "PhongID": 1259,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1073,
+            "PhimID": 4,
+            "PhongID": 1259,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6530,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1073,
+            "NgayDat": "2026-10-08T08:51:40.6159028",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.6159028"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "update_paid",
+      "ErrorNumber": 50120,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1261,
+            "RapID": 1,
+            "TenPhong": "R12 7A36AB18-5228-4A14-AB5C-866B9D47B51F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1262,
+            "RapID": 1,
+            "TenPhong": "R12 443E6529-68CE-4343-A48F-F5E00A91840E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3359,
+            "PhongID": 1261,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1074,
+            "PhimID": 4,
+            "PhongID": 1261,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1075,
+            "PhimID": 4,
+            "PhongID": 1261,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6531,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1074,
+            "NgayDat": "2026-10-08T08:51:40.6389739",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Đã thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.6389739"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1261,
+            "RapID": 1,
+            "TenPhong": "R12 7A36AB18-5228-4A14-AB5C-866B9D47B51F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1262,
+            "RapID": 1,
+            "TenPhong": "R12 443E6529-68CE-4343-A48F-F5E00A91840E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3359,
+            "PhongID": 1261,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1074,
+            "PhimID": 4,
+            "PhongID": 1261,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1075,
+            "PhimID": 4,
+            "PhongID": 1261,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6531,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1074,
+            "NgayDat": "2026-10-08T08:51:40.6389739",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Đã thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.6389739"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "expired_assignment",
+      "ErrorNumber": 50050,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1315,
+            "RapID": 712,
+            "TenPhong": "R12 4BBF9709-90B3-4B66-9095-ED74D025470F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1316,
+            "RapID": 1,
+            "TenPhong": "R12 B42BF719-4C40-4AAE-8632-5FDF8D37E568",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3386,
+            "PhongID": 1315,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1315,
+            "RapID": 712,
+            "TenPhong": "R12 4BBF9709-90B3-4B66-9095-ED74D025470F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1316,
+            "RapID": 1,
+            "TenPhong": "R12 B42BF719-4C40-4AAE-8632-5FDF8D37E568",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3386,
+            "PhongID": 1315,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "trigger",
+      "TestCase": "multirow_overlap",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1321,
+            "RapID": 1,
+            "TenPhong": "R12 E61D2EA4-EBAE-4D82-9C79-3814E16C2724",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1322,
+            "RapID": 1,
+            "TenPhong": "R12 78F12967-3B75-478D-86B9-E02E4951A839",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3389,
+            "PhongID": 1321,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1321,
+            "RapID": 1,
+            "TenPhong": "R12 E61D2EA4-EBAE-4D82-9C79-3814E16C2724",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1322,
+            "RapID": 1,
+            "TenPhong": "R12 78F12967-3B75-478D-86B9-E02E4951A839",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3389,
+            "PhongID": 1321,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "missing_show_update",
+      "ErrorNumber": 50058,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1265,
+            "RapID": 1,
+            "TenPhong": "R12 422A7A0D-E8A9-4F71-BE0D-200BB195AB9C",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1266,
+            "RapID": 1,
+            "TenPhong": "R12 7946EA60-4DCC-4687-B37F-4486789634C4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3361,
+            "PhongID": 1265,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1076,
+            "PhimID": 4,
+            "PhongID": 1265,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1265,
+            "RapID": 1,
+            "TenPhong": "R12 422A7A0D-E8A9-4F71-BE0D-200BB195AB9C",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1266,
+            "RapID": 1,
+            "TenPhong": "R12 7946EA60-4DCC-4687-B37F-4486789634C4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3361,
+            "PhongID": 1265,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1076,
+            "PhimID": 4,
+            "PhongID": 1265,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "manager",
+      "TestCase": "missing_show_cancel",
+      "ErrorNumber": 50116,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1267,
+            "RapID": 1,
+            "TenPhong": "R12 5942B7AB-E364-4099-A757-D72CDF5719A2",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1268,
+            "RapID": 1,
+            "TenPhong": "R12 FAAE4E27-ABBE-4220-A21D-D56603627F39",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3362,
+            "PhongID": 1267,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1077,
+            "PhimID": 4,
+            "PhongID": 1267,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1267,
+            "RapID": 1,
+            "TenPhong": "R12 5942B7AB-E364-4099-A757-D72CDF5719A2",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1268,
+            "RapID": 1,
+            "TenPhong": "R12 FAAE4E27-ABBE-4220-A21D-D56603627F39",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3362,
+            "PhongID": 1267,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1077,
+            "PhimID": 4,
+            "PhongID": 1267,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "create_clear",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1271,
+            "RapID": 1,
+            "TenPhong": "R12 7E01209E-169C-4970-B3B3-BCCBBFEAA154",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1272,
+            "RapID": 1,
+            "TenPhong": "R12 0914266D-CC82-4CF8-BDAF-E05BA8FFDE60",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3364,
+            "PhongID": 1271,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1271,
+            "RapID": 1,
+            "TenPhong": "R12 7E01209E-169C-4970-B3B3-BCCBBFEAA154",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1272,
+            "RapID": 1,
+            "TenPhong": "R12 0914266D-CC82-4CF8-BDAF-E05BA8FFDE60",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3364,
+            "PhongID": 1271,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1078,
+            "PhimID": 4,
+            "PhongID": 1271,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "create_boundary",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1273,
+            "RapID": 1,
+            "TenPhong": "R12 8404E542-3599-4E35-83B3-5052B17AE783",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1274,
+            "RapID": 1,
+            "TenPhong": "R12 A2DA5CD2-225C-4ADC-A9CE-167BBA8259E4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3365,
+            "PhongID": 1273,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1079,
+            "PhimID": 4,
+            "PhongID": 1273,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1273,
+            "RapID": 1,
+            "TenPhong": "R12 8404E542-3599-4E35-83B3-5052B17AE783",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1274,
+            "RapID": 1,
+            "TenPhong": "R12 A2DA5CD2-225C-4ADC-A9CE-167BBA8259E4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3365,
+            "PhongID": 1273,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1079,
+            "PhimID": 4,
+            "PhongID": 1273,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1080,
+            "PhimID": 4,
+            "PhongID": 1273,
+            "ThoiGianBatDau": "2026-10-18T11:41:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T14:31:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "different_room",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1275,
+            "RapID": 1,
+            "TenPhong": "R12 D53EE574-5856-4991-BA89-00FD1A112A17",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1276,
+            "RapID": 1,
+            "TenPhong": "R12 6EFF1ADA-3AEE-43D6-A094-6D75930C4347",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3366,
+            "PhongID": 1275,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1081,
+            "PhimID": 4,
+            "PhongID": 1275,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1275,
+            "RapID": 1,
+            "TenPhong": "R12 D53EE574-5856-4991-BA89-00FD1A112A17",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1276,
+            "RapID": 1,
+            "TenPhong": "R12 6EFF1ADA-3AEE-43D6-A094-6D75930C4347",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3366,
+            "PhongID": 1275,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1081,
+            "PhimID": 4,
+            "PhongID": 1275,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1082,
+            "PhimID": 4,
+            "PhongID": 1276,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "exact",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1277,
+            "RapID": 1,
+            "TenPhong": "R12 10D48AFB-55D6-44C4-B90A-CE312682183D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1278,
+            "RapID": 1,
+            "TenPhong": "R12 597CF8BC-F98B-4711-9F83-3BB0768C9F73",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3367,
+            "PhongID": 1277,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1083,
+            "PhimID": 4,
+            "PhongID": 1277,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1277,
+            "RapID": 1,
+            "TenPhong": "R12 10D48AFB-55D6-44C4-B90A-CE312682183D",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1278,
+            "RapID": 1,
+            "TenPhong": "R12 597CF8BC-F98B-4711-9F83-3BB0768C9F73",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3367,
+            "PhongID": 1277,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1083,
+            "PhimID": 4,
+            "PhongID": 1277,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "inside",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1279,
+            "RapID": 1,
+            "TenPhong": "R12 F40A8016-BB69-42A0-B384-EE61831BA01C",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1280,
+            "RapID": 1,
+            "TenPhong": "R12 CF3B26D5-3295-41DB-9343-4917256F45AA",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3368,
+            "PhongID": 1279,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1084,
+            "PhimID": 4,
+            "PhongID": 1279,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1279,
+            "RapID": 1,
+            "TenPhong": "R12 F40A8016-BB69-42A0-B384-EE61831BA01C",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1280,
+            "RapID": 1,
+            "TenPhong": "R12 CF3B26D5-3295-41DB-9343-4917256F45AA",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3368,
+            "PhongID": 1279,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1084,
+            "PhimID": 4,
+            "PhongID": 1279,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "contains",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1281,
+            "RapID": 1,
+            "TenPhong": "R12 F79D5F43-7AD8-4F1B-81EB-2373816A5B81",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1282,
+            "RapID": 1,
+            "TenPhong": "R12 46791835-D674-4D8D-90E5-3361ECDA4082",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3369,
+            "PhongID": 1281,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1085,
+            "PhimID": 4,
+            "PhongID": 1281,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1281,
+            "RapID": 1,
+            "TenPhong": "R12 F79D5F43-7AD8-4F1B-81EB-2373816A5B81",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1282,
+            "RapID": 1,
+            "TenPhong": "R12 46791835-D674-4D8D-90E5-3361ECDA4082",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3369,
+            "PhongID": 1281,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1085,
+            "PhimID": 4,
+            "PhongID": 1281,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "partial_before",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1283,
+            "RapID": 1,
+            "TenPhong": "R12 32A45DF1-8A37-45F6-9FCB-369E38F68DC2",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1284,
+            "RapID": 1,
+            "TenPhong": "R12 4A08BD68-4C6C-45DD-B024-4BF4118263C4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3370,
+            "PhongID": 1283,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1086,
+            "PhimID": 4,
+            "PhongID": 1283,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1283,
+            "RapID": 1,
+            "TenPhong": "R12 32A45DF1-8A37-45F6-9FCB-369E38F68DC2",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1284,
+            "RapID": 1,
+            "TenPhong": "R12 4A08BD68-4C6C-45DD-B024-4BF4118263C4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3370,
+            "PhongID": 1283,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1086,
+            "PhimID": 4,
+            "PhongID": 1283,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "missing_room",
+      "ErrorNumber": 50056,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1305,
+            "RapID": 1,
+            "TenPhong": "R12 AC8E9F8B-636C-4657-856E-A85DC2CFC935",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1306,
+            "RapID": 1,
+            "TenPhong": "R12 78086545-5097-49E2-A2A5-5E02C9848F1A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3381,
+            "PhongID": 1305,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1305,
+            "RapID": 1,
+            "TenPhong": "R12 AC8E9F8B-636C-4657-856E-A85DC2CFC935",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1306,
+            "RapID": 1,
+            "TenPhong": "R12 78086545-5097-49E2-A2A5-5E02C9848F1A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3381,
+            "PhongID": 1305,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "invalid_time",
+      "ErrorNumber": 50216,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1311,
+            "RapID": 1,
+            "TenPhong": "R12 40E8CCF1-5829-468B-87E6-1DB02C3ED8A0",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1312,
+            "RapID": 1,
+            "TenPhong": "R12 01BEA93C-3776-4552-AF04-0A3173343D78",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3384,
+            "PhongID": 1311,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1311,
+            "RapID": 1,
+            "TenPhong": "R12 40E8CCF1-5829-468B-87E6-1DB02C3ED8A0",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1312,
+            "RapID": 1,
+            "TenPhong": "R12 01BEA93C-3776-4552-AF04-0A3173343D78",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3384,
+            "PhongID": 1311,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "partial_after",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1285,
+            "RapID": 1,
+            "TenPhong": "R12 71E3F7AC-6636-4C34-A8DF-4BC3A9739EE1",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1286,
+            "RapID": 1,
+            "TenPhong": "R12 C3ABDF42-79EE-4F73-A39E-8459BF4F5976",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3371,
+            "PhongID": 1285,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1087,
+            "PhimID": 4,
+            "PhongID": 1285,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1285,
+            "RapID": 1,
+            "TenPhong": "R12 71E3F7AC-6636-4C34-A8DF-4BC3A9739EE1",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1286,
+            "RapID": 1,
+            "TenPhong": "R12 C3ABDF42-79EE-4F73-A39E-8459BF4F5976",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3371,
+            "PhongID": 1285,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1087,
+            "PhimID": 4,
+            "PhongID": 1285,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "update_clear",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1287,
+            "RapID": 1,
+            "TenPhong": "R12 CE41F240-1226-4EE0-A578-F96337114EC4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1288,
+            "RapID": 1,
+            "TenPhong": "R12 C0C5E215-8D3B-4767-959B-1F26EECD6125",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3372,
+            "PhongID": 1287,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1088,
+            "PhimID": 4,
+            "PhongID": 1287,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1089,
+            "PhimID": 4,
+            "PhongID": 1287,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1287,
+            "RapID": 1,
+            "TenPhong": "R12 CE41F240-1226-4EE0-A578-F96337114EC4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1288,
+            "RapID": 1,
+            "TenPhong": "R12 C0C5E215-8D3B-4767-959B-1F26EECD6125",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3372,
+            "PhongID": 1287,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1088,
+            "PhimID": 4,
+            "PhongID": 1287,
+            "ThoiGianBatDau": "2026-10-18T14:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T17:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1089,
+            "PhimID": 4,
+            "PhongID": 1287,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "update_conflict",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1289,
+            "RapID": 1,
+            "TenPhong": "R12 0C72ABD7-D4A4-42F3-BC25-8DA6FA7E622F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1290,
+            "RapID": 1,
+            "TenPhong": "R12 99ABA5A2-A2CD-42CD-AC6E-E4A92CD5F363",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3373,
+            "PhongID": 1289,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1090,
+            "PhimID": 4,
+            "PhongID": 1289,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1091,
+            "PhimID": 4,
+            "PhongID": 1289,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1289,
+            "RapID": 1,
+            "TenPhong": "R12 0C72ABD7-D4A4-42F3-BC25-8DA6FA7E622F",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1290,
+            "RapID": 1,
+            "TenPhong": "R12 99ABA5A2-A2CD-42CD-AC6E-E4A92CD5F363",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3373,
+            "PhongID": 1289,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1090,
+            "PhimID": 4,
+            "PhongID": 1289,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1091,
+            "PhimID": 4,
+            "PhongID": 1289,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "update_same",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1291,
+            "RapID": 1,
+            "TenPhong": "R12 90417D08-FB37-4F54-BE0C-779A30494048",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1292,
+            "RapID": 1,
+            "TenPhong": "R12 F6618046-04C6-42B8-BD68-8144EFD63066",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3374,
+            "PhongID": 1291,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1092,
+            "PhimID": 4,
+            "PhongID": 1291,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1093,
+            "PhimID": 4,
+            "PhongID": 1291,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1291,
+            "RapID": 1,
+            "TenPhong": "R12 90417D08-FB37-4F54-BE0C-779A30494048",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1292,
+            "RapID": 1,
+            "TenPhong": "R12 F6618046-04C6-42B8-BD68-8144EFD63066",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3374,
+            "PhongID": 1291,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1092,
+            "PhimID": 4,
+            "PhongID": 1291,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1093,
+            "PhimID": 4,
+            "PhongID": 1291,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "update_boundary",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1293,
+            "RapID": 1,
+            "TenPhong": "R12 96CE26D9-DB9C-42FA-9FB5-9B5DF98E3865",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1294,
+            "RapID": 1,
+            "TenPhong": "R12 F4D7E368-26FB-4EEB-9751-9FE975659F9A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3375,
+            "PhongID": 1293,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1094,
+            "PhimID": 4,
+            "PhongID": 1293,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1095,
+            "PhimID": 4,
+            "PhongID": 1293,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1293,
+            "RapID": 1,
+            "TenPhong": "R12 96CE26D9-DB9C-42FA-9FB5-9B5DF98E3865",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1294,
+            "RapID": 1,
+            "TenPhong": "R12 F4D7E368-26FB-4EEB-9751-9FE975659F9A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3375,
+            "PhongID": 1293,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1094,
+            "PhimID": 4,
+            "PhongID": 1293,
+            "ThoiGianBatDau": "2026-10-18T18:01:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T20:51:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1095,
+            "PhimID": 4,
+            "PhongID": 1293,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "cancel",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1295,
+            "RapID": 1,
+            "TenPhong": "R12 CEBB0657-1F0C-4374-B083-13196304EDF8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1296,
+            "RapID": 1,
+            "TenPhong": "R12 A8A6DAF8-67FA-4C17-A4AC-CDCAD4A05A63",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3376,
+            "PhongID": 1295,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1096,
+            "PhimID": 4,
+            "PhongID": 1295,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1295,
+            "RapID": 1,
+            "TenPhong": "R12 CEBB0657-1F0C-4374-B083-13196304EDF8",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1296,
+            "RapID": 1,
+            "TenPhong": "R12 A8A6DAF8-67FA-4C17-A4AC-CDCAD4A05A63",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3376,
+            "PhongID": 1295,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1096,
+            "PhimID": 4,
+            "PhongID": 1295,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Đã hủy"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "cancel_then_create",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1297,
+            "RapID": 1,
+            "TenPhong": "R12 7FEF063F-3578-4F37-AE1A-63C19517C69B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1298,
+            "RapID": 1,
+            "TenPhong": "R12 29D02A6B-CEAE-4BD3-822A-CE837DE74131",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3377,
+            "PhongID": 1297,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1097,
+            "PhimID": 4,
+            "PhongID": 1297,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1297,
+            "RapID": 1,
+            "TenPhong": "R12 7FEF063F-3578-4F37-AE1A-63C19517C69B",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1298,
+            "RapID": 1,
+            "TenPhong": "R12 29D02A6B-CEAE-4BD3-822A-CE837DE74131",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3377,
+            "PhongID": 1297,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1097,
+            "PhimID": 4,
+            "PhongID": 1297,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Đã hủy"
+          },
+          {
+            "SuatChieuID": 1098,
+            "PhimID": 4,
+            "PhongID": 1297,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "cancel_completed",
+      "ErrorNumber": 50119,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1299,
+            "RapID": 1,
+            "TenPhong": "R12 0FA09E16-383B-4429-8464-F67EC3F02E64",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1300,
+            "RapID": 1,
+            "TenPhong": "R12 78DE11D6-8063-4176-8E0C-FB00B17B4E7E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3378,
+            "PhongID": 1299,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1099,
+            "PhimID": 4,
+            "PhongID": 1299,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1299,
+            "RapID": 1,
+            "TenPhong": "R12 0FA09E16-383B-4429-8464-F67EC3F02E64",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1300,
+            "RapID": 1,
+            "TenPhong": "R12 78DE11D6-8063-4176-8E0C-FB00B17B4E7E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3378,
+            "PhongID": 1299,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1099,
+            "PhimID": 4,
+            "PhongID": 1299,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "cancel_held",
+      "ErrorNumber": 50118,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1301,
+            "RapID": 1,
+            "TenPhong": "R12 B59BCD0A-9204-4C76-8DD6-8EE1D7B09BC2",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1302,
+            "RapID": 1,
+            "TenPhong": "R12 87ABB306-852F-49FE-9B7D-5344C4909828",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3379,
+            "PhongID": 1301,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1100,
+            "PhimID": 4,
+            "PhongID": 1301,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6532,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1100,
+            "NgayDat": "2026-10-08T08:51:40.7751473",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.7751473"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1301,
+            "RapID": 1,
+            "TenPhong": "R12 B59BCD0A-9204-4C76-8DD6-8EE1D7B09BC2",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1302,
+            "RapID": 1,
+            "TenPhong": "R12 87ABB306-852F-49FE-9B7D-5344C4909828",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3379,
+            "PhongID": 1301,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1100,
+            "PhimID": 4,
+            "PhongID": 1301,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6532,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1100,
+            "NgayDat": "2026-10-08T08:51:40.7751473",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Chờ thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.7751473"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "missing_show_update",
+      "ErrorNumber": 50058,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1307,
+            "RapID": 1,
+            "TenPhong": "R12 ED9E2CF7-6EB9-4E85-9DF8-0DBEC8F1FC25",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1308,
+            "RapID": 1,
+            "TenPhong": "R12 0B7BD8CC-79EC-4D47-8EC4-B31FBCC7595A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3382,
+            "PhongID": 1307,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1103,
+            "PhimID": 4,
+            "PhongID": 1307,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1307,
+            "RapID": 1,
+            "TenPhong": "R12 ED9E2CF7-6EB9-4E85-9DF8-0DBEC8F1FC25",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1308,
+            "RapID": 1,
+            "TenPhong": "R12 0B7BD8CC-79EC-4D47-8EC4-B31FBCC7595A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3382,
+            "PhongID": 1307,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1103,
+            "PhimID": 4,
+            "PhongID": 1307,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "update_paid",
+      "ErrorNumber": 50120,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1303,
+            "RapID": 1,
+            "TenPhong": "R12 167F295F-B0B7-40B5-82BD-17E15D849E75",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1304,
+            "RapID": 1,
+            "TenPhong": "R12 3BB201D1-2CE9-4C36-9F77-381EA09A7C1A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3380,
+            "PhongID": 1303,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1101,
+            "PhimID": 4,
+            "PhongID": 1303,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1102,
+            "PhimID": 4,
+            "PhongID": 1303,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6533,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1101,
+            "NgayDat": "2026-10-08T08:51:40.7801912",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Đã thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.7801912"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1303,
+            "RapID": 1,
+            "TenPhong": "R12 167F295F-B0B7-40B5-82BD-17E15D849E75",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1304,
+            "RapID": 1,
+            "TenPhong": "R12 3BB201D1-2CE9-4C36-9F77-381EA09A7C1A",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3380,
+            "PhongID": 1303,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1101,
+            "PhimID": 4,
+            "PhongID": 1303,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1102,
+            "PhimID": 4,
+            "PhongID": 1303,
+            "ThoiGianBatDau": "2026-10-18T20:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T23:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ],
+        "orders": [
+          {
+            "DonDatVeID": 6533,
+            "NguoiDungID": 5,
+            "SuatChieuID": 1101,
+            "NgayDat": "2026-10-08T08:51:40.7801912",
+            "TongTienVe": 0,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "TrangThai": "Đã thanh toán",
+            "HanGiuCho": "2026-10-08T09:11:40.7801912"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "admin",
+      "TestCase": "missing_show_cancel",
+      "ErrorNumber": 50116,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1309,
+            "RapID": 1,
+            "TenPhong": "R12 A73AC3D9-2B04-49C1-8CA5-7999EA7E7638",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1310,
+            "RapID": 1,
+            "TenPhong": "R12 976D3F65-4ABD-4E9B-A3EF-EE851435BF92",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3383,
+            "PhongID": 1309,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1104,
+            "PhimID": 4,
+            "PhongID": 1309,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1309,
+            "RapID": 1,
+            "TenPhong": "R12 A73AC3D9-2B04-49C1-8CA5-7999EA7E7638",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1310,
+            "RapID": 1,
+            "TenPhong": "R12 976D3F65-4ABD-4E9B-A3EF-EE851435BF92",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3383,
+            "PhongID": 1309,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1104,
+            "PhimID": 4,
+            "PhongID": 1309,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "alias",
+      "TestCase": "alias_clear",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1317,
+            "RapID": 1,
+            "TenPhong": "R12 893B4B4D-18B5-4734-A29C-932B081EAFBF",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1318,
+            "RapID": 1,
+            "TenPhong": "R12 009CC528-41DD-4F44-B922-2D2325216FB9",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3387,
+            "PhongID": 1317,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1317,
+            "RapID": 1,
+            "TenPhong": "R12 893B4B4D-18B5-4734-A29C-932B081EAFBF",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1318,
+            "RapID": 1,
+            "TenPhong": "R12 009CC528-41DD-4F44-B922-2D2325216FB9",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3387,
+            "PhongID": 1317,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1105,
+            "PhimID": 4,
+            "PhongID": 1317,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "alias",
+      "TestCase": "alias_overlap",
+      "ErrorNumber": 50001,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1319,
+            "RapID": 1,
+            "TenPhong": "R12 D2D47AF7-C54B-4D1B-AAA9-70DCBB9DABC4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1320,
+            "RapID": 1,
+            "TenPhong": "R12 63BF3B23-5B76-49C0-9395-6C0CF26E1A1E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3388,
+            "PhongID": 1319,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1106,
+            "PhimID": 4,
+            "PhongID": 1319,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1319,
+            "RapID": 1,
+            "TenPhong": "R12 D2D47AF7-C54B-4D1B-AAA9-70DCBB9DABC4",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1320,
+            "RapID": 1,
+            "TenPhong": "R12 63BF3B23-5B76-49C0-9395-6C0CF26E1A1E",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3388,
+            "PhongID": 1319,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1106,
+            "PhimID": 4,
+            "PhongID": 1319,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "trigger",
+      "TestCase": "multirow_clear",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1323,
+            "RapID": 1,
+            "TenPhong": "R12 B6A43FC4-A749-4E74-9D93-6A01D4B0C0E5",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1324,
+            "RapID": 1,
+            "TenPhong": "R12 B7B1C4DF-4A43-47C6-8D64-BE9DC3342FDE",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3390,
+            "PhongID": 1323,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1323,
+            "RapID": 1,
+            "TenPhong": "R12 B6A43FC4-A749-4E74-9D93-6A01D4B0C0E5",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1324,
+            "RapID": 1,
+            "TenPhong": "R12 B7B1C4DF-4A43-47C6-8D64-BE9DC3342FDE",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3390,
+            "PhongID": 1323,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1109,
+            "PhimID": 4,
+            "PhongID": 1323,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          },
+          {
+            "SuatChieuID": 1110,
+            "PhimID": 4,
+            "PhongID": 1323,
+            "ThoiGianBatDau": "2026-10-18T11:41:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T14:31:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    },
+    {
+      "Role": "trigger",
+      "TestCase": "multirow_cancelled",
+      "ErrorNumber": null,
+      "BeforeState": {
+        "rooms": [
+          {
+            "PhongID": 1325,
+            "RapID": 1,
+            "TenPhong": "R12 DD93E972-3C7B-4CFE-8BB5-E8C0B6FB0FDB",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1326,
+            "RapID": 1,
+            "TenPhong": "R12 ACA1998B-A755-4582-BB4B-2B1E4796A00C",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3391,
+            "PhongID": 1325,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ]
+      },
+      "AfterState": {
+        "rooms": [
+          {
+            "PhongID": 1325,
+            "RapID": 1,
+            "TenPhong": "R12 DD93E972-3C7B-4CFE-8BB5-E8C0B6FB0FDB",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          },
+          {
+            "PhongID": 1326,
+            "RapID": 1,
+            "TenPhong": "R12 ACA1998B-A755-4582-BB4B-2B1E4796A00C",
+            "LoaiPhong": "2D",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "seats": [
+          {
+            "GheID": 3391,
+            "PhongID": 1325,
+            "HangGhe": "A",
+            "SoGhe": 1,
+            "LoaiGhe": "Thường",
+            "TrangThai": "Hoạt động"
+          }
+        ],
+        "shows": [
+          {
+            "SuatChieuID": 1111,
+            "PhimID": 4,
+            "PhongID": 1325,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Đã hủy"
+          },
+          {
+            "SuatChieuID": 1112,
+            "PhimID": 4,
+            "PhongID": 1325,
+            "ThoiGianBatDau": "2026-10-18T08:51:40.4834054",
+            "ThoiGianKetThuc": "2026-10-18T11:41:40.4834054",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán"
+          }
+        ]
+      },
+      "OverlapCount": 0,
+      "Result": "PASS"
+    }
+  ],
+  "before": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "20a0480af532df29fab544a1f469c4bc8c0c770e740ddfdf791a667f4b9874b3",
+      "objects": "57e80994c6cd228773a5bd9dc0f4eded5123439f0e330217710842e7520462bb",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "7a1111658b4472db18f0bc1912c9d261ae03a209999d04dde30e3cd2027d4e70",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "0b9c9f9f216469eea8d4d00cd242c573cf6288ea15a73f5d90f4bf03ce6f98d2",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "after": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "20a0480af532df29fab544a1f469c4bc8c0c770e740ddfdf791a667f4b9874b3",
+      "objects": "57e80994c6cd228773a5bd9dc0f4eded5123439f0e330217710842e7520462bb",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "7a1111658b4472db18f0bc1912c9d261ae03a209999d04dde30e3cd2027d4e70",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "0b9c9f9f216469eea8d4d00cd242c573cf6288ea15a73f5d90f4bf03ce6f98d2",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "fixtureCleanup": "PASS",
+  "completedAt": "2026-10-08T08:51:40.940Z"
+}

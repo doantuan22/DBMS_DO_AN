@@ -1,0 +1,62 @@
+{"executable":"C:\\Program Files\\nodejs\\node.exe","args":["--test","tests/roleAwareProfile.test.js","tests/authRateLimit.test.js","tests/authMiddleware.test.js","tests/authService.test.js","tests/authValidator.test.js","tests/jwt.test.js","tests/password.test.js","tests/r4Password.test.js","tests/r3bAuthorization.test.js"],"cwd":"C:\\Users\\Admin\\AppData\\Local\\Temp\\dbms-r46-regression-qFOmgh\\backend","exitCode":0,"signal":null}
+✔ authentication requires a bearer token and attaches DB-reloaded identity (1.2343ms)
+✔ permission middleware allows a grant and returns 401/403 otherwise (0.3133ms)
+✔ R4.5-01/02 allows requests below and exactly at the configured threshold (2.2106ms)
+✔ R4.5-03/09 rejects only excess with account-neutral429 and real positive Retry-After (0.3502ms)
+✔ R4.5-04/10 expiry resets at exact boundary and rejection does not extend window (0.1852ms)
+✔ R4.5-05 independent clients and endpoints have independent counters (0.1977ms)
+✔ R4.5-06 synchronous counting prevents a rapid parallel burst bypass (0.4819ms)
+✔ bounded state refuses new keys without resetting active buckets and reclaims expired keys (0.2071ms)
+✔ IPv4-mapped addresses and IPv6 textual variants/prefix rotation cannot reset identity (4.1749ms)
+✔ limiter guards only POST login/register, with existing case/trailing-slash matching (0.3482ms)
+✔ R4.5-10 separate limiter factories start independent state without a global reset (0.2093ms)
+✔ invalid policies cannot accidentally disable protection (0.7759ms)
+✔ R4.5-07/09 real HTTP login short-circuits before service and preserves429 JSON/header (49.7959ms)
+✔ R4.5-08 real HTTP register short-circuits before registration service (16.3927ms)
+✔ malformed JSON/credentials count before parsing and do not call auth service (11.4786ms)
+✔ real HTTP forged forwarded headers cannot bypass current trust proxy=false (15.1645ms)
+✔ real HTTP independent socket sources have separate counters (13.7663ms)
+✔ real HTTP burst admits exact threshold and unaffected routes/methods retain contracts (31.9534ms)
+✔ real HTTP app instances and deterministic expiry do not leak limiter state (13.7004ms)
+✔ production defaults and positive environment overrides are validated without a test bypass (395.2189ms)
+✔ register hashes the password and calls the registration SP with output id (2.8662ms)
+✔ maps SQL duplicate errors to conflict responses without exposing SQL messages (1.1613ms)
+▶ login verifies the hash, uses SP permissions, and supports the four seeded roles
+  ✔ KHACH_HANG (0.8515ms)
+  ✔ QUAN_LY_RAP (0.3891ms)
+  ✔ CSKH (0.3192ms)
+  ✔ ADMIN (0.3005ms)
+✔ login verifies the hash, uses SP permissions, and supports the four seeded roles (3.3705ms)
+▶ login returns one generic unauthorized error for missing, locked, or incorrect credentials
+  ✔ unknown email (0.4828ms)
+  ✔ locked account (0.362ms)
+✔ login returns one generic unauthorized error for missing, locked, or incorrect credentials (1.9896ms)
+✔ current user reloads permissions and profile updates call only the existing SP (0.9727ms)
+✔ normalizes customer registration fields and only permits the customer profile (32.5634ms)
+✔ validates login and prevents profile updates to immutable fields (0.428ms)
+✔ issues a signed identity token with expiry and verifies it (4.5764ms)
+✔ rejects tampered tokens and refuses weak/missing secrets (0.876ms)
+✔ hashes are salted bcrypt hashes and verify correctly (324.626ms)
+✔ demo seed hash matches the documented demo password (79.0465ms)
+✔ permission middleware denies unknown/empty permission and requires every permission (1.151ms)
+✔ all service flows share active/role/permission SQL error semantics (0.6405ms)
+✔ parallel Admin requests bind their own actor and never share mutable identity state (11.4599ms)
+✔ all new account entry points enforce UTF-8 byte boundaries and preserve password whitespace (710.4567ms)
+✔ role metadata rejects blank/oversized names without accepting grant fields (0.4157ms)
+✔ profile KHACH_HANG: exact typed signature, authoritative reload and safe DTO (3.8316ms)
+✔ profile QUAN_LY_RAP: exact typed signature, authoritative reload and safe DTO (0.4698ms)
+✔ profile CSKH: exact typed signature, authoritative reload and safe DTO (0.3035ms)
+✔ profile ADMIN: exact typed signature, authoritative reload and safe DTO (0.2868ms)
+✔ profile validator preserves Customer fields and PUT omitted/null replacement semantics (18.6134ms)
+✔ self-update controller binds authenticated identity and refuses spoof before calling service (0.3697ms)
+✔ profile service preserves existing phone/birth domain mapping and SQL authorization errors (0.7625ms)
+✔ global SQL profile authorization/constraint errors retain safe public HTTP taxonomy (0.4208ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 50
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1223.5172
+

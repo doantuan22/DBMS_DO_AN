@@ -176,7 +176,10 @@ export function createAdminService({ execute = executeProcedure, executeWithOutp
       const result = await executeFor(actorId, 'ADMIN_REPORT_REVENUE', {
         TuNgay: date(filters.fromDate), DenNgay: date(filters.toDate), RapID: int(filters.cinemaId),
       });
-      return { cinemas: rows(result), totals: rows(result, 1)[0] ?? {} };
+      const summary = rows(result)[0] ?? {};
+      const byCinema = rows(result, 1);
+      // Retain the existing API aliases while exposing the four SQL recordsets.
+      return { summary, byCinema, byMovie: rows(result, 2), byDate: rows(result, 3), cinemas: byCinema, totals: summary };
     },
     async createUser(actorId, input) {
       return this.write(actorId, 'ADMIN_USER_CREATE', {
@@ -223,7 +226,17 @@ export function createAdminService({ execute = executeProcedure, executeWithOutp
     async deleteSeat(actorId, id) { return this.write(actorId, 'ADMIN_SEAT_DELETE', { GheID: int(id) }); },
     async pricing(actorId, filters = {}) { return rows(await executeFor(actorId, 'ADMIN_PRICING_LIST', { RapID: int(filters.cinemaId) })); },
     async createPricing(actorId, input) { return this.write(actorId, 'ADMIN_PRICING_CREATE', { RapID: int(input.cinemaId), LoaiGhe: text(50, input.seatType), LoaiNgay: text(50, input.dayType), DinhDang: text(50, input.format), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, NgayBatDau: date(input.startsOn), NgayKetThuc: date(input.endsOn) }); },
-    async updatePricing(actorId, id, input) { return this.write(actorId, 'ADMIN_PRICING_UPDATE', { GiaID: int(id), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge }, TrangThai: text(50, input.status) }); },
+    async updatePricing(actorId, id, input) {
+      const conditions = input.seatType === undefined ? {} : {
+        LoaiGhe: text(50, input.seatType), LoaiNgay: text(50, input.dayType),
+        DinhDang: text(50, input.format), NgayBatDau: date(input.startsOn),
+        NgayKetThuc: date(input.endsOn), CapNhatDieuKien: { type: DbTypes.Bit, value: true },
+      };
+      return this.write(actorId, 'ADMIN_PRICING_UPDATE', {
+        GiaID: int(id), PhuThu: { type: DbTypes.Decimal(18, 2), value: input.surcharge },
+        TrangThai: text(50, input.status), ...conditions,
+      });
+    },
     async showtimes(actorId, filters = {}) { return rows(await executeFor(actorId, 'ADMIN_SHOWTIME_LIST', { RapID: int(filters.cinemaId), TuNgay: date(filters.fromDate), DenNgay: date(filters.toDate) })); },
     async createShowtime(actorId, input) {
       try { return await executeFor(actorId, 'ADMIN_SHOWTIME_CREATE', { PhimID: int(input.movieId), PhongID: int(input.roomId), ThoiGianBatDau: { type: DbTypes.DateTime2, value: parseApiInstant(input.startsAt, 'startsAt') }, ThoiGianKetThuc: { type: DbTypes.DateTime2, value: parseApiInstant(input.endsAt, 'endsAt') }, DinhDang: text(50, input.format), GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice } }); } catch (error) { mapAdminProcedureError(error); }

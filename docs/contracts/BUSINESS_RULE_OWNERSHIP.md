@@ -1,0 +1,37 @@
+# Business Rule Ownership — R4.4 / I-17
+
+Baseline: working source sau Task 11, roadmap R4.4 và thiết kế KH-06. Database là chủ sở hữu quyết định nghiệp vụ và tiền chính thức. Frontend giữ UX guards/hiển thị preview; Backend validate HTTP, bind SQL types và orchestrate SP. Provisional subtotal từ **giá do DB procedures trả về** là ngoại lệ preview đã được roadmap cho phép, không phải final order/payment calculation.
+
+## Ownership matrix trước sửa
+
+| Rule / điều kiện hiện hành | Frontend | Backend | SQL owner / enforcement / lỗi | Phân loại / quyết định |
+| --- | --- | --- | --- | --- |
+| Tối đa **10 distinct seats/order** | constants/bookingLimits.js, utils/bookingLimits.js, SeatMap.jsx; từ chối ghế thứ 11 | bookingValidator.js: seatIds; reject >10 HTTP400 SEAT_LIMIT_EXCEEDED; duplicate IDs reject | fn_GioiHanGheMoiDon()=10; sp_Booking_Create kiểm COUNT sau DISTINCT, THROW50026; transaction rollback | LEGITIMATE DUPLICATION; giữ nguyên, thêm boundary/parity proof |
+| Tối đa **10 đơn vị mỗi sản phẩm**, không có trần tổng food toàn đơn | ProductPicker.jsx/clampQuantity: 0 = không chọn; toProducts bỏ quantity0 | bookingValidator.js: positive integer ≤10, duplicate product IDs reject; HTTP400 PRODUCT_QUANTITY_LIMIT_EXCEEDED | fn_GioiHanSoLuongSanPham()=10; booking SUM các dòng cùng product trước kiểm, THROW50027; malformed/inactive/missing product50402; CHITIETDOAN CHECK SoLuong>0 | LEGITIMATE DUPLICATION; giữ nguyên; test 10+10 khác products hợp lệ, split same product vượt10 bị reject |
+| **0 < percent value ≤99**, types Phần trăm/PERCENT | Admin promotion form gửi giá trị; không có phép tính discount tại FE; lỗi từ server | adminValidator.js MAX_PERCENT_DISCOUNT=99, promotionWrite; HTTP400 INVALID_REQUEST | CK_KHUYENMAI_PhanTram99, CK_KHUYENMAI_GiaTri; SP Admin Create/Update dùng constraints; native547; sp_Promotion_Validate rechecks | MATCHED / LEGITIMATE DUPLICATION; không thêm FE percentage guard để tạo diff |
+| Giảm tối đa **99% subtotal cho mọi discount type**, truncate cap tới hai decimals | Hiển thị discountAmount DB preview, không tính discount | Mapping SQL output; không tính final discount | fn_GioiHanGiamGiaPhanTram()=99; sp_Promotion_Validate và booking cap dùng ROUND(...,2,1) | MATCHED; không đổi formula R2.2 |
+| GiamToiDa là **số tiền** tùy chọn, khác percentage99 | Admin maximumDiscount field | nullable, nonnegative / typed DECIMAL | CHECK ≥0; preview SP áp dụng max amount cho percentage trước cap99%; FIXED/Số tiền dùng value rồi cap99% như baseline | MATCHED; không đồng nhất hai loại trần |
+| Promotion eligibility: existing/active, DB time inclusive [start,end], min order, valid config | BookingPreparation ghi rõ tạm tính; invalid booking hiển thị lỗi, không báo thành công | validatePromotion orchestration; createBooking không gửi accepted/discountAmount | sp_Promotion_Validate; booking revalidates sau row lock, THROW50029 nếu invalid; Backend HTTP409 PROMOTION_NOT_AVAILABLE | MATCHED; preview không hứa booking tương lai |
+| Promotion quota: used<quantity | Không reservation/consume ở FE | Không consume hoặc local quota decision | Preview SELECT-only; booking UPDLOCK/HOLDLOCK và guarded UPDATE trong transaction; CHECK 0≤used≤quantity; failure50029 | MATCHED; giữ nguyên locking/consume R2.2 |
+| Provisional subtotal: DB seat prices + DB product prices × selected quantities | Không gửi price/total; gửi IDs/qty/code | bookingService.validatePromotion reduce trước typed TongTienDon DECIMAL(18,2) | Giá từ sp_Seat_ListByShowtime (fn_TinhGiaVe) / sp_Product_ListActive; promotion discount vẫn do SQL | **MISMATCH đã reproduce**: 0.10+0.10+0.10=0.30000000000000004 khiến HTTP400 ở typed guard, dù SQL booking hợp lệ; normalize preview sum tới scale2 trước bind |
+| Ticket/food/order final monetary snapshots | Booking success dùng booking.total, không preview | bookingDto mapping TongTienVe/TongTienDoAn/TienGiamGia/TongThanhToan; booking input chỉ IDs/qty/code | sp_Booking_Create tính/snapshot fn_TinhGiaVe + product prices, revalidated discount; một transaction | MATCHED; không JS final arithmetic |
+| Payment amount | PaymentPage lấy order.total, gửi method/status; không gửi amount | orderService typed payment calls, không preview money input | sp_Payment_CreateAttempt đọc order snapshots, ghi SoTien; lifecycle SQL | MATCHED; không đổi payment flow |
+| Historical money sau catalog/promo edit | Hiển thị order/ticket/payment đã lưu | Map SQL outputs | CHITIETVE.GiaVe, CHITIETDOAN.DonGia, DONDATVE totals/discount, THANHTOAN.SoTien | MATCHED; không tính lại lịch sử |
+| Adjacent existing guards: **3 active holds/customer, 5 minutes** | bookingLimits MAX_HOLDING_ORDERS/HOLD_MINUTES cho messages/deadline | Forward SQL hold conflicts | fn_GioiHanDonDangGiu()=3; fn_ThoiGianGiuChoPhut()=5; booking/lifecycle SQL | MATCHED; kiểm parity, không đổi hold/expiry |
+
+Audit source/live, params/checks và reproduction trước sửa: [audit-before.json](../evidence/r44/audit-before.json), [preview-before.json](../evidence/r44/preview-before.json). Live/source toàn bộ 159 modules khớp trước Task 12; SQL không cần chỉnh sửa.
+
+## Minimal change decision
+
+Chỉ sửa `backend/src/services/bookingService.js` ở subtotal preview: normalize tổng đang lấy từ DB về scale2 bằng `Number(sum.toFixed(2))` trước bind DECIMAL(18,2). Không thay đổi input/response, không tự tính discount, không ảnh hưởng createBooking hoặc payment. SQL vẫn quyết định preview discount và final booking snapshots. Test phải kiểm cả fractional cents và subtotal/minimum boundary; không chỉ mock PASS.
+
+Constants hiện đã khớp và các module là public import surface của guards/tests hiện có. **Giữ constants riêng**, bổ sung parity tests với SQL functions/CHECK và verified contract 10/10/99. Shared JS module không khắc phục binary subtotal mismatch; đổi imports của phần đang đúng không cần thiết theo phạm vi Task 12. Giữ UX/fail-fast validation có ích, SQL CHECK/Function/SP nguyên trạng; không config table/framework mới.
+
+## Preview / authoritative API contract
+
+- `POST /api/promotions/validate`: input showtimeId/seatIds/products IDs+qty/promotionCode. Không nhận subtotal, price, discountAmount, total, isValid hoặc quota từ client. Output `{promotion:{isValid,code,promotionId,discountType,discountValue,discountAmount,message,provisionalSubtotal}}` vẫn giữ nguyên. Tất cả amount/eligibility ở response này là **preview tại thời điểm đọc**, không reserve quota hoặc tạo booking.
+- `POST /api/bookings`: cùng IDs/qty/code; không nhận preview acceptance/money. SQL re-read prices, validate promotion với current protected row và consume quota atomic. Requested invalid promotion trả409, không fallback âm thầm thành no-promotion booking. Success response `{booking:{id,userId,showtimeId,bookedAt,ticketTotal,productTotal,discountTotal,total,status,holdExpiresAt,ticketCount}}` là **authoritative** SQL snapshot.
+- Payment creation nhận order ID/method, không nhận preview total; amount đọc từ stored order. Preview khác final sau price/promotion thay đổi là hợp lệ. Client phải dùng returned booking/order/payment values.
+- UI hiện đã ghi “tạm tính”, “mã sẽ được kiểm tra lại”, giá cuối từ DB; booking rejection không tạo success hoặc payment link mới. Không sửa layout hoặc state races ngoài I-17.
+
+Fix mismatch theo DB contract đã xác minh; không đổi official limits/formula để khớp client. Boundary/actual HTTP/direct SP, precision, stale preview, no partial write, historical và actual UI proof được lưu ở [Task 12 evidence](../evidence/R4_BUSINESS_RULE_OWNERSHIP.md).

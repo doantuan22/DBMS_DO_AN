@@ -1,0 +1,31 @@
+{"executable":"C:\\Program Files\\nodejs\\node.exe","args":["--test","tests/orderDetailReadOnly.test.js","tests/orderService.test.js","tests/orderValidator.test.js","tests/expireJob.test.js","tests/authMiddleware.test.js","tests/r3bAuthorization.test.js"],"cwd":"C:\\Users\\Admin\\AppData\\Local\\Temp\\dbms-r47-regression-I4kxWV\\backend","exitCode":0,"signal":null}
+✔ authentication requires a bearer token and attaches DB-reloaded identity (1.147ms)
+✔ permission middleware allows a grant and returns 401/403 otherwise (0.2777ms)
+✔ job calls the whitelisted expire procedure and survives errors (1.606ms)
+✔ detail binds two exact typed authenticated inputs and makes one read call for each GET (2.0537ms)
+✔ existing four sets and status projection map without JavaScript expiry or persisted mutation (0.9271ms)
+✔ SQL missing/ownership error stays indistinguishable safe404 (0.7112ms)
+✔ detail controller uses authenticated owner despite client query/body identity; invalid ids call no SP (0.6613ms)
+✔ versioned SQL Detail call graph contains only read routines and preserves live time projection (8.4287ms)
+✔ expiry job overlap guard permits one actual gateway call and recovers for subsequent ticks (0.7363ms)
+✔ existing scheduler timer executes independently and stop prevents further execution (55.8286ms)
+✔ orders map the four database recordsets without client prices or ownership fields (1.7543ms)
+✔ payment creation first performs the database ownership lookup and never accepts amount (0.4532ms)
+✔ payment result checks that the attempt belongs to the customer order before the completion procedure (0.379ms)
+✔ database ownership and state errors map to safe REST errors (1.0456ms)
+✔ numeric overflow while paying maps to 400 and unrelated errors are untouched (0.6667ms)
+✔ R2 compensation comes from DB and successful payment history is unchanged (0.3857ms)
+✔ R2 payment on ineligible showtime maps to a domain conflict (0.3765ms)
+✔ payment validators accept only the exact database method and result states (2.0468ms)
+✔ permission middleware denies unknown/empty permission and requires every permission (1.4541ms)
+✔ all service flows share active/role/permission SQL error semantics (0.757ms)
+✔ parallel Admin requests bind their own actor and never share mutable identity state (11.9699ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1477.164
+

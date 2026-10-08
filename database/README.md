@@ -183,7 +183,7 @@ npm run db:build -- --database=CinemaBookingDB_R0_Stress
 npm run db:smoke -- --database=CinemaBookingDB_R0_Stress --stress
 ```
 
-Không include legacy tests trong pipeline mới. Mapping lỗi thiếu từ DB cũ ghi ở _audit/known-contract-gaps.json; test phát hiện gap mới và giữ danh sách gap đã báo cáo, không coi các gap là đã remediation.
+Không include legacy tests trong pipeline mới. Backend SQL error mapping guards đọc canonical SQL được version trong Git, yêu cầu mọi mã lỗi có thể đến API được mapping; exemption phải có lý do và vẫn được kiểm tra. Backend tests không đọc `_audit/known-contract-gaps.json`. Xem [Backend test setup](../backend/TESTING.md) để cài dependencies và kiểm chứng clean checkout.
 
 ## Thêm/sửa object
 

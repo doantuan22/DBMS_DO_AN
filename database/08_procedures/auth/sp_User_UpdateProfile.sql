@@ -13,8 +13,20 @@ AS
 BEGIN
     SET NOCOUNT ON;
     IF @NgaySinh > dbo.fn_HomNay() THROW 50400, N'Ngày sinh không được ở tương lai.', 1;
+    DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
     BEGIN TRY
-        BEGIN TRANSACTION;
+        IF @OwnTran = 1 BEGIN TRANSACTION;
+        ELSE SAVE TRANSACTION UserUpdateProfile;
+
+        DECLARE @MaVaiTro VARCHAR(50);
+        SELECT @MaVaiTro = v.MaVaiTro
+        FROM dbo.NGUOIDUNG n WITH (UPDLOCK, HOLDLOCK)
+        JOIN dbo.VAITRO v WITH (HOLDLOCK) ON v.VaiTroID = n.VaiTroID
+        WHERE n.NguoiDungID = @NguoiDungID AND n.TrangThai = N'Hoạt động';
+        IF @MaVaiTro IS NULL
+            THROW 50300, N'Tài khoản không khả dụng.', 1;
+        IF @MaVaiTro <> 'KHACH_HANG' AND (@NgaySinh IS NOT NULL OR @GioiTinh IS NOT NULL)
+            THROW 50301, N'Chỉ khách hàng được cập nhật ngày sinh và giới tính.', 1;
 
         -- Kiểm tra trùng số điện thoại với tài khoản khác
         IF @SoDienThoai IS NOT NULL AND EXISTS (
@@ -30,27 +42,35 @@ BEGIN
             SoDienThoai = @SoDienThoai
         WHERE NguoiDungID = @NguoiDungID;
 
-        IF EXISTS (SELECT 1 FROM dbo.HOSOKHACHHANG WHERE NguoiDungID = @NguoiDungID)
+        IF @MaVaiTro = 'KHACH_HANG'
         BEGIN
-            UPDATE dbo.HOSOKHACHHANG
-            SET NgaySinh = @NgaySinh,
-                GioiTinh = @GioiTinh
-            WHERE NguoiDungID = @NguoiDungID;
-        END
-        ELSE
-        BEGIN
-            INSERT INTO dbo.HOSOKHACHHANG (NguoiDungID, NgaySinh, GioiTinh, DiemTichLuy)
-            VALUES (@NguoiDungID, @NgaySinh, @GioiTinh, 0);
+            IF EXISTS (SELECT 1 FROM dbo.HOSOKHACHHANG WITH (UPDLOCK, HOLDLOCK) WHERE NguoiDungID = @NguoiDungID)
+            BEGIN
+                UPDATE dbo.HOSOKHACHHANG
+                SET NgaySinh = @NgaySinh,
+                    GioiTinh = @GioiTinh
+                WHERE NguoiDungID = @NguoiDungID;
+            END
+            ELSE
+            BEGIN
+                INSERT INTO dbo.HOSOKHACHHANG (NguoiDungID, NgaySinh, GioiTinh, DiemTichLuy)
+                VALUES (@NguoiDungID, @NgaySinh, @GioiTinh, 0);
+            END
         END
 
-        COMMIT TRANSACTION;
+        IF @OwnTran = 1 COMMIT TRANSACTION;
 
         -- Trả về dữ liệu sau cập nhật
         EXEC dbo.sp_User_GetCurrent @NguoiDungID = @NguoiDungID;
 
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        IF XACT_STATE() = -1 ROLLBACK TRANSACTION;
+        ELSE IF XACT_STATE() = 1
+        BEGIN
+            IF @OwnTran = 1 ROLLBACK TRANSACTION;
+            ELSE ROLLBACK TRANSACTION UserUpdateProfile;
+        END
         ;THROW;
     END CATCH
 END;

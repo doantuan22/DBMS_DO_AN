@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { ROLES } from '../../constants/roles';
 
 function profileForm(user) {
   return {
@@ -12,6 +13,7 @@ function profileForm(user) {
 
 export default function Profile() {
   const { user, updateProfile } = useAuth();
+  const isCustomer = user.role === ROLES.CUSTOMER;
   const [form, setForm] = useState(() => profileForm(user));
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -26,8 +28,8 @@ export default function Profile() {
       await updateProfile({
         ...form,
         SoDienThoai: form.SoDienThoai || null,
-        NgaySinh: form.NgaySinh || null,
-        GioiTinh: form.GioiTinh || null,
+        NgaySinh: isCustomer ? form.NgaySinh || null : null,
+        GioiTinh: isCustomer ? form.GioiTinh || null : null,
       });
       setNotice('Đã cập nhật hồ sơ cá nhân thành công.');
     } catch (err) {
@@ -60,7 +62,7 @@ export default function Profile() {
           Vai trò
           <input value={user.roleName} readOnly />
         </label>
-        {user.loyaltyPoints != null && (
+        {isCustomer && user.loyaltyPoints != null && (
           <label>
             Điểm tích lũy
             <input value={`${user.loyaltyPoints} điểm`} readOnly />
@@ -84,6 +86,7 @@ export default function Profile() {
             onChange={(event) => update('SoDienThoai', event.target.value)}
           />
         </label>
+        {isCustomer && <>
         <label>
           Ngày sinh
           <input
@@ -101,6 +104,7 @@ export default function Profile() {
             <option>Khác</option>
           </select>
         </label>
+        </>}
         {error && <p className="form-error" role="alert">{error}</p>}
         {notice && <p className="form-success" role="status">{notice}</p>}
         <button type="submit" disabled={busy}>

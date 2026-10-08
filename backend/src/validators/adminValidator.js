@@ -119,7 +119,21 @@ export const assignmentWrite = (v, create = false) => {
 export const cinemaWrite = (v, create = false) => enums(bodyShape(v, create ? { name: 'string:150', address: 'string:255', city: 'string:100', phone: 'string:20?', description: 'string:500?', operatingSince: 'date?' } : { name: 'string:150', address: 'string:255', city: 'string:100', phone: 'string:20?', description: 'string:500?', status: 'string:50' }), 'cinemas');
 export const roomWrite = (v, create = false) => enums(bodyShape(v, create ? { cinemaId: 'id', name: 'string:100', type: 'string:50' } : { name: 'string:100', type: 'string:50', status: 'string:50' }), 'rooms', { type: ROOM_TYPES });
 export const seatWrite = (v, create = false) => enums(bodyShape(v, create ? { roomId: 'id', row: 'string:10', number: 'positive-int', type: 'string:50' } : { type: 'string:50', status: 'string:50' }), 'seats', { type: SEAT_TYPES });
-export const pricingWrite = (v, create = false) => enums(bodyShape(v, create ? { cinemaId: 'id', seatType: 'string:50', dayType: 'string:50', format: 'string:50', surcharge: 'nonnegative', startsOn: 'date', endsOn: 'nullable-date?' } : { surcharge: 'nonnegative', status: 'string:50' }), 'pricing', { seatType: [...SEAT_TYPES, 'Tất cả'], dayType: DAY_TYPES, format: [...ROOM_TYPES, 'Tất cả'] });
+export const pricingWrite = (v, create = false) => {
+  const conditions = { seatType: 'string:50', dayType: 'string:50', format: 'string:50', startsOn: 'date', endsOn: 'nullable-date?' };
+  // As in Manager, old surcharge/status payloads preserve conditions; supplying
+  // any condition requires the complete group, with a nullable open end date.
+  const editingConditions = !create && Object.keys(conditions).some(field => v && Object.hasOwn(v, field));
+  const result = enums(bodyShape(v, create
+    ? { cinemaId: 'id', ...conditions, surcharge: 'nonnegative' }
+    : { ...(editingConditions ? conditions : {}), surcharge: 'nonnegative', status: 'string:50' }),
+  'pricing', { seatType: [...SEAT_TYPES, 'Tất cả'], dayType: DAY_TYPES, format: [...ROOM_TYPES, 'Tất cả'] });
+  if (editingConditions) {
+    result.endsOn ??= null;
+    if (result.endsOn && result.endsOn < result.startsOn) throw new HttpError(400, 'INVALID_REQUEST', 'endsOn must not precede startsOn.');
+  }
+  return result;
+};
 // Mirrors CK_HINHANH_RAPCHIEUPHIM_TrangThai (migration 010).
 export const CINEMA_IMAGE_STATUSES = RESOURCE_STATUSES.cinemaImages;
 export const cinemaImageWrite = (v, create = false) => {

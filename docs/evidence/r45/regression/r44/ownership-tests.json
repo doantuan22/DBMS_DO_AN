@@ -1,0 +1,1623 @@
+{
+  "database": "CinemaBookingDB_R0_R33_20261008_01",
+  "startedAt": "2026-10-08T12:01:13.705Z",
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "verified-contract-FE-BE-live-SQL-parity",
+      "status": "PASS",
+      "contract": {
+        "seats": 10,
+        "foodPerProduct": 10,
+        "percent": 99,
+        "holding": 3,
+        "minutes": 5
+      }
+    },
+    {
+      "name": "R4.4-01-seats-9-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254,
+          4255,
+          4256,
+          4257,
+          4258,
+          4259,
+          4260,
+          4261
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 720000,
+        "productTotal": 10000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-01-seats-9-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254,
+          4255,
+          4256,
+          4257,
+          4258,
+          4259,
+          4260,
+          4261
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 720000,
+        "productTotal": 10000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-02-seats-10-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254,
+          4255,
+          4256,
+          4257,
+          4258,
+          4259,
+          4260,
+          4261,
+          4262
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 800000,
+        "productTotal": 10000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-02-seats-10-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254,
+          4255,
+          4256,
+          4257,
+          4258,
+          4259,
+          4260,
+          4261,
+          4262
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 800000,
+        "productTotal": 10000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-03-09-10-eleven-seats-direct-HTTP-bypass",
+      "status": "PASS",
+      "sqlError": 50026,
+      "httpStatus": 400,
+      "httpCode": "SEAT_LIMIT_EXCEEDED",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "R4.4-04-food-9-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 9
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 80000,
+        "productTotal": 90000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-04-food-9-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 9
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 80000,
+        "productTotal": 90000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-05-food-10-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 10
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 80000,
+        "productTotal": 100000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-05-food-10-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 10
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 80000,
+        "productTotal": 100000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-06-09-10-eleven-units-direct-HTTP-bypass",
+      "status": "PASS",
+      "sqlError": 50027,
+      "httpStatus": 400,
+      "httpCode": "PRODUCT_QUANTITY_LIMIT_EXCEEDED",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "split-duplicate-product-cannot-bypass-summed-cap",
+      "status": "PASS",
+      "sqlError": 50027,
+      "httpStatus": 400,
+      "httpCode": "DUPLICATE_PRODUCT",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "distinct-products-ten-each-twenty-total-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 10
+          },
+          {
+            "productId": 934,
+            "quantity": 10
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 80000,
+        "productTotal": 200000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "distinct-products-ten-each-twenty-total-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 10
+          },
+          {
+            "productId": 934,
+            "quantity": 10
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 80000,
+        "productTotal": 200000,
+        "discountTotal": 1000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-07-percent99-boundary-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 160000,
+        "productTotal": 10000,
+        "discountTotal": 168300
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-07-percent99-boundary-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 160000,
+        "productTotal": 10000,
+        "discountTotal": 168300
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-08-percentage100-DB-CHECK-and-HTTP-rejection",
+      "status": "PASS",
+      "sqlError": 547,
+      "noPartialUpdate": true
+    },
+    {
+      "name": "percent-versus-maximum-monetary-discount-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 160000,
+        "productTotal": 10000,
+        "discountTotal": 5000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "percent-versus-maximum-monetary-discount-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 160000,
+        "productTotal": 10000,
+        "discountTotal": 5000
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "fixed-discount-also-obeys99percent-subtotal-cap-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 160000,
+        "productTotal": 10000,
+        "discountTotal": 168300
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "fixed-discount-also-obeys99percent-subtotal-cap-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1342,
+        "seatIds": [
+          4253,
+          4254
+        ],
+        "products": [
+          {
+            "productId": 933,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-EFB2E9AC-3222-47BC-A0EA-0AF22D02C78A"
+      },
+      "amounts": {
+        "ticketTotal": 160000,
+        "productTotal": 10000,
+        "discountTotal": 168300
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "R4.4-11-12-fractional-preview-read-only-and-minimum-equality",
+      "status": "PASS",
+      "preview": {
+        "isValid": true,
+        "code": "R21-D5C17506-F987-4070-8009-5CB90F06C8E4",
+        "promotionId": 929,
+        "discountType": "FIXED",
+        "discountValue": 0.1,
+        "discountAmount": 0.1,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 0.3
+      },
+      "allRowsUnchanged": true
+    },
+    {
+      "name": "fractional-preview-and-authoritative-booking-consistent-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1343,
+        "seatIds": [
+          4264,
+          4265
+        ],
+        "products": [
+          {
+            "productId": 935,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-D5C17506-F987-4070-8009-5CB90F06C8E4"
+      },
+      "amounts": {
+        "ticketTotal": 0.2,
+        "productTotal": 0.1,
+        "discountTotal": 0.1
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "fractional-preview-and-authoritative-booking-consistent-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1343,
+        "seatIds": [
+          4264,
+          4265
+        ],
+        "products": [
+          {
+            "productId": 935,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-D5C17506-F987-4070-8009-5CB90F06C8E4"
+      },
+      "amounts": {
+        "ticketTotal": 0.2,
+        "productTotal": 0.1,
+        "discountTotal": 0.1
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "fractional-minimum-one-cent-above",
+      "status": "PASS",
+      "sqlError": 50029,
+      "httpStatus": 409,
+      "httpCode": "PROMOTION_NOT_AVAILABLE",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "decimal99percent-cap-truncates-and-keeps-positive-total-SQL",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1343,
+        "seatIds": [
+          4264,
+          4265
+        ],
+        "products": [
+          {
+            "productId": 935,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-D5C17506-F987-4070-8009-5CB90F06C8E4"
+      },
+      "amounts": {
+        "ticketTotal": 0.2,
+        "productTotal": 0.1,
+        "discountTotal": 0.29
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "decimal99percent-cap-truncates-and-keeps-positive-total-HTTP",
+      "status": "PASS",
+      "input": {
+        "showtimeId": 1343,
+        "seatIds": [
+          4264,
+          4265
+        ],
+        "products": [
+          {
+            "productId": 935,
+            "quantity": 1
+          }
+        ],
+        "promotionCode": "R21-D5C17506-F987-4070-8009-5CB90F06C8E4"
+      },
+      "amounts": {
+        "ticketTotal": 0.2,
+        "productTotal": 0.1,
+        "discountTotal": 0.29
+      },
+      "readAfterWrite": "PASS"
+    },
+    {
+      "name": "decimal-cap-independent-oracle",
+      "status": "PASS",
+      "preview": {
+        "isValid": true,
+        "code": "R21-D5C17506-F987-4070-8009-5CB90F06C8E4",
+        "promotionId": 929,
+        "discountType": "PERCENT",
+        "discountValue": 99,
+        "discountAmount": 0.29,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 0.3
+      },
+      "subtotal": 0.3,
+      "discount": 0.29,
+      "total": 0.01
+    },
+    {
+      "name": "R4.4-13-14-stale-preview-paused",
+      "status": "PASS",
+      "sqlError": 50029,
+      "httpStatus": 409,
+      "httpCode": "PROMOTION_NOT_AVAILABLE",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "stale-preview-paused-was-valid",
+      "status": "PASS",
+      "preview": {
+        "isValid": true,
+        "code": "R21-B6A80E3D-105F-4FBD-AA2E-FE0D4E644540",
+        "promotionId": 930,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      }
+    },
+    {
+      "name": "R4.4-13-14-stale-preview-quota-exhausted",
+      "status": "PASS",
+      "sqlError": 50029,
+      "httpStatus": 409,
+      "httpCode": "PROMOTION_NOT_AVAILABLE",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "stale-preview-quota-exhausted-was-valid",
+      "status": "PASS",
+      "preview": {
+        "isValid": true,
+        "code": "R21-B448FDBF-0DCD-483B-9AF8-51C885FAFA87",
+        "promotionId": 931,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      }
+    },
+    {
+      "name": "R4.4-13-14-stale-preview-minimum-raised",
+      "status": "PASS",
+      "sqlError": 50029,
+      "httpStatus": 409,
+      "httpCode": "PROMOTION_NOT_AVAILABLE",
+      "allRowsUnchanged": true,
+      "noPartialBooking": true
+    },
+    {
+      "name": "stale-preview-minimum-raised-was-valid",
+      "status": "PASS",
+      "preview": {
+        "isValid": true,
+        "code": "R21-46910972-A902-438F-9280-83A540A96419",
+        "promotionId": 932,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 170000
+      }
+    },
+    {
+      "name": "R4.4-15-16-preview-differs-final-response-uses-current-SQL-snapshots",
+      "status": "PASS",
+      "preview": {
+        "isValid": true,
+        "code": "R21-E911C287-A945-4916-AAC7-9663929F957E",
+        "promotionId": 933,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 90000
+      },
+      "booking": {
+        "id": 8766,
+        "userId": 5,
+        "showtimeId": 1347,
+        "bookedAt": "2026-10-08T12:01:19.682Z",
+        "ticketTotal": 85000,
+        "productTotal": 12000,
+        "discountTotal": 2000,
+        "total": 95000,
+        "status": "Chờ thanh toán",
+        "holdExpiresAt": "2026-10-08T12:06:19.682Z",
+        "ticketCount": 1
+      }
+    },
+    {
+      "name": "R4.4-17-18-payment-and-historical-money-never-use-preview",
+      "status": "PASS",
+      "quote": {
+        "isValid": true,
+        "code": "R21-E911C287-A945-4916-AAC7-9663929F957E",
+        "promotionId": 933,
+        "discountType": "Số tiền",
+        "discountValue": 1000,
+        "discountAmount": 1000,
+        "message": "Áp dụng mã khuyến mãi thành công.",
+        "provisionalSubtotal": 90000
+      },
+      "booking": {
+        "id": 8766,
+        "userId": 5,
+        "showtimeId": 1347,
+        "bookedAt": "2026-10-08T12:01:19.682Z",
+        "ticketTotal": 85000,
+        "productTotal": 12000,
+        "discountTotal": 2000,
+        "total": 95000,
+        "status": "Chờ thanh toán",
+        "holdExpiresAt": "2026-10-08T12:06:19.682Z",
+        "ticketCount": 1
+      },
+      "payment": {
+        "id": 95,
+        "orderId": 8766,
+        "method": "VNPAY",
+        "amount": 95000,
+        "createdAt": "2026-10-08T12:01:19.751Z",
+        "transactionCode": "TXN-20261008120119-8766-6C82A2",
+        "status": "Đang xử lý",
+        "holdExpiresAt": "2026-10-08T12:06:19.682Z"
+      },
+      "monetaryBefore": [
+        [
+          {
+            "TongTienVe": 85000,
+            "TongTienDoAn": 12000,
+            "TienGiamGia": 2000
+          }
+        ],
+        [
+          {
+            "GiaVe": 85000
+          }
+        ],
+        [
+          {
+            "DonGia": 12000,
+            "SoLuong": 1
+          }
+        ],
+        [
+          {
+            "SoTien": 95000
+          }
+        ]
+      ],
+      "monetaryAfter": [
+        [
+          {
+            "TongTienVe": 85000,
+            "TongTienDoAn": 12000,
+            "TienGiamGia": 2000
+          }
+        ],
+        [
+          {
+            "GiaVe": 85000
+          }
+        ],
+        [
+          {
+            "DonGia": 12000,
+            "SoLuong": 1
+          }
+        ],
+        [
+          {
+            "SoTien": 95000
+          }
+        ]
+      ]
+    },
+    {
+      "name": "spoofed-money-acceptance-quota-rejected-no-writes",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/auth/login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "SEAT_LIMIT_EXCEEDED",
+        "message": "An order can contain at most 10 seats."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "PRODUCT_QUANTITY_LIMIT_EXCEEDED",
+        "message": "Each product quantity must be at most 10."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "DUPLICATE_PRODUCT",
+        "message": "products must not contain duplicate productId values."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/928",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/928",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "A percent discount must be greater than 0 and at most 99."
+      }
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/928",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/928",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/929",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/929",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/929",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/930",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/932",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 409,
+      "expected": 409,
+      "error": {
+        "code": "PROMOTION_NOT_AVAILABLE",
+        "message": "The requested promotion is no longer available. Review your order before booking."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "POST",
+      "route": "/admin/pricing",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/products/939",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/933",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/orders/8766/payments",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/orders/8766/payments/95/result",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/pricing/625",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/products/939",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "admin",
+      "method": "PUT",
+      "route": "/admin/promotions/933",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "GET",
+      "route": "/orders/8766",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/bookings",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/promotions/validate",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    {
+      "role": "customer",
+      "method": "POST",
+      "route": "/orders/8766/payments",
+      "status": 400,
+      "expected": 400,
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    }
+  ],
+  "before": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "20a0480af532df29fab544a1f469c4bc8c0c770e740ddfdf791a667f4b9874b3",
+      "objects": "57e80994c6cd228773a5bd9dc0f4eded5123439f0e330217710842e7520462bb",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "7a1111658b4472db18f0bc1912c9d261ae03a209999d04dde30e3cd2027d4e70",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "0b9c9f9f216469eea8d4d00cd242c573cf6288ea15a73f5d90f4bf03ce6f98d2",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "after": {
+    "data": [
+      {
+        "table": "BANGGIA",
+        "rows": 7,
+        "sha256": "673821efcfa258f345fb0698c28c364297080d05d230c150be169714d9728325"
+      },
+      {
+        "table": "BOITHUONG_HUYSUAT",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETDOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "CHITIETVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DANHGIAPHIM",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "DIENVIEN",
+        "rows": 6,
+        "sha256": "c04b9d6d1fddedb9a738eae24514bccbea23a838a16c35d6399657e909f33e60"
+      },
+      {
+        "table": "DONDATVE",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "GHE",
+        "rows": 240,
+        "sha256": "6ef706e464e518503844ec00ebe0bc1315a05759c1e1dfffb826c6b8d0cb5076"
+      },
+      {
+        "table": "HINHANH_RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "ee4f521658703a49c3123427ff6b17c4f88023667ecd15885b83d223c6eeefea"
+      },
+      {
+        "table": "HOSOKHACHHANG",
+        "rows": 4,
+        "sha256": "5bfe89fd283ba356e65c83a9f536ae6bec5b497c43567e813c4251c1c3869ace"
+      },
+      {
+        "table": "KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "KHUYENMAI",
+        "rows": 3,
+        "sha256": "d9c9a32fa589ae6007adc242d264bb97966be7b010c472c900a422a336e882f8"
+      },
+      {
+        "table": "NGUOIDUNG",
+        "rows": 8,
+        "sha256": "c4b8ba4a01c88440d93b15ca48c947cd0383bffeab975906d6bbbbe982ffa073"
+      },
+      {
+        "table": "PHANCONG_RAP",
+        "rows": 2,
+        "sha256": "052443353375683f88e2a5e1bf09cd60a6d6f520bebe3466ee60e02bcd9ecbd3"
+      },
+      {
+        "table": "PHIM",
+        "rows": 4,
+        "sha256": "4f4ecc777262ad55935a3546ddbe2485a97f19d71d8e548fdde307e74ec503f2"
+      },
+      {
+        "table": "PHIM_DIENVIEN",
+        "rows": 4,
+        "sha256": "79d6276dd41388622a6085075ae22a2fa08566d439524be7147531f14c1f5ecb"
+      },
+      {
+        "table": "PHIM_THELOAI",
+        "rows": 7,
+        "sha256": "7abf09dda54a2f99b45e35b096d81c1703ef1ef4ebfc458f138fe33dc5e0e6c9"
+      },
+      {
+        "table": "PHONGCHIEU",
+        "rows": 6,
+        "sha256": "bd125b0c0bbbdc4ffb582192de7342bcc81760324e62998dae42be8819e00d91"
+      },
+      {
+        "table": "QUYEN",
+        "rows": 23,
+        "sha256": "5fae6c1d7a586eb9e7c9e91f4f56d5405d20b3b54212d50d183e7f2ac7ce346c"
+      },
+      {
+        "table": "RAPCHIEUPHIM",
+        "rows": 3,
+        "sha256": "6fea141b059d1bae3d25e720b1147f3f2432a81b3ea66636a6c194ab9127d01c"
+      },
+      {
+        "table": "SANPHAM",
+        "rows": 5,
+        "sha256": "a1187a885837dd1ba24646ff7d1e52b6df74c4b9927674c55b7e8349aa992335"
+      },
+      {
+        "table": "SUATCHIEU",
+        "rows": 5,
+        "sha256": "1e94823476afc4767217ab55e8e371aafad28f6e6ad954a6ab71a708390a6632"
+      },
+      {
+        "table": "THANHTOAN",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "table": "THELOAI",
+        "rows": 7,
+        "sha256": "fdc80a602c39ce4ddd8c40255784d221ae15f99d680bb4d4364a84e3aee204a8"
+      },
+      {
+        "table": "VAITRO",
+        "rows": 4,
+        "sha256": "752c64348a9351962c53c8f1e0163b2e51db6160e0a795547a64b3c0a58a69dd"
+      },
+      {
+        "table": "VAITRO_QUYEN",
+        "rows": 40,
+        "sha256": "64e4aa9980a22f397602fe741cf29f4061de5d8a717ca7ee2ef6390013d9907a"
+      },
+      {
+        "table": "XULY_KHIEUNAI",
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "metadataHashes": {
+      "environment": "20a0480af532df29fab544a1f469c4bc8c0c770e740ddfdf791a667f4b9874b3",
+      "objects": "57e80994c6cd228773a5bd9dc0f4eded5123439f0e330217710842e7520462bb",
+      "schemas": "2f511498db2e9c1485a747ba4b283d501249d0818b70ff311e7755248522e558",
+      "columns": "42cae76cfcb2915530056b08d4e2d61bd92996596edb7523b336d32312f8f871",
+      "parameters": "7a1111658b4472db18f0bc1912c9d261ae03a209999d04dde30e3cd2027d4e70",
+      "keys": "22f93a08e3c7040570984837f6903983151adb2e0c73f0180ded0d9dff07219b",
+      "foreignKeys": "b8668b4122f64440e80756e519e12b8f44c6866d50c28ac49e94bc7d47834a25",
+      "checks": "2311e52a4f3ee27787c1a33d7c60dabaf8e3452546f833500b66f7cd71240f38",
+      "indexes": "4191dd28ed37037b60fea92e96ea5c3d6557d684cb18f627c982f6a1eeb0441a",
+      "triggers": "82b7c4335a22a4e585610b0bd78c38934a5aac4ad41f88e21f74981bdd2a2b00",
+      "dependencies": "0b9c9f9f216469eea8d4d00cd242c573cf6288ea15a73f5d90f4bf03ce6f98d2",
+      "principals": "f9f7d7848bf371641c2282247d1571abe145ffb50297b58caf690f0697003897",
+      "permissions": "c1dbb10f90ccc7fe9d3bdad2de66ba1e4ebbf87100d77cdd971c0b058baf16e1",
+      "memberships": "8d05448fd2d3008b88d711aff095ada055fcdd1ee24630f63090925dbd688cad",
+      "rowcounts": "36c9f4503f7c93b3a9c564a04f95f45992ad515ca46167deebd343723a882fb6"
+    }
+  },
+  "cleanup": "PASS",
+  "session": {
+    "spid": 82,
+    "trancount": 0,
+    "xactState": 0
+  },
+  "finishedAt": "2026-10-08T12:01:21.391Z"
+}

@@ -22,6 +22,7 @@ test('admin service uses fixed whitelisted procedures and typed parameters', asy
   const calls = [];
   const service = createAdminService({ execute: async (key, params) => {
     calls.push({ key, params });
+    if (key === 'ADMIN_REPORT_REVENUE') return { recordsets: [[{ total: 4 }], [{ id: 3 }], [{ movie: 5 }], [{ day: '2026-01-01' }]] };
     return { recordsets: [[{ id: 3 }], [{ total: 4 }]] };
   } });
   assert.deepEqual(await service.users(1, { roleId: 2, status: 'active', search: 'Mai' }), [{ id: 3 }]);
@@ -29,6 +30,7 @@ test('admin service uses fixed whitelisted procedures and typed parameters', asy
   assert.equal(calls[0].params.VaiTroID.value, 2);
   assert.equal(calls[0].params.SearchTerm.value, 'Mai');
   assert.deepEqual(await service.revenue(1, { fromDate: '2026-01-01', toDate: '2026-01-31' }), {
+    summary: { total: 4 }, byCinema: [{ id: 3 }], byMovie: [{ movie: 5 }], byDate: [{ day: '2026-01-01' }],
     cinemas: [{ id: 3 }], totals: { total: 4 },
   });
   assert.equal(calls[1].key, 'ADMIN_REPORT_REVENUE');
