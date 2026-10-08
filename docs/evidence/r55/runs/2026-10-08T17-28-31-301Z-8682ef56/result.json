@@ -1,0 +1,1140 @@
+{
+  "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+  "mode": "fixture-test",
+  "seedOnly": false,
+  "database": "CinemaBookingDB_Test",
+  "status": "PASS",
+  "startedAt": "2026-10-08T17:28:31.302Z",
+  "steps": [
+    {
+      "testID": "R55-TARGET",
+      "scenario": "Read-only instance, database and physical file preflight",
+      "expected": "Exact allowed disposable target",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:31.302Z",
+      "actual": {
+        "status": "PREFLIGHT ONLY",
+        "database": "CinemaBookingDB_Test",
+        "server": {
+          "ServerName": "DESKTOP-E67DPCV",
+          "MachineName": "DESKTOP-E67DPCV",
+          "InstanceName": null,
+          "Version": "17.0.1000.7",
+          "ConnectedDatabase": "master",
+          "UtcNow": "2026-10-08T17:28:32.0609012",
+          "BusinessDate": "2026-10-09",
+          "DataPath": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\",
+          "LogPath": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\",
+          "CanCreateDatabase": 1,
+          "databases": [
+            {
+              "name": "CinemaBookingDB",
+              "database_id": 19,
+              "create_date": "2026-10-03T20:59:18.233",
+              "state_desc": "ONLINE",
+              "is_read_only": false,
+              "database_guid": "96F850EA-987F-41A1-9086-38F6597968C8",
+              "files": [
+                {
+                  "name": "CinemaBookingDB",
+                  "type_desc": "ROWS",
+                  "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB.mdf"
+                },
+                {
+                  "name": "CinemaBookingDB_log",
+                  "type_desc": "LOG",
+                  "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_log.ldf"
+                }
+              ]
+            },
+            {
+              "name": "CinemaBookingDB_Test",
+              "database_id": 42,
+              "create_date": "2026-10-09T00:26:34.080",
+              "state_desc": "ONLINE",
+              "is_read_only": false,
+              "database_guid": "3E4A34E5-09E5-4DF2-9F42-CEC389FDA0E7",
+              "files": [
+                {
+                  "name": "CinemaBookingDB_Test",
+                  "type_desc": "ROWS",
+                  "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test.mdf"
+                },
+                {
+                  "name": "CinemaBookingDB_Test_log",
+                  "type_desc": "LOG",
+                  "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test_log.ldf"
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "name": "CinemaBookingDB_Test",
+          "database_id": 42,
+          "create_date": "2026-10-09T00:26:34.080",
+          "state_desc": "ONLINE",
+          "is_read_only": false,
+          "database_guid": "3E4A34E5-09E5-4DF2-9F42-CEC389FDA0E7",
+          "files": [
+            {
+              "name": "CinemaBookingDB_Test",
+              "type_desc": "ROWS",
+              "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test.mdf"
+            },
+            {
+              "name": "CinemaBookingDB_Test_log",
+              "type_desc": "LOG",
+              "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test_log.ldf"
+            }
+          ]
+        },
+        "main": {
+          "name": "CinemaBookingDB",
+          "database_id": 19,
+          "create_date": "2026-10-03T20:59:18.233",
+          "state_desc": "ONLINE",
+          "is_read_only": false,
+          "database_guid": "96F850EA-987F-41A1-9086-38F6597968C8",
+          "files": [
+            {
+              "name": "CinemaBookingDB",
+              "type_desc": "ROWS",
+              "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB.mdf"
+            },
+            {
+              "name": "CinemaBookingDB_log",
+              "type_desc": "LOG",
+              "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_log.ldf"
+            }
+          ]
+        },
+        "expectedNewFiles": null,
+        "confirmation": "7ea8d1723caf206180fcb67058a8772566f55310568ba70dca726476bf7771e3",
+        "sqlGuard": "IF CONVERT(nvarchar(128),SERVERPROPERTY('ServerName')) <> N'DESKTOP-E67DPCV' THROW 51055, 'Actual SQL Server instance changed since preflight.', 1;\nIF NOT EXISTS (SELECT 1 FROM master.sys.databases d JOIN master.sys.database_recovery_status r ON r.database_id=d.database_id WHERE d.name=N'CinemaBookingDB_Test' AND r.database_guid=N'3E4A34E5-09E5-4DF2-9F42-CEC389FDA0E7' AND d.state_desc='ONLINE' AND d.is_read_only=0) THROW 51055, 'Test database identity/state changed since preflight.', 1;\nIF (SELECT COUNT(*) FROM master.sys.master_files WHERE database_id=DB_ID(N'CinemaBookingDB_Test')) <> 2 THROW 51055, 'Test database file count changed.', 1;\nIF NOT EXISTS (SELECT 1 FROM master.sys.master_files WHERE database_id=DB_ID(N'CinemaBookingDB_Test') AND name=N'CinemaBookingDB_Test' AND physical_name=N'C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test.mdf') THROW 51055, 'Test database physical path changed.', 1;\nIF NOT EXISTS (SELECT 1 FROM master.sys.master_files WHERE database_id=DB_ID(N'CinemaBookingDB_Test') AND name=N'CinemaBookingDB_Test_log' AND physical_name=N'C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test_log.ldf') THROW 51055, 'Test database physical path changed.', 1;\n"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:32.079Z"
+    },
+    {
+      "testID": "R55-AUTHORIZE",
+      "scenario": "Confirm reviewed target and separate existing-target reset opt-in",
+      "expected": "Confirmation tokens match live identity",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:32.080Z",
+      "actual": "Completed without error",
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:32.080Z"
+    },
+    {
+      "testID": "R55-MAIN-BEFORE",
+      "scenario": "Fingerprint main read-only before test writes",
+      "expected": "27 table hashes and metadata hashes, no exported rows",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:32.081Z",
+      "actual": {
+        "database": "CinemaBookingDB",
+        "data": [
+          {
+            "TableName": "BANGGIA",
+            "Rows": 7,
+            "Sha256": "32866B9AAFC16A18A878F87398D32ABFAC80D226CCD45925902D604220AE4852"
+          },
+          {
+            "TableName": "BOITHUONG_HUYSUAT",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "CHITIETDOAN",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "CHITIETVE",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "DANHGIAPHIM",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "DIENVIEN",
+            "Rows": 6,
+            "Sha256": "BA80D851C39E0466D848AF91184B30D033910DA89E7EE990F7F97458E6D7D990"
+          },
+          {
+            "TableName": "DONDATVE",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "GHE",
+            "Rows": 240,
+            "Sha256": "477B525CDBC8D68026724ADAB359DD1AA4C19BB3905E084CD4ED24595BB3E567"
+          },
+          {
+            "TableName": "HINHANH_RAPCHIEUPHIM",
+            "Rows": 3,
+            "Sha256": "2AD8057A16C848FCEE09192959DFA39926932244E21D322514BF6024E97ED861"
+          },
+          {
+            "TableName": "HOSOKHACHHANG",
+            "Rows": 4,
+            "Sha256": "3E0716015200A6241745A8992D204432D7D125541FCEC0E4C606DEEC1293F894"
+          },
+          {
+            "TableName": "KHIEUNAI",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "KHUYENMAI",
+            "Rows": 3,
+            "Sha256": "0E755C1FDBB14801B9F68131B6F19C7F20673D1D13491F7782337C02080D329D"
+          },
+          {
+            "TableName": "NGUOIDUNG",
+            "Rows": 8,
+            "Sha256": "D290033F76005906D7A4BBBDBEB54123D171E4F3DF55AA2D15E363BA138E4F24"
+          },
+          {
+            "TableName": "PHANCONG_RAP",
+            "Rows": 2,
+            "Sha256": "871497498A970992BC7A6987C340DB127AF97692A03502137FD4B71AE55E6517"
+          },
+          {
+            "TableName": "PHIM",
+            "Rows": 4,
+            "Sha256": "7236C8660FF8A79C77AFAE887A18D6624E5543511D84E5F94F61F114A471CA60"
+          },
+          {
+            "TableName": "PHIM_DIENVIEN",
+            "Rows": 4,
+            "Sha256": "0EAA7A86584FA191878A53C5F47F1C9BD9F2110203177C1C70EAFD6190CDF2FD"
+          },
+          {
+            "TableName": "PHIM_THELOAI",
+            "Rows": 7,
+            "Sha256": "1CEF8AB9BC3C2196138B68F529654A97A4F42326F0B29CCC0CBB843A85304FEE"
+          },
+          {
+            "TableName": "PHONGCHIEU",
+            "Rows": 6,
+            "Sha256": "552436EFA3D1776B83E8853A3B2C75EEFCB325DF73F1A46B0AC5DC8BF3690A43"
+          },
+          {
+            "TableName": "QUYEN",
+            "Rows": 23,
+            "Sha256": "3BA97A66BDF4D642B9BBE8F80322CF344CEDE3249717AE302E2EE720D0C19497"
+          },
+          {
+            "TableName": "RAPCHIEUPHIM",
+            "Rows": 3,
+            "Sha256": "709FA82B83F81D43055589F659526A8DFD1FD2B609CB5B24F7E468063FD41856"
+          },
+          {
+            "TableName": "SANPHAM",
+            "Rows": 5,
+            "Sha256": "7D3ACA1D5FD9B818C19BEE899C8E0E2AB027DA021C03453D6EA09C5D3120DE6A"
+          },
+          {
+            "TableName": "SUATCHIEU",
+            "Rows": 5,
+            "Sha256": "D6C5C2938A284CE6F1E33E19E377041AA823DB3D68CF375F0F7697BA3B6EA20C"
+          },
+          {
+            "TableName": "THANHTOAN",
+            "Rows": 0,
+            "Sha256": null
+          },
+          {
+            "TableName": "THELOAI",
+            "Rows": 7,
+            "Sha256": "73981A2A2406590E9073D810204AFDC38CC8649170279B837509481D96C95960"
+          },
+          {
+            "TableName": "VAITRO",
+            "Rows": 4,
+            "Sha256": "0C2DF8DCFBBF4472BEFD43BB54C230F26C2B43C30FDCECCF2B05937900988238"
+          },
+          {
+            "TableName": "VAITRO_QUYEN",
+            "Rows": 40,
+            "Sha256": "E4784A66678249415ADB3A79128B8B666A8FFE33CBD7707F8DF7E3B07528E622"
+          },
+          {
+            "TableName": "XULY_KHIEUNAI",
+            "Rows": 0,
+            "Sha256": null
+          }
+        ],
+        "metadata": [
+          {
+            "Category": "objects",
+            "Sha256": "95CF404EAA291D3A9A7AA4322B30E489709DFD4A74CE272CF04BE576D5B5694A"
+          },
+          {
+            "Category": "schemas",
+            "Sha256": "5A6DD309A611E84ED4E74ADCCDB1630FBDB12D4BC402D4E1CE74C29328B66B4E"
+          },
+          {
+            "Category": "columns",
+            "Sha256": "1468E0F3045F5C7D10702E574A966AE229262C6D8629B4FA467A79D415DA99F9"
+          },
+          {
+            "Category": "parameters",
+            "Sha256": "D93B0556AFF1D491434CAC16EF96998669A89873811A571A7F18986A68A889BA"
+          },
+          {
+            "Category": "keys",
+            "Sha256": "FFF5C06A85D4FA09C95925DA0E4D6FE3A169E40948296E301E0FB570CDE69FA6"
+          },
+          {
+            "Category": "foreignKeys",
+            "Sha256": "774C3AB8543F07DED5263CCE6091205C35D9FADA90FDAD807E3D46646C8F0C82"
+          },
+          {
+            "Category": "checks",
+            "Sha256": "80063BFF914D32BECA9CCA80B158FA72967BC2731298918D8028ECF0E16FF219"
+          },
+          {
+            "Category": "indexes",
+            "Sha256": "3BCEB66C923DA28A82CE2824490FB38190BB3B54A44B789F94E69CC1279606A9"
+          },
+          {
+            "Category": "triggers",
+            "Sha256": "2D1410C1EE9F08312D3235080C1DBD08EF77D2E74CEE6F9BD3F11A49E679E33E"
+          },
+          {
+            "Category": "dependencies",
+            "Sha256": "0EFE24548CD8B4AB9E163713633493925AB0350E3034BC2C5DCE42B13AF28F3D"
+          },
+          {
+            "Category": "principals",
+            "Sha256": "4C2573B660BB73CA36D5543646E569509604571402735B5A8CF48A2429D5B8FF"
+          },
+          {
+            "Category": "permissions",
+            "Sha256": "C1A0A7DEC5414DB8EB454680D3CAC0FC07F10EA2725E3FECB2294C6F032AB842"
+          },
+          {
+            "Category": "memberships",
+            "Sha256": "5D8C657968CA8972A1BA828E01148953257059B0E5F9B86C773891CBDC944405"
+          }
+        ]
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:34.359Z"
+    },
+    {
+      "testID": "R55-OBJECTS",
+      "scenario": "Existing comprehensive schema/object/dependency verification",
+      "expected": "Canonical baseline matches runtime",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:35.916Z",
+      "actual": {
+        "evidence": "objects.log",
+        "result": "SQL completed; all THROW assertions accepted"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:38.481Z"
+    },
+    {
+      "testID": "R55-MODULE-PARITY",
+      "scenario": "Existing source module verification and actual inventory",
+      "expected": "159 module definitions and full metadata",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:38.482Z",
+      "actual": {
+        "modules": 159,
+        "tables": 27,
+        "evidence": "objects.json"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:49.354Z"
+    },
+    {
+      "testID": "R55-SEED-INVARIANTS",
+      "scenario": "Counts, trusted constraints, UTC/release/overlap and ID contracts",
+      "expected": "376 base rows / 8 past / 24 bookable / 32 shows",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:49.355Z",
+      "actual": {
+        "evidence": "seed-verification.log",
+        "result": "SQL completed; all THROW assertions accepted"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:50.216Z"
+    },
+    {
+      "testID": "R55-PUBLIC-READS",
+      "scenario": "Actual public list/detail/seat SPs for every future show",
+      "expected": "24 details / 960 seat rows, price/room/availability correct",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:50.217Z",
+      "actual": {
+        "evidence": "public-reads.log",
+        "result": "SQL completed; all THROW assertions accepted"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:51.392Z"
+    },
+    {
+      "testID": "R55-ROLLBACK",
+      "scenario": "R5.4 default rollback and immediate no-open-transaction assertion",
+      "expected": "All embedded fixture invariants PASS; baseline data/metadata unchanged",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:53.179Z",
+      "actual": {
+        "evidence": [
+          "fixture-rollback.log",
+          "rollback-fingerprints.json"
+        ]
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:56.311Z"
+    },
+    {
+      "testID": "R55-COMMIT",
+      "scenario": "R5.4 positive commit then immediate lifecycle/payment/seat assertions",
+      "expected": "6/7/5/4/1/5/7/1 rows, live pending, monetary/points/quota/history valid",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:56.311Z",
+      "actual": {
+        "evidence": "fixture-commit.log",
+        "result": "SQL completed; all THROW assertions accepted"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:28:57.648Z"
+    },
+    {
+      "testID": "R55-NEGATIVE",
+      "scenario": "R5.4 review eligibility/duplicate/foreign order probes",
+      "expected": "50004 / 50040 / 50041; all tables/metadata unchanged",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:59.130Z",
+      "actual": {
+        "evidence": [
+          "negative-probes.log",
+          "negative-fingerprints.json"
+        ]
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:29:01.385Z"
+    },
+    {
+      "testID": "R55-SNAPSHOT",
+      "scenario": "Normalize seeded schedule and fixture business relationships",
+      "expected": "Exclude random refs/identities/absolute instants, retain authoritative SQL monetary values",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:29:01.386Z",
+      "actual": {
+        "shows": [
+          {
+            "SuatChieuID": 1,
+            "PhimID": 1,
+            "PhongID": 1,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -2,
+            "LocalTime": "18:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 2,
+            "PhimID": 1,
+            "PhongID": 1,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 85000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 1,
+            "LocalTime": "02:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 3,
+            "PhimID": 1,
+            "PhongID": 2,
+            "DinhDang": "IMAX",
+            "GiaVeCoBan": 120000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 1,
+            "LocalTime": "05:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 4,
+            "PhimID": 2,
+            "PhongID": 4,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 1,
+            "LocalTime": "03:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 5,
+            "PhimID": 4,
+            "PhongID": 6,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 1,
+            "LocalTime": "04:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 6,
+            "PhimID": 2,
+            "PhongID": 3,
+            "DinhDang": "3D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -7,
+            "LocalTime": "12:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 7,
+            "PhimID": 3,
+            "PhongID": 5,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 90000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -7,
+            "LocalTime": "16:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 8,
+            "PhimID": 4,
+            "PhongID": 6,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -7,
+            "LocalTime": "18:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 9,
+            "PhimID": 3,
+            "PhongID": 2,
+            "DinhDang": "IMAX",
+            "GiaVeCoBan": 120000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -3,
+            "LocalTime": "14:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 10,
+            "PhimID": 2,
+            "PhongID": 4,
+            "DinhDang": "ScreenX",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -3,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 11,
+            "PhimID": 4,
+            "PhongID": 3,
+            "DinhDang": "3D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -1,
+            "LocalTime": "12:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 12,
+            "PhimID": 2,
+            "PhongID": 5,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Hoàn thành",
+            "RelativeDay": -1,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 13,
+            "PhimID": 3,
+            "PhongID": 3,
+            "DinhDang": "3D",
+            "GiaVeCoBan": 90000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 1,
+            "LocalTime": "12:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 14,
+            "PhimID": 2,
+            "PhongID": 5,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 1,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 15,
+            "PhimID": 4,
+            "PhongID": 1,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 2,
+            "LocalTime": "18:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 16,
+            "PhimID": 3,
+            "PhongID": 2,
+            "DinhDang": "IMAX",
+            "GiaVeCoBan": 120000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 2,
+            "LocalTime": "18:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 17,
+            "PhimID": 2,
+            "PhongID": 3,
+            "DinhDang": "3D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 2,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 18,
+            "PhimID": 1,
+            "PhongID": 4,
+            "DinhDang": "ScreenX",
+            "GiaVeCoBan": 85000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 2,
+            "LocalTime": "18:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 19,
+            "PhimID": 4,
+            "PhongID": 5,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 2,
+            "LocalTime": "18:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 20,
+            "PhimID": 3,
+            "PhongID": 6,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 90000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 2,
+            "LocalTime": "18:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 21,
+            "PhimID": 2,
+            "PhongID": 1,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 3,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 22,
+            "PhimID": 4,
+            "PhongID": 2,
+            "DinhDang": "IMAX",
+            "GiaVeCoBan": 120000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 3,
+            "LocalTime": "18:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 23,
+            "PhimID": 1,
+            "PhongID": 3,
+            "DinhDang": "3D",
+            "GiaVeCoBan": 85000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 3,
+            "LocalTime": "18:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 24,
+            "PhimID": 3,
+            "PhongID": 4,
+            "DinhDang": "ScreenX",
+            "GiaVeCoBan": 90000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 3,
+            "LocalTime": "18:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 25,
+            "PhimID": 2,
+            "PhongID": 5,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 3,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 26,
+            "PhimID": 1,
+            "PhongID": 6,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 85000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 3,
+            "LocalTime": "18:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 27,
+            "PhimID": 3,
+            "PhongID": 1,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 90000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 7,
+            "LocalTime": "18:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 28,
+            "PhimID": 2,
+            "PhongID": 2,
+            "DinhDang": "IMAX",
+            "GiaVeCoBan": 120000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 7,
+            "LocalTime": "18:00:00",
+            "Duration": 131
+          },
+          {
+            "SuatChieuID": 29,
+            "PhimID": 4,
+            "PhongID": 3,
+            "DinhDang": "3D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 7,
+            "LocalTime": "18:00:00",
+            "Duration": 110
+          },
+          {
+            "SuatChieuID": 30,
+            "PhimID": 1,
+            "PhongID": 4,
+            "DinhDang": "ScreenX",
+            "GiaVeCoBan": 85000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 7,
+            "LocalTime": "18:00:00",
+            "Duration": 166
+          },
+          {
+            "SuatChieuID": 31,
+            "PhimID": 3,
+            "PhongID": 5,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 90000,
+            "TrangThai": "Mở bán",
+            "RelativeDay": 7,
+            "LocalTime": "18:00:00",
+            "Duration": 180
+          },
+          {
+            "SuatChieuID": 32,
+            "PhimID": 4,
+            "PhongID": 6,
+            "DinhDang": "2D",
+            "GiaVeCoBan": 75000,
+            "TrangThai": "Đã hủy",
+            "RelativeDay": 7,
+            "LocalTime": "18:00:00",
+            "Duration": 110
+          }
+        ],
+        "orders": [
+          {
+            "Scenario": "CANCELED",
+            "Email": "khachhang1@gmail.com",
+            "SuatChieuID": 2,
+            "TrangThai": "Đã hủy",
+            "TongTienVe": 95000,
+            "TongTienDoAn": 45000,
+            "TienGiamGia": 14000,
+            "Tickets": [
+              {
+                "HangGhe": "A",
+                "SoGhe": 2,
+                "GiaVe": 95000,
+                "TrangThai": "Đã hủy"
+              }
+            ],
+            "Food": [
+              {
+                "SanPhamID": 1,
+                "SoLuong": 1,
+                "DonGia": 45000
+              }
+            ],
+            "Payments": null
+          },
+          {
+            "Scenario": "COMPENSATED",
+            "Email": "khachhang3@gmail.com",
+            "SuatChieuID": 32,
+            "TrangThai": "Đã hủy",
+            "TongTienVe": 150000,
+            "TongTienDoAn": 85000,
+            "TienGiamGia": 23500,
+            "Tickets": [
+              {
+                "HangGhe": "A",
+                "SoGhe": 1,
+                "GiaVe": 75000,
+                "TrangThai": "Đã hủy"
+              },
+              {
+                "HangGhe": "A",
+                "SoGhe": 2,
+                "GiaVe": 75000,
+                "TrangThai": "Đã hủy"
+              }
+            ],
+            "Food": [
+              {
+                "SanPhamID": 1,
+                "SoLuong": 1,
+                "DonGia": 45000
+              },
+              {
+                "SanPhamID": 2,
+                "SoLuong": 1,
+                "DonGia": 40000
+              }
+            ],
+            "Payments": [
+              {
+                "PhuongThuc": "MOMO",
+                "SoTien": 211500,
+                "TrangThai": "Thành công",
+                "GhiChu": "R54 paid before show cancellation"
+              }
+            ]
+          },
+          {
+            "Scenario": "EXPIRED",
+            "Email": "khachhang1@gmail.com",
+            "SuatChieuID": 2,
+            "TrangThai": "Hết hạn",
+            "TongTienVe": 95000,
+            "TongTienDoAn": 45000,
+            "TienGiamGia": 14000,
+            "Tickets": [
+              {
+                "HangGhe": "A",
+                "SoGhe": 1,
+                "GiaVe": 95000,
+                "TrangThai": "Đã hủy"
+              }
+            ],
+            "Food": [
+              {
+                "SanPhamID": 1,
+                "SoLuong": 1,
+                "DonGia": 45000
+              }
+            ],
+            "Payments": null
+          },
+          {
+            "Scenario": "HISTORY",
+            "Email": "khachhang1@gmail.com",
+            "SuatChieuID": 12,
+            "TrangThai": "Đã thanh toán",
+            "TongTienVe": 80000,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "Tickets": [
+              {
+                "HangGhe": "A",
+                "SoGhe": 1,
+                "GiaVe": 80000,
+                "TrangThai": "Đã đặt"
+              }
+            ],
+            "Food": null,
+            "Payments": [
+              {
+                "PhuongThuc": "VNPAY",
+                "SoTien": 80000,
+                "TrangThai": "Thành công",
+                "GhiChu": "R54 controlled historical payment snapshot"
+              }
+            ]
+          },
+          {
+            "Scenario": "PAID",
+            "Email": "khachhang1@gmail.com",
+            "SuatChieuID": 2,
+            "TrangThai": "Đã thanh toán",
+            "TongTienVe": 95000,
+            "TongTienDoAn": 45000,
+            "TienGiamGia": 14000,
+            "Tickets": [
+              {
+                "HangGhe": "A",
+                "SoGhe": 3,
+                "GiaVe": 95000,
+                "TrangThai": "Đã đặt"
+              }
+            ],
+            "Food": [
+              {
+                "SanPhamID": 1,
+                "SoLuong": 1,
+                "DonGia": 45000
+              }
+            ],
+            "Payments": [
+              {
+                "PhuongThuc": "VNPAY",
+                "SoTien": 126000,
+                "TrangThai": "Thất bại",
+                "GhiChu": "R54 failed attempt"
+              },
+              {
+                "PhuongThuc": "VNPAY",
+                "SoTien": 126000,
+                "TrangThai": "Thành công",
+                "GhiChu": "R54 paid after retry"
+              }
+            ]
+          },
+          {
+            "Scenario": "PENDING",
+            "Email": "khachhang2@gmail.com",
+            "SuatChieuID": 2,
+            "TrangThai": "Chờ thanh toán",
+            "TongTienVe": 95000,
+            "TongTienDoAn": 0,
+            "TienGiamGia": 0,
+            "Tickets": [
+              {
+                "HangGhe": "A",
+                "SoGhe": 1,
+                "GiaVe": 95000,
+                "TrangThai": "Đã đặt"
+              }
+            ],
+            "Food": null,
+            "Payments": null
+          }
+        ],
+        "complaints": [
+          {
+            "Email": "khachhang3@gmail.com",
+            "TieuDe": "R54-C-CLOSED",
+            "TrangThai": "Đã đóng",
+            "LinkedOrder": 1,
+            "History": [
+              {
+                "Email": "cskh@cinemadb.vn",
+                "NoiDungXuLy": "R54 investigating",
+                "TrangThaiSauXuLy": "Đang xử lý"
+              },
+              {
+                "Email": "cskh@cinemadb.vn",
+                "NoiDungXuLy": "R54 resolved",
+                "TrangThaiSauXuLy": "Đã giải quyết"
+              },
+              {
+                "Email": "admin@cinemadb.vn",
+                "NoiDungXuLy": "Cập nhật trạng thái khiếu nại.",
+                "TrangThaiSauXuLy": "Đã đóng"
+              }
+            ]
+          },
+          {
+            "Email": "khachhang1@gmail.com",
+            "TieuDe": "R54-C-NEW",
+            "TrangThai": "Mới",
+            "LinkedOrder": 0,
+            "History": null
+          },
+          {
+            "Email": "khachhang1@gmail.com",
+            "TieuDe": "R54-C-PROCESSING",
+            "TrangThai": "Đang xử lý",
+            "LinkedOrder": 1,
+            "History": [
+              {
+                "Email": "cskh@cinemadb.vn",
+                "NoiDungXuLy": "R54 investigating",
+                "TrangThaiSauXuLy": "Đang xử lý"
+              }
+            ]
+          },
+          {
+            "Email": "khachhang2@gmail.com",
+            "TieuDe": "R54-C-REJECTED",
+            "TrangThai": "Từ chối",
+            "LinkedOrder": 0,
+            "History": [
+              {
+                "Email": "cskh@cinemadb.vn",
+                "NoiDungXuLy": "R54 rejection reason",
+                "TrangThaiSauXuLy": "Từ chối"
+              }
+            ]
+          },
+          {
+            "Email": "khachhang1@gmail.com",
+            "TieuDe": "R54-C-RESOLVED",
+            "TrangThai": "Đã giải quyết",
+            "LinkedOrder": 1,
+            "History": [
+              {
+                "Email": "cskh@cinemadb.vn",
+                "NoiDungXuLy": "R54 investigating",
+                "TrangThaiSauXuLy": "Đang xử lý"
+              },
+              {
+                "Email": "cskh@cinemadb.vn",
+                "NoiDungXuLy": "R54 resolved",
+                "TrangThaiSauXuLy": "Đã giải quyết"
+              }
+            ]
+          }
+        ],
+        "reviews": [
+          {
+            "Email": "khachhang1@gmail.com",
+            "PhimID": 2,
+            "SoSao": 5,
+            "NoiDung": "R54 eligible historical review"
+          }
+        ],
+        "compensation": [
+          {
+            "Email": "khachhang3@gmail.com",
+            "SuatChieuID": 32,
+            "DiemBoiThuong": 135
+          }
+        ],
+        "points": [
+          {
+            "Email": "khachhang1@gmail.com",
+            "DiemTichLuy": 356
+          },
+          {
+            "Email": "khachhang2@gmail.com",
+            "DiemTichLuy": 80
+          },
+          {
+            "Email": "khachhang3@gmail.com",
+            "DiemTichLuy": 391
+          },
+          {
+            "Email": "khachhang4@gmail.com",
+            "DiemTichLuy": 0
+          }
+        ],
+        "promotions": [
+          {
+            "MaCode": "CHAOBANMOI",
+            "SoLuong": 1000,
+            "SoLuongDaDung": 1
+          },
+          {
+            "MaCode": "GIAM30K",
+            "SoLuong": 500,
+            "SoLuongDaDung": 0
+          },
+          {
+            "MaCode": "VIPMEMBER",
+            "SoLuong": 200,
+            "SoLuongDaDung": 0
+          }
+        ]
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:29:06.259Z"
+    },
+    {
+      "testID": "R55-MAIN-AFTER",
+      "scenario": "Prove main unchanged after test success/failure",
+      "expected": "Same 27 table and metadata hashes",
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:29:06.261Z",
+      "actual": {
+        "evidence": "main-preservation.json",
+        "result": "Exact equality"
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-10-08T17:29:07.678Z"
+    }
+  ],
+  "targetIdentity": {
+    "server": "DESKTOP-E67DPCV",
+    "target": {
+      "name": "CinemaBookingDB_Test",
+      "database_id": 42,
+      "create_date": "2026-10-09T00:26:34.080",
+      "state_desc": "ONLINE",
+      "is_read_only": false,
+      "database_guid": "3E4A34E5-09E5-4DF2-9F42-CEC389FDA0E7",
+      "files": [
+        {
+          "name": "CinemaBookingDB_Test",
+          "type_desc": "ROWS",
+          "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test.mdf"
+        },
+        {
+          "name": "CinemaBookingDB_Test_log",
+          "type_desc": "LOG",
+          "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test_log.ldf"
+        }
+      ]
+    }
+  },
+  "clock": {
+    "UtcNow": "2026-10-08T17:28:35.9008795",
+    "SeedDate": "2026-10-09"
+  },
+  "normalizedHash": "3401e888615cf0b37fb16d1e49d1f4056ecbc398af9546cb18682e9a65b4b624",
+  "finishedAt": "2026-10-08T17:29:07.679Z"
+}

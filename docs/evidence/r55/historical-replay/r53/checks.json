@@ -1,0 +1,278 @@
+{
+  "status": "FAIL",
+  "capturedAt": "2026-10-08T17:46:50.675Z",
+  "validationKind": "STATIC SOURCE AND BOUNDARY ANALYSIS",
+  "databaseConnection": false,
+  "sqlExecuted": false,
+  "checks": [
+    {
+      "name": "SQL source structure, one DB clock, UTC/business date contract, showtime-only writes",
+      "status": "FAIL",
+      "detail": "The input did not match the regular expression /DATEADD\\(HOUR, plan\\.LocalHour, CONVERT\\(datetime2\\(7\\), DATEADD\\(DAY, plan\\.DayOffset, @Today\\)\\)\\)/. Input:\n\n\"IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0\\n\" +\n  'BEGIN\\n' +\n  ' \\n' +\n  ' \\n' +\n  'DECLARE @NowUtc datetime2(7) = dbo.fn_BayGio();\\n' +\n  'DECLARE @Today date = dbo.fn_NgayKinhDoanh(@NowUtc);\\n' +\n  'IF EXISTS (SELECT 1 FROM dbo.SUATCHIEU)\\n' +\n  \"    THROW 51004, 'Dynamic showtime seed requires empty showtime data; no refresh or repair is performed.', 1;\\n\" +\n  '\\n' +\n  'DECLARE @ShowtimePlan TABLE (\\n' +\n  '    SuatChieuID int PRIMARY KEY, PhimID int NOT NULL, PhongID int NOT NULL,\\n' +\n  '    DayOffset int NOT NULL, LocalHour int NOT NULL,\\n' +\n  '    DinhDang nvarchar(50) NOT NULL, GiaVeCoBan decimal(18,2) NOT NULL,\\n' +\n  '    TrangThai nvarchar(50) NOT NULL\\n' +\n  ');\\n' +\n  'INSERT INTO @ShowtimePlan (SuatChieuID, PhimID, PhongID, DayOffset, LocalHour, DinhDang, GiaVeCoBan, TrangThai) VALUES\\n' +\n  ' \\n' +\n  \"(1, 1, 1, -2, 18, N'2D', 80000, N'Hoàn thành'),\\n\" +\n  \"(2, 1, 1,  1,  2, N'2D', 85000, N'Mở bán'),\\n\" +\n  \"(3, 1, 2,  1,  5, N'IMAX', 120000, N'Mở bán'),\\n\" +\n  \"(4, 2, 4,  1,  3, N'2D', 80000, N'Mở bán'),\\n\" +\n  \"(5, 4, 6,  1,  4, N'2D', 75000, N'Mở bán'),\\n\" +\n  ' \\n' +\n  \"(6, 2, 3, -7, 12, N'3D', 80000, N'Hoàn thành'),\\n\" +\n  \"(7, 3, 5, -7, 16, N'2D', 90000, N'Hoàn thành'),\\n\" +\n  \"(8, 4, 6, -7, 18, N'2D', 75000, N'Hoàn thành'),\\n\" +\n  \"(9, 3, 2, -3, 14, N'IMAX', 120000, N'Hoàn thành'),\\n\" +\n  \"(10, 2, 4, -3, 18, N'ScreenX', 80000, N'Hoàn thành'),\\n\" +\n  \"(11, 4, 3, -1, 12, N'3D', 75000, N'Hoàn thành'),\\n\" +\n  \"(12, 2, 5, -1, 18, N'2D', 80000, N'Hoàn thành'),\\n\" +\n  ' \\n' +\n  \"(13, 3, 3, 1, 12, N'3D', 90000, N'Mở bán'),\\n\" +\n  \"(14, 2, 5, 1, 18, N'2D', 80000, N'Mở bán'),\\n\" +\n  \"(15, 4, 1, 2, 18, N'2D', 75000, N'Mở bán'),\\n\" +\n  \"(16, 3, 2, 2, 18, N'IMAX', 120000, N'Mở bán'),\\n\" +\n  \"(17, 2, 3, 2, 18, N'3D', 80000, N'Mở bán'),\\n\" +\n  \"(18, 1, 4, 2, 18, N'ScreenX', 85000, N'Mở bán'),\\n\" +\n  \"(19, 4, 5, 2, 18, N'2D', 75000, N'Mở bán'),\\n\" +\n  \"(20, 3, 6, 2, 18, N'2D', 90000, N'Mở bán'),\\n\" +\n  \"(21, 2, 1, 3, 18, N'2D', 80000, N'Mở bán'),\\n\" +\n  \"(22, 4, 2, 3, 18, N'IMAX', 120000, N'Mở bán'),\\n\" +\n  \"(23, 1, 3, 3, 18, N'3D', 85000, N'Mở bán'),\\n\" +\n  \"(24, 3, 4, 3, 18, N'ScreenX', 90000, N'Mở bán'),\\n\" +\n  \"(25, 2, 5, 3, 18, N'2D', 80000, N'Mở bán'),\\n\" +\n  \"(26, 1, 6, 3, 18, N'2D', 85000, N'Mở bán'),\\n\" +\n  \"(27, 3, 1, 7, 18, N'2D', 90000, N'Mở bán'),\\n\" +\n  \"(28, 2, 2, 7, 18, N'IMAX', 120000, N'Mở bán'),\\n\" +\n  \"(29, 4, 3, 7, 18, N'3D', 75000, N'Mở bán'),\\n\" +\n  \"(30, 1, 4, 7, 18, N'ScreenX', 85000, N'Mở bán'),\\n\" +\n  \"(31, 3, 5, 7, 18, N'2D', 90000, N'Mở bán'),\\n\" +\n  \"(32, 4, 6, 7, 18, N'2D', 75000, N'Mở bán');\\n\" +\n  '\\n' +\n  'IF EXISTS (\\n' +\n  '    SELECT 1 FROM @ShowtimePlan showPlan\\n' +\n  '    LEFT JOIN dbo.PHIM p ON p.PhimID = showPlan.PhimID\\n' +\n  '    LEFT JOIN dbo.PHONGCHIEU pc ON pc.PhongID = showPlan.PhongID\\n' +\n  '    LEFT JOIN dbo.RAPCHIEUPHIM r ON r.RapID = pc.RapID\\n' +\n  '    WHERE p.PhimID IS NULL OR pc.PhongID IS NULL OR r.RapID IS NULL\\n' +\n  '       OR p.ThoiLuong <= 0 OR p.ThoiLuong > 480\\n' +\n  '       OR (showPlan.DayOffset > 0 AND (\\n' +\n  \"           p.TrangThai = N'Ngừng chiếu' OR pc.TrangThai <> N'Hoạt động'\\n\" +\n  \"           OR r.TrangThai <> N'Hoạt động'\\n\" +\n  \"           OR NOT EXISTS (SELECT 1 FROM dbo.GHE g WHERE g.PhongID = pc.PhongID AND g.TrangThai = N'Hoạt động')\\n\" +\n  '       ))\\n' +\n  ')\\n' +\n  \"    THROW 51004, 'Dynamic showtime seed requires valid movies, active future rooms/cinemas and active seats.', 1;\\n\" +\n  '\\n' +\n  'DECLARE @ShowtimeRows TABLE (\\n' +\n  '    SuatChieuID int PRIMARY KEY, PhimID int NOT NULL, PhongID int NOT NULL,\\n' +\n  '    ThoiGianBatDau datetime2(7) NOT NULL, ThoiGianKetThuc datetime2(7) NOT NULL,\\n' +\n  '    DinhDang nvarchar(50) NOT NULL, GiaVeCoBan decimal(18,2) NOT NULL,\\n' +\n  '    TrangThai nvarchar(50) NOT NULL\\n' +\n  ');\\n' +\n  'INSERT INTO @ShowtimeRows (SuatChieuID, PhimID, PhongID, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai)\\n' +\n  'SELECT showPlan.SuatChieuID, showPlan.PhimID, showPlan.PhongID, slot.StartUtc,\\n' +\n  '       DATEADD(MINUTE, p.ThoiLuong, slot.StartUtc), showPlan.DinhDang, showPlan.GiaVeCoBan, showPlan.TrangThai\\n' +\n  'FROM @ShowtimePlan showPlan\\n' +\n  'JOIN dbo.PHIM p ON p.PhimID = showPlan.PhimID\\n' +\n  'CROSS APPLY (SELECT dbo.fn_UtcTuGioRap(\\n' +\n  '    DATEADD(HOUR, showPlan.LocalHour, CONVERT(datetime2(7), DATEADD(DAY, showPlan.DayOffset, @Today)))\\n' +\n  ') AS StartUtc) slot;\\n' +\n  '\\n' +\n  ' \\n' +\n  'IF EXISTS (\\n' +\n  '    SELECT 1 FROM @ShowtimeRows s JOIN dbo.PHIM p ON p.PhimID = s.PhimID\\n' +\n  '    WHERE dbo.fn_NgayKinhDoanh(s.ThoiGianBatDau) < p.NgayKhoiChieu\\n' +\n  '       OR (p.NgayKetThuc IS NOT NULL AND dbo.fn_NgayKinhDoanh(s.ThoiGianBatDau) > p.NgayKetThuc)\\n' +\n  '       OR s.ThoiGianKetThuc <= s.ThoiGianBatDau\\n' +\n  \"       OR (s.TrangThai = N'Hoàn thành' AND s.ThoiGianKetThuc >= @NowUtc)\\n\" +\n  \"       OR (s.TrangThai = N'Mở bán' AND s.ThoiGianBatDau <= @NowUtc)\\n\" +\n  ')\\n' +\n  \"    THROW 51004, 'Dynamic showtime dates must be past/future as planned and inside base movie release windows; check SeedDate against the DB clock.', 1;\\n\" +\n  '\\n' +\n  ' \\n' +\n  'SET IDENTITY_INSERT dbo.SUATCHIEU ON;\\n' +\n  'BEGIN TRY\\n' +\n  '    INSERT INTO dbo.SUATCHIEU (SuatChieuID, PhimID, PhongID, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai)\\n' +\n  '    SELECT SuatChieuID, PhimID, PhongID, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai FROM @ShowtimeRows;\\n' +\n  '    SET IDENTITY_INSERT dbo.SUATCHIEU OFF;\\n' +\n  'END TRY\\n' +\n  'BEGIN CATCH\\n' +\n  '    SET IDENTITY_INSERT dbo.SUATCHIEU OFF;\\n' +\n  '    THROW;\\n' +\n  'END CATCH;\\n' +\n  '\\n' +\n  ' \\n' +\n  'IF EXISTS (\\n' +\n  '    SELECT 1 FROM @ShowtimeRows s\\n' +\n  '    LEFT JOIN dbo.vw_LichChieuChiTiet v ON v.SuatChieuID = s.SuatChieuID\\n' +\n  \"    WHERE s.TrangThai = N'Mở bán' AND (v.SuatChieuID IS NULL OR v.IsBookable <> 1)\\n\" +\n  ')\\n' +\n  \"    THROW 51004, 'Dynamic future showtimes failed the current DB bookability contract.', 1;\\n\" +\n  '\\n' +\n  'END;\\n' +\n  'GO\\n'\n"
+    },
+    {
+      "name": "32 unique IDs: 8 historical and 24 future open; four movies, six rooms, three cinemas",
+      "status": "PASS",
+      "detail": {
+        "past": 8,
+        "futureOpen": 24,
+        "pastByDay": {
+          "-7": 3,
+          "-3": 2,
+          "-2": 1,
+          "-1": 2
+        },
+        "futureByDay": {
+          "1": 6,
+          "2": 6,
+          "3": 6,
+          "7": 6
+        },
+        "futureByMovie": {
+          "1": 6,
+          "2": 6,
+          "3": 6,
+          "4": 6
+        },
+        "futureByRoom": {
+          "1": 4,
+          "2": 4,
+          "3": 4,
+          "4": 4,
+          "5": 4,
+          "6": 4
+        },
+        "futureByCinema": {
+          "1": 12,
+          "2": 8,
+          "3": 4
+        }
+      }
+    },
+    {
+      "name": "IDs 1-5 retain parents, format, price, status, relative day/local hour and actual duration",
+      "status": "PASS",
+      "detail": {
+        "preservedIds": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "clockChange": "SeedDate -> DB business day; instant changes deliberately",
+        "oldIdentityCeiling": 5,
+        "newIdentityCeiling": 32
+      }
+    },
+    {
+      "name": "Actual schema enums/FKs and DB duration contract, with valid future parent seats",
+      "status": "PASS",
+      "detail": {
+        "showtimeChecks": 4,
+        "showtimeFKs": 2,
+        "duration": "Actual PHIM.ThoiLuong minutes; zero added buffer",
+        "activeSeatsPerSeedRoom": 40,
+        "pastLifecycle": "Historical INSERT with Hoàn thành, no business status transition/transaction fabricated"
+      }
+    },
+    {
+      "name": "Month/year/leap-day/local-midnight boundaries: strict past/future, UTC and release dates",
+      "status": "PASS",
+      "detail": {
+        "kind": "STATIC BOUNDARY ANALYSIS",
+        "cases": [
+          {
+            "name": "current example",
+            "artificialClock": "2026-10-08T08:30:00.000Z",
+            "businessDate": "2026-10-08",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2026-10-09",
+              "start": "2026-10-08T19:00:00.000Z",
+              "end": "2026-10-08T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "before local midnight/month boundary",
+            "artificialClock": "2026-10-31T16:59:59.999Z",
+            "businessDate": "2026-10-31",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2026-11-01",
+              "start": "2026-10-31T19:00:00.000Z",
+              "end": "2026-10-31T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "after local midnight/month boundary",
+            "artificialClock": "2026-10-31T17:00:00.000Z",
+            "businessDate": "2026-11-01",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2026-11-02",
+              "start": "2026-11-01T19:00:00.000Z",
+              "end": "2026-11-01T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "before local midnight/year boundary",
+            "artificialClock": "2026-12-31T16:59:59.999Z",
+            "businessDate": "2026-12-31",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2027-01-01",
+              "start": "2026-12-31T19:00:00.000Z",
+              "end": "2026-12-31T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "after local midnight/year boundary",
+            "artificialClock": "2026-12-31T17:00:00.000Z",
+            "businessDate": "2027-01-01",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2027-01-02",
+              "start": "2027-01-01T19:00:00.000Z",
+              "end": "2027-01-01T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "leap day beginning",
+            "artificialClock": "2028-02-28T17:00:00.000Z",
+            "businessDate": "2028-02-29",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2028-03-01",
+              "start": "2028-02-29T19:00:00.000Z",
+              "end": "2028-02-29T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "leap month end",
+            "artificialClock": "2028-02-29T16:59:59.999Z",
+            "businessDate": "2028-02-29",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2028-03-01",
+              "start": "2028-02-29T19:00:00.000Z",
+              "end": "2028-02-29T21:46:00.000Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "No same-room overlap; strict trigger boundaries accept end == start",
+      "status": "PASS",
+      "detail": {
+        "overlapPairs": 0,
+        "touchingBoundary": "accepted by strict inequalities",
+        "oneMillisecondOverlap": "rejected in static predicate",
+        "differentRoomsSameTime": "allowed"
+      }
+    },
+    {
+      "name": "Stale SeedDate: DB-relative schedule is unchanged; incompatible release window is rejected",
+      "status": "PASS",
+      "detail": {
+        "compatibleOldSeedDate": "2026-01-01",
+        "rejectedArtificialSeedDates": [
+          "2024-01-01",
+          "2027-01-01"
+        ],
+        "baseRowsChanged": 0,
+        "liveErrorRollback": "NOT RUN"
+      }
+    },
+    {
+      "name": "Public list/detail/seat and booking retain authoritative full IsBookable contract",
+      "status": "PASS",
+      "detail": {
+        "futureStaticPrerequisites": 24,
+        "sqlReadAndBookingExecution": "NOT RUN",
+        "legacyFirstFutureId": 2,
+        "legacyFirstHistoricalId": 1
+      }
+    },
+    {
+      "name": "Base, schema, contracts, callers/fixtures, R5.1/R5.2 evidence and orchestration preserved",
+      "status": "FAIL",
+      "detail": "database/10_seed/test_fixture/README.md\n+ actual - expected\n\n+ '013a378f00bdc63962a27797d95ec3dd273c03106e4aaa74cc2f1adb21293a90'\n- 'e30a2ab44f3952121773e9dea38e99c4568d9edace839f3935b4bffd6acf4dc2'\n"
+    }
+  ],
+  "liveVerification": {
+    "status": "NOT RUN",
+    "reason": "No existing disposable test database has been confirmed safe. No database was created/reset; SQL execution/compilation and public/booking runtime are deferred to R5.5."
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "status": "LIVE SQL PASS",
+  "method": "Existing R54 THROW assertion blocks reached their completion marker; explicit negative result records match error codes; full fingerprints compared separately",
+  "assertions": [
+    {
+      "testID": "R54-PREREQUISITES",
+      "scenario": "fresh transaction data, trusted constraints and enabled triggers.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-COMPENSATION",
+      "scenario": "delegate exact proportional/FLOOR calculation to the DB helper.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-ORDER-TICKET-FOOD",
+      "scenario": "exact intended coverage, no half-constructed order.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-MONEY",
+      "scenario": "amounts remain stored snapshots, not recalculated from mutable catalog.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-PAYMENTS-TIME",
+      "scenario": "retain retry failure; exactly one successful payment per paid history.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-SEAT-CONFLICT",
+      "scenario": "expired ticket stays present while a valid new booking reuses A1.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-POINTS-QUOTA",
+      "scenario": "preserve seed offsets and apply only fixture lifecycle deltas.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-COMPLAINT-HISTORY",
+      "scenario": "ownership, 0/1/many events, authoritative highest XuLyID.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-REVIEW",
+      "scenario": "complete valid paid history, not just a permissive trigger predicate.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-commit.log"
+    },
+    {
+      "testID": "R54-ROLLBACK",
+      "scenario": "no fixture rows, credit, quota or canceled-show mutation remains.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/fixture-rollback.log"
+    },
+    {
+      "testID": "R54-REVIEW-INELIGIBLE",
+      "scenario": "Existing SP negative input with isolated rollback",
+      "expected": 50004,
+      "actual": 50004,
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/negative-probes.log"
+    },
+    {
+      "testID": "R54-REVIEW-DUPLICATE",
+      "scenario": "Existing SP negative input with isolated rollback",
+      "expected": 50040,
+      "actual": 50040,
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/negative-probes.log"
+    },
+    {
+      "testID": "R54-C-FOREIGN-ORDER",
+      "scenario": "Existing SP negative input with isolated rollback",
+      "expected": 50041,
+      "actual": 50041,
+      "status": "PASS",
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/negative-probes.log"
+    },
+    {
+      "testID": "R54-PREREQUISITES",
+      "scenario": "fresh transaction data, trusted constraints and enabled triggers.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-COMPENSATION",
+      "scenario": "delegate exact proportional/FLOOR calculation to the DB helper.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-ORDER-TICKET-FOOD",
+      "scenario": "exact intended coverage, no half-constructed order.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-MONEY",
+      "scenario": "amounts remain stored snapshots, not recalculated from mutable catalog.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-PAYMENTS-TIME",
+      "scenario": "retain retry failure; exactly one successful payment per paid history.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-SEAT-CONFLICT",
+      "scenario": "expired ticket stays present while a valid new booking reuses A1.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-POINTS-QUOTA",
+      "scenario": "preserve seed offsets and apply only fixture lifecycle deltas.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-COMPLAINT-HISTORY",
+      "scenario": "ownership, 0/1/many events, authoritative highest XuLyID.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-REVIEW",
+      "scenario": "complete valid paid history, not just a permissive trigger predicate.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+    },
+    {
+      "testID": "R54-ROLLBACK",
+      "scenario": "no fixture rows, credit, quota or canceled-show mutation remains.",
+      "expected": "Guard/THROW predicate finds no violation",
+      "actual": "Fixture reached its PASS completion marker after this assertion block",
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-rollback.log"
+    },
+    {
+      "testID": "R54-REVIEW-INELIGIBLE",
+      "scenario": "Existing SP negative input with isolated rollback",
+      "expected": 50004,
+      "actual": 50004,
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/negative-probes.log"
+    },
+    {
+      "testID": "R54-REVIEW-DUPLICATE",
+      "scenario": "Existing SP negative input with isolated rollback",
+      "expected": 50040,
+      "actual": 50040,
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/negative-probes.log"
+    },
+    {
+      "testID": "R54-C-FOREIGN-ORDER",
+      "scenario": "Existing SP negative input with isolated rollback",
+      "expected": 50041,
+      "actual": 50041,
+      "status": "PASS",
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/negative-probes.log"
+    }
+  ]
+}

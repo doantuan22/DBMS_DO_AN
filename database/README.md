@@ -4,6 +4,16 @@
 
 The phase-specific deployment descriptions below are historical workflows. Do not rerun an old remediation deploy over a later baseline. Apply only the reviewed pending source delta; retain schema-bound functions that have not changed. Demo seed assertions belong to a clean baseline and must not overwrite legitimate current RBAC grants.
 
+## R5.5 current test workflow
+
+Use [Test Pipeline](../scripts/db/TEST_PIPELINE.md) for preflight, fresh build/seed,
+fixture verification and explicitly confirmed rebuild of `CinemaBookingDB_Test`.
+SeedDate uses SQL Server business time; canonical build/seed sources and fixture
+guards are retained. Each run logs runtime assertions and main-preservation hashes.
+Existing target reset needs operator permission plus the current target/reset tokens.
+`db:reset` now refuses main; historical reset commands below need current safety flags.
+See [R5.5 report](../docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md).
+
 ## Historical baseline workflows
 
 R3B hiện hành: **27 tables, 6 views, 21 functions, 7 triggers, 125 procedures,
@@ -110,7 +120,7 @@ Baseline đã reconcile: **26 bảng, 6 view, 17 function, 7 trigger, 124 proced
 | 07_triggers | Một file/trigger |
 | 08_procedures | Một file/SP theo auth/public/customer/booking/payment/manager/support/admin/system |
 | 09_security | Role db_executor EXECUTE-only, map login có sẵn |
-| 10_seed | Reference/demo fixtures |
+| 10_seed | seed_base / seed_demo_dynamic / test_fixture; entry point seed-all.sql giữ nguyên |
 | 11_tests | Smoke rollback, multirow trigger, integrity, permission, concurrency |
 | 12_verify | Tên/cấu trúc/signature/binding/dependency/orphan/seed |
 | _audit | Inventory, reconciliation, bằng chứng và deferred issues |
@@ -159,7 +169,7 @@ npm run test:backend
 
 Nếu PowerShell chặn npm.ps1, dùng npm.cmd. Fail SQL/verify trả nonzero và dừng pipeline. Rebuild fail có thể để lại DB dựng dở; sửa lỗi rồi reset. Không chạy trong NODE_ENV=production. Runner chỉ nhận CinemaBookingDB hoặc disposable CinemaBookingDB_R0_*.
 
-SeedDate mặc định ngày hiện tại ở Việt Nam; `npm run db:reset -- --seed-date=2026-10-03` tái lập fixture chính xác. Suất demo là ngày sau SeedDate; ngày quá cũ thì smoke yêu cầu reset. Fixture ID cố định dùng explicit IDENTITY_INSERT trong DB trống, test tìm bằng business key, không phụ thuộc identity của DB cũ. Seed lặp không duplicate. Không import đơn/thanh toán/khiếu nại audit hay sửa DATA-001; promotion counter khởi tạo 0 vì chưa có đơn.
+SeedDate mặc định ngày hiện tại ở Việt Nam trên máy gọi và vẫn chi phối ngày của base seed. Từ R5.3, lịch demo lấy một mốc đồng hồ UTC của SQL Server, tính ngày tại giờ Việt Nam: 8 suất quá khứ và 24 suất mở bán ở ngày +1/+2/+3/+7. SeedDate cố định không còn tái lập timestamp suất chiếu; nếu cửa sổ phát hành phim từ SeedDate không chứa lịch động, script báo 51004 trước insert. ID 1–5 và các business key liên quan giữ nguyên, bổ sung ID 6–32 trên DB trống; không dựa identity của DB cũ. Seed lặp vẫn skip theo sentinel Admin, không refresh hoặc repair; xem [hướng dẫn seed và giới hạn chạy lại](10_seed/README.md) và [dynamic seed](10_seed/seed_demo_dynamic/README.md). Không import đơn/thanh toán/khiếu nại audit hay sửa DATA-001; promotion counter vẫn khởi tạo 0. Không tự reset/seed database đang dùng để xử lý dữ liệu cũ.
 
 SQLCMD trực tiếp/SSMS SQLCMD Mode: working directory **database/**. Ví dụ Windows authentication:
 

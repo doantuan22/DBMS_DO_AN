@@ -1,0 +1,31 @@
+{
+  "testID": "R55-REBUILD-CONSISTENCY",
+  "scenario": "Two clean rebuilds, full pipeline vs separate build/fixture modes",
+  "expected": "Distinct target GUID, same relationships/relative schedule/states/invariants; same-day money identical",
+  "runIDs": [
+    "2026-10-08T17-23-49-200Z-64c02c3a",
+    "2026-10-08T17-26-28-262Z-b628aef3",
+    "2026-10-08T17-28-31-301Z-8682ef56"
+  ],
+  "status": "PASS",
+  "comparedAt": "2026-10-08T17:36:32.720Z",
+  "businessDates": [
+    "2026-10-09",
+    "2026-10-09"
+  ],
+  "actual": {
+    "snapshotEquality": "Exact",
+    "normalizedHash": "3401e888615cf0b37fb16d1e49d1f4056ecbc398af9546cb18682e9a65b4b624",
+    "categories": [
+      "shows",
+      "orders",
+      "complaints",
+      "reviews",
+      "compensation",
+      "points",
+      "promotions"
+    ],
+    "monetaryAuthority": "Both live SQL fixture and public pricing assertions passed"
+  },
+  "mainPreservation": "Exact equality across both rebuilds and fixture runs"
+}

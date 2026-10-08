@@ -1,0 +1,1093 @@
+{
+  "status": "SOURCE REFERENCE AUDIT",
+  "sqlExecuted": false,
+  "bindings": [
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Booking_Create",
+      "source": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@makhuyenmai",
+          "type": "varchar(50)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@danhsachgheid",
+          "type": "varchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@danhsachdoanjson",
+          "type": "nvarchar(max)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@newdondatveid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Order_ExpirePending",
+      "source": "database/08_procedures/customer/sp_Order_ExpirePending.sql",
+      "parameters": [
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@traveketqua",
+          "type": "bit",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Booking_Create",
+      "source": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@makhuyenmai",
+          "type": "varchar(50)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@danhsachgheid",
+          "type": "varchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@danhsachdoanjson",
+          "type": "nvarchar(max)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@newdondatveid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Order_Cancel",
+      "source": "database/08_procedures/customer/sp_Order_Cancel.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Booking_Create",
+      "source": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@makhuyenmai",
+          "type": "varchar(50)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@danhsachgheid",
+          "type": "varchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@danhsachdoanjson",
+          "type": "nvarchar(max)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@newdondatveid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Payment_CreateAttempt",
+      "source": "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@phuongthuc",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@thanhtoanid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        },
+        {
+          "name": "@magiaodich",
+          "type": "varchar(100)",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Payment_UpdateResult",
+      "source": "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@thanhtoanid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaithanhtoan",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@magiaodichngoai",
+          "type": "varchar(100)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@ghichu",
+          "type": "nvarchar(255)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Payment_CreateAttempt",
+      "source": "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@phuongthuc",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@thanhtoanid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        },
+        {
+          "name": "@magiaodich",
+          "type": "varchar(100)",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Payment_UpdateResult",
+      "source": "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@thanhtoanid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaithanhtoan",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@magiaodichngoai",
+          "type": "varchar(100)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@ghichu",
+          "type": "nvarchar(255)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Booking_Create",
+      "source": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@makhuyenmai",
+          "type": "varchar(50)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@danhsachgheid",
+          "type": "varchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@danhsachdoanjson",
+          "type": "nvarchar(max)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@newdondatveid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Payment_CreateAttempt",
+      "source": "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@phuongthuc",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@thanhtoanid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        },
+        {
+          "name": "@magiaodich",
+          "type": "varchar(100)",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Payment_UpdateResult",
+      "source": "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@thanhtoanid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaithanhtoan",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@magiaodichngoai",
+          "type": "varchar(100)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@ghichu",
+          "type": "nvarchar(255)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Showtime_CancelCascade",
+      "source": "database/08_procedures/system/sp_Showtime_CancelCascade.sql",
+      "parameters": [
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@lydo",
+          "type": "nvarchar(255)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Showtime_CancelCascade",
+      "source": "database/08_procedures/system/sp_Showtime_CancelCascade.sql",
+      "parameters": [
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@lydo",
+          "type": "nvarchar(255)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Review_Create",
+      "source": "database/08_procedures/customer/sp_Review_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@phimid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@sosao",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(1000)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Complaint_Create",
+      "source": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@loaikhieunai",
+          "type": "nvarchar(100)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@tieude",
+          "type": "nvarchar(200)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@mucdouutien",
+          "type": "nvarchar(50)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Complaint_Create",
+      "source": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@loaikhieunai",
+          "type": "nvarchar(100)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@tieude",
+          "type": "nvarchar(200)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@mucdouutien",
+          "type": "nvarchar(50)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_AddProcessing",
+      "source": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidungxuly",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaisauxuly",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Complaint_Create",
+      "source": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@loaikhieunai",
+          "type": "nvarchar(100)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@tieude",
+          "type": "nvarchar(200)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@mucdouutien",
+          "type": "nvarchar(50)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_AddProcessing",
+      "source": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidungxuly",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaisauxuly",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_AddProcessing",
+      "source": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidungxuly",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaisauxuly",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Complaint_Create",
+      "source": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@loaikhieunai",
+          "type": "nvarchar(100)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@tieude",
+          "type": "nvarchar(200)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@mucdouutien",
+          "type": "nvarchar(50)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_AddProcessing",
+      "source": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidungxuly",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaisauxuly",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_AddProcessing",
+      "source": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidungxuly",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaisauxuly",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_UpdateStatus",
+      "source": "database/08_procedures/support/sp_Support_Complaint_UpdateStatus.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaimoi",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Complaint_Create",
+      "source": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@loaikhieunai",
+          "type": "nvarchar(100)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@tieude",
+          "type": "nvarchar(200)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@mucdouutien",
+          "type": "nvarchar(50)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Support_Complaint_AddProcessing",
+      "source": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@khieunaiid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidungxuly",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@trangthaisauxuly",
+          "type": "nvarchar(50)",
+          "optional": false,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/transaction-fixture.sql",
+      "procedure": "sp_Booking_Create",
+      "source": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@suatchieuid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@makhuyenmai",
+          "type": "varchar(50)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@danhsachgheid",
+          "type": "varchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@danhsachdoanjson",
+          "type": "nvarchar(max)",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@newdondatveid",
+          "type": "int",
+          "optional": false,
+          "output": true
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/negative-probes.sql",
+      "procedure": "sp_Review_Create",
+      "source": "database/08_procedures/customer/sp_Review_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@phimid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@sosao",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(1000)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/negative-probes.sql",
+      "procedure": "sp_Review_Create",
+      "source": "database/08_procedures/customer/sp_Review_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@phimid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@sosao",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(1000)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    },
+    {
+      "caller": "database/10_seed/test_fixture/negative-probes.sql",
+      "procedure": "sp_Complaint_Create",
+      "source": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "parameters": [
+        {
+          "name": "@nguoidungid",
+          "type": "int",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@dondatveid",
+          "type": "int",
+          "optional": true,
+          "output": false
+        },
+        {
+          "name": "@loaikhieunai",
+          "type": "nvarchar(100)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@tieude",
+          "type": "nvarchar(200)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@noidung",
+          "type": "nvarchar(max)",
+          "optional": false,
+          "output": false
+        },
+        {
+          "name": "@mucdouutien",
+          "type": "nvarchar(50)",
+          "optional": true,
+          "output": false
+        }
+      ]
+    }
+  ]
+}

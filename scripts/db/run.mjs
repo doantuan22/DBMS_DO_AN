@@ -3,8 +3,14 @@ import path from 'node:path';
 import { root,dbRoot,audit,read,write,credentials,sqlcmd,expandSql } from './lib.mjs';
 import { verify } from './verify.mjs';
 import { BUSINESS_TIME_ZONE } from '../../shared/dateTimeContract.mjs';
+import { preflight, authorize } from './test-target.mjs';
 
 const mode=process.argv[2]||'verify';
+if (['preflight-test','build-test','fixture-test','rebuild-test'].includes(mode)) {
+ const { main } = await import('./test-pipeline.mjs');
+ await main(process.argv.slice(2));
+ process.exit(process.exitCode || 0);
+}
 const integrated=process.argv.includes('--integrated');
 const env=credentials();
 const database=process.argv.find(a=>a.startsWith('--database='))?.slice(11)||env.DB_DATABASE||'CinemaBookingDB';
@@ -17,7 +23,13 @@ const parsedDay=new Date(seedDate+'T00:00:00Z');
 if(!Number.isFinite(parsedDay.getTime())||parsedDay.toISOString().slice(0,10)!==seedDate||seedDate.startsWith('0000'))throw new Error('Seed date must be a valid SQL date.');
 const entries={reset:'reset-database.sql',build:'run-all.sql',seed:'10_seed/seed-all.sql',verify:'12_verify/verify_database.sql',test:'11_tests/test-all.sql'};
 if(!(mode in entries))throw new Error(`Unknown mode ${mode}`);
-const sql=expandSql(entries[mode]).replaceAll('CinemaBookingDB',database).replaceAll('$(SeedDate)',seedDate);
+let resetGate='';
+if(mode==='reset') {
+ const gate=preflight(database,integrated); // refuses main before destructive SQL is expanded/executed
+ authorize(gate,process.argv.find(a=>a.startsWith('--confirm-target='))?.slice(17),process.argv.find(a=>a.startsWith('--confirm-reset='))?.slice(16),true);
+ resetGate='USE master;\n'+gate.sqlGuard+'\n';
+}
+const sql=resetGate+expandSql(entries[mode]).replaceAll('CinemaBookingDB',database).replaceAll('$(SeedDate)',seedDate);
 // One sqlcmd session: includes retain USE, SET options, temp tables and transactions.
 try {
  const output=sqlcmd(sql,{database:['build','reset'].includes(mode)?'master':database,integrated,file:true});

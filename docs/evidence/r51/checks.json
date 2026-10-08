@@ -1,0 +1,312 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-08T15:10:32.983Z",
+  "databaseConnection": false,
+  "sqlExecuted": false,
+  "checks": [
+    {
+      "name": "17 seed files moved once with identical bytes",
+      "status": "PASS",
+      "detail": {
+        "moved": 17,
+        "base": 16,
+        "demo": 1,
+        "newSqlFiles": 0
+      }
+    },
+    {
+      "name": "Expanded seed/build/reset SQL exactly preserved",
+      "status": "PASS",
+      "detail": {
+        "entries": [
+          "10_seed/seed-all.sql",
+          "run-all.sql",
+          "reset-database.sql"
+        ],
+        "comparison": "Exact UTF-8 text, including batch boundaries/options/transaction/verification"
+      }
+    },
+    {
+      "name": "Canonical build/seed/test/verify SQLCMD includes resolve without cycles",
+      "status": "PASS",
+      "detail": {
+        "files": 261,
+        "includes": 248
+      }
+    },
+    {
+      "name": "Seed order and exactly-once inclusion preserved",
+      "status": "PASS",
+      "detail": [
+        "database/10_seed/seed_base/001_reference.sql",
+        "database/10_seed/seed_base/002_reference.sql",
+        "database/10_seed/seed_base/003_reference.sql",
+        "database/10_seed/seed_base/004_reference.sql",
+        "database/10_seed/seed_base/005_reference.sql",
+        "database/10_seed/seed_base/006_reference.sql",
+        "database/10_seed/seed_base/007_reference.sql",
+        "database/10_seed/seed_base/008_reference.sql",
+        "database/10_seed/seed_base/009_reference.sql",
+        "database/10_seed/seed_base/010_reference.sql",
+        "database/10_seed/seed_base/011_reference.sql",
+        "database/10_seed/seed_base/012_reference.sql",
+        "database/10_seed/seed_base/013_reference.sql",
+        "database/10_seed/seed_demo_dynamic/014_reference.sql",
+        "database/10_seed/seed_base/015_reference.sql",
+        "database/10_seed/seed_base/016_reference.sql",
+        "database/10_seed/seed_base/017_cinema_images.sql",
+        "database/12_verify/verify_seed.sql"
+      ]
+    },
+    {
+      "name": "FK parents inserted before children, including mixed files",
+      "status": "PASS",
+      "detail": {
+        "seededTables": [
+          "VAITRO",
+          "QUYEN",
+          "VAITRO_QUYEN",
+          "NGUOIDUNG",
+          "HOSOKHACHHANG",
+          "RAPCHIEUPHIM",
+          "PHANCONG_RAP",
+          "PHONGCHIEU",
+          "GHE",
+          "THELOAI",
+          "DIENVIEN",
+          "PHIM",
+          "PHIM_THELOAI",
+          "PHIM_DIENVIEN",
+          "BANGGIA",
+          "SUATCHIEU",
+          "SANPHAM",
+          "KHUYENMAI",
+          "HINHANH_RAPCHIEUPHIM"
+        ],
+        "dependencies": [
+          {
+            "file": "database/10_seed/seed_base/001_reference.sql",
+            "table": "VAITRO",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/002_reference.sql",
+            "table": "QUYEN",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/003_reference.sql",
+            "table": "VAITRO_QUYEN",
+            "parents": [
+              "QUYEN",
+              "VAITRO"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/003_reference.sql",
+            "table": "VAITRO_QUYEN",
+            "parents": [
+              "QUYEN",
+              "VAITRO"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/003_reference.sql",
+            "table": "VAITRO_QUYEN",
+            "parents": [
+              "QUYEN",
+              "VAITRO"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/003_reference.sql",
+            "table": "VAITRO_QUYEN",
+            "parents": [
+              "QUYEN",
+              "VAITRO"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/004_reference.sql",
+            "table": "NGUOIDUNG",
+            "parents": [
+              "VAITRO"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/004_reference.sql",
+            "table": "HOSOKHACHHANG",
+            "parents": [
+              "NGUOIDUNG"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/005_reference.sql",
+            "table": "RAPCHIEUPHIM",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/006_reference.sql",
+            "table": "PHANCONG_RAP",
+            "parents": [
+              "NGUOIDUNG",
+              "RAPCHIEUPHIM"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/007_reference.sql",
+            "table": "PHONGCHIEU",
+            "parents": [
+              "RAPCHIEUPHIM"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/008_reference.sql",
+            "table": "GHE",
+            "parents": [
+              "PHONGCHIEU"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/009_reference.sql",
+            "table": "THELOAI",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/010_reference.sql",
+            "table": "DIENVIEN",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/011_reference.sql",
+            "table": "PHIM",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/012_reference.sql",
+            "table": "PHIM_THELOAI",
+            "parents": [
+              "PHIM",
+              "THELOAI"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/012_reference.sql",
+            "table": "PHIM_DIENVIEN",
+            "parents": [
+              "DIENVIEN",
+              "PHIM"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/013_reference.sql",
+            "table": "BANGGIA",
+            "parents": [
+              "RAPCHIEUPHIM"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_demo_dynamic/014_reference.sql",
+            "table": "SUATCHIEU",
+            "parents": [
+              "PHIM",
+              "PHONGCHIEU"
+            ]
+          },
+          {
+            "file": "database/10_seed/seed_base/015_reference.sql",
+            "table": "SANPHAM",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/016_reference.sql",
+            "table": "KHUYENMAI",
+            "parents": []
+          },
+          {
+            "file": "database/10_seed/seed_base/017_cinema_images.sql",
+            "table": "HINHANH_RAPCHIEUPHIM",
+            "parents": [
+              "RAPCHIEUPHIM"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Build objects and seed function prerequisites precede data",
+      "status": "PASS",
+      "detail": {
+        "functions": [
+          "fn_UtcTuGioRap"
+        ],
+        "objectsBeforeSeed": true
+      }
+    },
+    {
+      "name": "Schema, business modules, API, UI, existing tests and entry points unchanged",
+      "status": "PASS",
+      "detail": {
+        "identicalFiles": 491
+      }
+    },
+    {
+      "name": "Only scoped tracked files changed",
+      "status": "PASS",
+      "detail": {
+        "changed": [
+          "README.md",
+          "database/10_seed/001_reference.sql",
+          "database/10_seed/002_reference.sql",
+          "database/10_seed/003_reference.sql",
+          "database/10_seed/004_reference.sql",
+          "database/10_seed/005_reference.sql",
+          "database/10_seed/006_reference.sql",
+          "database/10_seed/007_reference.sql",
+          "database/10_seed/008_reference.sql",
+          "database/10_seed/009_reference.sql",
+          "database/10_seed/010_reference.sql",
+          "database/10_seed/011_reference.sql",
+          "database/10_seed/012_reference.sql",
+          "database/10_seed/013_reference.sql",
+          "database/10_seed/014_reference.sql",
+          "database/10_seed/015_reference.sql",
+          "database/10_seed/016_reference.sql",
+          "database/10_seed/017_cinema_images.sql",
+          "database/10_seed/seed-all.sql",
+          "database/README.md",
+          "scripts/db/generate-seed.mjs",
+          "scripts/r3a/inventory.mjs",
+          "scripts/r6a/provenance.mjs"
+        ]
+      }
+    },
+    {
+      "name": "No old active seed paths; historical evidence preserved",
+      "status": "PASS",
+      "detail": {
+        "scanned": 301,
+        "historicalSnapshotPathsRewritten": false
+      }
+    },
+    {
+      "name": "Existing readers parse moved data and generator outputs grouped paths",
+      "status": "PASS",
+      "detail": {
+        "users": 8,
+        "profiles": 4,
+        "permissions": 23,
+        "generatorExecuted": false,
+        "seedEntryPointUnchanged": true
+      }
+    },
+    {
+      "name": "Fixture sources retained; groups documented without SQL placeholders",
+      "status": "PASS",
+      "detail": {
+        "auditedFilesRetained": 201,
+        "newTransactionFixtures": 0
+      }
+    }
+  ]
+}

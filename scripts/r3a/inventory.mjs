@@ -205,7 +205,7 @@ const permissionUsage=catalog.permissions.map(p=>({id:p.QuyenID,code:p.MaQuyen,n
  expectedRoutes:rows.filter(r=>r.expectedPermission===p.MaQuyen).map(r=>r.method+' '+r.route),
  databasePermissionChecks:Object.values(sqlObjects).filter(o=>o.permissionChecks.includes(p.MaQuyen)).map(o=>o.name),
  feAreaGates:['DAT_VE','QL_PHONG','QL_KHIEUNAI','QL_NGUOIDUNG'].includes(p.MaQuyen),
- source:'database/10_seed/002_reference.sql'}));
+ source:'database/10_seed/seed_base/002_reference.sql'}));
 write(path.join(evidence,'permission-usage.json'),permissionUsage);
 const guardSites=Object.entries(productionHashes()).filter(([file])=>file.startsWith('frontend/src/')).flatMap(([file])=>read(path.join(root,file)).split(/\r?\n/).flatMap((text,i)=>/userHasPermission|userCanEnterArea|visibleAreasFor|RequireRole|RequireAuth|ROLE_AREAS|user\.role|auth:forbidden|refreshCurrentUser/.test(text)?[{file,line:i+1,text:text.trim()}]:[]));
 write(path.join(evidence,'frontend-guards.json'),guardSites);

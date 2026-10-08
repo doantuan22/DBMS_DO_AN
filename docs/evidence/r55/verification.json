@@ -1,0 +1,538 @@
+{
+  "status": "PASS",
+  "sourceImplementation": "DONE",
+  "liveSqlVerification": "PASS",
+  "rebuildConsistency": "PASS",
+  "overall": "DONE",
+  "phaseR5": "DONE",
+  "capturedAt": "2026-10-08T17:48:27.510Z",
+  "timezone": "Asia/Saigon",
+  "target": {
+    "database": "CinemaBookingDB_Test",
+    "server": "DESKTOP-E67DPCV",
+    "files": [
+      {
+        "name": "CinemaBookingDB_Test",
+        "type_desc": "ROWS",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test.mdf"
+      },
+      {
+        "name": "CinemaBookingDB_Test_log",
+        "type_desc": "LOG",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test_log.ldf"
+      }
+    ],
+    "guid": "3E4A34E5-09E5-4DF2-9F42-CEC389FDA0E7"
+  },
+  "schemaActual": {
+    "tables": 27,
+    "procedures": 125,
+    "functions": 21,
+    "views": 6,
+    "triggers": 7,
+    "indexes": 63,
+    "constraints": 161,
+    "modules": 159
+  },
+  "baseActual": [
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "BANGGIA",
+      "Expected": 7,
+      "Actual": 7,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "DIENVIEN",
+      "Expected": 6,
+      "Actual": 6,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "GHE",
+      "Expected": 240,
+      "Actual": 240,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "HINHANH_RAPCHIEUPHIM",
+      "Expected": 3,
+      "Actual": 3,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "HOSOKHACHHANG",
+      "Expected": 4,
+      "Actual": 4,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "KHUYENMAI",
+      "Expected": 3,
+      "Actual": 3,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "NGUOIDUNG",
+      "Expected": 8,
+      "Actual": 8,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "PHANCONG_RAP",
+      "Expected": 2,
+      "Actual": 2,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "PHIM",
+      "Expected": 4,
+      "Actual": 4,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "PHIM_DIENVIEN",
+      "Expected": 4,
+      "Actual": 4,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "PHIM_THELOAI",
+      "Expected": 7,
+      "Actual": 7,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "PHONGCHIEU",
+      "Expected": 6,
+      "Actual": 6,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "QUYEN",
+      "Expected": 23,
+      "Actual": 23,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "RAPCHIEUPHIM",
+      "Expected": 3,
+      "Actual": 3,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "SANPHAM",
+      "Expected": 5,
+      "Actual": 5,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "THELOAI",
+      "Expected": 7,
+      "Actual": 7,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "VAITRO",
+      "Expected": 4,
+      "Actual": 4,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-BASE-COUNTS",
+      "TableName": "VAITRO_QUYEN",
+      "Expected": 40,
+      "Actual": 40,
+      "Result": "PASS"
+    }
+  ],
+  "fixtureActual": [
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "DONDATVE",
+      "Expected": 6,
+      "Actual": 6,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "CHITIETVE",
+      "Expected": 7,
+      "Actual": 7,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "CHITIETDOAN",
+      "Expected": 5,
+      "Actual": 5,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "THANHTOAN",
+      "Expected": 4,
+      "Actual": 4,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "DANHGIAPHIM",
+      "Expected": 1,
+      "Actual": 1,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "KHIEUNAI",
+      "Expected": 5,
+      "Actual": 5,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "XULY_KHIEUNAI",
+      "Expected": 7,
+      "Actual": 7,
+      "Result": "PASS"
+    },
+    {
+      "TestID": "R55-FIXTURE-COUNTS",
+      "TableName": "BOITHUONG_HUYSUAT",
+      "Expected": 1,
+      "Actual": 1,
+      "Result": "PASS"
+    }
+  ],
+  "dynamicActual": {
+    "past": 8,
+    "futureBookable": 24,
+    "total": 32,
+    "anchorDates": [
+      "2026-10-09",
+      "2026-10-09"
+    ]
+  },
+  "runtimeRuns": [
+    {
+      "runID": "2026-10-08T17-23-49-200Z-64c02c3a",
+      "mode": "rebuild-test",
+      "seedOnly": false,
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:23:49.201Z",
+      "finishedAt": "2026-10-08T17:24:31.580Z",
+      "evidence": "runs/2026-10-08T17-23-49-200Z-64c02c3a/result.json"
+    },
+    {
+      "runID": "2026-10-08T17-26-28-262Z-b628aef3",
+      "mode": "rebuild-test",
+      "seedOnly": true,
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:26:28.263Z",
+      "finishedAt": "2026-10-08T17:26:54.063Z",
+      "evidence": "runs/2026-10-08T17-26-28-262Z-b628aef3/result.json"
+    },
+    {
+      "runID": "2026-10-08T17-28-31-301Z-8682ef56",
+      "mode": "fixture-test",
+      "seedOnly": false,
+      "status": "PASS",
+      "startedAt": "2026-10-08T17:28:31.302Z",
+      "finishedAt": "2026-10-08T17:29:07.679Z",
+      "evidence": "runs/2026-10-08T17-28-31-301Z-8682ef56/result.json"
+    }
+  ],
+  "assertionsEvidence": "assertions.json",
+  "consistencyEvidence": "consistency.json",
+  "mainPreservation": "Exact equality of 27 table hashes and metadata before/after all accepted runs; equal across both rebuilds",
+  "commands": [
+    {
+      "command": "node scripts/r55/checks.mjs",
+      "exitCode": 0,
+      "result": "6/6 STATIC PASS",
+      "evidence": "checks.json"
+    },
+    {
+      "command": "node --check (runner + five new JS files)",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd --prefix backend test",
+      "exitCode": 0,
+      "result": "191/191 PASS; 0 failed/skipped",
+      "evidence": "backend.txt"
+    },
+    {
+      "command": "node scripts/audit-no-sql.mjs",
+      "exitCode": 0,
+      "result": "PASS; 101 files scanned",
+      "evidence": "no-sql.txt"
+    },
+    {
+      "command": "node scripts/r55/regression.mjs",
+      "exitCode": 0,
+      "result": "No unexpected regression; original historical parity failures preserved",
+      "evidence": "historical-replay/summary.json"
+    },
+    {
+      "command": "node scripts/r55/compare.mjs <full1> <seed2> <fixture2>",
+      "exitCode": 0,
+      "result": "Exact same-day normalized equality + distinct rebuilt GUID",
+      "evidence": "consistency.json"
+    },
+    {
+      "command": "git diff --check / new-file whitespace / links",
+      "exitCode": 0,
+      "result": "PASS; Git LF/CRLF warnings only"
+    }
+  ],
+  "protectedFiles": 840,
+  "unchangedFiles": 834,
+  "changedExistingFiles": [
+    {
+      "file": "database/10_seed/seed_demo_dynamic/014_reference.sql",
+      "beforeSha256": "e570794d053f00d1f807355f035705ff5e53104e39c21715670de81ce081b994",
+      "afterSha256": "e03ea45d6a5ef845ec5e671d94297e248f3dfe2837e57e9dc7a025f40cb851e6"
+    },
+    {
+      "file": "database/10_seed/test_fixture/negative-probes.sql",
+      "beforeSha256": "8246bb668730dce389666a1af87f9e41620f66eff2fc1bb05803b3f60abf051f",
+      "afterSha256": "cc9bb1820a21cf5fd66aba492b2b7dfc1f68321f9213a6328350d9fa257f7e9d"
+    },
+    {
+      "file": "database/10_seed/test_fixture/README.md",
+      "beforeSha256": "94161e9e3040446b2dcdbf4ee7a629d380befd653f2d9c1f7b37440452740410",
+      "afterSha256": "013a378f00bdc63962a27797d95ec3dd273c03106e4aaa74cc2f1adb21293a90"
+    },
+    {
+      "file": "database/README.md",
+      "beforeSha256": "f0987027d0aaad7e9076e5132b8ec6c2b67c0e144263b192288a566c73ec5efe",
+      "afterSha256": "a7b7f906c395c7cface6392881c41ba938f82a9382c57f2a00ef94549cf6cc20"
+    },
+    {
+      "file": "scripts/db/run.mjs",
+      "beforeSha256": "473596736aa0406f4c68938a2720be9fce1d3a7b601bcd60d9e03ad036de9536",
+      "afterSha256": "d0fcd252613303b2acb5f6569faf48313759d0ca9378aaca95ca8176c26b007c"
+    },
+    {
+      "file": "package.json",
+      "beforeSha256": "14293bd86175abd9ea8ff35105d9d9c4dfb578de5add9d8d9e5ddd7936f0241b",
+      "afterSha256": "9285623d16ebc516191640fe704bad5edd6dfc8522e29aa657c081bdf4f0ab63"
+    }
+  ],
+  "newFiles": {
+    "scripts/db/test-target.mjs": "7f312a1573605b11cb63e15616d84e5ed36201f55f995e38048c86a4efbcecaa",
+    "scripts/db/test-pipeline.mjs": "ffcd2d589e5d560018887e8dc08c51a64e0a66539521d97c46d45ee07c3c8d92",
+    "scripts/db/TEST_PIPELINE.md": "d6317a669cc3d96f175469ce485f5f7f4546c2eec73d778f83a3fb4471384816",
+    "scripts/r55/checks.mjs": "6908c0d0bbea64525e0e8872291c607eb471155791c453ea928c8ac98a1d47bb",
+    "scripts/r55/regression.mjs": "eeac54d722a8ca032cbc442fe1e59c172b46d38b9004f819c10d35584b91f56c",
+    "scripts/r55/compare.mjs": "76259605d5246aa8923144dee28c2a124643a47e22fe911f0e20d6dea79d4cea",
+    "database/12_verify/r55_seed.sql": "fcd94f21c1e23a6a58c88ec47359a192679199dc4fdc739958136551cccb4f01",
+    "database/12_verify/r55_fixture.sql": "4da4ce19cd8532125900286db682fed3aa18ea1993707ef16a42567cc9f7bdd1",
+    "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md": "3238d3ae2d2b1e66868f935663bcff6da42b3842bfc3b8b321ca54b788340218"
+  },
+  "oldEvidenceOverwritten": false,
+  "runtimeFixes": [
+    "SQL1086 fingerprint UNION ALL wrapped by outer SELECT",
+    "R5.3 reserved alias plan -> showPlan only",
+    "R5.4 transaction-state assertion separated from JSON-history reads only"
+  ],
+  "acceptedOperatorResetPermission": "operator-authorization.json",
+  "notRun": [
+    "Live rebuild across business-date boundary",
+    "Full Backend/HTTP/browser integration and exhaustive concurrency",
+    "45 Use Case regression"
+  ],
+  "laterPhasesImplemented": false,
+  "documentationLinks": {
+    "status": "PASS",
+    "checkedTargets": 44,
+    "links": [
+      {
+        "file": "scripts/db/TEST_PIPELINE.md",
+        "target": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/R5_1_SEED_REPORT.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/R5_2_BASE_SEED_REPORT.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/R5_3_DYNAMIC_SHOWTIME_REPORT.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/audit-before.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/pipeline-plan.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/initial-preflight.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/operator-authorization.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/consistency.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "scripts/db/TEST_PIPELINE.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-23-49-200Z-64c02c3a/result.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-26-28-262Z-b628aef3/result.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/result.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/objects.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/seed-verification.log"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/public-reads.log"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/fixture-commit.log"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/rollback-fingerprints.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/negative-probes.log"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-28-31-301Z-8682ef56/negative-fingerprints.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/consistency.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "scripts/r55/compare.mjs"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-16-47-232Z-39496705/result.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/runs/2026-10-08T17-17-11-544Z-ad975ab7/result.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/seed-failure-isolation.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/negative-debug.txt"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/negative-split-regression.txt"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "scripts/db/TEST_PIPELINE.md"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/checks.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/create-guard-live.txt"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/backend.txt"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/no-sql.txt"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/verification.json"
+      },
+      {
+        "file": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md",
+        "target": "docs/evidence/r55/historical-replay/summary.json"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "database/10_seed/test_fixture/fixture-matrix.md"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "database/10_seed/test_fixture/transaction-fixture.sql"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "database/10_seed/test_fixture/negative-probes.sql"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "docs/evidence/r51/seed-inventory.json"
+      }
+    ]
+  }
+}

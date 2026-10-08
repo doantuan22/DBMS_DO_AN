@@ -1,0 +1,132 @@
+FAIL SQL source structure, one DB clock, UTC/business date contract, showtime-only writes: The input did not match the regular expression /DATEADD\(HOUR, plan\.LocalHour, CONVERT\(datetime2\(7\), DATEADD\(DAY, plan\.DayOffset, @Today\)\)\)/. Input:
+
+"IF CONVERT(int,SESSION_CONTEXT(N'CinemaSeedSkip')) = 0\n" +
+  'BEGIN\n' +
+  ' \n' +
+  ' \n' +
+  'DECLARE @NowUtc datetime2(7) = dbo.fn_BayGio();\n' +
+  'DECLARE @Today date = dbo.fn_NgayKinhDoanh(@NowUtc);\n' +
+  'IF EXISTS (SELECT 1 FROM dbo.SUATCHIEU)\n' +
+  "    THROW 51004, 'Dynamic showtime seed requires empty showtime data; no refresh or repair is performed.', 1;\n" +
+  '\n' +
+  'DECLARE @ShowtimePlan TABLE (\n' +
+  '    SuatChieuID int PRIMARY KEY, PhimID int NOT NULL, PhongID int NOT NULL,\n' +
+  '    DayOffset int NOT NULL, LocalHour int NOT NULL,\n' +
+  '    DinhDang nvarchar(50) NOT NULL, GiaVeCoBan decimal(18,2) NOT NULL,\n' +
+  '    TrangThai nvarchar(50) NOT NULL\n' +
+  ');\n' +
+  'INSERT INTO @ShowtimePlan (SuatChieuID, PhimID, PhongID, DayOffset, LocalHour, DinhDang, GiaVeCoBan, TrangThai) VALUES\n' +
+  ' \n' +
+  "(1, 1, 1, -2, 18, N'2D', 80000, N'Hoàn thành'),\n" +
+  "(2, 1, 1,  1,  2, N'2D', 85000, N'Mở bán'),\n" +
+  "(3, 1, 2,  1,  5, N'IMAX', 120000, N'Mở bán'),\n" +
+  "(4, 2, 4,  1,  3, N'2D', 80000, N'Mở bán'),\n" +
+  "(5, 4, 6,  1,  4, N'2D', 75000, N'Mở bán'),\n" +
+  ' \n' +
+  "(6, 2, 3, -7, 12, N'3D', 80000, N'Hoàn thành'),\n" +
+  "(7, 3, 5, -7, 16, N'2D', 90000, N'Hoàn thành'),\n" +
+  "(8, 4, 6, -7, 18, N'2D', 75000, N'Hoàn thành'),\n" +
+  "(9, 3, 2, -3, 14, N'IMAX', 120000, N'Hoàn thành'),\n" +
+  "(10, 2, 4, -3, 18, N'ScreenX', 80000, N'Hoàn thành'),\n" +
+  "(11, 4, 3, -1, 12, N'3D', 75000, N'Hoàn thành'),\n" +
+  "(12, 2, 5, -1, 18, N'2D', 80000, N'Hoàn thành'),\n" +
+  ' \n' +
+  "(13, 3, 3, 1, 12, N'3D', 90000, N'Mở bán'),\n" +
+  "(14, 2, 5, 1, 18, N'2D', 80000, N'Mở bán'),\n" +
+  "(15, 4, 1, 2, 18, N'2D', 75000, N'Mở bán'),\n" +
+  "(16, 3, 2, 2, 18, N'IMAX', 120000, N'Mở bán'),\n" +
+  "(17, 2, 3, 2, 18, N'3D', 80000, N'Mở bán'),\n" +
+  "(18, 1, 4, 2, 18, N'ScreenX', 85000, N'Mở bán'),\n" +
+  "(19, 4, 5, 2, 18, N'2D', 75000, N'Mở bán'),\n" +
+  "(20, 3, 6, 2, 18, N'2D', 90000, N'Mở bán'),\n" +
+  "(21, 2, 1, 3, 18, N'2D', 80000, N'Mở bán'),\n" +
+  "(22, 4, 2, 3, 18, N'IMAX', 120000, N'Mở bán'),\n" +
+  "(23, 1, 3, 3, 18, N'3D', 85000, N'Mở bán'),\n" +
+  "(24, 3, 4, 3, 18, N'ScreenX', 90000, N'Mở bán'),\n" +
+  "(25, 2, 5, 3, 18, N'2D', 80000, N'Mở bán'),\n" +
+  "(26, 1, 6, 3, 18, N'2D', 85000, N'Mở bán'),\n" +
+  "(27, 3, 1, 7, 18, N'2D', 90000, N'Mở bán'),\n" +
+  "(28, 2, 2, 7, 18, N'IMAX', 120000, N'Mở bán'),\n" +
+  "(29, 4, 3, 7, 18, N'3D', 75000, N'Mở bán'),\n" +
+  "(30, 1, 4, 7, 18, N'ScreenX', 85000, N'Mở bán'),\n" +
+  "(31, 3, 5, 7, 18, N'2D', 90000, N'Mở bán'),\n" +
+  "(32, 4, 6, 7, 18, N'2D', 75000, N'Mở bán');\n" +
+  '\n' +
+  'IF EXISTS (\n' +
+  '    SELECT 1 FROM @ShowtimePlan showPlan\n' +
+  '    LEFT JOIN dbo.PHIM p ON p.PhimID = showPlan.PhimID\n' +
+  '    LEFT JOIN dbo.PHONGCHIEU pc ON pc.PhongID = showPlan.PhongID\n' +
+  '    LEFT JOIN dbo.RAPCHIEUPHIM r ON r.RapID = pc.RapID\n' +
+  '    WHERE p.PhimID IS NULL OR pc.PhongID IS NULL OR r.RapID IS NULL\n' +
+  '       OR p.ThoiLuong <= 0 OR p.ThoiLuong > 480\n' +
+  '       OR (showPlan.DayOffset > 0 AND (\n' +
+  "           p.TrangThai = N'Ngừng chiếu' OR pc.TrangThai <> N'Hoạt động'\n" +
+  "           OR r.TrangThai <> N'Hoạt động'\n" +
+  "           OR NOT EXISTS (SELECT 1 FROM dbo.GHE g WHERE g.PhongID = pc.PhongID AND g.TrangThai = N'Hoạt động')\n" +
+  '       ))\n' +
+  ')\n' +
+  "    THROW 51004, 'Dynamic showtime seed requires valid movies, active future rooms/cinemas and active seats.', 1;\n" +
+  '\n' +
+  'DECLARE @ShowtimeRows TABLE (\n' +
+  '    SuatChieuID int PRIMARY KEY, PhimID int NOT NULL, PhongID int NOT NULL,\n' +
+  '    ThoiGianBatDau datetime2(7) NOT NULL, ThoiGianKetThuc datetime2(7) NOT NULL,\n' +
+  '    DinhDang nvarchar(50) NOT NULL, GiaVeCoBan decimal(18,2) NOT NULL,\n' +
+  '    TrangThai nvarchar(50) NOT NULL\n' +
+  ');\n' +
+  'INSERT INTO @ShowtimeRows (SuatChieuID, PhimID, PhongID, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai)\n' +
+  'SELECT showPlan.SuatChieuID, showPlan.PhimID, showPlan.PhongID, slot.StartUtc,\n' +
+  '       DATEADD(MINUTE, p.ThoiLuong, slot.StartUtc), showPlan.DinhDang, showPlan.GiaVeCoBan, showPlan.TrangThai\n' +
+  'FROM @ShowtimePlan showPlan\n' +
+  'JOIN dbo.PHIM p ON p.PhimID = showPlan.PhimID\n' +
+  'CROSS APPLY (SELECT dbo.fn_UtcTuGioRap(\n' +
+  '    DATEADD(HOUR, showPlan.LocalHour, CONVERT(datetime2(7), DATEADD(DAY, showPlan.DayOffset, @Today)))\n' +
+  ') AS StartUtc) slot;\n' +
+  '\n' +
+  ' \n' +
+  'IF EXISTS (\n' +
+  '    SELECT 1 FROM @ShowtimeRows s JOIN dbo.PHIM p ON p.PhimID = s.PhimID\n' +
+  '    WHERE dbo.fn_NgayKinhDoanh(s.ThoiGianBatDau) < p.NgayKhoiChieu\n' +
+  '       OR (p.NgayKetThuc IS NOT NULL AND dbo.fn_NgayKinhDoanh(s.ThoiGianBatDau) > p.NgayKetThuc)\n' +
+  '       OR s.ThoiGianKetThuc <= s.ThoiGianBatDau\n' +
+  "       OR (s.TrangThai = N'Hoàn thành' AND s.ThoiGianKetThuc >= @NowUtc)\n" +
+  "       OR (s.TrangThai = N'Mở bán' AND s.ThoiGianBatDau <= @NowUtc)\n" +
+  ')\n' +
+  "    THROW 51004, 'Dynamic showtime dates must be past/future as planned and inside base movie release windows; check SeedDate against the DB clock.', 1;\n" +
+  '\n' +
+  ' \n' +
+  'SET IDENTITY_INSERT dbo.SUATCHIEU ON;\n' +
+  'BEGIN TRY\n' +
+  '    INSERT INTO dbo.SUATCHIEU (SuatChieuID, PhimID, PhongID, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai)\n' +
+  '    SELECT SuatChieuID, PhimID, PhongID, ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai FROM @ShowtimeRows;\n' +
+  '    SET IDENTITY_INSERT dbo.SUATCHIEU OFF;\n' +
+  'END TRY\n' +
+  'BEGIN CATCH\n' +
+  '    SET IDENTITY_INSERT dbo.SUATCHIEU OFF;\n' +
+  '    THROW;\n' +
+  'END CATCH;\n' +
+  '\n' +
+  ' \n' +
+  'IF EXISTS (\n' +
+  '    SELECT 1 FROM @ShowtimeRows s\n' +
+  '    LEFT JOIN dbo.vw_LichChieuChiTiet v ON v.SuatChieuID = s.SuatChieuID\n' +
+  "    WHERE s.TrangThai = N'Mở bán' AND (v.SuatChieuID IS NULL OR v.IsBookable <> 1)\n" +
+  ')\n' +
+  "    THROW 51004, 'Dynamic future showtimes failed the current DB bookability contract.', 1;\n" +
+  '\n' +
+  'END;\n' +
+  'GO\n'
+
+PASS 32 unique IDs: 8 historical and 24 future open; four movies, six rooms, three cinemas
+PASS IDs 1-5 retain parents, format, price, status, relative day/local hour and actual duration
+PASS Actual schema enums/FKs and DB duration contract, with valid future parent seats
+PASS Month/year/leap-day/local-midnight boundaries: strict past/future, UTC and release dates
+PASS No same-room overlap; strict trigger boundaries accept end == start
+PASS Stale SeedDate: DB-relative schedule is unchanged; incompatible release window is rejected
+PASS Public list/detail/seat and booking retain authoritative full IsBookable contract
+FAIL Base, schema, contracts, callers/fixtures, R5.1/R5.2 evidence and orchestration preserved: database/10_seed/test_fixture/README.md
++ actual - expected
+
++ '013a378f00bdc63962a27797d95ec3dd273c03106e4aaa74cc2f1adb21293a90'
+- 'e30a2ab44f3952121773e9dea38e99c4568d9edace839f3935b4bffd6acf4dc2'
+
+7/9 R5.3 checks PASS; LIVE SQL: NOT RUN.

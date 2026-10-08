@@ -1,0 +1,351 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-08T15:47:37.732Z",
+  "validationKind": "STATIC SOURCE DATA + LOCAL BCRYPT",
+  "seedDays": [
+    "2026-10-08",
+    "2026-01-01",
+    "2028-02-29"
+  ],
+  "databaseConnection": false,
+  "sqlExecuted": false,
+  "checks": [
+    {
+      "name": "All 16 base files parsed; schema, CHECK, UNIQUE, FK values and order",
+      "status": "PASS",
+      "detail": {
+        "files": [
+          "001_reference.sql",
+          "002_reference.sql",
+          "003_reference.sql",
+          "004_reference.sql",
+          "005_reference.sql",
+          "006_reference.sql",
+          "007_reference.sql",
+          "008_reference.sql",
+          "009_reference.sql",
+          "010_reference.sql",
+          "011_reference.sql",
+          "012_reference.sql",
+          "013_reference.sql",
+          "015_reference.sql",
+          "016_reference.sql",
+          "017_cinema_images.sql"
+        ],
+        "audits": [
+          {
+            "seedDay": "2026-10-08",
+            "checkConstraints": 35,
+            "uniqueIndexes": 27,
+            "fkValueAssertions": 374,
+            "rowCounts": {
+              "VAITRO": 4,
+              "QUYEN": 23,
+              "VAITRO_QUYEN": 40,
+              "NGUOIDUNG": 8,
+              "HOSOKHACHHANG": 4,
+              "RAPCHIEUPHIM": 3,
+              "PHANCONG_RAP": 2,
+              "PHONGCHIEU": 6,
+              "GHE": 240,
+              "THELOAI": 7,
+              "DIENVIEN": 6,
+              "PHIM": 4,
+              "PHIM_THELOAI": 7,
+              "PHIM_DIENVIEN": 4,
+              "BANGGIA": 7,
+              "SANPHAM": 5,
+              "KHUYENMAI": 3,
+              "HINHANH_RAPCHIEUPHIM": 3
+            }
+          },
+          {
+            "seedDay": "2026-01-01",
+            "checkConstraints": 35,
+            "uniqueIndexes": 27,
+            "fkValueAssertions": 374,
+            "rowCounts": {
+              "VAITRO": 4,
+              "QUYEN": 23,
+              "VAITRO_QUYEN": 40,
+              "NGUOIDUNG": 8,
+              "HOSOKHACHHANG": 4,
+              "RAPCHIEUPHIM": 3,
+              "PHANCONG_RAP": 2,
+              "PHONGCHIEU": 6,
+              "GHE": 240,
+              "THELOAI": 7,
+              "DIENVIEN": 6,
+              "PHIM": 4,
+              "PHIM_THELOAI": 7,
+              "PHIM_DIENVIEN": 4,
+              "BANGGIA": 7,
+              "SANPHAM": 5,
+              "KHUYENMAI": 3,
+              "HINHANH_RAPCHIEUPHIM": 3
+            }
+          },
+          {
+            "seedDay": "2028-02-29",
+            "checkConstraints": 35,
+            "uniqueIndexes": 27,
+            "fkValueAssertions": 374,
+            "rowCounts": {
+              "VAITRO": 4,
+              "QUYEN": 23,
+              "VAITRO_QUYEN": 40,
+              "NGUOIDUNG": 8,
+              "HOSOKHACHHANG": 4,
+              "RAPCHIEUPHIM": 3,
+              "PHANCONG_RAP": 2,
+              "PHONGCHIEU": 6,
+              "GHE": 240,
+              "THELOAI": 7,
+              "DIENVIEN": 6,
+              "PHIM": 4,
+              "PHIM_THELOAI": 7,
+              "PHIM_DIENVIEN": 4,
+              "BANGGIA": 7,
+              "SANPHAM": 5,
+              "KHUYENMAI": 3,
+              "HINHANH_RAPCHIEUPHIM": 3
+            }
+          }
+        ],
+        "limitation": "Static fresh-dataset model; SQL Server execution NOT RUN"
+      }
+    },
+    {
+      "name": "Four roles and existing 23-permission/40-grant baseline; all SP permission codes resolve",
+      "status": "PASS",
+      "detail": {
+        "permissions": [
+          "XEM_PHIM",
+          "DAT_VE",
+          "THANH_TOAN",
+          "DANH_GIA",
+          "GUI_KHIEU_NAI",
+          "QL_PHONG",
+          "QL_GHE",
+          "QL_SUAT_CHIEU",
+          "QL_BANG_GIA",
+          "XEM_BAO_CAO_RAP",
+          "QL_KHIEUNAI",
+          "XULY_KHIEUNAI",
+          "TRA_CUU_DON",
+          "QL_NGUOIDUNG",
+          "QL_VAITRO",
+          "QL_QUYEN",
+          "PHANCONG_RAP",
+          "QL_RAP",
+          "QL_DANHMUC_PHIM",
+          "QL_THELOAI",
+          "QL_SANPHAM",
+          "QL_KHUYENMAI",
+          "XEM_BAO_CAO_TOANHE"
+        ],
+        "roleGrants": {
+          "KHACH_HANG": [
+            "XEM_PHIM",
+            "DAT_VE",
+            "THANH_TOAN",
+            "DANH_GIA",
+            "GUI_KHIEU_NAI"
+          ],
+          "QUAN_LY_RAP": [
+            "XEM_PHIM",
+            "DAT_VE",
+            "THANH_TOAN",
+            "QL_PHONG",
+            "QL_GHE",
+            "QL_SUAT_CHIEU",
+            "QL_BANG_GIA",
+            "XEM_BAO_CAO_RAP"
+          ],
+          "CSKH": [
+            "XEM_PHIM",
+            "QL_KHIEUNAI",
+            "XULY_KHIEUNAI",
+            "TRA_CUU_DON"
+          ],
+          "ADMIN": [
+            "XEM_PHIM",
+            "DAT_VE",
+            "THANH_TOAN",
+            "DANH_GIA",
+            "GUI_KHIEU_NAI",
+            "QL_PHONG",
+            "QL_GHE",
+            "QL_SUAT_CHIEU",
+            "QL_BANG_GIA",
+            "XEM_BAO_CAO_RAP",
+            "QL_KHIEUNAI",
+            "XULY_KHIEUNAI",
+            "TRA_CUU_DON",
+            "QL_NGUOIDUNG",
+            "QL_VAITRO",
+            "QL_QUYEN",
+            "PHANCONG_RAP",
+            "QL_RAP",
+            "QL_DANHMUC_PHIM",
+            "QL_THELOAI",
+            "QL_SANPHAM",
+            "QL_KHUYENMAI",
+            "XEM_BAO_CAO_TOANHE"
+          ]
+        },
+        "requiredByProcedures": [
+          "QL_DANHMUC_PHIM",
+          "PHANCONG_RAP",
+          "QL_RAP",
+          "XEM_BAO_CAO_TOANHE",
+          "QL_THELOAI",
+          "QL_QUYEN",
+          "QL_SANPHAM",
+          "QL_KHUYENMAI",
+          "QL_VAITRO",
+          "QL_NGUOIDUNG",
+          "QL_BANG_GIA",
+          "QL_PHONG",
+          "QL_GHE",
+          "QL_SUAT_CHIEU",
+          "DAT_VE",
+          "GUI_KHIEU_NAI",
+          "DANH_GIA",
+          "XEM_BAO_CAO_RAP",
+          "THANH_TOAN",
+          "QL_KHIEUNAI",
+          "XULY_KHIEUNAI",
+          "TRA_CUU_DON"
+        ],
+        "note": "Existing public grants retained; role AND permission guards remain authoritative"
+      }
+    },
+    {
+      "name": "Eight demo account hashes verify with the real bcrypt helper; profiles only for four customers",
+      "status": "PASS",
+      "detail": {
+        "validHashes": 8,
+        "activeAccounts": 8,
+        "customerProfiles": 4,
+        "staffProfiles": 0,
+        "pointsRetained": [
+          150,
+          80,
+          45,
+          0
+        ],
+        "loginSqlRuntime": "NOT RUN"
+      }
+    },
+    {
+      "name": "Two active Manager assignments and out-of-scope cinemas; SeedDate windows",
+      "status": "PASS",
+      "detail": {
+        "assignments": [
+          {
+            "managerId": 2,
+            "cinemaId": 1,
+            "startsOn": "2026-09-08",
+            "endsOn": "2028-10-08"
+          },
+          {
+            "managerId": 3,
+            "cinemaId": 2,
+            "startsOn": "2026-09-08",
+            "endsOn": "2028-10-08"
+          }
+        ],
+        "negativeScopeAvailable": true,
+        "sqlScopeRuntime": "NOT RUN"
+      }
+    },
+    {
+      "name": "Cinema/room/seat/image catalog is active and usable",
+      "status": "PASS",
+      "detail": {
+        "cinemas": 3,
+        "rooms": 6,
+        "seats": 240,
+        "seatsPerRoom": 40,
+        "images": 3,
+        "seatTypes": [
+          "Thường",
+          "VIP",
+          "Sweetbox"
+        ],
+        "imageRemoteAvailability": "NOT CHECKED"
+      }
+    },
+    {
+      "name": "Movie/genre/actor links valid; parent dates cover R5.3 horizon without creating shows",
+      "status": "PASS",
+      "detail": {
+        "movies": 4,
+        "genres": 7,
+        "actors": 6,
+        "movieGenreLinks": 7,
+        "movieActorLinks": 4,
+        "castCoverageRequiredForEveryMovie": false,
+        "horizonDays": [
+          -7,
+          7
+        ],
+        "showsCreated": 0
+      }
+    },
+    {
+      "name": "Products/pricing/promotion valid; no holiday, overlapping pricing tuple or consumed quota",
+      "status": "PASS",
+      "detail": {
+        "products": 5,
+        "pricingRules": 7,
+        "promotions": 3,
+        "counters": [
+          0,
+          0,
+          0
+        ],
+        "validKinds": [
+          "Ngày thường",
+          "Cuối tuần",
+          "Tất cả"
+        ],
+        "ruleCoexistence": "Different tuple dimensions may coexist additively, as in the unchanged SQL trigger"
+      }
+    },
+    {
+      "name": "Checker rejects in-memory corruptions; no SQL fixtures persisted",
+      "status": "PASS",
+      "detail": {
+        "rejectedCorruptions": [
+          "Missing genre parent",
+          "Duplicate seat position",
+          "Invalid seat enum",
+          "Invalid legacy day",
+          "Oversubscribed promotion",
+          "Malformed SQL INT",
+          "String overflow",
+          "SQL NULL in required field"
+        ],
+        "nullableCheckSemantics": "PASS",
+        "sqlWrites": 0
+      }
+    },
+    {
+      "name": "R5.1 source, base data, dynamic SQL, fixtures, API/schema/UI and orchestration preserved",
+      "status": "PASS",
+      "detail": {
+        "identicalFiles": 809,
+        "expandedEntries": 3,
+        "dataEdits": 0,
+        "sentinelChanged": false,
+        "liveRerun": "NOT RUN: only source branch semantics audited"
+      }
+    }
+  ],
+  "liveVerification": {
+    "status": "NOT RUN",
+    "reason": "No existing disposable database has been identified and confirmed for this task; no DB/test pipeline was created."
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "status": "PREFLIGHT ONLY",
+  "database": "CinemaBookingDB_Test",
+  "server": {
+    "ServerName": "DESKTOP-E67DPCV",
+    "MachineName": "DESKTOP-E67DPCV",
+    "InstanceName": null,
+    "Version": "17.0.1000.7",
+    "ConnectedDatabase": "master",
+    "UtcNow": "2026-10-08T17:17:12.2846253",
+    "BusinessDate": "2026-10-09",
+    "DataPath": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\",
+    "LogPath": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\",
+    "CanCreateDatabase": 1,
+    "databases": [
+      {
+        "name": "CinemaBookingDB",
+        "database_id": 19,
+        "create_date": "2026-10-03T20:59:18.233",
+        "state_desc": "ONLINE",
+        "is_read_only": false,
+        "database_guid": "96F850EA-987F-41A1-9086-38F6597968C8",
+        "files": [
+          {
+            "name": "CinemaBookingDB",
+            "type_desc": "ROWS",
+            "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB.mdf"
+          },
+          {
+            "name": "CinemaBookingDB_log",
+            "type_desc": "LOG",
+            "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_log.ldf"
+          }
+        ]
+      }
+    ]
+  },
+  "target": null,
+  "main": {
+    "name": "CinemaBookingDB",
+    "database_id": 19,
+    "create_date": "2026-10-03T20:59:18.233",
+    "state_desc": "ONLINE",
+    "is_read_only": false,
+    "database_guid": "96F850EA-987F-41A1-9086-38F6597968C8",
+    "files": [
+      {
+        "name": "CinemaBookingDB",
+        "type_desc": "ROWS",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB.mdf"
+      },
+      {
+        "name": "CinemaBookingDB_log",
+        "type_desc": "LOG",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_log.ldf"
+      }
+    ]
+  },
+  "expectedNewFiles": [
+    {
+      "type": "ROWS",
+      "path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test.mdf"
+    },
+    {
+      "type": "LOG",
+      "path": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_Test_log.ldf"
+    }
+  ],
+  "confirmation": "20bd29a62c92b9504e63f933b66355720c7c3b7a9976001fdec3d16f5351f19a",
+  "sqlGuard": "IF CONVERT(nvarchar(128),SERVERPROPERTY('ServerName')) <> N'DESKTOP-E67DPCV' THROW 51055, 'Actual SQL Server instance changed since preflight.', 1;\nIF DB_ID(N'CinemaBookingDB_Test') IS NOT NULL THROW 51055, 'Target appeared after preflight; creation must not reset it.', 1;\n"
+}

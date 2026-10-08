@@ -4,6 +4,11 @@ React → REST API → Express → Stored Procedure → SQL Server. Baseline ch�
 
 SQL Server `sa` được chấp nhận cho đồ án/local; kiến trúc Stored-Procedure-Only vẫn bắt buộc. Pricing có đúng Ngày thường / Cuối tuần / Tất cả. Source database và hướng dẫn chi tiết: [database/README.md](database/README.md). Các script `r1`…`r8` là tooling của các đợt trước, không tự chạy để triển khai Phase tiếp theo.
 
+Tổ chức seed R5.1: [nhóm seed, dependency và cách chạy](database/10_seed/README.md),
+[báo cáo và verification](docs/R5_1_SEED_REPORT.md). Entry point `db:seed` giữ nguyên;
+chưa triển khai dữ liệu/pipeline R5.2–R5.5. Kiểm tra hồ sơ tổ chức offline bằng
+`node scripts/r51/checks.mjs` (hash snapshot tại thời điểm bàn giao R5.1).
+
 Kiểm tra ứng dụng từ repo root sau khi cài dependencies ở backend/frontend:
 
 ```powershell

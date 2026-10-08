@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-08T15:10:01.452Z",
+  "databaseConnection": false,
+  "sqlExecuted": false,
+  "staticChecks": {
+    "command": "node scripts/r51/checks.mjs",
+    "pass": 11,
+    "fail": 0
+  },
+  "backend": {
+    "command": "npm.cmd --prefix backend test",
+    "pass": 191,
+    "fail": 0,
+    "skip": 0,
+    "log": "backend.txt"
+  },
+  "frontend": {
+    "command": "npm.cmd --prefix frontend test",
+    "pass": 62,
+    "fail": 0,
+    "skip": 0,
+    "log": "frontend.txt"
+  },
+  "lint": {
+    "command": "npm.cmd --prefix frontend run lint",
+    "status": "PASS",
+    "log": "frontend-lint.txt"
+  },
+  "noSql": {
+    "command": "node scripts/audit-no-sql.mjs",
+    "status": "PASS",
+    "scanned": 101,
+    "log": "no-sql.txt"
+  },
+  "syntax": {
+    "status": "PASS",
+    "files": [
+      "scripts/r51/checks.mjs",
+      "scripts/db/generate-seed.mjs",
+      "scripts/r3a/inventory.mjs",
+      "scripts/r6a/provenance.mjs"
+    ]
+  },
+  "documentation": {
+    "status": "PASS",
+    "validatedLinks": 18,
+    "files": [
+      "database/10_seed/README.md",
+      "database/10_seed/seed_base/README.md",
+      "database/10_seed/seed_demo_dynamic/README.md",
+      "database/10_seed/test_fixture/README.md",
+      "docs/R5_1_SEED_REPORT.md"
+    ]
+  },
+  "gitWhitespace": {
+    "status": "PASS"
+  },
+  "notRun": [
+    "Live seed or SQL integration: no existing safe test target identified; no DB was created or modified.",
+    "Migration/reset/drop/generator: not required for path-only organization.",
+    "Frontend build/full browser E2E: no UI changes; current render/unit tests and lint passed."
+  ]
+}

@@ -1,0 +1,10 @@
+﻿PASS All 16 base files parsed; schema, CHECK, UNIQUE, FK values and order
+PASS Four roles and existing 23-permission/40-grant baseline; all SP permission codes resolve
+PASS Eight demo account hashes verify with the real bcrypt helper; profiles only for four customers
+PASS Two active Manager assignments and out-of-scope cinemas; SeedDate windows
+PASS Cinema/room/seat/image catalog is active and usable
+PASS Movie/genre/actor links valid; parent dates cover R5.3 horizon without creating shows
+PASS Products/pricing/promotion valid; no holiday, overlapping pricing tuple or consumed quota
+PASS Checker rejects in-memory corruptions; no SQL fixtures persisted
+PASS R5.1 source, base data, dynamic SQL, fixtures, API/schema/UI and orchestration preserved
+9/9 R5.2 checks PASS; SQL runtime NOT RUN.

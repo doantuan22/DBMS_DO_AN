@@ -1,0 +1,10 @@
+﻿PASS SQL source structure, one DB clock, UTC/business date contract, showtime-only writes
+PASS 32 unique IDs: 8 historical and 24 future open; four movies, six rooms, three cinemas
+PASS IDs 1-5 retain parents, format, price, status, relative day/local hour and actual duration
+PASS Actual schema enums/FKs and DB duration contract, with valid future parent seats
+PASS Month/year/leap-day/local-midnight boundaries: strict past/future, UTC and release dates
+PASS No same-room overlap; strict trigger boundaries accept end == start
+PASS Stale SeedDate: DB-relative schedule is unchanged; incompatible release window is rejected
+PASS Public list/detail/seat and booking retain authoritative full IsBookable contract
+PASS Base, schema, contracts, callers/fixtures, R5.1/R5.2 evidence and orchestration preserved
+9/9 R5.3 checks PASS; LIVE SQL: NOT RUN.

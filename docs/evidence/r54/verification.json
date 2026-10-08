@@ -1,0 +1,212 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-08T16:55:11.092Z",
+  "scope": "R5.4 source/static and offline regression",
+  "sourceImplementation": "DONE",
+  "liveSqlVerification": "NOT RUN",
+  "sqlExecuted": false,
+  "databaseConnection": false,
+  "sqlCompilation": "NOT RUN",
+  "commands": [
+    {
+      "command": "node scripts/r54/checks.mjs",
+      "exitCode": 0,
+      "result": "9/9 STATIC PASS",
+      "evidence": "checks.json"
+    },
+    {
+      "command": "node --check scripts/r54/checks.mjs",
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm.cmd --prefix backend test",
+      "exitCode": 0,
+      "result": "191/191 PASS; 0 fail/cancelled/skipped",
+      "evidence": "backend.txt"
+    },
+    {
+      "command": "node scripts/audit-no-sql.mjs",
+      "exitCode": 0,
+      "result": "PASS; 101 files scanned",
+      "evidence": "no-sql.txt"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "PASS; existing LF/CRLF Git warnings only"
+    }
+  ],
+  "launcherNote": "PowerShell blocks npm.ps1 under existing execution policy; npm.cmd ran the full suite. No policy change.",
+  "changedExistingFiles": [
+    {
+      "file": "database/10_seed/test_fixture/README.md",
+      "sha256": "94161e9e3040446b2dcdbf4ee7a629d380befd653f2d9c1f7b37440452740410"
+    }
+  ],
+  "newSource": {
+    "database/10_seed/test_fixture/transaction-fixture.sql": "83b1138a4ef2c73b6d1aaaa029d7dafbdba5d7b0aaef95eb615c77df5f349e36",
+    "database/10_seed/test_fixture/negative-probes.sql": "8246bb668730dce389666a1af87f9e41620f66eff2fc1bb05803b3f60abf051f",
+    "database/10_seed/test_fixture/fixture-matrix.md": "afd8797bcfe016af590bb60185a3d32380ee1d2fba687c7b75a9515588fb3e9a",
+    "scripts/r54/checks.mjs": "783d336322826463a05591af7921964f70546d04752af7426f2be088db554bcb",
+    "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md": "9bc8ac35e80c009d9e3127a6ad22f49b5fe83eea58641fd6e4f139d1e05a98d3"
+  },
+  "newFileWhitespaceAndConflictMarkers": "PASS",
+  "protectedFileCount": 826,
+  "unchangedExpandedEntries": [
+    "10_seed/seed-all.sql",
+    "run-all.sql",
+    "reset-database.sql"
+  ],
+  "previousEvidenceOverwritten": false,
+  "sourceOnlyPlannedCounts": {
+    "orders": 6,
+    "tickets": 7,
+    "foodLines": 5,
+    "payments": 4,
+    "failedPayments": 1,
+    "successfulPayments": 3,
+    "reviews": 1,
+    "complaints": 5,
+    "processingEvents": 7,
+    "compensation": 1
+  },
+  "notApplicable": {
+    "completedOrder": "Schema state, no implemented completion workflow",
+    "usedTicket": "Schema state, no implemented check-in workflow",
+    "refund": "Cancellation credits points and preserves success payment"
+  },
+  "liveVerificationReason": "No existing disposable test database has been confirmed safe for R5.4. No database was created/reset or written to; SQL compilation/runtime assertions await a confirmed target.",
+  "laterPhasesImplemented": false,
+  "documentationLinks": {
+    "status": "PASS",
+    "files": [
+      "database/10_seed/test_fixture/README.md",
+      "database/10_seed/test_fixture/fixture-matrix.md",
+      "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md"
+    ],
+    "checkedTargets": 30,
+    "links": [
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "database/10_seed/test_fixture/fixture-matrix.md"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "database/10_seed/test_fixture/transaction-fixture.sql"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "database/10_seed/test_fixture/negative-probes.sql"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md"
+      },
+      {
+        "file": "database/10_seed/test_fixture/README.md",
+        "target": "docs/evidence/r51/seed-inventory.json"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/R5_1_SEED_REPORT.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/R5_2_BASE_SEED_REPORT.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/R5_3_DYNAMIC_SHOWTIME_REPORT.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/audit-before.json"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/contracts.json"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "scripts/r21/fixtures.mjs"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "scripts/r33/fixtures.mjs"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "scripts/r47/fixtures.mjs"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/11_tests/procedures/smoke.sql"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/11_tests/payment/compensation.sql"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/10_seed/test_fixture/fixture-matrix.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/contracts/ORDER_DETAIL_READ_ONLY.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/10_seed/test_fixture/transaction-fixture.sql"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/10_seed/test_fixture/negative-probes.sql"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/10_seed/test_fixture/README.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "scripts/r54/checks.mjs"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "database/10_seed/test_fixture/README.md"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/checks.json"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/checks.txt"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/verification.json"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/backend.txt"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/no-sql.txt"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/verification.json"
+      },
+      {
+        "file": "docs/R5_4_TRANSACTION_FIXTURE_REPORT.md",
+        "target": "docs/evidence/r54/contracts.json"
+      }
+    ]
+  }
+}

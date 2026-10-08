@@ -1,0 +1,39 @@
+FAIL 17 seed files moved once with identical bytes: database/10_seed/seed_demo_dynamic/014_reference.sql
++ actual - expected
+
++ 'e03ea45d6a5ef845ec5e671d94297e248f3dfe2837e57e9dc7a025f40cb851e6'
+- 'b2e0f8541068dd44d51de384f3e3373e7cfbc74d12452c113f34fadc15a5e34c'
+
+FAIL Expanded seed/build/reset SQL exactly preserved: 10_seed/seed-all.sql
++ actual - expected
+
++ '2676cf9c8703aadb41cef7ff57c4f100a997005f2b59c9e383fcbe1d1ca7649d'
+- 'fc85c7398c498872e5b3e9faebf7e2b4227c074cc7bddee20abcbec6d783a30c'
+
+PASS Canonical build/seed/test/verify SQLCMD includes resolve without cycles
+PASS Seed order and exactly-once inclusion preserved
+PASS FK parents inserted before children, including mixed files
+PASS Build objects and seed function prerequisites precede data
+PASS Schema, business modules, API, UI, existing tests and entry points unchanged
+FAIL Only scoped tracked files changed: Unexpected tracked change: package.json
+PASS No old active seed paths; historical evidence preserved
+PASS Existing readers parse moved data and generator outputs grouped paths
+FAIL Fixture sources retained; groups documented without SQL placeholders: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   'database/10_seed/test_fixture/fixture-matrix.md',
++   'database/10_seed/test_fixture/negative-probes.sql',
+    'database/10_seed/test_fixture/README.md',
++   'database/10_seed/test_fixture/transaction-fixture.sql'
+  ]
+
+7/11 checks PASS; no database connection or SQL execution.
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'database/10_seed/seed-all.sql', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'database/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/db/generate-seed.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/db/run.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/r3a/inventory.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/r6a/provenance.mjs', LF will be replaced by CRLF the next time Git touches it

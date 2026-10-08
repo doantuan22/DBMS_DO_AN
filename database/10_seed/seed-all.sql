@@ -11,23 +11,23 @@ IF @skip=0 AND EXISTS(SELECT 1 FROM dbo.VAITRO) THROW 51004, 'Partial/nonempty r
 EXEC sys.sp_set_session_context @key=N'CinemaSeedSkip',@value=@skip;
 BEGIN TRANSACTION;
 GO
-:r ./10_seed/001_reference.sql
-:r ./10_seed/002_reference.sql
-:r ./10_seed/003_reference.sql
-:r ./10_seed/004_reference.sql
-:r ./10_seed/005_reference.sql
-:r ./10_seed/006_reference.sql
-:r ./10_seed/007_reference.sql
-:r ./10_seed/008_reference.sql
-:r ./10_seed/009_reference.sql
-:r ./10_seed/010_reference.sql
-:r ./10_seed/011_reference.sql
-:r ./10_seed/012_reference.sql
-:r ./10_seed/013_reference.sql
-:r ./10_seed/014_reference.sql
-:r ./10_seed/015_reference.sql
-:r ./10_seed/016_reference.sql
-:r ./10_seed/017_cinema_images.sql
+:r ./10_seed/seed_base/001_reference.sql
+:r ./10_seed/seed_base/002_reference.sql
+:r ./10_seed/seed_base/003_reference.sql
+:r ./10_seed/seed_base/004_reference.sql
+:r ./10_seed/seed_base/005_reference.sql
+:r ./10_seed/seed_base/006_reference.sql
+:r ./10_seed/seed_base/007_reference.sql
+:r ./10_seed/seed_base/008_reference.sql
+:r ./10_seed/seed_base/009_reference.sql
+:r ./10_seed/seed_base/010_reference.sql
+:r ./10_seed/seed_base/011_reference.sql
+:r ./10_seed/seed_base/012_reference.sql
+:r ./10_seed/seed_base/013_reference.sql
+:r ./10_seed/seed_demo_dynamic/014_reference.sql
+:r ./10_seed/seed_base/015_reference.sql
+:r ./10_seed/seed_base/016_reference.sql
+:r ./10_seed/seed_base/017_cinema_images.sql
 :r ./12_verify/verify_seed.sql
 COMMIT TRANSACTION;
 EXEC sys.sp_set_session_context @key=N'CinemaSeedSkip',@value=NULL;

@@ -1,0 +1,291 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-08T16:10:33.580Z",
+  "validationKind": "STATIC SOURCE AND BOUNDARY ANALYSIS",
+  "databaseConnection": false,
+  "sqlExecuted": false,
+  "checks": [
+    {
+      "name": "SQL source structure, one DB clock, UTC/business date contract, showtime-only writes",
+      "status": "PASS",
+      "detail": {
+        "physicalInsertTargets": [
+          "dbo.SUATCHIEU"
+        ],
+        "newTransactionRows": 0,
+        "sqlSyntax": "Reviewed/balanced source; SQL Server compilation NOT RUN"
+      }
+    },
+    {
+      "name": "32 unique IDs: 8 historical and 24 future open; four movies, six rooms, three cinemas",
+      "status": "PASS",
+      "detail": {
+        "past": 8,
+        "futureOpen": 24,
+        "pastByDay": {
+          "-7": 3,
+          "-3": 2,
+          "-2": 1,
+          "-1": 2
+        },
+        "futureByDay": {
+          "1": 6,
+          "2": 6,
+          "3": 6,
+          "7": 6
+        },
+        "futureByMovie": {
+          "1": 6,
+          "2": 6,
+          "3": 6,
+          "4": 6
+        },
+        "futureByRoom": {
+          "1": 4,
+          "2": 4,
+          "3": 4,
+          "4": 4,
+          "5": 4,
+          "6": 4
+        },
+        "futureByCinema": {
+          "1": 12,
+          "2": 8,
+          "3": 4
+        }
+      }
+    },
+    {
+      "name": "IDs 1-5 retain parents, format, price, status, relative day/local hour and actual duration",
+      "status": "PASS",
+      "detail": {
+        "preservedIds": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "clockChange": "SeedDate -> DB business day; instant changes deliberately",
+        "oldIdentityCeiling": 5,
+        "newIdentityCeiling": 32
+      }
+    },
+    {
+      "name": "Actual schema enums/FKs and DB duration contract, with valid future parent seats",
+      "status": "PASS",
+      "detail": {
+        "showtimeChecks": 4,
+        "showtimeFKs": 2,
+        "duration": "Actual PHIM.ThoiLuong minutes; zero added buffer",
+        "activeSeatsPerSeedRoom": 40,
+        "pastLifecycle": "Historical INSERT with Hoàn thành, no business status transition/transaction fabricated"
+      }
+    },
+    {
+      "name": "Month/year/leap-day/local-midnight boundaries: strict past/future, UTC and release dates",
+      "status": "PASS",
+      "detail": {
+        "kind": "STATIC BOUNDARY ANALYSIS",
+        "cases": [
+          {
+            "name": "current example",
+            "artificialClock": "2026-10-08T08:30:00.000Z",
+            "businessDate": "2026-10-08",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2026-10-09",
+              "start": "2026-10-08T19:00:00.000Z",
+              "end": "2026-10-08T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "before local midnight/month boundary",
+            "artificialClock": "2026-10-31T16:59:59.999Z",
+            "businessDate": "2026-10-31",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2026-11-01",
+              "start": "2026-10-31T19:00:00.000Z",
+              "end": "2026-10-31T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "after local midnight/month boundary",
+            "artificialClock": "2026-10-31T17:00:00.000Z",
+            "businessDate": "2026-11-01",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2026-11-02",
+              "start": "2026-11-01T19:00:00.000Z",
+              "end": "2026-11-01T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "before local midnight/year boundary",
+            "artificialClock": "2026-12-31T16:59:59.999Z",
+            "businessDate": "2026-12-31",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2027-01-01",
+              "start": "2026-12-31T19:00:00.000Z",
+              "end": "2026-12-31T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "after local midnight/year boundary",
+            "artificialClock": "2026-12-31T17:00:00.000Z",
+            "businessDate": "2027-01-01",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2027-01-02",
+              "start": "2027-01-01T19:00:00.000Z",
+              "end": "2027-01-01T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "leap day beginning",
+            "artificialClock": "2028-02-28T17:00:00.000Z",
+            "businessDate": "2028-02-29",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2028-03-01",
+              "start": "2028-02-29T19:00:00.000Z",
+              "end": "2028-02-29T21:46:00.000Z"
+            }
+          },
+          {
+            "name": "leap month end",
+            "artificialClock": "2028-02-29T16:59:59.999Z",
+            "businessDate": "2028-02-29",
+            "past": 8,
+            "futureOpen": 24,
+            "example": {
+              "SuatChieuID": 2,
+              "PhimID": 1,
+              "PhongID": 1,
+              "DayOffset": 1,
+              "LocalHour": 2,
+              "DinhDang": "2D",
+              "GiaVeCoBan": 85000,
+              "TrangThai": "Mở bán",
+              "RapID": 1,
+              "localDate": "2028-03-01",
+              "start": "2028-02-29T19:00:00.000Z",
+              "end": "2028-02-29T21:46:00.000Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "No same-room overlap; strict trigger boundaries accept end == start",
+      "status": "PASS",
+      "detail": {
+        "overlapPairs": 0,
+        "touchingBoundary": "accepted by strict inequalities",
+        "oneMillisecondOverlap": "rejected in static predicate",
+        "differentRoomsSameTime": "allowed"
+      }
+    },
+    {
+      "name": "Stale SeedDate: DB-relative schedule is unchanged; incompatible release window is rejected",
+      "status": "PASS",
+      "detail": {
+        "compatibleOldSeedDate": "2026-01-01",
+        "rejectedArtificialSeedDates": [
+          "2024-01-01",
+          "2027-01-01"
+        ],
+        "baseRowsChanged": 0,
+        "liveErrorRollback": "NOT RUN"
+      }
+    },
+    {
+      "name": "Public list/detail/seat and booking retain authoritative full IsBookable contract",
+      "status": "PASS",
+      "detail": {
+        "futureStaticPrerequisites": 24,
+        "sqlReadAndBookingExecution": "NOT RUN",
+        "legacyFirstFutureId": 2,
+        "legacyFirstHistoricalId": 1
+      }
+    },
+    {
+      "name": "Base, schema, contracts, callers/fixtures, R5.1/R5.2 evidence and orchestration preserved",
+      "status": "PASS",
+      "detail": {
+        "identicalFiles": 814,
+        "expandedEntriesIdenticalOutsideDynamic": 3,
+        "baseSqlEdits": 0,
+        "sentinelChanges": 0,
+        "previousEvidenceOverwritten": false,
+        "oldHashCheckers": "Historical R5.1/R5.2 whole-source parity checks intentionally describe their captured phase, not current dynamic SQL"
+      }
+    }
+  ],
+  "liveVerification": {
+    "status": "NOT RUN",
+    "reason": "No existing disposable test database has been confirmed safe. No database was created/reset; SQL execution/compilation and public/booking runtime are deferred to R5.5."
+  }
+}

@@ -45,7 +45,7 @@ const preR1 = load('audit/remediation/evidence/historical-data-pre-migration-che
 const after = load('audit/remediation/r6a/evidence/main-after.json');
 assert.ok(after.dataVersusR5.every(table => table.matchesR5));
 
-const seedUsersFile = 'database/10_seed/004_reference.sql';
+const seedUsersFile = 'database/10_seed/seed_base/004_reference.sql';
 const seedUsers = read(path.join(root, seedUsersFile));
 const seedRoles = [...seedUsers.matchAll(/^\((\d+),\s*(\d+),/gm)].map(match => ({ NguoiDungID: Number(match[1]), VaiTroID: Number(match[2]) }));
 const seedProfiles = [...seedUsers.matchAll(/^\((\d+),\s*'([^']+)',\s*N?'[^']+',\s*(\d+)\)/gm)]
@@ -101,9 +101,9 @@ const sourceReferences = [
 write(path.join(evidence, 'historical-evidence-sanitized.json'), { status: 'PASS', historical, fixtureProof });
 write(path.join(evidence, 'provenance.json'), {
   status: 'PASS', seed: { users: pointer(seedUsersFile), userRoleChecks: seedRoles, profileChecks,
-    assignments: pointer('database/10_seed/006_reference.sql'), showtimes: pointer('database/10_seed/014_reference.sql'),
+    assignments: pointer('database/10_seed/seed_base/006_reference.sql'), showtimes: pointer('database/10_seed/seed_demo_dynamic/014_reference.sql'),
     inferredSeedDay: seedDay.toISOString().slice(0, 10), seedDayEvidence: 'All five showtimes match the seed schedule for this business day; this is an inference, not an execution log.',
-    showChecks, promotions: pointer('database/10_seed/016_reference.sql'), promotionSeedCounters: [{ KhuyenMaiID: 1, counter: 0 }, { KhuyenMaiID: 2, counter: 0 }, { KhuyenMaiID: 3, counter: 0 }] },
+    showChecks, promotions: pointer('database/10_seed/seed_base/016_reference.sql'), promotionSeedCounters: [{ KhuyenMaiID: 1, counter: 0 }, { KhuyenMaiID: 2, counter: 0 }, { KhuyenMaiID: 3, counter: 0 }] },
   r1: { evidence: pointer('audit/remediation/evidence/migration-CinemaBookingDB.json'), status: r1.status,
     provenance: r1.provenance, dateOnlyChanged: r1.dateOnlyChanged, ambiguousHistoricalRowsModified: r1.ambiguousHistoricalRowsModified,
     preMigrationInventory: { evidence: pointer('audit/remediation/evidence/historical-data-pre-migration-check.json'), tables: preR1.tables },

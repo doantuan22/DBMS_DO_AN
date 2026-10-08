@@ -1,0 +1,639 @@
+{
+  "capturedAt": "2026-10-08T16:05:06.347Z",
+  "kind": "READ-ONLY SOURCE INVENTORY; no listed scripts were executed",
+  "scannedFiles": 389,
+  "matches": [
+    {
+      "file": "scripts/audit-full-20261003/aggregates.mjs",
+      "line": 5,
+      "kind": "catalogSelector",
+      "source": "const counts=inspect('movie-review-count-multiplication',`SELECT v.PhimID,v.SoLuotDanhGia viewReviewCount,(SELECT COUNT(*) FROM dbo.DANHGIAPHIM r WHERE r.PhimID=v.PhimID) actualReviewCount,(SELECT COUNT(*) FROM dbo.SUATCHIEU s WHERE s.PhimID=v.PhimID) showtimeCount FROM dbo.vw_ThongKePhim v WHERE v.SoLuotDanhGia<>(SELECT COUNT(*) FROM dbo.DANHGIAPHIM r WHERE r.PhimID=v.PhimID)`);"
+    },
+    {
+      "file": "scripts/audit-full-20261003/contracts.mjs",
+      "line": 21,
+      "kind": "fixedSeedId",
+      "source": "const input={name:'AUDIT',email:'audit@example.invalid',password:'AuditPassword123',roleId:1,code:'AUDIT',permissionIds:[1],cinemaId:1,userId:1,roomId:1,movieId:1,showtimeId:1,seatIds:[1],row:'A',number:1,type:'2D',status:'Hoạt động',format:'2D',basePrice:80000,surcharge:1,startsOn:'2026-10-03',endsOn:null,startsAt:'2026-10-04T17:00:00Z',endsAt:'2026-10-04T18:30:00Z',quantity:1,discountType:'FIXED',discountValue:1000,minimumOrder:0,price:10000,title:'AUDIT',durationMinutes:90,releaseDate:'2026-10-03',endDate:null,genreIds:[1],url:'/favicon.svg',cover:true,displayOrder:1,rating:5,content:'AUDIT',nextStatus:'Đang xử lý',orderId:1,paymentMethod:'MOMO',products:[],promotionCode:'AUDIT',HoTen:'AUDIT',Email:'audit@example.invalid',MatKhau:'AuditPassword123'};"
+    },
+    {
+      "file": "scripts/audit-full-20261003/contracts.mjs",
+      "line": 39,
+      "kind": "catalogSelector",
+      "source": "else if(area==='catalog'){args=['listMovies','listCinemas','listShowtimes'].includes(method)?[input]:[1];}"
+    },
+    {
+      "file": "scripts/audit-full-20261003/data-inspect.mjs",
+      "line": 27,
+      "kind": "catalogSelector",
+      "source": "'data-active-seat-duplicates': `SELECT d.SuatChieuID,v.GheID,COUNT(*) tickets FROM dbo.CHITIETVE v JOIN dbo.DONDATVE d ON d.DonDatVeID=v.DonDatVeID WHERE v.TrangThai<>N'Đã hủy' AND dbo.fn_DonDangGiuGhe(d.TrangThai,d.HanGiuCho,SYSDATETIME())=1 GROUP BY d.SuatChieuID,v.GheID HAVING COUNT(*)>1`,"
+    },
+    {
+      "file": "scripts/audit-full-20261003/db-checks.mjs",
+      "line": 20,
+      "kind": "catalogSelector",
+      "source": "inspect('fixture-active-seat-duplicates',`SELECT d.SuatChieuID,v.GheID,COUNT(*) tickets FROM dbo.CHITIETVE v JOIN dbo.DONDATVE d ON d.DonDatVeID=v.DonDatVeID WHERE v.TrangThai<>N'Đã hủy' AND dbo.fn_DonDangGiuGhe(d.TrangThai,d.HanGiuCho,SYSDATETIME())=1 GROUP BY d.SuatChieuID,v.GheID HAVING COUNT(*)>1`);"
+    },
+    {
+      "file": "scripts/audit-full-20261003/integration.mjs",
+      "line": 72,
+      "kind": "catalogSelector",
+      "source": "check('public-showtime-visible',(await must('public-showtimes','GET',`/movies/${movie}/showtimes`)).showtimes.some(x=>x.id===showId));"
+    },
+    {
+      "file": "scripts/audit-full-20261003/integration.mjs",
+      "line": 154,
+      "kind": "catalogSelector",
+      "source": "for(const path of ['/admin/dashboard','/admin/users','/admin/permissions','/admin/assignments','/admin/cinemas','/admin/rooms','/admin/seats','/admin/movies','/admin/genres','/admin/actors','/admin/products','/admin/promotions','/admin/pricing','/admin/showtimes','/admin/complaints','/admin/reports/revenue'])check(`admin-read ${path}`,(await call(`admin-read ${path}`,'GET',path,admin)).status===200);"
+    },
+    {
+      "file": "scripts/audit-full-20261003/report.mjs",
+      "line": 32,
+      "kind": "catalogSelector",
+      "source": "bug('BUG-018','Số lượt đánh giá phim bị nhân theo số suất chiếu','P2','PROVEN','KH-04','DB / BE / Integration','Số lượt đánh giá phải bằng COUNT DANHGIAPHIM của phim.','Một đánh giá của phim audit trả reviewCount=1.','vw_ThongKePhim JOIN DANHGIAPHIM và SUATCHIEU cùng lúc rồi COUNT(dg.DanhGiaID); API phim audit trả số nhân theo số suất. Có3phim sai trong query.','So COUNT trực tiếp với view, gọi GET /movies/14.',['movie-review-count-multiplication.json','aggregates-transcript.json'],['vw_ThongKePhim','sp_Movie_List','sp_Movie_GetDetail'],['backend/src/services/catalogService.js'],['frontend/src/pages/MovieDetail.jsx'],'JOIN hai quan hệ 1-n trước aggregate; AVG không đổi khi lặp đồng đều, COUNT bị nhân.','Pre-aggregate từng nhánh hoặc COUNT DISTINCT reviewID.','0/1/n reviews ×0/1/n showtimes, list và detail consistency.',undefined,'Sai dữ liệu thống kê trả ra, không tăng actual review rows.');"
+    },
+    {
+      "file": "scripts/audit-full-20261003/report.mjs",
+      "line": 84,
+      "kind": "catalogSelector",
+      "source": "['KH-05','Lịch chiếu','MovieDetail.jsx','GET /movies/:movieId/showtimes','SHOWTIME_LIST_BY_MOVIE','SUATCHIEU,PHONGCHIEU,RAPCHIEUPHIM','ISSUES','ISSUES','ISSUES','VERIFIED','FAIL','BUG-001 clock'],"
+    },
+    {
+      "file": "scripts/audit-full-20261003/report.mjs",
+      "line": 205,
+      "kind": "catalogSelector",
+      "source": "6views,17functions,7triggers đã inventory/đọc dependency. vw_ThongKePhim COUNTreview nhân theo SUATCHIEU: BUG-018 đã SELECT+API chứng minh. Revenueviews/SP aggregate từngorder/payment trước join rạp; không joinimages. LichSuDatVe/ChiTietDon derive expired display theo clock và snapshotmoney; detail vẫn cần history lifecycle thống nhất."
+    },
+    {
+      "file": "scripts/db/backend-smoke.mjs",
+      "line": 36,
+      "kind": "catalogSelector",
+      "source": "const {showtimes:shows}=await request(`/movies/${movie.id}/showtimes`);"
+    },
+    {
+      "file": "scripts/db/clean-clone-check.mjs",
+      "line": 17,
+      "kind": "seedReader",
+      "source": "const result=spawnSync(process.execPath,['scripts/db/run.mjs','build',`--database=${database}`,'--seed-date=2026-10-03'],{cwd:target,env:{...process.env,...env},encoding:'utf8',maxBuffer:32*1024*1024});"
+    },
+    {
+      "file": "scripts/db/contract-check.mjs",
+      "line": 20,
+      "kind": "fixedSeedId",
+      "source": "const input={name:'AUDIT',email:'audit@example.invalid',password:'AuditPassword123',roleId:1,code:'AUDIT',permissionIds:[1],cinemaId:1,userId:1,roomId:1,movieId:1,showtimeId:1,seatIds:[1],row:'A',number:1,type:'2D',status:'Hoạt động',format:'2D',basePrice:80000,surcharge:1,startsOn:'2026-10-03',endsOn:null,startsAt:'2026-10-04T17:00:00Z',endsAt:'2026-10-04T18:30:00Z',quantity:1,discountType:'FIXED',discountValue:1000,minimumOrder:0,price:10000,title:'AUDIT',durationMinutes:90,releaseDate:'2026-10-03',endDate:null,genreIds:[1],url:'/favicon.svg',cover:true,displayOrder:1,rating:5,content:'AUDIT',nextStatus:'Đang xử lý',orderId:1,paymentMethod:'MOMO',products:[],promotionCode:'AUDIT',HoTen:'AUDIT',Email:'audit@example.invalid',MatKhau:'AuditPassword123'};"
+    },
+    {
+      "file": "scripts/db/contract-check.mjs",
+      "line": 39,
+      "kind": "catalogSelector",
+      "source": "else if(area==='catalog'){args=['listMovies','listCinemas','listShowtimes'].includes(method)?[input]:[1];}"
+    },
+    {
+      "file": "scripts/db/generate-seed.mjs",
+      "line": 27,
+      "kind": "seedReader",
+      "source": "put('10_seed/seed-all.sql', `:on error exit\\nUSE CinemaBookingDB;\\nGO\\nSET NOCOUNT ON;\\nSET XACT_ABORT ON;\\nDECLARE @day date = TRY_CONVERT(date,N'$(SeedDate)',126);\\nIF @day IS NULL THROW 51004, 'SeedDate must be YYYY-MM-DD.', 1;\\nEXEC sys.sp_set_session_context @key=N'CinemaSeedDay',@value=@day;\\nDECLARE @skip int = CASE WHEN EXISTS(SELECT 1 FROM dbo.NGUOIDUNG WHERE Email='admin@cinemadb.vn') THEN 1 ELSE 0 END;\\nIF @skip=0 AND EXISTS(SELECT 1 FROM dbo.VAITRO) THROW 51004, 'Partial/nonempty reference data: reset before seed.', 1;\\nEXEC sys.sp_set_session_context @key=N'CinemaSeedSkip',@value=@skip;\\nBEGIN TRANSACTION;\\nGO\\n${files.map(p=>`:r ./${p}`).join('\\n')}\\nCOMMIT TRANSACTION;\\nEXEC sys.sp_set_session_context @key=N'CinemaSeedSkip',@value=NULL;\\nEXEC sys.sp_set_session_context @key=N'CinemaSeedDay',@value=NULL;\\nPRINT 'PASS reference/demo seed (idempotent, no historical audit fixtures)';\\nGO`);"
+    },
+    {
+      "file": "scripts/db/generate-seed.mjs",
+      "line": 28,
+      "kind": "catalogSelector",
+      "source": "put('12_verify/verify_seed.sql', `IF EXISTS(SELECT MaVaiTro FROM (VALUES('ADMIN'),('QUAN_LY_RAP'),('CSKH'),('KHACH_HANG')) e(MaVaiTro) EXCEPT SELECT MaVaiTro FROM dbo.VAITRO) THROW 51005, 'Missing seed role.', 1;\\nIF EXISTS(SELECT MaQuyen FROM (VALUES('XEM_PHIM'),('DAT_VE'),('THANH_TOAN'),('DANH_GIA'),('GUI_KHIEU_NAI'),('QL_PHONG'),('QL_GHE')) e(MaQuyen) EXCEPT SELECT MaQuyen FROM dbo.QUYEN) THROW 51005, 'Missing seed permission.', 1;\\nIF EXISTS(SELECT 1 FROM dbo.QUYEN q WHERE NOT EXISTS(SELECT 1 FROM dbo.VAITRO_QUYEN vq JOIN dbo.VAITRO v ON v.VaiTroID=vq.VaiTroID WHERE v.MaVaiTro='ADMIN' AND vq.QuyenID=q.QuyenID)) THROW 51005, 'Missing admin role-permission mapping.', 1;\\nIF (SELECT COUNT(*) FROM dbo.NGUOIDUNG WHERE Email IN ('admin@cinemadb.vn','manager.q1@cinemadb.vn','cskh@cinemadb.vn','khachhang1@gmail.com'))<>4 THROW 51005, 'Missing demo accounts.', 1;\\nIF NOT EXISTS(SELECT 1 FROM dbo.PHIM) OR NOT EXISTS(SELECT 1 FROM dbo.SUATCHIEU) OR NOT EXISTS(SELECT 1 FROM dbo.GHE) OR NOT EXISTS(SELECT 1 FROM dbo.BANGGIA) OR NOT EXISTS(SELECT 1 FROM dbo.SANPHAM) OR NOT EXISTS(SELECT 1 FROM dbo.KHUYENMAI) THROW 51005, 'Missing catalog fixture.', 1;\\nPRINT 'PASS seed roles, permissions, mappings, accounts and catalog';\\nGO`);"
+    },
+    {
+      "file": "scripts/db/run.mjs",
+      "line": 14,
+      "kind": "seedReader",
+      "source": "const seedDate=process.argv.find(a=>a.startsWith('--seed-date='))?.slice(12)||new Intl.DateTimeFormat('en-CA',{timeZone:BUSINESS_TIME_ZONE,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());"
+    },
+    {
+      "file": "scripts/db/run.mjs",
+      "line": 20,
+      "kind": "seedReader",
+      "source": "const sql=expandSql(entries[mode]).replaceAll('CinemaBookingDB',database).replaceAll('$(SeedDate)',seedDate);"
+    },
+    {
+      "file": "scripts/r1/browser-forms.mjs",
+      "line": 11,
+      "kind": "fixedSeedId",
+      "source": "const showtime = { SuatChieuID: 1, PhimID: 1, PhongID: 1, ThoiGianBatDau: '2026-10-03T12:30:00.123Z', ThoiGianKetThuc: '2026-10-03T14:30:00.123Z', DinhDang: '2D', GiaVeCoBan: 80000, TrangThai: 'Chưa chiếu' };"
+    },
+    {
+      "file": "scripts/r1/integration.mjs",
+      "line": 70,
+      "kind": "catalogSelector",
+      "source": "const filtered=await request(`/movies/1/showtimes?date=${date}`);"
+    },
+    {
+      "file": "scripts/r1/migration-fixture.mjs",
+      "line": 9,
+      "kind": "seedReader",
+      "source": "sqlcmd(expand('run-all.sql').replaceAll('CinemaBookingDB',database).replaceAll('$(SeedDate)','2026-10-03'),{database:'master',file:true});"
+    },
+    {
+      "file": "scripts/r1/sql-fixtures.mjs",
+      "line": 28,
+      "kind": "catalogSelector",
+      "source": "@Show int=(SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU WHERE ThoiGianBatDau>@Now ORDER BY SuatChieuID), @Order int;"
+    },
+    {
+      "file": "scripts/r11/common.mjs",
+      "line": 43,
+      "kind": "catalogSelector",
+      "source": "SELECT * FROM dbo.SUATCHIEU WHERE PhongID=@Room ORDER BY SuatChieuID;"
+    },
+    {
+      "file": "scripts/r12/api-tests.mjs",
+      "line": 15,
+      "kind": "catalogSelector",
+      "source": "async function overlapCount(room) {return(await pool.request().input('Room',sql.Int,room).query(`SELECT COUNT(*) count FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "scripts/r2/integration.mjs",
+      "line": 145,
+      "kind": "catalogSelector",
+      "source": "const inside = await new sql.Request(rollbackTx).input('ID', sql.Int, rollbackShow).query('SELECT COUNT(*) AS C FROM dbo.BOITHUONG_HUYSUAT b JOIN dbo.DONDATVE d ON d.DonDatVeID=b.DonDatVeID WHERE d.SuatChieuID=@ID');"
+    },
+    {
+      "file": "scripts/r2/integration.mjs",
+      "line": 150,
+      "kind": "catalogSelector",
+      "source": "assert.equal((await query('SELECT COUNT(*) AS C FROM dbo.BOITHUONG_HUYSUAT b JOIN dbo.DONDATVE d ON d.DonDatVeID=b.DonDatVeID WHERE d.SuatChieuID=@ID', rollbackShow)).recordset[0].C, 0);"
+    },
+    {
+      "file": "scripts/r2/integration.mjs",
+      "line": 165,
+      "kind": "catalogSelector",
+      "source": "assert.equal((await query('SELECT COUNT(*) AS C FROM dbo.BOITHUONG_HUYSUAT b JOIN dbo.DONDATVE d ON d.DonDatVeID=b.DonDatVeID WHERE d.SuatChieuID=@ID', overflowShow)).recordset[0].C, 0);"
+    },
+    {
+      "file": "scripts/r21/api-tests.mjs",
+      "line": 42,
+      "kind": "catalogSelector",
+      "source": "const list=await api('customer','GET',`/movies/${f.movie}/showtimes`,null,200);assert.equal(list.data.showtimes.length,positive?1:0);"
+    },
+    {
+      "file": "scripts/r21/main-readonly.mjs",
+      "line": 9,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) shows,SUM(CONVERT(INT,IsBookable)) bookable,SUM(CASE WHEN TrangThaiSuatChieu=N'Mở bán' AND ThoiGianBatDau>dbo.fn_BayGio() AND IsBookable=0 THEN 1 ELSE 0 END) ineligibleFutureOpen"
+    },
+    {
+      "file": "scripts/r21/main-readonly.mjs",
+      "line": 11,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) overlaps FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "scripts/r22/main-readonly.mjs",
+      "line": 10,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) shows,SUM(CONVERT(INT,IsBookable)) bookable,SUM(CASE WHEN TrangThaiSuatChieu=N'Mở bán' AND ThoiGianBatDau>dbo.fn_BayGio() AND IsBookable=0 THEN 1 ELSE 0 END) ineligibleFutureOpen"
+    },
+    {
+      "file": "scripts/r22/main-readonly.mjs",
+      "line": 12,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) overlaps FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "scripts/r2fix/migration-tests.mjs",
+      "line": 16,
+      "kind": "seedReader",
+      "source": "sqlcmd((build+'\\n'+expandSql('10_seed/seed-all.sql')).replaceAll('CinemaBookingDB',database).replaceAll('$(SeedDate)','2026-10-04'),{database:'master',file:true});"
+    },
+    {
+      "file": "scripts/r2fix/migration-tests.mjs",
+      "line": 29,
+      "kind": "catalogSelector",
+      "source": "SELECT * FROM dbo.SUATCHIEU ORDER BY SuatChieuID;"
+    },
+    {
+      "file": "scripts/r2fix/migration-tests.mjs",
+      "line": 40,
+      "kind": "catalogSelector",
+      "source": "@Show INT=(SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU ORDER BY SuatChieuID),"
+    },
+    {
+      "file": "scripts/r2fix/verify-main-readonly.mjs",
+      "line": 15,
+      "kind": "catalogSelector",
+      "source": "const counts = query('SELECT (SELECT COUNT(*) FROM dbo.BOITHUONG_HUYSUAT) AS CompensationEvents,(SELECT COUNT(*) FROM dbo.DONDATVE) AS Orders,(SELECT COUNT(*) FROM dbo.THANHTOAN) AS Payments,(SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE ThoiGianBatDau>dbo.fn_BayGio()) AS FutureShows', { database });"
+    },
+    {
+      "file": "scripts/r31/main-readonly.mjs",
+      "line": 10,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) shows,SUM(CONVERT(INT,IsBookable)) bookable,SUM(CASE WHEN TrangThaiSuatChieu=N'Mở bán' AND ThoiGianBatDau>dbo.fn_BayGio() AND IsBookable=0 THEN 1 ELSE 0 END) ineligibleFutureOpen"
+    },
+    {
+      "file": "scripts/r31/main-readonly.mjs",
+      "line": 12,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) overlaps FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "scripts/r32/main-readonly.mjs",
+      "line": 10,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) shows,SUM(CONVERT(INT,IsBookable)) bookable,SUM(CASE WHEN TrangThaiSuatChieu=N'Mở bán' AND ThoiGianBatDau>dbo.fn_BayGio() AND IsBookable=0 THEN 1 ELSE 0 END) ineligibleFutureOpen"
+    },
+    {
+      "file": "scripts/r32/main-readonly.mjs",
+      "line": 12,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) overlaps FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "scripts/r33/main-readonly.mjs",
+      "line": 10,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) shows,SUM(CONVERT(INT,IsBookable)) bookable,SUM(CASE WHEN TrangThaiSuatChieu=N'Mở bán' AND ThoiGianBatDau>dbo.fn_BayGio() AND IsBookable=0 THEN 1 ELSE 0 END) ineligibleFutureOpen"
+    },
+    {
+      "file": "scripts/r33/main-readonly.mjs",
+      "line": 12,
+      "kind": "catalogSelector",
+      "source": "SELECT COUNT(*) overlaps FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "scripts/r3a/capture-services.mjs",
+      "line": 20,
+      "kind": "fixedSeedId",
+      "source": "const input={name:'AUDIT',email:'audit@example.invalid',password:'AuditPassword123',roleId:1,code:'AUDIT',permissionIds:[1],cinemaId:1,userId:1,roomId:1,movieId:1,showtimeId:1,seatIds:[1],row:'A',number:1,type:'2D',status:'Hoáº¡t Ä‘á»™ng',format:'2D',basePrice:80000,surcharge:1,startsOn:'2026-10-03',endsOn:null,startsAt:'2026-10-04T17:00:00Z',endsAt:'2026-10-04T18:30:00Z',quantity:1,discountType:'FIXED',discountValue:1000,minimumOrder:0,price:10000,title:'AUDIT',durationMinutes:90,releaseDate:'2026-10-03',endDate:null,genreIds:[1],url:'/favicon.svg',cover:true,displayOrder:1,rating:5,content:'AUDIT',nextStatus:'Äang xá»­ lÃ½',orderId:1,paymentMethod:'MOMO',products:[],promotionCode:'AUDIT',HoTen:'AUDIT',Email:'audit@example.invalid',MatKhau:'AuditPassword123'};"
+    },
+    {
+      "file": "scripts/r3a/capture-services.mjs",
+      "line": 38,
+      "kind": "catalogSelector",
+      "source": "else if(area==='catalog'){args=['listMovies','listCinemas','listShowtimes'].includes(method)?[input]:[1];}"
+    },
+    {
+      "file": "scripts/r3a/inventory.mjs",
+      "line": 23,
+      "kind": "catalogSelector",
+      "source": "const map={users:'ADM-02',roles:'ADM-03',permissions:'ADM-04',assignments:'ADM-06',cinemas:'ADM-07',rooms:'ADM-08',seats:'ADM-08',movies:'ADM-09',actors:'ADM-09',genres:'ADM-10',products:'ADM-11',promotions:'ADM-12',pricing:'ADM-13',showtimes:'ADM-14',complaints:'ADM-15',reports:'ADM-16',dashboard:'ADM-16'};"
+    },
+    {
+      "file": "scripts/r3b/matrix.mjs",
+      "line": 36,
+      "kind": "catalogSelector",
+      "source": "r.catalogNote=r.actor==='PUBLIC'&&/movies|cinemas|showtimes|genres|products/.test(r.route)?'XEM_PHIM: NOT ENFORCED':'';"
+    },
+    {
+      "file": "scripts/r3b/probes.mjs",
+      "line": 131,
+      "kind": "catalogSelector",
+      "source": "for(const route of ['/movies','/movies/1','/genres','/cinemas','/movies/1/showtimes',`/showtimes/${show.id}/seats`,'/products'])await api('public catalog without JWT',route);"
+    },
+    {
+      "file": "scripts/r4/final-evidence.mjs",
+      "line": 40,
+      "kind": "catalogSelector",
+      "source": "const names={users:'Tài khoản',roles:'Vai trò',permissions:'Quyền',assignments:'Phân công',cinemas:'Rạp',rooms:'Phòng',seats:'Ghế',movies:'Phim',genres:'Thể loại',actors:'Diễn viên',products:'Sản phẩm',promotions:'Khuyến mãi',pricing:'Bảng giá',showtimes:'Suất chiếu'};"
+    },
+    {
+      "file": "scripts/r5/integration.mjs",
+      "line": 114,
+      "kind": "catalogSelector",
+      "source": "const view=(await query('SELECT * FROM dbo.vw_ThongKePhim WHERE PhimID=@ID',{ID:mid}))[0];assert.equal(view.SoLuotDanhGia,count);assert.equal(view.DiemDanhGiaTrungBinh,avg);assert.equal(view.TongSoSuatChieu,4);"
+    },
+    {
+      "file": "scripts/r53/checks.mjs",
+      "line": 11,
+      "kind": "seedReader",
+      "source": "const dynamicFile = 'database/10_seed/seed_demo_dynamic/014_reference.sql';"
+    },
+    {
+      "file": "scripts/r53/checks.mjs",
+      "line": 207,
+      "kind": "seedReader",
+      "source": "return { compatibleOldSeedDate: '2026-01-01', rejectedArtificialSeedDates: ['2024-01-01', '2027-01-01'], baseRowsChanged: 0, liveErrorRollback: 'NOT RUN' };"
+    },
+    {
+      "file": "scripts/r53/checks.mjs",
+      "line": 217,
+      "kind": "catalogSelector",
+      "source": "assert.match(source('database/11_tests/procedures/smoke.sql'), /WHERE TrangThai=N'Hoàn thành' ORDER BY SuatChieuID/);"
+    },
+    {
+      "file": "scripts/r6a/audit.mjs",
+      "line": 111,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.DONDATVE d WHERE d.SuatChieuID=s.SuatChieuID) AS bookingCount"
+    },
+    {
+      "file": "scripts/r6a/audit.mjs",
+      "line": 112,
+      "kind": "catalogSelector",
+      "source": "FROM dbo.SUATCHIEU s JOIN dbo.PHIM p ON p.PhimID=s.PhimID ORDER BY s.SuatChieuID`;"
+    },
+    {
+      "file": "scripts/r6a/provenance.mjs",
+      "line": 104,
+      "kind": "seedReader",
+      "source": "assignments: pointer('database/10_seed/seed_base/006_reference.sql'), showtimes: pointer('database/10_seed/seed_demo_dynamic/014_reference.sql'),"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-003.sql",
+      "line": 6,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.SUATCHIEU other WHERE other.PhongID=s.PhongID AND other.SuatChieuID<>s.SuatChieuID"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-003.sql",
+      "line": 8,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.DONDATVE d WHERE d.SuatChieuID=s.SuatChieuID) AS bookingCount,"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-003.sql",
+      "line": 9,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.THANHTOAN t JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE d.SuatChieuID=s.SuatChieuID AND t.TrangThai=N'Thành công') AS successfulPayments"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-003.sql",
+      "line": 12,
+      "kind": "catalogSelector",
+      "source": "ORDER BY s.SuatChieuID;"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-004.sql",
+      "line": 5,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.DONDATVE d WHERE d.SuatChieuID=s.SuatChieuID) AS bookingCount,"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-004.sql",
+      "line": 6,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.THANHTOAN t JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE d.SuatChieuID=s.SuatChieuID AND t.TrangThai=N'Thành công') AS successfulPayments"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-004.sql",
+      "line": 10,
+      "kind": "catalogSelector",
+      "source": "ORDER BY s.SuatChieuID;"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-009.sql",
+      "line": 3,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.DONDATVE d WHERE d.SuatChieuID=s.SuatChieuID) AS bookingCount,"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-009.sql",
+      "line": 4,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.DONDATVE d WHERE d.SuatChieuID=s.SuatChieuID AND d.NgayDat>s.ThoiGianBatDau) AS bookingsCreatedAfterStart,"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-009.sql",
+      "line": 5,
+      "kind": "catalogSelector",
+      "source": "(SELECT COUNT(*) FROM dbo.THANHTOAN t JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID WHERE d.SuatChieuID=s.SuatChieuID AND t.TrangThai=N'Thành công') AS successfulPayments,"
+    },
+    {
+      "file": "scripts/r6a/queries/DATA-009.sql",
+      "line": 7,
+      "kind": "catalogSelector",
+      "source": "FROM dbo.SUATCHIEU s WHERE s.TrangThai=N'Mở bán' AND s.ThoiGianKetThuc<=@AuditNow ORDER BY s.SuatChieuID;"
+    },
+    {
+      "file": "scripts/r6a/report.mjs",
+      "line": 137,
+      "kind": "catalogSelector",
+      "source": "DB hiện tại không có đơn20/26/27/28, user17/21/26/34 hay assignment13/14. Không tái tạo các record này. Không reset counter1/2/3. Giữ nguyên SUATCHIEU2/3/4/5 với trạng thái Mở bán và timestamp hiện tại: availability do giờ bắt đầu + status quyết định."
+    },
+    {
+      "file": "scripts/r6a/report.mjs",
+      "line": 158,
+      "kind": "seedReader",
+      "source": "${finding.id === 'DATA-002' ? 'Đối chiếu riêng mỗi đơn26/27/28: ABSENT; thiếu snapshot/payment/cancel/ledger event gốc → INSUFFICIENT_EVIDENCE, không eligible backfill. Không xác nhận các đơn này đã được bồi thường đúng. Profile5/6/7/8 còn150/80/45/0 điểm và khớp seed; số dư không chứng minh compensation cũ. R2 giữ success payment, không refund, tỷ lệ vé/đồ ăn, FLOOR(net ticket/1000), transaction và UNIQUE(DonDatVeID); source hiện tại khớp DB.\\n\\n' : ''}${finding.id === 'DATA-001' ? 'Evidence cũ tốt nhất: #20 Hết hạn; vé80000, đồ ăn0, giảm120000, tổng−40000; detail sums vé80000/food0. Không có promoID, receipt, nguyên lịch sử payment attempts hoặc giá trị discount đúng. Old payment mismatch scan rỗng chỉ chứng minh không có mismatch trong tập đã quét; không chứng minh chưa từng thu tiền âm. Current main không có bất kỳ payment nào.\\n\\n' : ''}${finding.id === 'DATA-003' ? 'Predicate chính xác dùng end < DATEADD(MINUTE,current movie duration,start), không làm tròn DATEDIFF(MINUTE). Query thu past/current/future, booking/payment và overlap nếu kéo dài cho từng anomaly; tập anomaly rỗng. [Toàn bộ5 suất](evidence/all-showtimes.json) đều PAST, duration đủ, không có booking. Không có current/future candidate.\\n\\n' : ''}${finding.id === 'DATA-004' ? 'Ngày chiếu lấy fn_NgayKinhDoanh(start) UTC+7, không CAST UTC timestamp thành DATE. Suất1 ngày kinh doanh2026-10-01;2–5 ngày2026-10-04; tất cả nằm trong release2026-09-03..end2027-10-03 của phim tương ứng. Available evidence không có revision log cho cửa sổ phim cũ. Validator hiện tại kiểm tra duration/time; không tuyên bố nó đã có rule release/end-date hay mở GAP mới.\\n\\n' : ''}${finding.id === 'DATA-005' ? 'Quét toàn bộ4 profile theo business date2026-10-05. NgaySinh nullable; không có invalid current production record để đề xuất NULL hóa. Không export DOB thường; provenance chỉ lưu boolean khớp seed.\\n\\n' : ''}${finding.id === 'DATA-006' ? 'Quét mọi role KHACH_HANG, không chỉ danh sách orphan cũ. Customer5–8 role/profile khớp seed và R1→R5 lineage; dependency booking/payment/compensation/review/complaint đều0. User34 có manifest fixture; user21 không suy nguồn từ email/prefix. Contract NULL/NULL/0 chỉ là default R5 khi có customer hợp lệ cần backfill; hiện không áp dụng.\\n\\n' : ''}${finding.id === 'DATA-007' ? 'Identity: user+cinema+start+end(NULL= NULL)+status; GROUP BY quét cảactive vàcancelled. Hai assignment seed: ID1 user2/rạp1 vàID2 user3/rạp2; không exact duplicate, không overlap same user/cinema. Nhóm cancelled cũ user3/rạp3 hiện vắng.\\n\\n' : ''}${finding.id === 'DATA-008' ? 'Semantics nguồn: booking hợp lệ trong transaction tăng1, rollback không tiêu lượt; hủy đơn Chờ thanh toán giảm1; expire pending giảm theo số đơn vừa chuyển; hủy suất R2 giảm theo paid orders liên quan sau xử lý expired holds. Payment thành công không là điểm tăng riêng. Counter là lượt đã reserve/commit chưa release theo lifecycle, với initial seed offset, không là COUNT tất cả đơn còn lưu hoặc lifetime payment count. Hold hết giờ nhưng job chưa chuyển có thể vẫn còn trong counter. Seed hiện tại đặt0/0/0. Audit cũ ghi16/20/5 và seed offset5/20; không có event ledger đủ để tái dựng. Không gán COUNT hay reset.\\n\\n' : ''}${finding.id === 'DATA-009' ? 'Seed show2–5 được tạo tương lai theo seed day; đã qua giờ ở audit ngày2026-10-05. Admin/Manager truyền status rõ ràng khi create/update; shared R5 enum chỉ whitelist, không yêu cầu auto lifecycle. Job hiện chỉ expire pending orders. Booking_Create chặn start<=fn_BayGio trước expirePending và phần tạo đơn; kiểm bằng source đã parity, không gọi SP ghi. FE MovieDetail→API public list→ShowtimeBrowser dùng kết quả đã lọc Mở bán ANDstart>now; gọi read-only sp_Showtime_ListByMovie cho phim1/2/4 đều trả0. API/detail hoặc trang quản trị có thể vẫn đọc lịch sử; không suy diễn availability chỉ từ nhãn. ID43/44 cũ vắng.\\n\\n' : ''}Quyết định R6B: ${finding.proposedR6BAction}"
+    },
+    {
+      "file": "scripts/r8/browser-run.mjs",
+      "line": 14,
+      "kind": "catalogSelector",
+      "source": "const past=(await request().query('SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU WHERE PhimID=@Movie AND ThoiGianKetThuc<dbo.fn_BayGio() ORDER BY SuatChieuID DESC')).recordset[0].SuatChieuID;"
+    },
+    {
+      "file": "scripts/r8/browser.mjs",
+      "line": 55,
+      "kind": "catalogSelector",
+      "source": "for(const [uc,label,route]of [['ADM-02','Tài khoản','/api/admin/users'],['ADM-03','Vai trò','/api/admin/roles'],['ADM-04','Quyền','/api/admin/permissions'],['ADM-06','Phân công','/api/admin/assignments'],['ADM-07','Rạp','/api/admin/cinemas'],['ADM-08','Phòng','/api/admin/rooms'],['ADM-08','Ghế','/api/admin/seats'],['ADM-09','Phim','/api/admin/movies'],['ADM-09','Diễn viên','/api/admin/actors'],['ADM-10','Thể loại','/api/admin/genres'],['ADM-11','Sản phẩm','/api/admin/products'],['ADM-12','Khuyến mãi','/api/admin/promotions'],['ADM-13','Bảng giá','/api/admin/pricing'],['ADM-14','Suất chiếu','/api/admin/showtimes'],['ADM-15','Khiếu nại','/api/admin/complaints'],['ADM-16','Doanh thu','/api/admin/reports/revenue']]){const start=requests.length;await click(label,\"document.querySelector('nav[aria-label=\\\"Phân hệ quản trị\\\"]')\");await apiSeen(route,start);await check(uc,'Admin '+label+' actual API section');}"
+    },
+    {
+      "file": "scripts/r8/flows.mjs",
+      "line": 74,
+      "kind": "catalogSelector",
+      "source": "await api('KH-05',`/movies/${ids.movie}/showtimes`,{actor:'public'});await api('KH-06',`/showtimes/${ids.show}/seats`,{actor:'public'});await api('KH-05',`/showtimes/${ids.show}`,{actor:'public'});"
+    },
+    {
+      "file": "scripts/r8/performance.mjs",
+      "line": 13,
+      "kind": "catalogSelector",
+      "source": "const operations=[['Movie list','/movies'],['Movie detail',`/movies/${ids.movie}`],['Showtime list',`/movies/${ids.movie}/showtimes`],['Seat availability',`/showtimes/${ids.show}/seats`],['Manager dashboard',`/manager/cinemas/${ids.cinema}/dashboard`,'manager'],['Manager revenue',`/manager/cinemas/${ids.cinema}/revenue?fromDate=${day}&toDate=${day}`,'manager'],['Complaint queue','/support/complaints','support'],['Complaint order reference',`/support/complaints/${ids.complaint}/order-reference`,'support'],['Admin revenue',`/admin/reports/revenue?fromDate=${day}&toDate=${day}`,'admin']];"
+    },
+    {
+      "file": "scripts/r8/permission-matrix.mjs",
+      "line": 36,
+      "kind": "catalogSelector",
+      "source": "r.catalogNote=r.actor==='PUBLIC'&&/movies|cinemas|showtimes|genres|products/.test(r.route)?'XEM_PHIM: NOT ENFORCED':'';"
+    },
+    {
+      "file": "scripts/uiux/audit.mjs",
+      "line": 44,
+      "kind": "catalogSelector",
+      "source": "const show=(await ask(pool,\"SELECT TOP(1) SuatChieuID AS id,PhimID AS movie,RapID AS cinema FROM dbo.SUATCHIEU s JOIN dbo.PHONGCHIEU p ON p.PhongID=s.PhongID WHERE s.ThoiGianBatDau>dbo.fn_BayGio() AND s.TrangThai=N'Mở bán' ORDER BY s.ThoiGianBatDau DESC\")).recordset[0];assert.ok(show);"
+    },
+    {
+      "file": "scripts/uiux/audit.mjs",
+      "line": 61,
+      "kind": "catalogSelector",
+      "source": "for(const[label,key]of [['Tài khoản','users'],['Vai trò','roles'],['Quyền','permissions'],['Phân công','assignments'],['Rạp','cinemas'],['Ảnh rạp','images'],['Phòng','rooms'],['Ghế','seats'],['Phim','movies'],['Thể loại','genres'],['Diễn viên','actors'],['Sản phẩm','products'],['Khuyến mãi','promotions'],['Bảng giá','pricing'],['Suất chiếu','showtimes'],['Khiếu nại','complaints'],['Doanh thu','revenue']])await capture('admin-'+key,'/admin','admin',async()=>{await wait(\"document.querySelector('nav[aria-label=\\\"Phân hệ quản trị\\\"]')!==null\");await evaluate(`(()=>{const n=[...document.querySelectorAll('nav[aria-label=\"Phân hệ quản trị\"] button')].find(n=>n.textContent===${JSON.stringify(label)});n.click();})()`);await new Promise(r=>setTimeout(r,220));if(key==='images'){await evaluate(\"(()=>{const s=document.querySelector('select[aria-label=\\\"Chọn rạp\\\"]');const set=Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set;set.call(s,s.options[1].value);s.dispatchEvent(new Event('change',{bubbles:true}));})()\");await new Promise(r=>setTimeout(r,180));}});"
+    },
+    {
+      "file": "database/11_tests/booking/bookability.sql",
+      "line": 98,
+      "kind": "catalogSelector",
+      "source": "DECLARE @Orders INT=(SELECT COUNT(*) FROM dbo.DONDATVE WHERE SuatChieuID=@Show),"
+    },
+    {
+      "file": "database/11_tests/booking/bookability.sql",
+      "line": 99,
+      "kind": "catalogSelector",
+      "source": "@Tickets INT=(SELECT COUNT(*) FROM dbo.CHITIETVE v JOIN dbo.DONDATVE d ON d.DonDatVeID=v.DonDatVeID WHERE d.SuatChieuID=@Show),"
+    },
+    {
+      "file": "database/11_tests/booking/bookability.sql",
+      "line": 100,
+      "kind": "catalogSelector",
+      "source": "@Foods INT=(SELECT COUNT(*) FROM dbo.CHITIETDOAN f JOIN dbo.DONDATVE d ON d.DonDatVeID=f.DonDatVeID WHERE d.SuatChieuID=@Show),"
+    },
+    {
+      "file": "database/11_tests/booking/promotion_atomicity.sql",
+      "line": 79,
+      "kind": "catalogSelector",
+      "source": "DECLARE @Count INT=(SELECT COUNT(*) FROM dbo.DONDATVE WHERE SuatChieuID=@Show),@Usage INT=(SELECT SoLuongDaDung FROM dbo.KHUYENMAI WHERE KhuyenMaiID=@Promo),"
+    },
+    {
+      "file": "database/11_tests/booking/promotion_atomicity.sql",
+      "line": 80,
+      "kind": "catalogSelector",
+      "source": "@Tickets INT=(SELECT COUNT(*) FROM dbo.CHITIETVE WHERE DonDatVeID IN(SELECT DonDatVeID FROM dbo.DONDATVE WHERE SuatChieuID=@Show)),"
+    },
+    {
+      "file": "database/11_tests/booking/promotion_atomicity.sql",
+      "line": 81,
+      "kind": "catalogSelector",
+      "source": "@Foods INT=(SELECT COUNT(*) FROM dbo.CHITIETDOAN WHERE DonDatVeID IN(SELECT DonDatVeID FROM dbo.DONDATVE WHERE SuatChieuID=@Show)),"
+    },
+    {
+      "file": "database/11_tests/booking/promotion_atomicity.sql",
+      "line": 82,
+      "kind": "catalogSelector",
+      "source": "@Discount DECIMAL(18,2)=(SELECT TienGiamGia FROM dbo.DONDATVE WHERE SuatChieuID=@Show),"
+    },
+    {
+      "file": "database/11_tests/concurrency/showtime-overlap.mjs",
+      "line": 33,
+      "kind": "catalogSelector",
+      "source": "return (await observer.request().query(`SELECT COUNT(*) count FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "database/11_tests/concurrency/showtime-overlap.mjs",
+      "line": 131,
+      "kind": "catalogSelector",
+      "source": "const global=(await observer.request().query(`SELECT COUNT(*) count FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "database/11_tests/procedures/smoke.sql",
+      "line": 11,
+      "kind": "catalogSelector",
+      "source": "SELECT TOP(1) @Show=s.SuatChieuID,@Movie=s.PhimID,@Room=s.PhongID,@Cinema=p.RapID"
+    },
+    {
+      "file": "database/11_tests/procedures/smoke.sql",
+      "line": 13,
+      "kind": "catalogSelector",
+      "source": "WHERE s.TrangThai=N'Mở bán' AND s.ThoiGianBatDau>dbo.fn_BayGio() ORDER BY s.SuatChieuID;"
+    },
+    {
+      "file": "database/11_tests/procedures/smoke.sql",
+      "line": 54,
+      "kind": "catalogSelector",
+      "source": "DECLARE @PastShow int=(SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU WHERE TrangThai=N'Hoàn thành' ORDER BY SuatChieuID);"
+    },
+    {
+      "file": "database/11_tests/rooms/delete_atomicity.sql",
+      "line": 80,
+      "kind": "catalogSelector",
+      "source": "JSON_QUERY((SELECT * FROM dbo.SUATCHIEU WHERE PhongID=@Room ORDER BY SuatChieuID FOR JSON PATH)) shows,"
+    },
+    {
+      "file": "database/11_tests/rooms/delete_atomicity.sql",
+      "line": 99,
+      "kind": "catalogSelector",
+      "source": "JSON_QUERY((SELECT * FROM dbo.SUATCHIEU WHERE PhongID=@Room ORDER BY SuatChieuID FOR JSON PATH)) shows,"
+    },
+    {
+      "file": "database/11_tests/showtimes/overlap_safety.sql",
+      "line": 59,
+      "kind": "catalogSelector",
+      "source": "JSON_QUERY((SELECT * FROM dbo.SUATCHIEU WHERE PhongID IN (@Room,@OtherRoom) ORDER BY SuatChieuID FOR JSON PATH)) shows,"
+    },
+    {
+      "file": "database/11_tests/showtimes/overlap_safety.sql",
+      "line": 113,
+      "kind": "catalogSelector",
+      "source": "JSON_QUERY((SELECT * FROM dbo.SUATCHIEU WHERE PhongID IN (@Room,@OtherRoom) ORDER BY SuatChieuID FOR JSON PATH)) shows,"
+    },
+    {
+      "file": "database/11_tests/showtimes/overlap_safety.sql",
+      "line": 115,
+      "kind": "catalogSelector",
+      "source": "SELECT @Count=COUNT(*) FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON a.PhongID=b.PhongID AND a.SuatChieuID<b.SuatChieuID"
+    },
+    {
+      "file": "database/11_tests/triggers/multirow.sql",
+      "line": 7,
+      "kind": "catalogSelector",
+      "source": "DECLARE @Show int=(SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU WHERE TrangThai=N'Mở bán' ORDER BY SuatChieuID);"
+    },
+    {
+      "file": "backend/tests/adminService.test.js",
+      "line": 242,
+      "kind": "fixedSeedId",
+      "source": "const result = { recordsets: [[{ SuatChieuID: 5 }]] };"
+    },
+    {
+      "file": "backend/tests/app.test.js",
+      "line": 51,
+      "kind": "catalogSelector",
+      "source": "const invalidDate = await fetch(`http://127.0.0.1:${port}/api/movies/1/showtimes?date=2026-02-30`);"
+    },
+    {
+      "file": "backend/tests/app.test.js",
+      "line": 64,
+      "kind": "fixedSeedId",
+      "source": "method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ showtimeId: 1, seatIds: [1] }),"
+    },
+    {
+      "file": "backend/tests/r5-contract.test.js",
+      "line": 27,
+      "kind": "catalogSelector",
+      "source": "const tables={users:'nguoidung',assignments:'phancong_rap',cinemas:'rapchieuphim',rooms:'phongchieu',seats:'ghe',movies:'phim',products:'sanpham',promotions:'khuyenmai',pricing:'banggia',showtimes:'suatchieu',cinemaImages:'hinhanh_rapchieuphim'};"
+    },
+    {
+      "file": "frontend/tests/r2-browser-fixtures.jsx",
+      "line": 20,
+      "kind": "fixedSeedId",
+      "source": "const order = { id: 1, showtimeId: 1, movieTitle: 'R2 film', cinemaName: 'R2 cinema', total: 150000, status: 'Chờ thanh toán', holdExpiresAt: new Date(Date.now() + 1500).toISOString(), payments: [] };"
+    },
+    {
+      "file": "frontend/tests/r2-browser-fixtures.jsx",
+      "line": 33,
+      "kind": "fixedSeedId",
+      "source": "else if (route === '/api/admin/showtimes') payload = { showtimes: [{ SuatChieuID: 1, TenPhim: 'R2 film', TrangThai: 'Mở bán' }] };"
+    },
+    {
+      "file": "frontend/tests/r3b-browser-fixtures.jsx",
+      "line": 18,
+      "kind": "fixedSeedId",
+      "source": "const order={id:1,showtimeId:1,status:'Chờ thanh toán',holdExpiresAt:new Date(Date.now()+60000).toISOString(),movieTitle:'R3B film',cinemaName:'Fixture',total:120000,payments:[]};"
+    },
+    {
+      "file": "frontend/tests/r4-browser-fixtures.jsx",
+      "line": 17,
+      "kind": "catalogSelector",
+      "source": "const labels={users:'Tài khoản',roles:'Vai trò',permissions:'Quyền',assignments:'Phân công',cinemas:'Rạp',rooms:'Phòng',seats:'Ghế',movies:'Phim',genres:'Thể loại',actors:'Diễn viên',products:'Sản phẩm',promotions:'Khuyến mãi',pricing:'Bảng giá',showtimes:'Suất chiếu'};"
+    }
+  ],
+  "decisions": [
+    {
+      "source": "database/11_tests/procedures/smoke.sql; scripts/r1/sql-fixtures.mjs; scripts/db/backend-smoke.mjs",
+      "decision": "Keep first completed ID 1 and first open ID 2, parents and slots; selectors still have qualifying rows at fresh seed time."
+    },
+    {
+      "source": "database/11_tests/pricing, showtimes, booking; scripts/r21/r47 fixture helpers",
+      "decision": "Private resources and captured SCOPE_IDENTITY values; no count-five or next-ID-six baseline requirement found."
+    },
+    {
+      "source": "scripts/r2fix/migration-tests.mjs",
+      "decision": "Fixed 2026-10-04 remains a historical replay input. Source seed now uses DB time and rejects incompatible movie dates; schedule dates are not an invariant of the migration replay."
+    },
+    {
+      "source": "scripts/r51/checks.mjs; scripts/r52/checks.mjs",
+      "decision": "Whole-source SHA parity is a closed-phase historical assertion. Preserve checks and evidence; use R5.3 snapshot parity excluding the authorized dynamic body, not overwrite historical PASS."
+    },
+    {
+      "source": "scripts/r6a/queries/DATA-003.sql; DATA-004.sql; DATA-009.sql",
+      "decision": "Historical dev-data anomaly queries are evidence readers, not a specification for fresh-seed IDs 6-32. Fresh IDs must not be mistaken for the original audited records."
+    },
+    {
+      "source": "scripts/db/generate-seed.mjs; pinned replay tools",
+      "decision": "Historical extraction/replay; not the active seed runner. Do not run the generator or rewrite historical datasets."
+    }
+  ]
+}
