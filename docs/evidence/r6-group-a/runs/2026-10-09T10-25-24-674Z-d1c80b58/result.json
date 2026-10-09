@@ -1,0 +1,169 @@
+{
+  "runID": "2026-10-09T10-25-24-674Z-d1c80b58",
+  "database": "CinemaBookingDB_R0_R6A_20261009_01",
+  "phase": "R6.1",
+  "repetitions": 3,
+  "startedAt": "2026-10-09T10:25:24.675Z",
+  "status": "FAIL",
+  "cases": [
+    {
+      "testID": "R6.1-01",
+      "scenario": "Normal booking",
+      "expected": "Movie → showtime → seat → food → promo → booking → detail; SQL snapshots/amounts match",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-02",
+      "scenario": "No food",
+      "expected": "201; zero food rows and productTotal=0",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-03",
+      "scenario": "With food",
+      "expected": "201; two products retain quantity and DB unit-price snapshots",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-04",
+      "scenario": "With promotion",
+      "expected": "SQL preview matches final discount and quota increases once",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-05",
+      "scenario": "Without promotion",
+      "expected": "NULL promo, zero discount, every counter unchanged",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-06",
+      "scenario": "Wrong seat room",
+      "expected": "409 SEAT_UNAVAILABLE; no persisted mutation",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-07",
+      "scenario": "Inactive seat",
+      "expected": "Maintenance and broken seats rejected; no persisted mutation",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-08",
+      "scenario": "Same seat duplicate",
+      "expected": "Paid seat rejects second booking; duplicate input rejected separately; no partial commit",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-09",
+      "scenario": "Held seat",
+      "expected": "Live held seat unavailable to another customer; persisted state unchanged",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-10",
+      "scenario": "Expired hold",
+      "expected": "Effective expiry reads without writes; same-seat reuse persists expiry and releases promo exactly once",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-11",
+      "scenario": "Max seats",
+      "expected": "10 accepted; 11 rejected by HTTP and SQL50026; no mutation on reject",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-12",
+      "scenario": "Max food quantity",
+      "expected": "10 each for distinct products accepted; 11 and split 6+5 rejected by SQL; no mutation",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-13",
+      "scenario": "Inactive parent",
+      "expected": "Cinema, room and movie eligibility each reject 409 SHOWTIME_UNAVAILABLE without writes",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    },
+    {
+      "testID": "R6.1-14",
+      "scenario": "Past showtime",
+      "expected": "R5 past show rejected 409 SHOWTIME_UNAVAILABLE without writes",
+      "status": "BLOCKED",
+      "actual": "Suite could not reach scenario: Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n",
+      "fix": "None",
+      "requests": [],
+      "checks": [],
+      "rounds": []
+    }
+  ],
+  "requests": [],
+  "error": {
+    "message": "Refuse nonempty transaction target: DONDATVE\n\n'0' !== 0\n"
+  },
+  "completedAt": "2026-10-09T10:25:27.043Z"
+}
