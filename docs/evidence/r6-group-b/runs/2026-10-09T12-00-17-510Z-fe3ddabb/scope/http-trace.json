@@ -1,0 +1,1145 @@
+[
+  {
+    "sequence": 0,
+    "url": "http://127.0.0.1:61281/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:00:58.155Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 2,
+        "name": "Nguyễn Văn Quản Lý 1",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "QUAN_LY_RAP",
+        "roleName": "Quản lý rạp",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          }
+        ],
+        "cinemaAssignments": [
+          {
+            "cinemaId": 1,
+            "name": "Cinema Star Hai Bà Trưng",
+            "city": "Hồ Chí Minh",
+            "assignmentStatus": "Hiệu lực"
+          },
+          {
+            "cinemaId": 420,
+            "name": "R21 API",
+            "city": "HCM",
+            "assignmentStatus": "Hiệu lực"
+          }
+        ]
+      }
+    },
+    "completedAt": "2026-10-09T12:00:58.513Z"
+  },
+  {
+    "sequence": 1,
+    "url": "http://127.0.0.1:61281/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:00:58.514Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:00:58.583Z"
+  },
+  {
+    "sequence": 2,
+    "url": "http://127.0.0.1:61281/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:00:58.583Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 5,
+        "name": "Đoàn Anh Tuấn",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 150,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:00:58.648Z"
+  },
+  {
+    "sequence": 3,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:58.738Z",
+    "status": 200,
+    "response": {
+      "cinemas": [
+        {
+          "assignmentId": 1,
+          "id": 1,
+          "name": "Cinema Star Hai Bà Trưng",
+          "address": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+          "city": "Hồ Chí Minh",
+          "phone": "[REDACTED]",
+          "startsOn": "2026-09-09",
+          "endsOn": "2028-10-09",
+          "assignmentStatus": "Hiệu lực"
+        },
+        {
+          "assignmentId": 418,
+          "id": 420,
+          "name": "R21 API",
+          "address": "Fixture",
+          "city": "HCM",
+          "phone": "[REDACTED]",
+          "startsOn": "2026-10-08",
+          "endsOn": null,
+          "assignmentStatus": "Hiệu lực"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:00:58.746Z"
+  },
+  {
+    "sequence": 4,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/420/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:58.747Z",
+    "status": 200,
+    "response": {
+      "rooms": [
+        {
+          "id": 424,
+          "cinemaId": 420,
+          "cinemaName": "R21 API",
+          "name": "R21 API",
+          "type": "2D",
+          "status": "Hoạt động",
+          "seatCount": 4
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:00:58.765Z"
+  },
+  {
+    "sequence": 5,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/421/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:58.971Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:00:58.978Z"
+  },
+  {
+    "sequence": 6,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/421/showtimes",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:59.134Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:00:59.140Z"
+  },
+  {
+    "sequence": 7,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/421/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:59.292Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:00:59.303Z"
+  },
+  {
+    "sequence": 8,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:59.474Z",
+    "status": 200,
+    "response": {
+      "cinemas": [
+        {
+          "assignmentId": 1,
+          "id": 1,
+          "name": "Cinema Star Hai Bà Trưng",
+          "address": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+          "city": "Hồ Chí Minh",
+          "phone": "[REDACTED]",
+          "startsOn": "2026-09-09",
+          "endsOn": "2028-10-09",
+          "assignmentStatus": "Hiệu lực"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:00:59.479Z"
+  },
+  {
+    "sequence": 9,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/420/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:59.646Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:00:59.653Z"
+  },
+  {
+    "sequence": 10,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424",
+    "method": "PUT",
+    "input": {
+      "name": "R6B scope updated",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:00:59.810Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:00:59.825Z"
+  },
+  {
+    "sequence": 11,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424/seats",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:00:59.979Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:00:59.985Z"
+  },
+  {
+    "sequence": 12,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1903",
+    "method": "PUT",
+    "input": {
+      "type": "Thường",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:00.175Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:00.181Z"
+  },
+  {
+    "sequence": 13,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 835,
+      "roomId": 424,
+      "startsAt": "2026-10-19T18:00:58.124Z",
+      "endsAt": "2026-10-19T19:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:01:00.351Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:00.366Z"
+  },
+  {
+    "sequence": 14,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/450",
+    "method": "PUT",
+    "input": {
+      "movieId": 835,
+      "startsAt": "2026-10-19T12:00:58.124Z",
+      "endsAt": "2026-10-19T13:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:01:00.519Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:00.527Z"
+  },
+  {
+    "sequence": 15,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/450/cancel",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:01:00.680Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:00.690Z"
+  },
+  {
+    "sequence": 16,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:01:00.868Z",
+    "status": 200,
+    "response": {
+      "cinemas": [
+        {
+          "assignmentId": 1,
+          "id": 1,
+          "name": "Cinema Star Hai Bà Trưng",
+          "address": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+          "city": "Hồ Chí Minh",
+          "phone": "[REDACTED]",
+          "startsOn": "2026-09-09",
+          "endsOn": "2028-10-09",
+          "assignmentStatus": "Hiệu lực"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:01:00.873Z"
+  },
+  {
+    "sequence": 17,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/420/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:01:01.027Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.032Z"
+  },
+  {
+    "sequence": 18,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424",
+    "method": "PUT",
+    "input": {
+      "name": "R6B scope updated",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:01.191Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.197Z"
+  },
+  {
+    "sequence": 19,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424/seats",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:01:01.360Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.366Z"
+  },
+  {
+    "sequence": 20,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1903",
+    "method": "PUT",
+    "input": {
+      "type": "Thường",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:01.517Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.523Z"
+  },
+  {
+    "sequence": 21,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 835,
+      "roomId": 424,
+      "startsAt": "2026-10-19T18:00:58.124Z",
+      "endsAt": "2026-10-19T19:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:01:01.669Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.676Z"
+  },
+  {
+    "sequence": 22,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/450",
+    "method": "PUT",
+    "input": {
+      "movieId": 835,
+      "startsAt": "2026-10-19T12:00:58.124Z",
+      "endsAt": "2026-10-19T13:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:01:01.830Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.837Z"
+  },
+  {
+    "sequence": 23,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/450/cancel",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:01:01.992Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:01.999Z"
+  },
+  {
+    "sequence": 24,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/420/rooms",
+    "method": "POST",
+    "input": {
+      "name": "R6B assigned new room",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:01:02.109Z",
+    "status": 201,
+    "response": {
+      "room": {
+        "id": 426,
+        "cinemaId": 420,
+        "name": "R6B assigned new room",
+        "type": "2D",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.123Z"
+  },
+  {
+    "sequence": 25,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/426",
+    "method": "PUT",
+    "input": {
+      "name": "R6B scope updated",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:02.124Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "id": 426,
+        "cinemaId": 420,
+        "name": "R6B scope updated",
+        "type": "2D",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.131Z"
+  },
+  {
+    "sequence": 26,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/426",
+    "method": "PUT",
+    "input": {
+      "name": "R6B scope updated",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:02.207Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_REQUIRED",
+        "message": "Manager access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.210Z"
+  },
+  {
+    "sequence": 27,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424",
+    "method": "PUT",
+    "input": {
+      "name": "R6B scope updated",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:02.375Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.380Z"
+  },
+  {
+    "sequence": 28,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1903",
+    "method": "PUT",
+    "input": {
+      "type": "Thường",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:02.529Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.533Z"
+  },
+  {
+    "sequence": 29,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/450",
+    "method": "PUT",
+    "input": {
+      "movieId": 835,
+      "startsAt": "2026-10-19T12:00:58.124Z",
+      "endsAt": "2026-10-19T13:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:01:02.697Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.702Z"
+  },
+  {
+    "sequence": 30,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/425/seats?RapID=420",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:01:02.864Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:02.869Z"
+  },
+  {
+    "sequence": 31,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/425?RapID=420",
+    "method": "PUT",
+    "input": {
+      "name": "R6B scope updated",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:01:03.024Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.029Z"
+  },
+  {
+    "sequence": 32,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/425?RapID=420",
+    "method": "DELETE",
+    "input": {
+      "RapID": 420,
+      "NguoiDungID": 1
+    },
+    "startedAt": "2026-10-09T12:01:03.182Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.198Z"
+  },
+  {
+    "sequence": 33,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/425/seats?RapID=420",
+    "method": "POST",
+    "input": {
+      "row": "B",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:01:03.352Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.368Z"
+  },
+  {
+    "sequence": 34,
+    "url": "http://127.0.0.1:61281/api/manager/cinemas/421/rooms?RapID=420",
+    "method": "POST",
+    "input": {
+      "name": "Forbidden room",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:01:03.523Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.529Z"
+  },
+  {
+    "sequence": 35,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424/seats",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:01:03.685Z",
+    "status": 200,
+    "response": {
+      "seats": [
+        {
+          "id": 1903,
+          "roomId": 424,
+          "row": "A",
+          "number": 1,
+          "label": "A1",
+          "type": "VIP",
+          "status": "Hoạt động"
+        },
+        {
+          "id": 1904,
+          "roomId": 424,
+          "row": "A",
+          "number": 2,
+          "label": "A2",
+          "type": "VIP",
+          "status": "Hoạt động"
+        },
+        {
+          "id": 1905,
+          "roomId": 424,
+          "row": "A",
+          "number": 3,
+          "label": "A3",
+          "type": "Thường",
+          "status": "Hoạt động"
+        },
+        {
+          "id": 1906,
+          "roomId": 424,
+          "row": "A",
+          "number": 4,
+          "label": "A4",
+          "type": "Thường",
+          "status": "Hoạt động"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:01:03.692Z"
+  },
+  {
+    "sequence": 36,
+    "url": "http://127.0.0.1:61281/api/manager/rooms/424/seats",
+    "method": "POST",
+    "input": {
+      "row": "B",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:01:03.770Z",
+    "status": 201,
+    "response": {
+      "seat": {
+        "id": 1908,
+        "roomId": 424,
+        "row": "B",
+        "number": 1,
+        "type": "Thường",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.777Z"
+  },
+  {
+    "sequence": 37,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1908",
+    "method": "PUT",
+    "input": {
+      "type": "VIP",
+      "status": "Bảo trì"
+    },
+    "startedAt": "2026-10-09T12:01:03.777Z",
+    "status": 200,
+    "response": {
+      "seat": {
+        "id": 1908,
+        "roomId": 424,
+        "row": "B",
+        "number": 1,
+        "type": "VIP",
+        "status": "Bảo trì"
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.783Z"
+  },
+  {
+    "sequence": 38,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1907?RapID=420",
+    "method": "PUT",
+    "input": {
+      "type": "VIP",
+      "status": "Bảo trì"
+    },
+    "startedAt": "2026-10-09T12:01:03.861Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:03.865Z"
+  },
+  {
+    "sequence": 39,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1907?RapID=420",
+    "method": "DELETE",
+    "input": {
+      "RapID": 420
+    },
+    "startedAt": "2026-10-09T12:01:04.012Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:04.025Z"
+  },
+  {
+    "sequence": 40,
+    "url": "http://127.0.0.1:61281/api/manager/seats/1908",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:01:04.102Z",
+    "status": 200,
+    "response": {
+      "deleted": true
+    },
+    "completedAt": "2026-10-09T12:01:04.108Z"
+  },
+  {
+    "sequence": 41,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 835,
+      "roomId": 424,
+      "startsAt": "2026-10-19T18:00:58.124Z",
+      "endsAt": "2026-10-19T19:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:01:04.117Z",
+    "status": 201,
+    "response": {
+      "showtime": {
+        "id": 452,
+        "movieId": 835,
+        "movieTitle": "R21 API",
+        "roomId": 424,
+        "roomName": "R21 API",
+        "cinemaId": 420,
+        "cinemaName": "R21 API",
+        "startsAt": "2026-10-19T18:00:58.124Z",
+        "endsAt": "2026-10-19T19:30:58.124Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Mở bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:01:04.144Z"
+  },
+  {
+    "sequence": 42,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/452",
+    "method": "PUT",
+    "input": {
+      "movieId": 835,
+      "startsAt": "2026-10-19T21:00:58.124Z",
+      "endsAt": "2026-10-19T22:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Đóng bán"
+    },
+    "startedAt": "2026-10-09T12:01:04.145Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "id": 452,
+        "movieId": 835,
+        "movieTitle": "R21 API",
+        "roomId": 424,
+        "roomName": "R21 API",
+        "cinemaId": 420,
+        "cinemaName": "R21 API",
+        "startsAt": "2026-10-19T21:00:58.124Z",
+        "endsAt": "2026-10-19T22:30:58.124Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Đóng bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:01:04.150Z"
+  },
+  {
+    "sequence": 43,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes?RapID=420",
+    "method": "POST",
+    "input": {
+      "movieId": 835,
+      "roomId": 425,
+      "startsAt": "2026-10-19T18:00:58.124Z",
+      "endsAt": "2026-10-19T19:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:01:04.226Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:04.231Z"
+  },
+  {
+    "sequence": 44,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/451?RapID=420",
+    "method": "PUT",
+    "input": {
+      "movieId": 835,
+      "startsAt": "2026-10-19T12:00:58.124Z",
+      "endsAt": "2026-10-19T13:30:58.124Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:01:04.384Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:04.389Z"
+  },
+  {
+    "sequence": 45,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/451/cancel?RapID=420",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:01:04.540Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:01:04.545Z"
+  },
+  {
+    "sequence": 46,
+    "url": "http://127.0.0.1:61281/api/manager/showtimes/452/cancel",
+    "method": "POST",
+    "input": {
+      "reason": "R6B scope control"
+    },
+    "startedAt": "2026-10-09T12:01:04.621Z",
+    "status": 200,
+    "response": {
+      "cancelled": true
+    },
+    "completedAt": "2026-10-09T12:01:04.641Z"
+  }
+]

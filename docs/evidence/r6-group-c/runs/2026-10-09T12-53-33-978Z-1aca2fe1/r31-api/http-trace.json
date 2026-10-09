@@ -1,0 +1,3738 @@
+[
+  {
+    "sequence": 0,
+    "url": "http://127.0.0.1:54155/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:54:51.086Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:54:51.470Z"
+  },
+  {
+    "sequence": 1,
+    "url": "http://127.0.0.1:54155/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:54:51.470Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 5,
+        "name": "Đoàn Anh Tuấn",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 150,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:54:51.541Z"
+  },
+  {
+    "sequence": 2,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:51.542Z",
+    "status": 200,
+    "response": {
+      "actors": [
+        {
+          "PhimID": 26,
+          "DienVienID": 34,
+          "HoTen": "R31 actor4",
+          "VaiDien": "new3"
+        },
+        {
+          "PhimID": 26,
+          "DienVienID": 35,
+          "HoTen": "R31 actor5",
+          "VaiDien": "new4"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:51.559Z"
+  },
+  {
+    "sequence": 3,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:51.567Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:51.571Z"
+  },
+  {
+    "sequence": 4,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:51.572Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:51.599Z"
+  },
+  {
+    "sequence": 5,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        },
+        {
+          "actorId": 2147483647,
+          "role": "bad"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:51.724Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "ACTOR_NOT_FOUND",
+        "message": "Actor was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:51.731Z"
+  },
+  {
+    "sequence": 6,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:51.844Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:51.847Z"
+  },
+  {
+    "sequence": 7,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:51.847Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:51.852Z"
+  },
+  {
+    "sequence": 8,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 2147483647,
+          "role": "bad"
+        },
+        {
+          "actorId": 2147483646,
+          "role": "bad"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:51.958Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "ACTOR_NOT_FOUND",
+        "message": "Actor was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:51.963Z"
+  },
+  {
+    "sequence": 9,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.067Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:52.069Z"
+  },
+  {
+    "sequence": 10,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.070Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:52.074Z"
+  },
+  {
+    "sequence": 11,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 34,
+          "role": "different"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:52.178Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "MOVIE_CAST_INVALID",
+        "message": "The cast list must be valid."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:52.183Z"
+  },
+  {
+    "sequence": 12,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.280Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:52.282Z"
+  },
+  {
+    "sequence": 13,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.282Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:52.286Z"
+  },
+  {
+    "sequence": 14,
+    "url": "http://127.0.0.1:54155/api/admin/movies/2147483647/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:52.395Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "MOVIE_NOT_FOUND",
+        "message": "Movie was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:52.398Z"
+  },
+  {
+    "sequence": 15,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.500Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:52.501Z"
+  },
+  {
+    "sequence": 16,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.502Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:52.506Z"
+  },
+  {
+    "sequence": 17,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": null
+    },
+    "startedAt": "2026-10-09T12:54:52.605Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:52.608Z"
+  },
+  {
+    "sequence": 18,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.711Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:52.713Z"
+  },
+  {
+    "sequence": 19,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.714Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:52.718Z"
+  },
+  {
+    "sequence": 20,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:52.822Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:52.825Z"
+  },
+  {
+    "sequence": 21,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.921Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:52.923Z"
+  },
+  {
+    "sequence": 22,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:52.923Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:52.928Z"
+  },
+  {
+    "sequence": 23,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": {}
+    },
+    "startedAt": "2026-10-09T12:54:53.027Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is invalid."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:53.030Z"
+  },
+  {
+    "sequence": 24,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.126Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:53.128Z"
+  },
+  {
+    "sequence": 25,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.129Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:53.133Z"
+  },
+  {
+    "sequence": 26,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "role": "bad"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:53.233Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "actorId must be an integer from 1 to 2147483647."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:53.235Z"
+  },
+  {
+    "sequence": 27,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.343Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:53.345Z"
+  },
+  {
+    "sequence": 28,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.346Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:53.354Z"
+  },
+  {
+    "sequence": 29,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": "34",
+          "role": "bad"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:53.452Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "actorId must be an integer from 1 to 2147483647."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:53.454Z"
+  },
+  {
+    "sequence": 30,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.550Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:53.552Z"
+  },
+  {
+    "sequence": 31,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.553Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:53.557Z"
+  },
+  {
+    "sequence": 32,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:53.658Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is invalid."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:53.660Z"
+  },
+  {
+    "sequence": 33,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.770Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:53.772Z"
+  },
+  {
+    "sequence": 34,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.773Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:53.777Z"
+  },
+  {
+    "sequence": 35,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": null
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:53.873Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cast is invalid."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:53.876Z"
+  },
+  {
+    "sequence": 36,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.970Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:53.973Z"
+  },
+  {
+    "sequence": 37,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:53.974Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:53.977Z"
+  },
+  {
+    "sequence": 38,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        }
+      ],
+      "ActorID": 1
+    },
+    "startedAt": "2026-10-09T12:54:54.080Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:54.083Z"
+  },
+  {
+    "sequence": 39,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.180Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.182Z"
+  },
+  {
+    "sequence": 40,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.183Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.187Z"
+  },
+  {
+    "sequence": 41,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:54.283Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:54.285Z"
+  },
+  {
+    "sequence": 42,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.383Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.384Z"
+  },
+  {
+    "sequence": 43,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.385Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.389Z"
+  },
+  {
+    "sequence": 44,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:54.483Z",
+    "status": 401,
+    "response": {
+      "error": {
+        "code": "UNAUTHENTICATED",
+        "message": "Authentication required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:54.484Z"
+  },
+  {
+    "sequence": 45,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.579Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.581Z"
+  },
+  {
+    "sequence": 46,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.582Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.586Z"
+  },
+  {
+    "sequence": 47,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "malformedJson": "{\"cast\":["
+    },
+    "startedAt": "2026-10-09T12:54:54.589Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INTERNAL_ERROR",
+        "message": "Unexpected end of JSON input"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:54.590Z"
+  },
+  {
+    "sequence": 48,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.592Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.594Z"
+  },
+  {
+    "sequence": 49,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.595Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.599Z"
+  },
+  {
+    "sequence": 50,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 34,
+          "role": "new3"
+        },
+        {
+          "actorId": 35,
+          "role": "new4"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:54.604Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:54.606Z"
+  },
+  {
+    "sequence": 51,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.616Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.618Z"
+  },
+  {
+    "sequence": 52,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.619Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.623Z"
+  },
+  {
+    "sequence": 53,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 36,
+          "role": "Injected"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:54.629Z",
+    "status": 500,
+    "response": {
+      "error": {
+        "code": "EREQUEST",
+        "message": "Internal server error"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:54.643Z"
+  },
+  {
+    "sequence": 54,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.647Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [
+        {
+          "id": 34,
+          "name": "R31 actor4",
+          "nationality": null,
+          "role": "new3"
+        },
+        {
+          "id": 35,
+          "name": "R31 actor5",
+          "nationality": null,
+          "role": "new4"
+        }
+      ],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.651Z"
+  },
+  {
+    "sequence": 55,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.653Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": "[{\"actorId\":34,\"role\":\"new3\"},{\"actorId\":35,\"role\":\"new4\"}]"
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.671Z"
+  },
+  {
+    "sequence": 56,
+    "url": "http://127.0.0.1:54155/api/admin/movies/26/actors",
+    "method": "PUT",
+    "input": {
+      "cast": []
+    },
+    "startedAt": "2026-10-09T12:54:54.673Z",
+    "status": 200,
+    "response": {
+      "actors": []
+    },
+    "completedAt": "2026-10-09T12:54:54.682Z"
+  },
+  {
+    "sequence": 57,
+    "url": "http://127.0.0.1:54155/api/movies/26",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.685Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "id": 26,
+        "title": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+        "durationMinutes": 90,
+        "releaseDate": "2020-01-01",
+        "endDate": null,
+        "language": null,
+        "subtitle": null,
+        "ageRating": null,
+        "director": null,
+        "description": null,
+        "posterUrl": null,
+        "trailerUrl": null,
+        "status": "Đang chiếu",
+        "averageRating": 0,
+        "reviewCount": 0,
+        "genres": []
+      },
+      "genres": [
+        {
+          "id": 1,
+          "name": "Hành động"
+        }
+      ],
+      "actors": [],
+      "reviews": []
+    },
+    "completedAt": "2026-10-09T12:54:54.686Z"
+  },
+  {
+    "sequence": 58,
+    "url": "http://127.0.0.1:54155/api/admin/movies",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:54.687Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 1,
+          "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+          "ThoiLuong": 166,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T16",
+          "DaoDien": "Denis Villeneuve",
+          "MoTa": "Paul Atreides hợp lực cùng Chani và tộc người Fremen để trả thù những kẻ đã hủy diệt gia đình anh.",
+          "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=Way9Dexny3w",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,2",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 2,
+          "TenPhim": "Mai",
+          "ThoiLuong": 131,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Việt",
+          "PhuDe": "Phụ đề Tiếng Anh",
+          "DoTuoi": "T18",
+          "DaoDien": "Trấn Thành",
+          "MoTa": "Mai là một người phụ nữ làm nghề massage trị liệu với nhiều vết thương tâm hồn, tìm kiếm hạnh phúc bên chàng trai Dương.",
+          "PosterURL": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleMai",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "6,7",
+          "DanhSachDienVienJson": "[{\"actorId\":4,\"role\":\"Ông Hoàng\"},{\"actorId\":5,\"role\":\"Mai\"},{\"actorId\":6,\"role\":\"Dương\"}]"
+        },
+        {
+          "PhimID": 3,
+          "TenPhim": "Oppenheimer",
+          "ThoiLuong": 180,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Anh",
+          "PhuDe": "Phụ đề Tiếng Việt",
+          "DoTuoi": "T18",
+          "DaoDien": "Christopher Nolan",
+          "MoTa": "Câu chuyện về nhà vật lý lý thuyết J. Robert Oppenheimer, cha đẻ của bom nguyên tử trong Thế chiến II.",
+          "PosterURL": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=uYPbbksJxIg",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "7",
+          "DanhSachDienVienJson": "[{\"actorId\":2,\"role\":\"J. Robert Oppenheimer\"}]"
+        },
+        {
+          "PhimID": 4,
+          "TenPhim": "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+          "ThoiLuong": 110,
+          "NgayKhoiChieu": "2026-09-09",
+          "NgayKetThuc": "2027-10-09",
+          "NgonNgu": "Tiếng Nhật",
+          "PhuDe": "Phụ đề Tiếng Việt & Lồng tiếng",
+          "DoTuoi": "P",
+          "DaoDien": "Nagaoka Chika",
+          "MoTa": "Cuộc đối đầu kịch tính tại Hakodate giữa Conan, Siêu đạo chích Kid và kiếm thủ Hattori Heiji.",
+          "PosterURL": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800",
+          "TrailerURL": "https://youtube.com/watch?v=exampleConan",
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1,5",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 26,
+          "TenPhim": "R31 target 8B44C07C-0E53-4AE9-AD7C-848685BB5D36",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "1",
+          "DanhSachDienVienJson": null
+        },
+        {
+          "PhimID": 27,
+          "TenPhim": "R31 other 155C638F-21BA-4FEB-B2B8-31666377E8C9",
+          "ThoiLuong": 90,
+          "NgayKhoiChieu": "2020-01-01",
+          "NgayKetThuc": null,
+          "NgonNgu": null,
+          "PhuDe": null,
+          "DoTuoi": null,
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": null,
+          "DanhSachDienVienJson": "[{\"actorId\":31,\"role\":\"other\"}]"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:54.691Z"
+  }
+]

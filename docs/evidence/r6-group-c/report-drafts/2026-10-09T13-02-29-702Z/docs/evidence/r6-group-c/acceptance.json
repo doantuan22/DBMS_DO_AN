@@ -1,0 +1,71 @@
+{
+  "status": "DONE",
+  "fullR6": "DONE",
+  "database": "CinemaBookingDB_R0_R6C_20261009_01",
+  "runID": "2026-10-09T12-53-33-978Z-1aca2fe1",
+  "sourcePhases": {
+    "R6.8": {
+      "httpCases": 79,
+      "sqlGroups": 35,
+      "status": "DONE"
+    },
+    "R6.9": {
+      "httpCases": 341,
+      "sqlGroups": 112,
+      "status": "DONE"
+    },
+    "R6.10": {
+      "documents": 5,
+      "status": "DONE"
+    }
+  },
+  "httpRequests": 603,
+  "backendTests": 191,
+  "adminEndpoints": 68,
+  "adminModules": 19,
+  "productionDefects": 0,
+  "productionChanges": 0,
+  "reusedGroupA": {
+    "runID": "2026-10-09T10-38-48-967Z-91393232",
+    "mandatoryScenarios": 26,
+    "status": "DONE"
+  },
+  "reusedGroupB": {
+    "runID": "2026-10-09T12-02-23-892Z-64ec76fa",
+    "verificationUnits": 498,
+    "status": "DONE"
+  },
+  "preservation": {
+    "status": "PASS",
+    "files": 1034,
+    "sha256": "77753f26b8ed0f7c7b37053061e9ea73878fcdba44433cb85aa89785736e61b4"
+  },
+  "protectedDatabases": [
+    {
+      "database": "CinemaBookingDB",
+      "status": "PASS"
+    },
+    {
+      "database": "CinemaBookingDB_R0_R6A_20261009_01",
+      "status": "PASS"
+    },
+    {
+      "database": "CinemaBookingDB_R0_R6B_20261009_01",
+      "status": "PASS"
+    }
+  ],
+  "moduleParity": {
+    "modules": 159,
+    "metadataHash": "9964e50cdda4f6e8750663284497b69b9fd4c691328a31de9d8ac4f9089e9a75"
+  },
+  "fixtureFix": "New Admin user password fixture changed from legacy seed six bytes to valid eight bytes; independent short-password negative reproduction PASS, failed attempt retained.",
+  "createdAt": "2026-10-09T12:59:26.413Z",
+  "reportValidation": "docs/evidence/r6-group-c/report-validation.json",
+  "finalDocuments": [
+    "docs/DATABASE_INTEGRATION_REPORT.md",
+    "docs/BACKEND_INTEGRATION_REPORT.md",
+    "docs/CONCURRENCY_REPORT.md",
+    "docs/ROLLBACK_REPORT.md",
+    "docs/DATA_INTEGRITY_REPORT.md"
+  ]
+}

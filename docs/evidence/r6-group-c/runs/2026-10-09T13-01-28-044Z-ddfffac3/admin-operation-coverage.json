@@ -1,0 +1,3542 @@
+{
+  "status": "PASS",
+  "modules": [
+    {
+      "module": "Report",
+      "operations": [
+        "GET /api/admin/dashboard",
+        "GET /api/admin/reports/revenue"
+      ],
+      "endpoints": 2,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "User",
+      "operations": [
+        "GET /api/admin/users",
+        "POST /api/admin/users",
+        "PUT /api/admin/users/:userId/status"
+      ],
+      "endpoints": 3,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Role",
+      "operations": [
+        "GET /api/admin/roles",
+        "POST /api/admin/roles",
+        "PUT /api/admin/roles/:roleId",
+        "DELETE /api/admin/roles/:roleId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Role-Permission",
+      "operations": [
+        "GET /api/admin/roles/:roleId/permissions",
+        "PUT /api/admin/roles/:roleId/permissions"
+      ],
+      "endpoints": 2,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Permission",
+      "operations": [
+        "GET /api/admin/permissions",
+        "POST /api/admin/permissions",
+        "PUT /api/admin/permissions/:permissionId",
+        "DELETE /api/admin/permissions/:permissionId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Assignment",
+      "operations": [
+        "GET /api/admin/assignments",
+        "POST /api/admin/assignments",
+        "PUT /api/admin/assignments/:assignmentId"
+      ],
+      "endpoints": 3,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Cinema",
+      "operations": [
+        "GET /api/admin/cinemas",
+        "POST /api/admin/cinemas",
+        "PUT /api/admin/cinemas/:cinemaId",
+        "DELETE /api/admin/cinemas/:cinemaId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Image",
+      "operations": [
+        "GET /api/admin/cinemas/:cinemaId/images",
+        "POST /api/admin/cinemas/:cinemaId/images",
+        "PUT /api/admin/cinemas/:cinemaId/images/:imageId",
+        "DELETE /api/admin/cinemas/:cinemaId/images/:imageId",
+        "PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover"
+      ],
+      "endpoints": 5,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Room",
+      "operations": [
+        "GET /api/admin/rooms",
+        "POST /api/admin/rooms",
+        "PUT /api/admin/rooms/:roomId",
+        "DELETE /api/admin/rooms/:roomId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Seat",
+      "operations": [
+        "GET /api/admin/seats",
+        "POST /api/admin/seats",
+        "PUT /api/admin/seats/:seatId",
+        "DELETE /api/admin/seats/:seatId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Pricing",
+      "operations": [
+        "GET /api/admin/pricing",
+        "POST /api/admin/pricing",
+        "PUT /api/admin/pricing/:pricingId"
+      ],
+      "endpoints": 3,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Showtime",
+      "operations": [
+        "GET /api/admin/showtimes",
+        "POST /api/admin/showtimes",
+        "PUT /api/admin/showtimes/:showtimeId",
+        "POST /api/admin/showtimes/:showtimeId/cancel"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Movie",
+      "operations": [
+        "GET /api/admin/movies",
+        "POST /api/admin/movies",
+        "PUT /api/admin/movies/:movieId",
+        "DELETE /api/admin/movies/:movieId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Cast",
+      "operations": [
+        "PUT /api/admin/movies/:movieId/actors"
+      ],
+      "endpoints": 1,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Genre",
+      "operations": [
+        "GET /api/admin/genres",
+        "POST /api/admin/genres",
+        "PUT /api/admin/genres/:genreId",
+        "DELETE /api/admin/genres/:genreId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Actor",
+      "operations": [
+        "GET /api/admin/actors",
+        "POST /api/admin/actors",
+        "PUT /api/admin/actors/:actorId",
+        "DELETE /api/admin/actors/:actorId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Product",
+      "operations": [
+        "GET /api/admin/products",
+        "POST /api/admin/products",
+        "PUT /api/admin/products/:productId",
+        "DELETE /api/admin/products/:productId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Promotion",
+      "operations": [
+        "GET /api/admin/promotions",
+        "POST /api/admin/promotions",
+        "PUT /api/admin/promotions/:promotionId",
+        "DELETE /api/admin/promotions/:promotionId"
+      ],
+      "endpoints": 4,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    },
+    {
+      "module": "Complaint",
+      "operations": [
+        "GET /api/admin/complaints",
+        "GET /api/admin/complaints/:complaintId",
+        "GET /api/admin/complaints/:complaintId/order-reference",
+        "POST /api/admin/complaints/:complaintId/processings",
+        "PUT /api/admin/complaints/:complaintId/status"
+      ],
+      "endpoints": 5,
+      "status": "PASS",
+      "evidence": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin-operation-coverage.json"
+    }
+  ],
+  "operations": [
+    {
+      "module": "dashboard",
+      "useCase": "ADM-16",
+      "method": "GET",
+      "api": "/api/admin/dashboard",
+      "permissions": [
+        "XEM_BAO_CAO_TOANHE"
+      ],
+      "controller": "adminController.dashboard",
+      "service": "adminService.dashboard",
+      "procedureKeys": [
+        "ADMIN_DASHBOARD"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Dashboard"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 243
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 241
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 242
+        }
+      ]
+    },
+    {
+      "module": "users",
+      "useCase": "ADM-02",
+      "method": "GET",
+      "api": "/api/admin/users",
+      "permissions": [
+        "QL_NGUOIDUNG"
+      ],
+      "controller": "adminController.users",
+      "service": "adminService.users",
+      "procedureKeys": [
+        "ADMIN_USER_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_User_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 9
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 7
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 8
+        }
+      ]
+    },
+    {
+      "module": "users",
+      "useCase": "ADM-02",
+      "method": "POST",
+      "api": "/api/admin/users",
+      "permissions": [
+        "QL_NGUOIDUNG"
+      ],
+      "controller": "adminController.createUser",
+      "service": "adminService.createUser",
+      "procedureKeys": [
+        "ADMIN_USER_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_User_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 5
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 2
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 3
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 4
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 6
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 10
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 11
+        }
+      ]
+    },
+    {
+      "module": "users",
+      "useCase": "ADM-02",
+      "method": "PUT",
+      "api": "/api/admin/users/:userId/status",
+      "permissions": [
+        "QL_NGUOIDUNG"
+      ],
+      "controller": "adminController.updateUserStatus",
+      "service": "adminService.setUserStatus",
+      "procedureKeys": [
+        "ADMIN_USER_UPDATE_STATUS"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_User_UpdateStatus"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 14
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 16
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 12
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 13
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 15
+        }
+      ]
+    },
+    {
+      "module": "roles",
+      "useCase": "ADM-03/05",
+      "method": "GET",
+      "api": "/api/admin/roles",
+      "permissions": [
+        "QL_VAITRO"
+      ],
+      "controller": "adminController.roles",
+      "service": "adminService.roles",
+      "procedureKeys": [
+        "ADMIN_ROLE_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Role_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 24
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 22
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 23
+        }
+      ]
+    },
+    {
+      "module": "Role-Permission",
+      "useCase": "ADM-03/05",
+      "method": "GET",
+      "api": "/api/admin/roles/:roleId/permissions",
+      "permissions": [
+        "QL_QUYEN"
+      ],
+      "controller": "adminController.rolePermissions",
+      "service": "adminService.rolePermissions",
+      "procedureKeys": [
+        "ADMIN_ROLE_PERMISSION_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_RolePermission_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 46
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 44
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 45
+        }
+      ]
+    },
+    {
+      "module": "roles",
+      "useCase": "ADM-03/05",
+      "method": "POST",
+      "api": "/api/admin/roles",
+      "permissions": [
+        "QL_VAITRO"
+      ],
+      "controller": "adminController.createRole",
+      "service": "adminService.createRole",
+      "procedureKeys": [
+        "ADMIN_ROLE_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Role_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 20
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 18
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 19
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 21
+        }
+      ]
+    },
+    {
+      "module": "roles",
+      "useCase": "ADM-03/05",
+      "method": "PUT",
+      "api": "/api/admin/roles/:roleId",
+      "permissions": [
+        "QL_VAITRO"
+      ],
+      "controller": "adminController.updateRole",
+      "service": "adminService.updateRole",
+      "procedureKeys": [
+        "ADMIN_ROLE_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Role_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 27
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 25
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 26
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 28
+        }
+      ]
+    },
+    {
+      "module": "roles",
+      "useCase": "ADM-03/05",
+      "method": "DELETE",
+      "api": "/api/admin/roles/:roleId",
+      "permissions": [
+        "QL_VAITRO"
+      ],
+      "controller": "adminController.deleteRole",
+      "service": "adminService.deleteRole",
+      "procedureKeys": [
+        "ADMIN_ROLE_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Role_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 56
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 48
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 49
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 50
+        }
+      ]
+    },
+    {
+      "module": "permissions",
+      "useCase": "ADM-04",
+      "method": "GET",
+      "api": "/api/admin/permissions",
+      "permissions": [
+        "QL_QUYEN"
+      ],
+      "controller": "adminController.permissions",
+      "service": "adminService.permissions",
+      "procedureKeys": [
+        "ADMIN_PERMISSION_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Permission_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 35
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 33
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 34
+        }
+      ]
+    },
+    {
+      "module": "permissions",
+      "useCase": "ADM-04",
+      "method": "POST",
+      "api": "/api/admin/permissions",
+      "permissions": [
+        "QL_QUYEN"
+      ],
+      "controller": "adminController.createPermission",
+      "service": "adminService.createPermission",
+      "procedureKeys": [
+        "ADMIN_PERMISSION_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Permission_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 31
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 29
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 30
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 32
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 40
+        }
+      ]
+    },
+    {
+      "module": "permissions",
+      "useCase": "ADM-04",
+      "method": "PUT",
+      "api": "/api/admin/permissions/:permissionId",
+      "permissions": [
+        "QL_QUYEN"
+      ],
+      "controller": "adminController.updatePermission",
+      "service": "adminService.updatePermission",
+      "procedureKeys": [
+        "ADMIN_PERMISSION_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Permission_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 38
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 36
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 37
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 39
+        }
+      ]
+    },
+    {
+      "module": "permissions",
+      "useCase": "ADM-04",
+      "method": "DELETE",
+      "api": "/api/admin/permissions/:permissionId",
+      "permissions": [
+        "QL_QUYEN"
+      ],
+      "controller": "adminController.deletePermission",
+      "service": "adminService.deletePermission",
+      "procedureKeys": [
+        "ADMIN_PERMISSION_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Permission_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 55
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 51
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 52
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 53
+        }
+      ]
+    },
+    {
+      "module": "Role-Permission",
+      "useCase": "ADM-03/05",
+      "method": "PUT",
+      "api": "/api/admin/roles/:roleId/permissions",
+      "permissions": [
+        "QL_QUYEN"
+      ],
+      "controller": "adminController.setRolePermissions",
+      "service": "adminService.setRolePermissions",
+      "procedureKeys": [
+        "ADMIN_ROLE_PERMISSION_SET"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_RolePermission_Set"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 43
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 54
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 41
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 42
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 47
+        }
+      ]
+    },
+    {
+      "module": "assignments",
+      "useCase": "ADM-06",
+      "method": "GET",
+      "api": "/api/admin/assignments",
+      "permissions": [
+        "PHANCONG_RAP"
+      ],
+      "controller": "adminController.assignments",
+      "service": "adminService.assignments",
+      "procedureKeys": [
+        "ADMIN_ASSIGNMENT_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Assignment_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 74
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 78
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 84
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 72
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 73
+        }
+      ]
+    },
+    {
+      "module": "assignments",
+      "useCase": "ADM-06",
+      "method": "POST",
+      "api": "/api/admin/assignments",
+      "permissions": [
+        "PHANCONG_RAP"
+      ],
+      "controller": "adminController.createAssignment",
+      "service": "adminService.createAssignment",
+      "procedureKeys": [
+        "ADMIN_ASSIGNMENT_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Assignment_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 70
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 68
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 69
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 71
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 75
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 76
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 77
+        }
+      ]
+    },
+    {
+      "module": "assignments",
+      "useCase": "ADM-06",
+      "method": "PUT",
+      "api": "/api/admin/assignments/:assignmentId",
+      "permissions": [
+        "PHANCONG_RAP"
+      ],
+      "controller": "adminController.updateAssignment",
+      "service": "adminService.updateAssignment",
+      "procedureKeys": [
+        "ADMIN_ASSIGNMENT_UPDATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Assignment_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 82
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 80
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 81
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 83
+        }
+      ]
+    },
+    {
+      "module": "cinemas",
+      "useCase": "ADM-07",
+      "method": "GET",
+      "api": "/api/admin/cinemas",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.cinemas",
+      "service": "adminService.cinemas",
+      "procedureKeys": [
+        "ADMIN_CINEMA_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Cinema_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 63
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 61
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 62
+        }
+      ]
+    },
+    {
+      "module": "cinemas",
+      "useCase": "ADM-07",
+      "method": "POST",
+      "api": "/api/admin/cinemas",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.createCinema",
+      "service": "adminService.createCinema",
+      "procedureKeys": [
+        "ADMIN_CINEMA_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Cinema_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 59
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 57
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 58
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 60
+        }
+      ]
+    },
+    {
+      "module": "cinemas",
+      "useCase": "ADM-07",
+      "method": "PUT",
+      "api": "/api/admin/cinemas/:cinemaId",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.updateCinema",
+      "service": "adminService.updateCinema",
+      "procedureKeys": [
+        "ADMIN_CINEMA_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Cinema_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 66
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 64
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 65
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 67
+        }
+      ]
+    },
+    {
+      "module": "cinemas",
+      "useCase": "ADM-07",
+      "method": "DELETE",
+      "api": "/api/admin/cinemas/:cinemaId",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.deleteCinema",
+      "service": "adminService.deleteCinema",
+      "procedureKeys": [
+        "ADMIN_CINEMA_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Cinema_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 254
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 247
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 248
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 249
+        }
+      ]
+    },
+    {
+      "module": "Image",
+      "useCase": "ADM-07",
+      "method": "GET",
+      "api": "/api/admin/cinemas/:cinemaId/images",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.cinemaImages",
+      "service": "adminService.cinemaImages",
+      "procedureKeys": [
+        "ADMIN_CINEMA_IMAGE_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_CinemaImage_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 94
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 92
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 93
+        }
+      ]
+    },
+    {
+      "module": "Image",
+      "useCase": "ADM-07",
+      "method": "POST",
+      "api": "/api/admin/cinemas/:cinemaId/images",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.createCinemaImage",
+      "service": "adminService.createCinemaImage",
+      "procedureKeys": [
+        "ADMIN_CINEMA_IMAGE_CREATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_CinemaImage_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 88
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 90
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 86
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 87
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 89
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 91
+        }
+      ]
+    },
+    {
+      "module": "Image",
+      "useCase": "ADM-07",
+      "method": "PUT",
+      "api": "/api/admin/cinemas/:cinemaId/images/:imageId",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.updateCinemaImage",
+      "service": "adminService.updateCinemaImage",
+      "procedureKeys": [
+        "ADMIN_CINEMA_IMAGE_UPDATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_CinemaImage_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 97
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 95
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 96
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 98
+        }
+      ]
+    },
+    {
+      "module": "Image",
+      "useCase": "ADM-07",
+      "method": "DELETE",
+      "api": "/api/admin/cinemas/:cinemaId/images/:imageId",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.deleteCinemaImage",
+      "service": "adminService.deleteCinemaImage",
+      "procedureKeys": [
+        "ADMIN_CINEMA_IMAGE_DELETE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_CinemaImage_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 105
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 106
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 103
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 104
+        }
+      ]
+    },
+    {
+      "module": "Image",
+      "useCase": "ADM-07",
+      "method": "PATCH",
+      "api": "/api/admin/cinemas/:cinemaId/images/:imageId/cover",
+      "permissions": [
+        "QL_RAP"
+      ],
+      "controller": "adminController.setCinemaImageCover",
+      "service": "adminService.setCinemaImageCover",
+      "procedureKeys": [
+        "ADMIN_CINEMA_IMAGE_SET_COVER"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_CinemaImage_SetCover"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 101
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 99
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 100
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 102
+        }
+      ]
+    },
+    {
+      "module": "rooms",
+      "useCase": "ADM-08",
+      "method": "GET",
+      "api": "/api/admin/rooms",
+      "permissions": [
+        "QL_PHONG"
+      ],
+      "controller": "adminController.rooms",
+      "service": "adminService.rooms",
+      "procedureKeys": [
+        "ADMIN_ROOM_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Room_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 113
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 111
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 112
+        }
+      ]
+    },
+    {
+      "module": "rooms",
+      "useCase": "ADM-08",
+      "method": "POST",
+      "api": "/api/admin/rooms",
+      "permissions": [
+        "QL_PHONG"
+      ],
+      "controller": "adminController.createRoom",
+      "service": "adminService.createRoom",
+      "procedureKeys": [
+        "ADMIN_ROOM_CREATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Room_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 109
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 107
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 108
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 110
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 118
+        }
+      ]
+    },
+    {
+      "module": "rooms",
+      "useCase": "ADM-08",
+      "method": "PUT",
+      "api": "/api/admin/rooms/:roomId",
+      "permissions": [
+        "QL_PHONG"
+      ],
+      "controller": "adminController.updateRoom",
+      "service": "adminService.updateRoom",
+      "procedureKeys": [
+        "ADMIN_ROOM_UPDATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Room_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 116
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 114
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 115
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 117
+        }
+      ]
+    },
+    {
+      "module": "rooms",
+      "useCase": "ADM-08",
+      "method": "DELETE",
+      "api": "/api/admin/rooms/:roomId",
+      "permissions": [
+        "QL_PHONG"
+      ],
+      "controller": "adminController.deleteRoom",
+      "service": "adminService.deleteRoom",
+      "procedureKeys": [
+        "ADMIN_ROOM_DELETE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Room_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 246
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 250
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 244
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 245
+        }
+      ]
+    },
+    {
+      "module": "seats",
+      "useCase": "ADM-08",
+      "method": "GET",
+      "api": "/api/admin/seats",
+      "permissions": [
+        "QL_GHE"
+      ],
+      "controller": "adminController.seats",
+      "service": "adminService.seats",
+      "procedureKeys": [
+        "ADMIN_SEAT_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Seat_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 125
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 123
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 124
+        }
+      ]
+    },
+    {
+      "module": "seats",
+      "useCase": "ADM-08",
+      "method": "POST",
+      "api": "/api/admin/seats",
+      "permissions": [
+        "QL_GHE"
+      ],
+      "controller": "adminController.createSeat",
+      "service": "adminService.createSeat",
+      "procedureKeys": [
+        "ADMIN_SEAT_CREATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Seat_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 121
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 119
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 120
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 122
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 130
+        }
+      ]
+    },
+    {
+      "module": "seats",
+      "useCase": "ADM-08",
+      "method": "PUT",
+      "api": "/api/admin/seats/:seatId",
+      "permissions": [
+        "QL_GHE"
+      ],
+      "controller": "adminController.updateSeat",
+      "service": "adminService.updateSeat",
+      "procedureKeys": [
+        "ADMIN_SEAT_UPDATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Seat_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 128
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 126
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 127
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 129
+        }
+      ]
+    },
+    {
+      "module": "seats",
+      "useCase": "ADM-08",
+      "method": "DELETE",
+      "api": "/api/admin/seats/:seatId",
+      "permissions": [
+        "QL_GHE"
+      ],
+      "controller": "adminController.deleteSeat",
+      "service": "adminService.deleteSeat",
+      "procedureKeys": [
+        "ADMIN_SEAT_DELETE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Seat_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 133
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 131
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 132
+        }
+      ]
+    },
+    {
+      "module": "pricing",
+      "useCase": "ADM-13",
+      "method": "GET",
+      "api": "/api/admin/pricing",
+      "permissions": [
+        "QL_BANG_GIA"
+      ],
+      "controller": "adminController.pricing",
+      "service": "adminService.pricing",
+      "procedureKeys": [
+        "ADMIN_PRICING_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Pricing_List"
+      ],
+      "existingTest": "R4.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 203
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 14
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 16
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 18
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 20
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 22
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 24
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 26
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 28
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 53
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 201
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 202
+        }
+      ]
+    },
+    {
+      "module": "pricing",
+      "useCase": "ADM-13",
+      "method": "POST",
+      "api": "/api/admin/pricing",
+      "permissions": [
+        "QL_BANG_GIA"
+      ],
+      "controller": "adminController.createPricing",
+      "service": "adminService.createPricing",
+      "procedureKeys": [
+        "ADMIN_PRICING_CREATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Pricing_Create"
+      ],
+      "existingTest": "R4.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 199
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 197
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 198
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 200
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 208
+        }
+      ]
+    },
+    {
+      "module": "pricing",
+      "useCase": "ADM-13",
+      "method": "PUT",
+      "api": "/api/admin/pricing/:pricingId",
+      "permissions": [
+        "QL_BANG_GIA"
+      ],
+      "controller": "adminController.updatePricing",
+      "service": "adminService.updatePricing",
+      "procedureKeys": [
+        "ADMIN_PRICING_UPDATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Pricing_Update"
+      ],
+      "existingTest": "R4.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 206
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 13
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 15
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 17
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 19
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 21
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 23
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 25
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 27
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 52
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 204
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 205
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 207
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 4
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 5
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 6
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 7
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 8
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 9
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 29
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 30
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 31
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 32
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 33
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 34
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 35
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 36
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 37
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 38
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 39
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 40
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 41
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 42
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 43
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 44
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 45
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 46
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 47
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 48
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 49
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 50
+        }
+      ]
+    },
+    {
+      "module": "showtimes",
+      "useCase": "ADM-14",
+      "method": "GET",
+      "api": "/api/admin/showtimes",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ],
+      "controller": "adminController.showtimes",
+      "service": "adminService.showtimes",
+      "procedureKeys": [
+        "ADMIN_SHOWTIME_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Showtime_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 184
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 182
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 183
+        }
+      ]
+    },
+    {
+      "module": "showtimes",
+      "useCase": "ADM-14",
+      "method": "POST",
+      "api": "/api/admin/showtimes",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ],
+      "controller": "adminController.createShowtime",
+      "service": "adminService.createShowtime",
+      "procedureKeys": [
+        "ADMIN_SHOWTIME_CREATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Showtime_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 180
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 178
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 179
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 181
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 189
+        }
+      ]
+    },
+    {
+      "module": "showtimes",
+      "useCase": "ADM-14",
+      "method": "PUT",
+      "api": "/api/admin/showtimes/:showtimeId",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ],
+      "controller": "adminController.updateShowtime",
+      "service": "adminService.updateShowtime",
+      "procedureKeys": [
+        "ADMIN_SHOWTIME_UPDATE"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Showtime_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 187
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 185
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 186
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 188
+        }
+      ]
+    },
+    {
+      "module": "showtimes",
+      "useCase": "ADM-14",
+      "method": "POST",
+      "api": "/api/admin/showtimes/:showtimeId/cancel",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ],
+      "controller": "adminController.cancelShowtime",
+      "service": "adminService.cancelShowtime",
+      "procedureKeys": [
+        "ADMIN_SHOWTIME_CANCEL"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Showtime_Cancel"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 192
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 190
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 191
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 193
+        }
+      ]
+    },
+    {
+      "module": "movies",
+      "useCase": "ADM-09",
+      "method": "GET",
+      "api": "/api/admin/movies",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.movies",
+      "service": "adminService.movies",
+      "procedureKeys": [
+        "ADMIN_MOVIE_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Movie_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 162
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 4
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 7
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 10
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 13
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 16
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 19
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 22
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 25
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 28
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 31
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 34
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 37
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 40
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 43
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 46
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 49
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 52
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 55
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 58
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 160
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 161
+        }
+      ]
+    },
+    {
+      "module": "movies",
+      "useCase": "ADM-09",
+      "method": "POST",
+      "api": "/api/admin/movies",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.createMovie",
+      "service": "adminService.createMovie",
+      "procedureKeys": [
+        "ADMIN_MOVIE_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Movie_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 158
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 156
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 157
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 159
+        }
+      ]
+    },
+    {
+      "module": "movies",
+      "useCase": "ADM-09",
+      "method": "PUT",
+      "api": "/api/admin/movies/:movieId",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.updateMovie",
+      "service": "adminService.updateMovie",
+      "procedureKeys": [
+        "ADMIN_MOVIE_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Movie_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 165
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 163
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 164
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 166
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 167
+        }
+      ]
+    },
+    {
+      "module": "movies",
+      "useCase": "ADM-09",
+      "method": "DELETE",
+      "api": "/api/admin/movies/:movieId",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.deleteMovie",
+      "service": "adminService.deleteMovie",
+      "procedureKeys": [
+        "ADMIN_MOVIE_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Movie_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 251
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 194
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 195
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 196
+        }
+      ]
+    },
+    {
+      "module": "Cast",
+      "useCase": "ADM-09",
+      "method": "PUT",
+      "api": "/api/admin/movies/:movieId/actors",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.setMovieActors",
+      "service": "adminService.setMovieActors",
+      "procedureKeys": [
+        "ADMIN_MOVIE_ACTOR_SET"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_MovieActor_Set"
+      ],
+      "existingTest": "R3.1 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 170
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 2
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 56
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 168
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 169
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 171
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 5
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 8
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 11
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 14
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 17
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 20
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 23
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 26
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 29
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 32
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 35
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 38
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 41
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 44
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 47
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 50
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r31-api/http-trace.json",
+          "selector": 53
+        }
+      ]
+    },
+    {
+      "module": "genres",
+      "useCase": "ADM-10",
+      "method": "GET",
+      "api": "/api/admin/genres",
+      "permissions": [
+        "QL_THELOAI"
+      ],
+      "controller": "adminController.genres",
+      "service": "adminService.genres",
+      "procedureKeys": [
+        "ADMIN_GENRE_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Genre_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 140
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 138
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 139
+        }
+      ]
+    },
+    {
+      "module": "genres",
+      "useCase": "ADM-10",
+      "method": "POST",
+      "api": "/api/admin/genres",
+      "permissions": [
+        "QL_THELOAI"
+      ],
+      "controller": "adminController.createGenre",
+      "service": "adminService.createGenre",
+      "procedureKeys": [
+        "ADMIN_GENRE_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Genre_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 136
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 134
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 135
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 137
+        }
+      ]
+    },
+    {
+      "module": "genres",
+      "useCase": "ADM-10",
+      "method": "PUT",
+      "api": "/api/admin/genres/:genreId",
+      "permissions": [
+        "QL_THELOAI"
+      ],
+      "controller": "adminController.updateGenre",
+      "service": "adminService.updateGenre",
+      "procedureKeys": [
+        "ADMIN_GENRE_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Genre_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 143
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 141
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 142
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 144
+        }
+      ]
+    },
+    {
+      "module": "genres",
+      "useCase": "ADM-10",
+      "method": "DELETE",
+      "api": "/api/admin/genres/:genreId",
+      "permissions": [
+        "QL_THELOAI"
+      ],
+      "controller": "adminController.deleteGenre",
+      "service": "adminService.deleteGenre",
+      "procedureKeys": [
+        "ADMIN_GENRE_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Genre_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 253
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 175
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 176
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 177
+        }
+      ]
+    },
+    {
+      "module": "actors",
+      "useCase": "ADM-09",
+      "method": "GET",
+      "api": "/api/admin/actors",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.actors",
+      "service": "adminService.actors",
+      "procedureKeys": [
+        "ADMIN_ACTOR_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Actor_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 151
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 149
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 150
+        }
+      ]
+    },
+    {
+      "module": "actors",
+      "useCase": "ADM-09",
+      "method": "POST",
+      "api": "/api/admin/actors",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.createActor",
+      "service": "adminService.createActor",
+      "procedureKeys": [
+        "ADMIN_ACTOR_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Actor_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 147
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 145
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 146
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 148
+        }
+      ]
+    },
+    {
+      "module": "actors",
+      "useCase": "ADM-09",
+      "method": "PUT",
+      "api": "/api/admin/actors/:actorId",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.updateActor",
+      "service": "adminService.updateActor",
+      "procedureKeys": [
+        "ADMIN_ACTOR_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Actor_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 154
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 152
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 153
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 155
+        }
+      ]
+    },
+    {
+      "module": "actors",
+      "useCase": "ADM-09",
+      "method": "DELETE",
+      "api": "/api/admin/actors/:actorId",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ],
+      "controller": "adminController.deleteActor",
+      "service": "adminService.deleteActor",
+      "procedureKeys": [
+        "ADMIN_ACTOR_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Actor_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 252
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 172
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 173
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 174
+        }
+      ]
+    },
+    {
+      "module": "products",
+      "useCase": "ADM-11",
+      "method": "GET",
+      "api": "/api/admin/products",
+      "permissions": [
+        "QL_SANPHAM"
+      ],
+      "controller": "adminController.products",
+      "service": "adminService.products",
+      "procedureKeys": [
+        "ADMIN_PRODUCT_LIST"
+      ],
+      "procedures": [
+        "dbo.usp_Admin_Product_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 215
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 213
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 214
+        }
+      ]
+    },
+    {
+      "module": "products",
+      "useCase": "ADM-11",
+      "method": "POST",
+      "api": "/api/admin/products",
+      "permissions": [
+        "QL_SANPHAM"
+      ],
+      "controller": "adminController.createProduct",
+      "service": "adminService.createProduct",
+      "procedureKeys": [
+        "ADMIN_PRODUCT_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Product_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 211
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 209
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 210
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 212
+        }
+      ]
+    },
+    {
+      "module": "products",
+      "useCase": "ADM-11",
+      "method": "PUT",
+      "api": "/api/admin/products/:productId",
+      "permissions": [
+        "QL_SANPHAM"
+      ],
+      "controller": "adminController.updateProduct",
+      "service": "adminService.updateProduct",
+      "procedureKeys": [
+        "ADMIN_PRODUCT_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Product_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 218
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 216
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 217
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 219
+        }
+      ]
+    },
+    {
+      "module": "products",
+      "useCase": "ADM-11",
+      "method": "DELETE",
+      "api": "/api/admin/products/:productId",
+      "permissions": [
+        "QL_SANPHAM"
+      ],
+      "controller": "adminController.deleteProduct",
+      "service": "adminService.deleteProduct",
+      "procedureKeys": [
+        "ADMIN_PRODUCT_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Product_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 222
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 220
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 221
+        }
+      ]
+    },
+    {
+      "module": "promotions",
+      "useCase": "ADM-12",
+      "method": "GET",
+      "api": "/api/admin/promotions",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ],
+      "controller": "adminController.promotions",
+      "service": "adminService.promotions",
+      "procedureKeys": [
+        "ADMIN_PROMOTION_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Promotion_List"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 229
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 227
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 228
+        }
+      ]
+    },
+    {
+      "module": "promotions",
+      "useCase": "ADM-12",
+      "method": "POST",
+      "api": "/api/admin/promotions",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ],
+      "controller": "adminController.createPromotion",
+      "service": "adminService.createPromotion",
+      "procedureKeys": [
+        "ADMIN_PROMOTION_CREATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Promotion_Create"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 225
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 223
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 224
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 226
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 234
+        }
+      ]
+    },
+    {
+      "module": "promotions",
+      "useCase": "ADM-12",
+      "method": "PUT",
+      "api": "/api/admin/promotions/:promotionId",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ],
+      "controller": "adminController.updatePromotion",
+      "service": "adminService.updatePromotion",
+      "procedureKeys": [
+        "ADMIN_PROMOTION_UPDATE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Promotion_Update"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 232
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 230
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 231
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 233
+        }
+      ]
+    },
+    {
+      "module": "promotions",
+      "useCase": "ADM-12",
+      "method": "DELETE",
+      "api": "/api/admin/promotions/:promotionId",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ],
+      "controller": "adminController.deletePromotion",
+      "service": "adminService.deletePromotion",
+      "procedureKeys": [
+        "ADMIN_PROMOTION_DELETE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Promotion_Delete"
+      ],
+      "existingTest": "Existing unit/older integration; fresh owned HTTP/SQL coverage required",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 237
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 235
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 236
+        }
+      ]
+    },
+    {
+      "module": "reports",
+      "useCase": "ADM-16",
+      "method": "GET",
+      "api": "/api/admin/reports/revenue",
+      "permissions": [
+        "XEM_BAO_CAO_TOANHE"
+      ],
+      "controller": "adminController.revenue",
+      "service": "adminService.revenue",
+      "procedureKeys": [
+        "ADMIN_REPORT_REVENUE"
+      ],
+      "procedures": [
+        "dbo.sp_Admin_Report_Revenue"
+      ],
+      "existingTest": "R4.2 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 240
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 51
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r43-pricing/http-trace.json",
+          "selector": 54
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 4
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 5
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 6
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 7
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 8
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 9
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 10
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 11
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 12
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 13
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 14
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 15
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 16
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 17
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 18
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 19
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 20
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 21
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 22
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 23
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 24
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 36
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 238
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/admin/http-trace.json",
+          "selector": 239
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 25
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 26
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 27
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 28
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 29
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 30
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 31
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 32
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 33
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 34
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r42-report/http-trace.json",
+          "selector": 35
+        }
+      ]
+    },
+    {
+      "module": "complaints",
+      "useCase": "ADM-15",
+      "method": "GET",
+      "api": "/api/admin/complaints",
+      "permissions": [
+        "QL_KHIEUNAI"
+      ],
+      "controller": "wrapSupport",
+      "service": "supportService.list",
+      "procedureKeys": [
+        "SUPPORT_COMPLAINT_LIST"
+      ],
+      "procedures": [
+        "dbo.sp_Support_Complaint_List"
+      ],
+      "existingTest": "R3.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 10
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 17
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 24
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 31
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 38
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 45
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 52
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 59
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 66
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 73
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 80
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 86
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 92
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 98
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 133
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 140
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 147
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 154
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 25
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 26
+        }
+      ]
+    },
+    {
+      "module": "complaints",
+      "useCase": "ADM-15",
+      "method": "GET",
+      "api": "/api/admin/complaints/:complaintId",
+      "permissions": [
+        "QL_KHIEUNAI"
+      ],
+      "controller": "wrapSupport",
+      "service": "supportService.detail",
+      "procedureKeys": [
+        "SUPPORT_COMPLAINT_GET_DETAIL"
+      ],
+      "procedures": [
+        "dbo.sp_Support_Complaint_GetDetail"
+      ],
+      "existingTest": "R3.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 7
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 14
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 21
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 28
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 35
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 42
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 49
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 56
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 63
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 70
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 77
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 83
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 89
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 95
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 130
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 137
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 144
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 151
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 27
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 28
+        }
+      ]
+    },
+    {
+      "module": "complaints",
+      "useCase": "ADM-15",
+      "method": "GET",
+      "api": "/api/admin/complaints/:complaintId/order-reference",
+      "permissions": [
+        "QL_KHIEUNAI",
+        "TRA_CUU_DON"
+      ],
+      "controller": "wrapSupport",
+      "service": "supportService.orderReference",
+      "procedureKeys": [
+        "SUPPORT_COMPLAINT_GET_ORDER_REFERENCE"
+      ],
+      "procedures": [
+        "dbo.sp_Support_Complaint_GetOrderReference"
+      ],
+      "existingTest": "R3.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 157
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 9
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 19
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 33
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 43
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 44
+        }
+      ]
+    },
+    {
+      "module": "complaints",
+      "useCase": "ADM-15",
+      "method": "POST",
+      "api": "/api/admin/complaints/:complaintId/processings",
+      "permissions": [
+        "QL_KHIEUNAI",
+        "XULY_KHIEUNAI"
+      ],
+      "controller": "wrapSupport",
+      "service": "supportService.addProcessing",
+      "procedureKeys": [
+        "SUPPORT_COMPLAINT_ADD_PROCESSING"
+      ],
+      "procedures": [
+        "dbo.sp_Support_Complaint_AddProcessing"
+      ],
+      "existingTest": "R3.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 40
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 47
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 54
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 61
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 109
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 110
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 111
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 112
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 113
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 114
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 115
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 116
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 124
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 126
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 142
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 34
+        }
+      ]
+    },
+    {
+      "module": "complaints",
+      "useCase": "ADM-15",
+      "method": "PUT",
+      "api": "/api/admin/complaints/:complaintId/status",
+      "permissions": [
+        "QL_KHIEUNAI",
+        "XULY_KHIEUNAI"
+      ],
+      "controller": "wrapSupport",
+      "service": "supportService.updateStatus",
+      "procedureKeys": [
+        "SUPPORT_COMPLAINT_UPDATE_STATUS"
+      ],
+      "procedures": [
+        "dbo.sp_Support_Complaint_UpdateStatus"
+      ],
+      "existingTest": "R3.3 SQL/API",
+      "status": "PASS",
+      "positive": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 75
+        }
+      ],
+      "negative": [
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 117
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 125
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 127
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/r33-api/http-trace.json",
+          "selector": 149
+        },
+        {
+          "file": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/complaint-flow/http-trace.json",
+          "selector": 35
+        }
+      ]
+    }
+  ]
+}

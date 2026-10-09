@@ -1,0 +1,825 @@
+[
+  {
+    "sequence": 0,
+    "url": "http://127.0.0.1:57043/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:03:22.709Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 2,
+        "name": "Nguyễn Văn Quản Lý 1",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "QUAN_LY_RAP",
+        "roleName": "Quản lý rạp",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          }
+        ],
+        "cinemaAssignments": [
+          {
+            "cinemaId": 1,
+            "name": "Cinema Star Hai Bà Trưng",
+            "city": "Hồ Chí Minh",
+            "assignmentStatus": "Hiệu lực"
+          }
+        ]
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.082Z"
+  },
+  {
+    "sequence": 1,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1100,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.086Z",
+    "status": 201,
+    "response": {
+      "showtime": {
+        "id": 1044,
+        "movieId": 1,
+        "movieTitle": "Dune: Hành Tinh Cát - Phần Hai",
+        "roomId": 1100,
+        "roomName": "R11 FEAFF045-766D-452A-BA3E-7DE67D2B0854",
+        "cinemaId": 1,
+        "cinemaName": "Cinema Star Hai Bà Trưng",
+        "startsAt": "2026-10-19T12:03:22.708Z",
+        "endsAt": "2026-10-19T14:59:22.708Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Mở bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.122Z"
+  },
+  {
+    "sequence": 2,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1100,
+      "startsAt": "2026-10-20T00:03:22.708Z",
+      "endsAt": "2026-10-20T02:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.122Z",
+    "status": 201,
+    "response": {
+      "showtime": {
+        "id": 1045,
+        "movieId": 1,
+        "movieTitle": "Dune: Hành Tinh Cát - Phần Hai",
+        "roomId": 1100,
+        "roomName": "R11 FEAFF045-766D-452A-BA3E-7DE67D2B0854",
+        "cinemaId": 1,
+        "cinemaName": "Cinema Star Hai Bà Trưng",
+        "startsAt": "2026-10-20T00:03:22.708Z",
+        "endsAt": "2026-10-20T02:59:22.708Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Mở bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.133Z"
+  },
+  {
+    "sequence": 3,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1100,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.257Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.267Z"
+  },
+  {
+    "sequence": 4,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes/1045",
+    "method": "PUT",
+    "input": {
+      "movieId": 1,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:03:23.431Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.466Z"
+  },
+  {
+    "sequence": 5,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1101,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.560Z",
+    "status": 201,
+    "response": {
+      "showtime": {
+        "id": 1046,
+        "movieId": 1,
+        "movieTitle": "Dune: Hành Tinh Cát - Phần Hai",
+        "roomId": 1101,
+        "roomName": "R11 4956AAA2-B242-4B47-B10E-1FB08A2C0077",
+        "cinemaId": 1,
+        "cinemaName": "Cinema Star Hai Bà Trưng",
+        "startsAt": "2026-10-19T12:03:22.708Z",
+        "endsAt": "2026-10-19T14:59:22.708Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Mở bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.571Z"
+  },
+  {
+    "sequence": 6,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1101,
+      "startsAt": "2026-10-20T00:03:22.708Z",
+      "endsAt": "2026-10-20T02:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.572Z",
+    "status": 201,
+    "response": {
+      "showtime": {
+        "id": 1047,
+        "movieId": 1,
+        "movieTitle": "Dune: Hành Tinh Cát - Phần Hai",
+        "roomId": 1101,
+        "roomName": "R11 4956AAA2-B242-4B47-B10E-1FB08A2C0077",
+        "cinemaId": 1,
+        "cinemaName": "Cinema Star Hai Bà Trưng",
+        "startsAt": "2026-10-20T00:03:22.708Z",
+        "endsAt": "2026-10-20T02:59:22.708Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Mở bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.583Z"
+  },
+  {
+    "sequence": 7,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1101,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.672Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.679Z"
+  },
+  {
+    "sequence": 8,
+    "url": "http://127.0.0.1:57043/api/manager/showtimes/1047",
+    "method": "PUT",
+    "input": {
+      "movieId": 1,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:03:23.843Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.849Z"
+  },
+  {
+    "sequence": 9,
+    "url": "http://127.0.0.1:57043/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:03:23.933Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:03:23.997Z"
+  },
+  {
+    "sequence": 10,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1102,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:23.999Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 1048,
+              "PhimID": 1,
+              "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+              "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+              "ThoiLuong": 166,
+              "DoTuoi": "T16",
+              "RapID": 1,
+              "TenRap": "Cinema Star Hai Bà Trưng",
+              "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+              "ThanhPho": "Hồ Chí Minh",
+              "PhongID": 1102,
+              "TenPhong": "R11 638C7605-7DF5-4FB5-90CF-F88F15B96B18",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-19T12:03:22.708Z",
+              "ThoiGianKetThuc": "2026-10-19T14:59:22.708Z",
+              "NgayChieu": "2026-10-19",
+              "GioBatDau": "19:03",
+              "GioKetThuc": "21:59",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThaiSuatChieu": "Mở bán",
+              "TongSoGhe": 2,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 2
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 1048,
+            "PhimID": 1,
+            "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+            "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+            "ThoiLuong": 166,
+            "DoTuoi": "T16",
+            "RapID": 1,
+            "TenRap": "Cinema Star Hai Bà Trưng",
+            "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+            "ThanhPho": "Hồ Chí Minh",
+            "PhongID": 1102,
+            "TenPhong": "R11 638C7605-7DF5-4FB5-90CF-F88F15B96B18",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-19T12:03:22.708Z",
+            "ThoiGianKetThuc": "2026-10-19T14:59:22.708Z",
+            "NgayChieu": "2026-10-19",
+            "GioBatDau": "19:03",
+            "GioKetThuc": "21:59",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThaiSuatChieu": "Mở bán",
+            "TongSoGhe": 2,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 2
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.007Z"
+  },
+  {
+    "sequence": 11,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1102,
+      "startsAt": "2026-10-20T00:03:22.708Z",
+      "endsAt": "2026-10-20T02:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:24.007Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 1049,
+              "PhimID": 1,
+              "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+              "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+              "ThoiLuong": 166,
+              "DoTuoi": "T16",
+              "RapID": 1,
+              "TenRap": "Cinema Star Hai Bà Trưng",
+              "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+              "ThanhPho": "Hồ Chí Minh",
+              "PhongID": 1102,
+              "TenPhong": "R11 638C7605-7DF5-4FB5-90CF-F88F15B96B18",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-20T00:03:22.708Z",
+              "ThoiGianKetThuc": "2026-10-20T02:59:22.708Z",
+              "NgayChieu": "2026-10-20",
+              "GioBatDau": "07:03",
+              "GioKetThuc": "09:59",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThaiSuatChieu": "Mở bán",
+              "TongSoGhe": 2,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 2
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 1049,
+            "PhimID": 1,
+            "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+            "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+            "ThoiLuong": 166,
+            "DoTuoi": "T16",
+            "RapID": 1,
+            "TenRap": "Cinema Star Hai Bà Trưng",
+            "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+            "ThanhPho": "Hồ Chí Minh",
+            "PhongID": 1102,
+            "TenPhong": "R11 638C7605-7DF5-4FB5-90CF-F88F15B96B18",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-20T00:03:22.708Z",
+            "ThoiGianKetThuc": "2026-10-20T02:59:22.708Z",
+            "NgayChieu": "2026-10-20",
+            "GioBatDau": "07:03",
+            "GioKetThuc": "09:59",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThaiSuatChieu": "Mở bán",
+            "TongSoGhe": 2,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 2
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.014Z"
+  },
+  {
+    "sequence": 12,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1102,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:24.098Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.104Z"
+  },
+  {
+    "sequence": 13,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes/1049",
+    "method": "PUT",
+    "input": {
+      "movieId": 1,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:03:24.278Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.310Z"
+  },
+  {
+    "sequence": 14,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1103,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:24.395Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 1050,
+              "PhimID": 1,
+              "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+              "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+              "ThoiLuong": 166,
+              "DoTuoi": "T16",
+              "RapID": 1,
+              "TenRap": "Cinema Star Hai Bà Trưng",
+              "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+              "ThanhPho": "Hồ Chí Minh",
+              "PhongID": 1103,
+              "TenPhong": "R11 E278456D-72C3-4163-9C1F-015EB34B0AF0",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-19T12:03:22.708Z",
+              "ThoiGianKetThuc": "2026-10-19T14:59:22.708Z",
+              "NgayChieu": "2026-10-19",
+              "GioBatDau": "19:03",
+              "GioKetThuc": "21:59",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThaiSuatChieu": "Mở bán",
+              "TongSoGhe": 2,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 2
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 1050,
+            "PhimID": 1,
+            "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+            "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+            "ThoiLuong": 166,
+            "DoTuoi": "T16",
+            "RapID": 1,
+            "TenRap": "Cinema Star Hai Bà Trưng",
+            "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+            "ThanhPho": "Hồ Chí Minh",
+            "PhongID": 1103,
+            "TenPhong": "R11 E278456D-72C3-4163-9C1F-015EB34B0AF0",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-19T12:03:22.708Z",
+            "ThoiGianKetThuc": "2026-10-19T14:59:22.708Z",
+            "NgayChieu": "2026-10-19",
+            "GioBatDau": "19:03",
+            "GioKetThuc": "21:59",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThaiSuatChieu": "Mở bán",
+            "TongSoGhe": 2,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 2
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.406Z"
+  },
+  {
+    "sequence": 15,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1103,
+      "startsAt": "2026-10-20T00:03:22.708Z",
+      "endsAt": "2026-10-20T02:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:24.407Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 1051,
+              "PhimID": 1,
+              "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+              "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+              "ThoiLuong": 166,
+              "DoTuoi": "T16",
+              "RapID": 1,
+              "TenRap": "Cinema Star Hai Bà Trưng",
+              "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+              "ThanhPho": "Hồ Chí Minh",
+              "PhongID": 1103,
+              "TenPhong": "R11 E278456D-72C3-4163-9C1F-015EB34B0AF0",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-20T00:03:22.708Z",
+              "ThoiGianKetThuc": "2026-10-20T02:59:22.708Z",
+              "NgayChieu": "2026-10-20",
+              "GioBatDau": "07:03",
+              "GioKetThuc": "09:59",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThaiSuatChieu": "Mở bán",
+              "TongSoGhe": 2,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 2
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 1051,
+            "PhimID": 1,
+            "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+            "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+            "ThoiLuong": 166,
+            "DoTuoi": "T16",
+            "RapID": 1,
+            "TenRap": "Cinema Star Hai Bà Trưng",
+            "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+            "ThanhPho": "Hồ Chí Minh",
+            "PhongID": 1103,
+            "TenPhong": "R11 E278456D-72C3-4163-9C1F-015EB34B0AF0",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-20T00:03:22.708Z",
+            "ThoiGianKetThuc": "2026-10-20T02:59:22.708Z",
+            "NgayChieu": "2026-10-20",
+            "GioBatDau": "07:03",
+            "GioKetThuc": "09:59",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThaiSuatChieu": "Mở bán",
+            "TongSoGhe": 2,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 2
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.412Z"
+  },
+  {
+    "sequence": 16,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 1103,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:24.497Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.503Z"
+  },
+  {
+    "sequence": 17,
+    "url": "http://127.0.0.1:57043/api/admin/showtimes/1051",
+    "method": "PUT",
+    "input": {
+      "movieId": 1,
+      "startsAt": "2026-10-19T12:03:22.708Z",
+      "endsAt": "2026-10-19T14:59:22.708Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "status": "Mở bán"
+    },
+    "startedAt": "2026-10-09T12:03:24.669Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:24.674Z"
+  }
+]

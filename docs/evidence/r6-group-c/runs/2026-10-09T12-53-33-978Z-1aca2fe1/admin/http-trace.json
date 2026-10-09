@@ -1,0 +1,5748 @@
+[
+  {
+    "sequence": 0,
+    "url": "http://127.0.0.1:60874/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:53:57.730Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:53:58.115Z"
+  },
+  {
+    "sequence": 1,
+    "url": "http://127.0.0.1:60874/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:53:58.116Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 5,
+        "name": "Đoàn Anh Tuấn",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 150,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:53:58.190Z"
+  },
+  {
+    "sequence": 2,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "email": "[REDACTED]",
+      "password": "[REDACTED]",
+      "roleId": 2,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_NGUOIDUNG"
+      ]
+    },
+    "startedAt": "2026-10-09T12:53:58.281Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:58.289Z"
+  },
+  {
+    "sequence": 3,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "email": "[REDACTED]",
+      "password": "[REDACTED]",
+      "roleId": 2
+    },
+    "startedAt": "2026-10-09T12:53:58.519Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:58.523Z"
+  },
+  {
+    "sequence": 4,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "email": "[REDACTED]",
+      "password": "[REDACTED]",
+      "roleId": 2
+    },
+    "startedAt": "2026-10-09T12:53:58.693Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "password must be 8 to 72 UTF-8 bytes."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:58.698Z"
+  },
+  {
+    "sequence": 5,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "email": "[REDACTED]",
+      "password": "[REDACTED]",
+      "roleId": 2
+    },
+    "startedAt": "2026-10-09T12:53:58.863Z",
+    "status": 200,
+    "response": {
+      "user": {
+        "NguoiDungID": 13,
+        "HoTen": "R6C-83ff6062",
+        "Email": "[REDACTED]",
+        "SoDienThoai": "[REDACTED]",
+        "MaVaiTro": "QUAN_LY_RAP",
+        "TenVaiTro": "Quản lý rạp",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:53:58.932Z"
+  },
+  {
+    "sequence": 6,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:53:59.098Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:59.102Z"
+  },
+  {
+    "sequence": 7,
+    "url": "http://127.0.0.1:60874/api/admin/users?roleId=2&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:53:59.274Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:59.277Z"
+  },
+  {
+    "sequence": 8,
+    "url": "http://127.0.0.1:60874/api/admin/users?roleId=2",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:53:59.445Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:59.449Z"
+  },
+  {
+    "sequence": 9,
+    "url": "http://127.0.0.1:60874/api/admin/users?roleId=2",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:53:59.616Z",
+    "status": 200,
+    "response": {
+      "users": [
+        {
+          "NguoiDungID": 13,
+          "HoTen": "R6C-83ff6062",
+          "Email": "[REDACTED]",
+          "SoDienThoai": "[REDACTED]",
+          "NgayTao": "2026-10-09T12:53:58.930Z",
+          "TrangThai": "Hoạt động",
+          "VaiTroID": 2,
+          "MaVaiTro": "QUAN_LY_RAP",
+          "TenVaiTro": "Quản lý rạp",
+          "DiemTichLuy": null
+        },
+        {
+          "NguoiDungID": 2,
+          "HoTen": "Nguyễn Văn Quản Lý 1",
+          "Email": "[REDACTED]",
+          "SoDienThoai": "[REDACTED]",
+          "NgayTao": "2026-01-04T17:00:00.000Z",
+          "TrangThai": "Hoạt động",
+          "VaiTroID": 2,
+          "MaVaiTro": "QUAN_LY_RAP",
+          "TenVaiTro": "Quản lý rạp",
+          "DiemTichLuy": null
+        },
+        {
+          "NguoiDungID": 3,
+          "HoTen": "Trần Thị Quản Lý 2",
+          "Email": "[REDACTED]",
+          "SoDienThoai": "[REDACTED]",
+          "NgayTao": "2026-01-04T17:00:00.000Z",
+          "TrangThai": "Hoạt động",
+          "VaiTroID": 2,
+          "MaVaiTro": "QUAN_LY_RAP",
+          "TenVaiTro": "Quản lý rạp",
+          "DiemTichLuy": null
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:53:59.620Z"
+  },
+  {
+    "sequence": 10,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "email": "[REDACTED]",
+      "password": "[REDACTED]",
+      "roleId": 2
+    },
+    "startedAt": "2026-10-09T12:53:59.788Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "EMAIL_ALREADY_EXISTS",
+        "message": "This email already exists."
+      }
+    },
+    "completedAt": "2026-10-09T12:53:59.854Z"
+  },
+  {
+    "sequence": 11,
+    "url": "http://127.0.0.1:60874/api/admin/users",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "email": "[REDACTED]",
+      "password": "[REDACTED]",
+      "roleId": 2147483647
+    },
+    "startedAt": "2026-10-09T12:54:00.017Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REFERENCE",
+        "message": "The request references data that does not exist or is not allowed."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:00.083Z"
+  },
+  {
+    "sequence": 12,
+    "url": "http://127.0.0.1:60874/api/admin/users/13/status",
+    "method": "PUT",
+    "input": {
+      "status": "Bị khóa",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_NGUOIDUNG"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:00.240Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:00.244Z"
+  },
+  {
+    "sequence": 13,
+    "url": "http://127.0.0.1:60874/api/admin/users/13/status",
+    "method": "PUT",
+    "input": {
+      "status": "Bị khóa"
+    },
+    "startedAt": "2026-10-09T12:54:00.412Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:00.416Z"
+  },
+  {
+    "sequence": 14,
+    "url": "http://127.0.0.1:60874/api/admin/users/13/status",
+    "method": "PUT",
+    "input": {
+      "status": "Bị khóa"
+    },
+    "startedAt": "2026-10-09T12:54:00.580Z",
+    "status": 200,
+    "response": {
+      "user": {
+        "NguoiDungID": 13,
+        "HoTen": "R6C-83ff6062",
+        "Email": "[REDACTED]",
+        "TrangThai": "Bị khóa"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:00.584Z"
+  },
+  {
+    "sequence": 15,
+    "url": "http://127.0.0.1:60874/api/admin/users/13/status",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:00.746Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "status is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:00.749Z"
+  },
+  {
+    "sequence": 16,
+    "url": "http://127.0.0.1:60874/api/admin/users/13/status",
+    "method": "PUT",
+    "input": {
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:00.911Z",
+    "status": 200,
+    "response": {
+      "user": {
+        "NguoiDungID": 13,
+        "HoTen": "R6C-83ff6062",
+        "Email": "[REDACTED]",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:00.915Z"
+  },
+  {
+    "sequence": 17,
+    "url": "http://127.0.0.1:60874/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:54:00.999Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 13,
+        "name": "R6C-83ff6062",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "QUAN_LY_RAP",
+        "roleName": "Quản lý rạp",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.062Z"
+  },
+  {
+    "sequence": 18,
+    "url": "http://127.0.0.1:60874/api/admin/roles",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "R6C-83ff6062",
+      "description": "owned role",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_VAITRO"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:01.141Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.144Z"
+  },
+  {
+    "sequence": 19,
+    "url": "http://127.0.0.1:60874/api/admin/roles",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "R6C-83ff6062",
+      "description": "owned role"
+    },
+    "startedAt": "2026-10-09T12:54:01.309Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.312Z"
+  },
+  {
+    "sequence": 20,
+    "url": "http://127.0.0.1:60874/api/admin/roles",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "R6C-83ff6062",
+      "description": "owned role"
+    },
+    "startedAt": "2026-10-09T12:54:01.486Z",
+    "status": 200,
+    "response": {
+      "role": {
+        "VaiTroID": 7,
+        "MaVaiTro": "R6C-83ff6062",
+        "TenVaiTro": "R6C-83ff6062",
+        "MoTa": "owned role"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.491Z"
+  },
+  {
+    "sequence": 21,
+    "url": "http://127.0.0.1:60874/api/admin/roles",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:01.653Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "code is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.657Z"
+  },
+  {
+    "sequence": 22,
+    "url": "http://127.0.0.1:60874/api/admin/roles?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:01.821Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.824Z"
+  },
+  {
+    "sequence": 23,
+    "url": "http://127.0.0.1:60874/api/admin/roles",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:01.989Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:01.992Z"
+  },
+  {
+    "sequence": 24,
+    "url": "http://127.0.0.1:60874/api/admin/roles",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:02.157Z",
+    "status": 200,
+    "response": {
+      "roles": [
+        {
+          "VaiTroID": 1,
+          "MaVaiTro": "ADMIN",
+          "TenVaiTro": "Quản trị viên",
+          "MoTa": "Toàn quyền quản trị hệ thống, tài khoản, cấu hình và báo cáo"
+        },
+        {
+          "VaiTroID": 2,
+          "MaVaiTro": "QUAN_LY_RAP",
+          "TenVaiTro": "Quản lý rạp",
+          "MoTa": "Quản lý phòng chiếu, ghế, suất chiếu và giá vé trong phạm vi rạp được phân công"
+        },
+        {
+          "VaiTroID": 3,
+          "MaVaiTro": "CSKH",
+          "TenVaiTro": "Chăm sóc khách hàng",
+          "MoTa": "Tiếp nhận, tra cứu và xử lý khiếu nại của khách hàng"
+        },
+        {
+          "VaiTroID": 4,
+          "MaVaiTro": "KHACH_HANG",
+          "TenVaiTro": "Khách hàng",
+          "MoTa": "Người dùng đặt vé xem phim, mua đồ ăn, đánh giá và gửi khiếu nại"
+        },
+        {
+          "VaiTroID": 7,
+          "MaVaiTro": "R6C-83ff6062",
+          "TenVaiTro": "R6C-83ff6062",
+          "MoTa": "owned role"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:02.161Z"
+  },
+  {
+    "sequence": 25,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "description": "edit",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_VAITRO"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:02.322Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:02.325Z"
+  },
+  {
+    "sequence": 26,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "description": "edit"
+    },
+    "startedAt": "2026-10-09T12:54:02.494Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:02.498Z"
+  },
+  {
+    "sequence": 27,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "description": "edit"
+    },
+    "startedAt": "2026-10-09T12:54:02.668Z",
+    "status": 200,
+    "response": {
+      "role": {
+        "VaiTroID": 7,
+        "MaVaiTro": "R6C-83ff6062",
+        "TenVaiTro": "R6C-83ff6062 edit",
+        "MoTa": "edit"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:02.672Z"
+  },
+  {
+    "sequence": 28,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:02.836Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:02.839Z"
+  },
+  {
+    "sequence": 29,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "R6C-83ff6062",
+      "description": "owned permission",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_QUYEN"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:03.001Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:03.003Z"
+  },
+  {
+    "sequence": 30,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "R6C-83ff6062",
+      "description": "owned permission"
+    },
+    "startedAt": "2026-10-09T12:54:03.165Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:03.167Z"
+  },
+  {
+    "sequence": 31,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "R6C-83ff6062",
+      "description": "owned permission"
+    },
+    "startedAt": "2026-10-09T12:54:03.337Z",
+    "status": 200,
+    "response": {
+      "permission": {
+        "QuyenID": 26,
+        "MaQuyen": "R6C-83ff6062",
+        "TenQuyen": "R6C-83ff6062",
+        "MoTa": "owned permission"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:03.341Z"
+  },
+  {
+    "sequence": 32,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:03.506Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "code is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:03.509Z"
+  },
+  {
+    "sequence": 33,
+    "url": "http://127.0.0.1:60874/api/admin/permissions?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:03.671Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:03.676Z"
+  },
+  {
+    "sequence": 34,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:03.843Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:03.845Z"
+  },
+  {
+    "sequence": 35,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:04.009Z",
+    "status": 200,
+    "response": {
+      "permissions": [
+        {
+          "QuyenID": 4,
+          "MaQuyen": "DANH_GIA",
+          "TenQuyen": "Đánh giá phim đã xem",
+          "MoTa": "Gửi số sao và nhận xét cho phim đã xem"
+        },
+        {
+          "QuyenID": 2,
+          "MaQuyen": "DAT_VE",
+          "TenQuyen": "Đặt vé xem phim",
+          "MoTa": "Chọn ghế, áp dụng khuyến mãi, tạo đơn đặt vé"
+        },
+        {
+          "QuyenID": 5,
+          "MaQuyen": "GUI_KHIEU_NAI",
+          "TenQuyen": "Gửi khiếu nại",
+          "MoTa": "Tạo khiếu nại gửi bộ phận chăm sóc khách hàng"
+        },
+        {
+          "QuyenID": 17,
+          "MaQuyen": "PHANCONG_RAP",
+          "TenQuyen": "Phân công quản lý rạp",
+          "MoTa": "Gán rạp quản lý cho tài khoản quản lý rạp"
+        },
+        {
+          "QuyenID": 9,
+          "MaQuyen": "QL_BANG_GIA",
+          "TenQuyen": "Cấu hình bảng giá rạp",
+          "MoTa": "Cài đặt phụ thu bảng giá rạp"
+        },
+        {
+          "QuyenID": 19,
+          "MaQuyen": "QL_DANHMUC_PHIM",
+          "TenQuyen": "Quản lý phim",
+          "MoTa": "Thêm, sửa, xóa danh mục phim và diễn viên"
+        },
+        {
+          "QuyenID": 7,
+          "MaQuyen": "QL_GHE",
+          "TenQuyen": "Quản lý sơ đồ ghế rạp",
+          "MoTa": "Thêm, sửa sơ đồ ghế thuộc phòng chiếu"
+        },
+        {
+          "QuyenID": 11,
+          "MaQuyen": "QL_KHIEUNAI",
+          "TenQuyen": "Xem danh sách khiếu nại",
+          "MoTa": "Truy cập hàng đợi khiếu nại"
+        },
+        {
+          "QuyenID": 22,
+          "MaQuyen": "QL_KHUYENMAI",
+          "TenQuyen": "Quản lý khuyến mãi",
+          "MoTa": "Tạo và cấu hình mã giảm giá"
+        },
+        {
+          "QuyenID": 14,
+          "MaQuyen": "QL_NGUOIDUNG",
+          "TenQuyen": "Quản lý tài khoản",
+          "MoTa": "Xem, khóa, mở khóa, tạo tài khoản"
+        },
+        {
+          "QuyenID": 6,
+          "MaQuyen": "QL_PHONG",
+          "TenQuyen": "Quản lý phòng chiếu rạp",
+          "MoTa": "Thêm, sửa phòng chiếu thuộc rạp phân công"
+        },
+        {
+          "QuyenID": 16,
+          "MaQuyen": "QL_QUYEN",
+          "TenQuyen": "Quản lý quyền",
+          "MoTa": "Quản lý danh mục quyền và gán quyền"
+        },
+        {
+          "QuyenID": 18,
+          "MaQuyen": "QL_RAP",
+          "TenQuyen": "Quản lý rạp chiếu phim",
+          "MoTa": "Thêm, sửa rạp trên toàn hệ thống"
+        },
+        {
+          "QuyenID": 21,
+          "MaQuyen": "QL_SANPHAM",
+          "TenQuyen": "Quản lý sản phẩm đồ ăn",
+          "MoTa": "Thêm, sửa giá sản phẩm ăn uống"
+        },
+        {
+          "QuyenID": 8,
+          "MaQuyen": "QL_SUAT_CHIEU",
+          "TenQuyen": "Quản lý suất chiếu rạp",
+          "MoTa": "Lập lịch, điều chỉnh, hủy suất chiếu rạp"
+        },
+        {
+          "QuyenID": 20,
+          "MaQuyen": "QL_THELOAI",
+          "TenQuyen": "Quản lý thể loại",
+          "MoTa": "Thêm, sửa thể loại phim"
+        },
+        {
+          "QuyenID": 15,
+          "MaQuyen": "QL_VAITRO",
+          "TenQuyen": "Quản lý vai trò",
+          "MoTa": "Thêm, sửa danh mục vai trò"
+        },
+        {
+          "QuyenID": 26,
+          "MaQuyen": "R6C-83ff6062",
+          "TenQuyen": "R6C-83ff6062",
+          "MoTa": "owned permission"
+        },
+        {
+          "QuyenID": 3,
+          "MaQuyen": "THANH_TOAN",
+          "TenQuyen": "Thanh toán đơn hàng",
+          "MoTa": "Thực hiện thanh toán trực tuyến cho vé và đồ ăn"
+        },
+        {
+          "QuyenID": 13,
+          "MaQuyen": "TRA_CUU_DON",
+          "TenQuyen": "Tra cứu đơn tham chiếu",
+          "MoTa": "Xem thông tin đơn đặt vé liên quan đến khiếu nại"
+        },
+        {
+          "QuyenID": 10,
+          "MaQuyen": "XEM_BAO_CAO_RAP",
+          "TenQuyen": "Xem báo cáo doanh thu rạp",
+          "MoTa": "Xem thống kê doanh thu rạp phân công"
+        },
+        {
+          "QuyenID": 23,
+          "MaQuyen": "XEM_BAO_CAO_TOANHE",
+          "TenQuyen": "Báo cáo doanh thu toàn hệ thống",
+          "MoTa": "Xem doanh thu toàn chuỗi rạp"
+        },
+        {
+          "QuyenID": 1,
+          "MaQuyen": "XEM_PHIM",
+          "TenQuyen": "Xem thông tin phim và lịch chiếu",
+          "MoTa": "Khách hàng xem danh mục phim, lịch chiếu"
+        },
+        {
+          "QuyenID": 12,
+          "MaQuyen": "XULY_KHIEUNAI",
+          "TenQuyen": "Ghi nhận xử lý khiếu nại",
+          "MoTa": "Ghi nhận tiến trình và đổi trạng thái khiếu nại"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:04.013Z"
+  },
+  {
+    "sequence": 36,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "description": "edit",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_QUYEN"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:04.171Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:04.174Z"
+  },
+  {
+    "sequence": 37,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "description": "edit"
+    },
+    "startedAt": "2026-10-09T12:54:04.336Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:04.338Z"
+  },
+  {
+    "sequence": 38,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "description": "edit"
+    },
+    "startedAt": "2026-10-09T12:54:04.501Z",
+    "status": 200,
+    "response": {
+      "permission": {
+        "QuyenID": 26,
+        "MaQuyen": "R6C-83ff6062",
+        "TenQuyen": "R6C-83ff6062 edit",
+        "MoTa": "edit"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:04.505Z"
+  },
+  {
+    "sequence": 39,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:04.666Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:04.669Z"
+  },
+  {
+    "sequence": 40,
+    "url": "http://127.0.0.1:60874/api/admin/permissions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "name": "duplicate"
+    },
+    "startedAt": "2026-10-09T12:54:04.836Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "PERMISSION_CODE_EXISTS",
+        "message": "This permission code already exists."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:04.840Z"
+  },
+  {
+    "sequence": 41,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "PUT",
+    "input": {
+      "permissionIds": [
+        26
+      ],
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_QUYEN"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:05.000Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:05.003Z"
+  },
+  {
+    "sequence": 42,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "PUT",
+    "input": {
+      "permissionIds": [
+        26
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:05.163Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:05.166Z"
+  },
+  {
+    "sequence": 43,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "PUT",
+    "input": {
+      "permissionIds": [
+        26
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:05.329Z",
+    "status": 200,
+    "response": {
+      "permissions": [
+        {
+          "VaiTroID": 7,
+          "QuyenID": 26,
+          "MaQuyen": "R6C-83ff6062",
+          "TenQuyen": "R6C-83ff6062 edit"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:05.334Z"
+  },
+  {
+    "sequence": 44,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:05.496Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:05.498Z"
+  },
+  {
+    "sequence": 45,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:05.659Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:05.661Z"
+  },
+  {
+    "sequence": 46,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:05.833Z",
+    "status": 200,
+    "response": {
+      "permissions": [
+        {
+          "VaiTroID": 7,
+          "QuyenID": 26,
+          "MaQuyen": "R6C-83ff6062",
+          "TenQuyen": "R6C-83ff6062 edit"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:05.837Z"
+  },
+  {
+    "sequence": 47,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "PUT",
+    "input": {
+      "permissionIds": [
+        2147483647
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:06.014Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REFERENCE",
+        "message": "The request references data that does not exist or is not allowed."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:06.019Z"
+  },
+  {
+    "sequence": 48,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_VAITRO"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:06.179Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:06.183Z"
+  },
+  {
+    "sequence": 49,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:06.348Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:06.352Z"
+  },
+  {
+    "sequence": 50,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:06.517Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "ROLE_IN_USE",
+        "message": "A role assigned to users or permissions cannot be deleted."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:06.521Z"
+  },
+  {
+    "sequence": 51,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_QUYEN"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:06.685Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:06.687Z"
+  },
+  {
+    "sequence": 52,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:06.854Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:06.857Z"
+  },
+  {
+    "sequence": 53,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:07.035Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "PERMISSION_IN_USE",
+        "message": "A permission assigned to roles cannot be deleted."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:07.038Z"
+  },
+  {
+    "sequence": 54,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7/permissions",
+    "method": "PUT",
+    "input": {
+      "permissionIds": []
+    },
+    "startedAt": "2026-10-09T12:54:07.217Z",
+    "status": 200,
+    "response": {
+      "permissions": []
+    },
+    "completedAt": "2026-10-09T12:54:07.221Z"
+  },
+  {
+    "sequence": 55,
+    "url": "http://127.0.0.1:60874/api/admin/permissions/26",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:07.402Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa quyền."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:07.406Z"
+  },
+  {
+    "sequence": 56,
+    "url": "http://127.0.0.1:60874/api/admin/roles/7",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:07.584Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa vai trò."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:07.588Z"
+  },
+  {
+    "sequence": 57,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "address": "Fixture",
+      "city": "HCM",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:07.754Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:07.756Z"
+  },
+  {
+    "sequence": 58,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "address": "Fixture",
+      "city": "HCM"
+    },
+    "startedAt": "2026-10-09T12:54:07.922Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:07.926Z"
+  },
+  {
+    "sequence": 59,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "address": "Fixture",
+      "city": "HCM"
+    },
+    "startedAt": "2026-10-09T12:54:08.095Z",
+    "status": 200,
+    "response": {
+      "cinema": {
+        "RapID": 13,
+        "TenRap": "R6C-83ff6062",
+        "DiaChi": "Fixture",
+        "ThanhPho": "HCM",
+        "SoDienThoai": "[REDACTED]",
+        "MoTa": null,
+        "NgayHoatDong": null,
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:08.100Z"
+  },
+  {
+    "sequence": 60,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:08.270Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:08.273Z"
+  },
+  {
+    "sequence": 61,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:08.433Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:08.436Z"
+  },
+  {
+    "sequence": 62,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:08.598Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:08.601Z"
+  },
+  {
+    "sequence": 63,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:08.763Z",
+    "status": 200,
+    "response": {
+      "cinemas": [
+        {
+          "RapID": 3,
+          "TenRap": "Cinema Star Times City",
+          "DiaChi": "458 Minh Khai, Vĩnh Tuy, Hai Bà Trưng",
+          "ThanhPho": "Hà Nội",
+          "SoDienThoai": "[REDACTED]",
+          "MoTa": "Cụm rạp tiêu chuẩn quốc tế lớn nhất miền Bắc",
+          "NgayHoatDong": "2024-03-01",
+          "TrangThai": "Hoạt động"
+        },
+        {
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062",
+          "DiaChi": "Fixture",
+          "ThanhPho": "HCM",
+          "SoDienThoai": "[REDACTED]",
+          "MoTa": null,
+          "NgayHoatDong": null,
+          "TrangThai": "Hoạt động"
+        },
+        {
+          "RapID": 1,
+          "TenRap": "Cinema Star Hai Bà Trưng",
+          "DiaChi": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+          "ThanhPho": "Hồ Chí Minh",
+          "SoDienThoai": "[REDACTED]",
+          "MoTa": "Cụm rạp flagship trung tâm Sài Gòn với phòng chiếu IMAX hiện đại",
+          "NgayHoatDong": "2024-01-01",
+          "TrangThai": "Hoạt động"
+        },
+        {
+          "RapID": 2,
+          "TenRap": "Cinema Star Landmark",
+          "DiaChi": "208 Nguyễn Hữu Cảnh, Phường 22, Bình Thạnh",
+          "ThanhPho": "Hồ Chí Minh",
+          "SoDienThoai": "[REDACTED]",
+          "MoTa": "Rạp chiếu phim cao cấp tại Landmark với màn hình ScreenX 270 độ",
+          "NgayHoatDong": "2024-06-01",
+          "TrangThai": "Hoạt động"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:08.766Z"
+  },
+  {
+    "sequence": 64,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "address": "Edited",
+      "city": "HCM",
+      "status": "Hoạt động",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:08.933Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:08.935Z"
+  },
+  {
+    "sequence": 65,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "address": "Edited",
+      "city": "HCM",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:09.104Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:09.106Z"
+  },
+  {
+    "sequence": 66,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "address": "Edited",
+      "city": "HCM",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:09.270Z",
+    "status": 200,
+    "response": {
+      "cinema": {
+        "RapID": 13,
+        "TenRap": "R6C-83ff6062 edit",
+        "DiaChi": "Edited",
+        "ThanhPho": "HCM",
+        "SoDienThoai": "[REDACTED]",
+        "MoTa": null,
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:09.274Z"
+  },
+  {
+    "sequence": 67,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:09.439Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:09.441Z"
+  },
+  {
+    "sequence": 68,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "PHANCONG_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:09.599Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:09.601Z"
+  },
+  {
+    "sequence": 69,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:09.761Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:09.764Z"
+  },
+  {
+    "sequence": 70,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:09.931Z",
+    "status": 200,
+    "response": {
+      "assignment": {
+        "PhanCongID": 14,
+        "NguoiDungID": 13,
+        "HoTen": "R6C-83ff6062",
+        "RapID": 13,
+        "TenRap": "R6C-83ff6062 edit",
+        "NgayBatDau": "2026-10-09",
+        "NgayKetThuc": null,
+        "TrangThai": "Hiệu lực"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:09.936Z"
+  },
+  {
+    "sequence": 71,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:10.099Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "userId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:10.102Z"
+  },
+  {
+    "sequence": 72,
+    "url": "http://127.0.0.1:60874/api/admin/assignments?cinemaId=13&userId=13&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:10.264Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:10.266Z"
+  },
+  {
+    "sequence": 73,
+    "url": "http://127.0.0.1:60874/api/admin/assignments?cinemaId=13&userId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:10.430Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:10.432Z"
+  },
+  {
+    "sequence": 74,
+    "url": "http://127.0.0.1:60874/api/admin/assignments?cinemaId=13&userId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:10.592Z",
+    "status": 200,
+    "response": {
+      "assignments": [
+        {
+          "PhanCongID": 14,
+          "NguoiDungID": 13,
+          "TenQuanLy": "R6C-83ff6062",
+          "Email": "[REDACTED]",
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "ThanhPho": "HCM",
+          "NgayBatDau": "2026-10-09",
+          "NgayKetThuc": null,
+          "TrangThai": "Hiệu lực"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:10.596Z"
+  },
+  {
+    "sequence": 75,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:10.757Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "ASSIGNMENT_DUPLICATE",
+        "message": "An identical assignment already exists."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:10.761Z"
+  },
+  {
+    "sequence": 76,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {
+      "userId": 1,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:10.926Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "ASSIGNMENT_MANAGER_REQUIRED",
+        "message": "The assigned user must have the manager role."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:10.931Z"
+  },
+  {
+    "sequence": 77,
+    "url": "http://127.0.0.1:60874/api/admin/assignments",
+    "method": "POST",
+    "input": {
+      "userId": 13,
+      "cinemaId": 2147483647,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:11.089Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REFERENCE",
+        "message": "The request references data that does not exist or is not allowed."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:11.094Z"
+  },
+  {
+    "sequence": 78,
+    "url": "http://127.0.0.1:60874/api/admin/assignments?userId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:11.254Z",
+    "status": 200,
+    "response": {
+      "assignments": [
+        {
+          "PhanCongID": 14,
+          "NguoiDungID": 13,
+          "TenQuanLy": "R6C-83ff6062",
+          "Email": "[REDACTED]",
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "ThanhPho": "HCM",
+          "NgayBatDau": "2026-10-09",
+          "NgayKetThuc": null,
+          "TrangThai": "Hiệu lực"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:11.259Z"
+  },
+  {
+    "sequence": 79,
+    "url": "http://127.0.0.1:60874/api/manager/cinemas/13/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:11.262Z",
+    "status": 200,
+    "response": {
+      "rooms": []
+    },
+    "completedAt": "2026-10-09T12:54:11.266Z"
+  },
+  {
+    "sequence": 80,
+    "url": "http://127.0.0.1:60874/api/admin/assignments/14",
+    "method": "PUT",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null,
+      "status": "Đã hủy",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "PHANCONG_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:11.426Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:11.429Z"
+  },
+  {
+    "sequence": 81,
+    "url": "http://127.0.0.1:60874/api/admin/assignments/14",
+    "method": "PUT",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null,
+      "status": "Đã hủy"
+    },
+    "startedAt": "2026-10-09T12:54:11.594Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:11.597Z"
+  },
+  {
+    "sequence": 82,
+    "url": "http://127.0.0.1:60874/api/admin/assignments/14",
+    "method": "PUT",
+    "input": {
+      "userId": 13,
+      "cinemaId": 13,
+      "startsOn": "2026-10-09",
+      "endsOn": null,
+      "status": "Đã hủy"
+    },
+    "startedAt": "2026-10-09T12:54:11.765Z",
+    "status": 200,
+    "response": {
+      "assignment": {
+        "PhanCongID": 14,
+        "NguoiDungID": 13,
+        "TenQuanLy": "R6C-83ff6062",
+        "Email": "[REDACTED]",
+        "RapID": 13,
+        "TenRap": "R6C-83ff6062 edit",
+        "NgayBatDau": "2026-10-09",
+        "NgayKetThuc": null,
+        "TrangThai": "Đã hủy"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:11.769Z"
+  },
+  {
+    "sequence": 83,
+    "url": "http://127.0.0.1:60874/api/admin/assignments/14",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:11.931Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "userId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:11.934Z"
+  },
+  {
+    "sequence": 84,
+    "url": "http://127.0.0.1:60874/api/admin/assignments?userId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:12.094Z",
+    "status": 200,
+    "response": {
+      "assignments": [
+        {
+          "PhanCongID": 14,
+          "NguoiDungID": 13,
+          "TenQuanLy": "R6C-83ff6062",
+          "Email": "[REDACTED]",
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "ThanhPho": "HCM",
+          "NgayBatDau": "2026-10-09",
+          "NgayKetThuc": null,
+          "TrangThai": "Đã hủy"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:12.097Z"
+  },
+  {
+    "sequence": 85,
+    "url": "http://127.0.0.1:60874/api/manager/cinemas/13/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:12.099Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:12.103Z"
+  },
+  {
+    "sequence": 86,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "POST",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "owned image",
+      "displayOrder": 1,
+      "status": "Hoạt động",
+      "cover": true,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:12.263Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:12.265Z"
+  },
+  {
+    "sequence": 87,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "POST",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "owned image",
+      "displayOrder": 1,
+      "status": "Hoạt động",
+      "cover": true
+    },
+    "startedAt": "2026-10-09T12:54:12.429Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:12.431Z"
+  },
+  {
+    "sequence": 88,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "POST",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "owned image",
+      "displayOrder": 1,
+      "status": "Hoạt động",
+      "cover": true
+    },
+    "startedAt": "2026-10-09T12:54:12.605Z",
+    "status": 201,
+    "response": {
+      "image": {
+        "HinhAnhRapID": 8,
+        "RapID": 13,
+        "URL": "/r6c-image.svg",
+        "MoTa": "owned image",
+        "LaAnhDaiDien": true,
+        "ThuTuHienThi": 1,
+        "TrangThai": "Hoạt động",
+        "NgayTao": "2026-10-09T12:54:12.609Z"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:12.610Z"
+  },
+  {
+    "sequence": 89,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:12.776Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "url is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:12.779Z"
+  },
+  {
+    "sequence": 90,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "POST",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "owned image",
+      "displayOrder": 2,
+      "status": "Hoạt động",
+      "cover": false
+    },
+    "startedAt": "2026-10-09T12:54:12.939Z",
+    "status": 201,
+    "response": {
+      "image": {
+        "HinhAnhRapID": 9,
+        "RapID": 13,
+        "URL": "/r6c-image.svg",
+        "MoTa": "owned image",
+        "LaAnhDaiDien": false,
+        "ThuTuHienThi": 2,
+        "TrangThai": "Hoạt động",
+        "NgayTao": "2026-10-09T12:54:12.942Z"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:12.943Z"
+  },
+  {
+    "sequence": 91,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:13.105Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "url is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:13.107Z"
+  },
+  {
+    "sequence": 92,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:13.266Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:13.269Z"
+  },
+  {
+    "sequence": 93,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:13.434Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:13.437Z"
+  },
+  {
+    "sequence": 94,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:13.597Z",
+    "status": 200,
+    "response": {
+      "images": [
+        {
+          "HinhAnhRapID": 8,
+          "RapID": 13,
+          "URL": "/r6c-image.svg",
+          "MoTa": "owned image",
+          "LaAnhDaiDien": true,
+          "ThuTuHienThi": 1,
+          "TrangThai": "Hoạt động",
+          "NgayTao": "2026-10-09T12:54:12.609Z"
+        },
+        {
+          "HinhAnhRapID": 9,
+          "RapID": 13,
+          "URL": "/r6c-image.svg",
+          "MoTa": "owned image",
+          "LaAnhDaiDien": false,
+          "ThuTuHienThi": 2,
+          "TrangThai": "Hoạt động",
+          "NgayTao": "2026-10-09T12:54:12.942Z"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:13.601Z"
+  },
+  {
+    "sequence": 95,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "PUT",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "updated",
+      "displayOrder": 1,
+      "status": "Hoạt động",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:13.767Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:13.769Z"
+  },
+  {
+    "sequence": 96,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "PUT",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "updated",
+      "displayOrder": 1,
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:13.927Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:13.929Z"
+  },
+  {
+    "sequence": 97,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "PUT",
+    "input": {
+      "url": "/r6c-image.svg",
+      "description": "updated",
+      "displayOrder": 1,
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:14.088Z",
+    "status": 200,
+    "response": {
+      "image": {
+        "HinhAnhRapID": 8,
+        "RapID": 13,
+        "URL": "/r6c-image.svg",
+        "MoTa": "updated",
+        "LaAnhDaiDien": true,
+        "ThuTuHienThi": 1,
+        "TrangThai": "Hoạt động",
+        "NgayTao": "2026-10-09T12:54:12.609Z"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:14.092Z"
+  },
+  {
+    "sequence": 98,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:14.251Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "url is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:14.254Z"
+  },
+  {
+    "sequence": 99,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/9/cover",
+    "method": "PATCH",
+    "input": {
+      "cover": true,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:14.410Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:14.412Z"
+  },
+  {
+    "sequence": 100,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/9/cover",
+    "method": "PATCH",
+    "input": {
+      "cover": true
+    },
+    "startedAt": "2026-10-09T12:54:14.582Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:14.585Z"
+  },
+  {
+    "sequence": 101,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/9/cover",
+    "method": "PATCH",
+    "input": {
+      "cover": true
+    },
+    "startedAt": "2026-10-09T12:54:14.746Z",
+    "status": 200,
+    "response": {
+      "image": {
+        "HinhAnhRapID": 9,
+        "RapID": 13,
+        "URL": "/r6c-image.svg",
+        "MoTa": "owned image",
+        "LaAnhDaiDien": true,
+        "ThuTuHienThi": 2,
+        "TrangThai": "Hoạt động",
+        "NgayTao": "2026-10-09T12:54:12.942Z"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:14.750Z"
+  },
+  {
+    "sequence": 102,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/9/cover",
+    "method": "PATCH",
+    "input": {
+      "cover": false
+    },
+    "startedAt": "2026-10-09T12:54:14.915Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "Set cover to true; use the image lifecycle controls to remove a cover."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:14.918Z"
+  },
+  {
+    "sequence": 103,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:15.074Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:15.077Z"
+  },
+  {
+    "sequence": 104,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:15.236Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:15.240Z"
+  },
+  {
+    "sequence": 105,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/8",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:15.403Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa ảnh rạp."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:15.407Z"
+  },
+  {
+    "sequence": 106,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13/images/9",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:15.571Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa ảnh rạp."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:15.574Z"
+  },
+  {
+    "sequence": 107,
+    "url": "http://127.0.0.1:60874/api/admin/rooms",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "name": "R6C-83ff6062",
+      "type": "2D",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_PHONG"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:15.739Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:15.742Z"
+  },
+  {
+    "sequence": 108,
+    "url": "http://127.0.0.1:60874/api/admin/rooms",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "name": "R6C-83ff6062",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:54:15.910Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:15.912Z"
+  },
+  {
+    "sequence": 109,
+    "url": "http://127.0.0.1:60874/api/admin/rooms",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "name": "R6C-83ff6062",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:54:16.084Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "PhongID": 16,
+        "RapID": 13,
+        "TenPhong": "R6C-83ff6062",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:16.088Z"
+  },
+  {
+    "sequence": 110,
+    "url": "http://127.0.0.1:60874/api/admin/rooms",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:16.250Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cinemaId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:16.253Z"
+  },
+  {
+    "sequence": 111,
+    "url": "http://127.0.0.1:60874/api/admin/rooms?cinemaId=13&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:16.411Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:16.413Z"
+  },
+  {
+    "sequence": 112,
+    "url": "http://127.0.0.1:60874/api/admin/rooms?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:16.573Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:16.575Z"
+  },
+  {
+    "sequence": 113,
+    "url": "http://127.0.0.1:60874/api/admin/rooms?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:16.736Z",
+    "status": 200,
+    "response": {
+      "rooms": [
+        {
+          "PhongID": 16,
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "TenPhong": "R6C-83ff6062",
+          "LoaiPhong": "2D",
+          "TrangThai": "Hoạt động",
+          "TongSoGhe": 0
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:16.739Z"
+  },
+  {
+    "sequence": 114,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "type": "2D",
+      "status": "Hoạt động",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_PHONG"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:16.918Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:16.921Z"
+  },
+  {
+    "sequence": 115,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:17.106Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:17.110Z"
+  },
+  {
+    "sequence": 116,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:17.319Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "PhongID": 16,
+        "RapID": 13,
+        "TenPhong": "R6C-83ff6062 edit",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:17.325Z"
+  },
+  {
+    "sequence": 117,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:17.579Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:17.582Z"
+  },
+  {
+    "sequence": 118,
+    "url": "http://127.0.0.1:60874/api/admin/rooms",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "name": "R6C-83ff6062 edit",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:54:17.764Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "ROOM_NAME_CONFLICT",
+        "message": "This room name already exists in the cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:17.770Z"
+  },
+  {
+    "sequence": 119,
+    "url": "http://127.0.0.1:60874/api/admin/seats",
+    "method": "POST",
+    "input": {
+      "roomId": 16,
+      "row": "A",
+      "number": 1,
+      "type": "Thường",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_GHE"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:17.932Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:17.934Z"
+  },
+  {
+    "sequence": 120,
+    "url": "http://127.0.0.1:60874/api/admin/seats",
+    "method": "POST",
+    "input": {
+      "roomId": 16,
+      "row": "A",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:54:18.104Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:18.106Z"
+  },
+  {
+    "sequence": 121,
+    "url": "http://127.0.0.1:60874/api/admin/seats",
+    "method": "POST",
+    "input": {
+      "roomId": 16,
+      "row": "A",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:54:18.279Z",
+    "status": 200,
+    "response": {
+      "seat": {
+        "GheID": 271,
+        "PhongID": 16,
+        "HangGhe": "A",
+        "SoGhe": 1,
+        "LoaiGhe": "Thường",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:18.283Z"
+  },
+  {
+    "sequence": 122,
+    "url": "http://127.0.0.1:60874/api/admin/seats",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:18.444Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "roomId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:18.447Z"
+  },
+  {
+    "sequence": 123,
+    "url": "http://127.0.0.1:60874/api/admin/seats?roomId=16&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:18.611Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:18.613Z"
+  },
+  {
+    "sequence": 124,
+    "url": "http://127.0.0.1:60874/api/admin/seats?roomId=16",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:18.773Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:18.775Z"
+  },
+  {
+    "sequence": 125,
+    "url": "http://127.0.0.1:60874/api/admin/seats?roomId=16",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:18.936Z",
+    "status": 200,
+    "response": {
+      "seats": [
+        {
+          "GheID": 271,
+          "PhongID": 16,
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "HangGhe": "A",
+          "SoGhe": 1,
+          "TenGhe": "A1",
+          "LoaiGhe": "Thường",
+          "TrangThai": "Hoạt động"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:18.939Z"
+  },
+  {
+    "sequence": 126,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "PUT",
+    "input": {
+      "type": "VIP",
+      "status": "Bảo trì",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_GHE"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:19.104Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:19.106Z"
+  },
+  {
+    "sequence": 127,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "PUT",
+    "input": {
+      "type": "VIP",
+      "status": "Bảo trì"
+    },
+    "startedAt": "2026-10-09T12:54:19.268Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:19.271Z"
+  },
+  {
+    "sequence": 128,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "PUT",
+    "input": {
+      "type": "VIP",
+      "status": "Bảo trì"
+    },
+    "startedAt": "2026-10-09T12:54:19.437Z",
+    "status": 200,
+    "response": {
+      "seat": {
+        "GheID": 271,
+        "PhongID": 16,
+        "HangGhe": "A",
+        "SoGhe": 1,
+        "LoaiGhe": "VIP",
+        "TrangThai": "Bảo trì"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:19.447Z"
+  },
+  {
+    "sequence": 129,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:19.608Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "type is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:19.611Z"
+  },
+  {
+    "sequence": 130,
+    "url": "http://127.0.0.1:60874/api/admin/seats",
+    "method": "POST",
+    "input": {
+      "roomId": 16,
+      "row": "A",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:54:19.770Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SEAT_POSITION_CONFLICT",
+        "message": "This seat position already exists in the room."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:19.774Z"
+  },
+  {
+    "sequence": 131,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_GHE"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:19.935Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:19.938Z"
+  },
+  {
+    "sequence": 132,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:20.097Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:20.100Z"
+  },
+  {
+    "sequence": 133,
+    "url": "http://127.0.0.1:60874/api/admin/seats/271",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:20.260Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa ghế."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:20.264Z"
+  },
+  {
+    "sequence": 134,
+    "url": "http://127.0.0.1:60874/api/admin/genres",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_THELOAI"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:20.430Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:20.433Z"
+  },
+  {
+    "sequence": 135,
+    "url": "http://127.0.0.1:60874/api/admin/genres",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062"
+    },
+    "startedAt": "2026-10-09T12:54:20.592Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:20.594Z"
+  },
+  {
+    "sequence": 136,
+    "url": "http://127.0.0.1:60874/api/admin/genres",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062"
+    },
+    "startedAt": "2026-10-09T12:54:20.758Z",
+    "status": 200,
+    "response": {
+      "genre": {
+        "TheLoaiID": 10,
+        "TenTheLoai": "R6C-83ff6062"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:20.763Z"
+  },
+  {
+    "sequence": 137,
+    "url": "http://127.0.0.1:60874/api/admin/genres",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:20.923Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:20.925Z"
+  },
+  {
+    "sequence": 138,
+    "url": "http://127.0.0.1:60874/api/admin/genres?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:21.085Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:21.087Z"
+  },
+  {
+    "sequence": 139,
+    "url": "http://127.0.0.1:60874/api/admin/genres",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:21.248Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:21.250Z"
+  },
+  {
+    "sequence": 140,
+    "url": "http://127.0.0.1:60874/api/admin/genres",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:21.409Z",
+    "status": 200,
+    "response": {
+      "genres": [
+        {
+          "TheLoaiID": 4,
+          "TenTheLoai": "Hài kịch"
+        },
+        {
+          "TheLoaiID": 1,
+          "TenTheLoai": "Hành động"
+        },
+        {
+          "TheLoaiID": 5,
+          "TenTheLoai": "Hoạt hình"
+        },
+        {
+          "TheLoaiID": 3,
+          "TenTheLoai": "Kinh dị"
+        },
+        {
+          "TheLoaiID": 2,
+          "TenTheLoai": "Khoa học viễn tưởng"
+        },
+        {
+          "TheLoaiID": 10,
+          "TenTheLoai": "R6C-83ff6062"
+        },
+        {
+          "TheLoaiID": 7,
+          "TenTheLoai": "Tâm lý - Kịch tính"
+        },
+        {
+          "TheLoaiID": 6,
+          "TenTheLoai": "Tình cảm"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:21.413Z"
+  },
+  {
+    "sequence": 141,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_THELOAI"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:21.581Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:21.584Z"
+  },
+  {
+    "sequence": 142,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit"
+    },
+    "startedAt": "2026-10-09T12:54:21.746Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:21.748Z"
+  },
+  {
+    "sequence": 143,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit"
+    },
+    "startedAt": "2026-10-09T12:54:21.910Z",
+    "status": 200,
+    "response": {
+      "genre": {
+        "TheLoaiID": 10,
+        "TenTheLoai": "R6C-83ff6062 edit"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:21.914Z"
+  },
+  {
+    "sequence": 144,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:22.071Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:22.073Z"
+  },
+  {
+    "sequence": 145,
+    "url": "http://127.0.0.1:60874/api/admin/actors",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "birthDate": "1990-01-01",
+      "nationality": "VN",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:22.227Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:22.230Z"
+  },
+  {
+    "sequence": 146,
+    "url": "http://127.0.0.1:60874/api/admin/actors",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "birthDate": "1990-01-01",
+      "nationality": "VN"
+    },
+    "startedAt": "2026-10-09T12:54:22.393Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:22.395Z"
+  },
+  {
+    "sequence": 147,
+    "url": "http://127.0.0.1:60874/api/admin/actors",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "birthDate": "1990-01-01",
+      "nationality": "VN"
+    },
+    "startedAt": "2026-10-09T12:54:22.561Z",
+    "status": 200,
+    "response": {
+      "actor": {
+        "DienVienID": 23,
+        "HoTen": "R6C-83ff6062",
+        "NgaySinh": "1990-01-01",
+        "QuocTich": "VN"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:22.579Z"
+  },
+  {
+    "sequence": 148,
+    "url": "http://127.0.0.1:60874/api/admin/actors",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:22.753Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:22.756Z"
+  },
+  {
+    "sequence": 149,
+    "url": "http://127.0.0.1:60874/api/admin/actors?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:22.930Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:22.933Z"
+  },
+  {
+    "sequence": 150,
+    "url": "http://127.0.0.1:60874/api/admin/actors",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:23.110Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:23.112Z"
+  },
+  {
+    "sequence": 151,
+    "url": "http://127.0.0.1:60874/api/admin/actors",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:23.302Z",
+    "status": 200,
+    "response": {
+      "actors": [
+        {
+          "DienVienID": 2,
+          "HoTen": "Cillian Murphy",
+          "NgaySinh": "1976-05-25",
+          "QuocTich": "Ireland"
+        },
+        {
+          "DienVienID": 3,
+          "HoTen": "Margot Robbie",
+          "NgaySinh": "1990-07-02",
+          "QuocTich": "Úc"
+        },
+        {
+          "DienVienID": 5,
+          "HoTen": "Phương Anh Đào",
+          "NgaySinh": "1992-04-30",
+          "QuocTich": "Việt Nam"
+        },
+        {
+          "DienVienID": 23,
+          "HoTen": "R6C-83ff6062",
+          "NgaySinh": "1990-01-01",
+          "QuocTich": "VN"
+        },
+        {
+          "DienVienID": 1,
+          "HoTen": "Tom Cruise",
+          "NgaySinh": "1962-07-03",
+          "QuocTich": "Mỹ"
+        },
+        {
+          "DienVienID": 6,
+          "HoTen": "Tuấn Trần",
+          "NgaySinh": "1992-11-20",
+          "QuocTich": "Việt Nam"
+        },
+        {
+          "DienVienID": 4,
+          "HoTen": "Trấn Thành",
+          "NgaySinh": "1987-02-05",
+          "QuocTich": "Việt Nam"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:23.305Z"
+  },
+  {
+    "sequence": 152,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "birthDate": "1991-01-01",
+      "nationality": "VN",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:23.483Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:23.485Z"
+  },
+  {
+    "sequence": 153,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "birthDate": "1991-01-01",
+      "nationality": "VN"
+    },
+    "startedAt": "2026-10-09T12:54:23.657Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:23.660Z"
+  },
+  {
+    "sequence": 154,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062 edit",
+      "birthDate": "1991-01-01",
+      "nationality": "VN"
+    },
+    "startedAt": "2026-10-09T12:54:23.848Z",
+    "status": 200,
+    "response": {
+      "actor": {
+        "DienVienID": 23,
+        "HoTen": "R6C-83ff6062 edit",
+        "NgaySinh": "1991-01-01",
+        "QuocTich": "VN"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:23.853Z"
+  },
+  {
+    "sequence": 155,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:24.031Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:24.033Z"
+  },
+  {
+    "sequence": 156,
+    "url": "http://127.0.0.1:60874/api/admin/movies",
+    "method": "POST",
+    "input": {
+      "title": "R6C-83ff6062",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        10
+      ],
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:24.216Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:24.218Z"
+  },
+  {
+    "sequence": 157,
+    "url": "http://127.0.0.1:60874/api/admin/movies",
+    "method": "POST",
+    "input": {
+      "title": "R6C-83ff6062",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        10
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:24.399Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:24.401Z"
+  },
+  {
+    "sequence": 158,
+    "url": "http://127.0.0.1:60874/api/admin/movies",
+    "method": "POST",
+    "input": {
+      "title": "R6C-83ff6062",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        10
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:24.578Z",
+    "status": 201,
+    "response": {
+      "movie": {
+        "movieId": 23,
+        "detail": [
+          {
+            "PhimID": 23,
+            "TenPhim": "R6C-83ff6062",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-09",
+            "NgayKetThuc": "2026-10-20",
+            "NgonNgu": "Việt",
+            "PhuDe": null,
+            "DoTuoi": "P",
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu",
+            "DiemDanhGiaTrungBinh": 0,
+            "SoLuotDanhGia": 0
+          }
+        ]
+      }
+    },
+    "completedAt": "2026-10-09T12:54:24.583Z"
+  },
+  {
+    "sequence": 159,
+    "url": "http://127.0.0.1:60874/api/admin/movies",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:24.762Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "title is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:24.765Z"
+  },
+  {
+    "sequence": 160,
+    "url": "http://127.0.0.1:60874/api/admin/movies?genreId=10&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:24.945Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:24.947Z"
+  },
+  {
+    "sequence": 161,
+    "url": "http://127.0.0.1:60874/api/admin/movies?genreId=10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:25.128Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:25.130Z"
+  },
+  {
+    "sequence": 162,
+    "url": "http://127.0.0.1:60874/api/admin/movies?genreId=10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:25.308Z",
+    "status": 200,
+    "response": {
+      "movies": [
+        {
+          "PhimID": 23,
+          "TenPhim": "R6C-83ff6062",
+          "ThoiLuong": 60,
+          "NgayKhoiChieu": "2026-10-09",
+          "NgayKetThuc": "2026-10-20",
+          "NgonNgu": "Việt",
+          "PhuDe": null,
+          "DoTuoi": "P",
+          "DaoDien": null,
+          "MoTa": null,
+          "PosterURL": null,
+          "TrailerURL": null,
+          "TrangThai": "Đang chiếu",
+          "TheLoaiIdList": "10",
+          "DanhSachDienVienJson": null
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:25.312Z"
+  },
+  {
+    "sequence": 163,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "PUT",
+    "input": {
+      "title": "R6C-83ff6062 edit",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        10
+      ],
+      "status": "Đang chiếu",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:25.490Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:25.492Z"
+  },
+  {
+    "sequence": 164,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "PUT",
+    "input": {
+      "title": "R6C-83ff6062 edit",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        10
+      ],
+      "status": "Đang chiếu"
+    },
+    "startedAt": "2026-10-09T12:54:25.667Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:25.669Z"
+  },
+  {
+    "sequence": 165,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "PUT",
+    "input": {
+      "title": "R6C-83ff6062 edit",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        10
+      ],
+      "status": "Đang chiếu"
+    },
+    "startedAt": "2026-10-09T12:54:25.847Z",
+    "status": 200,
+    "response": {
+      "movie": {
+        "recordsets": [
+          [
+            {
+              "PhimID": 23,
+              "TenPhim": "R6C-83ff6062 edit",
+              "ThoiLuong": 60,
+              "NgayKhoiChieu": "2026-10-09",
+              "NgayKetThuc": "2026-10-20",
+              "NgonNgu": "Việt",
+              "PhuDe": null,
+              "DoTuoi": "P",
+              "DaoDien": null,
+              "MoTa": null,
+              "PosterURL": null,
+              "TrailerURL": null,
+              "TrangThai": "Đang chiếu",
+              "DiemDanhGiaTrungBinh": 0,
+              "SoLuotDanhGia": 0
+            }
+          ],
+          [
+            {
+              "TheLoaiID": 10,
+              "TenTheLoai": "R6C-83ff6062 edit"
+            }
+          ],
+          [],
+          []
+        ],
+        "recordset": [
+          {
+            "PhimID": 23,
+            "TenPhim": "R6C-83ff6062 edit",
+            "ThoiLuong": 60,
+            "NgayKhoiChieu": "2026-10-09",
+            "NgayKetThuc": "2026-10-20",
+            "NgonNgu": "Việt",
+            "PhuDe": null,
+            "DoTuoi": "P",
+            "DaoDien": null,
+            "MoTa": null,
+            "PosterURL": null,
+            "TrailerURL": null,
+            "TrangThai": "Đang chiếu",
+            "DiemDanhGiaTrungBinh": 0,
+            "SoLuotDanhGia": 0
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:54:25.852Z"
+  },
+  {
+    "sequence": 166,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:26.034Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "title is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:26.037Z"
+  },
+  {
+    "sequence": 167,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "PUT",
+    "input": {
+      "title": "must rollback",
+      "durationMinutes": 60,
+      "releaseDate": "2026-10-09",
+      "endDate": "2026-10-20",
+      "language": "Việt",
+      "ageRating": "P",
+      "genreIds": [
+        2147483647
+      ],
+      "status": "Đang chiếu"
+    },
+    "startedAt": "2026-10-09T12:54:26.213Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REFERENCE",
+        "message": "The request references data that does not exist or is not allowed."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:26.218Z"
+  },
+  {
+    "sequence": 168,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 23,
+          "role": "Lead"
+        }
+      ],
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:26.392Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:26.395Z"
+  },
+  {
+    "sequence": 169,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 23,
+          "role": "Lead"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:26.571Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:26.574Z"
+  },
+  {
+    "sequence": 170,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 23,
+          "role": "Lead"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:26.762Z",
+    "status": 200,
+    "response": {
+      "actors": [
+        {
+          "PhimID": 23,
+          "DienVienID": 23,
+          "HoTen": "R6C-83ff6062 edit",
+          "VaiDien": "Lead"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:26.767Z"
+  },
+  {
+    "sequence": 171,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23/actors",
+    "method": "PUT",
+    "input": {
+      "cast": [
+        {
+          "actorId": 2147483647,
+          "role": "bad"
+        }
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:26.948Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "ACTOR_NOT_FOUND",
+        "message": "Actor was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:26.952Z"
+  },
+  {
+    "sequence": 172,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:27.127Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:27.130Z"
+  },
+  {
+    "sequence": 173,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:27.307Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:27.310Z"
+  },
+  {
+    "sequence": 174,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:27.489Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "ACTOR_IN_USE",
+        "message": "An actor who appears in movies cannot be deleted."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:27.494Z"
+  },
+  {
+    "sequence": 175,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_THELOAI"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:27.671Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:27.674Z"
+  },
+  {
+    "sequence": 176,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:27.853Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:27.856Z"
+  },
+  {
+    "sequence": 177,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:28.037Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "GENRE_IN_USE",
+        "message": "A genre assigned to movies cannot be deleted."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:28.040Z"
+  },
+  {
+    "sequence": 178,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 23,
+      "roomId": 16,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 80000,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:28.218Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:28.221Z"
+  },
+  {
+    "sequence": 179,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 23,
+      "roomId": 16,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:54:28.398Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:28.400Z"
+  },
+  {
+    "sequence": 180,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 23,
+      "roomId": 16,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:54:28.583Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 42,
+              "PhimID": 23,
+              "TenPhim": "R6C-83ff6062 edit",
+              "PosterURL": null,
+              "ThoiLuong": 60,
+              "DoTuoi": "P",
+              "RapID": 13,
+              "TenRap": "R6C-83ff6062 edit",
+              "DiaChiRap": "Edited",
+              "ThanhPho": "HCM",
+              "PhongID": 16,
+              "TenPhong": "R6C-83ff6062 edit",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-19T12:53:58.195Z",
+              "ThoiGianKetThuc": "2026-10-19T14:23:58.195Z",
+              "NgayChieu": "2026-10-19",
+              "GioBatDau": "19:53",
+              "GioKetThuc": "21:23",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThaiSuatChieu": "Mở bán",
+              "TongSoGhe": 0,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 0
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 42,
+            "PhimID": 23,
+            "TenPhim": "R6C-83ff6062 edit",
+            "PosterURL": null,
+            "ThoiLuong": 60,
+            "DoTuoi": "P",
+            "RapID": 13,
+            "TenRap": "R6C-83ff6062 edit",
+            "DiaChiRap": "Edited",
+            "ThanhPho": "HCM",
+            "PhongID": 16,
+            "TenPhong": "R6C-83ff6062 edit",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-19T12:53:58.195Z",
+            "ThoiGianKetThuc": "2026-10-19T14:23:58.195Z",
+            "NgayChieu": "2026-10-19",
+            "GioBatDau": "19:53",
+            "GioKetThuc": "21:23",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThaiSuatChieu": "Mở bán",
+            "TongSoGhe": 0,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 0
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:54:28.588Z"
+  },
+  {
+    "sequence": 181,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:28.782Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "movieId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:28.785Z"
+  },
+  {
+    "sequence": 182,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes?cinemaId=13&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:28.963Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:28.966Z"
+  },
+  {
+    "sequence": 183,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:29.142Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:29.144Z"
+  },
+  {
+    "sequence": 184,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:29.326Z",
+    "status": 200,
+    "response": {
+      "showtimes": [
+        {
+          "SuatChieuID": 42,
+          "PhimID": 23,
+          "TenPhim": "R6C-83ff6062 edit",
+          "PhongID": 16,
+          "TenPhong": "R6C-83ff6062 edit",
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "ThoiGianBatDau": "2026-10-19T12:53:58.195Z",
+          "ThoiGianKetThuc": "2026-10-19T14:23:58.195Z",
+          "DinhDang": "2D",
+          "GiaVeCoBan": 80000,
+          "TrangThai": "Mở bán"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:29.330Z"
+  },
+  {
+    "sequence": 185,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42",
+    "method": "PUT",
+    "input": {
+      "movieId": 23,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 90000,
+      "status": "Đóng bán",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:29.513Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:29.516Z"
+  },
+  {
+    "sequence": 186,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42",
+    "method": "PUT",
+    "input": {
+      "movieId": 23,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 90000,
+      "status": "Đóng bán"
+    },
+    "startedAt": "2026-10-09T12:54:29.695Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:29.698Z"
+  },
+  {
+    "sequence": 187,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42",
+    "method": "PUT",
+    "input": {
+      "movieId": 23,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 90000,
+      "status": "Đóng bán"
+    },
+    "startedAt": "2026-10-09T12:54:29.884Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 42,
+              "PhimID": 23,
+              "TenPhim": "R6C-83ff6062 edit",
+              "PosterURL": null,
+              "ThoiLuong": 60,
+              "DoTuoi": "P",
+              "RapID": 13,
+              "TenRap": "R6C-83ff6062 edit",
+              "DiaChiRap": "Edited",
+              "ThanhPho": "HCM",
+              "PhongID": 16,
+              "TenPhong": "R6C-83ff6062 edit",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-19T12:53:58.195Z",
+              "ThoiGianKetThuc": "2026-10-19T14:23:58.195Z",
+              "NgayChieu": "2026-10-19",
+              "GioBatDau": "19:53",
+              "GioKetThuc": "21:23",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 90000,
+              "TrangThaiSuatChieu": "Đóng bán",
+              "TongSoGhe": 0,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 0
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 42,
+            "PhimID": 23,
+            "TenPhim": "R6C-83ff6062 edit",
+            "PosterURL": null,
+            "ThoiLuong": 60,
+            "DoTuoi": "P",
+            "RapID": 13,
+            "TenRap": "R6C-83ff6062 edit",
+            "DiaChiRap": "Edited",
+            "ThanhPho": "HCM",
+            "PhongID": 16,
+            "TenPhong": "R6C-83ff6062 edit",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-19T12:53:58.195Z",
+            "ThoiGianKetThuc": "2026-10-19T14:23:58.195Z",
+            "NgayChieu": "2026-10-19",
+            "GioBatDau": "19:53",
+            "GioKetThuc": "21:23",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 90000,
+            "TrangThaiSuatChieu": "Đóng bán",
+            "TongSoGhe": 0,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 0
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:54:29.889Z"
+  },
+  {
+    "sequence": 188,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:30.069Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "movieId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:30.072Z"
+  },
+  {
+    "sequence": 189,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 23,
+      "roomId": 16,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-19T14:23:58.195Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:54:30.246Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_OVERLAP",
+        "message": "The room already has an overlapping showtime."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:30.250Z"
+  },
+  {
+    "sequence": 190,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42/cancel",
+    "method": "POST",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_SUAT_CHIEU"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:30.427Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:30.430Z"
+  },
+  {
+    "sequence": 191,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42/cancel",
+    "method": "POST",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:30.615Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:30.617Z"
+  },
+  {
+    "sequence": 192,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/42/cancel",
+    "method": "POST",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:30.795Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Hủy suất chiếu thành công.",
+        "SoDonDaHuy": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:54:30.799Z"
+  },
+  {
+    "sequence": 193,
+    "url": "http://127.0.0.1:60874/api/admin/showtimes/2147483647/cancel",
+    "method": "POST",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:30.978Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "SHOWTIME_NOT_FOUND",
+        "message": "Showtime was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:30.982Z"
+  },
+  {
+    "sequence": 194,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_DANHMUC_PHIM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:31.159Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:31.162Z"
+  },
+  {
+    "sequence": 195,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:31.339Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:31.342Z"
+  },
+  {
+    "sequence": 196,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:31.531Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "MOVIE_HAS_DEPENDENCIES",
+        "message": "A movie with showtimes or reviews cannot be deleted; change its status instead."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:31.535Z"
+  },
+  {
+    "sequence": 197,
+    "url": "http://127.0.0.1:60874/api/admin/pricing",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "seatType": "VIP",
+      "dayType": "Cuối tuần",
+      "format": "2D",
+      "surcharge": 15000,
+      "startsOn": "2026-10-09",
+      "endsOn": null,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_BANG_GIA"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:31.712Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:31.715Z"
+  },
+  {
+    "sequence": 198,
+    "url": "http://127.0.0.1:60874/api/admin/pricing",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "seatType": "VIP",
+      "dayType": "Cuối tuần",
+      "format": "2D",
+      "surcharge": 15000,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:31.907Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:31.910Z"
+  },
+  {
+    "sequence": 199,
+    "url": "http://127.0.0.1:60874/api/admin/pricing",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "seatType": "VIP",
+      "dayType": "Cuối tuần",
+      "format": "2D",
+      "surcharge": 15000,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:32.093Z",
+    "status": 200,
+    "response": {
+      "pricing": {
+        "GiaID": 24,
+        "RapID": 13,
+        "LoaiGhe": "VIP",
+        "LoaiNgay": "Cuối tuần",
+        "DinhDang": "2D",
+        "PhuThu": 15000,
+        "NgayBatDau": "2026-10-09",
+        "NgayKetThuc": null,
+        "TrangThai": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:32.101Z"
+  },
+  {
+    "sequence": 200,
+    "url": "http://127.0.0.1:60874/api/admin/pricing",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:32.286Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "cinemaId is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:32.288Z"
+  },
+  {
+    "sequence": 201,
+    "url": "http://127.0.0.1:60874/api/admin/pricing?cinemaId=13&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:32.465Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:32.467Z"
+  },
+  {
+    "sequence": 202,
+    "url": "http://127.0.0.1:60874/api/admin/pricing?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:32.652Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:32.655Z"
+  },
+  {
+    "sequence": 203,
+    "url": "http://127.0.0.1:60874/api/admin/pricing?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:32.833Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "GiaID": 24,
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "LoaiGhe": "VIP",
+          "LoaiNgay": "Cuối tuần",
+          "DinhDang": "2D",
+          "PhuThu": 15000,
+          "NgayBatDau": "2026-10-09",
+          "NgayKetThuc": null,
+          "TrangThai": "Áp dụng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:32.837Z"
+  },
+  {
+    "sequence": 204,
+    "url": "http://127.0.0.1:60874/api/admin/pricing/24",
+    "method": "PUT",
+    "input": {
+      "surcharge": 20000,
+      "status": "Áp dụng",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_BANG_GIA"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:33.017Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:33.019Z"
+  },
+  {
+    "sequence": 205,
+    "url": "http://127.0.0.1:60874/api/admin/pricing/24",
+    "method": "PUT",
+    "input": {
+      "surcharge": 20000,
+      "status": "Áp dụng"
+    },
+    "startedAt": "2026-10-09T12:54:33.198Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:33.200Z"
+  },
+  {
+    "sequence": 206,
+    "url": "http://127.0.0.1:60874/api/admin/pricing/24",
+    "method": "PUT",
+    "input": {
+      "surcharge": 20000,
+      "status": "Áp dụng"
+    },
+    "startedAt": "2026-10-09T12:54:33.379Z",
+    "status": 200,
+    "response": {
+      "pricing": {
+        "GiaID": 24,
+        "RapID": 13,
+        "LoaiGhe": "VIP",
+        "LoaiNgay": "Cuối tuần",
+        "DinhDang": "2D",
+        "PhuThu": 20000,
+        "NgayBatDau": "2026-10-09",
+        "NgayKetThuc": null,
+        "TrangThai": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:33.383Z"
+  },
+  {
+    "sequence": 207,
+    "url": "http://127.0.0.1:60874/api/admin/pricing/24",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:33.562Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "surcharge is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:33.564Z"
+  },
+  {
+    "sequence": 208,
+    "url": "http://127.0.0.1:60874/api/admin/pricing",
+    "method": "POST",
+    "input": {
+      "cinemaId": 13,
+      "seatType": "VIP",
+      "dayType": "Ngày lễ",
+      "format": "2D",
+      "surcharge": 15000,
+      "startsOn": "2026-10-09",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T12:54:33.742Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "dayType is not supported by the database contract."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:33.745Z"
+  },
+  {
+    "sequence": 209,
+    "url": "http://127.0.0.1:60874/api/admin/products",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "type": "Snack",
+      "price": 10000,
+      "image": "/r6c-snack.svg",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_SANPHAM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:33.922Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:33.924Z"
+  },
+  {
+    "sequence": 210,
+    "url": "http://127.0.0.1:60874/api/admin/products",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "type": "Snack",
+      "price": 10000,
+      "image": "/r6c-snack.svg"
+    },
+    "startedAt": "2026-10-09T12:54:34.110Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:34.112Z"
+  },
+  {
+    "sequence": 211,
+    "url": "http://127.0.0.1:60874/api/admin/products",
+    "method": "POST",
+    "input": {
+      "name": "R6C-83ff6062",
+      "type": "Snack",
+      "price": 10000,
+      "image": "/r6c-snack.svg"
+    },
+    "startedAt": "2026-10-09T12:54:34.295Z",
+    "status": 201,
+    "response": {
+      "product": {
+        "SanPhamID": 15,
+        "TenSanPham": "R6C-83ff6062",
+        "LoaiSanPham": "Snack",
+        "Gia": 10000,
+        "MoTa": null,
+        "HinhAnh": "/r6c-snack.svg",
+        "TrangThai": "Đang bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:34.299Z"
+  },
+  {
+    "sequence": 212,
+    "url": "http://127.0.0.1:60874/api/admin/products",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:34.477Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:34.480Z"
+  },
+  {
+    "sequence": 213,
+    "url": "http://127.0.0.1:60874/api/admin/products?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:34.656Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:34.658Z"
+  },
+  {
+    "sequence": 214,
+    "url": "http://127.0.0.1:60874/api/admin/products",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:34.840Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:34.842Z"
+  },
+  {
+    "sequence": 215,
+    "url": "http://127.0.0.1:60874/api/admin/products",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:35.020Z",
+    "status": 200,
+    "response": {
+      "products": [
+        {
+          "SanPhamID": 2,
+          "TenSanPham": "Bắp rang bơ Caramel vừa",
+          "LoaiSanPham": "Bắp rang",
+          "Gia": 40000,
+          "MoTa": "Vị ngọt ngào của sốt caramel truyền thống",
+          "HinhAnh": "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=400",
+          "TrangThai": "Đang bán"
+        },
+        {
+          "SanPhamID": 1,
+          "TenSanPham": "Bắp rang bơ phô mai lớn",
+          "LoaiSanPham": "Bắp rang",
+          "Gia": 45000,
+          "MoTa": "Bắp ngô nở đều phủ ngập phô mai cheddar thơm lừng",
+          "HinhAnh": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=400",
+          "TrangThai": "Đang bán"
+        },
+        {
+          "SanPhamID": 3,
+          "TenSanPham": "Coca-Cola tươi lớn",
+          "LoaiSanPham": "Nước ngọt",
+          "Gia": 30000,
+          "MoTa": "Ly nước ngọt có gas mát lạnh sảng khoái",
+          "HinhAnh": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400",
+          "TrangThai": "Đang bán"
+        },
+        {
+          "SanPhamID": 5,
+          "TenSanPham": "Combo Couple (1 Bắp lớn + 2 Nước)",
+          "LoaiSanPham": "Combo",
+          "Gia": 95000,
+          "MoTa": "Gói tiết kiệm trọn vẹn trải nghiệm xem phim cho cặp đôi",
+          "HinhAnh": "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?w=400",
+          "TrangThai": "Đang bán"
+        },
+        {
+          "SanPhamID": 4,
+          "TenSanPham": "Nước suối Dasani 500ml",
+          "LoaiSanPham": "Nước ngọt",
+          "Gia": 20000,
+          "MoTa": "Nước khoáng tinh khiết đóng chai",
+          "HinhAnh": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=400",
+          "TrangThai": "Đang bán"
+        },
+        {
+          "SanPhamID": 15,
+          "TenSanPham": "R6C-83ff6062",
+          "LoaiSanPham": "Snack",
+          "Gia": 10000,
+          "MoTa": null,
+          "HinhAnh": "/r6c-snack.svg",
+          "TrangThai": "Đang bán"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:35.024Z"
+  },
+  {
+    "sequence": 216,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062",
+      "type": "Snack",
+      "price": 20000,
+      "image": "/r6c-snack.svg",
+      "status": "Đang bán",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_SANPHAM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:35.201Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:35.203Z"
+  },
+  {
+    "sequence": 217,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062",
+      "type": "Snack",
+      "price": 20000,
+      "image": "/r6c-snack.svg",
+      "status": "Đang bán"
+    },
+    "startedAt": "2026-10-09T12:54:35.381Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:35.384Z"
+  },
+  {
+    "sequence": 218,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "PUT",
+    "input": {
+      "name": "R6C-83ff6062",
+      "type": "Snack",
+      "price": 20000,
+      "image": "/r6c-snack.svg",
+      "status": "Đang bán"
+    },
+    "startedAt": "2026-10-09T12:54:35.566Z",
+    "status": 200,
+    "response": {
+      "product": {
+        "SanPhamID": 15,
+        "TenSanPham": "R6C-83ff6062",
+        "LoaiSanPham": "Snack",
+        "Gia": 20000,
+        "MoTa": null,
+        "HinhAnh": "/r6c-snack.svg",
+        "TrangThai": "Đang bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:35.570Z"
+  },
+  {
+    "sequence": 219,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:35.750Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "name is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:35.752Z"
+  },
+  {
+    "sequence": 220,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_SANPHAM"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:35.929Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:35.932Z"
+  },
+  {
+    "sequence": 221,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:36.110Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:36.113Z"
+  },
+  {
+    "sequence": 222,
+    "url": "http://127.0.0.1:60874/api/admin/products/15",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:36.295Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa sản phẩm."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:36.299Z"
+  },
+  {
+    "sequence": 223,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 10,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10,
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:36.491Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:36.494Z"
+  },
+  {
+    "sequence": 224,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 10,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10
+    },
+    "startedAt": "2026-10-09T12:54:36.673Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:36.676Z"
+  },
+  {
+    "sequence": 225,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062",
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 10,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10
+    },
+    "startedAt": "2026-10-09T12:54:36.872Z",
+    "status": 201,
+    "response": {
+      "promotion": {
+        "KhuyenMaiID": 13,
+        "MaCode": "R6C-83ff6062",
+        "MoTa": "owned promo",
+        "LoaiGiamGia": "Phần trăm",
+        "GiaTriGiam": 10,
+        "DonHangToiThieu": 0,
+        "GiamToiDa": 10000,
+        "NgayBatDau": "2026-10-19T12:53:58.195Z",
+        "NgayKetThuc": "2026-10-20T12:53:58.195Z",
+        "SoLuong": 10,
+        "SoLuongDaDung": 0,
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:36.877Z"
+  },
+  {
+    "sequence": 226,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "POST",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:37.072Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "discountType is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:37.075Z"
+  },
+  {
+    "sequence": 227,
+    "url": "http://127.0.0.1:60874/api/admin/promotions?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:37.254Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:37.256Z"
+  },
+  {
+    "sequence": 228,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:37.439Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:37.441Z"
+  },
+  {
+    "sequence": 229,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:37.645Z",
+    "status": 200,
+    "response": {
+      "promotions": [
+        {
+          "KhuyenMaiID": 13,
+          "MaCode": "R6C-83ff6062",
+          "MoTa": "owned promo",
+          "LoaiGiamGia": "Phần trăm",
+          "GiaTriGiam": 10,
+          "DonHangToiThieu": 0,
+          "GiamToiDa": 10000,
+          "NgayBatDau": "2026-10-19T12:53:58.195Z",
+          "NgayKetThuc": "2026-10-20T12:53:58.195Z",
+          "SoLuong": 10,
+          "SoLuongDaDung": 0,
+          "TrangThai": "Hoạt động"
+        },
+        {
+          "KhuyenMaiID": 1,
+          "MaCode": "CHAOBANMOI",
+          "MoTa": "Giảm 10% cho khách hàng mới",
+          "LoaiGiamGia": "Phần trăm",
+          "GiaTriGiam": 10,
+          "DonHangToiThieu": 100000,
+          "GiamToiDa": 50000,
+          "NgayBatDau": "2026-09-08T17:00:00.000Z",
+          "NgayKetThuc": "2027-10-08T17:00:00.000Z",
+          "SoLuong": 1000,
+          "SoLuongDaDung": 0,
+          "TrangThai": "Hoạt động"
+        },
+        {
+          "KhuyenMaiID": 2,
+          "MaCode": "GIAM30K",
+          "MoTa": "Giảm trực tiếp 30.000 đ cho đơn từ 150k",
+          "LoaiGiamGia": "Số tiền",
+          "GiaTriGiam": 30000,
+          "DonHangToiThieu": 150000,
+          "GiamToiDa": null,
+          "NgayBatDau": "2026-09-08T17:00:00.000Z",
+          "NgayKetThuc": "2027-10-08T17:00:00.000Z",
+          "SoLuong": 500,
+          "SoLuongDaDung": 0,
+          "TrangThai": "Hoạt động"
+        },
+        {
+          "KhuyenMaiID": 3,
+          "MaCode": "VIPMEMBER",
+          "MoTa": "Giảm 20% cho thành viên thân thiết",
+          "LoaiGiamGia": "Phần trăm",
+          "GiaTriGiam": 20,
+          "DonHangToiThieu": 200000,
+          "GiamToiDa": 100000,
+          "NgayBatDau": "2026-09-08T17:00:00.000Z",
+          "NgayKetThuc": "2027-10-08T17:00:00.000Z",
+          "SoLuong": 200,
+          "SoLuongDaDung": 0,
+          "TrangThai": "Hoạt động"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:54:37.649Z"
+  },
+  {
+    "sequence": 230,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "PUT",
+    "input": {
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 20,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10,
+      "status": "Hoạt động",
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:37.845Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:37.847Z"
+  },
+  {
+    "sequence": 231,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "PUT",
+    "input": {
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 20,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10,
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:38.027Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:38.030Z"
+  },
+  {
+    "sequence": 232,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "PUT",
+    "input": {
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 20,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10,
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:54:38.214Z",
+    "status": 200,
+    "response": {
+      "promotion": {
+        "KhuyenMaiID": 13,
+        "MaCode": "R6C-83ff6062",
+        "MoTa": "owned promo",
+        "LoaiGiamGia": "Phần trăm",
+        "GiaTriGiam": 20,
+        "DonHangToiThieu": 0,
+        "GiamToiDa": 10000,
+        "NgayBatDau": "2026-10-19T12:53:58.195Z",
+        "NgayKetThuc": "2026-10-20T12:53:58.195Z",
+        "SoLuong": 10,
+        "SoLuongDaDung": 0,
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:54:38.218Z"
+  },
+  {
+    "sequence": 233,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "PUT",
+    "input": {},
+    "startedAt": "2026-10-09T12:54:38.398Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "discountType is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:38.402Z"
+  },
+  {
+    "sequence": 234,
+    "url": "http://127.0.0.1:60874/api/admin/promotions",
+    "method": "POST",
+    "input": {
+      "code": "R6C-83ff6062bad",
+      "description": "owned promo",
+      "discountType": "Phần trăm",
+      "discountValue": 100,
+      "minimumOrder": 0,
+      "maximumDiscount": 10000,
+      "startsAt": "2026-10-19T12:53:58.195Z",
+      "endsAt": "2026-10-20T12:53:58.195Z",
+      "quantity": 10
+    },
+    "startedAt": "2026-10-09T12:54:38.576Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "A percent discount must be greater than 0 and at most 99."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:38.578Z"
+  },
+  {
+    "sequence": 235,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_KHUYENMAI"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:38.753Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:38.756Z"
+  },
+  {
+    "sequence": 236,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:38.933Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:38.936Z"
+  },
+  {
+    "sequence": 237,
+    "url": "http://127.0.0.1:60874/api/admin/promotions/13",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:39.118Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa khuyến mãi."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:39.122Z"
+  },
+  {
+    "sequence": 238,
+    "url": "http://127.0.0.1:60874/api/admin/reports/revenue?cinemaId=13&ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:39.302Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:39.305Z"
+  },
+  {
+    "sequence": 239,
+    "url": "http://127.0.0.1:60874/api/admin/reports/revenue?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:39.484Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:39.486Z"
+  },
+  {
+    "sequence": 240,
+    "url": "http://127.0.0.1:60874/api/admin/reports/revenue?cinemaId=13",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:39.668Z",
+    "status": 200,
+    "response": {
+      "summary": {
+        "TongSoDonToanHeThong": 0,
+        "TongSoVeBan": 0,
+        "TongDoanhThuVe": 0,
+        "TongDoanhThuDoAn": 0,
+        "TongTienGiam": 0,
+        "TongDoanhThuThucTe": 0
+      },
+      "byCinema": [
+        {
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "ThanhPho": "HCM",
+          "SoDon": 0,
+          "SoVeBan": 0,
+          "DoanhThuVe": 0,
+          "DoanhThuDoAn": 0,
+          "TongTienGiam": 0,
+          "DoanhThuThucTe": 0
+        }
+      ],
+      "byMovie": [],
+      "byDate": [],
+      "cinemas": [
+        {
+          "RapID": 13,
+          "TenRap": "R6C-83ff6062 edit",
+          "ThanhPho": "HCM",
+          "SoDon": 0,
+          "SoVeBan": 0,
+          "DoanhThuVe": 0,
+          "DoanhThuDoAn": 0,
+          "TongTienGiam": 0,
+          "DoanhThuThucTe": 0
+        }
+      ],
+      "totals": {
+        "TongSoDonToanHeThong": 0,
+        "TongSoVeBan": 0,
+        "TongDoanhThuVe": 0,
+        "TongDoanhThuDoAn": 0,
+        "TongTienGiam": 0,
+        "TongDoanhThuThucTe": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:54:39.673Z"
+  },
+  {
+    "sequence": 241,
+    "url": "http://127.0.0.1:60874/api/admin/dashboard?ActorID=1&role=ADMIN",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:39.852Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:39.854Z"
+  },
+  {
+    "sequence": 242,
+    "url": "http://127.0.0.1:60874/api/admin/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:40.034Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:40.036Z"
+  },
+  {
+    "sequence": 243,
+    "url": "http://127.0.0.1:60874/api/admin/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:40.215Z",
+    "status": 200,
+    "response": {
+      "dashboard": {
+        "TongNguoiDung": 9,
+        "TongRap": 4,
+        "TongPhongChieu": 7,
+        "PhimDangChieu": 5,
+        "SuatChieuHomNay": 0,
+        "TongDonThanhCong": 0,
+        "TongDoanhThuToanThoiGian": 0,
+        "KhieuNaiChuaXuLy": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:54:40.235Z"
+  },
+  {
+    "sequence": 244,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_PHONG"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:40.417Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:40.420Z"
+  },
+  {
+    "sequence": 245,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:40.599Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:40.602Z"
+  },
+  {
+    "sequence": 246,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:40.788Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "PhongID": 16,
+        "Deleted": false,
+        "Deactivated": true,
+        "TrangThai": "Ngưng hoạt động",
+        "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:40.792Z"
+  },
+  {
+    "sequence": 247,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "DELETE",
+    "input": {
+      "ActorID": 1,
+      "role": "ADMIN",
+      "permissions": [
+        "QL_RAP"
+      ]
+    },
+    "startedAt": "2026-10-09T12:54:40.974Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "ADMIN_REQUIRED",
+        "message": "Admin access is required."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:40.977Z"
+  },
+  {
+    "sequence": 248,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:41.158Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:41.161Z"
+  },
+  {
+    "sequence": 249,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:41.345Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "CINEMA_HAS_DEPENDENCIES",
+        "message": "A cinema with rooms, assignments, pricing or images cannot be deleted; change its status instead."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:41.352Z"
+  },
+  {
+    "sequence": 250,
+    "url": "http://127.0.0.1:60874/api/admin/rooms/16",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:41.537Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "PhongID": 16,
+        "Deleted": true,
+        "Deactivated": false,
+        "TrangThai": null,
+        "Message": "Đã xóa phòng."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:41.541Z"
+  },
+  {
+    "sequence": 251,
+    "url": "http://127.0.0.1:60874/api/admin/movies/23",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:41.727Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa phim."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:41.737Z"
+  },
+  {
+    "sequence": 252,
+    "url": "http://127.0.0.1:60874/api/admin/actors/23",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:41.932Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa diễn viên."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:41.938Z"
+  },
+  {
+    "sequence": 253,
+    "url": "http://127.0.0.1:60874/api/admin/genres/10",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:42.122Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa thể loại."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:42.125Z"
+  },
+  {
+    "sequence": 254,
+    "url": "http://127.0.0.1:60874/api/admin/cinemas/13",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:54:42.308Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "Message": "Đã xóa rạp."
+      }
+    },
+    "completedAt": "2026-10-09T12:54:42.315Z"
+  }
+]

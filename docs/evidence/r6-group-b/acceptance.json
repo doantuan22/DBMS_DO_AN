@@ -1,0 +1,105 @@
+{
+  "status": "DONE",
+  "database": "CinemaBookingDB_R0_R6B_20261009_01",
+  "checkpointsRun": "2026-10-09T12-00-17-510Z-fe3ddabb",
+  "finalRun": "2026-10-09T12-02-23-892Z-64ec76fa",
+  "phases": {
+    "R6.4": {
+      "pass": 228,
+      "fail": 0,
+      "blocked": 0,
+      "status": "DONE"
+    },
+    "R6.5": {
+      "pass": 8,
+      "fail": 0,
+      "blocked": 0,
+      "status": "DONE"
+    },
+    "R6.6": {
+      "pass": 37,
+      "fail": 0,
+      "blocked": 0,
+      "status": "DONE"
+    },
+    "R6.7": {
+      "pass": 225,
+      "fail": 0,
+      "blocked": 0,
+      "status": "DONE"
+    }
+  },
+  "finalVerification": {
+    "pass": 498,
+    "fail": 0,
+    "blocked": 0,
+    "httpRequests": 380,
+    "backendTests": 191
+  },
+  "replayedPassingRuns": 2,
+  "totalPassingUnitsAcrossTwoFullRuns": 996,
+  "concurrency": {
+    "historicalRaces": 20,
+    "roomRaces": 10,
+    "showtimeScenarios": 26,
+    "stressRaces": 125,
+    "gatedStress": 100,
+    "simultaneousStress": 25,
+    "deterministicLockWaits": 152,
+    "independentRoomCommits": 4,
+    "finalCommittedOverlaps": 0
+  },
+  "productionDefects": 0,
+  "productionChanges": 0,
+  "offlineFixtureFix": "Scope permission restore now preserves NgayGan; initial failed attempt and exact baseline recovery remain available.",
+  "mainPreservation": "PASS",
+  "fixturePreservation": "PASS",
+  "oldEvidencePreservation": {
+    "status": "PASS",
+    "files": 931,
+    "sha256": "0501ffa7a4ccbb0dca350a1189bf94a849829e5f68362afa183e86a134c48176"
+  },
+  "moduleParity": {
+    "modules": 159,
+    "metadataHash": "9964e50cdda4f6e8750663284497b69b9fd4c691328a31de9d8ac4f9089e9a75"
+  },
+  "integrity": [
+    [
+      {
+        "status": "PASS",
+        "invariants": "seats/quota/holds/atomicity/money/payment/constraints"
+      }
+    ],
+    [
+      {
+        "databaseName": "CinemaBookingDB_R0_R6B_20261009_01",
+        "rcsi": true
+      }
+    ],
+    [
+      {
+        "invalidForeignKeys": 0,
+        "invalidChecks": 0,
+        "disabledTriggers": 0,
+        "committedOverlaps": 0
+      }
+    ],
+    [
+      {
+        "name": "TRG_SuatChieu_KiemTraTrungLich",
+        "is_disabled": false
+      }
+    ]
+  ],
+  "scopeIDs": [
+    "R6.5-01",
+    "R6.5-02",
+    "R6.5-03",
+    "R6.5-04",
+    "R6.5-05",
+    "R6.5-06",
+    "R6.5-07",
+    "R6.5-08"
+  ],
+  "createdAt": "2026-10-09T12:07:18.861Z"
+}

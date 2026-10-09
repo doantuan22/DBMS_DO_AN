@@ -1,0 +1,942 @@
+[
+  {
+    "sequence": 0,
+    "url": "http://127.0.0.1:57009/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:03:14.056Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 2,
+        "name": "Nguyễn Văn Quản Lý 1",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "QUAN_LY_RAP",
+        "roleName": "Quản lý rạp",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          }
+        ],
+        "cinemaAssignments": [
+          {
+            "cinemaId": 1,
+            "name": "Cinema Star Hai Bà Trưng",
+            "city": "Hồ Chí Minh",
+            "assignmentStatus": "Hiệu lực"
+          }
+        ]
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.426Z"
+  },
+  {
+    "sequence": 1,
+    "url": "http://127.0.0.1:57009/api/manager/cinemas/1/rooms",
+    "method": "POST",
+    "input": {
+      "name": "R11 HTTP manager 1791547394427",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:03:14.427Z",
+    "status": 201,
+    "response": {
+      "room": {
+        "id": 966,
+        "cinemaId": 1,
+        "name": "R11 HTTP manager 1791547394427",
+        "type": "2D",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.447Z"
+  },
+  {
+    "sequence": 2,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/966/seats",
+    "method": "POST",
+    "input": {
+      "row": "A",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:03:14.447Z",
+    "status": 201,
+    "response": {
+      "seat": {
+        "id": 3242,
+        "roomId": 966,
+        "row": "A",
+        "number": 1,
+        "type": "Thường",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.460Z"
+  },
+  {
+    "sequence": 3,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/966",
+    "method": "PUT",
+    "input": {
+      "name": "R11 HTTP updated 966",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:03:14.461Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "id": 966,
+        "cinemaId": 1,
+        "name": "R11 HTTP updated 966",
+        "type": "2D",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.475Z"
+  },
+  {
+    "sequence": 4,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/966?RapID=2147483600",
+    "method": "DELETE",
+    "input": {
+      "RapID": 2147483600,
+      "NguoiDungID": 2147483600
+    },
+    "startedAt": "2026-10-09T12:03:14.480Z",
+    "status": 200,
+    "response": {
+      "deleted": true,
+      "deactivated": false,
+      "roomId": 966,
+      "status": null,
+      "message": "Xóa phòng chiếu thành công."
+    },
+    "completedAt": "2026-10-09T12:03:14.496Z"
+  },
+  {
+    "sequence": 5,
+    "url": "http://127.0.0.1:57009/api/manager/cinemas/1/rooms",
+    "method": "POST",
+    "input": {
+      "name": "R11 HTTP manager 1791547394507",
+      "type": "2D"
+    },
+    "startedAt": "2026-10-09T12:03:14.507Z",
+    "status": 201,
+    "response": {
+      "room": {
+        "id": 967,
+        "cinemaId": 1,
+        "name": "R11 HTTP manager 1791547394507",
+        "type": "2D",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.515Z"
+  },
+  {
+    "sequence": 6,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/967/seats",
+    "method": "POST",
+    "input": {
+      "row": "A",
+      "number": 1,
+      "type": "Thường"
+    },
+    "startedAt": "2026-10-09T12:03:14.516Z",
+    "status": 201,
+    "response": {
+      "seat": {
+        "id": 3243,
+        "roomId": 967,
+        "row": "A",
+        "number": 1,
+        "type": "Thường",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.523Z"
+  },
+  {
+    "sequence": 7,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/967",
+    "method": "PUT",
+    "input": {
+      "name": "R11 HTTP updated 967",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:03:14.524Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "id": 967,
+        "cinemaId": 1,
+        "name": "R11 HTTP updated 967",
+        "type": "2D",
+        "status": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.532Z"
+  },
+  {
+    "sequence": 8,
+    "url": "http://127.0.0.1:57009/api/manager/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 967,
+      "startsAt": "2026-10-19T12:03:14.533Z",
+      "endsAt": "2026-10-19T14:59:14.533Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:14.534Z",
+    "status": 201,
+    "response": {
+      "showtime": {
+        "id": 950,
+        "movieId": 1,
+        "movieTitle": "Dune: Hành Tinh Cát - Phần Hai",
+        "roomId": 967,
+        "roomName": "R11 HTTP updated 967",
+        "cinemaId": 1,
+        "cinemaName": "Cinema Star Hai Bà Trưng",
+        "startsAt": "2026-10-19T12:03:14.533Z",
+        "endsAt": "2026-10-19T14:59:14.533Z",
+        "format": "2D",
+        "basePrice": 80000,
+        "status": "Mở bán"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.569Z"
+  },
+  {
+    "sequence": 9,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/967?RapID=2147483600",
+    "method": "DELETE",
+    "input": {
+      "RapID": 2147483600,
+      "NguoiDungID": 2147483600
+    },
+    "startedAt": "2026-10-09T12:03:14.571Z",
+    "status": 200,
+    "response": {
+      "deleted": false,
+      "deactivated": true,
+      "roomId": 967,
+      "status": "Ngưng hoạt động",
+      "message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+    },
+    "completedAt": "2026-10-09T12:03:14.581Z"
+  },
+  {
+    "sequence": 10,
+    "url": "http://127.0.0.1:57009/api/manager/cinemas/1/rooms",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.585Z",
+    "status": 200,
+    "response": {
+      "rooms": [
+        {
+          "id": 1,
+          "cinemaId": 1,
+          "cinemaName": "Cinema Star Hai Bà Trưng",
+          "name": "Phòng 1 - Cinema 1",
+          "type": "2D",
+          "status": "Hoạt động",
+          "seatCount": 40
+        },
+        {
+          "id": 2,
+          "cinemaId": 1,
+          "cinemaName": "Cinema Star Hai Bà Trưng",
+          "name": "Phòng 2 - IMAX Laser",
+          "type": "IMAX",
+          "status": "Hoạt động",
+          "seatCount": 40
+        },
+        {
+          "id": 3,
+          "cinemaId": 1,
+          "cinemaName": "Cinema Star Hai Bà Trưng",
+          "name": "Phòng 3 - VIP Deluxe",
+          "type": "3D",
+          "status": "Hoạt động",
+          "seatCount": 40
+        },
+        {
+          "id": 967,
+          "cinemaId": 1,
+          "cinemaName": "Cinema Star Hai Bà Trưng",
+          "name": "R11 HTTP updated 967",
+          "type": "2D",
+          "status": "Ngưng hoạt động",
+          "seatCount": 1
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:03:14.597Z"
+  },
+  {
+    "sequence": 11,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/967",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.598Z",
+    "status": 200,
+    "response": {
+      "deleted": false,
+      "deactivated": true,
+      "roomId": 967,
+      "status": "Ngưng hoạt động",
+      "message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+    },
+    "completedAt": "2026-10-09T12:03:14.604Z"
+  },
+  {
+    "sequence": 12,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/2147483600",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.607Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "ROOM_NOT_FOUND",
+        "message": "Room was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.613Z"
+  },
+  {
+    "sequence": 13,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/not-an-id",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.614Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "roomId must be a positive integer."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.618Z"
+  },
+  {
+    "sequence": 14,
+    "url": "http://127.0.0.1:57009/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T12:03:14.618Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.683Z"
+  },
+  {
+    "sequence": 15,
+    "url": "http://127.0.0.1:57009/api/admin/rooms",
+    "method": "POST",
+    "input": {
+      "name": "R11 HTTP admin 1791547394683",
+      "type": "2D",
+      "cinemaId": 1
+    },
+    "startedAt": "2026-10-09T12:03:14.683Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "PhongID": 968,
+        "RapID": 1,
+        "TenPhong": "R11 HTTP admin 1791547394683",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.694Z"
+  },
+  {
+    "sequence": 16,
+    "url": "http://127.0.0.1:57009/api/admin/seats",
+    "method": "POST",
+    "input": {
+      "row": "A",
+      "number": 1,
+      "type": "Thường",
+      "roomId": 968
+    },
+    "startedAt": "2026-10-09T12:03:14.694Z",
+    "status": 200,
+    "response": {
+      "seat": {
+        "GheID": 3244,
+        "PhongID": 968,
+        "HangGhe": "A",
+        "SoGhe": 1,
+        "LoaiGhe": "Thường",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.705Z"
+  },
+  {
+    "sequence": 17,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/968",
+    "method": "PUT",
+    "input": {
+      "name": "R11 HTTP updated 968",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:03:14.705Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "PhongID": 968,
+        "RapID": 1,
+        "TenPhong": "R11 HTTP updated 968",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.716Z"
+  },
+  {
+    "sequence": 18,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/968?RapID=2147483600",
+    "method": "DELETE",
+    "input": {
+      "RapID": 2147483600,
+      "NguoiDungID": 2147483600
+    },
+    "startedAt": "2026-10-09T12:03:14.718Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "PhongID": 968,
+        "Deleted": true,
+        "Deactivated": false,
+        "TrangThai": null,
+        "Message": "Đã xóa phòng."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.726Z"
+  },
+  {
+    "sequence": 19,
+    "url": "http://127.0.0.1:57009/api/admin/rooms",
+    "method": "POST",
+    "input": {
+      "name": "R11 HTTP admin 1791547394730",
+      "type": "2D",
+      "cinemaId": 1
+    },
+    "startedAt": "2026-10-09T12:03:14.730Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "PhongID": 969,
+        "RapID": 1,
+        "TenPhong": "R11 HTTP admin 1791547394730",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.735Z"
+  },
+  {
+    "sequence": 20,
+    "url": "http://127.0.0.1:57009/api/admin/seats",
+    "method": "POST",
+    "input": {
+      "row": "A",
+      "number": 1,
+      "type": "Thường",
+      "roomId": 969
+    },
+    "startedAt": "2026-10-09T12:03:14.735Z",
+    "status": 200,
+    "response": {
+      "seat": {
+        "GheID": 3245,
+        "PhongID": 969,
+        "HangGhe": "A",
+        "SoGhe": 1,
+        "LoaiGhe": "Thường",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.739Z"
+  },
+  {
+    "sequence": 21,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/969",
+    "method": "PUT",
+    "input": {
+      "name": "R11 HTTP updated 969",
+      "type": "2D",
+      "status": "Hoạt động"
+    },
+    "startedAt": "2026-10-09T12:03:14.740Z",
+    "status": 200,
+    "response": {
+      "room": {
+        "PhongID": 969,
+        "RapID": 1,
+        "TenPhong": "R11 HTTP updated 969",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.744Z"
+  },
+  {
+    "sequence": 22,
+    "url": "http://127.0.0.1:57009/api/admin/showtimes",
+    "method": "POST",
+    "input": {
+      "movieId": 1,
+      "roomId": 969,
+      "startsAt": "2026-10-19T12:03:14.746Z",
+      "endsAt": "2026-10-19T14:59:14.746Z",
+      "format": "2D",
+      "basePrice": 80000
+    },
+    "startedAt": "2026-10-09T12:03:14.746Z",
+    "status": 200,
+    "response": {
+      "showtime": {
+        "recordsets": [
+          [
+            {
+              "SuatChieuID": 951,
+              "PhimID": 1,
+              "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+              "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+              "ThoiLuong": 166,
+              "DoTuoi": "T16",
+              "RapID": 1,
+              "TenRap": "Cinema Star Hai Bà Trưng",
+              "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+              "ThanhPho": "Hồ Chí Minh",
+              "PhongID": 969,
+              "TenPhong": "R11 HTTP updated 969",
+              "LoaiPhong": "2D",
+              "ThoiGianBatDau": "2026-10-19T12:03:14.746Z",
+              "ThoiGianKetThuc": "2026-10-19T14:59:14.746Z",
+              "NgayChieu": "2026-10-19",
+              "GioBatDau": "19:03",
+              "GioKetThuc": "21:59",
+              "DinhDang": "2D",
+              "GiaVeCoBan": 80000,
+              "TrangThaiSuatChieu": "Mở bán",
+              "TongSoGhe": 1,
+              "SoGheDaDat": 0,
+              "SoGheConLai": 1
+            }
+          ]
+        ],
+        "recordset": [
+          {
+            "SuatChieuID": 951,
+            "PhimID": 1,
+            "TenPhim": "Dune: Hành Tinh Cát - Phần Hai",
+            "PosterURL": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+            "ThoiLuong": 166,
+            "DoTuoi": "T16",
+            "RapID": 1,
+            "TenRap": "Cinema Star Hai Bà Trưng",
+            "DiaChiRap": "123 Hai Bà Trưng, Phường Bến Nghé, Quận 1",
+            "ThanhPho": "Hồ Chí Minh",
+            "PhongID": 969,
+            "TenPhong": "R11 HTTP updated 969",
+            "LoaiPhong": "2D",
+            "ThoiGianBatDau": "2026-10-19T12:03:14.746Z",
+            "ThoiGianKetThuc": "2026-10-19T14:59:14.746Z",
+            "NgayChieu": "2026-10-19",
+            "GioBatDau": "19:03",
+            "GioKetThuc": "21:59",
+            "DinhDang": "2D",
+            "GiaVeCoBan": 80000,
+            "TrangThaiSuatChieu": "Mở bán",
+            "TongSoGhe": 1,
+            "SoGheDaDat": 0,
+            "SoGheConLai": 1
+          }
+        ],
+        "output": {},
+        "rowsAffected": [],
+        "returnValue": 0
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.754Z"
+  },
+  {
+    "sequence": 23,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/969?RapID=2147483600",
+    "method": "DELETE",
+    "input": {
+      "RapID": 2147483600,
+      "NguoiDungID": 2147483600
+    },
+    "startedAt": "2026-10-09T12:03:14.758Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "PhongID": 969,
+        "Deleted": false,
+        "Deactivated": true,
+        "TrangThai": "Ngưng hoạt động",
+        "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.765Z"
+  },
+  {
+    "sequence": 24,
+    "url": "http://127.0.0.1:57009/api/admin/rooms?cinemaId=1",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.766Z",
+    "status": 200,
+    "response": {
+      "rooms": [
+        {
+          "PhongID": 1,
+          "RapID": 1,
+          "TenRap": "Cinema Star Hai Bà Trưng",
+          "TenPhong": "Phòng 1 - Cinema 1",
+          "LoaiPhong": "2D",
+          "TrangThai": "Hoạt động",
+          "TongSoGhe": 40
+        },
+        {
+          "PhongID": 2,
+          "RapID": 1,
+          "TenRap": "Cinema Star Hai Bà Trưng",
+          "TenPhong": "Phòng 2 - IMAX Laser",
+          "LoaiPhong": "IMAX",
+          "TrangThai": "Hoạt động",
+          "TongSoGhe": 40
+        },
+        {
+          "PhongID": 3,
+          "RapID": 1,
+          "TenRap": "Cinema Star Hai Bà Trưng",
+          "TenPhong": "Phòng 3 - VIP Deluxe",
+          "LoaiPhong": "3D",
+          "TrangThai": "Hoạt động",
+          "TongSoGhe": 40
+        },
+        {
+          "PhongID": 969,
+          "RapID": 1,
+          "TenRap": "Cinema Star Hai Bà Trưng",
+          "TenPhong": "R11 HTTP updated 969",
+          "LoaiPhong": "2D",
+          "TrangThai": "Ngưng hoạt động",
+          "TongSoGhe": 1
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T12:03:14.777Z"
+  },
+  {
+    "sequence": 25,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/969",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.778Z",
+    "status": 200,
+    "response": {
+      "result": {
+        "PhongID": 969,
+        "Deleted": false,
+        "Deactivated": true,
+        "TrangThai": "Ngưng hoạt động",
+        "Message": "Phòng có lịch sử suất chiếu đã chuyển sang Ngưng hoạt động."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.782Z"
+  },
+  {
+    "sequence": 26,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/2147483600",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.786Z",
+    "status": 404,
+    "response": {
+      "error": {
+        "code": "ROOM_NOT_FOUND",
+        "message": "Room was not found."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.790Z"
+  },
+  {
+    "sequence": 27,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/not-an-id",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.790Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "roomId must be a positive integer."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.793Z"
+  },
+  {
+    "sequence": 28,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/970?RapID=1",
+    "method": "DELETE",
+    "input": {
+      "RapID": 1
+    },
+    "startedAt": "2026-10-09T12:03:14.804Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.810Z"
+  },
+  {
+    "sequence": 29,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/971",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.819Z",
+    "status": 500,
+    "response": {
+      "error": {
+        "code": "EREQUEST",
+        "message": "Internal server error"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.835Z"
+  },
+  {
+    "sequence": 30,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/971",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.839Z",
+    "status": 500,
+    "response": {
+      "error": {
+        "code": "EREQUEST",
+        "message": "Internal server error"
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.847Z"
+  },
+  {
+    "sequence": 31,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/972",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.867Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "ROOM_DELETE_CONFLICT",
+        "message": "Room deletion conflicted with another operation. Reload and retry."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.885Z"
+  },
+  {
+    "sequence": 32,
+    "url": "http://127.0.0.1:57009/api/admin/rooms/972",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.889Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "ROOM_DELETE_CONFLICT",
+        "message": "Room deletion conflicted with another operation. Reload and retry."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.896Z"
+  },
+  {
+    "sequence": 33,
+    "url": "http://127.0.0.1:57009/api/manager/rooms/1",
+    "method": "DELETE",
+    "input": null,
+    "startedAt": "2026-10-09T12:03:14.905Z",
+    "status": 401,
+    "response": {
+      "error": {
+        "code": "UNAUTHENTICATED",
+        "message": "Authentication required."
+      }
+    },
+    "completedAt": "2026-10-09T12:03:14.907Z"
+  }
+]
