@@ -1,0 +1,986 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "SMOKE-01",
+      "result": "PASS",
+      "assertions": [
+        "Actual main.jsx/App/AuthProvider/BrowserRouter/AppRoutes/AreaLayout mounted"
+      ],
+      "screenshot": "public-desktop.png",
+      "route": "/",
+      "headings": [
+        "Chọn phim hay, tìm suất chiếu phù hợp",
+        "Phim",
+        "Dune: Hành Tinh Cát - Phần Hai",
+        "Mai",
+        "Oppenheimer",
+        "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+        "Trạng thái hệ thống"
+      ]
+    },
+    {
+      "id": "SMOKE-02",
+      "result": "PASS",
+      "assertions": [
+        "Real browser API health response identifies isolated Test DB; proxy targets this run Express"
+      ],
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44"
+    },
+    {
+      "id": "SMOKE-06",
+      "result": "PASS",
+      "assertions": [
+        "Actual Login form -> auth/me/current grants -> expected role default route",
+        "Real role-area read rendered"
+      ],
+      "role": "ADMIN",
+      "actorID": 1,
+      "screenshot": "admin-desktop.png",
+      "route": "/admin",
+      "headings": [
+        "Quản trị hệ thống",
+        "Tổng quan"
+      ],
+      "networkStart": 42,
+      "networkEnd": 46
+    },
+    {
+      "id": "SMOKE-04",
+      "result": "PASS",
+      "assertions": [
+        "Actual Login form -> auth/me/current grants -> expected role default route",
+        "Real role-area read rendered"
+      ],
+      "role": "QUAN_LY_RAP",
+      "actorID": 2,
+      "screenshot": "quan_ly_rap-desktop.png",
+      "route": "/manager",
+      "headings": [
+        "Manager Portal",
+        "Dashboard",
+        "Phòng chiếu",
+        "Ghế ",
+        "Suất chiếu",
+        "Bảng giá",
+        "Doanh thu"
+      ],
+      "networkStart": 67,
+      "networkEnd": 81
+    },
+    {
+      "id": "SMOKE-05",
+      "result": "PASS",
+      "assertions": [
+        "Actual Login form -> auth/me/current grants -> expected role default route",
+        "Real role-area read rendered"
+      ],
+      "role": "CSKH",
+      "actorID": 4,
+      "screenshot": "cskh-desktop.png",
+      "route": "/support",
+      "headings": [
+        "CSKH Portal"
+      ],
+      "networkStart": 101,
+      "networkEnd": 105
+    },
+    {
+      "id": "SMOKE-03",
+      "result": "PASS",
+      "assertions": [
+        "Actual Login form -> auth/me/current grants -> expected role default route",
+        "Real role-area read rendered"
+      ],
+      "role": "KHACH_HANG",
+      "actorID": 5,
+      "screenshot": "khach_hang-desktop.png",
+      "route": "/",
+      "headings": [
+        "Chọn phim hay, tìm suất chiếu phù hợp",
+        "Phim",
+        "Dune: Hành Tinh Cát - Phần Hai",
+        "Mai",
+        "Oppenheimer",
+        "Thám Tử Lừng Danh Conan: Ngôi Sao 5 Cánh 1 Triệu Đô",
+        "Trạng thái hệ thống"
+      ],
+      "networkStart": 125,
+      "networkEnd": 129
+    }
+  ],
+  "network": [
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/movies",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/health/db",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/admin/dashboard",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/admin/dashboard",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/admin/complaints",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/revenue",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/showtimes",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/rooms",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/pricing",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/revenue",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/showtimes",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/rooms",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/pricing",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/dashboard",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/manager/cinemas/1/dashboard",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/support/complaints",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/support/complaints",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/health/db",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/movies",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/authToken.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/httpClient.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/healthApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/catalogApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/ordersApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/feedbackApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/managerApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/supportApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/src/api/adminApi.js",
+      "method": "GET",
+      "status": 304
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "status": 200
+    }
+  ],
+  "exceptions": [],
+  "consoleErrors": [
+    {
+      "text": "Each child in a list should have a unique \"key\" prop.%s%s See https://react.dev/link/warning-keys for more information. \n\nCheck the render method of `AdminPortal`. "
+    }
+  ],
+  "failures": [
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/movies",
+      "method": "GET",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/health/db",
+      "method": "GET",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/movies",
+      "method": "GET",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/health/db",
+      "method": "GET",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "method": "GET",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "url": "http://127.0.0.1:61204/api/auth/me",
+      "method": "GET",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    }
+  ],
+  "error": "Browser console errors\n\n1 !== 0\n"
+}

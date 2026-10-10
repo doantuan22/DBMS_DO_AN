@@ -1,0 +1,162 @@
+{
+  "phase": "reproduce-r83-images",
+  "engine": "Chrome/155.0.8059.39",
+  "origin": "http://127.0.0.1:64106",
+  "network": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:64106/api/auth/login",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.176",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/auth/me",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.177",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/dashboard",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.178",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/dashboard",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.179",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.180",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.181",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas/1/images",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.182",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas/2/images",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.183",
+      "status": 503
+    },
+    {
+      "method": "DELETE",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas/2/images/1",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.184",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/dashboard",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.185",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.186",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.187",
+      "status": 503
+    }
+  ],
+  "exceptions": [],
+  "consoleErrors": [],
+  "failures": [
+    {
+      "method": "GET",
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "document": "3CC864F585504BB73C6C1FA1622F42C3",
+      "requestId": "8548.3",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/movies",
+      "document": "3CC864F585504BB73C6C1FA1622F42C3",
+      "requestId": "8548.86",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:64106/api/health/db",
+      "document": "3CC864F585504BB73C6C1FA1622F42C3",
+      "requestId": "8548.87",
+      "error": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "method": "GET",
+      "url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      "document": "F09AD4056CF2A273162015209E05D412",
+      "requestId": "8548.93",
+      "error": "net::ERR_NETWORK_ACCESS_DENIED",
+      "canceled": false
+    }
+  ],
+  "controls": [
+    {
+      "match": "/admin/cinemas/2/images",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas/2/images",
+      "method": "GET",
+      "backendStatus": 200,
+      "delay": 0,
+      "syntheticStatus": 503,
+      "networkFailure": null,
+      "kind": "CONTROLLED_TRANSPORT"
+    },
+    {
+      "match": "/admin/cinemas",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas",
+      "method": "GET",
+      "backendStatus": 200,
+      "delay": 0,
+      "syntheticStatus": 503,
+      "networkFailure": null,
+      "kind": "CONTROLLED_TRANSPORT"
+    },
+    {
+      "match": "/admin/cinemas",
+      "url": "http://127.0.0.1:64106/api/admin/cinemas",
+      "method": "GET",
+      "backendStatus": 200,
+      "delay": 0,
+      "syntheticStatus": 503,
+      "networkFailure": null,
+      "kind": "CONTROLLED_TRANSPORT"
+    }
+  ],
+  "harnessErrors": [],
+  "canceledInterceptions": [],
+  "profileRetention": "Dedicated OS temp profile; owned browser stopped; no user profile"
+}

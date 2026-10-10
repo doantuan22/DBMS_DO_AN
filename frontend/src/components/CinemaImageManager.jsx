@@ -19,6 +19,10 @@ export default function CinemaImageManager() {
   const [selected, setSelected] = useState(null);
   const [form, setForm] = useState(blank);
   const imageRequest = useRef(0);
+  const writePending = useRef(false);
+  const mounted = useRef(true);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { mounted.current = true; const request = imageRequest; return () => { mounted.current = false; request.current++; }; }, []);
 
   useEffect(() => {
     if (!canManage) return;
@@ -46,28 +50,33 @@ export default function CinemaImageManager() {
   };
 
   const submit = async (event) => {
-    event.preventDefault(); if (!canManage) return; setNotice(null);
+    event.preventDefault(); if (!canManage || writePending.current) return; writePending.current = true; setBusy(true); setNotice(null);
     const requestId = imageRequest.current;
     try {
       const payload = { url: form.url, description: form.description, displayOrder: Number(form.displayOrder), status: form.status };
       if (selected) await adminApi.updateCinemaImage(cinemaId, selected.HinhAnhRapID, payload);
       else await adminApi.createCinemaImage(cinemaId, { ...payload, cover: form.cover });
-      if (requestId !== imageRequest.current) return;
+      if (!mounted.current || requestId !== imageRequest.current) return;
       setSelected(null); setForm(blank()); setNotice({ ok: true, text: 'Đã lưu ảnh rạp.' }); await loadImages();
-    } catch (requestError) { if (requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
+    } catch (requestError) { if (mounted.current && requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
+    finally { writePending.current = false; if (mounted.current) setBusy(false); }
   };
 
   const remove = async (image) => {
-    if (!canManage) return;
+    if (!canManage || writePending.current) return;
     if (!window.confirm('Xác nhận xóa ảnh rạp?')) return;
-    try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); if (selected?.HinhAnhRapID === image.HinhAnhRapID) { setSelected(null); setForm(blank()); } setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
-    catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
+    writePending.current = true; setBusy(true); const requestId = imageRequest.current;
+    try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); if (!mounted.current || requestId !== imageRequest.current) return; if (selected?.HinhAnhRapID === image.HinhAnhRapID) { setSelected(null); setForm(blank()); } setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
+    catch (requestError) { if (mounted.current && requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
+    finally { writePending.current = false; if (mounted.current) setBusy(false); }
   };
 
   const setCover = async (image) => {
-    if (!canManage) return;
-    try { await adminApi.setCinemaImageCover(cinemaId, image.HinhAnhRapID); setNotice({ ok: true, text: 'Đã chọn ảnh đại diện.' }); await loadImages(); }
-    catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
+    if (!canManage || writePending.current) return;
+    writePending.current = true; setBusy(true); const requestId = imageRequest.current;
+    try { await adminApi.setCinemaImageCover(cinemaId, image.HinhAnhRapID); if (!mounted.current || requestId !== imageRequest.current) return; setNotice({ ok: true, text: 'Đã chọn ảnh đại diện.' }); await loadImages(); }
+    catch (requestError) { if (mounted.current && requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
+    finally { writePending.current = false; if (mounted.current) setBusy(false); }
   };
 
   if (!canManage) return <EmptyState>Bạn chưa được cấp quyền quản lý ảnh rạp.</EmptyState>;
@@ -82,10 +91,10 @@ export default function CinemaImageManager() {
       <label>Thứ tự hiển thị<input required min="0" type="number" value={form.displayOrder} onChange={(event) => setForm((value) => ({ ...value, displayOrder: event.target.value }))} /></label>
       <label>Trạng thái<select required value={form.status} onChange={(event) => setForm((value) => ({ ...value, status: event.target.value }))}>{CINEMA_IMAGE_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}</select></label>
       {!selected && <label><input type="checkbox" checked={form.cover} onChange={(event) => setForm((value) => ({ ...value, cover: event.target.checked }))} /> Ảnh đại diện</label>}
-      <div className="catalog-actions"><button className="catalog-button">Lưu</button>{selected && <button type="button" className="catalog-button catalog-button--secondary" onClick={() => { setSelected(null); setForm(blank()); }}>Bỏ chọn</button>}</div>
+      <div className="catalog-actions"><button className="catalog-button" disabled={busy}>Lưu</button>{selected && <button type="button" disabled={busy} className="catalog-button catalog-button--secondary" onClick={() => { setSelected(null); setForm(blank()); }}>Bỏ chọn</button>}</div>
     </form>}
     {loading && <LoadingState>Đang tải ảnh rạp…</LoadingState>}
     {!loading && cinemaId && images.length === 0 && <EmptyState>Rạp này chưa có ảnh.</EmptyState>}
-    {!loading && images.length > 0 && <div className="catalog-table-wrap"><table className="catalog-table"><thead><tr><th>Ảnh</th><th>Mô tả</th><th>Thứ tự</th><th>Trạng thái</th><th>Đại diện</th><th>Thao tác</th></tr></thead><tbody>{images.map((image) => <tr key={image.HinhAnhRapID}><td><a href={image.URL} target="_blank" rel="noreferrer">Mở ảnh</a></td><td>{image.MoTa ?? '—'}</td><td>{image.ThuTuHienThi}</td><td>{image.TrangThai}</td><td>{image.LaAnhDaiDien ? 'Có' : 'Không'}</td><td className="catalog-actions"><button type="button" className="catalog-button catalog-button--secondary" onClick={() => edit(image)}>Sửa</button>{!image.LaAnhDaiDien && <button type="button" className="catalog-button" onClick={() => setCover(image)}>Chọn đại diện</button>}<button type="button" className="catalog-button" onClick={() => remove(image)}>Xóa</button></td></tr>)}</tbody></table></div>}
+    {!loading && images.length > 0 && <div className="catalog-table-wrap"><table className="catalog-table"><thead><tr><th>Ảnh</th><th>Mô tả</th><th>Thứ tự</th><th>Trạng thái</th><th>Đại diện</th><th>Thao tác</th></tr></thead><tbody>{images.map((image) => <tr key={image.HinhAnhRapID}><td><a href={image.URL} target="_blank" rel="noreferrer">Mở ảnh</a></td><td>{image.MoTa ?? '—'}</td><td>{image.ThuTuHienThi}</td><td>{image.TrangThai}</td><td>{image.LaAnhDaiDien ? 'Có' : 'Không'}</td><td className="catalog-actions"><button type="button" disabled={busy} className="catalog-button catalog-button--secondary" onClick={() => edit(image)}>Sửa</button>{!image.LaAnhDaiDien && <button type="button" disabled={busy} className="catalog-button" onClick={() => setCover(image)}>Chọn đại diện</button>}<button type="button" disabled={busy} className="catalog-button" onClick={() => remove(image)}>Xóa</button></td></tr>)}</tbody></table></div>}
   </section>;
 }

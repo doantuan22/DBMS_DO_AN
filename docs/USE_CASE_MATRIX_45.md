@@ -1,6 +1,10 @@
 # Use Case Matrix — 45 UC
 
-Status: FINAL — R7 DATABASE/BACKEND ACCEPTANCE
+**Current R8.3 — PARTIAL, PHASE R8 NOT ACCEPTED (10/10/2026).** Database/Backend 45 PASS; Frontend/Overall **44 PASS / 0 PARTIAL / 1 BROKEN / 0 MISSING**. ADM-07 BROKEN do R83-FE-01/R83-FE-02; 42/43 Frontend gaps được nghiệm thu, R71-FE-ADM-07 REOPENED. [Báo cáo nghiệm thu](R8_3_FINAL_ACCEPTANCE_REPORT.md); [Per-UC audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json).
+
+Các mô tả/evidence/rationale R7 bên dưới là lịch sử theo ngày ghi trong tài liệu; những số liệu 2 PASS/43 PARTIAL và MAIN_DB_DEPLOYMENT_PENDING mô tả checkpoint R7.3, không phải trạng thái R8.3. Source/backend/main hiện hành được đối chiếu trong fresh R8.3 audit. Bảng counts, matrix 45 dòng và runtime table từng UC đã cập nhật; đoạn R8.3 current tại mỗi UC là quyết định hiện hành. Bản trước cập nhật: [USE_CASE_MATRIX_45_BEFORE_R8_3.md](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/USE_CASE_MATRIX_45_BEFORE_R8_3.md).
+
+Status lịch sử R7.3: FINAL — R7 DATABASE/BACKEND ACCEPTANCE
 
 Ngày nghiệm thu: 2026-10-09 (Asia/Saigon). Git baseline `9d68c6dbad0750de5ccb84eccbd6959dcf735845`. R7.1 lập baseline; R7.2 bổ sung SQL/HTTP regression và hai fix theo policy được người dùng chốt. R7.3 đối chiếu độc lập source, từng UC, raw evidence và môi trường; xem [báo cáo nghiệm thu](R7_3_FINAL_ACCEPTANCE_REPORT.md). Phạm vi FINAL là Database/Backend trên canonical source và Test DB đã verification; chưa nghiệm thu toàn hệ thống.
 
@@ -20,7 +24,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 **Cập nhật R7.2:** DB/BE **45 PASS / 0 PARTIAL / 0 BROKEN / 0 MISSING**. FE và Overall giữ **2 PASS / 43 PARTIAL**; 43 `R71-FE-*` tiếp tục `DEFER_TO_R8`. Sáu gap DB/BE đã RESOLVED theo [policy được phê duyệt](contracts/R7_2_APPROVED_POLICIES.md) và [evidence mới](<evidence/r7-2/final/2026-10-09T15-47-45-330Z-d024c694/verification-matrix.json>). Số liệu/evidence R7.1 trong registry E001–E431 là lịch sử được giữ nguyên phạm vi.
 
-## Final counts by actor and layer
+## Current counts by actor and layer — R8.3
 
 ### Database/Backend
 
@@ -34,74 +38,74 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 ### Frontend
 
-| Actor | Total | PASS | PARTIAL | BROKEN | MISSING |
+| Vai trò | Tổng | PASS | PARTIAL | BROKEN | MISSING |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Customer | 14 | 2 | 12 | 0 | 0 |
-| Manager | 9 | 0 | 9 | 0 | 0 |
-| CSKH | 6 | 0 | 6 | 0 | 0 |
-| Admin | 16 | 0 | 16 | 0 | 0 |
-| Total | 45 | 2 | 43 | 0 | 0 |
+| Customer | 14 | 14 | 0 | 0 | 0 |
+| Manager | 9 | 9 | 0 | 0 | 0 |
+| CSKH | 6 | 6 | 0 | 0 | 0 |
+| Admin | 16 | 15 | 0 | 1 | 0 |
+| **Tổng** | **45** | **44** | **0** | **1** | **0** |
 
 ### Overall
 
-| Actor | Total | PASS | PARTIAL | BROKEN | MISSING |
+| Vai trò | Tổng | PASS | PARTIAL | BROKEN | MISSING |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Customer | 14 | 2 | 12 | 0 | 0 |
-| Manager | 9 | 0 | 9 | 0 | 0 |
-| CSKH | 6 | 0 | 6 | 0 | 0 |
-| Admin | 16 | 0 | 16 | 0 | 0 |
-| Total | 45 | 2 | 43 | 0 | 0 |
+| Customer | 14 | 14 | 0 | 0 | 0 |
+| Manager | 9 | 9 | 0 | 0 | 0 |
+| CSKH | 6 | 6 | 0 | 0 | 0 |
+| Admin | 16 | 15 | 0 | 1 | 0 |
+| **Tổng** | **45** | **44** | **0** | **1** | **0** |
 
 ## Matrix (đúng 45 dòng)
 
 
 | UC ID | Actor | Function | Database | Stored Procedure | Backend | Authorization | Frontend | Integration Evidence | DB/BE Status | FE Status | Overall Status | Gap ID |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [KH-01](#uc-kh-01) | Customer | Đăng ký | MAPPED: HOSOKHACHHANG,NGUOIDUNG,VAITRO; invariants/constraints ở chi tiết | sp_Auth_RegisterCustomer | POST /api/auth/register; [1 endpoint chain](#uc-kh-01) | Public; limiter endpoint/IP; không nhận role/actor/grant của client. | /register → pages/auth/Register.jsx → authApi.registerCustomer; [full FE](#uc-kh-01) | [E001](#evidence-e001), [E002](#evidence-e002), [E003](#evidence-e003), [E004](#evidence-e004), [E380](#evidence-e380), [E381](#evidence-e381), [E382](#evidence-e382), [E383](#evidence-e383) | PASS | PARTIAL | PARTIAL | R71-FE-KH-01 |
-| [KH-02](#uc-kh-02) | Customer | Đăng nhập | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-kh-02) | POST /api/auth/login; [3 endpoint chain](#uc-kh-02) | Public login; GETme/permissions authenticate; DB/current account là authority. | /login → pages/auth/Login.jsx → authApi.login/getCurrentUser; [full FE](#uc-kh-02) | [E005](#evidence-e005), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011), [E384](#evidence-e384), [E385](#evidence-e385), [E386](#evidence-e386), [E387](#evidence-e387) | PASS | PASS | PASS | — |
-| [KH-03](#uc-kh-03) | Customer | Profile | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_ListAssignedCinemas<br>sp_RBAC_GetPermissionsByUser<br>+2: [full chain](#uc-kh-03) | GET /api/auth/me; [2 endpoint chain](#uc-kh-03) | authenticate; ownership bằng req.user.userId; không functional permission mới. | /profile → RequireAuth → pages/auth/Profile.jsx; [full FE](#uc-kh-03) | [E015](#evidence-e015), [E016](#evidence-e016), [E017](#evidence-e017), [E018](#evidence-e018), [E019](#evidence-e019), [E020](#evidence-e020), [E021](#evidence-e021), [E022](#evidence-e022), [E023](#evidence-e023), [E024](#evidence-e024), [E025](#evidence-e025), [E026](#evidence-e026), [E027](#evidence-e027), [E028](#evidence-e028), [E029](#evidence-e029), [E030](#evidence-e030), [E388](#evidence-e388) | PASS | PASS | PASS | — |
-| [KH-04](#uc-kh-04) | Customer | Xem phim/list/detail | MAPPED: DANHGIAPHIM,DIENVIEN,NGUOIDUNG,PHIM,PHIM_DIENVIEN,PHIM_THELOAI,SUATCHIEU,THELOAI; invariants/constraints ở chi tiết | sp_Genre_List<br>sp_Movie_GetDetail<br>+1: [full chain](#uc-kh-04) | GET /api/movies; [3 endpoint chain](#uc-kh-04) | Public: không requirePermission XEM_PHIM. | /movies → Movies/MovieGrid; /movies/:movieId → MovieDetail; [full FE](#uc-kh-04) | [E031](#evidence-e031) | PASS | PARTIAL | PARTIAL | R71-FE-KH-04 |
-| [KH-05](#uc-kh-05) | Customer | Xem lịch chiếu | MAPPED: CHITIETVE,DONDATVE,GHE,HINHANH_RAPCHIEUPHIM,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SUATCHIEU; invariants/constraints ở chi tiết | sp_Cinema_List<br>sp_Showtime_GetDetail<br>+1: [full chain](#uc-kh-05) | GET /api/cinemas; [3 endpoint chain](#uc-kh-05) | Public reads; write booking riêng KH-07. | /movies/:movieId → MovieDetail/ShowtimeBrowser → catalogApi.getCinemas/getShowtimes/getShowtimeDetail; cinema/date filter, link /booking/:showtimeId; loading/error/empty.; [full FE](#uc-kh-05) | [E031](#evidence-e031), [E032](#evidence-e032), [E033](#evidence-e033) | PASS | PARTIAL | PARTIAL | R71-FE-KH-05 |
-| [KH-06](#uc-kh-06) | Customer | Chọn ghế | MAPPED: BANGGIA,CHITIETVE,DONDATVE,GHE,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SUATCHIEU; invariants/constraints ở chi tiết | sp_Seat_ListByShowtime<br>sp_Showtime_GetDetail | GET /api/showtimes/:showtimeId; [2 endpoint chain](#uc-kh-06) | Seat read public; Customer+DAT_VE khi submit booking. | /booking/:showtimeId → BookingPreparation/SeatMap → catalogApi.getShowtimeDetail/getSeats; chọn/bỏ ghế, disabled held/sold, loading/error/empty.; [full FE](#uc-kh-06) | [E031](#evidence-e031), [E034](#evidence-e034), [E035](#evidence-e035), [E036](#evidence-e036), [E037](#evidence-e037), [E038](#evidence-e038), [E039](#evidence-e039), [E040](#evidence-e040), [E389](#evidence-e389), [E390](#evidence-e390) | PASS | PARTIAL | PARTIAL | R71-FE-KH-06 |
-| [KH-07](#uc-kh-07) | Customer | Đặt vé | MAPPED: BANGGIA,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Booking_Create | POST /api/bookings; [1 endpoint chain](#uc-kh-07) | authenticate→requireCustomer→requirePermission(DAT_VE); NguoiDungID trusted; SQL active/role/grant. | /booking/:showtimeId → BookingPreparation → catalogApi.createBooking; payload IDs/qty/code; success booking.total/HoldDeadline/payment link; lỗi giữ selection, refresh seats.; [full FE](#uc-kh-07) | [E031](#evidence-e031), [E041](#evidence-e041), [E042](#evidence-e042), [E043](#evidence-e043), [E034](#evidence-e034), [E035](#evidence-e035), [E036](#evidence-e036), [E037](#evidence-e037), [E044](#evidence-e044), [E045](#evidence-e045), [E032](#evidence-e032), [E033](#evidence-e033), [E038](#evidence-e038), [E039](#evidence-e039), [E040](#evidence-e040), [E046](#evidence-e046), [E047](#evidence-e047), [E048](#evidence-e048), [E391](#evidence-e391), [E389](#evidence-e389), [E390](#evidence-e390) | PASS | PARTIAL | PARTIAL | R71-FE-KH-07 |
-| [KH-08](#uc-kh-08) | Customer | Đồ ăn kèm vé | MAPPED: BANGGIA,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Booking_Create<br>sp_Product_ListActive | GET /api/products; [2 endpoint chain](#uc-kh-08) | Products public; booking Customer+DAT_VE, không permission food mới. | /booking/:showtimeId → ProductPicker/BookingPreparation → catalogApi.getProducts/createBooking; qty0 bỏ chọn, qty≤10/product; loading/error/empty.; [full FE](#uc-kh-08) | [E031](#evidence-e031), [E041](#evidence-e041), [E042](#evidence-e042), [E045](#evidence-e045), [E047](#evidence-e047), [E373](#evidence-e373), [E392](#evidence-e392), [E389](#evidence-e389), [E390](#evidence-e390) | PASS | PARTIAL | PARTIAL | R71-FE-KH-08 |
-| [KH-09](#uc-kh-09) | Customer | Khuyến mãi | MAPPED: BANGGIA,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Booking_Create<br>sp_Product_ListActive<br>+2: [full chain](#uc-kh-09) | POST /api/promotions/validate; [2 endpoint chain](#uc-kh-09) | authenticate→Customer→DAT_VE; promotion SP nhận trusted customer; client không gửi accepted/amount. | /booking/:showtimeId → BookingPreparation → catalogApi.validatePromotion/createBooking; provisional quote, previewVersion chống stale, explicit review khi409.; [full FE](#uc-kh-09) | [E031](#evidence-e031), [E049](#evidence-e049), [E050](#evidence-e050), [E037](#evidence-e037), [E051](#evidence-e051), [E047](#evidence-e047), [E048](#evidence-e048), [E373](#evidence-e373), [E393](#evidence-e393), [E391](#evidence-e391), [E394](#evidence-e394), [E392](#evidence-e392), [E389](#evidence-e389), [E429](#evidence-e429), [E430](#evidence-e430), [E431](#evidence-e431) | PASS | PARTIAL | PARTIAL | R71-FE-KH-09 |
-| [KH-10](#uc-kh-10) | Customer | Thanh toán | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,HOSOKHACHHANG,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Order_GetDetailByCustomer<br>sp_Payment_CreateAttempt<br>+1: [full chain](#uc-kh-10) | POST /api/orders/:orderId/payments; [3 endpoint chain](#uc-kh-10) | authenticate→Customer; pay writes THANH_TOAN; SQL ownership NguoiDungID và DonDatVeID/ThanhToanID. | /orders/:orderId/payment → RequireRole(Customer)/PaymentPage → ordersApi.getOrder/createPaymentAttempt/submitPaymentResult; simulated confirm, busy/error/deadline/history.; [full FE](#uc-kh-10) | [E052](#evidence-e052), [E053](#evidence-e053), [E054](#evidence-e054), [E055](#evidence-e055), [E056](#evidence-e056), [E057](#evidence-e057), [E058](#evidence-e058), [E059](#evidence-e059), [E373](#evidence-e373), [E395](#evidence-e395), [E396](#evidence-e396) | PASS | PARTIAL | PARTIAL | R71-FE-KH-10 |
-| [KH-11](#uc-kh-11) | Customer | Lịch sử đơn | MAPPED: CHITIETVE,DONDATVE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO; invariants/constraints ở chi tiết | sp_Order_ListByCustomer | GET /api/orders; [1 endpoint chain](#uc-kh-11) | authenticate→Customer; own GET không DAT_VE/THANH_TOAN write permission. | /orders → RequireRole(Customer)/Orders → ordersApi.getOrders; loading/error/retry/empty, order cards links.; [full FE](#uc-kh-11) | [E052](#evidence-e052), [E060](#evidence-e060) | PASS | PARTIAL | PARTIAL | R71-FE-KH-11 |
-| [KH-12](#uc-kh-12) | Customer | Chi tiết đơn | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO; invariants/constraints ở chi tiết | sp_Order_GetDetailByCustomer | GET /api/orders/:orderId; [1 endpoint chain](#uc-kh-12) | authenticate→Customer; SQL trusted owner; GET không write permission. | /orders/:orderId → RequireRole(Customer)/OrderDetail → ordersApi.getOrder; tickets/foods/payments/summary/HoldDeadline; loading/error/retry.; [full FE](#uc-kh-12) | [E031](#evidence-e031), [E037](#evidence-e037), [E052](#evidence-e052), [E053](#evidence-e053), [E373](#evidence-e373) | PASS | PARTIAL | PARTIAL | R71-FE-KH-12 |
-| [KH-13](#uc-kh-13) | Customer | Đánh giá | MAPPED: DANHGIAPHIM,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Review_Create<br>sp_Review_ListByMovie | GET /api/movies/:movieId/reviews; [2 endpoint chain](#uc-kh-13) | Public list; create authenticate→Customer→DANH_GIA; SQL current grant + eligibility trigger. | /movies/:movieId → MovieReviews → feedbackApi.getReviews/createReview; rating1–5/content, submit/error, empty/retry, permission-gated form.; [full FE](#uc-kh-13) | [E374](#evidence-e374), [E377](#evidence-e377), [E378](#evidence-e378), [E379](#evidence-e379) , [E432](#evidence-e432) | PASS | PARTIAL | PARTIAL | RESOLVED(R71-DB-01), R71-FE-KH-13 |
-| [KH-14](#uc-kh-14) | Customer | Khiếu nại | MAPPED: DONDATVE,KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Complaint_Create<br>sp_Complaint_GetByCustomer<br>+1: [full chain](#uc-kh-14) | POST /api/complaints; [3 endpoint chain](#uc-kh-14) | Customer; create GUI_KHIEU_NAI; own reads không cần write grant; trusted owner. | /complaints → Complaints; /complaints/:complaintId → ComplaintDetail; [full FE](#uc-kh-14) | [E110](#evidence-e110), [E111](#evidence-e111), [E112](#evidence-e112), [E113](#evidence-e113), [E114](#evidence-e114), [E115](#evidence-e115), [E116](#evidence-e116), [E117](#evidence-e117), [E118](#evidence-e118), [E119](#evidence-e119) | PASS | PARTIAL | PARTIAL | R71-FE-KH-14 |
-| [QLR-01](#uc-qlr-01) | Manager | Đăng nhập/rạp phân công | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-qlr-01) | POST /api/auth/login; [4 endpoint chain](#uc-qlr-01) | authenticate→Manager; GETcinemas bootstrap không functional grant; SQL role+live assignment. | /login → Login/AuthProvider; /manager → RequireRole(Manager)/ManagerPortal; [full FE](#uc-qlr-01) | [E012](#evidence-e012), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011), [E061](#evidence-e061), [E062](#evidence-e062), [E063](#evidence-e063) | PASS | PARTIAL | PARTIAL | R71-FE-QLR-01 |
-| [QLR-02](#uc-qlr-02) | Manager | Quản lý phòng | MAPPED: GHE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Room_Create<br>sp_Manager_Room_Delete<br>+2: [full chain](#uc-qlr-02) | GET /api/manager/cinemas/:cinemaId/rooms; [4 endpoint chain](#uc-qlr-02) | authenticate→Manager→QL_PHONG; SQL scope từ phòng→rạp; không tin spoof cinemaId. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getRooms/createRoom/updateRoom/deleteRoom + utils/managerForms.js; loading/error/empty, edit/delete/reload.; [full FE](#uc-qlr-02) | [E064](#evidence-e064), [E062](#evidence-e062), [E063](#evidence-e063), [E065](#evidence-e065), [E066](#evidence-e066), [E069](#evidence-e069), [E070](#evidence-e070), [E071](#evidence-e071), [E072](#evidence-e072), [E073](#evidence-e073), [E074](#evidence-e074), [E075](#evidence-e075), [E076](#evidence-e076), [E077](#evidence-e077), [E078](#evidence-e078), [E079](#evidence-e079), [E080](#evidence-e080), [E081](#evidence-e081) | PASS | PARTIAL | PARTIAL | R71-FE-QLR-02 |
-| [QLR-03](#uc-qlr-03) | Manager | Quản lý sơ đồ ghế | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Seat_Create<br>sp_Manager_Seat_Delete<br>+2: [full chain](#uc-qlr-03) | GET /api/manager/rooms/:roomId/seats; [4 endpoint chain](#uc-qlr-03) | Manager+QL_GHE; indirect parent scope và current grant ở BE+SQL. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getSeats/createSeat/updateSeat/deleteSeat + managerForms; seatLoader, persisted edit/reload, errors.; [full FE](#uc-qlr-03) | [E062](#evidence-e062), [E063](#evidence-e063), [E067](#evidence-e067), [E082](#evidence-e082), [E083](#evidence-e083), [E084](#evidence-e084), [E085](#evidence-e085), [E086](#evidence-e086), [E087](#evidence-e087), [E088](#evidence-e088), [E089](#evidence-e089), [E425](#evidence-e425), [E426](#evidence-e426), [E427](#evidence-e427), [E428](#evidence-e428) | PASS | PARTIAL | PARTIAL | R71-FE-QLR-03 |
-| [QLR-04](#uc-qlr-04) | Manager | Tạo suất chiếu | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Showtime_Create<br>sp_Manager_Showtime_List | GET /api/manager/cinemas/:cinemaId/showtimes; [2 endpoint chain](#uc-qlr-04) | Manager+QL_SUAT_CHIEU; scope from actual room; role/assignment live. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getManagerShowtimes/createManagerShowtime; movie/room form, loading/error/empty/reload.; [full FE](#uc-qlr-04) | [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E090](#evidence-e090), [E091](#evidence-e091), [E092](#evidence-e092), [E093](#evidence-e093), [E094](#evidence-e094), [E095](#evidence-e095), [E100](#evidence-e100), [E101](#evidence-e101), [E102](#evidence-e102) | PASS | PARTIAL | PARTIAL | R71-FE-QLR-04 |
-| [QLR-05](#uc-qlr-05) | Manager | Sửa suất chiếu | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Showtime_List<br>sp_Manager_Showtime_Update | GET /api/manager/cinemas/:cinemaId/showtimes; [2 endpoint chain](#uc-qlr-05) | Manager+QL_SUAT_CHIEU; show→room→cinema trusted scope. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getManagerShowtimes/updateManagerShowtime; hydrate full persisted fields, datetimeLocal conversion, error/retry.; [full FE](#uc-qlr-05) | [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E096](#evidence-e096), [E097](#evidence-e097), [E098](#evidence-e098), [E100](#evidence-e100), [E101](#evidence-e101), [E102](#evidence-e102), [E103](#evidence-e103), [E104](#evidence-e104), [E105](#evidence-e105), [E106](#evidence-e106), [E417](#evidence-e417), [E418](#evidence-e418), [E419](#evidence-e419), [E420](#evidence-e420) | PASS | PARTIAL | PARTIAL | R71-FE-QLR-05 |
-| [QLR-06](#uc-qlr-06) | Manager | Hủy suất chiếu | MAPPED: BOITHUONG_HUYSUAT,CHITIETVE,DONDATVE,HOSOKHACHHANG,KHUYENMAI,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Showtime_Cancel | POST /api/manager/showtimes/:showtimeId/cancel; [1 endpoint chain](#uc-qlr-06) | Manager+QL_SUAT_CHIEU; resource-derived cinema scope; trusted user ID. | /manager → ManagerPortal → managerApi.cancelManagerShowtime; cancel action/reload, busy/error.; [full FE](#uc-qlr-06) | [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E099](#evidence-e099), [E367](#evidence-e367), [E368](#evidence-e368), [E369](#evidence-e369) | PASS | PARTIAL | PARTIAL | R71-FE-QLR-06 |
-| [QLR-07](#uc-qlr-07) | Manager | Cấu hình bảng giá | MAPPED: BANGGIA,NGUOIDUNG,PHANCONG_RAP,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Pricing_Create<br>sp_Manager_Pricing_List<br>+1: [full chain](#uc-qlr-07) | GET /api/manager/cinemas/:cinemaId/pricing; [3 endpoint chain](#uc-qlr-07) | Manager+QL_BANG_GIA; create/list actual cinema, update lookup pricing→cinema; no scope spoof. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getPricing/createPricing/updatePricing + managerForms; three day types/full dimensions/dates, load/error/empty.; [full FE](#uc-qlr-07) | [E064](#evidence-e064), [E107](#evidence-e107), [E108](#evidence-e108), [E109](#evidence-e109) , [E433](#evidence-e433) | PASS | PARTIAL | PARTIAL | RESOLVED(R71-DB-02), R71-FE-QLR-07 |
-| [QLR-08](#uc-qlr-08) | Manager | Dashboard hoạt động rạp | MAPPED: DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Dashboard | GET /api/manager/cinemas/:cinemaId/dashboard; [1 endpoint chain](#uc-qlr-08) | Manager+XEM_BAO_CAO_RAP; fn_KiemTraQuanLyRapScope current, not Admin report authority. | /manager → ManagerPortal → managerApi.getDashboard; cinema selector, four metrics, loading/error/empty.; [full FE](#uc-qlr-08) | [E375](#evidence-e375) , [E434](#evidence-e434) | PASS | PARTIAL | PARTIAL | RESOLVED(R71-DB-03), R71-FE-QLR-08 |
-| [QLR-09](#uc-qlr-09) | Manager | Doanh thu rạp | MAPPED: CHITIETVE,DONDATVE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Revenue | GET /api/manager/cinemas/:cinemaId/revenue; [1 endpoint chain](#uc-qlr-09) | Manager+XEM_BAO_CAO_RAP; live assigned scope; Admin revenue tests cannot substitute Manager. | /manager → ManagerRevenue/ManagerPortal → managerApi.getRevenue; from/to form, loading/error/empty/rows.; [full FE](#uc-qlr-09) | [E376](#evidence-e376) , [E435](#evidence-e435) | PASS | PARTIAL | PARTIAL | RESOLVED(R71-DB-04), R71-FE-QLR-09 |
-| [CSKH-01](#uc-cskh-01) | CSKH | Đăng nhập | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-cskh-01) | POST /api/auth/login; [3 endpoint chain](#uc-cskh-01) | Public login; authenticated support route CSKH + QL_KHIEUNAI; SQL active/current role. | /login → Login/AuthProvider; /support → RequireRole(CSKH, QL_KHIEUNAI)/SupportPortal; login fields/busy/error.; [full FE](#uc-cskh-01) | [E013](#evidence-e013), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011) | PASS | PARTIAL | PARTIAL | R71-FE-CSKH-01 |
-| [CSKH-02](#uc-cskh-02) | CSKH | Hàng chờ khiếu nại | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_List | GET /api/support/complaints; [1 endpoint chain](#uc-cskh-02) | authenticate→requireSupport→QL_KHIEUNAI; SQL allows CSKH/Admin + exact grant. | /support → SupportPortal → supportApi.getSupportComplaints; status/type/search controls; priority displayed/sorted, loading/error/empty.; [full FE](#uc-cskh-02) | [E120](#evidence-e120), [E121](#evidence-e121), [E122](#evidence-e122), [E123](#evidence-e123) , [E436](#evidence-e436) | PASS | PARTIAL | PARTIAL | RESOLVED(R71-CT-01), R71-FE-CSKH-02 |
-| [CSKH-03](#uc-cskh-03) | CSKH | Chi tiết khiếu nại | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_GetDetail | GET /api/support/complaints/:complaintId; [1 endpoint chain](#uc-cskh-03) | CSKH + QL_KHIEUNAI; authenticate current user; SQL staff-role/grant. | /support → SupportPortal → supportApi.getSupportComplaint; selected detail/history, generation guard, loading/error; userCanAct.; [full FE](#uc-cskh-03) | [E124](#evidence-e124), [E125](#evidence-e125), [E126](#evidence-e126), [E127](#evidence-e127) | PASS | PARTIAL | PARTIAL | R71-FE-CSKH-03 |
-| [CSKH-04](#uc-cskh-04) | CSKH | Đơn tham chiếu | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHIEUNAI,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Support_Complaint_GetOrderReference | GET /api/support/complaints/:complaintId/order-reference; [1 endpoint chain](#uc-cskh-04) | requirePermission AND(QL_KHIEUNAI,TRA_CUU_DON); SQL repeats both; staff trusted identity. | /support → SupportPortal/ComplaintOrderReference/OrderReferenceDetails → supportApi.getComplaintOrderReference; linked detail or explicit empty; loading/error/retry.; [full FE](#uc-cskh-04) | [E128](#evidence-e128), [E129](#evidence-e129), [E130](#evidence-e130), [E131](#evidence-e131), [E132](#evidence-e132) | PASS | PARTIAL | PARTIAL | R71-FE-CSKH-04 |
-| [CSKH-05](#uc-cskh-05) | CSKH | Ghi lần xử lý | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_AddProcessing | POST /api/support/complaints/:complaintId/processings; [1 endpoint chain](#uc-cskh-05) | AND(QL_KHIEUNAI,XULY_KHIEUNAI) at route+SQL; role CSKH/Admin. | /support → SupportPortal → supportApi.addComplaintProcessing; content/next-status form, busy/error, reloadQueue+detail after write.; [full FE](#uc-cskh-05) | [E133](#evidence-e133), [E134](#evidence-e134), [E135](#evidence-e135), [E150](#evidence-e150), [E151](#evidence-e151) | PASS | PARTIAL | PARTIAL | R71-FE-CSKH-05 |
-| [CSKH-06](#uc-cskh-06) | CSKH | Đổi trạng thái | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_UpdateStatus | PUT /api/support/complaints/:complaintId/status; [1 endpoint chain](#uc-cskh-06) | AND(QL_KHIEUNAI,XULY_KHIEUNAI); current staff role/grants and trusted actor. | /support → SupportPortal → supportApi.updateComplaintStatus; status/content form, busy/error, refresh queue/detail.; [full FE](#uc-cskh-06) | [E136](#evidence-e136), [E137](#evidence-e137), [E138](#evidence-e138), [E150](#evidence-e150), [E151](#evidence-e151) | PASS | PARTIAL | PARTIAL | R71-FE-CSKH-06 |
-| [ADM-01](#uc-adm-01) | Admin | Đăng nhập | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-adm-01) | POST /api/auth/login; [3 endpoint chain](#uc-adm-01) | Public login; /admin role ADMIN; each API authenticate→Admin→exact grant. | /login → Login/AuthProvider; /admin → RequireRole(Admin)/AdminPortal; per-module permissions, busy/error.; [full FE](#uc-adm-01) | [E014](#evidence-e014), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-01 |
-| [ADM-02](#uc-adm-02) | Admin | Tài khoản người dùng | MAPPED: HOSOKHACHHANG,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_User_Create<br>sp_Admin_User_List<br>+1: [full chain](#uc-adm-02) | GET /api/admin/users; [3 endpoint chain](#uc-adm-02) | authenticate→requireAdmin→QL_NGUOIDUNG; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section users → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-02) | [E152](#evidence-e152), [E153](#evidence-e153), [E154](#evidence-e154), [E155](#evidence-e155), [E156](#evidence-e156), [E157](#evidence-e157), [E158](#evidence-e158), [E159](#evidence-e159), [E160](#evidence-e160), [E161](#evidence-e161) , [E437](#evidence-e437) | PASS | PARTIAL | PARTIAL | RESOLVED(R71-CT-02), R71-FE-ADM-02 |
-| [ADM-03](#uc-adm-03) | Admin | Vai trò | MAPPED: NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Role_Create<br>sp_Admin_Role_Delete<br>+2: [full chain](#uc-adm-03) | GET /api/admin/roles; [4 endpoint chain](#uc-adm-03) | authenticate→requireAdmin→QL_VAITRO; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section roles → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-03) | [E162](#evidence-e162), [E163](#evidence-e163), [E164](#evidence-e164), [E165](#evidence-e165), [E166](#evidence-e166), [E167](#evidence-e167), [E168](#evidence-e168), [E169](#evidence-e169), [E170](#evidence-e170), [E171](#evidence-e171), [E172](#evidence-e172) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-03 |
-| [ADM-04](#uc-adm-04) | Admin | Danh mục quyền | MAPPED: NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Permission_Create<br>sp_Admin_Permission_Delete<br>+2: [full chain](#uc-adm-04) | GET /api/admin/permissions; [4 endpoint chain](#uc-adm-04) | authenticate→requireAdmin→QL_QUYEN; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section permissions → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-04) | [E173](#evidence-e173), [E174](#evidence-e174), [E175](#evidence-e175), [E176](#evidence-e176), [E177](#evidence-e177), [E178](#evidence-e178), [E179](#evidence-e179), [E180](#evidence-e180), [E181](#evidence-e181), [E182](#evidence-e182), [E183](#evidence-e183), [E184](#evidence-e184) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-04 |
-| [ADM-05](#uc-adm-05) | Admin | Gán quyền vai trò | MAPPED: NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_RolePermission_Set<br>usp_Admin_RolePermission_List | GET /api/admin/roles/:roleId/permissions; [2 endpoint chain](#uc-adm-05) | authenticate→requireAdmin→QL_QUYEN; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section rolePermissions → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-05) | [E185](#evidence-e185), [E186](#evidence-e186), [E187](#evidence-e187), [E188](#evidence-e188), [E189](#evidence-e189) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-05 |
-| [ADM-06](#uc-adm-06) | Admin | Phân công quản lý | MAPPED: NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Assignment_Create<br>sp_Admin_Assignment_List<br>+1: [full chain](#uc-adm-06) | GET /api/admin/assignments; [3 endpoint chain](#uc-adm-06) | authenticate→requireAdmin→PHANCONG_RAP; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section assignments → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-06) | [E190](#evidence-e190), [E191](#evidence-e191), [E192](#evidence-e192), [E193](#evidence-e193), [E194](#evidence-e194), [E195](#evidence-e195), [E196](#evidence-e196), [E197](#evidence-e197), [E198](#evidence-e198), [E199](#evidence-e199), [E200](#evidence-e200) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-06 |
-| [ADM-07](#uc-adm-07) | Admin | Rạp và hình ảnh | MAPPED: BANGGIA,HINHANH_RAPCHIEUPHIM,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Cinema_Create<br>sp_Admin_Cinema_Delete<br>+7: [full chain](#uc-adm-07) | GET /api/admin/cinemas; [9 endpoint chain](#uc-adm-07) | authenticate→requireAdmin→QL_RAP; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section cinemas + CinemaImageManager → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes. Component CinemaImageManager.jsx xử lý image actions.; [full FE](#uc-adm-07) | [E201](#evidence-e201), [E202](#evidence-e202), [E203](#evidence-e203), [E204](#evidence-e204), [E205](#evidence-e205), [E206](#evidence-e206), [E207](#evidence-e207), [E208](#evidence-e208), [E209](#evidence-e209), [E210](#evidence-e210), [E211](#evidence-e211), [E212](#evidence-e212), [E213](#evidence-e213), [E214](#evidence-e214), [E215](#evidence-e215), [E216](#evidence-e216), [E217](#evidence-e217), [E218](#evidence-e218), [E219](#evidence-e219), [E220](#evidence-e220), [E221](#evidence-e221), [E222](#evidence-e222) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-07 |
-| [ADM-08](#uc-adm-08) | Admin | Phòng và ghế toàn hệ | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | usp_Admin_Room_Create<br>usp_Admin_Room_Delete<br>+6: [full chain](#uc-adm-08) | GET /api/admin/rooms; [8 endpoint chain](#uc-adm-08) | authenticate→requireAdmin→QL_GHE, QL_PHONG; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section rooms/seats → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-08) | [E223](#evidence-e223), [E224](#evidence-e224), [E225](#evidence-e225), [E226](#evidence-e226), [E227](#evidence-e227), [E228](#evidence-e228), [E229](#evidence-e229), [E230](#evidence-e230), [E231](#evidence-e231), [E232](#evidence-e232), [E233](#evidence-e233), [E234](#evidence-e234), [E235](#evidence-e235), [E236](#evidence-e236), [E237](#evidence-e237), [E238](#evidence-e238), [E239](#evidence-e239), [E240](#evidence-e240), [E241](#evidence-e241), [E242](#evidence-e242), [E353](#evidence-e353), [E354](#evidence-e354), [E355](#evidence-e355), [E356](#evidence-e356), [E357](#evidence-e357), [E370](#evidence-e370), [E371](#evidence-e371), [E078](#evidence-e078), [E421](#evidence-e421), [E422](#evidence-e422), [E423](#evidence-e423), [E424](#evidence-e424) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-08 |
-| [ADM-09](#uc-adm-09) | Admin | Phim và diễn viên | MAPPED: DANHGIAPHIM,DIENVIEN,NGUOIDUNG,PHIM,PHIM_DIENVIEN,PHIM_THELOAI,QUYEN,SUATCHIEU,THELOAI,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Actor_Create<br>sp_Admin_Actor_Delete<br>+7: [full chain](#uc-adm-09) | GET /api/admin/movies; [9 endpoint chain](#uc-adm-09) | authenticate→requireAdmin→QL_DANHMUC_PHIM; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section movies/actors + cast JSON editor → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-09) | [E243](#evidence-e243), [E244](#evidence-e244), [E245](#evidence-e245), [E246](#evidence-e246), [E247](#evidence-e247), [E248](#evidence-e248), [E249](#evidence-e249), [E250](#evidence-e250), [E251](#evidence-e251), [E252](#evidence-e252), [E253](#evidence-e253), [E254](#evidence-e254), [E255](#evidence-e255), [E256](#evidence-e256), [E257](#evidence-e257), [E258](#evidence-e258), [E259](#evidence-e259), [E260](#evidence-e260), [E261](#evidence-e261), [E262](#evidence-e262), [E263](#evidence-e263), [E264](#evidence-e264), [E327](#evidence-e327), [E407](#evidence-e407), [E408](#evidence-e408), [E409](#evidence-e409), [E410](#evidence-e410), [E411](#evidence-e411), [E412](#evidence-e412) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-09 |
-| [ADM-10](#uc-adm-10) | Admin | Thể loại | MAPPED: NGUOIDUNG,PHIM_THELOAI,QUYEN,THELOAI,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Genre_Create<br>sp_Admin_Genre_Delete<br>+2: [full chain](#uc-adm-10) | GET /api/admin/genres; [4 endpoint chain](#uc-adm-10) | authenticate→requireAdmin→QL_THELOAI; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section genres → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-10) | [E265](#evidence-e265), [E266](#evidence-e266), [E267](#evidence-e267), [E268](#evidence-e268), [E269](#evidence-e269), [E270](#evidence-e270), [E271](#evidence-e271), [E272](#evidence-e272), [E273](#evidence-e273), [E274](#evidence-e274), [E275](#evidence-e275) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-10 |
-| [ADM-11](#uc-adm-11) | Admin | Sản phẩm đồ ăn | MAPPED: CHITIETDOAN,NGUOIDUNG,QUYEN,SANPHAM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Product_Create<br>sp_Admin_Product_Delete<br>+2: [full chain](#uc-adm-11) | GET /api/admin/products; [4 endpoint chain](#uc-adm-11) | authenticate→requireAdmin→QL_SANPHAM; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section products → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-11) | [E276](#evidence-e276), [E277](#evidence-e277), [E278](#evidence-e278), [E279](#evidence-e279), [E280](#evidence-e280), [E281](#evidence-e281), [E282](#evidence-e282), [E283](#evidence-e283), [E284](#evidence-e284), [E285](#evidence-e285), [E373](#evidence-e373) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-11 |
-| [ADM-12](#uc-adm-12) | Admin | Chương trình khuyến mãi | MAPPED: DONDATVE,KHUYENMAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Promotion_Create<br>sp_Admin_Promotion_Delete<br>+2: [full chain](#uc-adm-12) | GET /api/admin/promotions; [4 endpoint chain](#uc-adm-12) | authenticate→requireAdmin→QL_KHUYENMAI; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section promotions → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-12) | [E286](#evidence-e286), [E287](#evidence-e287), [E288](#evidence-e288), [E289](#evidence-e289), [E290](#evidence-e290), [E291](#evidence-e291), [E292](#evidence-e292), [E293](#evidence-e293), [E294](#evidence-e294), [E295](#evidence-e295), [E296](#evidence-e296), [E373](#evidence-e373) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-12 |
-| [ADM-13](#uc-adm-13) | Admin | Bảng giá toàn hệ | MAPPED: BANGGIA,NGUOIDUNG,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | usp_Admin_Pricing_Create<br>usp_Admin_Pricing_List<br>+1: [full chain](#uc-adm-13) | GET /api/admin/pricing; [3 endpoint chain](#uc-adm-13) | authenticate→requireAdmin→QL_BANG_GIA; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section pricing → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-13) | [E297](#evidence-e297), [E298](#evidence-e298), [E299](#evidence-e299), [E300](#evidence-e300), [E301](#evidence-e301), [E302](#evidence-e302), [E303](#evidence-e303), [E304](#evidence-e304), [E305](#evidence-e305), [E328](#evidence-e328), [E329](#evidence-e329), [E330](#evidence-e330), [E397](#evidence-e397), [E398](#evidence-e398), [E399](#evidence-e399), [E400](#evidence-e400), [E401](#evidence-e401), [E402](#evidence-e402), [E403](#evidence-e403), [E404](#evidence-e404), [E405](#evidence-e405), [E406](#evidence-e406) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-13 |
-| [ADM-14](#uc-adm-14) | Admin | Suất chiếu toàn hệ | MAPPED: BOITHUONG_HUYSUAT,CHITIETVE,DONDATVE,GHE,HOSOKHACHHANG,KHUYENMAI,NGUOIDUNG,PHANCONG_RAP,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | usp_Admin_Showtime_Cancel<br>usp_Admin_Showtime_Create<br>+2: [full chain](#uc-adm-14) | GET /api/admin/showtimes; [4 endpoint chain](#uc-adm-14) | authenticate→requireAdmin→QL_SUAT_CHIEU; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section showtimes → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-14) | [E306](#evidence-e306), [E307](#evidence-e307), [E308](#evidence-e308), [E309](#evidence-e309), [E310](#evidence-e310), [E311](#evidence-e311), [E312](#evidence-e312), [E313](#evidence-e313), [E314](#evidence-e314), [E315](#evidence-e315), [E316](#evidence-e316), [E317](#evidence-e317), [E358](#evidence-e358), [E359](#evidence-e359), [E360](#evidence-e360), [E361](#evidence-e361), [E362](#evidence-e362), [E363](#evidence-e363), [E364](#evidence-e364), [E365](#evidence-e365), [E366](#evidence-e366), [E101](#evidence-e101), [E372](#evidence-e372), [E413](#evidence-e413), [E414](#evidence-e414), [E415](#evidence-e415), [E416](#evidence-e416) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-14 |
-| [ADM-15](#uc-adm-15) | Admin | Xử lý khiếu nại | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHIEUNAI,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_AddProcessing<br>sp_Support_Complaint_GetDetail<br>+3: [full chain](#uc-adm-15) | GET /api/admin/complaints; [5 endpoint chain](#uc-adm-15) | authenticate→requireAdmin→QL_KHIEUNAI, TRA_CUU_DON, XULY_KHIEUNAI; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section complaints + ComplaintOrderReference → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes. Component ComplaintOrderReference.jsx; writeComplaint refresh load()+openComplaint(selected).; [full FE](#uc-adm-15) | [E139](#evidence-e139), [E140](#evidence-e140), [E141](#evidence-e141), [E142](#evidence-e142), [E143](#evidence-e143), [E144](#evidence-e144), [E145](#evidence-e145), [E146](#evidence-e146), [E147](#evidence-e147), [E148](#evidence-e148), [E149](#evidence-e149), [E150](#evidence-e150), [E151](#evidence-e151), [E318](#evidence-e318), [E319](#evidence-e319), [E320](#evidence-e320), [E321](#evidence-e321), [E322](#evidence-e322) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-15 |
-| [ADM-16](#uc-adm-16) | Admin | Báo cáo toàn hệ | MAPPED: CHITIETVE,DONDATVE,KHIEUNAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Dashboard<br>sp_Admin_Report_Revenue | GET /api/admin/dashboard; [2 endpoint chain](#uc-adm-16) | authenticate→requireAdmin→XEM_BAO_CAO_TOANHE; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section dashboard/revenue → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-16) | [E323](#evidence-e323), [E324](#evidence-e324), [E325](#evidence-e325), [E326](#evidence-e326), [E331](#evidence-e331), [E332](#evidence-e332), [E333](#evidence-e333), [E334](#evidence-e334), [E335](#evidence-e335), [E336](#evidence-e336), [E337](#evidence-e337), [E338](#evidence-e338), [E339](#evidence-e339), [E340](#evidence-e340), [E341](#evidence-e341), [E342](#evidence-e342), [E343](#evidence-e343), [E344](#evidence-e344), [E345](#evidence-e345), [E346](#evidence-e346), [E347](#evidence-e347), [E348](#evidence-e348), [E349](#evidence-e349), [E350](#evidence-e350), [E351](#evidence-e351), [E352](#evidence-e352) | PASS | PARTIAL | PARTIAL | R71-FE-ADM-16 |
+| [KH-01](#uc-kh-01) | Customer | Đăng ký | MAPPED: HOSOKHACHHANG,NGUOIDUNG,VAITRO; invariants/constraints ở chi tiết | sp_Auth_RegisterCustomer | POST /api/auth/register; [1 endpoint chain](#uc-kh-01) | Public; limiter endpoint/IP; không nhận role/actor/grant của client. | /register → pages/auth/Register.jsx → authApi.registerCustomer; [full FE](#uc-kh-01) | [E001](#evidence-e001), [E002](#evidence-e002), [E003](#evidence-e003), [E004](#evidence-e004), [E380](#evidence-e380), [E381](#evidence-e381), [E382](#evidence-e382), [E383](#evidence-e383)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-01) |
+| [KH-02](#uc-kh-02) | Customer | Đăng nhập | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-kh-02) | POST /api/auth/login; [3 endpoint chain](#uc-kh-02) | Public login; GETme/permissions authenticate; DB/current account là authority. | /login → pages/auth/Login.jsx → authApi.login/getCurrentUser; [full FE](#uc-kh-02) | [E005](#evidence-e005), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011), [E384](#evidence-e384), [E385](#evidence-e385), [E386](#evidence-e386), [E387](#evidence-e387)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | — |
+| [KH-03](#uc-kh-03) | Customer | Profile | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_ListAssignedCinemas<br>sp_RBAC_GetPermissionsByUser<br>+2: [full chain](#uc-kh-03) | GET /api/auth/me; [2 endpoint chain](#uc-kh-03) | authenticate; ownership bằng req.user.userId; không functional permission mới. | /profile → RequireAuth → pages/auth/Profile.jsx; [full FE](#uc-kh-03) | [E015](#evidence-e015), [E016](#evidence-e016), [E017](#evidence-e017), [E018](#evidence-e018), [E019](#evidence-e019), [E020](#evidence-e020), [E021](#evidence-e021), [E022](#evidence-e022), [E023](#evidence-e023), [E024](#evidence-e024), [E025](#evidence-e025), [E026](#evidence-e026), [E027](#evidence-e027), [E028](#evidence-e028), [E029](#evidence-e029), [E030](#evidence-e030), [E388](#evidence-e388)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | — |
+| [KH-04](#uc-kh-04) | Customer | Xem phim/list/detail | MAPPED: DANHGIAPHIM,DIENVIEN,NGUOIDUNG,PHIM,PHIM_DIENVIEN,PHIM_THELOAI,SUATCHIEU,THELOAI; invariants/constraints ở chi tiết | sp_Genre_List<br>sp_Movie_GetDetail<br>+1: [full chain](#uc-kh-04) | GET /api/movies; [3 endpoint chain](#uc-kh-04) | Public: không requirePermission XEM_PHIM. | /movies → Movies/MovieGrid; /movies/:movieId → MovieDetail; [full FE](#uc-kh-04) | [E031](#evidence-e031)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-04) |
+| [KH-05](#uc-kh-05) | Customer | Xem lịch chiếu | MAPPED: CHITIETVE,DONDATVE,GHE,HINHANH_RAPCHIEUPHIM,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SUATCHIEU; invariants/constraints ở chi tiết | sp_Cinema_List<br>sp_Showtime_GetDetail<br>+1: [full chain](#uc-kh-05) | GET /api/cinemas; [3 endpoint chain](#uc-kh-05) | Public reads; write booking riêng KH-07. | /movies/:movieId → MovieDetail/ShowtimeBrowser → catalogApi.getCinemas/getShowtimes/getShowtimeDetail; cinema/date filter, link /booking/:showtimeId; loading/error/empty.; [full FE](#uc-kh-05) | [E031](#evidence-e031), [E032](#evidence-e032), [E033](#evidence-e033)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-05) |
+| [KH-06](#uc-kh-06) | Customer | Chọn ghế | MAPPED: BANGGIA,CHITIETVE,DONDATVE,GHE,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SUATCHIEU; invariants/constraints ở chi tiết | sp_Seat_ListByShowtime<br>sp_Showtime_GetDetail | GET /api/showtimes/:showtimeId; [2 endpoint chain](#uc-kh-06) | Seat read public; Customer+DAT_VE khi submit booking. | /booking/:showtimeId → BookingPreparation/SeatMap → catalogApi.getShowtimeDetail/getSeats; chọn/bỏ ghế, disabled held/sold, loading/error/empty.; [full FE](#uc-kh-06) | [E031](#evidence-e031), [E034](#evidence-e034), [E035](#evidence-e035), [E036](#evidence-e036), [E037](#evidence-e037), [E038](#evidence-e038), [E039](#evidence-e039), [E040](#evidence-e040), [E389](#evidence-e389), [E390](#evidence-e390)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-06) |
+| [KH-07](#uc-kh-07) | Customer | Đặt vé | MAPPED: BANGGIA,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Booking_Create | POST /api/bookings; [1 endpoint chain](#uc-kh-07) | authenticate→requireCustomer→requirePermission(DAT_VE); NguoiDungID trusted; SQL active/role/grant. | /booking/:showtimeId → BookingPreparation → catalogApi.createBooking; payload IDs/qty/code; success booking.total/HoldDeadline/payment link; lỗi giữ selection, refresh seats.; [full FE](#uc-kh-07) | [E031](#evidence-e031), [E041](#evidence-e041), [E042](#evidence-e042), [E043](#evidence-e043), [E034](#evidence-e034), [E035](#evidence-e035), [E036](#evidence-e036), [E037](#evidence-e037), [E044](#evidence-e044), [E045](#evidence-e045), [E032](#evidence-e032), [E033](#evidence-e033), [E038](#evidence-e038), [E039](#evidence-e039), [E040](#evidence-e040), [E046](#evidence-e046), [E047](#evidence-e047), [E048](#evidence-e048), [E391](#evidence-e391), [E389](#evidence-e389), [E390](#evidence-e390)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-07) |
+| [KH-08](#uc-kh-08) | Customer | Đồ ăn kèm vé | MAPPED: BANGGIA,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Booking_Create<br>sp_Product_ListActive | GET /api/products; [2 endpoint chain](#uc-kh-08) | Products public; booking Customer+DAT_VE, không permission food mới. | /booking/:showtimeId → ProductPicker/BookingPreparation → catalogApi.getProducts/createBooking; qty0 bỏ chọn, qty≤10/product; loading/error/empty.; [full FE](#uc-kh-08) | [E031](#evidence-e031), [E041](#evidence-e041), [E042](#evidence-e042), [E045](#evidence-e045), [E047](#evidence-e047), [E373](#evidence-e373), [E392](#evidence-e392), [E389](#evidence-e389), [E390](#evidence-e390)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-08) |
+| [KH-09](#uc-kh-09) | Customer | Khuyến mãi | MAPPED: BANGGIA,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Booking_Create<br>sp_Product_ListActive<br>+2: [full chain](#uc-kh-09) | POST /api/promotions/validate; [2 endpoint chain](#uc-kh-09) | authenticate→Customer→DAT_VE; promotion SP nhận trusted customer; client không gửi accepted/amount. | /booking/:showtimeId → BookingPreparation → catalogApi.validatePromotion/createBooking; provisional quote, previewVersion chống stale, explicit review khi409.; [full FE](#uc-kh-09) | [E031](#evidence-e031), [E049](#evidence-e049), [E050](#evidence-e050), [E037](#evidence-e037), [E051](#evidence-e051), [E047](#evidence-e047), [E048](#evidence-e048), [E373](#evidence-e373), [E393](#evidence-e393), [E391](#evidence-e391), [E394](#evidence-e394), [E392](#evidence-e392), [E389](#evidence-e389), [E429](#evidence-e429), [E430](#evidence-e430), [E431](#evidence-e431)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-09) |
+| [KH-10](#uc-kh-10) | Customer | Thanh toán | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,HOSOKHACHHANG,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Order_GetDetailByCustomer<br>sp_Payment_CreateAttempt<br>+1: [full chain](#uc-kh-10) | POST /api/orders/:orderId/payments; [3 endpoint chain](#uc-kh-10) | authenticate→Customer; pay writes THANH_TOAN; SQL ownership NguoiDungID và DonDatVeID/ThanhToanID. | /orders/:orderId/payment → RequireRole(Customer)/PaymentPage → ordersApi.getOrder/createPaymentAttempt/submitPaymentResult; simulated confirm, busy/error/deadline/history.; [full FE](#uc-kh-10) | [E052](#evidence-e052), [E053](#evidence-e053), [E054](#evidence-e054), [E055](#evidence-e055), [E056](#evidence-e056), [E057](#evidence-e057), [E058](#evidence-e058), [E059](#evidence-e059), [E373](#evidence-e373), [E395](#evidence-e395), [E396](#evidence-e396)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-10) |
+| [KH-11](#uc-kh-11) | Customer | Lịch sử đơn | MAPPED: CHITIETVE,DONDATVE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO; invariants/constraints ở chi tiết | sp_Order_ListByCustomer | GET /api/orders; [1 endpoint chain](#uc-kh-11) | authenticate→Customer; own GET không DAT_VE/THANH_TOAN write permission. | /orders → RequireRole(Customer)/Orders → ordersApi.getOrders; loading/error/retry/empty, order cards links.; [full FE](#uc-kh-11) | [E052](#evidence-e052), [E060](#evidence-e060)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-11) |
+| [KH-12](#uc-kh-12) | Customer | Chi tiết đơn | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO; invariants/constraints ở chi tiết | sp_Order_GetDetailByCustomer | GET /api/orders/:orderId; [1 endpoint chain](#uc-kh-12) | authenticate→Customer; SQL trusted owner; GET không write permission. | /orders/:orderId → RequireRole(Customer)/OrderDetail → ordersApi.getOrder; tickets/foods/payments/summary/HoldDeadline; loading/error/retry.; [full FE](#uc-kh-12) | [E031](#evidence-e031), [E037](#evidence-e037), [E052](#evidence-e052), [E053](#evidence-e053), [E373](#evidence-e373)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-12) |
+| [KH-13](#uc-kh-13) | Customer | Đánh giá | MAPPED: DANHGIAPHIM,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Review_Create<br>sp_Review_ListByMovie | GET /api/movies/:movieId/reviews; [2 endpoint chain](#uc-kh-13) | Public list; create authenticate→Customer→DANH_GIA; SQL current grant + eligibility trigger. | /movies/:movieId → MovieReviews → feedbackApi.getReviews/createReview; rating1–5/content, submit/error, empty/retry, permission-gated form.; [full FE](#uc-kh-13) | [E374](#evidence-e374), [E377](#evidence-e377), [E378](#evidence-e378), [E379](#evidence-e379) , [E432](#evidence-e432)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-DB-01), RESOLVED(R71-FE-KH-13) |
+| [KH-14](#uc-kh-14) | Customer | Khiếu nại | MAPPED: DONDATVE,KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Complaint_Create<br>sp_Complaint_GetByCustomer<br>+1: [full chain](#uc-kh-14) | POST /api/complaints; [3 endpoint chain](#uc-kh-14) | Customer; create GUI_KHIEU_NAI; own reads không cần write grant; trusted owner. | /complaints → Complaints; /complaints/:complaintId → ComplaintDetail; [full FE](#uc-kh-14) | [E110](#evidence-e110), [E111](#evidence-e111), [E112](#evidence-e112), [E113](#evidence-e113), [E114](#evidence-e114), [E115](#evidence-e115), [E116](#evidence-e116), [E117](#evidence-e117), [E118](#evidence-e118), [E119](#evidence-e119)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-KH-14) |
+| [QLR-01](#uc-qlr-01) | Manager | Đăng nhập/rạp phân công | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-qlr-01) | POST /api/auth/login; [4 endpoint chain](#uc-qlr-01) | authenticate→Manager; GETcinemas bootstrap không functional grant; SQL role+live assignment. | /login → Login/AuthProvider; /manager → RequireRole(Manager)/ManagerPortal; [full FE](#uc-qlr-01) | [E012](#evidence-e012), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011), [E061](#evidence-e061), [E062](#evidence-e062), [E063](#evidence-e063)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-QLR-01) |
+| [QLR-02](#uc-qlr-02) | Manager | Quản lý phòng | MAPPED: GHE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Room_Create<br>sp_Manager_Room_Delete<br>+2: [full chain](#uc-qlr-02) | GET /api/manager/cinemas/:cinemaId/rooms; [4 endpoint chain](#uc-qlr-02) | authenticate→Manager→QL_PHONG; SQL scope từ phòng→rạp; không tin spoof cinemaId. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getRooms/createRoom/updateRoom/deleteRoom + utils/managerForms.js; loading/error/empty, edit/delete/reload.; [full FE](#uc-qlr-02) | [E064](#evidence-e064), [E062](#evidence-e062), [E063](#evidence-e063), [E065](#evidence-e065), [E066](#evidence-e066), [E069](#evidence-e069), [E070](#evidence-e070), [E071](#evidence-e071), [E072](#evidence-e072), [E073](#evidence-e073), [E074](#evidence-e074), [E075](#evidence-e075), [E076](#evidence-e076), [E077](#evidence-e077), [E078](#evidence-e078), [E079](#evidence-e079), [E080](#evidence-e080), [E081](#evidence-e081)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-QLR-02) |
+| [QLR-03](#uc-qlr-03) | Manager | Quản lý sơ đồ ghế | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Seat_Create<br>sp_Manager_Seat_Delete<br>+2: [full chain](#uc-qlr-03) | GET /api/manager/rooms/:roomId/seats; [4 endpoint chain](#uc-qlr-03) | Manager+QL_GHE; indirect parent scope và current grant ở BE+SQL. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getSeats/createSeat/updateSeat/deleteSeat + managerForms; seatLoader, persisted edit/reload, errors.; [full FE](#uc-qlr-03) | [E062](#evidence-e062), [E063](#evidence-e063), [E067](#evidence-e067), [E082](#evidence-e082), [E083](#evidence-e083), [E084](#evidence-e084), [E085](#evidence-e085), [E086](#evidence-e086), [E087](#evidence-e087), [E088](#evidence-e088), [E089](#evidence-e089), [E425](#evidence-e425), [E426](#evidence-e426), [E427](#evidence-e427), [E428](#evidence-e428)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-QLR-03) |
+| [QLR-04](#uc-qlr-04) | Manager | Tạo suất chiếu | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Showtime_Create<br>sp_Manager_Showtime_List | GET /api/manager/cinemas/:cinemaId/showtimes; [2 endpoint chain](#uc-qlr-04) | Manager+QL_SUAT_CHIEU; scope from actual room; role/assignment live. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getManagerShowtimes/createManagerShowtime; movie/room form, loading/error/empty/reload.; [full FE](#uc-qlr-04) | [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E090](#evidence-e090), [E091](#evidence-e091), [E092](#evidence-e092), [E093](#evidence-e093), [E094](#evidence-e094), [E095](#evidence-e095), [E100](#evidence-e100), [E101](#evidence-e101), [E102](#evidence-e102)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-QLR-04) |
+| [QLR-05](#uc-qlr-05) | Manager | Sửa suất chiếu | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Showtime_List<br>sp_Manager_Showtime_Update | GET /api/manager/cinemas/:cinemaId/showtimes; [2 endpoint chain](#uc-qlr-05) | Manager+QL_SUAT_CHIEU; show→room→cinema trusted scope. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getManagerShowtimes/updateManagerShowtime; hydrate full persisted fields, datetimeLocal conversion, error/retry.; [full FE](#uc-qlr-05) | [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E096](#evidence-e096), [E097](#evidence-e097), [E098](#evidence-e098), [E100](#evidence-e100), [E101](#evidence-e101), [E102](#evidence-e102), [E103](#evidence-e103), [E104](#evidence-e104), [E105](#evidence-e105), [E106](#evidence-e106), [E417](#evidence-e417), [E418](#evidence-e418), [E419](#evidence-e419), [E420](#evidence-e420)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-QLR-05) |
+| [QLR-06](#uc-qlr-06) | Manager | Hủy suất chiếu | MAPPED: BOITHUONG_HUYSUAT,CHITIETVE,DONDATVE,HOSOKHACHHANG,KHUYENMAI,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Showtime_Cancel | POST /api/manager/showtimes/:showtimeId/cancel; [1 endpoint chain](#uc-qlr-06) | Manager+QL_SUAT_CHIEU; resource-derived cinema scope; trusted user ID. | /manager → ManagerPortal → managerApi.cancelManagerShowtime; cancel action/reload, busy/error.; [full FE](#uc-qlr-06) | [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E099](#evidence-e099), [E367](#evidence-e367), [E368](#evidence-e368), [E369](#evidence-e369)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-QLR-06) |
+| [QLR-07](#uc-qlr-07) | Manager | Cấu hình bảng giá | MAPPED: BANGGIA,NGUOIDUNG,PHANCONG_RAP,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Pricing_Create<br>sp_Manager_Pricing_List<br>+1: [full chain](#uc-qlr-07) | GET /api/manager/cinemas/:cinemaId/pricing; [3 endpoint chain](#uc-qlr-07) | Manager+QL_BANG_GIA; create/list actual cinema, update lookup pricing→cinema; no scope spoof. | /manager → ManagerPortal/ManagerResourceForm → managerApi.getPricing/createPricing/updatePricing + managerForms; three day types/full dimensions/dates, load/error/empty.; [full FE](#uc-qlr-07) | [E064](#evidence-e064), [E107](#evidence-e107), [E108](#evidence-e108), [E109](#evidence-e109) , [E433](#evidence-e433)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-DB-02), RESOLVED(R71-FE-QLR-07) |
+| [QLR-08](#uc-qlr-08) | Manager | Dashboard hoạt động rạp | MAPPED: DONDATVE,GHE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Dashboard | GET /api/manager/cinemas/:cinemaId/dashboard; [1 endpoint chain](#uc-qlr-08) | Manager+XEM_BAO_CAO_RAP; fn_KiemTraQuanLyRapScope current, not Admin report authority. | /manager → ManagerPortal → managerApi.getDashboard; cinema selector, four metrics, loading/error/empty.; [full FE](#uc-qlr-08) | [E375](#evidence-e375) , [E434](#evidence-e434)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-DB-03), RESOLVED(R71-FE-QLR-08) |
+| [QLR-09](#uc-qlr-09) | Manager | Doanh thu rạp | MAPPED: CHITIETVE,DONDATVE,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Manager_Revenue | GET /api/manager/cinemas/:cinemaId/revenue; [1 endpoint chain](#uc-qlr-09) | Manager+XEM_BAO_CAO_RAP; live assigned scope; Admin revenue tests cannot substitute Manager. | /manager → ManagerRevenue/ManagerPortal → managerApi.getRevenue; from/to form, loading/error/empty/rows.; [full FE](#uc-qlr-09) | [E376](#evidence-e376) , [E435](#evidence-e435)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-DB-04), RESOLVED(R71-FE-QLR-09) |
+| [CSKH-01](#uc-cskh-01) | CSKH | Đăng nhập | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-cskh-01) | POST /api/auth/login; [3 endpoint chain](#uc-cskh-01) | Public login; authenticated support route CSKH + QL_KHIEUNAI; SQL active/current role. | /login → Login/AuthProvider; /support → RequireRole(CSKH, QL_KHIEUNAI)/SupportPortal; login fields/busy/error.; [full FE](#uc-cskh-01) | [E013](#evidence-e013), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-CSKH-01) |
+| [CSKH-02](#uc-cskh-02) | CSKH | Hàng chờ khiếu nại | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_List | GET /api/support/complaints; [1 endpoint chain](#uc-cskh-02) | authenticate→requireSupport→QL_KHIEUNAI; SQL allows CSKH/Admin + exact grant. | /support → SupportPortal → supportApi.getSupportComplaints; status/type/search controls; priority displayed/sorted, loading/error/empty.; [full FE](#uc-cskh-02) | [E120](#evidence-e120), [E121](#evidence-e121), [E122](#evidence-e122), [E123](#evidence-e123) , [E436](#evidence-e436)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-CT-01), RESOLVED(R71-FE-CSKH-02) |
+| [CSKH-03](#uc-cskh-03) | CSKH | Chi tiết khiếu nại | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_GetDetail | GET /api/support/complaints/:complaintId; [1 endpoint chain](#uc-cskh-03) | CSKH + QL_KHIEUNAI; authenticate current user; SQL staff-role/grant. | /support → SupportPortal → supportApi.getSupportComplaint; selected detail/history, generation guard, loading/error; userCanAct.; [full FE](#uc-cskh-03) | [E124](#evidence-e124), [E125](#evidence-e125), [E126](#evidence-e126), [E127](#evidence-e127)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-CSKH-03) |
+| [CSKH-04](#uc-cskh-04) | CSKH | Đơn tham chiếu | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHIEUNAI,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Support_Complaint_GetOrderReference | GET /api/support/complaints/:complaintId/order-reference; [1 endpoint chain](#uc-cskh-04) | requirePermission AND(QL_KHIEUNAI,TRA_CUU_DON); SQL repeats both; staff trusted identity. | /support → SupportPortal/ComplaintOrderReference/OrderReferenceDetails → supportApi.getComplaintOrderReference; linked detail or explicit empty; loading/error/retry.; [full FE](#uc-cskh-04) | [E128](#evidence-e128), [E129](#evidence-e129), [E130](#evidence-e130), [E131](#evidence-e131), [E132](#evidence-e132)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-CSKH-04) |
+| [CSKH-05](#uc-cskh-05) | CSKH | Ghi lần xử lý | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_AddProcessing | POST /api/support/complaints/:complaintId/processings; [1 endpoint chain](#uc-cskh-05) | AND(QL_KHIEUNAI,XULY_KHIEUNAI) at route+SQL; role CSKH/Admin. | /support → SupportPortal → supportApi.addComplaintProcessing; content/next-status form, busy/error, reloadQueue+detail after write.; [full FE](#uc-cskh-05) | [E133](#evidence-e133), [E134](#evidence-e134), [E135](#evidence-e135), [E150](#evidence-e150), [E151](#evidence-e151)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-CSKH-05) |
+| [CSKH-06](#uc-cskh-06) | CSKH | Đổi trạng thái | MAPPED: KHIEUNAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_UpdateStatus | PUT /api/support/complaints/:complaintId/status; [1 endpoint chain](#uc-cskh-06) | AND(QL_KHIEUNAI,XULY_KHIEUNAI); current staff role/grants and trusted actor. | /support → SupportPortal → supportApi.updateComplaintStatus; status/content form, busy/error, refresh queue/detail.; [full FE](#uc-cskh-06) | [E136](#evidence-e136), [E137](#evidence-e137), [E138](#evidence-e138), [E150](#evidence-e150), [E151](#evidence-e151)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-CSKH-06) |
+| [ADM-01](#uc-adm-01) | Admin | Đăng nhập | MAPPED: HOSOKHACHHANG,NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Auth_Login<br>sp_Manager_ListAssignedCinemas<br>+2: [full chain](#uc-adm-01) | POST /api/auth/login; [3 endpoint chain](#uc-adm-01) | Public login; /admin role ADMIN; each API authenticate→Admin→exact grant. | /login → Login/AuthProvider; /admin → RequireRole(Admin)/AdminPortal; per-module permissions, busy/error.; [full FE](#uc-adm-01) | [E014](#evidence-e014), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-01) |
+| [ADM-02](#uc-adm-02) | Admin | Tài khoản người dùng | MAPPED: HOSOKHACHHANG,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_User_Create<br>sp_Admin_User_List<br>+1: [full chain](#uc-adm-02) | GET /api/admin/users; [3 endpoint chain](#uc-adm-02) | authenticate→requireAdmin→QL_NGUOIDUNG; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section users → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-02) | [E152](#evidence-e152), [E153](#evidence-e153), [E154](#evidence-e154), [E155](#evidence-e155), [E156](#evidence-e156), [E157](#evidence-e157), [E158](#evidence-e158), [E159](#evidence-e159), [E160](#evidence-e160), [E161](#evidence-e161) , [E437](#evidence-e437)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-CT-02), RESOLVED(R71-FE-ADM-02) |
+| [ADM-03](#uc-adm-03) | Admin | Vai trò | MAPPED: NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Role_Create<br>sp_Admin_Role_Delete<br>+2: [full chain](#uc-adm-03) | GET /api/admin/roles; [4 endpoint chain](#uc-adm-03) | authenticate→requireAdmin→QL_VAITRO; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section roles → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-03) | [E162](#evidence-e162), [E163](#evidence-e163), [E164](#evidence-e164), [E165](#evidence-e165), [E166](#evidence-e166), [E167](#evidence-e167), [E168](#evidence-e168), [E169](#evidence-e169), [E170](#evidence-e170), [E171](#evidence-e171), [E172](#evidence-e172)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-03) |
+| [ADM-04](#uc-adm-04) | Admin | Danh mục quyền | MAPPED: NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Permission_Create<br>sp_Admin_Permission_Delete<br>+2: [full chain](#uc-adm-04) | GET /api/admin/permissions; [4 endpoint chain](#uc-adm-04) | authenticate→requireAdmin→QL_QUYEN; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section permissions → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-04) | [E173](#evidence-e173), [E174](#evidence-e174), [E175](#evidence-e175), [E176](#evidence-e176), [E177](#evidence-e177), [E178](#evidence-e178), [E179](#evidence-e179), [E180](#evidence-e180), [E181](#evidence-e181), [E182](#evidence-e182), [E183](#evidence-e183), [E184](#evidence-e184)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-04) |
+| [ADM-05](#uc-adm-05) | Admin | Gán quyền vai trò | MAPPED: NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_RolePermission_Set<br>usp_Admin_RolePermission_List | GET /api/admin/roles/:roleId/permissions; [2 endpoint chain](#uc-adm-05) | authenticate→requireAdmin→QL_QUYEN; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section rolePermissions → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-05) | [E185](#evidence-e185), [E186](#evidence-e186), [E187](#evidence-e187), [E188](#evidence-e188), [E189](#evidence-e189)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-05) |
+| [ADM-06](#uc-adm-06) | Admin | Phân công quản lý | MAPPED: NGUOIDUNG,PHANCONG_RAP,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Assignment_Create<br>sp_Admin_Assignment_List<br>+1: [full chain](#uc-adm-06) | GET /api/admin/assignments; [3 endpoint chain](#uc-adm-06) | authenticate→requireAdmin→PHANCONG_RAP; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section assignments → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-06) | [E190](#evidence-e190), [E191](#evidence-e191), [E192](#evidence-e192), [E193](#evidence-e193), [E194](#evidence-e194), [E195](#evidence-e195), [E196](#evidence-e196), [E197](#evidence-e197), [E198](#evidence-e198), [E199](#evidence-e199), [E200](#evidence-e200)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-06) |
+| [ADM-07](#uc-adm-07) | Admin | Rạp và hình ảnh | MAPPED: BANGGIA,HINHANH_RAPCHIEUPHIM,NGUOIDUNG,PHANCONG_RAP,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Cinema_Create<br>sp_Admin_Cinema_Delete<br>+7: [full chain](#uc-adm-07) | GET /api/admin/cinemas; [9 endpoint chain](#uc-adm-07) | authenticate→requireAdmin→QL_RAP; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section cinemas + CinemaImageManager → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes. Component CinemaImageManager.jsx xử lý image actions.; [full FE](#uc-adm-07) | [E201](#evidence-e201), [E202](#evidence-e202), [E203](#evidence-e203), [E204](#evidence-e204), [E205](#evidence-e205), [E206](#evidence-e206), [E207](#evidence-e207), [E208](#evidence-e208), [E209](#evidence-e209), [E210](#evidence-e210), [E211](#evidence-e211), [E212](#evidence-e212), [E213](#evidence-e213), [E214](#evidence-e214), [E215](#evidence-e215), [E216](#evidence-e216), [E217](#evidence-e217), [E218](#evidence-e218), [E219](#evidence-e219), [E220](#evidence-e220), [E221](#evidence-e221), [E222](#evidence-e222)  [BROKEN R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | BROKEN | BROKEN | REOPENED(R71-FE-ADM-07) |
+| [ADM-08](#uc-adm-08) | Admin | Phòng và ghế toàn hệ | MAPPED: CHITIETVE,DONDATVE,GHE,NGUOIDUNG,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | usp_Admin_Room_Create<br>usp_Admin_Room_Delete<br>+6: [full chain](#uc-adm-08) | GET /api/admin/rooms; [8 endpoint chain](#uc-adm-08) | authenticate→requireAdmin→QL_GHE, QL_PHONG; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section rooms/seats → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-08) | [E223](#evidence-e223), [E224](#evidence-e224), [E225](#evidence-e225), [E226](#evidence-e226), [E227](#evidence-e227), [E228](#evidence-e228), [E229](#evidence-e229), [E230](#evidence-e230), [E231](#evidence-e231), [E232](#evidence-e232), [E233](#evidence-e233), [E234](#evidence-e234), [E235](#evidence-e235), [E236](#evidence-e236), [E237](#evidence-e237), [E238](#evidence-e238), [E239](#evidence-e239), [E240](#evidence-e240), [E241](#evidence-e241), [E242](#evidence-e242), [E353](#evidence-e353), [E354](#evidence-e354), [E355](#evidence-e355), [E356](#evidence-e356), [E357](#evidence-e357), [E370](#evidence-e370), [E371](#evidence-e371), [E078](#evidence-e078), [E421](#evidence-e421), [E422](#evidence-e422), [E423](#evidence-e423), [E424](#evidence-e424)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-08) |
+| [ADM-09](#uc-adm-09) | Admin | Phim và diễn viên | MAPPED: DANHGIAPHIM,DIENVIEN,NGUOIDUNG,PHIM,PHIM_DIENVIEN,PHIM_THELOAI,QUYEN,SUATCHIEU,THELOAI,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Actor_Create<br>sp_Admin_Actor_Delete<br>+7: [full chain](#uc-adm-09) | GET /api/admin/movies; [9 endpoint chain](#uc-adm-09) | authenticate→requireAdmin→QL_DANHMUC_PHIM; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section movies/actors + cast JSON editor → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-09) | [E243](#evidence-e243), [E244](#evidence-e244), [E245](#evidence-e245), [E246](#evidence-e246), [E247](#evidence-e247), [E248](#evidence-e248), [E249](#evidence-e249), [E250](#evidence-e250), [E251](#evidence-e251), [E252](#evidence-e252), [E253](#evidence-e253), [E254](#evidence-e254), [E255](#evidence-e255), [E256](#evidence-e256), [E257](#evidence-e257), [E258](#evidence-e258), [E259](#evidence-e259), [E260](#evidence-e260), [E261](#evidence-e261), [E262](#evidence-e262), [E263](#evidence-e263), [E264](#evidence-e264), [E327](#evidence-e327), [E407](#evidence-e407), [E408](#evidence-e408), [E409](#evidence-e409), [E410](#evidence-e410), [E411](#evidence-e411), [E412](#evidence-e412)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-09) |
+| [ADM-10](#uc-adm-10) | Admin | Thể loại | MAPPED: NGUOIDUNG,PHIM_THELOAI,QUYEN,THELOAI,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Genre_Create<br>sp_Admin_Genre_Delete<br>+2: [full chain](#uc-adm-10) | GET /api/admin/genres; [4 endpoint chain](#uc-adm-10) | authenticate→requireAdmin→QL_THELOAI; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section genres → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-10) | [E265](#evidence-e265), [E266](#evidence-e266), [E267](#evidence-e267), [E268](#evidence-e268), [E269](#evidence-e269), [E270](#evidence-e270), [E271](#evidence-e271), [E272](#evidence-e272), [E273](#evidence-e273), [E274](#evidence-e274), [E275](#evidence-e275)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-10) |
+| [ADM-11](#uc-adm-11) | Admin | Sản phẩm đồ ăn | MAPPED: CHITIETDOAN,NGUOIDUNG,QUYEN,SANPHAM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Product_Create<br>sp_Admin_Product_Delete<br>+2: [full chain](#uc-adm-11) | GET /api/admin/products; [4 endpoint chain](#uc-adm-11) | authenticate→requireAdmin→QL_SANPHAM; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section products → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-11) | [E276](#evidence-e276), [E277](#evidence-e277), [E278](#evidence-e278), [E279](#evidence-e279), [E280](#evidence-e280), [E281](#evidence-e281), [E282](#evidence-e282), [E283](#evidence-e283), [E284](#evidence-e284), [E285](#evidence-e285), [E373](#evidence-e373)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-11) |
+| [ADM-12](#uc-adm-12) | Admin | Chương trình khuyến mãi | MAPPED: DONDATVE,KHUYENMAI,NGUOIDUNG,QUYEN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Promotion_Create<br>sp_Admin_Promotion_Delete<br>+2: [full chain](#uc-adm-12) | GET /api/admin/promotions; [4 endpoint chain](#uc-adm-12) | authenticate→requireAdmin→QL_KHUYENMAI; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section promotions → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-12) | [E286](#evidence-e286), [E287](#evidence-e287), [E288](#evidence-e288), [E289](#evidence-e289), [E290](#evidence-e290), [E291](#evidence-e291), [E292](#evidence-e292), [E293](#evidence-e293), [E294](#evidence-e294), [E295](#evidence-e295), [E296](#evidence-e296), [E373](#evidence-e373)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-12) |
+| [ADM-13](#uc-adm-13) | Admin | Bảng giá toàn hệ | MAPPED: BANGGIA,NGUOIDUNG,QUYEN,RAPCHIEUPHIM,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | usp_Admin_Pricing_Create<br>usp_Admin_Pricing_List<br>+1: [full chain](#uc-adm-13) | GET /api/admin/pricing; [3 endpoint chain](#uc-adm-13) | authenticate→requireAdmin→QL_BANG_GIA; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section pricing → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-13) | [E297](#evidence-e297), [E298](#evidence-e298), [E299](#evidence-e299), [E300](#evidence-e300), [E301](#evidence-e301), [E302](#evidence-e302), [E303](#evidence-e303), [E304](#evidence-e304), [E305](#evidence-e305), [E328](#evidence-e328), [E329](#evidence-e329), [E330](#evidence-e330), [E397](#evidence-e397), [E398](#evidence-e398), [E399](#evidence-e399), [E400](#evidence-e400), [E401](#evidence-e401), [E402](#evidence-e402), [E403](#evidence-e403), [E404](#evidence-e404), [E405](#evidence-e405), [E406](#evidence-e406)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-13) |
+| [ADM-14](#uc-adm-14) | Admin | Suất chiếu toàn hệ | MAPPED: BOITHUONG_HUYSUAT,CHITIETVE,DONDATVE,GHE,HOSOKHACHHANG,KHUYENMAI,NGUOIDUNG,PHANCONG_RAP,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | usp_Admin_Showtime_Cancel<br>usp_Admin_Showtime_Create<br>+2: [full chain](#uc-adm-14) | GET /api/admin/showtimes; [4 endpoint chain](#uc-adm-14) | authenticate→requireAdmin→QL_SUAT_CHIEU; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section showtimes → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-14) | [E306](#evidence-e306), [E307](#evidence-e307), [E308](#evidence-e308), [E309](#evidence-e309), [E310](#evidence-e310), [E311](#evidence-e311), [E312](#evidence-e312), [E313](#evidence-e313), [E314](#evidence-e314), [E315](#evidence-e315), [E316](#evidence-e316), [E317](#evidence-e317), [E358](#evidence-e358), [E359](#evidence-e359), [E360](#evidence-e360), [E361](#evidence-e361), [E362](#evidence-e362), [E363](#evidence-e363), [E364](#evidence-e364), [E365](#evidence-e365), [E366](#evidence-e366), [E101](#evidence-e101), [E372](#evidence-e372), [E413](#evidence-e413), [E414](#evidence-e414), [E415](#evidence-e415), [E416](#evidence-e416)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-14) |
+| [ADM-15](#uc-adm-15) | Admin | Xử lý khiếu nại | MAPPED: BOITHUONG_HUYSUAT,CHITIETDOAN,CHITIETVE,DONDATVE,GHE,KHIEUNAI,KHUYENMAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SANPHAM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN,XULY_KHIEUNAI; invariants/constraints ở chi tiết | sp_Support_Complaint_AddProcessing<br>sp_Support_Complaint_GetDetail<br>+3: [full chain](#uc-adm-15) | GET /api/admin/complaints; [5 endpoint chain](#uc-adm-15) | authenticate→requireAdmin→QL_KHIEUNAI, TRA_CUU_DON, XULY_KHIEUNAI; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section complaints + ComplaintOrderReference → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes. Component ComplaintOrderReference.jsx; writeComplaint refresh load()+openComplaint(selected).; [full FE](#uc-adm-15) | [E139](#evidence-e139), [E140](#evidence-e140), [E141](#evidence-e141), [E142](#evidence-e142), [E143](#evidence-e143), [E144](#evidence-e144), [E145](#evidence-e145), [E146](#evidence-e146), [E147](#evidence-e147), [E148](#evidence-e148), [E149](#evidence-e149), [E150](#evidence-e150), [E151](#evidence-e151), [E318](#evidence-e318), [E319](#evidence-e319), [E320](#evidence-e320), [E321](#evidence-e321), [E322](#evidence-e322)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-15) |
+| [ADM-16](#uc-adm-16) | Admin | Báo cáo toàn hệ | MAPPED: CHITIETVE,DONDATVE,KHIEUNAI,NGUOIDUNG,PHIM,PHONGCHIEU,QUYEN,RAPCHIEUPHIM,SUATCHIEU,THANHTOAN,VAITRO,VAITRO_QUYEN; invariants/constraints ở chi tiết | sp_Admin_Dashboard<br>sp_Admin_Report_Revenue | GET /api/admin/dashboard; [2 endpoint chain](#uc-adm-16) | authenticate→requireAdmin→XEM_BAO_CAO_TOANHE; per-route AND, SQL @ActorID trusted (complaint uses @NguoiDungID). | /admin → RequireRole(Admin)/AdminPortal section dashboard/revenue → api/adminApi.js (list helpers + create/update/remove hoặc specialized actions); utils/adminForms.js; load/error/empty, form pending/error, reload after writes.; [full FE](#uc-adm-16) | [E323](#evidence-e323), [E324](#evidence-e324), [E325](#evidence-e325), [E326](#evidence-e326), [E331](#evidence-e331), [E332](#evidence-e332), [E333](#evidence-e333), [E334](#evidence-e334), [E335](#evidence-e335), [E336](#evidence-e336), [E337](#evidence-e337), [E338](#evidence-e338), [E339](#evidence-e339), [E340](#evidence-e340), [E341](#evidence-e341), [E342](#evidence-e342), [E343](#evidence-e343), [E344](#evidence-e344), [E345](#evidence-e345), [E346](#evidence-e346), [E347](#evidence-e347), [E348](#evidence-e348), [E349](#evidence-e349), [E350](#evidence-e350), [E351](#evidence-e351), [E352](#evidence-e352)  [PASS R8.3](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) | PASS | PASS | PASS | RESOLVED(R71-FE-ADM-16) |
 
 
 ## Trace chi tiết từng UC
@@ -151,17 +155,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E001](#evidence-e001), [E002](#evidence-e002), [E003](#evidence-e003), [E004](#evidence-e004), [E380](#evidence-e380), [E381](#evidence-e381), [E382](#evidence-e382), [E383](#evidence-e383)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R45 browser chỉ kiểm 429 và retry duplicate409; chưa UI đăng ký201, duplicate phone, input invalid và chuyển /login.. Gap: R71-FE-KH-01.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R45 browser chỉ kiểm 429 và retry duplicate409; chưa UI đăng ký201, duplicate phone, input invalid và chuyển /login.. Gap: R71-FE-KH-01.
 
 
 
 **Test IDs / raw case identities:** `valid registration follows real typed SP gateway and creates only Customer/profile`, `registered user login bcrypt JWT and live identity unchanged`, `invalid/duplicate registration contracts and no-write rollback unchanged`, `R4.5-08 register beyond production threshold never calls actual service/SQL`, `register: real429 shown as existing understandable retry error`, `register: form values retained and submit released`, `register: no automatic retry or navigation on429`, `register: explicit retry after expiry reaches existing duplicate-email contract`
 
 **R7.3 acceptance rationale:** Đăng ký: DB/BE PASS theo E001, E002, E003, E004, E380, E381, E382, E383; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/0`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-01 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/0`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-02"></a>
 
@@ -209,7 +216,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PASS | PASS |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E005](#evidence-e005), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011), [E384](#evidence-e384), [E385](#evidence-e385), [E386](#evidence-e386), [E387](#evidence-e387)
 
@@ -220,6 +227,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `real login JWT/current permissions/assignments KHACH_HANG`, `under-limit invalid/unknown credentials keep existing generic401`, `real four-role RBAC and non-auth endpoints preserved`, `account status and existing JWT live recheck unchanged`, `R4.5-07 login beyond production threshold never calls actual service/SQL`, `spoof resistance and other endpoints work with login/register counters exhausted`, `R4.5-04/10 exact expiry allows manual retry through real auth SP without sleeps`, `login: real429 shown as existing understandable retry error`, `login: form values retained and submit released`, `login: no automatic retry or navigation on429`, `login: explicit retry after expiry logs in and uses real JWT/me`
 
 **R7.3 acceptance rationale:** Đăng nhập: DB/BE PASS theo E005, E006, E007, E008, E009, E010, E011, E384, E385, E386, E387; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PASS (component flow giới hạn, chưa toàn App E2E). [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/1`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-02 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/1`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-03"></a>
 
@@ -266,7 +276,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PASS | PASS |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E015](#evidence-e015), [E016](#evidence-e016), [E017](#evidence-e017), [E018](#evidence-e018), [E019](#evidence-e019), [E020](#evidence-e020), [E021](#evidence-e021), [E022](#evidence-e022), [E023](#evidence-e023), [E024](#evidence-e024), [E025](#evidence-e025), [E026](#evidence-e026), [E027](#evidence-e027), [E028](#evidence-e028), [E029](#evidence-e029), [E030](#evidence-e030), [E388](#evidence-e388)
 
@@ -277,6 +287,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `R4.6-01 Customer common`, `R4.6-02 Customer specific, points preserved`, `R4.6-03/16 missing Customer valid NULL profile, repeated no duplicate`, `R4.6-11/14 invalid existing/missing profile constraints roll back common write`, `duplicate phone existing domain error, no writes`, `R4.6-13 missing user no profile`, `SQL and HTTP live inactive account rejection`, `direct SP has no trusted client role parameter`, `real typed API write/read-after-write KHACH_HANG`, `R4.6-10/20 identity, role/owner/security whitelist spoofing rejected, all tables unchanged`, `current SQL role overrides previously authenticated Customer role`, `R4.6-12 real injected profile UPDATE failure restores both tables, no open transaction`, `R4.6-12 real injected profile INSERT failure restores both tables, no open transaction`, `caller success remains uncommitted and caller rollback restores both`, `committable error rolls back SP savepoint, preserves caller prior work`, `doomed caller transaction rolled back fully, no partial writes`; records without a test ID: E388 `/results/0` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Profile: DB/BE PASS theo E015, E016, E017, E018, E019, E020, E021, E022, E023, E024, E025, E026, E027, E028, E029, E030, E388; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PASS (component flow giới hạn, chưa toàn App E2E). [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/2`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-03 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/2`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-04"></a>
 
@@ -324,17 +337,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | N/A — public core reads/selection không đòi permission | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | N/A — public core reads/selection không đòi permission | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser list/filter/detail, cast/genres, empty404 và retry.. Gap: R71-FE-KH-04.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser list/filter/detail, cast/genres, empty404 và retry.. Gap: R71-FE-KH-04.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`
 
 **R7.3 acceptance rationale:** Xem phim/list/detail: DB/BE PASS theo E031; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/3`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-04 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/3`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-05"></a>
 
@@ -382,17 +398,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | N/A — public core reads/selection không đòi permission | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | N/A — public core reads/selection không đòi permission | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031), [E032](#evidence-e032), [E033](#evidence-e033)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser chọn rạp/ngày, đổi filter, empty lịch và điều hướng booking.. Gap: R71-FE-KH-05.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser chọn rạp/ngày, đổi filter, empty lịch và điều hướng booking.. Gap: R71-FE-KH-05.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`, `R6.1-13`, `R6.1-14`
 
 **R7.3 acceptance rationale:** Xem lịch chiếu: DB/BE PASS theo E031, E032, E033; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/4`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-05 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/4`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-06"></a>
 
@@ -439,17 +458,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | N/A — public core reads/selection không đòi permission | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | N/A — public core reads/selection không đòi permission | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031), [E034](#evidence-e034), [E035](#evidence-e035), [E036](#evidence-e036), [E037](#evidence-e037), [E038](#evidence-e038), [E039](#evidence-e039), [E040](#evidence-e040), [E389](#evidence-e389), [E390](#evidence-e390)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 chỉ chọn ghế free; chưa browser held/sold, ghế11, concurrent conflict và refresh sau409.. Gap: R71-FE-KH-06.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 chỉ chọn ghế free; chưa browser held/sold, ghế11, concurrent conflict và refresh sau409.. Gap: R71-FE-KH-06.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`, `R6.1-07`, `R6.1-08`, `R6.1-09`, `R6.1-10`, `R6.2-01`, `R6.2-02`, `R6.2-03`, `booking final amount replaces old preview`, `booking payload contains only IDs quantities and code`
 
 **R7.3 acceptance rationale:** Chọn ghế: DB/BE PASS theo E031, E034, E035, E036, E037, E038, E039, E040, E389, E390; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/5`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-06 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/5`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-07"></a>
 
@@ -495,17 +517,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031), [E041](#evidence-e041), [E042](#evidence-e042), [E043](#evidence-e043), [E034](#evidence-e034), [E035](#evidence-e035), [E036](#evidence-e036), [E037](#evidence-e037), [E044](#evidence-e044), [E045](#evidence-e045), [E032](#evidence-e032), [E033](#evidence-e033), [E038](#evidence-e038), [E039](#evidence-e039), [E040](#evidence-e040), [E046](#evidence-e046), [E047](#evidence-e047), [E048](#evidence-e048), [E391](#evidence-e391), [E389](#evidence-e389), [E390](#evidence-e390)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 real booking 201 và stale promo409; chưa UI mất ghế, hết hold/max holds, double-submit và payment-link navigation.. Gap: R71-FE-KH-07.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 real booking 201 và stale promo409; chưa UI mất ghế, hết hold/max holds, double-submit và payment-link navigation.. Gap: R71-FE-KH-07.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`, `R6.1-02`, `R6.1-03`, `R6.1-06`, `R6.1-07`, `R6.1-08`, `R6.1-09`, `R6.1-10`, `R6.1-11`, `R6.1-12`, `R6.1-13`, `R6.1-14`, `R6.2-01`, `R6.2-02`, `R6.2-03`, `R6.2-04`, `REG-BOOKING-NEGATIVE`, `REG-BOOKING-ROLLBACK`, `stale preview rejected without success or automatic full-price retry`, `booking final amount replaces old preview`, `booking payload contains only IDs quantities and code`
 
 **R7.3 acceptance rationale:** Đặt vé: DB/BE PASS theo E031, E041, E042, E043, E034, E035, E036, E037, E044, E045, E032, E033, E038, E039, E040, E046, E047, E048, E391, E389, E390; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/6`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-07 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/6`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-08"></a>
 
@@ -552,17 +577,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031), [E041](#evidence-e041), [E042](#evidence-e042), [E045](#evidence-e045), [E047](#evidence-e047), [E373](#evidence-e373), [E392](#evidence-e392), [E389](#evidence-e389), [E390](#evidence-e390)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 browser chọn1food và snapshot authoritative; chưa qty0/10/11, nhiều product, inactive product và empty list.. Gap: R71-FE-KH-08.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 browser chọn1food và snapshot authoritative; chưa qty0/10/11, nhiều product, inactive product và empty list.. Gap: R71-FE-KH-08.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`, `R6.1-02`, `R6.1-03`, `R6.1-12`, `REG-BOOKING-NEGATIVE`, `R6.4-r32-sql-monetary-001`, `new preview reads current DB prices`, `booking final amount replaces old preview`, `booking payload contains only IDs quantities and code`
 
 **R7.3 acceptance rationale:** Đồ ăn kèm vé: DB/BE PASS theo E031, E041, E042, E045, E047, E373, E392, E389, E390; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/7`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-08 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/7`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-09"></a>
 
@@ -609,17 +637,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031), [E049](#evidence-e049), [E050](#evidence-e050), [E037](#evidence-e037), [E051](#evidence-e051), [E047](#evidence-e047), [E048](#evidence-e048), [E373](#evidence-e373), [E393](#evidence-e393), [E391](#evidence-e391), [E394](#evidence-e394), [E392](#evidence-e392), [E389](#evidence-e389), [E429](#evidence-e429), [E430](#evidence-e430), [E431](#evidence-e431)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 browser real stale/pause/requote/final price; R22 controlled timing. Chưa UI quota/minimum/expired, đổi code/seat/food với SQL thật.. Gap: R71-FE-KH-09.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 browser real stale/pause/requote/final price; R22 controlled timing. Chưa UI quota/minimum/expired, đổi code/seat/food với SQL thật.. Gap: R71-FE-KH-09.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`, `R6.1-04`, `R6.1-05`, `R6.1-10`, `R6.2-05`, `REG-BOOKING-NEGATIVE`, `REG-BOOKING-ROLLBACK`, `R6.4-r32-sql-monetary-001`, `valid real preview clearly provisional`, `stale preview rejected without success or automatic full-price retry`, `invalidated promotion requires explicit review`, `new preview reads current DB prices`, `booking final amount replaces old preview`
 
 **R7.3 acceptance rationale:** Khuyến mãi: DB/BE PASS theo E031, E049, E050, E037, E051, E047, E048, E373, E393, E391, E394, E392, E389; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/8`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-09 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/8`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-10"></a>
 
@@ -667,17 +698,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E052](#evidence-e052), [E053](#evidence-e053), [E054](#evidence-e054), [E055](#evidence-e055), [E056](#evidence-e056), [E057](#evidence-e057), [E058](#evidence-e058), [E059](#evidence-e059), [E373](#evidence-e373), [E395](#evidence-e395), [E396](#evidence-e396)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 browser successful payment/SQL amount; chưa UI failed→retry history, expiry, revoked permission, terminal replay/flip.. Gap: R71-FE-KH-10.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R44 browser successful payment/SQL amount; chưa UI failed→retry history, expiry, revoked permission, terminal replay/flip.. Gap: R71-FE-KH-10.
 
 
 
 **Test IDs / raw case identities:** `R6.3-01`, `R6.3-02`, `R6.3-03`, `R6.3-04`, `R6.3-05`, `R6.3-06`, `R6.3-07`, `REG-PAYMENT-ROLLBACK`, `R6.4-r32-sql-monetary-001`, `payment page displays authoritative order amount`, `payment amount comes from stored order without client money`
 
 **R7.3 acceptance rationale:** Thanh toán: DB/BE PASS theo E052, E053, E054, E055, E056, E057, E058, E059, E373, E395, E396; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/9`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-10 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/9`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-11"></a>
 
@@ -723,17 +757,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E052](#evidence-e052), [E060](#evidence-e060)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser history nonempty/mixed statuses, empty, direct navigation và error retry.. Gap: R71-FE-KH-11.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser history nonempty/mixed statuses, empty, direct navigation và error retry.. Gap: R71-FE-KH-11.
 
 
 
 **Test IDs / raw case identities:** `R6.3-01`; records without a test ID: E060 `/requests/86` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Lịch sử đơn: DB/BE PASS theo E052, E060; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/10`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-11 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/10`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-12"></a>
 
@@ -779,17 +816,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E031](#evidence-e031), [E037](#evidence-e037), [E052](#evidence-e052), [E053](#evidence-e053), [E373](#evidence-e373)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser full detail và expired/effective status, foreign404, timeline/foodempty; R44 PaymentPage order read không chứng minh OrderDetail component.. Gap: R71-FE-KH-12.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser full detail và expired/effective status, foreign404, timeline/foodempty; R44 PaymentPage order read không chứng minh OrderDetail component.. Gap: R71-FE-KH-12.
 
 
 
 **Test IDs / raw case identities:** `R6.1-01`, `R6.1-10`, `R6.3-01`, `R6.3-02`, `R6.4-r32-sql-monetary-001`
 
 **R7.3 acceptance rationale:** Chi tiết đơn: DB/BE PASS theo E031, E037, E052, E053, E373; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/11`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-12 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/11`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-13"></a>
 
@@ -836,7 +876,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E374](#evidence-e374), [E377](#evidence-e377), [E378](#evidence-e378), [E379](#evidence-e379), [E432](#evidence-e432)
 
@@ -850,6 +890,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `R55-ROLLBACK`, `R55-COMMIT`, `R55-NEGATIVE`, `KH13-01`, `KH13-02`, `KH13-02-future`, `KH13-02-pending`, `KH13-03`, `KH13-04-0`, `KH13-04-1`, `KH13-04-2`, `KH13-04-3`, `KH13-05`, `KH13-06-role`, `KH13-06-spoof`
 
 **R7.3 acceptance rationale:** Đánh giá: DB/BE PASS theo E377, E378, E379, E432 và 12 case R7.2 đã đối chiếu raw SQL/HTTP, authorization, fingerprint và cleanup; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/12`. Freshness: New R7.2 real SQL/HTTP cases on approved canonical definitions.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-13 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/12`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-kh-14"></a>
 
@@ -897,17 +940,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E110](#evidence-e110), [E111](#evidence-e111), [E112](#evidence-e112), [E113](#evidence-e113), [E114](#evidence-e114), [E115](#evidence-e115), [E116](#evidence-e116), [E117](#evidence-e117), [E118](#evidence-e118), [E119](#evidence-e119)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser linked/unlinked complaint submit, list/detail, status refresh và customer-safe timeline.. Gap: R71-FE-KH-14.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser linked/unlinked complaint submit, list/detail, status refresh và customer-safe timeline.. Gap: R71-FE-KH-14.
 
 
 
 **Test IDs / raw case identities:** `R6.8-linked-01`, `R6.8-linked-08`, `R6.8-linked-09`, `R6.8-linked-10`, `R6.8-linked-11`, `R6.8-linked-18`, `R6.8-linked-19`, `R6.8-linked-20`, `R6.8-linked-35`, `R6.8-linked-36`
 
 **R7.3 acceptance rationale:** Khiếu nại: DB/BE PASS theo E110, E111, E112, E113, E114, E115, E116, E117, E118, E119; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/13`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [KH-14 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/13`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-01"></a>
 
@@ -956,17 +1002,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E012](#evidence-e012), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011), [E061](#evidence-e061), [E062](#evidence-e062), [E063](#evidence-e063)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser login Manager→/manager, assigned selector và empty/expired/revoked scope.. Gap: R71-FE-QLR-01.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser login Manager→/manager, assigned selector và empty/expired/revoked scope.. Gap: R71-FE-QLR-01.
 
 
 
 **Test IDs / raw case identities:** `real login JWT/current permissions/assignments QUAN_LY_RAP`, `under-limit invalid/unknown credentials keep existing generic401`, `real four-role RBAC and non-auth endpoints preserved`, `account status and existing JWT live recheck unchanged`, `R4.5-07 login beyond production threshold never calls actual service/SQL`, `spoof resistance and other endpoints work with login/register counters exhausted`, `R4.5-04/10 exact expiry allows manual retry through real auth SP without sleeps`, `R6.5-01`, `R6.5-03`, `R6.5-04`
 
 **R7.3 acceptance rationale:** Đăng nhập/rạp phân công: DB/BE PASS theo E012, E006, E007, E008, E009, E010, E011, E061, E062, E063; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/14`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-01 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/14`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-02"></a>
 
@@ -1015,17 +1064,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E064](#evidence-e064), [E062](#evidence-e062), [E063](#evidence-e063), [E065](#evidence-e065), [E066](#evidence-e066), [E069](#evidence-e069), [E070](#evidence-e070), [E071](#evidence-e071), [E072](#evidence-e072), [E073](#evidence-e073), [E074](#evidence-e074), [E075](#evidence-e075), [E076](#evidence-e076), [E077](#evidence-e077), [E078](#evidence-e078), [E079](#evidence-e079), [E080](#evidence-e080), [E081](#evidence-e081)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser room CRUD, history/deactivate conflict, denied scope and refresh list.. Gap: R71-FE-QLR-02.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser room CRUD, history/deactivate conflict, denied scope and refresh list.. Gap: R71-FE-QLR-02.
 
 
 
 **Test IDs / raw case identities:** `R6.5-02`, `R6.5-03`, `R6.5-04`, `R6.5-05`, `R6.5-06`, `R6.6-r11-api-states-001`, `R6.6-r11-api-states-002`, `R6.6-r11-api-states-003`, `R6.6-r11-api-states-004`, `R6.6-r11-api-states-005`, `R6.6-r11-api-states-006`, `R6.6-r11-api-states-007`, `R6.6-r11-sql-cases-005`, `R6.6-r11-sql-cases-006`, `R6.6-r11-sql-cases-013`, `R6.6-r11-sql-cases-014`, `R6.6-r11-concurrency-cases-001`, `R6.6-r11-concurrency-cases-002`
 
 **R7.3 acceptance rationale:** Quản lý phòng: DB/BE PASS theo E064, E062, E063, E065, E066, E069, E070, E071, E072, E073, E074, E075, E076, E077, E078, E079, E080, E081; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/15`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-02 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/15`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-03"></a>
 
@@ -1074,17 +1126,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E062](#evidence-e062), [E063](#evidence-e063), [E067](#evidence-e067), [E082](#evidence-e082), [E083](#evidence-e083), [E084](#evidence-e084), [E085](#evidence-e085), [E086](#evidence-e086), [E087](#evidence-e087), [E088](#evidence-e088), [E089](#evidence-e089), [E425](#evidence-e425), [E426](#evidence-e426), [E427](#evidence-e427), [E428](#evidence-e428)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R32 controlled browser edit/retry; chưa SQL-backed seat create/delete, layout và future-seat/history conflict UI.. Gap: R71-FE-QLR-03.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R32 controlled browser edit/retry; chưa SQL-backed seat create/delete, layout và future-seat/history conflict UI.. Gap: R71-FE-QLR-03.
 
 
 
 **Test IDs / raw case identities:** `R6.5-03`, `R6.5-04`, `R6.5-07`, `R6.4-r32-sql-cases-036`, `R6.4-r32-sql-cases-037`, `R6.4-r32-sql-cases-038`, `R6.4-r32-sql-cases-039`, `R6.4-r32-sql-cases-040`, `R6.4-r32-sql-cases-041`, `R6.4-r32-sql-cases-042`, `R6.4-r32-sql-cases-043`
 
 **R7.3 acceptance rationale:** Quản lý sơ đồ ghế: DB/BE PASS theo E062, E063, E067, E082, E083, E084, E085, E086, E087, E088, E089; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/16`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-03 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/16`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-04"></a>
 
@@ -1131,17 +1186,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E090](#evidence-e090), [E091](#evidence-e091), [E092](#evidence-e092), [E093](#evidence-e093), [E094](#evidence-e094), [E095](#evidence-e095), [E100](#evidence-e100), [E101](#evidence-e101), [E102](#evidence-e102)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser show create, room/movie selection, overlap conflict and successful reload.. Gap: R71-FE-QLR-04.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser show create, room/movie selection, overlap conflict and successful reload.. Gap: R71-FE-QLR-04.
 
 
 
 **Test IDs / raw case identities:** `R6.5-03`, `R6.5-04`, `R6.5-08`, `R6.7-r12-concurrency-scenarios-001`, `R6.7-r12-concurrency-scenarios-002`, `R6.7-r12-concurrency-stress-001`; records without a test ID: E090 `/requests/1`, E091 `/requests/2`, E092 `/requests/3`, E093 `/requests/4`, E094 `/requests/5`, E095 `/requests/6` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Tạo suất chiếu: DB/BE PASS theo E062, E063, E068, E090, E091, E092, E093, E094, E095, E100, E101, E102; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/17`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-04 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/17`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-05"></a>
 
@@ -1188,17 +1246,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E096](#evidence-e096), [E097](#evidence-e097), [E098](#evidence-e098), [E100](#evidence-e100), [E101](#evidence-e101), [E102](#evidence-e102), [E103](#evidence-e103), [E104](#evidence-e104), [E105](#evidence-e105), [E106](#evidence-e106), [E417](#evidence-e417), [E418](#evidence-e418), [E419](#evidence-e419), [E420](#evidence-e420)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R32 controlled browser persisted edit/retry; chưa realSQL full update/history/overlap UI.. Gap: R71-FE-QLR-05.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R32 controlled browser persisted edit/retry; chưa realSQL full update/history/overlap UI.. Gap: R71-FE-QLR-05.
 
 
 
 **Test IDs / raw case identities:** `R6.5-03`, `R6.5-04`, `R6.5-08`, `R6.7-r12-concurrency-scenarios-001`, `R6.7-r12-concurrency-scenarios-002`, `R6.7-r12-concurrency-stress-001`, `R6.4-r32-sql-cases-005`, `R6.4-r32-sql-cases-006`, `R6.4-r32-sql-cases-007`, `R6.4-r32-sql-cases-008`; records without a test ID: E096 `/requests/8`, E097 `/requests/9`, E098 `/requests/10` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Sửa suất chiếu: DB/BE PASS theo E062, E063, E068, E096, E097, E098, E100, E101, E102, E103, E104, E105, E106; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/18`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-05 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/18`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-06"></a>
 
@@ -1244,17 +1305,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E062](#evidence-e062), [E063](#evidence-e063), [E068](#evidence-e068), [E099](#evidence-e099), [E367](#evidence-e367), [E368](#evidence-e368), [E369](#evidence-e369)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser cancel success, held/paid denial, expired-order policy and refresh show list.. Gap: R71-FE-QLR-06.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser cancel success, held/paid denial, expired-order policy and refresh show list.. Gap: R71-FE-QLR-06.
 
 
 
 **Test IDs / raw case identities:** `R6.5-03`, `R6.5-04`, `R6.5-08`, `R6.4-r32-sql-cases-048`, `R6.4-r32-sql-cases-049`, `R6.4-r32-sql-cases-050`; records without a test ID: E099 `/requests/11` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Hủy suất chiếu: DB/BE PASS theo E062, E063, E068, E099, E367, E368, E369; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/19`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-06 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/19`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-07"></a>
 
@@ -1302,7 +1366,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E064](#evidence-e064), [E107](#evidence-e107), [E108](#evidence-e108), [E109](#evidence-e109), [E433](#evidence-e433)
 
@@ -1316,6 +1380,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `R6.5-02`, `QLR07-01`, `QLR07-02`, `QLR07-03-0`, `QLR07-03-1`, `QLR07-03-2`, `QLR07-03-invalid`, `QLR07-04`, `QLR07-05`, `QLR07-06`, `QLR07-07-revoked`, `QLR07-07-expired`, `QLR07-08-grant`, `QLR07-08-role`; records without a test ID: E107 `/10`, E108 `/11`, E109 `/12` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Cấu hình bảng giá: DB/BE PASS theo E064, E107, E108, E109, E433 và 13 case R7.2 đã đối chiếu raw SQL/HTTP, authorization, fingerprint và cleanup; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/20`. Freshness: New R7.2 real SQL/HTTP cases on approved canonical definitions.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-07 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/20`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-08"></a>
 
@@ -1361,7 +1428,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E375](#evidence-e375), [E434](#evidence-e434)
 
@@ -1377,6 +1444,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `QLR08-01`, `QLR08-02`, `QLR08-02-foreign`, `QLR08-03`, `QLR08-04-revoked`, `QLR08-04-expired`, `QLR08-05-grant`, `QLR08-05-role`, `QLR08-06`
 
 **R7.3 acceptance rationale:** Dashboard hoạt động rạp: DB/BE PASS theo E434 và 9 case R7.2 đã đối chiếu raw SQL/HTTP, authorization, fingerprint và cleanup; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/21`. Freshness: New R7.2 real SQL/HTTP cases on approved canonical definitions.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-08 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/21`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-qlr-09"></a>
 
@@ -1422,7 +1492,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E376](#evidence-e376), [E435](#evidence-e435)
 
@@ -1436,6 +1506,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `QLR09-01`, `QLR09-02`, `QLR09-03-start`, `QLR09-03-end`, `QLR09-03-same`, `QLR09-03-default`, `QLR09-04`, `QLR09-04-foreign`, `QLR09-05-revoked`, `QLR09-05-expired`, `QLR09-06-grant`, `QLR09-06-role`, `QLR09-07-invalid-0`, `QLR09-07-invalid-1`, `QLR09-07-invalid-2`, `QLR09-07-empty`, `QLR09-08`
 
 **R7.3 acceptance rationale:** Doanh thu rạp: DB/BE PASS theo E435 và 17 case R7.2 đã đối chiếu raw SQL/HTTP, authorization, fingerprint và cleanup; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/22`. Freshness: New R7.2 real SQL/HTTP cases on approved canonical definitions.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [QLR-09 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/22`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-cskh-01"></a>
 
@@ -1483,17 +1556,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E013](#evidence-e013), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser login CSKH→support, missingQL permission/forbidden, refresh session.. Gap: R71-FE-CSKH-01.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser login CSKH→support, missingQL permission/forbidden, refresh session.. Gap: R71-FE-CSKH-01.
 
 
 
 **Test IDs / raw case identities:** `real login JWT/current permissions/assignments CSKH`, `under-limit invalid/unknown credentials keep existing generic401`, `real four-role RBAC and non-auth endpoints preserved`, `account status and existing JWT live recheck unchanged`, `R4.5-07 login beyond production threshold never calls actual service/SQL`, `spoof resistance and other endpoints work with login/register counters exhausted`, `R4.5-04/10 exact expiry allows manual retry through real auth SP without sleeps`
 
 **R7.3 acceptance rationale:** Đăng nhập: DB/BE PASS theo E013, E006, E007, E008, E009, E010, E011; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/23`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [CSKH-01 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/23`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-cskh-02"></a>
 
@@ -1539,7 +1615,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E120](#evidence-e120), [E121](#evidence-e121), [E122](#evidence-e122), [E123](#evidence-e123), [E436](#evidence-e436)
 
@@ -1553,6 +1629,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `R6.8-linked-02`, `R6.8-linked-12`, `R6.8-linked-25`, `R6.8-linked-26`, `CSKH02-01`, `CSKH02-02`, `CSKH02-02-priority-0`, `CSKH02-02-priority-1`, `CSKH02-02-priority-2`, `CSKH02-03`, `CSKH02-04`, `CSKH02-05`, `CSKH02-06`, `CSKH02-06-admin-consumer`, `CSKH02-06-admin-default`, `CSKH02-07`, `CSKH02-07-sql`, `CSKH02-08`, `CSKH02-09`
 
 **R7.3 acceptance rationale:** Hàng chờ khiếu nại: DB/BE PASS theo E120, E121, E122, E123, E436 và 15 case R7.2 đã đối chiếu raw SQL/HTTP, authorization, fingerprint và cleanup; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/24`. Freshness: New R7.2 real SQL/HTTP cases on approved canonical definitions.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [CSKH-02 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/24`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-cskh-03"></a>
 
@@ -1598,17 +1677,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E124](#evidence-e124), [E125](#evidence-e125), [E126](#evidence-e126), [E127](#evidence-e127)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser select/switch complaint, full timeline, notfound/retry, detail stale-response guard.. Gap: R71-FE-CSKH-03.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser select/switch complaint, full timeline, notfound/retry, detail stale-response guard.. Gap: R71-FE-CSKH-03.
 
 
 
 **Test IDs / raw case identities:** `R6.8-linked-03`, `R6.8-linked-13`, `R6.8-linked-27`, `R6.8-linked-28`
 
 **R7.3 acceptance rationale:** Chi tiết khiếu nại: DB/BE PASS theo E124, E125, E126, E127; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/25`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [CSKH-03 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/25`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-cskh-04"></a>
 
@@ -1654,17 +1736,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E128](#evidence-e128), [E129](#evidence-e129), [E130](#evidence-e130), [E131](#evidence-e131), [E132](#evidence-e132)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser linked/unlinked, each denied permission, switchingcomplaint and full monetary/payment reference.. Gap: R71-FE-CSKH-04.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser linked/unlinked, each denied permission, switchingcomplaint and full monetary/payment reference.. Gap: R71-FE-CSKH-04.
 
 
 
 **Test IDs / raw case identities:** `R6.8-linked-04`, `R6.8-linked-14`, `R6.8-linked-32`, `R6.8-linked-37`, `R6.8-linked-38`
 
 **R7.3 acceptance rationale:** Đơn tham chiếu: DB/BE PASS theo E128, E129, E130, E131, E132; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/26`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [CSKH-04 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/26`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-cskh-05"></a>
 
@@ -1710,17 +1795,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E133](#evidence-e133), [E134](#evidence-e134), [E135](#evidence-e135), [E150](#evidence-e150), [E151](#evidence-e151)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser append, validation/denied permissions, detail/queue refresh and timeline after retry.. Gap: R71-FE-CSKH-05.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser append, validation/denied permissions, detail/queue refresh and timeline after retry.. Gap: R71-FE-CSKH-05.
 
 
 
 **Test IDs / raw case identities:** `R6.8-linked-06`, `R6.8-linked-16`, `R6.8-linked-33`, `identity-order-over-timestamp`, `trigger-after-parent-update-batch-failure`
 
 **R7.3 acceptance rationale:** Ghi lần xử lý: DB/BE PASS theo E133, E134, E135, E150, E151; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/27`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [CSKH-05 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/27`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-cskh-06"></a>
 
@@ -1766,17 +1854,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E136](#evidence-e136), [E137](#evidence-e137), [E138](#evidence-e138), [E150](#evidence-e150), [E151](#evidence-e151)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser status change, audit append, validation/permission denial and refreshed detail/queue.. Gap: R71-FE-CSKH-06.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser status change, audit append, validation/permission denial and refreshed detail/queue.. Gap: R71-FE-CSKH-06.
 
 
 
 **Test IDs / raw case identities:** `R6.8-linked-07`, `R6.8-linked-17`, `R6.8-linked-34`, `identity-order-over-timestamp`, `trigger-after-parent-update-batch-failure`
 
 **R7.3 acceptance rationale:** Đổi trạng thái: DB/BE PASS theo E136, E137, E138, E150, E151; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/28`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [CSKH-06 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/28`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-01"></a>
 
@@ -1824,17 +1915,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E014](#evidence-e014), [E006](#evidence-e006), [E007](#evidence-e007), [E008](#evidence-e008), [E009](#evidence-e009), [E010](#evidence-e010), [E011](#evidence-e011)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser Admin login→portal, module access after permission removal, session reload.. Gap: R71-FE-ADM-01.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Chưa browser Admin login→portal, module access after permission removal, session reload.. Gap: R71-FE-ADM-01.
 
 
 
 **Test IDs / raw case identities:** `real login JWT/current permissions/assignments ADMIN`, `under-limit invalid/unknown credentials keep existing generic401`, `real four-role RBAC and non-auth endpoints preserved`, `account status and existing JWT live recheck unchanged`, `R4.5-07 login beyond production threshold never calls actual service/SQL`, `spoof resistance and other endpoints work with login/register counters exhausted`, `R4.5-04/10 exact expiry allows manual retry through real auth SP without sleeps`
 
 **R7.3 acceptance rationale:** Đăng nhập: DB/BE PASS theo E014, E006, E007, E008, E009, E010, E011; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/29`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-01 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/29`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-02"></a>
 
@@ -1882,7 +1976,7 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E152](#evidence-e152), [E153](#evidence-e153), [E154](#evidence-e154), [E155](#evidence-e155), [E156](#evidence-e156), [E157](#evidence-e157), [E158](#evidence-e158), [E159](#evidence-e159), [E160](#evidence-e160), [E161](#evidence-e161), [E437](#evidence-e437)
 
@@ -1898,6 +1992,9 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 **Test IDs / raw case identities:** `R6.9-admin-003`, `R6.9-admin-004`, `R6.9-admin-005`, `R6.9-admin-008`, `R6.9-admin-009`, `R6.9-admin-010`, `R6.9-admin-013`, `ADM02-01-QUAN_LY_RAP`, `ADM02-01-CSKH`, `ADM02-01-ADMIN`, `ADM02-02-customer`, `ADM02-02-sql-customer`, `ADM02-02-custom`, `ADM02-02-sql-custom`, `ADM02-03`, `ADM02-04`, `ADM02-05`, `ADM02-06-duplicate`, `ADM02-06-invalid`, `ADM02-07`, `ADM02-07-failure`, `ADM02-07-savepoint`, `ADM02-08-status`, `ADM02-08-list`; records without a test ID: E152 `/operations/1`, E153 `/operations/2`, E154 `/operations/3` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Tài khoản người dùng: DB/BE PASS theo E152, E153, E154, E155, E156, E157, E158, E159, E160, E161, E437 và 17 case R7.2 đã đối chiếu raw SQL/HTTP, authorization, fingerprint và cleanup; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/30`. Freshness: New R7.2 real SQL/HTTP cases on approved canonical definitions.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-02 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/30`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-03"></a>
 
@@ -1946,17 +2043,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E162](#evidence-e162), [E163](#evidence-e163), [E164](#evidence-e164), [E165](#evidence-e165), [E166](#evidence-e166), [E167](#evidence-e167), [E168](#evidence-e168), [E169](#evidence-e169), [E170](#evidence-e170), [E171](#evidence-e171), [E172](#evidence-e172)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Role CRUD form, usedrole delete conflict and list reload.. Gap: R71-FE-ADM-03.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Role CRUD form, usedrole delete conflict and list reload.. Gap: R71-FE-ADM-03.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-018`, `R6.9-admin-019`, `R6.9-admin-022`, `R6.9-admin-025`, `R6.9-admin-026`, `R6.9-admin-048`, `R6.9-admin-054`; records without a test ID: E162 `/operations/4`, E163 `/operations/6`, E164 `/operations/7`, E165 `/operations/8` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Vai trò: DB/BE PASS theo E162, E163, E164, E165, E166, E167, E168, E169, E170, E171, E172; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/31`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-03 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/31`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-04"></a>
 
@@ -2005,17 +2105,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E173](#evidence-e173), [E174](#evidence-e174), [E175](#evidence-e175), [E176](#evidence-e176), [E177](#evidence-e177), [E178](#evidence-e178), [E179](#evidence-e179), [E180](#evidence-e180), [E181](#evidence-e181), [E182](#evidence-e182), [E183](#evidence-e183), [E184](#evidence-e184)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Permission CRUD, usedgrant delete conflict, missingpermission behavior.. Gap: R71-FE-ADM-04.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Permission CRUD, usedgrant delete conflict, missingpermission behavior.. Gap: R71-FE-ADM-04.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-029`, `R6.9-admin-030`, `R6.9-admin-033`, `R6.9-admin-036`, `R6.9-admin-037`, `R6.9-admin-038`, `R6.9-admin-051`, `R6.9-admin-053`; records without a test ID: E173 `/operations/9`, E174 `/operations/10`, E175 `/operations/11`, E176 `/operations/12` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Danh mục quyền: DB/BE PASS theo E173, E174, E175, E176, E177, E178, E179, E180, E181, E182, E183, E184; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/32`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-04 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/32`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-05"></a>
 
@@ -2062,17 +2165,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E185](#evidence-e185), [E186](#evidence-e186), [E187](#evidence-e187), [E188](#evidence-e188), [E189](#evidence-e189)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Role grant editor load/set/explicitempty, invalidFK keeps grants, currentUI access update.. Gap: R71-FE-ADM-05.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Role grant editor load/set/explicitempty, invalidFK keeps grants, currentUI access update.. Gap: R71-FE-ADM-05.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-041`, `R6.9-admin-044`, `R6.9-admin-045`; records without a test ID: E185 `/operations/5`, E186 `/operations/13` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Gán quyền vai trò: DB/BE PASS theo E185, E186, E187, E188, E189; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/33`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-05 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/33`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-06"></a>
 
@@ -2120,17 +2226,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E190](#evidence-e190), [E191](#evidence-e191), [E192](#evidence-e192), [E193](#evidence-e193), [E194](#evidence-e194), [E195](#evidence-e195), [E196](#evidence-e196), [E197](#evidence-e197), [E198](#evidence-e198), [E199](#evidence-e199), [E200](#evidence-e200)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Assignment create/update/revoke forms, manager/cinema validation, scope refresh.. Gap: R71-FE-ADM-06.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Assignment create/update/revoke forms, manager/cinema validation, scope refresh.. Gap: R71-FE-ADM-06.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-068`, `R6.9-admin-069`, `R6.9-admin-072`, `R6.9-admin-073`, `R6.9-admin-074`, `R6.9-admin-075`, `R6.9-admin-076`, `R6.9-admin-079`; records without a test ID: E190 `/operations/14`, E191 `/operations/15`, E192 `/operations/16` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Phân công quản lý: DB/BE PASS theo E190, E191, E192, E193, E194, E195, E196, E197, E198, E199, E200; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/34`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-06 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/34`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-07"></a>
 
@@ -2184,17 +2293,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | BROKEN | BROKEN |
 
 **Evidence đúng phạm vi:** [E201](#evidence-e201), [E202](#evidence-e202), [E203](#evidence-e203), [E204](#evidence-e204), [E205](#evidence-e205), [E206](#evidence-e206), [E207](#evidence-e207), [E208](#evidence-e208), [E209](#evidence-e209), [E210](#evidence-e210), [E211](#evidence-e211), [E212](#evidence-e212), [E213](#evidence-e213), [E214](#evidence-e214), [E215](#evidence-e215), [E216](#evidence-e216), [E217](#evidence-e217), [E218](#evidence-e218), [E219](#evidence-e219), [E220](#evidence-e220), [E221](#evidence-e221), [E222](#evidence-e222)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Cinema and image CRUD/setcover/reorder selection, orphan/foreignimage denial and empty images.. Gap: R71-FE-ADM-07.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Cinema and image CRUD/setcover/reorder selection, orphan/foreignimage denial and empty images.. Gap: R71-FE-ADM-07.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-057`, `R6.9-admin-058`, `R6.9-admin-061`, `R6.9-admin-064`, `R6.9-admin-065`, `R6.9-admin-084`, `R6.9-admin-085`, `R6.9-admin-087`, `R6.9-admin-090`, `R6.9-admin-093`, `R6.9-admin-097`, `R6.9-admin-101`, `R6.9-admin-250`; records without a test ID: E201 `/operations/17`, E202 `/operations/18`, E203 `/operations/19`, E204 `/operations/20`, E205 `/operations/21`, E206 `/operations/22`, E207 `/operations/23`, E208 `/operations/24`, E209 `/operations/25` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Rạp và hình ảnh: DB/BE PASS theo E201, E202, E203, E204, E205, E206, E207, E208, E209, E210, E211, E212, E213, E214, E215, E216, E217, E218, E219, E220, E221, E222; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/35`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: BROKEN.** Real positive UI, HTTP and SQL remain valid; final acceptance revoked by reproduced image resource/error/retry defects [ADM-07 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/35`. R83-FE-01/R83-FE-02 còn OPEN; gap R71-FE-ADM-07 REOPENED, yêu cầu xử lý qua R8.2.
 
 <a id="uc-adm-08"></a>
 
@@ -2247,17 +2359,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E223](#evidence-e223), [E224](#evidence-e224), [E225](#evidence-e225), [E226](#evidence-e226), [E227](#evidence-e227), [E228](#evidence-e228), [E229](#evidence-e229), [E230](#evidence-e230), [E231](#evidence-e231), [E232](#evidence-e232), [E233](#evidence-e233), [E234](#evidence-e234), [E235](#evidence-e235), [E236](#evidence-e236), [E237](#evidence-e237), [E238](#evidence-e238), [E239](#evidence-e239), [E240](#evidence-e240), [E241](#evidence-e241), [E242](#evidence-e242), [E353](#evidence-e353), [E354](#evidence-e354), [E355](#evidence-e355), [E356](#evidence-e356), [E357](#evidence-e357), [E370](#evidence-e370), [E371](#evidence-e371), [E078](#evidence-e078), [E421](#evidence-e421), [E422](#evidence-e422), [E423](#evidence-e423), [E424](#evidence-e424)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Room/seat create/delete/history conflicts and SQL-backed edit; R32 controlled updates cover only a subset.. Gap: R71-FE-ADM-08.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Room/seat create/delete/history conflicts and SQL-backed edit; R32 controlled updates cover only a subset.. Gap: R71-FE-ADM-08.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-105`, `R6.9-admin-106`, `R6.9-admin-109`, `R6.9-admin-112`, `R6.9-admin-113`, `R6.9-admin-114`, `R6.9-admin-117`, `R6.9-admin-118`, `R6.9-admin-121`, `R6.9-admin-124`, `R6.9-admin-129`, `R6.9-admin-242`, `R6.4-r32-sql-cases-087`, `R6.4-r32-sql-cases-088`, `R6.4-r32-sql-cases-089`, `R6.4-r32-sql-cases-090`, `R6.4-r32-sql-cases-095`, `R6.6-r11-concurrency-cases-007`, `R6.6-r11-concurrency-cases-008`, `R6.6-r11-sql-cases-013`; records without a test ID: E223 `/operations/26`, E224 `/operations/27`, E225 `/operations/28`, E226 `/operations/29`, E227 `/operations/30`, E228 `/operations/31`, E229 `/operations/32`, E230 `/operations/33` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Phòng và ghế toàn hệ: DB/BE PASS theo E223, E224, E225, E226, E227, E228, E229, E230, E231, E232, E233, E234, E235, E236, E237, E238, E239, E240, E241, E242, E353, E354, E355, E356, E357, E370, E371, E078; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/36`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-08 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/36`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-09"></a>
 
@@ -2311,17 +2426,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E243](#evidence-e243), [E244](#evidence-e244), [E245](#evidence-e245), [E246](#evidence-e246), [E247](#evidence-e247), [E248](#evidence-e248), [E249](#evidence-e249), [E250](#evidence-e250), [E251](#evidence-e251), [E252](#evidence-e252), [E253](#evidence-e253), [E254](#evidence-e254), [E255](#evidence-e255), [E256](#evidence-e256), [E257](#evidence-e257), [E258](#evidence-e258), [E259](#evidence-e259), [E260](#evidence-e260), [E261](#evidence-e261), [E262](#evidence-e262), [E263](#evidence-e263), [E264](#evidence-e264), [E327](#evidence-e327), [E407](#evidence-e407), [E408](#evidence-e408), [E409](#evidence-e409), [E410](#evidence-e410), [E411](#evidence-e411), [E412](#evidence-e412)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. SQL-backed movie/actor CRUD/castsetclear, malformed/error/retry; R31 controlled editor covers cast UI only.. Gap: R71-FE-ADM-09.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. SQL-backed movie/actor CRUD/castsetclear, malformed/error/retry; R31 controlled editor covers cast UI only.. Gap: R71-FE-ADM-09.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-143`, `R6.9-admin-144`, `R6.9-admin-147`, `R6.9-admin-150`, `R6.9-admin-151`, `R6.9-admin-154`, `R6.9-admin-155`, `R6.9-admin-158`, `R6.9-admin-161`, `R6.9-admin-162`, `R6.9-admin-166`, `R6.9-admin-247`, `R6.9-admin-248`; records without a test ID: E243 `/operations/41`, E244 `/operations/42`, E245 `/operations/43`, E246 `/operations/44`, E247 `/operations/45`, E248 `/operations/50`, E249 `/operations/51`, E250 `/operations/52`, E251 `/operations/53`, E327 `/rollbackInjection` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Phim và diễn viên: DB/BE PASS theo E243, E244, E245, E246, E247, E248, E249, E250, E251, E252, E253, E254, E255, E256, E257, E258, E259, E260, E261, E262, E263, E264, E327; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/37`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-09 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/37`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-10"></a>
 
@@ -2370,17 +2488,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E265](#evidence-e265), [E266](#evidence-e266), [E267](#evidence-e267), [E268](#evidence-e268), [E269](#evidence-e269), [E270](#evidence-e270), [E271](#evidence-e271), [E272](#evidence-e272), [E273](#evidence-e273), [E274](#evidence-e274), [E275](#evidence-e275)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Genre CRUD and referenced deletion conflict, loading/empty/error.. Gap: R71-FE-ADM-10.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Genre CRUD and referenced deletion conflict, loading/empty/error.. Gap: R71-FE-ADM-10.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-132`, `R6.9-admin-133`, `R6.9-admin-136`, `R6.9-admin-139`, `R6.9-admin-140`, `R6.9-admin-173`, `R6.9-admin-249`; records without a test ID: E265 `/operations/46`, E266 `/operations/47`, E267 `/operations/48`, E268 `/operations/49` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Thể loại: DB/BE PASS theo E265, E266, E267, E268, E269, E270, E271, E272, E273, E274, E275; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/38`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-10 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/38`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-11"></a>
 
@@ -2429,17 +2550,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E276](#evidence-e276), [E277](#evidence-e277), [E278](#evidence-e278), [E279](#evidence-e279), [E280](#evidence-e280), [E281](#evidence-e281), [E282](#evidence-e282), [E283](#evidence-e283), [E284](#evidence-e284), [E285](#evidence-e285), [E373](#evidence-e373)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Product CRUD, invalidprice/useddelete, catalogrefresh/historicaldisplay.. Gap: R71-FE-ADM-11.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Product CRUD, invalidprice/useddelete, catalogrefresh/historicaldisplay.. Gap: R71-FE-ADM-11.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-207`, `R6.9-admin-208`, `R6.9-admin-211`, `R6.9-admin-214`, `R6.9-admin-215`, `R6.9-admin-218`, `R6.4-r32-sql-monetary-001`; records without a test ID: E276 `/operations/54`, E277 `/operations/55`, E278 `/operations/56`, E279 `/operations/57` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Sản phẩm đồ ăn: DB/BE PASS theo E276, E277, E278, E279, E280, E281, E282, E283, E284, E285, E373; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/39`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-11 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/39`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-12"></a>
 
@@ -2488,17 +2612,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E286](#evidence-e286), [E287](#evidence-e287), [E288](#evidence-e288), [E289](#evidence-e289), [E290](#evidence-e290), [E291](#evidence-e291), [E292](#evidence-e292), [E293](#evidence-e293), [E294](#evidence-e294), [E295](#evidence-e295), [E296](#evidence-e296), [E373](#evidence-e373)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Promo CRUD, dates/percent100/quota validation, deletion/reference, formerror/retry.. Gap: R71-FE-ADM-12.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Promo CRUD, dates/percent100/quota validation, deletion/reference, formerror/retry.. Gap: R71-FE-ADM-12.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-221`, `R6.9-admin-222`, `R6.9-admin-225`, `R6.9-admin-228`, `R6.9-admin-229`, `R6.9-admin-230`, `R6.9-admin-233`, `R6.4-r32-sql-monetary-001`; records without a test ID: E286 `/operations/58`, E287 `/operations/59`, E288 `/operations/60`, E289 `/operations/61` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Chương trình khuyến mãi: DB/BE PASS theo E286, E287, E288, E289, E290, E291, E292, E293, E294, E295, E296, E373; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/40`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-12 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/40`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-13"></a>
 
@@ -2546,17 +2673,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E297](#evidence-e297), [E298](#evidence-e298), [E299](#evidence-e299), [E300](#evidence-e300), [E301](#evidence-e301), [E302](#evidence-e302), [E303](#evidence-e303), [E304](#evidence-e304), [E305](#evidence-e305), [E328](#evidence-e328), [E329](#evidence-e329), [E330](#evidence-e330), [E397](#evidence-e397), [E398](#evidence-e398), [E399](#evidence-e399), [E400](#evidence-e400), [E401](#evidence-e401), [E402](#evidence-e402), [E403](#evidence-e403), [E404](#evidence-e404), [E405](#evidence-e405), [E406](#evidence-e406)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R43 real browser update/hydration/NULLdate/overlap/retry; still missing create/list acrosscinemas and deniedgrant UI.. Gap: R71-FE-ADM-13.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R43 real browser update/hydration/NULLdate/overlap/retry; still missing create/list acrosscinemas and deniedgrant UI.. Gap: R71-FE-ADM-13.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-195`, `R6.9-admin-196`, `R6.9-admin-199`, `R6.9-admin-202`, `R6.9-admin-203`, `R6.9-admin-204`, `R4.3-01-seatType`, `R4.3-02-dayType`, `R4.3-03-format`, `hydrates all seven persisted fields`, `cinema immutable during edit`, `three official day choices`, `real full PUT succeeds with exact seven-field payload`, `reload hydrates saved date and dimensions`, `clearing end date sends explicit NULL`, `real overlap shows conflict without false success`, `rejected form remains editable`, `valid retry succeeds and reloads`, `persisted read after failure and retry`; records without a test ID: E297 `/operations/34`, E298 `/operations/35`, E299 `/operations/36` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Bảng giá toàn hệ: DB/BE PASS theo E297, E298, E299, E300, E301, E302, E303, E304, E305, E328, E329, E330, E397, E398, E399, E400, E401, E402, E403, E404, E405, E406; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/41`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-13 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/41`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-14"></a>
 
@@ -2605,17 +2735,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E306](#evidence-e306), [E307](#evidence-e307), [E308](#evidence-e308), [E309](#evidence-e309), [E310](#evidence-e310), [E311](#evidence-e311), [E312](#evidence-e312), [E313](#evidence-e313), [E314](#evidence-e314), [E315](#evidence-e315), [E316](#evidence-e316), [E317](#evidence-e317), [E358](#evidence-e358), [E359](#evidence-e359), [E360](#evidence-e360), [E361](#evidence-e361), [E362](#evidence-e362), [E363](#evidence-e363), [E364](#evidence-e364), [E365](#evidence-e365), [E366](#evidence-e366), [E101](#evidence-e101), [E372](#evidence-e372), [E413](#evidence-e413), [E414](#evidence-e414), [E415](#evidence-e415), [E416](#evidence-e416)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R32 controlled edit; missing realSQL create/cancel/history/overlap and filter UI.. Gap: R71-FE-ADM-14.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. R32 controlled edit; missing realSQL create/cancel/history/overlap and filter UI.. Gap: R71-FE-ADM-14.
 
 
 
 **Test IDs / raw case identities:** `R6.9-admin-176`, `R6.9-admin-177`, `R6.9-admin-180`, `R6.9-admin-183`, `R6.9-admin-184`, `R6.9-admin-185`, `R6.9-admin-188`, `R6.9-admin-189`, `R6.4-r32-sql-cases-055`, `R6.4-r32-sql-cases-056`, `R6.4-r32-sql-cases-057`, `R6.4-r32-sql-cases-058`, `R6.4-r32-sql-cases-059`, `R6.4-r32-sql-cases-060`, `R6.4-r32-sql-cases-098`, `R6.4-r32-sql-cases-099`, `R6.4-r32-sql-cases-100`, `R6.7-r12-concurrency-scenarios-002`, `R6.7-r12-concurrency-scenarios-003`; records without a test ID: E306 `/operations/37`, E307 `/operations/38`, E308 `/operations/39`, E309 `/operations/40` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Suất chiếu toàn hệ: DB/BE PASS theo E306, E307, E308, E309, E310, E311, E312, E313, E314, E315, E316, E317, E358, E359, E360, E361, E362, E363, E364, E365, E366, E101, E372; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/42`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-14 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/42`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-15"></a>
 
@@ -2665,17 +2798,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E139](#evidence-e139), [E140](#evidence-e140), [E141](#evidence-e141), [E142](#evidence-e142), [E143](#evidence-e143), [E144](#evidence-e144), [E145](#evidence-e145), [E146](#evidence-e146), [E147](#evidence-e147), [E148](#evidence-e148), [E149](#evidence-e149), [E150](#evidence-e150), [E151](#evidence-e151), [E318](#evidence-e318), [E319](#evidence-e319), [E320](#evidence-e320), [E321](#evidence-e321), [E322](#evidence-e322)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Admin complaint select/process/status then queue+detail refresh, linked/unlinked reference/deniedgrant; source already calls load+openComplaint after writes.. Gap: R71-FE-ADM-15.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Admin complaint select/process/status then queue+detail refresh, linked/unlinked reference/deniedgrant; source already calls load+openComplaint after writes.. Gap: R71-FE-ADM-15.
 
 
 
 **Test IDs / raw case identities:** `R6.8-linked-05`, `R6.8-linked-15`, `R6.8-linked-21`, `R6.8-linked-22`, `R6.8-linked-23`, `R6.8-linked-24`, `R6.8-linked-29`, `R6.8-linked-30`, `R6.8-linked-31`, `R6.8-linked-39`, `R6.8-linked-40`, `identity-order-over-timestamp`, `trigger-after-parent-update-batch-failure`, `CSKH02-06-admin-consumer`, `CSKH02-06-admin-default`; records without a test ID: E318 `/operations/63`, E319 `/operations/64`, E320 `/operations/65`, E321 `/operations/66`, E322 `/operations/67` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Xử lý khiếu nại: DB/BE PASS theo E139, E140, E141, E142, E143, E144, E145, E146, E147, E148, E149, E150, E151, E318, E319, E320, E321, E322; shared Admin queue giữ default và hỗ trợ priority theo hai case mới; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/43`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source; shared queue consumer freshly exercised by R7.2 p2 Admin priority/default cases.
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-15 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/43`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 <a id="uc-adm-16"></a>
 
@@ -2722,17 +2858,20 @@ Nguồn quyết định: [ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md](<../ROADMAP_
 
 | Database runtime | SP gateway runtime | Backend runtime | Authorization | Integration luồng chính | Frontend implementation/runtime | Overall |
 | --- | --- | --- | --- | --- | --- | --- |
-| PASS | PASS | PASS | PASS | PASS | MAPPED / PARTIAL | PARTIAL |
+| PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
 **Evidence đúng phạm vi:** [E323](#evidence-e323), [E324](#evidence-e324), [E325](#evidence-e325), [E326](#evidence-e326), [E331](#evidence-e331), [E332](#evidence-e332), [E333](#evidence-e333), [E334](#evidence-e334), [E335](#evidence-e335), [E336](#evidence-e336), [E337](#evidence-e337), [E338](#evidence-e338), [E339](#evidence-e339), [E340](#evidence-e340), [E341](#evidence-e341), [E342](#evidence-e342), [E343](#evidence-e343), [E344](#evidence-e344), [E345](#evidence-e345), [E346](#evidence-e346), [E347](#evidence-e347), [E348](#evidence-e348), [E349](#evidence-e349), [E350](#evidence-e350), [E351](#evidence-e351), [E352](#evidence-e352)
 
-**Vì sao chưa toàn PASS:** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Dashboard/revenue form, four numerical breakdowns, filters/empty/error, deniedgrant; no existing realreport browser.. Gap: R71-FE-ADM-16.
+**Lý do PARTIAL lịch sử R7.3 (superseded bởi đánh giá R8.3 dưới đây):** FE source/action/guard đã mapped; browser hiện có chỉ chứng minh nhánh giới hạn hoặc NONE. Dashboard/revenue form, four numerical breakdowns, filters/empty/error, deniedgrant; no existing realreport browser.. Gap: R71-FE-ADM-16.
 
 
 **Test IDs / raw case identities:** `R6.9-admin-236`, `R6.9-admin-239`, `R4.2-01-empty-period`, `R4.2-02-single-cinema`, `R4.2-04-single-movie`, `R4.2-10-failed-pending-success-attempts-one-order`, `R4.2-11-two-tickets-two-food-lines-discount-no-fanout`, `R4.2-03-multiple-cinemas`, `R4.2-05-multiple-movies`, `R4.2-06-multi-day`, `R4.2-07-day-start-and-final-datetime2-tick`, `R4.2-07-previous-day-boundary`, `R4.2-07-next-day-boundary`, `cinema-filter-preserves-legacy-parameters`, `open-start-bound`, `open-end-bound`, `nonexistent-cinema-zero-summary-empty-breakdowns`, `R4.2-08-failed-and-unpaid-orders-excluded`, `expired-orders-excluded`, `R4.2-09-canceled-paid-orders-retain-success-receipts-compensation-not-refund`, `legacy-null-payment-time-falls-back-to-created-time`, `schema-supported-refunded-attempt-excluded`, `R4.2-12-catalog-pricing-promotion-changes-preserve-snapshots`, `repeat-identical-state-identical-report`; records without a test ID: E323 `/operations/0`, E324 `/operations/62` (artifact is linked in registry).
 
 **R7.3 acceptance rationale:** Báo cáo toàn hệ: DB/BE PASS theo E323, E324, E325, E326, E331, E332, E333, E334, E335, E336, E337, E338, E339, E340, E341, E342, E343, E344, E345, E346, E347, E348, E349, E350, E351, E352; source/typed gateway và scope được đối chiếu; không có material DB/BE gap còn mở. FE/Overall PARTIAL; DEFER_TO_R8. [Per-UC audit](evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json), JSON Pointer `/UCs/44`. Freshness: R6/R7.1 evidence reused for unchanged module definitions and unchanged source paths; R7.2 192-test seal matches current source.
 
+
+
+**R8.3 current Frontend/Overall: PASS.** Accepted primary and supplemental selectors independently verified; no material defect found within audited scope [ADM-16 browser/HTTP/SP/SQL/auth audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json), JSON Pointer `/UCs/44`. Evidence chính là actual AppRoutes + real SQL; controlled/component/unit phân biệt rõ. Gap kế thừa (nếu có) RESOLVED được nghiệm thu.
 
 ## Canonical object/signature index
 

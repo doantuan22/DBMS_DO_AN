@@ -1,0 +1,236 @@
+{
+  "status": "CAPTURED",
+  "assertions": [
+    {
+      "id": "SQL-REGISTER",
+      "status": "PASS",
+      "query": "SELECT u.NguoiDungID id,v.MaVaiTro role,COUNT(h.NguoiDungID) profiles FROM dbo.NGUOIDUNG u JOIN dbo.VAITRO v ON v.VaiTroID=u.VaiTroID LEFT JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.Email='r82.journey@example.invalid' GROUP BY u.NguoiDungID,v.MaVaiTro;",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 13,
+          "role": "KHACH_HANG",
+          "profiles": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-REGISTER-DUPLICATE-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.NGUOIDUNG WHERE Email='r82.journey@example.invalid';",
+      "inputs": {},
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-PROFILE",
+      "status": "PASS",
+      "query": "SELECT u.HoTen name,h.GioiTinh gender,CONVERT(varchar(10),h.NgaySinh,23) birthday FROM dbo.NGUOIDUNG u JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.NguoiDungID=@ID;",
+      "inputs": {
+        "ID": 5
+      },
+      "rows": [
+        {
+          "name": "R82 Customer Profile",
+          "gender": "Khác",
+          "birthday": "1994-05-06"
+        }
+      ]
+    },
+    {
+      "id": "SQL-CATALOG",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.PHIM WHERE PhimID=@ID AND TenPhim=N'R82 Journey Movie';",
+      "inputs": {
+        "ID": 6
+      },
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-SCHEDULE",
+      "status": "PASS",
+      "query": "SELECT SuatChieuID id,PhimID movie,PhongID room FROM dbo.SUATCHIEU WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 35
+      },
+      "rows": [
+        {
+          "id": 35,
+          "movie": 6,
+          "room": 8
+        }
+      ]
+    },
+    {
+      "id": "SQL-SEAT-SELECTION-READ-ONLY",
+      "status": "PASS",
+      "query": "SELECT (SELECT COUNT(*) FROM dbo.DONDATVE WHERE SuatChieuID=@ID) orders,(SELECT COUNT(*) FROM dbo.GHE WHERE PhongID=@Room AND TrangThai<>N'Hoạt động') unavailable;",
+      "inputs": {
+        "ID": 35,
+        "Room": 8
+      },
+      "rows": [
+        {
+          "orders": 0,
+          "unavailable": 2
+        }
+      ]
+    },
+    {
+      "id": "SQL-FOOD-PREBOOK-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.CHITIETDOAN;",
+      "inputs": {},
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-PROMOTION-PREVIEW-READ-ONLY",
+      "status": "PASS",
+      "query": "SELECT SoLuongDaDung used,GiaTriGiam discount FROM dbo.KHUYENMAI WHERE MaCode=@Code;",
+      "inputs": {
+        "Code": "R82JOURNEY"
+      },
+      "rows": [
+        {
+          "used": 0,
+          "discount": 25.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-BOOKING-SNAPSHOTS",
+      "status": "PASS",
+      "query": "SELECT d.DonDatVeID id,d.NguoiDungID owner,d.TongTienVe tickets,d.TongTienDoAn foods,d.TienGiamGia discount,d.TrangThai status,CASE WHEN d.HanGiuCho>dbo.fn_BayGio() THEN 1 ELSE 0 END live,(SELECT COUNT(*) FROM dbo.CHITIETVE WHERE DonDatVeID=d.DonDatVeID) ticketCount,(SELECT SoLuong FROM dbo.CHITIETDOAN WHERE DonDatVeID=d.DonDatVeID) quantity,(SELECT DonGia FROM dbo.CHITIETDOAN WHERE DonDatVeID=d.DonDatVeID) unitPrice FROM dbo.DONDATVE d WHERE SuatChieuID=@Show;",
+      "inputs": {
+        "Show": 35
+      },
+      "rows": [
+        {
+          "id": 6,
+          "owner": 5,
+          "tickets": 1000.25,
+          "foods": 200.5,
+          "discount": 25.25,
+          "status": "Chờ thanh toán",
+          "live": 1,
+          "ticketCount": 1,
+          "quantity": 2,
+          "unitPrice": 100.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-PAYMENT",
+      "status": "PASS",
+      "query": "SELECT d.TrangThai status,d.HanGiuCho deadline,p.PhuongThuc method,p.TrangThai paymentStatus,p.SoTien amount,(SELECT COUNT(*) FROM dbo.THANHTOAN WHERE DonDatVeID=d.DonDatVeID) attempts,(SELECT DiemTichLuy FROM dbo.HOSOKHACHHANG WHERE NguoiDungID=d.NguoiDungID) points FROM dbo.DONDATVE d JOIN dbo.THANHTOAN p ON p.DonDatVeID=d.DonDatVeID WHERE d.DonDatVeID=@ID;",
+      "inputs": {
+        "ID": 6
+      },
+      "rows": [
+        {
+          "status": "Đã thanh toán",
+          "deadline": null,
+          "method": "MOMO",
+          "paymentStatus": "Thành công",
+          "amount": 1175.5,
+          "attempts": 1,
+          "points": 151
+        }
+      ]
+    },
+    {
+      "id": "SQL-SECOND-OWNED-ORDER",
+      "status": "PASS",
+      "query": "SELECT DonDatVeID id FROM dbo.DONDATVE WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 36
+      },
+      "rows": [
+        {
+          "id": 7
+        }
+      ]
+    },
+    {
+      "id": "SQL-ORDER-OWNERSHIP",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.DONDATVE WHERE DonDatVeID=@ID AND NguoiDungID=@Owner;",
+      "inputs": {
+        "ID": 6,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-REVIEW-INELIGIBLE-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.DANHGIAPHIM WHERE PhimID=@Movie AND NguoiDungID=@Owner;",
+      "inputs": {
+        "Movie": 6,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-REVIEW-ONE",
+      "status": "PASS",
+      "query": "SELECT SoSao rating,NoiDung content FROM dbo.DANHGIAPHIM WHERE PhimID=@Movie AND NguoiDungID=@Owner;",
+      "inputs": {
+        "Movie": 6,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "rating": 5,
+          "content": "R82 eligible review"
+        }
+      ]
+    },
+    {
+      "id": "SQL-COMPLAINT",
+      "status": "PASS",
+      "query": "SELECT KhieuNaiID id,NguoiDungID owner,DonDatVeID orderId,TrangThai status FROM dbo.KHIEUNAI WHERE TieuDe=N'R82 Journey Complaint';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 61,
+          "owner": 5,
+          "orderId": 6,
+          "status": "Mới"
+        }
+      ]
+    },
+    {
+      "id": "SQL-FOREIGN-READ-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.DONDATVE WHERE NguoiDungID=@Owner;",
+      "inputs": {
+        "Owner": 13
+      },
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    }
+  ]
+}

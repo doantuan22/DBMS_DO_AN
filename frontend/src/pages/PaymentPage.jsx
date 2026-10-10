@@ -1,7 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { userCanAct } from '../utils/authorization';
 import HoldDeadline from '../components/HoldDeadline';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { createPaymentAttempt, getOrder, submitPaymentResult } from '../api/ordersApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
@@ -14,9 +14,18 @@ const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', cur
 
 export default function PaymentPage() {
   const { user } = useAuth();
-  const canPay = userCanAct(user, 'KHACH_HANG', 'THANH_TOAN');
   const { orderId } = useParams();
+  const scope = `${orderId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
+  return <PaymentContext key={scope} orderId={orderId} user={user} />;
+}
+
+function PaymentContext({ orderId, user }) {
+  const canPay = userCanAct(user, 'KHACH_HANG', 'THANH_TOAN');
   const [resource, setResource] = useState({ status: 'loading' });
+  const request = useRef(0);
+  const mounted = useRef(true);
+  const pending = useRef(false);
+  useEffect(() => { mounted.current = true; const generation = request; return () => { mounted.current = false; generation.current++; }; }, []);
   const [method, setMethod] = useState(METHODS[0]);
   const [elapsedDeadline, setElapsedDeadline] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -27,8 +36,9 @@ export default function PaymentPage() {
     return () => clearInterval(timer);
   }, []);
   const load = useCallback(async () => {
+    const generation = ++request.current;
     setResource({ status: 'loading' });
-    try { setResource({ status: 'success', data: (await getOrder(orderId)).order }); } catch (error) { setResource({ status: 'error', error }); }
+    try { const result = await getOrder(orderId); if (mounted.current && generation === request.current) setResource({ status: 'success', data: result.order }); } catch (error) { if (mounted.current && generation === request.current) setResource({ status: 'error', error }); }
   }, [orderId]);
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
 
@@ -45,18 +55,22 @@ export default function PaymentPage() {
   }, [elapsedDeadline, resource.data?.status, load]);
 
   async function confirmPayment() {
-    if (busy || !canConfirm) return;
+    if (pending.current || !canConfirm) return;
+    pending.current = true;
     setBusy(true); setMessage(null);
     try {
       const { payment } = await createPaymentAttempt(orderId, method);
       const result = await submitPaymentResult(orderId, payment.id, 'Thành công');
+      if (!mounted.current) return;
+      request.current++;
       setResource({ status: 'success', data: result.order });
       setMessage('Đã xác nhận thanh toán thành công.');
     } catch (error) {
+      if (!mounted.current) return;
       setMessage(bookingErrorMessage(error) ?? error.message);
       await load();
       if (resource.data?.showtimeId) void getSeats(resource.data.showtimeId).catch(() => {});
-    } finally { setBusy(false); }
+    } finally { pending.current = false; if (mounted.current) setBusy(false); }
   }
   if (resource.status === 'loading') return <LoadingState>Đang tải thông tin thanh toán…</LoadingState>;
   if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;

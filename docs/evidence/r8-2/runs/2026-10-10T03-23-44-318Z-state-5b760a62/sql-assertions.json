@@ -1,0 +1,29 @@
+{
+  "status": "CAPTURED",
+  "assertions": [
+    {
+      "id": "SQL-REGISTER",
+      "status": "PASS",
+      "query": "SELECT u.NguoiDungID id,v.MaVaiTro role,COUNT(h.NguoiDungID) profiles FROM dbo.NGUOIDUNG u JOIN dbo.VAITRO v ON v.VaiTroID=u.VaiTroID LEFT JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.Email='r82.journey@example.invalid' GROUP BY u.NguoiDungID,v.MaVaiTro;",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 21,
+          "role": "KHACH_HANG",
+          "profiles": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-REGISTER-DUPLICATE-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.NGUOIDUNG WHERE Email='r82.journey@example.invalid';",
+      "inputs": {},
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    }
+  ]
+}

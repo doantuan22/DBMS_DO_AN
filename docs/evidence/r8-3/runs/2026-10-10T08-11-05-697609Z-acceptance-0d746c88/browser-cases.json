@@ -1,0 +1,80 @@
+{
+  "phase": "reproduce-r83-images",
+  "checks": [
+    {
+      "id": "R83-ADM07-IMAGE-BASELINE",
+      "UCs": [
+        "ADM-07"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T08:12:16.695Z",
+      "assertions": {
+        "cinema": 1,
+        "image": 1,
+        "realListLoaded": true
+      },
+      "networkRange": [
+        4,
+        7
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T08:12:16.937Z"
+    },
+    {
+      "id": "R83-ADM07-FAILED-CINEMA-SWITCH",
+      "UCs": [
+        "ADM-07"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T08:12:16.938Z",
+      "error": "Failed cinema B read exposes cinema A image rows and enabled mutations\n\n1 !== 0\n",
+      "screenshot": "R83-ADM07-FAILED-CINEMA-SWITCH-FAIL.png",
+      "networkRange": [
+        7,
+        9
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        1
+      ],
+      "finishedAt": "2026-10-10T08:12:17.896Z"
+    },
+    {
+      "id": "R83-ADM07-CINEMA-LIST-RETRY",
+      "UCs": [
+        "ADM-07"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T08:12:17.896Z",
+      "error": "Retry hides cinema-list failure without reloading the list",
+      "screenshot": "R83-ADM07-CINEMA-LIST-RETRY-FAIL.png",
+      "networkRange": [
+        9,
+        12
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        1,
+        3
+      ],
+      "finishedAt": "2026-10-10T08:12:18.828Z"
+    }
+  ]
+}

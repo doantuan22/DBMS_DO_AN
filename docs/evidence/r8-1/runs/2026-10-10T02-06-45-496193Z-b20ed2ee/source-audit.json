@@ -1,0 +1,2838 @@
+{
+  "status": "PASS",
+  "requiredDocuments": {
+    "ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md": {
+      "sha256": "b1106d7d560e371c8f7c483b72cc2a9684d4e94abb94e2b071a498af16d43a6f",
+      "lines": 3287
+    },
+    "docs/USE_CASE_BASELINE_45.md": {
+      "sha256": "611f081c3aa9a92435924d876ea77f83931e0fdcdbb1e5787370cb4a3b271583",
+      "lines": 65
+    },
+    "docs/USE_CASE_MATRIX_45.md": {
+      "sha256": "7124029b9e7c187f1262ccc1d2e1dcd9c6fb16e1b5e183a9c90032e57625f1fe",
+      "lines": 8521
+    },
+    "docs/R7_1_BASELINE_EVIDENCE_REPORT.md": {
+      "sha256": "7e2d8dadd246b8e5c4bf6edf5e117933f06d8d17870d719f590e63f80395cfbc",
+      "lines": 164
+    },
+    "docs/R7_2_VERIFICATION_BACKLOG.md": {
+      "sha256": "ba52e162f722cdc904695cc040184a231aad98c3a8888b272d85121224c16f4e",
+      "lines": 74
+    },
+    "docs/R7_2_REGRESSION_REPORT.md": {
+      "sha256": "dc9a0fdd435424f807710929d76b77cd53e627542e33ba357e034b1d90f76796",
+      "lines": 91
+    },
+    "docs/R7_3_FINAL_ACCEPTANCE_REPORT.md": {
+      "sha256": "4fe200282a66db68c73c15b5f3b7425ebd339e579de2901af7611d68de4df583",
+      "lines": 259
+    },
+    "docs/MAIN_DATABASE_SYNC_REPORT.md": {
+      "sha256": "99882e7f7d2069c13d0e87ea6f719e88783c653fb1e883336ccd2fcf195d1d5f",
+      "lines": 141
+    },
+    "docs/PROJECT_ACCEPTED_CONSTRAINTS.md": {
+      "sha256": "3431f75ced37fdbd07b1a1a94117530f29f2b82ce6722154f5e89c05c99e1e5b",
+      "lines": 21
+    },
+    "scripts/db/TEST_PIPELINE.md": {
+      "sha256": "d6317a669cc3d96f175469ce485f5f7f4546c2eec73d778f83a3fb4471384816",
+      "lines": 64
+    },
+    "docs/contracts/ADMIN_PRICING_UPDATE.md": {
+      "sha256": "8b3a4b73162fbea9a71828102e979ad982c07bbc3659255bd456e7c270f07853",
+      "lines": 54
+    },
+    "docs/contracts/ADMIN_REVENUE.md": {
+      "sha256": "56da331fb23b00cb0532cc2887d18ae97a3bfab08966d07965359be10a5ba695",
+      "lines": 65
+    },
+    "docs/contracts/AUTH_RATE_LIMITING.md": {
+      "sha256": "3c4f17644e82223b5f2ba0b355b763ee485add9ca7fd26a8e3dd3e588548b48e",
+      "lines": 61
+    },
+    "docs/contracts/BUSINESS_RULE_OWNERSHIP.md": {
+      "sha256": "14993ccdd8b610dd6a916019d96110ea00f7f0f7cbf464875035128a917368b7",
+      "lines": 37
+    },
+    "docs/contracts/ORDER_DETAIL_READ_ONLY.md": {
+      "sha256": "7d70b958ae25383ed6bfb2c07315d8b00b1b6d17b2ab18943ab6b7d1c302ecba",
+      "lines": 51
+    },
+    "docs/contracts/R7_2_APPROVED_POLICIES.md": {
+      "sha256": "1c76e555d964d2dbffe960f12371d93d9bd0f60f34fdb5df2029b69faf88cdb6",
+      "lines": 17
+    },
+    "docs/contracts/ROLE_AWARE_PROFILE_UPDATE.md": {
+      "sha256": "ba13f95dfd1feddd4008ff2d21b8058c0cd7fd9d3e5de18f48b75d4a5fc2f9c5",
+      "lines": 47
+    }
+  },
+  "sources": {
+    "frontend/src/api/adminApi.js": {
+      "sha256": "b274ed0bff0c30cd97e86760e786c5667f205a65720483eec1f0df2588423282",
+      "lines": 39,
+      "imports": [
+        "./httpClient.js"
+      ]
+    },
+    "frontend/src/api/authApi.js": {
+      "sha256": "67722b3ad71685a01d39d1b74b66a78376280c20e42f42f57496341e125a8100",
+      "lines": 7,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/api/authToken.js": {
+      "sha256": "b3a10ed28a602d2458047e7ed60b756efcfbd61d09d4009b980f84ba8efde340",
+      "lines": 20,
+      "imports": []
+    },
+    "frontend/src/api/catalogApi.js": {
+      "sha256": "ee0adc906a52e19add4773a8dc6ad7d5dd99052d3da91006f8656c61254ddaeb",
+      "lines": 54,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/api/feedbackApi.js": {
+      "sha256": "65db1be078f26588a63d698b765bc80ff3bea000407141589ff74cd2af4e84ec",
+      "lines": 7,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/api/healthApi.js": {
+      "sha256": "36004b4b95ee8d3061dbabfb1f5a3e0e79a14eb1f1da0c6d89121c11b82a55f2",
+      "lines": 4,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/api/httpClient.js": {
+      "sha256": "3bbd37d62216039c281c97c914efab28e9722d768bb61d024689ae9d9a204604",
+      "lines": 29,
+      "imports": [
+        "./authToken"
+      ]
+    },
+    "frontend/src/api/managerApi.js": {
+      "sha256": "b48177498685b6bf26dea418e5b16bef7da741f820d79b1e032ba9d4a55a9af2",
+      "lines": 20,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/api/ordersApi.js": {
+      "sha256": "0932dc2016c6ed0e85ba4ddb0e8264f37ea7bc94883d57f0f8451e573b4b7538",
+      "lines": 6,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/api/supportApi.js": {
+      "sha256": "27fe76e4c920afe9f1765a606bc4ee9981da2b2bbaba0c58ca4af6477c65dd06",
+      "lines": 14,
+      "imports": [
+        "./httpClient"
+      ]
+    },
+    "frontend/src/App.jsx": {
+      "sha256": "392ae0231922f4e61fafeb2e49502268a49b3cc533ffaa449e67f61e37d367dc",
+      "lines": 18,
+      "imports": [
+        "react-router-dom",
+        "./context/AuthContext",
+        "./routes",
+        "./components/ErrorBoundary",
+        "./components/AccessErrorHandler"
+      ]
+    },
+    "frontend/src/assets/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/components/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/components/AccessErrorHandler.jsx": {
+      "sha256": "070f9a4f93276af31e37f60b281dd07db10603845375c65f05a9a1abc9662a9e",
+      "lines": 20,
+      "imports": [
+        "react",
+        "../context/AuthContext"
+      ]
+    },
+    "frontend/src/components/CatalogStates.jsx": {
+      "sha256": "1f6b8c11747a1fa1d671515f62553ee6f66d8606bb2e8cd9dae0fe955cb877a6",
+      "lines": 16,
+      "imports": []
+    },
+    "frontend/src/components/CinemaGallery.jsx": {
+      "sha256": "1cc736cc7e6b033653944b53f83aaa6754d4ef9a71d65888bed3938b5db05f06",
+      "lines": 10,
+      "imports": [
+        "../utils/cinemaGallery"
+      ]
+    },
+    "frontend/src/components/CinemaImageManager.jsx": {
+      "sha256": "0c29d7b62c666a62c0c504cb5f89c09dc38379c53d6ac52f50fc84c3f260504c",
+      "lines": 91,
+      "imports": [
+        "react",
+        "../api/adminApi",
+        "./CatalogStates",
+        "../constants/cinemaImageStatuses",
+        "../context/AuthContext",
+        "../utils/authorization"
+      ]
+    },
+    "frontend/src/components/CinemaList.jsx": {
+      "sha256": "cf60b042e009df958ed48f3e37ce298bcfd780ba48a2cf8bf136df5428ac7d77",
+      "lines": 21,
+      "imports": [
+        "react-router-dom"
+      ]
+    },
+    "frontend/src/components/ComplaintOrderReference.jsx": {
+      "sha256": "bb19c6ed94ab891870111392a552f8a5771797729735c0e1c90b5cf829923200",
+      "lines": 47,
+      "imports": [
+        "react",
+        "../api/supportApi",
+        "../utils/dateTime",
+        "./CatalogStates"
+      ]
+    },
+    "frontend/src/components/DatabaseHealth.jsx": {
+      "sha256": "aa6fa087cf550a098153cbaa49f0292fdca26115c3dc5b46ceeb9b9a94376fd3",
+      "lines": 31,
+      "imports": [
+        "react",
+        "../api/healthApi"
+      ]
+    },
+    "frontend/src/components/ErrorBoundary.jsx": {
+      "sha256": "b564a87690768e071cc4fa06d5ecd144878011234ac0b024345b0e85fb0f005a",
+      "lines": 22,
+      "imports": [
+        "react"
+      ]
+    },
+    "frontend/src/components/HoldDeadline.jsx": {
+      "sha256": "74b6e8a5b0d6039a53d3985e0aae5054c408129fb863a2abd52ccd2b34e9300f",
+      "lines": 25,
+      "imports": [
+        "react",
+        "../utils/dateTime"
+      ]
+    },
+    "frontend/src/components/ManagerResourceForm.jsx": {
+      "sha256": "d3ea286247761a2de73fc954540664a7d4bab9e1f2db6e20a09e715f422589e5",
+      "lines": 28,
+      "imports": [
+        "react",
+        "../utils/managerForms"
+      ]
+    },
+    "frontend/src/components/ManagerRevenue.jsx": {
+      "sha256": "8d913919789cdae49de997be1ddd8141158ed424ac9ec9736308ffd058db573b",
+      "lines": 37,
+      "imports": [
+        "react",
+        "../api/managerApi",
+        "../utils/dateTime",
+        "./CatalogStates"
+      ]
+    },
+    "frontend/src/components/MovieCard.jsx": {
+      "sha256": "6d6042b68c8d4011d38603fb950caee1df6095e284cab9779808961699481409",
+      "lines": 18,
+      "imports": [
+        "react-router-dom"
+      ]
+    },
+    "frontend/src/components/MovieGrid.jsx": {
+      "sha256": "c18aa8b9e992c1b2695f2f85c5c2525875ffe5d797f508c56333afdbc2936fba",
+      "lines": 5,
+      "imports": [
+        "./MovieCard"
+      ]
+    },
+    "frontend/src/components/MovieReviews.jsx": {
+      "sha256": "d77922ee563ef53c074af8f2a5e8c8dbed94faeb70d69cb5e32e3c27abaf79a6",
+      "lines": 33,
+      "imports": [
+        "../utils/authorization",
+        "../utils/dateTime",
+        "react",
+        "../api/feedbackApi",
+        "../context/AuthContext",
+        "./CatalogStates"
+      ]
+    },
+    "frontend/src/components/primitives/StatusBadge.jsx": {
+      "sha256": "3aa4f6ae771679ab2cd5792c486a4a0b5d680589bed12555d6b0ceec19ec3581",
+      "lines": 25,
+      "imports": []
+    },
+    "frontend/src/components/ProductPicker.jsx": {
+      "sha256": "26c9d295d5121a4a0e8f93268c804c0034a22e479edaf8e9e7ab520fffae8bd3",
+      "lines": 19,
+      "imports": [
+        "../constants/bookingLimits"
+      ]
+    },
+    "frontend/src/components/SeatMap.jsx": {
+      "sha256": "1051b9a291f4dcde73ee8975b2d0f1c95372497952a35236fc4b9ef13b23b74a",
+      "lines": 72,
+      "imports": [
+        "react",
+        "../constants/bookingLimits"
+      ]
+    },
+    "frontend/src/components/ShowtimeBrowser.jsx": {
+      "sha256": "c607edfca00e7c0e02cb42c825bb18de96c4756ea01380f86848568a8f81b5c9",
+      "lines": 48,
+      "imports": [
+        "../utils/dateTime",
+        "react-router-dom",
+        "./CatalogStates"
+      ]
+    },
+    "frontend/src/constants/bookingLimits.js": {
+      "sha256": "bfd8f5f5baa71ca0b788c756e8274b639c59a39fe6a89cb11930a1b10144bfe5",
+      "lines": 7,
+      "imports": []
+    },
+    "frontend/src/constants/cinemaImageStatuses.js": {
+      "sha256": "9604a9785e263275ed3880d8e601520d899986cd3bffea23506d6036ed66c063",
+      "lines": 3,
+      "imports": [
+        "../../../shared/resourceContract.mjs"
+      ]
+    },
+    "frontend/src/constants/roles.js": {
+      "sha256": "6785b19b8d9edcb343b528c036457bda4a55db495729e4ba8926ea2a2c74b6d7",
+      "lines": 23,
+      "imports": []
+    },
+    "frontend/src/context/AuthContext.jsx": {
+      "sha256": "b3a546b13098ee5ad5010fb2e44e987fc5460bd669cc2b6609ce6e50f9009f8f",
+      "lines": 83,
+      "imports": [
+        "react",
+        "../api/authApi",
+        "../api/authToken",
+        "../services/authSession"
+      ]
+    },
+    "frontend/src/hooks/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/index.css": {
+      "sha256": "6d5c735536c26e999fd3ef7ad5708e5c27cceb195ded4fc3bc5f27e317f92968",
+      "lines": 1619,
+      "imports": []
+    },
+    "frontend/src/layouts/AreaLayout.jsx": {
+      "sha256": "2c712656b8fac4090002096a2d5adb06a6186f27e52a780094beb77be14d21f4",
+      "lines": 57,
+      "imports": [
+        "react-router-dom",
+        "../context/AuthContext",
+        "../utils/authorization"
+      ]
+    },
+    "frontend/src/main.jsx": {
+      "sha256": "4b4b864dbe45253425d0c925337180ec07e204295179f80f59551216f466f618",
+      "lines": 10,
+      "imports": [
+        "react",
+        "react-dom/client",
+        "./index.css",
+        "./App.jsx"
+      ]
+    },
+    "frontend/src/pages/admin/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/pages/AdminPortal.jsx": {
+      "sha256": "06a08380c87d6a6429ceeaf21890984bfd04128ae94f48b0e9099fbbf6e613b3",
+      "lines": 206,
+      "imports": [
+        "../context/AuthContext",
+        "../utils/authorization",
+        "../utils/dateTime",
+        "../utils/adminForms",
+        "../../../shared/resourceContract.mjs",
+        "react",
+        "../api/adminApi",
+        "../components/CatalogStates",
+        "../components/CinemaImageManager",
+        "../utils/bookingLimits"
+      ]
+    },
+    "frontend/src/pages/auth/Login.jsx": {
+      "sha256": "7a024c60552409a4d596036de4c590e7d45f0fbcc28ccf3bf30a953718f471ae",
+      "lines": 80,
+      "imports": [
+        "react",
+        "react-router-dom",
+        "../../context/AuthContext",
+        "../../constants/roles"
+      ]
+    },
+    "frontend/src/pages/auth/Profile.jsx": {
+      "sha256": "da58b686b5c918c41e757f72ee43a686e7f7ae33ed07978b74d576fea5b7bfda",
+      "lines": 116,
+      "imports": [
+        "react",
+        "../../context/AuthContext",
+        "../../constants/roles"
+      ]
+    },
+    "frontend/src/pages/auth/Register.jsx": {
+      "sha256": "00faa3cdedab298e402cb234a67f90a727d83df0d9e8fcb84110ab79d9db543c",
+      "lines": 132,
+      "imports": [
+        "react",
+        "react-router-dom",
+        "../../context/AuthContext"
+      ]
+    },
+    "frontend/src/pages/BookingPreparation.jsx": {
+      "sha256": "aaea4ff5d22ab0b09659975c39118ddf002e46fa6522a5636743dc1fe5fa4657",
+      "lines": 181,
+      "imports": [
+        "../utils/authorization",
+        "../utils/dateTime",
+        "../components/HoldDeadline",
+        "react",
+        "react-router-dom",
+        "../api/catalogApi",
+        "../components/CatalogStates",
+        "../components/ProductPicker",
+        "../components/SeatMap",
+        "../context/AuthContext",
+        "../utils/bookingLimits"
+      ]
+    },
+    "frontend/src/pages/CinemaDetail.jsx": {
+      "sha256": "f08f8fba5060146f3c2464e5db8678f95df047885700a862dfe90c9ce19c3c0b",
+      "lines": 39,
+      "imports": [
+        "react",
+        "react-router-dom",
+        "../api/catalogApi",
+        "../components/CatalogStates",
+        "../components/CinemaGallery"
+      ]
+    },
+    "frontend/src/pages/Cinemas.jsx": {
+      "sha256": "5f2d16d4145a0feaed63f719cdfe8a7fb1947b2cba34a31ccce35112e254b838",
+      "lines": 28,
+      "imports": [
+        "react",
+        "../api/catalogApi",
+        "../components/CinemaList",
+        "../components/CatalogStates",
+        "../services/catalogResource"
+      ]
+    },
+    "frontend/src/pages/ComplaintDetail.jsx": {
+      "sha256": "e3c29c9f4ac6c0d6d61bf1be0616819a3c97c868223bd478574346cc262d6c0e",
+      "lines": 44,
+      "imports": [
+        "../utils/dateTime",
+        "react",
+        "react-router-dom",
+        "../api/feedbackApi",
+        "../components/CatalogStates",
+        "../components/primitives/StatusBadge"
+      ]
+    },
+    "frontend/src/pages/Complaints.jsx": {
+      "sha256": "762b9646c83714cd033ab95986013baf6e5c87a34ec5e0a8f14b5c401c6d85cc",
+      "lines": 26,
+      "imports": [
+        "../context/AuthContext",
+        "../utils/authorization",
+        "react",
+        "react-router-dom",
+        "../api/feedbackApi",
+        "../api/ordersApi",
+        "../components/CatalogStates",
+        "../components/primitives/StatusBadge"
+      ]
+    },
+    "frontend/src/pages/customer/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/pages/CustomerArea.jsx": {
+      "sha256": "8ae0259d4fdf8e931312e2fba88637b8843e918afb74350fc656924a7449e428",
+      "lines": 21,
+      "imports": [
+        "react-router-dom"
+      ]
+    },
+    "frontend/src/pages/Forbidden.jsx": {
+      "sha256": "c0212f34c5e5d0d330f5bc63983a395c1caf2a98a21d03be47a75166ee20f871",
+      "lines": 11,
+      "imports": [
+        "react-router-dom"
+      ]
+    },
+    "frontend/src/pages/Home.jsx": {
+      "sha256": "0ab254e345d049436f082f1e01e1d70d8f4ba4bfd746c32a49e49f6ca932f3b0",
+      "lines": 37,
+      "imports": [
+        "react",
+        "react-router-dom",
+        "../api/catalogApi",
+        "../components/MovieGrid",
+        "../components/CatalogStates",
+        "../services/catalogResource"
+      ]
+    },
+    "frontend/src/pages/manager/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/pages/ManagerPortal.jsx": {
+      "sha256": "49f1c866bb7c6722b87e27cb8ad637f1fde79cb2e5de729d2f8266fd9e9846a3",
+      "lines": 144,
+      "imports": [
+        "react",
+        "../context/AuthContext",
+        "../utils/authorization",
+        "../utils/dateTime",
+        "../api/managerApi",
+        "../utils/bookingLimits",
+        "../components/CatalogStates",
+        "../components/ManagerResourceForm",
+        "../components/ManagerRevenue",
+        "../../../shared/resourceContract.mjs"
+      ]
+    },
+    "frontend/src/pages/MovieDetail.jsx": {
+      "sha256": "aa5d4c46bbee103cf7c20b72271f983f01e445759b6256fd3151d29af809d138",
+      "lines": 73,
+      "imports": [
+        "react",
+        "react-router-dom",
+        "../api/catalogApi",
+        "../components/CatalogStates",
+        "../components/ShowtimeBrowser",
+        "../components/MovieReviews",
+        "../services/catalogResource"
+      ]
+    },
+    "frontend/src/pages/Movies.jsx": {
+      "sha256": "833ac1e6e22916796ffa150bd6c91b1ecc51a87e9fa7392e80e91c817e51975a",
+      "lines": 57,
+      "imports": [
+        "react",
+        "../api/catalogApi",
+        "../components/MovieGrid",
+        "../components/CatalogStates",
+        "../services/catalogResource"
+      ]
+    },
+    "frontend/src/pages/NotFound.jsx": {
+      "sha256": "f8fde66def5785c8a1e75f3606b1d84b333b012a44ae5e13f67dbaec8a155c49",
+      "lines": 14,
+      "imports": [
+        "react-router-dom"
+      ]
+    },
+    "frontend/src/pages/OrderDetail.jsx": {
+      "sha256": "32f900c9b90fe7a3478c6c40ada252137780d06efc605cf786e9eb6bcaf41269",
+      "lines": 52,
+      "imports": [
+        "../context/AuthContext",
+        "../utils/authorization",
+        "../components/HoldDeadline",
+        "../utils/dateTime",
+        "react",
+        "react-router-dom",
+        "../api/ordersApi",
+        "../components/CatalogStates",
+        "../components/primitives/StatusBadge"
+      ]
+    },
+    "frontend/src/pages/Orders.jsx": {
+      "sha256": "d7eeb2283abfad4a9bf2d8a0806528fb1a47f80a67b5da9cd039dd8662e2235a",
+      "lines": 51,
+      "imports": [
+        "../utils/dateTime",
+        "react",
+        "react-router-dom",
+        "../api/ordersApi",
+        "../components/CatalogStates",
+        "../components/primitives/StatusBadge"
+      ]
+    },
+    "frontend/src/pages/PaymentPage.jsx": {
+      "sha256": "1c1350a911f050d21119a304d190339188b0ab34f42ae83ac6107ca1400b03a4",
+      "lines": 85,
+      "imports": [
+        "../context/AuthContext",
+        "../utils/authorization",
+        "../components/HoldDeadline",
+        "react",
+        "react-router-dom",
+        "../api/ordersApi",
+        "../components/CatalogStates",
+        "../components/primitives/StatusBadge",
+        "../utils/bookingLimits",
+        "../api/catalogApi"
+      ]
+    },
+    "frontend/src/pages/public/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/pages/support/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/pages/SupportPortal.jsx": {
+      "sha256": "f3309de11c3a5ef3f0fab999e859805de5da5f345b42dad5edd11d6518b093aa",
+      "lines": 65,
+      "imports": [
+        "../context/AuthContext",
+        "../utils/authorization",
+        "../utils/dateTime",
+        "react",
+        "../api/supportApi",
+        "../components/CatalogStates",
+        "../components/ComplaintOrderReference"
+      ]
+    },
+    "frontend/src/routes/index.jsx": {
+      "sha256": "228c4c43f9e0672a986a8d6f950855cd6217c76f249589494b4997fb4ee5ffc1",
+      "lines": 88,
+      "imports": [
+        "react-router-dom",
+        "../layouts/AreaLayout",
+        "../components/DatabaseHealth",
+        "./RequireRole",
+        "./RequireAuth",
+        "../pages/auth/Login",
+        "../pages/auth/Register",
+        "../pages/auth/Profile",
+        "../pages/Forbidden",
+        "../pages/NotFound",
+        "../pages/CustomerArea",
+        "../pages/Home",
+        "../pages/Movies",
+        "../pages/MovieDetail",
+        "../pages/Cinemas",
+        "../pages/CinemaDetail",
+        "../pages/BookingPreparation",
+        "../pages/Orders",
+        "../pages/OrderDetail",
+        "../pages/PaymentPage",
+        "../pages/Complaints",
+        "../pages/ComplaintDetail",
+        "../pages/ManagerPortal",
+        "../pages/SupportPortal",
+        "../pages/AdminPortal",
+        "../constants/roles"
+      ]
+    },
+    "frontend/src/routes/RequireAuth.jsx": {
+      "sha256": "c8e5213242befb780d4bf767d9191d3234ae1744ec5041efed3d036c0a394bd6",
+      "lines": 10,
+      "imports": [
+        "react-router-dom",
+        "../context/AuthContext"
+      ]
+    },
+    "frontend/src/routes/RequireRole.jsx": {
+      "sha256": "f8178b2bff47b5fb1c5aa5a95bca2c49dd8d95386928703a1f5c61e0394bae11",
+      "lines": 13,
+      "imports": [
+        "react-router-dom",
+        "../context/AuthContext",
+        "../utils/authorization"
+      ]
+    },
+    "frontend/src/services/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/services/authSession.js": {
+      "sha256": "5af67390ca951a7a679af77e85ca9576ce9a17a6dc22330d0b37a09d0378b5dc",
+      "lines": 32,
+      "imports": []
+    },
+    "frontend/src/services/catalogResource.js": {
+      "sha256": "fb1d3a5bd87d6a998f3d270ebaabca70c02ab500d5de259ee2ec3a067de53f27",
+      "lines": 17,
+      "imports": [
+        "../utils/dateTime.js"
+      ]
+    },
+    "frontend/src/utils/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "frontend/src/utils/adminForms.js": {
+      "sha256": "7f7f9de08a55e354cf99c1609ca26e3a6f718a6155239c67d99e95e5180d3863",
+      "lines": 42,
+      "imports": [
+        "./dateTime.js",
+        "../../../shared/resourceContract.mjs"
+      ]
+    },
+    "frontend/src/utils/authorization.js": {
+      "sha256": "8daccb21aeb464e6b585bb869c0232fced0b41ce63abff0c52898c80d9b601e4",
+      "lines": 32,
+      "imports": [
+        "../constants/roles.js"
+      ]
+    },
+    "frontend/src/utils/bookingLimits.js": {
+      "sha256": "38aea2ca33bb70c46c60010d751b16804225bbaf6e0aac1043193a8b2ce73585",
+      "lines": 36,
+      "imports": [
+        "../constants/bookingLimits"
+      ]
+    },
+    "frontend/src/utils/cinemaGallery.js": {
+      "sha256": "8b663d4dd4f3e85a495f70ca56441ad5953d5d2625264e0550a58e87597f35f0",
+      "lines": 4,
+      "imports": []
+    },
+    "frontend/src/utils/dateTime.js": {
+      "sha256": "8d719ea34fa1fe53aacd39d7d295c175ed0cb1b57d518b7ab0a2fa8a9bb23ff4",
+      "lines": 40,
+      "imports": [
+        "@js-temporal/polyfill",
+        "../../../shared/dateTimeContract.mjs"
+      ]
+    },
+    "frontend/src/utils/managerForms.js": {
+      "sha256": "9277e89a775a671bfa562d6ea3b82f6d3b5d8f5989c3c60b034ae47a49b8c8a5",
+      "lines": 36,
+      "imports": [
+        "../../../shared/resourceContract.mjs",
+        "./dateTime"
+      ]
+    },
+    "frontend/tests/admin-pricing.test.js": {
+      "sha256": "89340940d9942429dfffa13f99c18bbbae0a7564ca0ec1195400fa8c684f1de9",
+      "lines": 29,
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../src/utils/adminForms.js"
+      ]
+    },
+    "frontend/tests/adminPortal.test.js": {
+      "sha256": "8ed9a35b2a9bfed5d26f091fa4ce2f1985efd5da24a1cd699ef519bac5717886",
+      "lines": 35,
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "react",
+        "react-dom/server",
+        "vite"
+      ]
+    },
+    "frontend/tests/auth-rate-limit.test.js": {
+      "sha256": "ed6cb2689d448f882465ce333748aba55cc23b850605a92ff8836eed4b20676d",
+      "lines": 44,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "vite",
+        "../src/services/authSession.js",
+        "../../backend/src/app.js"
+      ]
+    },
+    "frontend/tests/authorization.test.js": {
+      "sha256": "4299ed0289d2b64339ea2749ada5a00f4ed6658fe596ebbbc2ef55c573db7898",
+      "lines": 12,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "../src/constants/roles.js",
+        "../src/utils/authorization.js"
+      ]
+    },
+    "frontend/tests/authPages.test.js": {
+      "sha256": "63509283717c106f255466201533dad4f531ae10abe7484979845a426673b1c9",
+      "lines": 40,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "react",
+        "react-dom/server",
+        "react-router-dom",
+        "vite"
+      ]
+    },
+    "frontend/tests/authSession.test.js": {
+      "sha256": "71afc88834c0307ecc34b66622de090f4fb47eb2caccaf06d4a1a7aa82d714d0",
+      "lines": 46,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "../src/services/authSession.js"
+      ]
+    },
+    "frontend/tests/bookingLimits.test.js": {
+      "sha256": "d83783e64367467ad1ad969d04083a04162eb9c058035171a71d5b570594f2c8",
+      "lines": 75,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "react",
+        "react-dom/server",
+        "vite"
+      ]
+    },
+    "frontend/tests/business-ownership.test.js": {
+      "sha256": "0e587c50cea5a3ec25c87144008d1a61b491b5ef3e7cdd40b680e43c1615e273",
+      "lines": 28,
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "vite"
+      ]
+    },
+    "frontend/tests/catalogPages.test.js": {
+      "sha256": "2c460ec23ee78ecc9eed2212ff8233175801e07627fb945de904b7c7ecfaf06a",
+      "lines": 132,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "react",
+        "react-dom/server",
+        "react-router-dom",
+        "vite"
+      ]
+    },
+    "frontend/tests/catalogResource.test.js": {
+      "sha256": "1501998b4edcf470f657a82cbf40948330f93a555fa0300cbed5c63e5e036eae",
+      "lines": 16,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "../src/services/catalogResource.js"
+      ]
+    },
+    "frontend/tests/dateTime.test.js": {
+      "sha256": "1a413b5b7928c003a9b36858d32c1a4d6ea263a5fa5434165fb069ca54b04284",
+      "lines": 39,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "node:child_process",
+        "../src/utils/dateTime.js",
+        "${module}"
+      ]
+    },
+    "frontend/tests/r0-pricing.test.js": {
+      "sha256": "ead768b80494ddd467fd6e8990e2e4569f7c7f742886b9287b0c61b018163652",
+      "lines": 52,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "vite",
+        "react",
+        "react-dom/server",
+        "../../shared/resourceContract.mjs"
+      ]
+    },
+    "frontend/tests/r2-browser-fixtures.jsx": {
+      "sha256": "5a03bcbccaff029ec5db037ec1ed3d58a1582b9d452c3cca1ed0b90b722c3e2b",
+      "lines": 74,
+      "imports": []
+    },
+    "frontend/tests/r22-browser-fixtures.jsx": {
+      "sha256": "280c6179dc591223c117dc7b31c943a7a5a186c8a9b73d3cbfdf6d6f13633b9d",
+      "lines": 54,
+      "imports": []
+    },
+    "frontend/tests/r31-browser-fixtures.jsx": {
+      "sha256": "c6c82eb242ac7d7f4984fc74204943941e89ca9c2040cd2a6655f4d752857cf8",
+      "lines": 32,
+      "imports": []
+    },
+    "frontend/tests/r32-browser-fixtures.jsx": {
+      "sha256": "99ef01ea91a263ca3a36959f76300ebfc132fde54feb53e2e0214fea9b1a6482",
+      "lines": 40,
+      "imports": []
+    },
+    "frontend/tests/r3b-browser-fixtures.jsx": {
+      "sha256": "e8598174b240c78d053f4a1c9e12805188789ca9a091403f8df77abd2dbeb3fd",
+      "lines": 96,
+      "imports": []
+    },
+    "frontend/tests/r3bAuthorization.test.js": {
+      "sha256": "8c05f3370d927ba0ed90512d175013208eb4afdf153fb25b6b0f7376a3b08fa5",
+      "lines": 31,
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../src/utils/authorization.js",
+        "../src/constants/roles.js"
+      ]
+    },
+    "frontend/tests/r4-browser-fixtures.jsx": {
+      "sha256": "b7fd8a713ac83310c9e9d4cc163ba9b867bb897870821287ea399301195e54f2",
+      "lines": 95,
+      "imports": []
+    },
+    "frontend/tests/r43-browser-fixture.jsx": {
+      "sha256": "52eef4e337d8c67bb6a1874a3019c8f6e383ca044363d96cc4c969ebf97b6491",
+      "lines": 34,
+      "imports": []
+    },
+    "frontend/tests/r44-browser-fixture.jsx": {
+      "sha256": "7d150206e410065d6f6cb35c375db9b08e0bd9aac3128f87fbb13af66f7e26e9",
+      "lines": 43,
+      "imports": []
+    },
+    "frontend/tests/r45-browser-fixture.jsx": {
+      "sha256": "3afa3e958587c5da5a56a738555fd1d3076ac8545814fe252cb4f3586354d4b6",
+      "lines": 36,
+      "imports": []
+    },
+    "frontend/tests/r46-browser-fixture.jsx": {
+      "sha256": "7a462cd0a5bab71d8841b3811f24abf316ee9c90c59aa30f7ec8c1aa280f7351",
+      "lines": 22,
+      "imports": []
+    },
+    "frontend/tests/r5-contract.test.js": {
+      "sha256": "41bc4d5cf32bdbf6bd50f7f1de48638dd1d235a9c710d2a2560fe5a0161e6899",
+      "lines": 16,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "../src/utils/adminForms.js",
+        "../../shared/resourceContract.mjs",
+        "../src/constants/cinemaImageStatuses.js"
+      ]
+    },
+    "frontend/tests/r7-browser-fixtures.jsx": {
+      "sha256": "b6b1efb22516619c13f0bd44d4f688991b14525bc634312ae6e391ea791c53fb",
+      "lines": 121,
+      "imports": []
+    },
+    "frontend/tests/r7-contract.test.js": {
+      "sha256": "27d2a8d8d5ef93a5daa3fe75dd144e4e37ec790ab08a9ebcbfb269cc8f12b244",
+      "lines": 45,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "vite",
+        "react",
+        "react-dom/server"
+      ]
+    },
+    "frontend/tests/role-aware-profile.test.js": {
+      "sha256": "343bcb948ee4da4de26d21b309bcdf99e7519289d346ff5929aa81606de29ae1",
+      "lines": 14,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "react",
+        "react-dom/server",
+        "vite"
+      ]
+    },
+    "frontend/tests/supportPortal.test.js": {
+      "sha256": "a83bf3c158b05ec9f705162ff46a52f10320ca5b17b93e94696c28107c5f2b91",
+      "lines": 27,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "react",
+        "react-dom/server",
+        "react-router-dom",
+        "vite"
+      ]
+    },
+    "frontend/tests/uiShell.test.js": {
+      "sha256": "a5567f5241bd0469bea77cbad885a4141a6b5d6c824c39425c58eece634755bd",
+      "lines": 78,
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "react",
+        "react-dom/server",
+        "react-router-dom",
+        "vite"
+      ]
+    },
+    "backend/src/app.js": {
+      "sha256": "6015c0f78ee145fefaf31f31bab58ad3dd1880db741fceac57b2299df79e0f18",
+      "lines": 20,
+      "imports": [
+        "cors",
+        "express",
+        "helmet",
+        "./config/env.js",
+        "./middleware/authRateLimit.js",
+        "./middleware/errorHandler.js",
+        "./middleware/notFound.js",
+        "./routes/index.js"
+      ]
+    },
+    "backend/src/config/database.js": {
+      "sha256": "c6faf4c3093342d74fe42bbcb4bbb39485059cc1b7ebe76f9fb02b2362c201bf",
+      "lines": 17,
+      "imports": [
+        "./env.js"
+      ]
+    },
+    "backend/src/config/env.js": {
+      "sha256": "d595e97dc9022c01ff402391c595e906604ffe327727e95a9862cb2e508998a4",
+      "lines": 45,
+      "imports": [
+        "dotenv"
+      ]
+    },
+    "backend/src/constants/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "backend/src/controllers/adminController.js": {
+      "sha256": "b40273d390dcf4e447fd8ad0f8ff04089bb52e039e121b325791afe57d1627e8",
+      "lines": 71,
+      "imports": [
+        "../services/adminService.js",
+        "../validators/adminValidator.js"
+      ]
+    },
+    "backend/src/controllers/authController.js": {
+      "sha256": "e4c821a1ea8bbcdc3f5bdfbdb554f3a64298521116164b6fb63416a79fa7a47a",
+      "lines": 32,
+      "imports": [
+        "../services/authService.js",
+        "../validators/authValidator.js"
+      ]
+    },
+    "backend/src/controllers/bookingController.js": {
+      "sha256": "defd9485b2f7b89f96fb8e5f784b9bca370f298f74d8718efdf5ebecb911788c",
+      "lines": 24,
+      "imports": [
+        "../services/bookingService.js",
+        "../validators/bookingValidator.js",
+        "../validators/catalogValidator.js"
+      ]
+    },
+    "backend/src/controllers/catalogController.js": {
+      "sha256": "e09b9d94f81b3d77d2d8f497372dd5bd3764f0fe27a1e56ac757e69e27ac87a8",
+      "lines": 25,
+      "imports": [
+        "../services/catalogService.js",
+        "../validators/catalogValidator.js"
+      ]
+    },
+    "backend/src/controllers/feedbackController.js": {
+      "sha256": "7b56500b2ee5bfe4cc30303becf5259dcb00b539bbd02bbe9dead307c7061a81",
+      "lines": 22,
+      "imports": [
+        "../services/feedbackService.js",
+        "../validators/feedbackValidator.js"
+      ]
+    },
+    "backend/src/controllers/healthController.js": {
+      "sha256": "e2ca1cb02deb08248778448351ed83cc14f52588fa60476cd14fb49a67e69d16",
+      "lines": 12,
+      "imports": [
+        "../services/healthService.js"
+      ]
+    },
+    "backend/src/controllers/managerController.js": {
+      "sha256": "49e0063cf33d433194a6cead5dca0b7d3085371770500f1cce5ed3e2f674df47",
+      "lines": 132,
+      "imports": [
+        "../services/managerService.js",
+        "../utils/httpError.js",
+        "../validators/managerValidator.js"
+      ]
+    },
+    "backend/src/controllers/orderController.js": {
+      "sha256": "80890071a8040ceb9f982fa3d7ae01a967facae71785be75d1d51fb0ddfd7b79",
+      "lines": 24,
+      "imports": [
+        "../services/orderService.js",
+        "../validators/orderValidator.js"
+      ]
+    },
+    "backend/src/controllers/supportController.js": {
+      "sha256": "caa9ad9deca297f7f585d37c33adde7841e77c57e6ef261fb6dec37f1ee63ce5",
+      "lines": 42,
+      "imports": [
+        "../services/supportService.js",
+        "../validators/supportValidator.js"
+      ]
+    },
+    "backend/src/db/pool.js": {
+      "sha256": "bed4f08fc47d45807b9ac644ff17feaad171355ee816ae534c69d322e8771b27",
+      "lines": 24,
+      "imports": [
+        "mssql",
+        "../config/database.js"
+      ]
+    },
+    "backend/src/db/procedureClient.js": {
+      "sha256": "21ac8ee427cd47bb93d76585f8613f65f11a0576108a2e96b161b4c4e9bd3e9f",
+      "lines": 82,
+      "imports": [
+        "mssql",
+        "./pool.js",
+        "./procedures.js",
+        "../utils/dateTime.js",
+        "../utils/inputContract.js",
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/db/procedures.js": {
+      "sha256": "ab0ef16a47c48d0397a66500c7fc7038190d25cffac23d440a745794dbe8e5ec",
+      "lines": 142,
+      "imports": []
+    },
+    "backend/src/jobs/expirePendingOrders.js": {
+      "sha256": "6942b5a3f518acb2207dba1ba1b27c1067c495d0aeb4021674f64622fbedf651",
+      "lines": 28,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/logger.js"
+      ]
+    },
+    "backend/src/middleware/authenticate.js": {
+      "sha256": "f5b689ef5a806a19f7bd443064d61a0e38fec27795972551e78d05af38f43792",
+      "lines": 22,
+      "imports": [
+        "../services/authService.js",
+        "../utils/jwt.js",
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/authRateLimit.js": {
+      "sha256": "fafcb8fcf250009af4cd281e9015bc0208e1c168b3c7aace5194185973b37947",
+      "lines": 56,
+      "imports": [
+        "node:perf_hooks",
+        "node:net",
+        "../config/env.js",
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/errorHandler.js": {
+      "sha256": "9e298d251e6bf2d4ab18c74c2e027812f1e8fd345da6bb0c94c6bd7d3ac4ec97",
+      "lines": 19,
+      "imports": [
+        "../utils/logger.js",
+        "../utils/authorizationErrors.js",
+        "../utils/sqlErrors.js"
+      ]
+    },
+    "backend/src/middleware/notFound.js": {
+      "sha256": "1d31a6861e46db1131fbda263a399907cd5e2fc23b7e65fa62860c51837e10b1",
+      "lines": 4,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/requireAdmin.js": {
+      "sha256": "0bd062a3c44d57053323ee6ba2c81d5751d2063e32a21a94258f8560c0ee7ea6",
+      "lines": 7,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/requireCustomer.js": {
+      "sha256": "270491045b0617394240c71bb3550cf677348a995b0b6eff852325e420b3e44d",
+      "lines": 7,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/requireManager.js": {
+      "sha256": "330420b44e63dc49ee6507abf94484260e31824ea7185f4fa5c54170932ba97a",
+      "lines": 7,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/requirePermission.js": {
+      "sha256": "9c412c8edab56db22611af5f3c85d75b6d98b8cb927588b08a0dee098520011a",
+      "lines": 10,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/middleware/requireSupport.js": {
+      "sha256": "c5d9deeb4234b96086c0be4ec26b1bad0544f7eec23f17e9461a5b4181f7eb24",
+      "lines": 11,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/routes/adminRoutes.js": {
+      "sha256": "b04b8f3aee1475d36814fb041fbfa9aede890c7344c9dd6562efdcb06c3e7c9f",
+      "lines": 86,
+      "imports": [
+        "express",
+        "../controllers/adminController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireAdmin.js",
+        "../middleware/requirePermission.js",
+        "../validators/supportValidator.js",
+        "../services/supportService.js"
+      ]
+    },
+    "backend/src/routes/authRoutes.js": {
+      "sha256": "9ac5396bc110ef1748c111ae95aef7eef59af0d9dd435ac9cc5037e6776b2542",
+      "lines": 12,
+      "imports": [
+        "express",
+        "../controllers/authController.js",
+        "../middleware/authenticate.js"
+      ]
+    },
+    "backend/src/routes/bookingRoutes.js": {
+      "sha256": "43020747055ad3c76638a1bddd10a1d9e026966030410095dc40e11d80fd1812",
+      "lines": 10,
+      "imports": [
+        "../middleware/requirePermission.js",
+        "express",
+        "../controllers/bookingController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireCustomer.js"
+      ]
+    },
+    "backend/src/routes/cinemaRoutes.js": {
+      "sha256": "d174c29d925a9a47e8547d093da4e350b50b61d72574e9c1268d308f3e6876ec",
+      "lines": 8,
+      "imports": [
+        "express",
+        "../controllers/catalogController.js"
+      ]
+    },
+    "backend/src/routes/complaintRoutes.js": {
+      "sha256": "53f5c3c276004b321f6fc2523ff860a60a5794fd9b37e5e61dcf0a96062db5e2",
+      "lines": 13,
+      "imports": [
+        "../middleware/requirePermission.js",
+        "express",
+        "../controllers/feedbackController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireCustomer.js"
+      ]
+    },
+    "backend/src/routes/genreRoutes.js": {
+      "sha256": "2af30f14c377ee3fa5182f4af66b5376c2e440bedec39a48a2ab3482599c7b13",
+      "lines": 7,
+      "imports": [
+        "express",
+        "../controllers/catalogController.js"
+      ]
+    },
+    "backend/src/routes/healthRoutes.js": {
+      "sha256": "837675e831e55012706d3dc38f49a98a062043d7bc62a48b2ae48c628077f0be",
+      "lines": 8,
+      "imports": [
+        "express",
+        "../controllers/healthController.js"
+      ]
+    },
+    "backend/src/routes/index.js": {
+      "sha256": "1a5133d248d6909ee9a2258808f12aecebecc6610e59b2aade43941674f196b7",
+      "lines": 34,
+      "imports": [
+        "express",
+        "./healthRoutes.js",
+        "./authRoutes.js",
+        "./movieRoutes.js",
+        "./cinemaRoutes.js",
+        "./genreRoutes.js",
+        "./showtimeRoutes.js",
+        "./bookingRoutes.js",
+        "./productRoutes.js",
+        "./promotionRoutes.js",
+        "./orderRoutes.js",
+        "./complaintRoutes.js",
+        "./managerRoutes.js",
+        "./supportRoutes.js",
+        "./adminRoutes.js"
+      ]
+    },
+    "backend/src/routes/managerRoutes.js": {
+      "sha256": "ec3039e124d4eee61174e43d714f3c5fc65863e604b5b436b4cb706e79d60bba",
+      "lines": 27,
+      "imports": [
+        "express",
+        "../controllers/managerController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireManager.js",
+        "../middleware/requirePermission.js"
+      ]
+    },
+    "backend/src/routes/movieRoutes.js": {
+      "sha256": "5cc474cd498d97d63690c285a96adaa58c3f558aec4886f957d4bb5a6414cda0",
+      "lines": 15,
+      "imports": [
+        "../middleware/requirePermission.js",
+        "express",
+        "../controllers/catalogController.js",
+        "../controllers/feedbackController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireCustomer.js"
+      ]
+    },
+    "backend/src/routes/orderRoutes.js": {
+      "sha256": "5e2f2dbde3353d55ccbd8321c65a40d5f29f1c9794db69f8ce97003a2d5125bd",
+      "lines": 14,
+      "imports": [
+        "../middleware/requirePermission.js",
+        "express",
+        "../controllers/orderController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireCustomer.js"
+      ]
+    },
+    "backend/src/routes/productRoutes.js": {
+      "sha256": "9bc2e14071c5b48d7e463f31d5846e307ea7287fa71e6fcaa3afbad6d5285ceb",
+      "lines": 7,
+      "imports": [
+        "express",
+        "../controllers/bookingController.js"
+      ]
+    },
+    "backend/src/routes/promotionRoutes.js": {
+      "sha256": "a931627a6f90461f602f35670dbc7b61dde531c6701608854e693733197ceca8",
+      "lines": 10,
+      "imports": [
+        "../middleware/requirePermission.js",
+        "express",
+        "../controllers/bookingController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requireCustomer.js"
+      ]
+    },
+    "backend/src/routes/showtimeRoutes.js": {
+      "sha256": "549e68e8a23660fb213b0f5c1e6de9785e938df89540084cb2ee8dcb0c7d4a41",
+      "lines": 9,
+      "imports": [
+        "express",
+        "../controllers/catalogController.js",
+        "../controllers/bookingController.js"
+      ]
+    },
+    "backend/src/routes/supportRoutes.js": {
+      "sha256": "1ba436a8c974f654f9d212514f4b1d38d28917ec56c737d47231075257431d2a",
+      "lines": 29,
+      "imports": [
+        "express",
+        "../controllers/supportController.js",
+        "../middleware/authenticate.js",
+        "../middleware/requirePermission.js",
+        "../middleware/requireSupport.js"
+      ]
+    },
+    "backend/src/server.js": {
+      "sha256": "cb565987ef84dc6229a3fdc8293f144fb0eec5c56f27cabd71cf16dbc944499f",
+      "lines": 27,
+      "imports": [
+        "./app.js",
+        "./config/env.js",
+        "./db/pool.js",
+        "./jobs/expirePendingOrders.js",
+        "./utils/logger.js"
+      ]
+    },
+    "backend/src/services/adminService.js": {
+      "sha256": "48ed0d7e93e84b554cf09a92fd6e54d5fbbd90f93ad10ce84549b5bc32876c8b",
+      "lines": 292,
+      "imports": [
+        "../utils/dateTime.js",
+        "../db/procedureClient.js",
+        "../utils/password.js",
+        "../utils/httpError.js",
+        "../utils/logger.js",
+        "../utils/authorizationErrors.js"
+      ]
+    },
+    "backend/src/services/authService.js": {
+      "sha256": "2bbb91399cf5dcd423f7513641b2888023f330546cecc20b3aa5c29de8479e40",
+      "lines": 131,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/password.js",
+        "../utils/jwt.js",
+        "../utils/httpError.js",
+        "../utils/dateTime.js"
+      ]
+    },
+    "backend/src/services/bookingService.js": {
+      "sha256": "fd8d23f2d078d6b7f787cf94cb63904f670db2c728d192bfedb07cd312c3484e",
+      "lines": 157,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/httpError.js",
+        "../utils/sqlErrors.js"
+      ]
+    },
+    "backend/src/services/catalogService.js": {
+      "sha256": "00a0c216c8504da5bcc556017e71d6329a5da41daa5ee12cbae594cbeb19a86b",
+      "lines": 151,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/httpError.js",
+        "../utils/dateTime.js"
+      ]
+    },
+    "backend/src/services/feedbackService.js": {
+      "sha256": "2515ec6728698adcc62dc81ab7b046d1bfefa018fee95ba82e0e050442487ec7",
+      "lines": 91,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/services/healthService.js": {
+      "sha256": "cf70db9c052fca9ce61362ef0c0133547a95a806fa8d907da9b147be8d3a6b49",
+      "lines": 12,
+      "imports": [
+        "../db/procedureClient.js",
+        "../db/procedures.js"
+      ]
+    },
+    "backend/src/services/managerService.js": {
+      "sha256": "ddce9a4643e3280d5fd5e648b110fdcf5514a3e28422943d2e5a3593ac0f8607",
+      "lines": 107,
+      "imports": [
+        "../utils/dateTime.js",
+        "../db/procedureClient.js",
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/services/orderService.js": {
+      "sha256": "d34bbe5d1de7f780745bb358f84f4ec8f78d5fb3093908af3ec88141698de3e2",
+      "lines": 122,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/httpError.js",
+        "../utils/sqlErrors.js"
+      ]
+    },
+    "backend/src/services/supportService.js": {
+      "sha256": "071e27008fa45b451b992f7bafd4ac0d985c11f637cabab269e2203c98297582",
+      "lines": 137,
+      "imports": [
+        "../db/procedureClient.js",
+        "../utils/httpError.js",
+        "./orderService.js"
+      ]
+    },
+    "backend/src/utils/authorizationErrors.js": {
+      "sha256": "d04409f4967d39c89c6fc63bae340f6de93134a5ccbfa28d0f89fd13030bb2a0",
+      "lines": 9,
+      "imports": [
+        "./httpError.js"
+      ]
+    },
+    "backend/src/utils/dateTime.js": {
+      "sha256": "d0fe7c5a2845d752af540b486b2466a9c24abf52cc13a4030910d552e2ae9f7f",
+      "lines": 42,
+      "imports": [
+        "./httpError.js",
+        "../../../shared/dateTimeContract.mjs"
+      ]
+    },
+    "backend/src/utils/httpError.js": {
+      "sha256": "6c64ca92e896a7fb08bfa28df2c2b7385d3ac492ce39855d72c13296d1849d05",
+      "lines": 7,
+      "imports": []
+    },
+    "backend/src/utils/inputContract.js": {
+      "sha256": "dc099a95a66b0d8e7cb81f4ab70e63892d80e57e9d238d721d4f608f76d6cdee",
+      "lines": 39,
+      "imports": [
+        "./httpError.js",
+        "./dateTime.js"
+      ]
+    },
+    "backend/src/utils/jwt.js": {
+      "sha256": "c8ece0ee56e14ff52e577068ae45ba0763cf7817c5e2e6e4665cccf7ea343e93",
+      "lines": 70,
+      "imports": [
+        "node:crypto",
+        "../config/env.js",
+        "./httpError.js"
+      ]
+    },
+    "backend/src/utils/logger.js": {
+      "sha256": "305ffa5582de6dc4cbe3913fd98d9df85f8719c6d0547b47540f55911e5f5813",
+      "lines": 17,
+      "imports": []
+    },
+    "backend/src/utils/password.js": {
+      "sha256": "f4587c77f49c1ead4bfdb90d99c8ab420492aa63988af98b23eabad3aaa11605",
+      "lines": 16,
+      "imports": [
+        "bcryptjs",
+        "./httpError.js"
+      ]
+    },
+    "backend/src/utils/sqlErrors.js": {
+      "sha256": "efa2f8cd3a4bd1e39cc3512ba877e7d58660649123e3977ba1a4cdd9267498b5",
+      "lines": 19,
+      "imports": [
+        "./httpError.js"
+      ]
+    },
+    "backend/src/validators/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "imports": []
+    },
+    "backend/src/validators/adminValidator.js": {
+      "sha256": "4913e99353105d3ca4f04d48b553c7c4b2b52dcc9b8298fb3d35c8e76bd383e5",
+      "lines": 181,
+      "imports": [
+        "../utils/dateTime.js",
+        "../utils/httpError.js",
+        "../utils/password.js",
+        "../utils/inputContract.js",
+        "../../../shared/resourceContract.mjs"
+      ]
+    },
+    "backend/src/validators/authValidator.js": {
+      "sha256": "6117d7033e13829b2d04c01629f2f6c75cefd7aa5823a7bba816557448ebdbb2",
+      "lines": 105,
+      "imports": [
+        "../utils/dateTime.js",
+        "../utils/httpError.js",
+        "../utils/password.js",
+        "../utils/inputContract.js"
+      ]
+    },
+    "backend/src/validators/bookingValidator.js": {
+      "sha256": "7882c784fa3861dc3c7fdb804e278933d8f40a45c9a0ab03b47e692cbd420122",
+      "lines": 89,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/validators/catalogValidator.js": {
+      "sha256": "0bd62e6a7d9a020b4959be9e0e7d9f39452d0e4dd9376023f0a4ea13067c7bd3",
+      "lines": 78,
+      "imports": [
+        "../utils/dateTime.js",
+        "../utils/httpError.js",
+        "../utils/inputContract.js",
+        "../../../shared/resourceContract.mjs"
+      ]
+    },
+    "backend/src/validators/feedbackValidator.js": {
+      "sha256": "e51124da4c800d1d3893c7f6bb57205e55f374ca56ae5b27d8d080a446ff39b6",
+      "lines": 44,
+      "imports": [
+        "../utils/httpError.js",
+        "../utils/inputContract.js"
+      ]
+    },
+    "backend/src/validators/managerValidator.js": {
+      "sha256": "f6fd0c9ba0803f1a6d9384003c5bb311ed381b0596078dcf7383038fb44e34f6",
+      "lines": 184,
+      "imports": [
+        "../utils/dateTime.js",
+        "../utils/httpError.js",
+        "../utils/inputContract.js",
+        "../../../shared/resourceContract.mjs"
+      ]
+    },
+    "backend/src/validators/orderValidator.js": {
+      "sha256": "a02c549247ff2326759fe0da9cdb23ad0d5c153e203cefd2ef1ca30f645c2110",
+      "lines": 45,
+      "imports": [
+        "../utils/httpError.js"
+      ]
+    },
+    "backend/src/validators/supportValidator.js": {
+      "sha256": "48293d93a6b55301461540191c1511db86342b25a2b9a4c526f72e068181e6bd",
+      "lines": 70,
+      "imports": [
+        "../utils/httpError.js",
+        "../utils/inputContract.js"
+      ]
+    },
+    "shared/dateTimeContract.mjs": {
+      "sha256": "bbb3fd8b8ee5a3e61e55771071ad1a9cf996ba5cca36aac85286a12f176375b9",
+      "lines": 2,
+      "imports": []
+    },
+    "shared/resourceContract.mjs": {
+      "sha256": "a7a7583ec95ab3e6fc0b02f5f65081d5d504cea6acc12ad8e0a7166b5cfc37dc",
+      "lines": 20,
+      "imports": []
+    }
+  },
+  "frontendImportGraph": {
+    "frontend/src/api/adminApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/authApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/authToken.js": [],
+    "frontend/src/api/catalogApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/feedbackApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/healthApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/httpClient.js": [
+      "frontend/src/api/authToken.js"
+    ],
+    "frontend/src/api/managerApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/ordersApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/api/supportApi.js": [
+      "frontend/src/api/httpClient.js"
+    ],
+    "frontend/src/App.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/routes/index.jsx",
+      "frontend/src/components/ErrorBoundary.jsx",
+      "frontend/src/components/AccessErrorHandler.jsx"
+    ],
+    "frontend/src/assets/.gitkeep": [],
+    "frontend/src/components/.gitkeep": [],
+    "frontend/src/components/AccessErrorHandler.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/components/CatalogStates.jsx": [],
+    "frontend/src/components/CinemaGallery.jsx": [
+      "frontend/src/utils/cinemaGallery.js"
+    ],
+    "frontend/src/components/CinemaImageManager.jsx": [
+      "frontend/src/api/adminApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/constants/cinemaImageStatuses.js",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js"
+    ],
+    "frontend/src/components/CinemaList.jsx": [],
+    "frontend/src/components/ComplaintOrderReference.jsx": [
+      "frontend/src/api/supportApi.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/components/CatalogStates.jsx"
+    ],
+    "frontend/src/components/DatabaseHealth.jsx": [
+      "frontend/src/api/healthApi.js"
+    ],
+    "frontend/src/components/ErrorBoundary.jsx": [],
+    "frontend/src/components/HoldDeadline.jsx": [
+      "frontend/src/utils/dateTime.js"
+    ],
+    "frontend/src/components/ManagerResourceForm.jsx": [
+      "frontend/src/utils/managerForms.js"
+    ],
+    "frontend/src/components/ManagerRevenue.jsx": [
+      "frontend/src/api/managerApi.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/components/CatalogStates.jsx"
+    ],
+    "frontend/src/components/MovieCard.jsx": [],
+    "frontend/src/components/MovieGrid.jsx": [
+      "frontend/src/components/MovieCard.jsx"
+    ],
+    "frontend/src/components/MovieReviews.jsx": [
+      "frontend/src/utils/authorization.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/api/feedbackApi.js",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/components/CatalogStates.jsx"
+    ],
+    "frontend/src/components/primitives/StatusBadge.jsx": [],
+    "frontend/src/components/ProductPicker.jsx": [
+      "frontend/src/constants/bookingLimits.js"
+    ],
+    "frontend/src/components/SeatMap.jsx": [
+      "frontend/src/constants/bookingLimits.js"
+    ],
+    "frontend/src/components/ShowtimeBrowser.jsx": [
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/components/CatalogStates.jsx"
+    ],
+    "frontend/src/constants/bookingLimits.js": [],
+    "frontend/src/constants/cinemaImageStatuses.js": [
+      "shared/resourceContract.mjs"
+    ],
+    "frontend/src/constants/roles.js": [],
+    "frontend/src/context/AuthContext.jsx": [
+      "frontend/src/api/authApi.js",
+      "frontend/src/api/authToken.js",
+      "frontend/src/services/authSession.js"
+    ],
+    "frontend/src/hooks/.gitkeep": [],
+    "frontend/src/index.css": [],
+    "frontend/src/layouts/AreaLayout.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js"
+    ],
+    "frontend/src/main.jsx": [
+      "frontend/src/index.css",
+      "frontend/src/App.jsx"
+    ],
+    "frontend/src/pages/admin/.gitkeep": [],
+    "frontend/src/pages/AdminPortal.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/utils/adminForms.js",
+      "shared/resourceContract.mjs",
+      "frontend/src/api/adminApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/CinemaImageManager.jsx",
+      "frontend/src/utils/bookingLimits.js"
+    ],
+    "frontend/src/pages/auth/Login.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/constants/roles.js"
+    ],
+    "frontend/src/pages/auth/Profile.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/constants/roles.js"
+    ],
+    "frontend/src/pages/auth/Register.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/pages/BookingPreparation.jsx": [
+      "frontend/src/utils/authorization.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/components/HoldDeadline.jsx",
+      "frontend/src/api/catalogApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/ProductPicker.jsx",
+      "frontend/src/components/SeatMap.jsx",
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/bookingLimits.js"
+    ],
+    "frontend/src/pages/CinemaDetail.jsx": [
+      "frontend/src/api/catalogApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/CinemaGallery.jsx"
+    ],
+    "frontend/src/pages/Cinemas.jsx": [
+      "frontend/src/api/catalogApi.js",
+      "frontend/src/components/CinemaList.jsx",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/services/catalogResource.js"
+    ],
+    "frontend/src/pages/ComplaintDetail.jsx": [
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/api/feedbackApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/primitives/StatusBadge.jsx"
+    ],
+    "frontend/src/pages/Complaints.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js",
+      "frontend/src/api/feedbackApi.js",
+      "frontend/src/api/ordersApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/primitives/StatusBadge.jsx"
+    ],
+    "frontend/src/pages/customer/.gitkeep": [],
+    "frontend/src/pages/CustomerArea.jsx": [],
+    "frontend/src/pages/Forbidden.jsx": [],
+    "frontend/src/pages/Home.jsx": [
+      "frontend/src/api/catalogApi.js",
+      "frontend/src/components/MovieGrid.jsx",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/services/catalogResource.js"
+    ],
+    "frontend/src/pages/manager/.gitkeep": [],
+    "frontend/src/pages/ManagerPortal.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/api/managerApi.js",
+      "frontend/src/utils/bookingLimits.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/ManagerResourceForm.jsx",
+      "frontend/src/components/ManagerRevenue.jsx",
+      "shared/resourceContract.mjs"
+    ],
+    "frontend/src/pages/MovieDetail.jsx": [
+      "frontend/src/api/catalogApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/ShowtimeBrowser.jsx",
+      "frontend/src/components/MovieReviews.jsx",
+      "frontend/src/services/catalogResource.js"
+    ],
+    "frontend/src/pages/Movies.jsx": [
+      "frontend/src/api/catalogApi.js",
+      "frontend/src/components/MovieGrid.jsx",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/services/catalogResource.js"
+    ],
+    "frontend/src/pages/NotFound.jsx": [],
+    "frontend/src/pages/OrderDetail.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js",
+      "frontend/src/components/HoldDeadline.jsx",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/api/ordersApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/primitives/StatusBadge.jsx"
+    ],
+    "frontend/src/pages/Orders.jsx": [
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/api/ordersApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/primitives/StatusBadge.jsx"
+    ],
+    "frontend/src/pages/PaymentPage.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js",
+      "frontend/src/components/HoldDeadline.jsx",
+      "frontend/src/api/ordersApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/primitives/StatusBadge.jsx",
+      "frontend/src/utils/bookingLimits.js",
+      "frontend/src/api/catalogApi.js"
+    ],
+    "frontend/src/pages/public/.gitkeep": [],
+    "frontend/src/pages/support/.gitkeep": [],
+    "frontend/src/pages/SupportPortal.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js",
+      "frontend/src/utils/dateTime.js",
+      "frontend/src/api/supportApi.js",
+      "frontend/src/components/CatalogStates.jsx",
+      "frontend/src/components/ComplaintOrderReference.jsx"
+    ],
+    "frontend/src/routes/index.jsx": [
+      "frontend/src/layouts/AreaLayout.jsx",
+      "frontend/src/components/DatabaseHealth.jsx",
+      "frontend/src/routes/RequireRole.jsx",
+      "frontend/src/routes/RequireAuth.jsx",
+      "frontend/src/pages/auth/Login.jsx",
+      "frontend/src/pages/auth/Register.jsx",
+      "frontend/src/pages/auth/Profile.jsx",
+      "frontend/src/pages/Forbidden.jsx",
+      "frontend/src/pages/NotFound.jsx",
+      "frontend/src/pages/CustomerArea.jsx",
+      "frontend/src/pages/Home.jsx",
+      "frontend/src/pages/Movies.jsx",
+      "frontend/src/pages/MovieDetail.jsx",
+      "frontend/src/pages/Cinemas.jsx",
+      "frontend/src/pages/CinemaDetail.jsx",
+      "frontend/src/pages/BookingPreparation.jsx",
+      "frontend/src/pages/Orders.jsx",
+      "frontend/src/pages/OrderDetail.jsx",
+      "frontend/src/pages/PaymentPage.jsx",
+      "frontend/src/pages/Complaints.jsx",
+      "frontend/src/pages/ComplaintDetail.jsx",
+      "frontend/src/pages/ManagerPortal.jsx",
+      "frontend/src/pages/SupportPortal.jsx",
+      "frontend/src/pages/AdminPortal.jsx",
+      "frontend/src/constants/roles.js"
+    ],
+    "frontend/src/routes/RequireAuth.jsx": [
+      "frontend/src/context/AuthContext.jsx"
+    ],
+    "frontend/src/routes/RequireRole.jsx": [
+      "frontend/src/context/AuthContext.jsx",
+      "frontend/src/utils/authorization.js"
+    ],
+    "frontend/src/services/.gitkeep": [],
+    "frontend/src/services/authSession.js": [],
+    "frontend/src/services/catalogResource.js": [
+      "frontend/src/utils/dateTime.js"
+    ],
+    "frontend/src/utils/.gitkeep": [],
+    "frontend/src/utils/adminForms.js": [
+      "frontend/src/utils/dateTime.js",
+      "shared/resourceContract.mjs"
+    ],
+    "frontend/src/utils/authorization.js": [
+      "frontend/src/constants/roles.js"
+    ],
+    "frontend/src/utils/bookingLimits.js": [
+      "frontend/src/constants/bookingLimits.js"
+    ],
+    "frontend/src/utils/cinemaGallery.js": [],
+    "frontend/src/utils/dateTime.js": [
+      "shared/dateTimeContract.mjs"
+    ],
+    "frontend/src/utils/managerForms.js": [
+      "shared/resourceContract.mjs",
+      "frontend/src/utils/dateTime.js"
+    ],
+    "frontend/tests/admin-pricing.test.js": [
+      "frontend/src/utils/adminForms.js"
+    ],
+    "frontend/tests/adminPortal.test.js": [],
+    "frontend/tests/auth-rate-limit.test.js": [
+      "frontend/src/services/authSession.js",
+      "backend/src/app.js"
+    ],
+    "frontend/tests/authorization.test.js": [
+      "frontend/src/constants/roles.js",
+      "frontend/src/utils/authorization.js"
+    ],
+    "frontend/tests/authPages.test.js": [],
+    "frontend/tests/authSession.test.js": [
+      "frontend/src/services/authSession.js"
+    ],
+    "frontend/tests/bookingLimits.test.js": [],
+    "frontend/tests/business-ownership.test.js": [],
+    "frontend/tests/catalogPages.test.js": [],
+    "frontend/tests/catalogResource.test.js": [
+      "frontend/src/services/catalogResource.js"
+    ],
+    "frontend/tests/dateTime.test.js": [
+      "frontend/src/utils/dateTime.js"
+    ],
+    "frontend/tests/r0-pricing.test.js": [
+      "shared/resourceContract.mjs"
+    ],
+    "frontend/tests/r2-browser-fixtures.jsx": [],
+    "frontend/tests/r22-browser-fixtures.jsx": [],
+    "frontend/tests/r31-browser-fixtures.jsx": [],
+    "frontend/tests/r32-browser-fixtures.jsx": [],
+    "frontend/tests/r3b-browser-fixtures.jsx": [],
+    "frontend/tests/r3bAuthorization.test.js": [
+      "frontend/src/utils/authorization.js",
+      "frontend/src/constants/roles.js"
+    ],
+    "frontend/tests/r4-browser-fixtures.jsx": [],
+    "frontend/tests/r43-browser-fixture.jsx": [],
+    "frontend/tests/r44-browser-fixture.jsx": [],
+    "frontend/tests/r45-browser-fixture.jsx": [],
+    "frontend/tests/r46-browser-fixture.jsx": [],
+    "frontend/tests/r5-contract.test.js": [
+      "frontend/src/utils/adminForms.js",
+      "shared/resourceContract.mjs",
+      "frontend/src/constants/cinemaImageStatuses.js"
+    ],
+    "frontend/tests/r7-browser-fixtures.jsx": [],
+    "frontend/tests/r7-contract.test.js": [],
+    "frontend/tests/role-aware-profile.test.js": [],
+    "frontend/tests/supportPortal.test.js": [],
+    "frontend/tests/uiShell.test.js": [],
+    "backend/src/app.js": [
+      "backend/src/config/env.js",
+      "backend/src/middleware/authRateLimit.js",
+      "backend/src/middleware/errorHandler.js",
+      "backend/src/middleware/notFound.js",
+      "backend/src/routes/index.js"
+    ],
+    "backend/src/config/database.js": [
+      "backend/src/config/env.js"
+    ],
+    "backend/src/config/env.js": [],
+    "backend/src/constants/.gitkeep": [],
+    "backend/src/controllers/adminController.js": [
+      "backend/src/services/adminService.js",
+      "backend/src/validators/adminValidator.js"
+    ],
+    "backend/src/controllers/authController.js": [
+      "backend/src/services/authService.js",
+      "backend/src/validators/authValidator.js"
+    ],
+    "backend/src/controllers/bookingController.js": [
+      "backend/src/services/bookingService.js",
+      "backend/src/validators/bookingValidator.js",
+      "backend/src/validators/catalogValidator.js"
+    ],
+    "backend/src/controllers/catalogController.js": [
+      "backend/src/services/catalogService.js",
+      "backend/src/validators/catalogValidator.js"
+    ],
+    "backend/src/controllers/feedbackController.js": [
+      "backend/src/services/feedbackService.js",
+      "backend/src/validators/feedbackValidator.js"
+    ],
+    "backend/src/controllers/healthController.js": [
+      "backend/src/services/healthService.js"
+    ],
+    "backend/src/controllers/managerController.js": [
+      "backend/src/services/managerService.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/validators/managerValidator.js"
+    ],
+    "backend/src/controllers/orderController.js": [
+      "backend/src/services/orderService.js",
+      "backend/src/validators/orderValidator.js"
+    ],
+    "backend/src/controllers/supportController.js": [
+      "backend/src/services/supportService.js",
+      "backend/src/validators/supportValidator.js"
+    ],
+    "backend/src/db/pool.js": [
+      "backend/src/config/database.js"
+    ],
+    "backend/src/db/procedureClient.js": [
+      "backend/src/db/pool.js",
+      "backend/src/db/procedures.js",
+      "backend/src/utils/dateTime.js",
+      "backend/src/utils/inputContract.js",
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/db/procedures.js": [],
+    "backend/src/jobs/expirePendingOrders.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/logger.js"
+    ],
+    "backend/src/middleware/authenticate.js": [
+      "backend/src/services/authService.js",
+      "backend/src/utils/jwt.js",
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/authRateLimit.js": [
+      "backend/src/config/env.js",
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/errorHandler.js": [
+      "backend/src/utils/logger.js",
+      "backend/src/utils/authorizationErrors.js",
+      "backend/src/utils/sqlErrors.js"
+    ],
+    "backend/src/middleware/notFound.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/requireAdmin.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/requireCustomer.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/requireManager.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/requirePermission.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/middleware/requireSupport.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/routes/adminRoutes.js": [
+      "backend/src/controllers/adminController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireAdmin.js",
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/validators/supportValidator.js",
+      "backend/src/services/supportService.js"
+    ],
+    "backend/src/routes/authRoutes.js": [
+      "backend/src/controllers/authController.js",
+      "backend/src/middleware/authenticate.js"
+    ],
+    "backend/src/routes/bookingRoutes.js": [
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/controllers/bookingController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireCustomer.js"
+    ],
+    "backend/src/routes/cinemaRoutes.js": [
+      "backend/src/controllers/catalogController.js"
+    ],
+    "backend/src/routes/complaintRoutes.js": [
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/controllers/feedbackController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireCustomer.js"
+    ],
+    "backend/src/routes/genreRoutes.js": [
+      "backend/src/controllers/catalogController.js"
+    ],
+    "backend/src/routes/healthRoutes.js": [
+      "backend/src/controllers/healthController.js"
+    ],
+    "backend/src/routes/index.js": [
+      "backend/src/routes/healthRoutes.js",
+      "backend/src/routes/authRoutes.js",
+      "backend/src/routes/movieRoutes.js",
+      "backend/src/routes/cinemaRoutes.js",
+      "backend/src/routes/genreRoutes.js",
+      "backend/src/routes/showtimeRoutes.js",
+      "backend/src/routes/bookingRoutes.js",
+      "backend/src/routes/productRoutes.js",
+      "backend/src/routes/promotionRoutes.js",
+      "backend/src/routes/orderRoutes.js",
+      "backend/src/routes/complaintRoutes.js",
+      "backend/src/routes/managerRoutes.js",
+      "backend/src/routes/supportRoutes.js",
+      "backend/src/routes/adminRoutes.js"
+    ],
+    "backend/src/routes/managerRoutes.js": [
+      "backend/src/controllers/managerController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireManager.js",
+      "backend/src/middleware/requirePermission.js"
+    ],
+    "backend/src/routes/movieRoutes.js": [
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/controllers/catalogController.js",
+      "backend/src/controllers/feedbackController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireCustomer.js"
+    ],
+    "backend/src/routes/orderRoutes.js": [
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/controllers/orderController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireCustomer.js"
+    ],
+    "backend/src/routes/productRoutes.js": [
+      "backend/src/controllers/bookingController.js"
+    ],
+    "backend/src/routes/promotionRoutes.js": [
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/controllers/bookingController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requireCustomer.js"
+    ],
+    "backend/src/routes/showtimeRoutes.js": [
+      "backend/src/controllers/catalogController.js",
+      "backend/src/controllers/bookingController.js"
+    ],
+    "backend/src/routes/supportRoutes.js": [
+      "backend/src/controllers/supportController.js",
+      "backend/src/middleware/authenticate.js",
+      "backend/src/middleware/requirePermission.js",
+      "backend/src/middleware/requireSupport.js"
+    ],
+    "backend/src/server.js": [
+      "backend/src/app.js",
+      "backend/src/config/env.js",
+      "backend/src/db/pool.js",
+      "backend/src/jobs/expirePendingOrders.js",
+      "backend/src/utils/logger.js"
+    ],
+    "backend/src/services/adminService.js": [
+      "backend/src/utils/dateTime.js",
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/password.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/logger.js",
+      "backend/src/utils/authorizationErrors.js"
+    ],
+    "backend/src/services/authService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/password.js",
+      "backend/src/utils/jwt.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/dateTime.js"
+    ],
+    "backend/src/services/bookingService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/sqlErrors.js"
+    ],
+    "backend/src/services/catalogService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/dateTime.js"
+    ],
+    "backend/src/services/feedbackService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/services/healthService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/db/procedures.js"
+    ],
+    "backend/src/services/managerService.js": [
+      "backend/src/utils/dateTime.js",
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/services/orderService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/sqlErrors.js"
+    ],
+    "backend/src/services/supportService.js": [
+      "backend/src/db/procedureClient.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/services/orderService.js"
+    ],
+    "backend/src/utils/authorizationErrors.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/utils/dateTime.js": [
+      "backend/src/utils/httpError.js",
+      "shared/dateTimeContract.mjs"
+    ],
+    "backend/src/utils/httpError.js": [],
+    "backend/src/utils/inputContract.js": [
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/dateTime.js"
+    ],
+    "backend/src/utils/jwt.js": [
+      "backend/src/config/env.js",
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/utils/logger.js": [],
+    "backend/src/utils/password.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/utils/sqlErrors.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/validators/.gitkeep": [],
+    "backend/src/validators/adminValidator.js": [
+      "backend/src/utils/dateTime.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/password.js",
+      "backend/src/utils/inputContract.js",
+      "shared/resourceContract.mjs"
+    ],
+    "backend/src/validators/authValidator.js": [
+      "backend/src/utils/dateTime.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/password.js",
+      "backend/src/utils/inputContract.js"
+    ],
+    "backend/src/validators/bookingValidator.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/validators/catalogValidator.js": [
+      "backend/src/utils/dateTime.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/inputContract.js",
+      "shared/resourceContract.mjs"
+    ],
+    "backend/src/validators/feedbackValidator.js": [
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/inputContract.js"
+    ],
+    "backend/src/validators/managerValidator.js": [
+      "backend/src/utils/dateTime.js",
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/inputContract.js",
+      "shared/resourceContract.mjs"
+    ],
+    "backend/src/validators/orderValidator.js": [
+      "backend/src/utils/httpError.js"
+    ],
+    "backend/src/validators/supportValidator.js": [
+      "backend/src/utils/httpError.js",
+      "backend/src/utils/inputContract.js"
+    ],
+    "shared/dateTimeContract.mjs": [],
+    "shared/resourceContract.mjs": []
+  },
+  "reachableFromActualMain": [
+    "frontend/src/App.jsx",
+    "frontend/src/api/adminApi.js",
+    "frontend/src/api/authApi.js",
+    "frontend/src/api/authToken.js",
+    "frontend/src/api/catalogApi.js",
+    "frontend/src/api/feedbackApi.js",
+    "frontend/src/api/healthApi.js",
+    "frontend/src/api/httpClient.js",
+    "frontend/src/api/managerApi.js",
+    "frontend/src/api/ordersApi.js",
+    "frontend/src/api/supportApi.js",
+    "frontend/src/components/AccessErrorHandler.jsx",
+    "frontend/src/components/CatalogStates.jsx",
+    "frontend/src/components/CinemaGallery.jsx",
+    "frontend/src/components/CinemaImageManager.jsx",
+    "frontend/src/components/CinemaList.jsx",
+    "frontend/src/components/ComplaintOrderReference.jsx",
+    "frontend/src/components/DatabaseHealth.jsx",
+    "frontend/src/components/ErrorBoundary.jsx",
+    "frontend/src/components/HoldDeadline.jsx",
+    "frontend/src/components/ManagerResourceForm.jsx",
+    "frontend/src/components/ManagerRevenue.jsx",
+    "frontend/src/components/MovieCard.jsx",
+    "frontend/src/components/MovieGrid.jsx",
+    "frontend/src/components/MovieReviews.jsx",
+    "frontend/src/components/ProductPicker.jsx",
+    "frontend/src/components/SeatMap.jsx",
+    "frontend/src/components/ShowtimeBrowser.jsx",
+    "frontend/src/components/primitives/StatusBadge.jsx",
+    "frontend/src/constants/bookingLimits.js",
+    "frontend/src/constants/cinemaImageStatuses.js",
+    "frontend/src/constants/roles.js",
+    "frontend/src/context/AuthContext.jsx",
+    "frontend/src/index.css",
+    "frontend/src/layouts/AreaLayout.jsx",
+    "frontend/src/main.jsx",
+    "frontend/src/pages/AdminPortal.jsx",
+    "frontend/src/pages/BookingPreparation.jsx",
+    "frontend/src/pages/CinemaDetail.jsx",
+    "frontend/src/pages/Cinemas.jsx",
+    "frontend/src/pages/ComplaintDetail.jsx",
+    "frontend/src/pages/Complaints.jsx",
+    "frontend/src/pages/CustomerArea.jsx",
+    "frontend/src/pages/Forbidden.jsx",
+    "frontend/src/pages/Home.jsx",
+    "frontend/src/pages/ManagerPortal.jsx",
+    "frontend/src/pages/MovieDetail.jsx",
+    "frontend/src/pages/Movies.jsx",
+    "frontend/src/pages/NotFound.jsx",
+    "frontend/src/pages/OrderDetail.jsx",
+    "frontend/src/pages/Orders.jsx",
+    "frontend/src/pages/PaymentPage.jsx",
+    "frontend/src/pages/SupportPortal.jsx",
+    "frontend/src/pages/auth/Login.jsx",
+    "frontend/src/pages/auth/Profile.jsx",
+    "frontend/src/pages/auth/Register.jsx",
+    "frontend/src/routes/RequireAuth.jsx",
+    "frontend/src/routes/RequireRole.jsx",
+    "frontend/src/routes/index.jsx",
+    "frontend/src/services/authSession.js",
+    "frontend/src/services/catalogResource.js",
+    "frontend/src/utils/adminForms.js",
+    "frontend/src/utils/authorization.js",
+    "frontend/src/utils/bookingLimits.js",
+    "frontend/src/utils/cinemaGallery.js",
+    "frontend/src/utils/dateTime.js",
+    "frontend/src/utils/managerForms.js",
+    "shared/dateTimeContract.mjs",
+    "shared/resourceContract.mjs"
+  ],
+  "routes": [
+    {
+      "line": 32,
+      "source": "<Routes>"
+    },
+    {
+      "line": 33,
+      "source": "<Route path=\"/\" element={<AreaLayout links={PUBLIC_LINKS} />}>"
+    },
+    {
+      "line": 34,
+      "source": "<Route index element={<><Home /><DatabaseHealth /></>} />"
+    },
+    {
+      "line": 35,
+      "source": "<Route path=\"movies\" element={<Movies />} />"
+    },
+    {
+      "line": 36,
+      "source": "<Route path=\"movies/:movieId\" element={<MovieDetail />} />"
+    },
+    {
+      "line": 37,
+      "source": "<Route path=\"cinemas\" element={<Cinemas />} />"
+    },
+    {
+      "line": 38,
+      "source": "<Route path=\"cinemas/:cinemaId\" element={<CinemaDetail />} />"
+    },
+    {
+      "line": 39,
+      "source": "<Route path=\"booking/:showtimeId\" element={<BookingPreparation />} />"
+    },
+    {
+      "line": 40,
+      "source": "<Route path=\"login\" element={<Login />} />"
+    },
+    {
+      "line": 41,
+      "source": "<Route path=\"register\" element={<Register />} />"
+    },
+    {
+      "line": 42,
+      "source": "<Route path=\"forbidden\" element={<Forbidden />} />"
+    },
+    {
+      "line": 43,
+      "source": "<Route path=\"*\" element={<NotFound />} />"
+    },
+    {
+      "line": 46,
+      "source": "<Route element={<RequireAuth />}>"
+    },
+    {
+      "line": 47,
+      "source": "<Route path=\"/profile\" element={<AreaLayout title=\"Hồ sơ cá nhân\" />}>"
+    },
+    {
+      "line": 48,
+      "source": "<Route index element={<Profile />} />"
+    },
+    {
+      "line": 52,
+      "source": "<Route element={<RequireRole role={ROLES.CUSTOMER} />}>"
+    },
+    {
+      "line": 53,
+      "source": "<Route path=\"/orders\" element={<AreaLayout title=\"Đơn đặt vé\" links={[{ to: '/', label: 'Trang chủ' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }]} />}>"
+    },
+    {
+      "line": 54,
+      "source": "<Route index element={<Orders />} />"
+    },
+    {
+      "line": 55,
+      "source": "<Route path=\":orderId\" element={<OrderDetail />} />"
+    },
+    {
+      "line": 56,
+      "source": "<Route path=\":orderId/payment\" element={<PaymentPage />} />"
+    },
+    {
+      "line": 58,
+      "source": "<Route path=\"/complaints\" element={<AreaLayout title=\"Khiếu nại\" links={[{ to: '/', label: 'Trang chủ' }, { to: '/complaints', label: 'Khiếu nại' }]} />}>"
+    },
+    {
+      "line": 59,
+      "source": "<Route index element={<Complaints />} />"
+    },
+    {
+      "line": 60,
+      "source": "<Route path=\":complaintId\" element={<ComplaintDetail />} />"
+    },
+    {
+      "line": 64,
+      "source": "<Route element={<RequireRole role={ROLES.MANAGER} />}>"
+    },
+    {
+      "line": 65,
+      "source": "<Route path=\"/manager\" element={<AreaLayout title=\"Quản lý rạp\" links={[{ to: '/', label: 'Trang chủ' }, { to: '/manager', label: 'Dashboard' }]} />}>"
+    },
+    {
+      "line": 66,
+      "source": "<Route index element={<ManagerPortal />} />"
+    },
+    {
+      "line": 70,
+      "source": "<Route element={<RequireRole role={ROLES.SUPPORT} permission={ROLE_AREAS[ROLES.SUPPORT].permission} />}>"
+    },
+    {
+      "line": 71,
+      "source": "<Route path=\"/support\" element={<AreaLayout title=\"Chăm sóc khách hàng\" links={[{ to: '/', label: 'Trang chủ' }, { to: '/support', label: 'CSKH' }]} />}>"
+    },
+    {
+      "line": 72,
+      "source": "<Route index element={<SupportPortal />} />"
+    },
+    {
+      "line": 76,
+      "source": "<Route element={<RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />}>"
+    },
+    {
+      "line": 77,
+      "source": "<Route path={ROLE_AREAS[ROLES.CUSTOMER].path} element={<AreaLayout title={ROLE_AREAS[ROLES.CUSTOMER].label} />}>"
+    },
+    {
+      "line": 78,
+      "source": "<Route index element={<CustomerArea />} />"
+    },
+    {
+      "line": 81,
+      "source": "<Route element={<RequireRole role={ROLES.ADMIN} />}>"
+    },
+    {
+      "line": 82,
+      "source": "<Route path=\"/admin\" element={<AreaLayout title=\"Quản trị hệ thống\" links={[{ to: '/', label: 'Trang chủ' }, { to: '/admin', label: 'Admin' }]} />}>"
+    },
+    {
+      "line": 83,
+      "source": "<Route index element={<AdminPortal />} />"
+    }
+  ],
+  "browserEvidenceSelectorsValidated": 52,
+  "browserRegistry": {
+    "E380": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/4",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E381": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/5",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E382": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/6",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E383": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/7",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E384": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/0",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E385": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/1",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E386": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/2",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E387": {
+      "artifact": "docs/evidence/r45/browser.json",
+      "selector": "/result/checks/3",
+      "scope": "Actual Login/Register/AuthProvider, real SQL; MemoryRouter destination stub. Registration retry409 is not UI201 registration.",
+      "artifactSHA256": "096d97a0c1041ddff26af312d677740328ef7f17b7175d9ab98cd85b0bc89e19",
+      "selectorValidated": true
+    },
+    "E388": {
+      "artifact": "docs/evidence/r46/browser.json",
+      "selector": "/results/0",
+      "scope": "Customer only; actual Profile/AuthProvider, real GETme/PUTme/read after write + post-UI SQL row check. Staff profile cases do not prove staff login areas.",
+      "artifactSHA256": "9fdc09dd9bb66b4d0a7f5554a9372deee060491200f48a865e42090bca483211",
+      "selectorValidated": true
+    },
+    "E389": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/4",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E390": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/5",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E391": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/1",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E392": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/3",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E393": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/0",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E394": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/2",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E395": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/6",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E396": {
+      "artifact": "docs/evidence/r44/browser.json",
+      "selector": "/result/checks/7",
+      "scope": "Actual BookingPreparation/PaymentPage, real BE/SQL; chosen free seat +1food +promo; final payment success; suite scopes limited.",
+      "artifactSHA256": "27d0882dd5eb0b1394881ab3fc0200661859f8c0f4bcb4e0ea170b9d6eb1b7e6",
+      "selectorValidated": true
+    },
+    "E397": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/0",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E398": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/1",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E399": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/2",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E400": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/3",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E401": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/4",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E402": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/5",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E403": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/6",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E404": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/7",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E405": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/8",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E406": {
+      "artifact": "docs/evidence/r43/browser.json",
+      "selector": "/result/checks/9",
+      "scope": "Actual Admin pricing UPDATE form realSQL: full7fields/NULL end/overlap/retry; no UI create.",
+      "artifactSHA256": "a9e2884e02ac84ad245efd5a3dbdb505cef88a14e2e2d6d776d4bc36ba53054b",
+      "selectorValidated": true
+    },
+    "E407": {
+      "artifact": "docs/evidence/r31/browser.json",
+      "selector": "/result/checks/0",
+      "scope": "Actual React cast editor with controlled HTTP responses; no live SQL/browser-integration claim.",
+      "artifactSHA256": "862fca165cc7b95a8a4bd97b02770b8691726a8c932ab9ad7b1a56e611c0f68c",
+      "selectorValidated": true
+    },
+    "E408": {
+      "artifact": "docs/evidence/r31/browser.json",
+      "selector": "/result/checks/1",
+      "scope": "Actual React cast editor with controlled HTTP responses; no live SQL/browser-integration claim.",
+      "artifactSHA256": "862fca165cc7b95a8a4bd97b02770b8691726a8c932ab9ad7b1a56e611c0f68c",
+      "selectorValidated": true
+    },
+    "E409": {
+      "artifact": "docs/evidence/r31/browser.json",
+      "selector": "/result/checks/4",
+      "scope": "Actual React cast editor with controlled HTTP responses; no live SQL/browser-integration claim.",
+      "artifactSHA256": "862fca165cc7b95a8a4bd97b02770b8691726a8c932ab9ad7b1a56e611c0f68c",
+      "selectorValidated": true
+    },
+    "E410": {
+      "artifact": "docs/evidence/r31/browser.json",
+      "selector": "/result/checks/5",
+      "scope": "Actual React cast editor with controlled HTTP responses; no live SQL/browser-integration claim.",
+      "artifactSHA256": "862fca165cc7b95a8a4bd97b02770b8691726a8c932ab9ad7b1a56e611c0f68c",
+      "selectorValidated": true
+    },
+    "E411": {
+      "artifact": "docs/evidence/r31/browser.json",
+      "selector": "/result/checks/6",
+      "scope": "Actual React cast editor with controlled HTTP responses; no live SQL/browser-integration claim.",
+      "artifactSHA256": "862fca165cc7b95a8a4bd97b02770b8691726a8c932ab9ad7b1a56e611c0f68c",
+      "selectorValidated": true
+    },
+    "E412": {
+      "artifact": "docs/evidence/r31/browser.json",
+      "selector": "/result/checks/7",
+      "scope": "Actual React cast editor with controlled HTTP responses; no live SQL/browser-integration claim.",
+      "artifactSHA256": "862fca165cc7b95a8a4bd97b02770b8691726a8c932ab9ad7b1a56e611c0f68c",
+      "selectorValidated": true
+    },
+    "E413": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/0",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E414": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/1",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E415": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/4",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E416": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/5",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E417": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/12",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E418": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/13",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E419": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/16",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E420": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/17",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E421": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/6",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E422": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/7",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E423": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/10",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E424": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/11",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E425": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/18",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E426": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/19",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E427": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/22",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E428": {
+      "artifact": "docs/evidence/r32/browser.json",
+      "selector": "/result/checks/23",
+      "scope": "Persisted show/seat edit and failure/retry using controlledHTTP; realSQL only separate R6 suites.",
+      "artifactSHA256": "0031779e99016772d2556a23d4466755cc9371505141f44edb69abf060c699d9",
+      "selectorValidated": true
+    },
+    "E429": {
+      "artifact": "docs/evidence/r22/browser.json",
+      "selector": "/result/checks/0",
+      "scope": "Controlled HTTP timing stale-preview/explicitretry supplement; never HTTP_SQL.",
+      "artifactSHA256": "119284d4f465ac146162bc840dd3453aec9431d095d63fbd27601674f5d4b348",
+      "selectorValidated": true
+    },
+    "E430": {
+      "artifact": "docs/evidence/r22/browser.json",
+      "selector": "/result/checks/3",
+      "scope": "Controlled HTTP timing stale-preview/explicitretry supplement; never HTTP_SQL.",
+      "artifactSHA256": "119284d4f465ac146162bc840dd3453aec9431d095d63fbd27601674f5d4b348",
+      "selectorValidated": true
+    },
+    "E431": {
+      "artifact": "docs/evidence/r22/browser.json",
+      "selector": "/result/checks/7",
+      "scope": "Controlled HTTP timing stale-preview/explicitretry supplement; never HTTP_SQL.",
+      "artifactSHA256": "119284d4f465ac146162bc840dd3453aec9431d095d63fbd27601674f5d4b348",
+      "selectorValidated": true
+    }
+  },
+  "sourceMappedIsNotRuntimePASS": true
+}

@@ -1,0 +1,1346 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-10-10T04:05:21.493Z",
+  "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+  "targetIdentity": {
+    "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+    "database_id": 48,
+    "create_date": "2026-10-10T08:59:01.693",
+    "state_desc": "ONLINE",
+    "is_read_only": false,
+    "database_guid": "33876608-D109-43B5-ACEC-0B84C2639A73",
+    "files": [
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+        "type_desc": "ROWS",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44.mdf"
+      },
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44_log",
+        "type_desc": "LOG",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44_log.ldf"
+      }
+    ]
+  },
+  "server": "DESKTOP-E67DPCV",
+  "phases": [],
+  "smoke": [
+    {
+      "id": "P3-KH01-REGISTER",
+      "UCs": [
+        "KH-01"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:24.173Z",
+      "networkRange": [
+        0,
+        2
+      ],
+      "sqlRange": [
+        0,
+        2
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:31.091Z"
+    },
+    {
+      "id": "P3-KH02-LOGIN",
+      "UCs": [
+        "KH-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:31.091Z",
+      "networkRange": [
+        2,
+        14
+      ],
+      "sqlRange": [
+        2,
+        2
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:32.121Z"
+    },
+    {
+      "id": "P3-KH03-PROFILE",
+      "UCs": [
+        "KH-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:32.122Z",
+      "networkRange": [
+        14,
+        17
+      ],
+      "sqlRange": [
+        2,
+        3
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:32.523Z"
+    },
+    {
+      "id": "P3-KH04-CATALOG",
+      "UCs": [
+        "KH-04"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:32.523Z",
+      "networkRange": [
+        17,
+        28
+      ],
+      "sqlRange": [
+        3,
+        4
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:33.538Z"
+    },
+    {
+      "id": "P3-KH05-SCHEDULE",
+      "UCs": [
+        "KH-05"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:33.538Z",
+      "networkRange": [
+        28,
+        35
+      ],
+      "sqlRange": [
+        4,
+        5
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:33.830Z"
+    },
+    {
+      "id": "P3-KH06-SEATS",
+      "UCs": [
+        "KH-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:33.831Z",
+      "networkRange": [
+        35,
+        35
+      ],
+      "sqlRange": [
+        5,
+        6
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:34.090Z"
+    },
+    {
+      "id": "P3-KH08-FOOD",
+      "UCs": [
+        "KH-08"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:34.090Z",
+      "networkRange": [
+        35,
+        35
+      ],
+      "sqlRange": [
+        6,
+        7
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:34.155Z"
+    },
+    {
+      "id": "P3-KH09-PROMOTION",
+      "UCs": [
+        "KH-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:34.155Z",
+      "networkRange": [
+        35,
+        37
+      ],
+      "sqlRange": [
+        7,
+        8
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:34.438Z"
+    },
+    {
+      "id": "P3-KH07-BOOKING",
+      "UCs": [
+        "KH-07",
+        "KH-08",
+        "KH-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:34.438Z",
+      "networkRange": [
+        37,
+        39
+      ],
+      "sqlRange": [
+        8,
+        9
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:34.607Z"
+    },
+    {
+      "id": "P3-KH10-PAYMENT",
+      "UCs": [
+        "KH-10"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:34.607Z",
+      "networkRange": [
+        39,
+        46
+      ],
+      "sqlRange": [
+        9,
+        10
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:35.021Z"
+    },
+    {
+      "id": "P3-KH11-ORDERS",
+      "UCs": [
+        "KH-11"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:35.022Z",
+      "networkRange": [
+        46,
+        58
+      ],
+      "sqlRange": [
+        10,
+        12
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:35.671Z"
+    },
+    {
+      "id": "P3-KH12-ORDER-DETAIL",
+      "UCs": [
+        "KH-12"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:35.671Z",
+      "networkRange": [
+        58,
+        67
+      ],
+      "sqlRange": [
+        12,
+        12
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:36.099Z"
+    },
+    {
+      "id": "P3-KH13-ELIGIBILITY",
+      "UCs": [
+        "KH-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:36.099Z",
+      "networkRange": [
+        67,
+        78
+      ],
+      "sqlRange": [
+        12,
+        14
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:36.805Z"
+    },
+    {
+      "id": "P3-KH14-COMPLAINT",
+      "UCs": [
+        "KH-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:36.805Z",
+      "networkRange": [
+        78,
+        87
+      ],
+      "sqlRange": [
+        14,
+        15
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:37.221Z"
+    },
+    {
+      "id": "P3-CUSTOMER-FOREIGN-OWNERSHIP",
+      "UCs": [
+        "KH-11",
+        "KH-12",
+        "KH-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:37.222Z",
+      "networkRange": [
+        87,
+        105
+      ],
+      "sqlRange": [
+        15,
+        16
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T04:05:37.956Z"
+    },
+    {
+      "id": "FINAL-REVIEW-IMMEDIATE-DOUBLE",
+      "UCs": [
+        "KH-13"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:38.478Z",
+      "networkRange": [
+        112,
+        120
+      ],
+      "sqlRange": [
+        16,
+        17
+      ],
+      "controlRange": [
+        0,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:39.843Z"
+    },
+    {
+      "id": "P3-CSKH01-LOGIN",
+      "UCs": [
+        "CSKH-01"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:39.843Z",
+      "networkRange": [
+        120,
+        129
+      ],
+      "sqlRange": [
+        17,
+        17
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:40.222Z"
+    },
+    {
+      "id": "P3-CSKH02-QUEUE",
+      "UCs": [
+        "CSKH-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:40.223Z",
+      "networkRange": [
+        129,
+        137
+      ],
+      "sqlRange": [
+        17,
+        18
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:40.664Z"
+    },
+    {
+      "id": "P3-CSKH03-DETAIL",
+      "UCs": [
+        "CSKH-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:40.664Z",
+      "networkRange": [
+        137,
+        140
+      ],
+      "sqlRange": [
+        18,
+        19
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:40.798Z"
+    },
+    {
+      "id": "P3-CSKH04-REFERENCE",
+      "UCs": [
+        "CSKH-04"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:40.798Z",
+      "networkRange": [
+        140,
+        140
+      ],
+      "sqlRange": [
+        19,
+        20
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:40.853Z"
+    },
+    {
+      "id": "P3-CSKH05-PROCESS",
+      "UCs": [
+        "CSKH-05"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:40.854Z",
+      "networkRange": [
+        140,
+        145
+      ],
+      "sqlRange": [
+        20,
+        21
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:41.057Z"
+    },
+    {
+      "id": "P3-CSKH06-STATUS",
+      "UCs": [
+        "CSKH-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:41.057Z",
+      "networkRange": [
+        145,
+        151
+      ],
+      "sqlRange": [
+        21,
+        23
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:41.277Z"
+    },
+    {
+      "id": "P3-SUPPORT-GRANT-DENIAL",
+      "UCs": [
+        "CSKH-02",
+        "CSKH-03",
+        "CSKH-04",
+        "CSKH-05",
+        "CSKH-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:41.277Z",
+      "networkRange": [
+        151,
+        159
+      ],
+      "sqlRange": [
+        23,
+        24
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:41.600Z"
+    },
+    {
+      "id": "P3-ADM01-LOGIN",
+      "UCs": [
+        "ADM-01"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:42.018Z",
+      "networkRange": [
+        166,
+        174
+      ],
+      "sqlRange": [
+        24,
+        24
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:42.382Z"
+    },
+    {
+      "id": "P3-ADM02-USERS",
+      "UCs": [
+        "ADM-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:42.382Z",
+      "networkRange": [
+        174,
+        185
+      ],
+      "sqlRange": [
+        24,
+        27
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:43.100Z"
+    },
+    {
+      "id": "P3-ADM03-ROLES",
+      "UCs": [
+        "ADM-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:43.101Z",
+      "networkRange": [
+        185,
+        190
+      ],
+      "sqlRange": [
+        27,
+        29
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:43.628Z"
+    },
+    {
+      "id": "P3-ADM04-PERMISSIONS",
+      "UCs": [
+        "ADM-04"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:43.628Z",
+      "networkRange": [
+        190,
+        195
+      ],
+      "sqlRange": [
+        29,
+        31
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:44.170Z"
+    },
+    {
+      "id": "P3-ADM05-GRANTS",
+      "UCs": [
+        "ADM-05"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:44.171Z",
+      "networkRange": [
+        195,
+        203
+      ],
+      "sqlRange": [
+        31,
+        33
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:45.182Z"
+    },
+    {
+      "id": "P3-ADM06-ASSIGNMENTS",
+      "UCs": [
+        "ADM-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:45.182Z",
+      "networkRange": [
+        203,
+        206
+      ],
+      "sqlRange": [
+        33,
+        34
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:45.587Z"
+    },
+    {
+      "id": "P3-ADM07-CINEMAS",
+      "UCs": [
+        "ADM-07"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:45.588Z",
+      "networkRange": [
+        206,
+        224
+      ],
+      "sqlRange": [
+        34,
+        37
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:46.981Z"
+    },
+    {
+      "id": "P3-ADM08-ROOM-SEAT",
+      "UCs": [
+        "ADM-08"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:46.982Z",
+      "networkRange": [
+        224,
+        234
+      ],
+      "sqlRange": [
+        37,
+        40
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:48.255Z"
+    },
+    {
+      "id": "P3-ADM10-GENRES",
+      "UCs": [
+        "ADM-10"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:48.255Z",
+      "networkRange": [
+        234,
+        239
+      ],
+      "sqlRange": [
+        40,
+        41
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:48.671Z"
+    },
+    {
+      "id": "P3-ADM09-MOVIES-CAST",
+      "UCs": [
+        "ADM-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:48.671Z",
+      "networkRange": [
+        239,
+        247
+      ],
+      "sqlRange": [
+        41,
+        44
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:49.538Z"
+    },
+    {
+      "id": "P3-ADM11-PRODUCT-DECIMAL",
+      "UCs": [
+        "ADM-11"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:49.538Z",
+      "networkRange": [
+        247,
+        254
+      ],
+      "sqlRange": [
+        44,
+        45
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:50.100Z"
+    },
+    {
+      "id": "P3-ADM12-PROMOTION-DECIMAL",
+      "UCs": [
+        "ADM-12"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:50.100Z",
+      "networkRange": [
+        254,
+        261
+      ],
+      "sqlRange": [
+        45,
+        46
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:50.880Z"
+    },
+    {
+      "id": "P3-ADM13-PRICING-DECIMAL",
+      "UCs": [
+        "ADM-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:50.881Z",
+      "networkRange": [
+        261,
+        264
+      ],
+      "sqlRange": [
+        46,
+        47
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:51.344Z"
+    },
+    {
+      "id": "P3-ADM14-SHOW-DECIMAL",
+      "UCs": [
+        "ADM-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:51.345Z",
+      "networkRange": [
+        264,
+        271
+      ],
+      "sqlRange": [
+        47,
+        49
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:52.318Z"
+    },
+    {
+      "id": "P3-ADM15-COMPLAINT",
+      "UCs": [
+        "ADM-15"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:52.319Z",
+      "networkRange": [
+        271,
+        278
+      ],
+      "sqlRange": [
+        49,
+        50
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:52.750Z"
+    },
+    {
+      "id": "P3-ADM16-REVENUE",
+      "UCs": [
+        "ADM-16"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:52.751Z",
+      "assertions": [
+        {
+          "receipts": 1175.5,
+          "payments": 1,
+          "orders": 1
+        },
+        "Four canonical dimensions, inclusive business date, future range excludes receipt"
+      ],
+      "networkRange": [
+        278,
+        281
+      ],
+      "sqlRange": [
+        50,
+        51
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:53.175Z"
+    },
+    {
+      "id": "P3-ADMIN-GRANT-DENIAL",
+      "UCs": [
+        "ADM-02",
+        "ADM-03",
+        "ADM-04",
+        "ADM-05",
+        "ADM-06",
+        "ADM-07",
+        "ADM-08",
+        "ADM-09",
+        "ADM-10",
+        "ADM-11",
+        "ADM-12",
+        "ADM-13",
+        "ADM-14",
+        "ADM-15",
+        "ADM-16"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:53.176Z",
+      "networkRange": [
+        281,
+        297
+      ],
+      "sqlRange": [
+        51,
+        52
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:53.328Z"
+    },
+    {
+      "id": "P3-QLR01-LOGIN-SCOPE",
+      "UCs": [
+        "QLR-01"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:53.418Z",
+      "networkRange": [
+        297,
+        326
+      ],
+      "sqlRange": [
+        52,
+        53
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:54.075Z"
+    },
+    {
+      "id": "P3-QLR02-ROOM",
+      "UCs": [
+        "QLR-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:54.075Z",
+      "networkRange": [
+        326,
+        338
+      ],
+      "sqlRange": [
+        53,
+        55
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:54.424Z"
+    },
+    {
+      "id": "P3-QLR03-SEAT",
+      "UCs": [
+        "QLR-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:54.425Z",
+      "networkRange": [
+        338,
+        353
+      ],
+      "sqlRange": [
+        55,
+        57
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:54.963Z"
+    },
+    {
+      "id": "P3-QLR04-CREATE-SHOW",
+      "UCs": [
+        "QLR-04"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:54.964Z",
+      "networkRange": [
+        353,
+        359
+      ],
+      "sqlRange": [
+        57,
+        58
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:55.275Z"
+    },
+    {
+      "id": "P3-QLR05-UPDATE-SHOW",
+      "UCs": [
+        "QLR-05"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:55.275Z",
+      "networkRange": [
+        359,
+        366
+      ],
+      "sqlRange": [
+        58,
+        59
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:55.483Z"
+    },
+    {
+      "id": "P3-QLR06-CANCEL-SHOW",
+      "UCs": [
+        "QLR-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:55.484Z",
+      "networkRange": [
+        366,
+        372
+      ],
+      "sqlRange": [
+        59,
+        60
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:55.623Z"
+    },
+    {
+      "id": "P3-QLR07-PRICING",
+      "UCs": [
+        "QLR-07"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:55.624Z",
+      "networkRange": [
+        372,
+        384
+      ],
+      "sqlRange": [
+        60,
+        62
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:56.120Z"
+    },
+    {
+      "id": "P3-QLR08-DASHBOARD",
+      "UCs": [
+        "QLR-08"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:56.121Z",
+      "networkRange": [
+        384,
+        384
+      ],
+      "sqlRange": [
+        62,
+        63
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:56.183Z"
+    },
+    {
+      "id": "P3-QLR09-REVENUE",
+      "UCs": [
+        "QLR-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:56.183Z",
+      "networkRange": [
+        384,
+        386
+      ],
+      "sqlRange": [
+        63,
+        64
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:56.688Z"
+    },
+    {
+      "id": "P3-MANAGER-SCOPE-GRANTS",
+      "UCs": [
+        "QLR-02",
+        "QLR-03",
+        "QLR-04",
+        "QLR-05",
+        "QLR-06",
+        "QLR-07",
+        "QLR-08",
+        "QLR-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:56.689Z",
+      "networkRange": [
+        386,
+        395
+      ],
+      "sqlRange": [
+        64,
+        65
+      ],
+      "controlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T04:05:56.828Z"
+    },
+    {
+      "id": "FINAL-ADMIN-LATE-DELETE-MODULE",
+      "UCs": [
+        "ADM-03",
+        "ADM-09"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:57.264Z",
+      "networkRange": [
+        399,
+        406
+      ],
+      "sqlRange": [
+        65,
+        66
+      ],
+      "controlRange": [
+        1,
+        2
+      ],
+      "finishedAt": "2026-10-10T04:05:58.739Z"
+    },
+    {
+      "id": "FINAL-ADMIN-STATUS-PENDING",
+      "UCs": [
+        "ADM-02"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:58.739Z",
+      "networkRange": [
+        406,
+        411
+      ],
+      "sqlRange": [
+        66,
+        67
+      ],
+      "controlRange": [
+        2,
+        3
+      ],
+      "finishedAt": "2026-10-10T04:05:59.921Z"
+    },
+    {
+      "id": "FINAL-CATALOG-FILTER-RACES-404",
+      "UCs": [
+        "KH-04",
+        "KH-05"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:05:59.921Z",
+      "networkRange": [
+        411,
+        431
+      ],
+      "sqlRange": [
+        67,
+        67
+      ],
+      "controlRange": [
+        3,
+        5
+      ],
+      "finishedAt": "2026-10-10T04:06:03.122Z"
+    },
+    {
+      "id": "FINAL-ADMIN-OPTIONAL-MOVIE-ACTOR-GENRE-CRUD",
+      "UCs": [
+        "ADM-09",
+        "ADM-10"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:06:03.417Z",
+      "networkRange": [
+        437,
+        467
+      ],
+      "sqlRange": [
+        67,
+        69
+      ],
+      "controlRange": [
+        5,
+        5
+      ],
+      "finishedAt": "2026-10-10T04:06:06.395Z"
+    },
+    {
+      "id": "FINAL-ADMIN-PRICING-ASSIGNMENT-EDIT",
+      "UCs": [
+        "ADM-06",
+        "ADM-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:06:06.395Z",
+      "networkRange": [
+        467,
+        473
+      ],
+      "sqlRange": [
+        69,
+        71
+      ],
+      "controlRange": [
+        5,
+        5
+      ],
+      "finishedAt": "2026-10-10T04:06:07.232Z"
+    },
+    {
+      "id": "FINAL-MANAGER-EMPTY-SEAT-ROOM-DELETE",
+      "UCs": [
+        "QLR-02",
+        "QLR-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:06:07.232Z",
+      "networkRange": [
+        473,
+        533
+      ],
+      "sqlRange": [
+        71,
+        72
+      ],
+      "controlRange": [
+        5,
+        5
+      ],
+      "finishedAt": "2026-10-10T04:06:08.524Z"
+    },
+    {
+      "id": "FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER",
+      "UCs": [
+        "KH-05",
+        "KH-06",
+        "KH-07",
+        "KH-08",
+        "KH-09",
+        "KH-10",
+        "QLR-02",
+        "QLR-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T04:06:08.525Z",
+      "networkRange": [
+        533,
+        627
+      ],
+      "sqlRange": [
+        72,
+        72
+      ],
+      "controlRange": [
+        5,
+        5
+      ],
+      "finishedAt": "2026-10-10T04:06:12.972Z"
+    },
+    {
+      "id": "ISOLATION-CLEANUP",
+      "result": "PASS",
+      "assertions": [
+        "Test backend exact identity + login denied main",
+        "Owned fixture cleanup restores all27 data/metadata fingerprints; main unchanged"
+      ]
+    }
+  ],
+  "scope": "R8.2 verification; no UC acceptance upgrade",
+  "browserStatus": "PASS",
+  "cleanup": "PASS",
+  "mainPreservation": "PASS",
+  "readiness": "READY",
+  "finishedAt": "2026-10-10T04:06:14.639Z"
+}

@@ -21,6 +21,12 @@ function toProducts(quantities) {
 export default function BookingPreparation() {
   const { showtimeId } = useParams();
   const { user } = useAuth();
+  const scope = `${user?.userId ?? 'guest'}:${user?.permissions?.map(item => item.code).sort().join(',') ?? ''}`;
+  return <BookingContext key={`${showtimeId}:${scope}`} showtimeId={showtimeId} />;
+}
+
+function BookingContext({ showtimeId }) {
+  const { user } = useAuth();
   const canBook = userCanAct(user, 'KHACH_HANG', 'DAT_VE');
   const [state, setState] = useState({ status: 'loading' });
   const [seats, setSeats] = useState([]);
@@ -35,17 +41,30 @@ export default function BookingPreparation() {
   const previewVersion = useRef(0);
   const [bookingState, setBookingState] = useState({ status: 'idle' });
   const [seatLimitNotice, setSeatLimitNotice] = useState(null);
+  const mounted = useRef(true);
+  const seatRequest = useRef(0);
+  const bookingPending = useRef(false);
+  const promotionRequest = useRef(0);
+  useEffect(() => {
+    mounted.current = true;
+    const requests = [seatRequest, previewVersion, promotionRequest];
+    return () => { mounted.current = false; requests.forEach(request => { request.current++; }); };
+  }, []);
 
   const loadSeats = useCallback(async (signal) => {
+    if (signal?.aborted || !mounted.current) return;
+    const request = ++seatRequest.current;
     previewVersion.current += 1;
     setPromotion(null);
+    setSeatsState({ status: 'loading' });
     try {
       const rows = await getSeats(showtimeId, { signal });
+      if (!mounted.current || signal?.aborted || request !== seatRequest.current) return;
       setSeats(rows);
       setSelectedSeatIds((previous) => previous.filter((id) => rows.some((seat) => seat.id === id && seat.status === 'Trống')));
       setSeatsState({ status: 'success' });
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (mounted.current && request === seatRequest.current && error.name !== 'AbortError') {
         setSeats([]);
         setSelectedSeatIds([]);
         setSeatsState({ status: 'error', error });
@@ -89,35 +108,39 @@ export default function BookingPreparation() {
   }
 
   async function applyPromotion() {
-    if (!canBook) return;
+    if (!canBook || promotionBusy || bookingPending.current) return;
     if (selectedSeatIds.length === 0) {
       setPromotion({ isValid: false, message: 'Hãy chọn ít nhất một ghế trước khi áp dụng khuyến mãi.' });
       return;
     }
     setPromotionBusy(true);
+    const request = ++promotionRequest.current;
     const version = ++previewVersion.current;
     try {
       const result = await validatePromotion({ showtimeId: Number(showtimeId), seatIds: selectedSeatIds, products: selectedProducts, promotionCode });
-      if (version === previewVersion.current) setPromotion(result.promotion);
+      if (mounted.current && version === previewVersion.current) setPromotion(result.promotion);
     } catch (error) {
-      if (version === previewVersion.current) setPromotion({ isValid: false, message: error.message });
-    } finally { setPromotionBusy(false); }
+      if (mounted.current && version === previewVersion.current) setPromotion({ isValid: false, message: error.message });
+    } finally { if (mounted.current && request === promotionRequest.current) setPromotionBusy(false); }
   }
 
   async function submitBooking() {
-    if (!canBook) return;
+    if (!canBook || bookingPending.current) return;
     if (selectedSeatIds.length === 0) {
       setBookingState({ status: 'error', message: 'Hãy chọn ít nhất một ghế.' });
       return;
     }
+    bookingPending.current = true;
     setBookingState({ status: 'loading' });
     previewVersion.current += 1;
     try {
       const result = await createBooking({ showtimeId: Number(showtimeId), seatIds: selectedSeatIds, products: selectedProducts, promotionCode: promotionCode.trim() || undefined });
+      if (!mounted.current) return;
       setBookingState({ status: 'success', booking: result.booking });
       setSelectedSeatIds([]);
       await loadSeats();
     } catch (error) {
+      if (!mounted.current) return;
       const friendly = bookingErrorMessage(error);
       if (error.code === 'PROMOTION_NOT_AVAILABLE') {
         setPromotion({ isValid: false, message: friendly });
@@ -132,7 +155,7 @@ export default function BookingPreparation() {
         setBookingState({ status: 'conflict', message: error.message });
         await loadSeats();
       } else setBookingState({ status: 'error', message: friendly ?? error.message });
-    }
+    } finally { bookingPending.current = false; }
   }
 
   if (state.status === 'loading') return <LoadingState>Đang xác nhận suất chiếu…</LoadingState>;

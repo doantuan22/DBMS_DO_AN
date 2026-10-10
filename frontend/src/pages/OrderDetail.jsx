@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { userCanAct } from '../utils/authorization';
 import HoldDeadline from '../components/HoldDeadline';
 import { formatDateTime } from '../utils/dateTime';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getOrder } from '../api/ordersApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
@@ -13,7 +13,15 @@ const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', cur
 export default function OrderDetail() {
   const { user } = useAuth();
   const { orderId } = useParams();
+  const scope = `${orderId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
+  return <OrderContext key={scope} orderId={orderId} user={user} />;
+}
+
+function OrderContext({ orderId, user }) {
   const [resource, setResource] = useState({ status: 'loading' });
+  const request = useRef(0);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; const generation = request; return () => { mounted.current = false; generation.current++; }; }, []);
   const [elapsedDeadline, setElapsedDeadline] = useState(null);
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -21,8 +29,9 @@ export default function OrderDetail() {
     return () => clearInterval(timer);
   }, []);
   const load = useCallback(async () => {
+    const generation = ++request.current;
     setResource({ status: 'loading' });
-    try { setResource({ status: 'success', data: (await getOrder(orderId)).order }); } catch (error) { setResource({ status: 'error', error }); }
+    try { const result = await getOrder(orderId); if (mounted.current && generation === request.current) setResource({ status: 'success', data: result.order }); } catch (error) { if (mounted.current && generation === request.current) setResource({ status: 'error', error }); }
   }, [orderId]);
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
   const onElapsed = useCallback(() => {

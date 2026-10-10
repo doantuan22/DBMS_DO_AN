@@ -1,0 +1,4586 @@
+{
+  "status": "CAPTURED",
+  "mode": "Observed real typed Request.execute; no fake results",
+  "calls": [
+    {
+      "sequence": 0,
+      "name": "dbo.sp_Auth_RegisterCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "HoTen",
+        "Email",
+        "MatKhauHash",
+        "SoDienThoai",
+        "NgaySinh",
+        "GioiTinh",
+        "NewUserId"
+      ],
+      "startedAt": "2026-10-10T03:18:59.280Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:18:59.301Z"
+    },
+    {
+      "sequence": 1,
+      "name": "dbo.sp_Auth_RegisterCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "HoTen",
+        "Email",
+        "MatKhauHash",
+        "SoDienThoai",
+        "NgaySinh",
+        "GioiTinh",
+        "NewUserId"
+      ],
+      "startedAt": "2026-10-10T03:18:59.795Z",
+      "status": "FAIL",
+      "sqlError": 50010,
+      "finishedAt": "2026-10-10T03:18:59.799Z"
+    },
+    {
+      "sequence": 2,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:00.117Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.137Z"
+    },
+    {
+      "sequence": 3,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:00.340Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.381Z"
+    },
+    {
+      "sequence": 4,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:00.344Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.385Z"
+    },
+    {
+      "sequence": 5,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:00.344Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.388Z"
+    },
+    {
+      "sequence": 6,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:00.516Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.518Z"
+    },
+    {
+      "sequence": 7,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.590Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.599Z"
+    },
+    {
+      "sequence": 8,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.590Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.599Z"
+    },
+    {
+      "sequence": 9,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:00.619Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.622Z"
+    },
+    {
+      "sequence": 10,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:00.620Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.623Z"
+    },
+    {
+      "sequence": 11,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.670Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.672Z"
+    },
+    {
+      "sequence": 12,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.670Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.672Z"
+    },
+    {
+      "sequence": 13,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.678Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.680Z"
+    },
+    {
+      "sequence": 14,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.678Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.680Z"
+    },
+    {
+      "sequence": 15,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.686Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.688Z"
+    },
+    {
+      "sequence": 16,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.686Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.688Z"
+    },
+    {
+      "sequence": 17,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.797Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.799Z"
+    },
+    {
+      "sequence": 18,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.797Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.799Z"
+    },
+    {
+      "sequence": 19,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.979Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.981Z"
+    },
+    {
+      "sequence": 20,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:00.979Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:00.981Z"
+    },
+    {
+      "sequence": 21,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.157Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.160Z"
+    },
+    {
+      "sequence": 22,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.157Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.160Z"
+    },
+    {
+      "sequence": 23,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.333Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.335Z"
+    },
+    {
+      "sequence": 24,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.333Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.335Z"
+    },
+    {
+      "sequence": 25,
+      "name": "dbo.sp_User_UpdateProfile",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "HoTen",
+        "SoDienThoai",
+        "NgaySinh",
+        "GioiTinh"
+      ],
+      "startedAt": "2026-10-10T03:19:01.340Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.353Z"
+    },
+    {
+      "sequence": 26,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.353Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.354Z"
+    },
+    {
+      "sequence": 27,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.353Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.354Z"
+    },
+    {
+      "sequence": 28,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.604Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.606Z"
+    },
+    {
+      "sequence": 29,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.604Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.606Z"
+    },
+    {
+      "sequence": 30,
+      "name": "dbo.sp_Genre_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:01.804Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.808Z"
+    },
+    {
+      "sequence": 31,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.807Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.810Z"
+    },
+    {
+      "sequence": 32,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:01.807Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.810Z"
+    },
+    {
+      "sequence": 33,
+      "name": "dbo.sp_Genre_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:01.807Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:01.811Z"
+    },
+    {
+      "sequence": 34,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:02.010Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.012Z"
+    },
+    {
+      "sequence": 35,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:02.298Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.299Z"
+    },
+    {
+      "sequence": 36,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:02.572Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.573Z"
+    },
+    {
+      "sequence": 37,
+      "name": "dbo.sp_Movie_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:02.755Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.773Z"
+    },
+    {
+      "sequence": 38,
+      "name": "dbo.sp_Cinema_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ThanhPho"
+      ],
+      "startedAt": "2026-10-10T03:19:02.758Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.770Z"
+    },
+    {
+      "sequence": 39,
+      "name": "dbo.sp_Movie_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:02.760Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.772Z"
+    },
+    {
+      "sequence": 40,
+      "name": "dbo.sp_Cinema_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ThanhPho"
+      ],
+      "startedAt": "2026-10-10T03:19:02.761Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.768Z"
+    },
+    {
+      "sequence": 41,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:02.761Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.818Z"
+    },
+    {
+      "sequence": 42,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:02.762Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.774Z"
+    },
+    {
+      "sequence": 43,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:02.762Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.774Z"
+    },
+    {
+      "sequence": 44,
+      "name": "dbo.sp_Review_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:02.789Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.793Z"
+    },
+    {
+      "sequence": 45,
+      "name": "dbo.sp_Review_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:02.795Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.796Z"
+    },
+    {
+      "sequence": 46,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:02.921Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.923Z"
+    },
+    {
+      "sequence": 47,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:02.940Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.942Z"
+    },
+    {
+      "sequence": 48,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:02.969Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:02.971Z"
+    },
+    {
+      "sequence": 49,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:03.003Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.005Z"
+    },
+    {
+      "sequence": 50,
+      "name": "dbo.sp_Showtime_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.039Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.084Z"
+    },
+    {
+      "sequence": 51,
+      "name": "dbo.sp_Showtime_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.042Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.079Z"
+    },
+    {
+      "sequence": 52,
+      "name": "dbo.sp_Product_ListActive",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:03.043Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.046Z"
+    },
+    {
+      "sequence": 53,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.043Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.121Z"
+    },
+    {
+      "sequence": 54,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.583Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.584Z"
+    },
+    {
+      "sequence": 55,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.583Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.584Z"
+    },
+    {
+      "sequence": 56,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.585Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.589Z"
+    },
+    {
+      "sequence": 57,
+      "name": "dbo.sp_Product_ListActive",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:03.585Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.588Z"
+    },
+    {
+      "sequence": 58,
+      "name": "dbo.sp_Promotion_Validate",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "MaCode",
+        "TongTienDon",
+        "KhuyenMaiID",
+        "LoaiGiamGia",
+        "GiaTriGiam",
+        "TienGiam",
+        "IsValid",
+        "Message"
+      ],
+      "startedAt": "2026-10-10T03:19:03.590Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.605Z"
+    },
+    {
+      "sequence": 59,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.716Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.718Z"
+    },
+    {
+      "sequence": 60,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.716Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.718Z"
+    },
+    {
+      "sequence": 61,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.718Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.723Z"
+    },
+    {
+      "sequence": 62,
+      "name": "dbo.sp_Product_ListActive",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:03.718Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.723Z"
+    },
+    {
+      "sequence": 63,
+      "name": "dbo.sp_Promotion_Validate",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "MaCode",
+        "TongTienDon",
+        "KhuyenMaiID",
+        "LoaiGiamGia",
+        "GiaTriGiam",
+        "TienGiam",
+        "IsValid",
+        "Message"
+      ],
+      "startedAt": "2026-10-10T03:19:03.723Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.725Z"
+    },
+    {
+      "sequence": 64,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.871Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.873Z"
+    },
+    {
+      "sequence": 65,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.871Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:03.872Z"
+    },
+    {
+      "sequence": 66,
+      "name": "dbo.sp_Booking_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "SuatChieuID",
+        "MaKhuyenMai",
+        "DanhSachGheId",
+        "DanhSachDoAnJson",
+        "NewDonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:03.873Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.020Z"
+    },
+    {
+      "sequence": 67,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.026Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.065Z"
+    },
+    {
+      "sequence": 68,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.131Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.132Z"
+    },
+    {
+      "sequence": 69,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.131Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.132Z"
+    },
+    {
+      "sequence": 70,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.133Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.174Z"
+    },
+    {
+      "sequence": 71,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.177Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.179Z"
+    },
+    {
+      "sequence": 72,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.177Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.179Z"
+    },
+    {
+      "sequence": 73,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.179Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.181Z"
+    },
+    {
+      "sequence": 74,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.249Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.251Z"
+    },
+    {
+      "sequence": 75,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.249Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.251Z"
+    },
+    {
+      "sequence": 76,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.251Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.253Z"
+    },
+    {
+      "sequence": 77,
+      "name": "dbo.sp_Payment_CreateAttempt",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID",
+        "PhuongThuc",
+        "ThanhToanID",
+        "MaGiaoDich"
+      ],
+      "startedAt": "2026-10-10T03:19:04.253Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.267Z"
+    },
+    {
+      "sequence": 78,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.272Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.273Z"
+    },
+    {
+      "sequence": 79,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.272Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.273Z"
+    },
+    {
+      "sequence": 80,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.274Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.277Z"
+    },
+    {
+      "sequence": 81,
+      "name": "dbo.sp_Payment_UpdateResult",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "ThanhToanID",
+        "TrangThaiThanhToan"
+      ],
+      "startedAt": "2026-10-10T03:19:04.277Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.301Z"
+    },
+    {
+      "sequence": 82,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.301Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.303Z"
+    },
+    {
+      "sequence": 83,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.503Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.504Z"
+    },
+    {
+      "sequence": 84,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.503Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.505Z"
+    },
+    {
+      "sequence": 85,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.514Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.516Z"
+    },
+    {
+      "sequence": 86,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.514Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.516Z"
+    },
+    {
+      "sequence": 87,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.516Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.518Z"
+    },
+    {
+      "sequence": 88,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.520Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.521Z"
+    },
+    {
+      "sequence": 89,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.520Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.521Z"
+    },
+    {
+      "sequence": 90,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.521Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.523Z"
+    },
+    {
+      "sequence": 91,
+      "name": "dbo.sp_Showtime_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.693Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.721Z"
+    },
+    {
+      "sequence": 92,
+      "name": "dbo.sp_Showtime_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.710Z"
+    },
+    {
+      "sequence": 93,
+      "name": "dbo.sp_Product_ListActive",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:04.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.701Z"
+    },
+    {
+      "sequence": 94,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.705Z"
+    },
+    {
+      "sequence": 95,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.702Z"
+    },
+    {
+      "sequence": 96,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.702Z"
+    },
+    {
+      "sequence": 97,
+      "name": "dbo.sp_Showtime_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.715Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.723Z"
+    },
+    {
+      "sequence": 98,
+      "name": "dbo.sp_Product_ListActive",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:04.716Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.724Z"
+    },
+    {
+      "sequence": 99,
+      "name": "dbo.sp_Showtime_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.723Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.726Z"
+    },
+    {
+      "sequence": 100,
+      "name": "dbo.sp_Product_ListActive",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:04.723Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.726Z"
+    },
+    {
+      "sequence": 101,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.724Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.729Z"
+    },
+    {
+      "sequence": 102,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.900Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.902Z"
+    },
+    {
+      "sequence": 103,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.900Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.902Z"
+    },
+    {
+      "sequence": 104,
+      "name": "dbo.sp_Booking_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "SuatChieuID",
+        "MaKhuyenMai",
+        "DanhSachGheId",
+        "DanhSachDoAnJson",
+        "NewDonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.902Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.927Z"
+    },
+    {
+      "sequence": 105,
+      "name": "dbo.sp_Seat_ListByShowtime",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "SuatChieuID"
+      ],
+      "startedAt": "2026-10-10T03:19:04.932Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:04.937Z"
+    },
+    {
+      "sequence": 106,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.156Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.157Z"
+    },
+    {
+      "sequence": 107,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.156Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.157Z"
+    },
+    {
+      "sequence": 108,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.169Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.171Z"
+    },
+    {
+      "sequence": 109,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.169Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.171Z"
+    },
+    {
+      "sequence": 110,
+      "name": "dbo.sp_Order_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.171Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.194Z"
+    },
+    {
+      "sequence": 111,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.197Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.198Z"
+    },
+    {
+      "sequence": 112,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.197Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.198Z"
+    },
+    {
+      "sequence": 113,
+      "name": "dbo.sp_Order_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.198Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.200Z"
+    },
+    {
+      "sequence": 114,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.416Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.418Z"
+    },
+    {
+      "sequence": 115,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.416Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.418Z"
+    },
+    {
+      "sequence": 116,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.427Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.429Z"
+    },
+    {
+      "sequence": 117,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.427Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.429Z"
+    },
+    {
+      "sequence": 118,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.429Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.431Z"
+    },
+    {
+      "sequence": 119,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.434Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.435Z"
+    },
+    {
+      "sequence": 120,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.434Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.435Z"
+    },
+    {
+      "sequence": 121,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.435Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.438Z"
+    },
+    {
+      "sequence": 122,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.614Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.616Z"
+    },
+    {
+      "sequence": 123,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.614Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.616Z"
+    },
+    {
+      "sequence": 124,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.625Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.626Z"
+    },
+    {
+      "sequence": 125,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.625Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.626Z"
+    },
+    {
+      "sequence": 126,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.627Z",
+      "status": "FAIL",
+      "sqlError": 50033,
+      "finishedAt": "2026-10-10T03:19:05.628Z"
+    },
+    {
+      "sequence": 127,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.630Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.631Z"
+    },
+    {
+      "sequence": 128,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.630Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.632Z"
+    },
+    {
+      "sequence": 129,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.632Z",
+      "status": "FAIL",
+      "sqlError": 50033,
+      "finishedAt": "2026-10-10T03:19:05.633Z"
+    },
+    {
+      "sequence": 130,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.815Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.816Z"
+    },
+    {
+      "sequence": 131,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.815Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.817Z"
+    },
+    {
+      "sequence": 132,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.826Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.827Z"
+    },
+    {
+      "sequence": 133,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.826Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.827Z"
+    },
+    {
+      "sequence": 134,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.828Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.829Z"
+    },
+    {
+      "sequence": 135,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.831Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.833Z"
+    },
+    {
+      "sequence": 136,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.831Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.833Z"
+    },
+    {
+      "sequence": 137,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:05.833Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:05.835Z"
+    },
+    {
+      "sequence": 138,
+      "name": "dbo.sp_Movie_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.010Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.015Z"
+    },
+    {
+      "sequence": 139,
+      "name": "dbo.sp_Cinema_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ThanhPho"
+      ],
+      "startedAt": "2026-10-10T03:19:06.011Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.016Z"
+    },
+    {
+      "sequence": 140,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:06.013Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.061Z"
+    },
+    {
+      "sequence": 141,
+      "name": "dbo.sp_Movie_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.016Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.028Z"
+    },
+    {
+      "sequence": 142,
+      "name": "dbo.sp_Showtime_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID",
+        "RapID",
+        "NgayChieu"
+      ],
+      "startedAt": "2026-10-10T03:19:06.016Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.021Z"
+    },
+    {
+      "sequence": 143,
+      "name": "dbo.sp_Cinema_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ThanhPho"
+      ],
+      "startedAt": "2026-10-10T03:19:06.018Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.020Z"
+    },
+    {
+      "sequence": 144,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.018Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.020Z"
+    },
+    {
+      "sequence": 145,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.018Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.020Z"
+    },
+    {
+      "sequence": 146,
+      "name": "dbo.sp_Review_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.040Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.048Z"
+    },
+    {
+      "sequence": 147,
+      "name": "dbo.sp_Review_ListByMovie",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "PhimID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.050Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.058Z"
+    },
+    {
+      "sequence": 148,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.135Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.136Z"
+    },
+    {
+      "sequence": 149,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.135Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.137Z"
+    },
+    {
+      "sequence": 150,
+      "name": "dbo.sp_Review_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "PhimID",
+        "SoSao",
+        "NoiDung"
+      ],
+      "startedAt": "2026-10-10T03:19:06.137Z",
+      "status": "FAIL",
+      "sqlError": 50004,
+      "finishedAt": "2026-10-10T03:19:06.154Z"
+    },
+    {
+      "sequence": 151,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.160Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.161Z"
+    },
+    {
+      "sequence": 152,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.160Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.161Z"
+    },
+    {
+      "sequence": 153,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.343Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.345Z"
+    },
+    {
+      "sequence": 154,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.343Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.345Z"
+    },
+    {
+      "sequence": 155,
+      "name": "dbo.sp_Review_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "PhimID",
+        "SoSao",
+        "NoiDung"
+      ],
+      "startedAt": "2026-10-10T03:19:06.345Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.346Z"
+    },
+    {
+      "sequence": 156,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.462Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.464Z"
+    },
+    {
+      "sequence": 157,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.462Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.464Z"
+    },
+    {
+      "sequence": 158,
+      "name": "dbo.sp_Review_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "PhimID",
+        "SoSao",
+        "NoiDung"
+      ],
+      "startedAt": "2026-10-10T03:19:06.464Z",
+      "status": "FAIL",
+      "sqlError": 50040,
+      "finishedAt": "2026-10-10T03:19:06.465Z"
+    },
+    {
+      "sequence": 159,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.719Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.720Z"
+    },
+    {
+      "sequence": 160,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.719Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.720Z"
+    },
+    {
+      "sequence": 161,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.732Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.735Z"
+    },
+    {
+      "sequence": 162,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.732Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.735Z"
+    },
+    {
+      "sequence": 163,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.733Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.735Z"
+    },
+    {
+      "sequence": 164,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.733Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.735Z"
+    },
+    {
+      "sequence": 165,
+      "name": "dbo.sp_Complaint_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.735Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.743Z"
+    },
+    {
+      "sequence": 166,
+      "name": "dbo.sp_Order_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.735Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.738Z"
+    },
+    {
+      "sequence": 167,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.740Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.742Z"
+    },
+    {
+      "sequence": 168,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.740Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.742Z"
+    },
+    {
+      "sequence": 169,
+      "name": "dbo.sp_Order_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.742Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.744Z"
+    },
+    {
+      "sequence": 170,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.747Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.748Z"
+    },
+    {
+      "sequence": 171,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.747Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.748Z"
+    },
+    {
+      "sequence": 172,
+      "name": "dbo.sp_Complaint_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.748Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.749Z"
+    },
+    {
+      "sequence": 173,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.916Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.917Z"
+    },
+    {
+      "sequence": 174,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:06.916Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.917Z"
+    },
+    {
+      "sequence": 175,
+      "name": "dbo.sp_Complaint_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID",
+        "LoaiKhieuNai",
+        "TieuDe",
+        "NoiDung"
+      ],
+      "startedAt": "2026-10-10T03:19:06.918Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:06.928Z"
+    },
+    {
+      "sequence": 176,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.176Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.177Z"
+    },
+    {
+      "sequence": 177,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.176Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.177Z"
+    },
+    {
+      "sequence": 178,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.188Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.190Z"
+    },
+    {
+      "sequence": 179,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.188Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.190Z"
+    },
+    {
+      "sequence": 180,
+      "name": "dbo.sp_Complaint_GetByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.190Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.198Z"
+    },
+    {
+      "sequence": 181,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.200Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.201Z"
+    },
+    {
+      "sequence": 182,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.200Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.202Z"
+    },
+    {
+      "sequence": 183,
+      "name": "dbo.sp_Complaint_GetByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.202Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.203Z"
+    },
+    {
+      "sequence": 184,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:07.381Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.405Z"
+    },
+    {
+      "sequence": 185,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:07.382Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.384Z"
+    },
+    {
+      "sequence": 186,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.382Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.384Z"
+    },
+    {
+      "sequence": 187,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.382Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.384Z"
+    },
+    {
+      "sequence": 188,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:07.616Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.618Z"
+    },
+    {
+      "sequence": 189,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.691Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.692Z"
+    },
+    {
+      "sequence": 190,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.691Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.692Z"
+    },
+    {
+      "sequence": 191,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:07.707Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.709Z"
+    },
+    {
+      "sequence": 192,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:07.708Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.709Z"
+    },
+    {
+      "sequence": 193,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.837Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.838Z"
+    },
+    {
+      "sequence": 194,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.837Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.839Z"
+    },
+    {
+      "sequence": 195,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.851Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.852Z"
+    },
+    {
+      "sequence": 196,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.851Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.852Z"
+    },
+    {
+      "sequence": 197,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.853Z",
+      "status": "FAIL",
+      "sqlError": 50033,
+      "finishedAt": "2026-10-10T03:19:07.854Z"
+    },
+    {
+      "sequence": 198,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.856Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.857Z"
+    },
+    {
+      "sequence": 199,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.856Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:07.857Z"
+    },
+    {
+      "sequence": 200,
+      "name": "dbo.sp_Order_GetDetailByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "DonDatVeID"
+      ],
+      "startedAt": "2026-10-10T03:19:07.858Z",
+      "status": "FAIL",
+      "sqlError": 50033,
+      "finishedAt": "2026-10-10T03:19:07.859Z"
+    },
+    {
+      "sequence": 201,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.021Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.023Z"
+    },
+    {
+      "sequence": 202,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.021Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.023Z"
+    },
+    {
+      "sequence": 203,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.031Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.033Z"
+    },
+    {
+      "sequence": 204,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.032Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.033Z"
+    },
+    {
+      "sequence": 205,
+      "name": "dbo.sp_Complaint_GetByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.033Z",
+      "status": "FAIL",
+      "sqlError": 50042,
+      "finishedAt": "2026-10-10T03:19:08.034Z"
+    },
+    {
+      "sequence": 206,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.036Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.038Z"
+    },
+    {
+      "sequence": 207,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.036Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.038Z"
+    },
+    {
+      "sequence": 208,
+      "name": "dbo.sp_Complaint_GetByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.038Z",
+      "status": "FAIL",
+      "sqlError": 50042,
+      "finishedAt": "2026-10-10T03:19:08.039Z"
+    },
+    {
+      "sequence": 209,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.205Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.206Z"
+    },
+    {
+      "sequence": 210,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.205Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.206Z"
+    },
+    {
+      "sequence": 211,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.219Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.221Z"
+    },
+    {
+      "sequence": 212,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.219Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.221Z"
+    },
+    {
+      "sequence": 213,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.220Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.221Z"
+    },
+    {
+      "sequence": 214,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.220Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.222Z"
+    },
+    {
+      "sequence": 215,
+      "name": "dbo.sp_Complaint_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.221Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.222Z"
+    },
+    {
+      "sequence": 216,
+      "name": "dbo.sp_Order_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.222Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.223Z"
+    },
+    {
+      "sequence": 217,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.225Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.227Z"
+    },
+    {
+      "sequence": 218,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.225Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.227Z"
+    },
+    {
+      "sequence": 219,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.226Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.227Z"
+    },
+    {
+      "sequence": 220,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.226Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.228Z"
+    },
+    {
+      "sequence": 221,
+      "name": "dbo.sp_Complaint_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.227Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.229Z"
+    },
+    {
+      "sequence": 222,
+      "name": "dbo.sp_Order_ListByCustomer",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.228Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.229Z"
+    },
+    {
+      "sequence": 223,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:08.452Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.456Z"
+    },
+    {
+      "sequence": 224,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:08.453Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.455Z"
+    },
+    {
+      "sequence": 225,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.453Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.456Z"
+    },
+    {
+      "sequence": 226,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.453Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.456Z"
+    },
+    {
+      "sequence": 227,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:08.632Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.633Z"
+    },
+    {
+      "sequence": 228,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.701Z"
+    },
+    {
+      "sequence": 229,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:08.699Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.701Z"
+    },
+    {
+      "sequence": 230,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:08.717Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.720Z"
+    },
+    {
+      "sequence": 231,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:08.717Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:08.719Z"
+    },
+    {
+      "sequence": 232,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:09.004Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.009Z"
+    },
+    {
+      "sequence": 233,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:09.006Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.010Z"
+    },
+    {
+      "sequence": 234,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.008Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.010Z"
+    },
+    {
+      "sequence": 235,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.008Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.011Z"
+    },
+    {
+      "sequence": 236,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:09.009Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.012Z"
+    },
+    {
+      "sequence": 237,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:09.009Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.011Z"
+    },
+    {
+      "sequence": 238,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:09.183Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.184Z"
+    },
+    {
+      "sequence": 239,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.251Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.252Z"
+    },
+    {
+      "sequence": 240,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.251Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.252Z"
+    },
+    {
+      "sequence": 241,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.271Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.273Z"
+    },
+    {
+      "sequence": 242,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.271Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.273Z"
+    },
+    {
+      "sequence": 243,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.273Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.292Z"
+    },
+    {
+      "sequence": 244,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.273Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.274Z"
+    },
+    {
+      "sequence": 245,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.273Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.275Z"
+    },
+    {
+      "sequence": 246,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.280Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.281Z"
+    },
+    {
+      "sequence": 247,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.280Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.281Z"
+    },
+    {
+      "sequence": 248,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.295Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.297Z"
+    },
+    {
+      "sequence": 249,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.295Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.296Z"
+    },
+    {
+      "sequence": 250,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.297Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.298Z"
+    },
+    {
+      "sequence": 251,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.385Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.386Z"
+    },
+    {
+      "sequence": 252,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.385Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.386Z"
+    },
+    {
+      "sequence": 253,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.387Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.388Z"
+    },
+    {
+      "sequence": 254,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.418Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.420Z"
+    },
+    {
+      "sequence": 255,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.418Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.420Z"
+    },
+    {
+      "sequence": 256,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.420Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.421Z"
+    },
+    {
+      "sequence": 257,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.451Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.452Z"
+    },
+    {
+      "sequence": 258,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.451Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.452Z"
+    },
+    {
+      "sequence": 259,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.452Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.453Z"
+    },
+    {
+      "sequence": 260,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.559Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.560Z"
+    },
+    {
+      "sequence": 261,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.559Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.560Z"
+    },
+    {
+      "sequence": 262,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.561Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.562Z"
+    },
+    {
+      "sequence": 263,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.567Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.569Z"
+    },
+    {
+      "sequence": 264,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.567Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.568Z"
+    },
+    {
+      "sequence": 265,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.569Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.570Z"
+    },
+    {
+      "sequence": 266,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.673Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.675Z"
+    },
+    {
+      "sequence": 267,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.673Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.675Z"
+    },
+    {
+      "sequence": 268,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.675Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.676Z"
+    },
+    {
+      "sequence": 269,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.684Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.685Z"
+    },
+    {
+      "sequence": 270,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.684Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.685Z"
+    },
+    {
+      "sequence": 271,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:09.685Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.687Z"
+    },
+    {
+      "sequence": 272,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.840Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.841Z"
+    },
+    {
+      "sequence": 273,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.840Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.841Z"
+    },
+    {
+      "sequence": 274,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.847Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.849Z"
+    },
+    {
+      "sequence": 275,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.847Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.849Z"
+    },
+    {
+      "sequence": 276,
+      "name": "dbo.sp_Support_Complaint_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.849Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.859Z"
+    },
+    {
+      "sequence": 277,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.872Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.874Z"
+    },
+    {
+      "sequence": 278,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.872Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.874Z"
+    },
+    {
+      "sequence": 279,
+      "name": "dbo.sp_Support_Complaint_GetOrderReference",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.874Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.918Z"
+    },
+    {
+      "sequence": 280,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.921Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.922Z"
+    },
+    {
+      "sequence": 281,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.921Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.922Z"
+    },
+    {
+      "sequence": 282,
+      "name": "dbo.sp_Support_Complaint_GetOrderReference",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:09.922Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:09.925Z"
+    },
+    {
+      "sequence": 283,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.102Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.103Z"
+    },
+    {
+      "sequence": 284,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.102Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.104Z"
+    },
+    {
+      "sequence": 285,
+      "name": "dbo.sp_Support_Complaint_AddProcessing",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID",
+        "NoiDungXuLy",
+        "TrangThaiSauXuLy"
+      ],
+      "startedAt": "2026-10-10T03:19:10.104Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.128Z"
+    },
+    {
+      "sequence": 286,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.136Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.137Z"
+    },
+    {
+      "sequence": 287,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.136Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.137Z"
+    },
+    {
+      "sequence": 288,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:10.138Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.160Z"
+    },
+    {
+      "sequence": 289,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.166Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.167Z"
+    },
+    {
+      "sequence": 290,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.166Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.167Z"
+    },
+    {
+      "sequence": 291,
+      "name": "dbo.sp_Support_Complaint_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.167Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.170Z"
+    },
+    {
+      "sequence": 292,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.179Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.180Z"
+    },
+    {
+      "sequence": 293,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.179Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.180Z"
+    },
+    {
+      "sequence": 294,
+      "name": "dbo.sp_Support_Complaint_GetOrderReference",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.180Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.183Z"
+    },
+    {
+      "sequence": 295,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.185Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.186Z"
+    },
+    {
+      "sequence": 296,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.185Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.186Z"
+    },
+    {
+      "sequence": 297,
+      "name": "dbo.sp_Support_Complaint_GetOrderReference",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.186Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.188Z"
+    },
+    {
+      "sequence": 298,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.285Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.287Z"
+    },
+    {
+      "sequence": 299,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.285Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.287Z"
+    },
+    {
+      "sequence": 300,
+      "name": "dbo.sp_Support_Complaint_UpdateStatus",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID",
+        "TrangThaiMoi"
+      ],
+      "startedAt": "2026-10-10T03:19:10.287Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.298Z"
+    },
+    {
+      "sequence": 301,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.302Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.304Z"
+    },
+    {
+      "sequence": 302,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.302Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.304Z"
+    },
+    {
+      "sequence": 303,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:10.304Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.305Z"
+    },
+    {
+      "sequence": 304,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.311Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.312Z"
+    },
+    {
+      "sequence": 305,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.311Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.312Z"
+    },
+    {
+      "sequence": 306,
+      "name": "dbo.sp_Support_Complaint_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.312Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.313Z"
+    },
+    {
+      "sequence": 307,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.322Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.324Z"
+    },
+    {
+      "sequence": 308,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.322Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.323Z"
+    },
+    {
+      "sequence": 309,
+      "name": "dbo.sp_Support_Complaint_GetOrderReference",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.324Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.325Z"
+    },
+    {
+      "sequence": 310,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.329Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.330Z"
+    },
+    {
+      "sequence": 311,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.329Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.330Z"
+    },
+    {
+      "sequence": 312,
+      "name": "dbo.sp_Support_Complaint_GetOrderReference",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.330Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.332Z"
+    },
+    {
+      "sequence": 313,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.447Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.448Z"
+    },
+    {
+      "sequence": 314,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.447Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.448Z"
+    },
+    {
+      "sequence": 315,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.600Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.601Z"
+    },
+    {
+      "sequence": 316,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.600Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.601Z"
+    },
+    {
+      "sequence": 317,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.707Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.709Z"
+    },
+    {
+      "sequence": 318,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.707Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.709Z"
+    },
+    {
+      "sequence": 319,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.723Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.724Z"
+    },
+    {
+      "sequence": 320,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.723Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.724Z"
+    },
+    {
+      "sequence": 321,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:10.724Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.726Z"
+    },
+    {
+      "sequence": 322,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.728Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.729Z"
+    },
+    {
+      "sequence": 323,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.728Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.729Z"
+    },
+    {
+      "sequence": 324,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:10.729Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.731Z"
+    },
+    {
+      "sequence": 325,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.797Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.799Z"
+    },
+    {
+      "sequence": 326,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.797Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.799Z"
+    },
+    {
+      "sequence": 327,
+      "name": "dbo.sp_Support_Complaint_GetDetail",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "KhieuNaiID"
+      ],
+      "startedAt": "2026-10-10T03:19:10.799Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:10.800Z"
+    },
+    {
+      "sequence": 328,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.040Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.041Z"
+    },
+    {
+      "sequence": 329,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.040Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.041Z"
+    },
+    {
+      "sequence": 330,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.192Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.193Z"
+    },
+    {
+      "sequence": 331,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.192Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.193Z"
+    },
+    {
+      "sequence": 332,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.198Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.199Z"
+    },
+    {
+      "sequence": 333,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.198Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.199Z"
+    },
+    {
+      "sequence": 334,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:11.363Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.368Z"
+    },
+    {
+      "sequence": 335,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:11.364Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.368Z"
+    },
+    {
+      "sequence": 336,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:11.368Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.371Z"
+    },
+    {
+      "sequence": 337,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:11.369Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.370Z"
+    },
+    {
+      "sequence": 338,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.369Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.371Z"
+    },
+    {
+      "sequence": 339,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.369Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.371Z"
+    },
+    {
+      "sequence": 340,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:11.550Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.551Z"
+    },
+    {
+      "sequence": 341,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.623Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.624Z"
+    },
+    {
+      "sequence": 342,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.623Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.624Z"
+    },
+    {
+      "sequence": 343,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.639Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.640Z"
+    },
+    {
+      "sequence": 344,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.639Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.640Z"
+    },
+    {
+      "sequence": 345,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:11.640Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.642Z"
+    },
+    {
+      "sequence": 346,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.644Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.645Z"
+    },
+    {
+      "sequence": 347,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.644Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.645Z"
+    },
+    {
+      "sequence": 348,
+      "name": "dbo.sp_Support_Complaint_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "LoaiKhieuNai",
+        "SearchTerm",
+        "MucDoUuTien"
+      ],
+      "startedAt": "2026-10-10T03:19:11.645Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.646Z"
+    },
+    {
+      "sequence": 349,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:11.827Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.832Z"
+    },
+    {
+      "sequence": 350,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:11.830Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.833Z"
+    },
+    {
+      "sequence": 351,
+      "name": "dbo.sp_Movie_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "TrangThai",
+        "TheLoaiID",
+        "SearchTerm"
+      ],
+      "startedAt": "2026-10-10T03:19:11.831Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.834Z"
+    },
+    {
+      "sequence": 352,
+      "name": "dbo.sp_System_HealthCheck",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [],
+      "startedAt": "2026-10-10T03:19:11.831Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.834Z"
+    },
+    {
+      "sequence": 353,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.832Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.835Z"
+    },
+    {
+      "sequence": 354,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:11.832Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:11.835Z"
+    },
+    {
+      "sequence": 355,
+      "name": "dbo.sp_Auth_Login",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "Email"
+      ],
+      "startedAt": "2026-10-10T03:19:12.016Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.017Z"
+    },
+    {
+      "sequence": 356,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.084Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.086Z"
+    },
+    {
+      "sequence": 357,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.084Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.085Z"
+    },
+    {
+      "sequence": 358,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.103Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.104Z"
+    },
+    {
+      "sequence": 359,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.103Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.105Z"
+    },
+    {
+      "sequence": 360,
+      "name": "dbo.sp_Admin_Dashboard",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.105Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.123Z"
+    },
+    {
+      "sequence": 361,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.109Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.110Z"
+    },
+    {
+      "sequence": 362,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.109Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.110Z"
+    },
+    {
+      "sequence": 363,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.120Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.121Z"
+    },
+    {
+      "sequence": 364,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.120Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.122Z"
+    },
+    {
+      "sequence": 365,
+      "name": "dbo.sp_Admin_User_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "VaiTroID",
+        "TrangThai",
+        "SearchTerm",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.122Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.136Z"
+    },
+    {
+      "sequence": 366,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.125Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.127Z"
+    },
+    {
+      "sequence": 367,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.125Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.127Z"
+    },
+    {
+      "sequence": 368,
+      "name": "dbo.sp_Admin_Dashboard",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.127Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.132Z"
+    },
+    {
+      "sequence": 369,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.143Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.145Z"
+    },
+    {
+      "sequence": 370,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.143Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.145Z"
+    },
+    {
+      "sequence": 371,
+      "name": "dbo.sp_Admin_Role_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.145Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.151Z"
+    },
+    {
+      "sequence": 372,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.350Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.352Z"
+    },
+    {
+      "sequence": 373,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.350Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.351Z"
+    },
+    {
+      "sequence": 374,
+      "name": "dbo.sp_Admin_User_Create",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "HoTen",
+        "Email",
+        "MatKhauHash",
+        "SoDienThoai",
+        "VaiTroID",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.420Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.433Z"
+    },
+    {
+      "sequence": 375,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.438Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.439Z"
+    },
+    {
+      "sequence": 376,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.438Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.439Z"
+    },
+    {
+      "sequence": 377,
+      "name": "dbo.sp_Admin_User_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "VaiTroID",
+        "TrangThai",
+        "SearchTerm",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.440Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.441Z"
+    },
+    {
+      "sequence": 378,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.446Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.447Z"
+    },
+    {
+      "sequence": 379,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.446Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.448Z"
+    },
+    {
+      "sequence": 380,
+      "name": "dbo.sp_Admin_Role_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.448Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.449Z"
+    },
+    {
+      "sequence": 381,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.590Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.592Z"
+    },
+    {
+      "sequence": 382,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.590Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.591Z"
+    },
+    {
+      "sequence": 383,
+      "name": "dbo.sp_Admin_User_UpdateStatus",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.592Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.601Z"
+    },
+    {
+      "sequence": 384,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.606Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.608Z"
+    },
+    {
+      "sequence": 385,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.606Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.608Z"
+    },
+    {
+      "sequence": 386,
+      "name": "dbo.sp_Admin_User_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "VaiTroID",
+        "TrangThai",
+        "SearchTerm",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.608Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.609Z"
+    },
+    {
+      "sequence": 387,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.614Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.616Z"
+    },
+    {
+      "sequence": 388,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.615Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.616Z"
+    },
+    {
+      "sequence": 389,
+      "name": "dbo.sp_Admin_Role_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.616Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.617Z"
+    },
+    {
+      "sequence": 390,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.738Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.741Z"
+    },
+    {
+      "sequence": 391,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.738Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.741Z"
+    },
+    {
+      "sequence": 392,
+      "name": "dbo.sp_Admin_User_UpdateStatus",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID",
+        "TrangThai",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.741Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.743Z"
+    },
+    {
+      "sequence": 393,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.752Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.754Z"
+    },
+    {
+      "sequence": 394,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.752Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.753Z"
+    },
+    {
+      "sequence": 395,
+      "name": "dbo.sp_Admin_User_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "VaiTroID",
+        "TrangThai",
+        "SearchTerm",
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.754Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.755Z"
+    },
+    {
+      "sequence": 396,
+      "name": "dbo.sp_User_GetCurrent",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.760Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.761Z"
+    },
+    {
+      "sequence": 397,
+      "name": "dbo.sp_RBAC_GetPermissionsByUser",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "NguoiDungID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.760Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.761Z"
+    },
+    {
+      "sequence": 398,
+      "name": "dbo.sp_Admin_Role_List",
+      "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+      "parameters": [
+        "ActorID"
+      ],
+      "startedAt": "2026-10-10T03:19:12.761Z",
+      "status": "PASS",
+      "finishedAt": "2026-10-10T03:19:12.763Z"
+    }
+  ]
+}

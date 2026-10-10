@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-10-10T03:52:14.447Z",
+  "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+  "targetIdentity": {
+    "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+    "database_id": 48,
+    "create_date": "2026-10-10T08:59:01.693",
+    "state_desc": "ONLINE",
+    "is_read_only": false,
+    "database_guid": "33876608-D109-43B5-ACEC-0B84C2639A73",
+    "files": [
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+        "type_desc": "ROWS",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44.mdf"
+      },
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44_log",
+        "type_desc": "LOG",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44_log.ldf"
+      }
+    ]
+  },
+  "server": "DESKTOP-E67DPCV",
+  "phases": [],
+  "smoke": [
+    {
+      "id": "OPTIONAL-ACTOR-NATIONALITY",
+      "UCs": [
+        "ADM-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:52:24.035Z",
+      "error": "Approved optional nationality is blocked by native required\n\nfalse !== true\n",
+      "screenshot": "OPTIONAL-ACTOR-NATIONALITY-FAIL.png",
+      "networkRange": [
+        7,
+        7
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:52:24.165Z"
+    },
+    {
+      "id": "ISOLATION-CLEANUP",
+      "result": "PASS",
+      "assertions": [
+        "Test backend exact identity + login denied main",
+        "Owned fixture cleanup restores all27 data/metadata fingerprints; main unchanged"
+      ]
+    }
+  ],
+  "scope": "R8.2 verification; no UC acceptance upgrade",
+  "browserStatus": "REPRODUCED",
+  "cleanup": "PASS",
+  "mainPreservation": "PASS",
+  "readiness": "READY",
+  "finishedAt": "2026-10-10T03:52:24.683Z"
+}

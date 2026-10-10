@@ -1,0 +1,43 @@
+{
+  "status": "CAPTURED",
+  "assertions": [
+    {
+      "id": "SQL-ADM02-ALLOWLIST",
+      "status": "PASS",
+      "query": "SELECT v.MaVaiTro role,COUNT(*) n,COUNT(h.NguoiDungID) profiles FROM dbo.NGUOIDUNG u JOIN dbo.VAITRO v ON v.VaiTroID=u.VaiTroID LEFT JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.Email LIKE 'r82.staff.%@example.invalid' GROUP BY v.MaVaiTro;",
+      "inputs": {},
+      "rows": [
+        {
+          "role": "ADMIN",
+          "n": 1,
+          "profiles": 0
+        },
+        {
+          "role": "CSKH",
+          "n": 1,
+          "profiles": 0
+        },
+        {
+          "role": "QUAN_LY_RAP",
+          "n": 1,
+          "profiles": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-DASHBOARD",
+      "status": "PASS",
+      "query": "SELECT TOP(1) p.RapID cinema,(SELECT COUNT(*) FROM dbo.PHONGCHIEU r WHERE r.RapID=p.RapID AND r.TrangThai=N'Hoạt động') activeRooms,(SELECT COUNT(*) FROM dbo.GHE g JOIN dbo.PHONGCHIEU r ON r.PhongID=g.PhongID WHERE r.RapID=p.RapID AND g.TrangThai=N'Hoạt động') activeSeats FROM dbo.PHANCONG_RAP p WHERE p.NguoiDungID=@ID AND p.TrangThai=N'Hiệu lực' ORDER BY p.RapID;",
+      "inputs": {
+        "ID": 2
+      },
+      "rows": [
+        {
+          "cinema": 1,
+          "activeRooms": 3,
+          "activeSeats": 120
+        }
+      ]
+    }
+  ]
+}

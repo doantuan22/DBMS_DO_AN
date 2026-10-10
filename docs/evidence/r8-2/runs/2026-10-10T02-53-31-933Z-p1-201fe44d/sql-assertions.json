@@ -1,0 +1,32 @@
+{
+  "status": "CAPTURED",
+  "assertions": [
+    {
+      "id": "SQL-ADMIN-WRITE-TARGET",
+      "status": "PASS",
+      "query": "SELECT KhieuNaiID id,COUNT(*) n FROM dbo.XULY_KHIEUNAI WHERE NoiDungXuLy=N'R82 admin target A' GROUP BY KhieuNaiID;",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 29,
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-SUPPORT-TIMELINE",
+      "status": "PASS",
+      "query": "SELECT k.KhieuNaiID id,k.TrangThai status,COUNT(x.XuLyID) processingCount FROM dbo.KHIEUNAI k JOIN dbo.XULY_KHIEUNAI x ON x.KhieuNaiID=k.KhieuNaiID WHERE k.KhieuNaiID=@ID GROUP BY k.KhieuNaiID,k.TrangThai;",
+      "inputs": {
+        "ID": 30
+      },
+      "rows": [
+        {
+          "id": 30,
+          "status": "Đã giải quyết",
+          "processingCount": 2
+        }
+      ]
+    }
+  ]
+}

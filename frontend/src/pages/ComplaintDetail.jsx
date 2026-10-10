@@ -1,16 +1,27 @@
 import { formatDateTime } from '../utils/dateTime';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getComplaint } from '../api/feedbackApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
 import StatusBadge from '../components/primitives/StatusBadge';
+import { useAuth } from '../context/AuthContext';
 
 export default function ComplaintDetail() {
   const { complaintId } = useParams();
+  const { user } = useAuth();
+  const scope = `${complaintId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
+  return <ComplaintContext key={scope} complaintId={complaintId} />;
+}
+
+function ComplaintContext({ complaintId }) {
   const [resource, setResource] = useState({ status: 'loading' });
+  const request = useRef(0);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; const generation = request; return () => { mounted.current = false; generation.current++; }; }, []);
   const load = useCallback(async () => {
+    const generation = ++request.current;
     setResource({ status: 'loading' });
-    try { setResource({ status: 'success', data: (await getComplaint(complaintId)).complaint }); } catch (error) { setResource({ status: 'error', error }); }
+    try { const result = await getComplaint(complaintId); if (mounted.current && generation === request.current) setResource({ status: 'success', data: result.complaint }); } catch (error) { if (mounted.current && generation === request.current) setResource({ status: 'error', error }); }
   }, [complaintId]);
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
   if (resource.status === 'loading') return <LoadingState>Đang tải khiếu nại…</LoadingState>;

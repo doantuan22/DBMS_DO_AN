@@ -49,6 +49,7 @@ function ManagerWorkspace({ cinemaId, user }) {
   const generation = useRef(0);
   const seatGeneration = useRef(0);
   const mounted = useRef(true);
+  const writePending = useRef(false);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const load = useCallback(async () => {
     const current = ++generation.current;
@@ -75,7 +76,8 @@ function ManagerWorkspace({ cinemaId, user }) {
     } catch (error) { if (mounted.current && current === seatGeneration.current) setSeats({ status: 'error', rows: [], error }); }
   };
   const run = async (action, success, reloadSeats = false) => {
-    if (busy) return;
+    if (writePending.current) return;
+    writePending.current = true;
     setBusy(true); setNotice(null);
     try {
       const result = await action();
@@ -86,7 +88,7 @@ function ManagerWorkspace({ cinemaId, user }) {
     } catch (error) {
       if (mounted.current) setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message });
       throw error;
-    } finally { if (mounted.current) setBusy(false); }
+    } finally { writePending.current = false; if (mounted.current) setBusy(false); }
   };
   const action = (fn, text, refreshSeats) => { void run(fn, text, refreshSeats).catch(() => {}); };
   const list = section => data.sections?.[section]?.data?.[section] ?? [];

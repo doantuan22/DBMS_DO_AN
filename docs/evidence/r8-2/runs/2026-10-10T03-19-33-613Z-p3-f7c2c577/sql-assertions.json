@@ -1,0 +1,818 @@
+{
+  "status": "CAPTURED",
+  "assertions": [
+    {
+      "id": "SQL-REGISTER",
+      "status": "PASS",
+      "query": "SELECT u.NguoiDungID id,v.MaVaiTro role,COUNT(h.NguoiDungID) profiles FROM dbo.NGUOIDUNG u JOIN dbo.VAITRO v ON v.VaiTroID=u.VaiTroID LEFT JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.Email='r82.journey@example.invalid' GROUP BY u.NguoiDungID,v.MaVaiTro;",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 16,
+          "role": "KHACH_HANG",
+          "profiles": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-REGISTER-DUPLICATE-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.NGUOIDUNG WHERE Email='r82.journey@example.invalid';",
+      "inputs": {},
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-PROFILE",
+      "status": "PASS",
+      "query": "SELECT u.HoTen name,h.GioiTinh gender,CONVERT(varchar(10),h.NgaySinh,23) birthday FROM dbo.NGUOIDUNG u JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.NguoiDungID=@ID;",
+      "inputs": {
+        "ID": 5
+      },
+      "rows": [
+        {
+          "name": "R82 Customer Profile",
+          "gender": "Khác",
+          "birthday": "1994-05-06"
+        }
+      ]
+    },
+    {
+      "id": "SQL-CATALOG",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.PHIM WHERE PhimID=@ID AND TenPhim=N'R82 Journey Movie';",
+      "inputs": {
+        "ID": 8
+      },
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-SCHEDULE",
+      "status": "PASS",
+      "query": "SELECT SuatChieuID id,PhimID movie,PhongID room FROM dbo.SUATCHIEU WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 39
+      },
+      "rows": [
+        {
+          "id": 39,
+          "movie": 8,
+          "room": 10
+        }
+      ]
+    },
+    {
+      "id": "SQL-SEAT-SELECTION-READ-ONLY",
+      "status": "PASS",
+      "query": "SELECT (SELECT COUNT(*) FROM dbo.DONDATVE WHERE SuatChieuID=@ID) orders,(SELECT COUNT(*) FROM dbo.GHE WHERE PhongID=@Room AND TrangThai<>N'Hoạt động') unavailable;",
+      "inputs": {
+        "ID": 39,
+        "Room": 10
+      },
+      "rows": [
+        {
+          "orders": 0,
+          "unavailable": 2
+        }
+      ]
+    },
+    {
+      "id": "SQL-FOOD-PREBOOK-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.CHITIETDOAN;",
+      "inputs": {},
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-PROMOTION-PREVIEW-READ-ONLY",
+      "status": "PASS",
+      "query": "SELECT SoLuongDaDung used,GiaTriGiam discount FROM dbo.KHUYENMAI WHERE MaCode=@Code;",
+      "inputs": {
+        "Code": "R82JOURNEY"
+      },
+      "rows": [
+        {
+          "used": 0,
+          "discount": 25.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-BOOKING-SNAPSHOTS",
+      "status": "PASS",
+      "query": "SELECT d.DonDatVeID id,d.NguoiDungID owner,d.TongTienVe tickets,d.TongTienDoAn foods,d.TienGiamGia discount,d.TrangThai status,CASE WHEN d.HanGiuCho>dbo.fn_BayGio() THEN 1 ELSE 0 END live,(SELECT COUNT(*) FROM dbo.CHITIETVE WHERE DonDatVeID=d.DonDatVeID) ticketCount,(SELECT SoLuong FROM dbo.CHITIETDOAN WHERE DonDatVeID=d.DonDatVeID) quantity,(SELECT DonGia FROM dbo.CHITIETDOAN WHERE DonDatVeID=d.DonDatVeID) unitPrice FROM dbo.DONDATVE d WHERE SuatChieuID=@Show;",
+      "inputs": {
+        "Show": 39
+      },
+      "rows": [
+        {
+          "id": 10,
+          "owner": 5,
+          "tickets": 1000.25,
+          "foods": 200.5,
+          "discount": 25.25,
+          "status": "Chờ thanh toán",
+          "live": 1,
+          "ticketCount": 1,
+          "quantity": 2,
+          "unitPrice": 100.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-PAYMENT",
+      "status": "PASS",
+      "query": "SELECT d.TrangThai status,d.HanGiuCho deadline,p.PhuongThuc method,p.TrangThai paymentStatus,p.SoTien amount,(SELECT COUNT(*) FROM dbo.THANHTOAN WHERE DonDatVeID=d.DonDatVeID) attempts,(SELECT DiemTichLuy FROM dbo.HOSOKHACHHANG WHERE NguoiDungID=d.NguoiDungID) points FROM dbo.DONDATVE d JOIN dbo.THANHTOAN p ON p.DonDatVeID=d.DonDatVeID WHERE d.DonDatVeID=@ID;",
+      "inputs": {
+        "ID": 10
+      },
+      "rows": [
+        {
+          "status": "Đã thanh toán",
+          "deadline": null,
+          "method": "MOMO",
+          "paymentStatus": "Thành công",
+          "amount": 1175.5,
+          "attempts": 1,
+          "points": 151
+        }
+      ]
+    },
+    {
+      "id": "SQL-SECOND-OWNED-ORDER",
+      "status": "PASS",
+      "query": "SELECT DonDatVeID id FROM dbo.DONDATVE WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 40
+      },
+      "rows": [
+        {
+          "id": 11
+        }
+      ]
+    },
+    {
+      "id": "SQL-ORDER-OWNERSHIP",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.DONDATVE WHERE DonDatVeID=@ID AND NguoiDungID=@Owner;",
+      "inputs": {
+        "ID": 10,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-REVIEW-INELIGIBLE-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.DANHGIAPHIM WHERE PhimID=@Movie AND NguoiDungID=@Owner;",
+      "inputs": {
+        "Movie": 8,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-REVIEW-ONE",
+      "status": "PASS",
+      "query": "SELECT SoSao rating,NoiDung content FROM dbo.DANHGIAPHIM WHERE PhimID=@Movie AND NguoiDungID=@Owner;",
+      "inputs": {
+        "Movie": 8,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "rating": 5,
+          "content": "R82 eligible review"
+        }
+      ]
+    },
+    {
+      "id": "SQL-COMPLAINT",
+      "status": "PASS",
+      "query": "SELECT KhieuNaiID id,NguoiDungID owner,DonDatVeID orderId,TrangThai status FROM dbo.KHIEUNAI WHERE TieuDe=N'R82 Journey Complaint';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 71,
+          "owner": 5,
+          "orderId": 10,
+          "status": "Mới"
+        }
+      ]
+    },
+    {
+      "id": "SQL-FOREIGN-READ-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.DONDATVE WHERE NguoiDungID=@Owner;",
+      "inputs": {
+        "Owner": 16
+      },
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-QUEUE-AND",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) matches FROM dbo.KHIEUNAI WHERE TieuDe LIKE N'%R82 Journey%' AND LoaiKhieuNai=N'R82 Journey';",
+      "inputs": {},
+      "rows": [
+        {
+          "matches": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-COMPLAINT-DETAIL",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.KHIEUNAI WHERE KhieuNaiID=@ID AND DonDatVeID=@Order;",
+      "inputs": {
+        "ID": 71,
+        "Order": 10
+      },
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-REFERENCE-LEDGER",
+      "status": "PASS",
+      "query": "SELECT p.SoTien amount,(SELECT COUNT(*) FROM dbo.CHITIETVE WHERE DonDatVeID=p.DonDatVeID) tickets FROM dbo.THANHTOAN p WHERE p.DonDatVeID=@ID AND p.TrangThai=N'Thành công';",
+      "inputs": {
+        "ID": 10
+      },
+      "rows": [
+        {
+          "amount": 1175.5,
+          "tickets": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-SUPPORT-PROCESS",
+      "status": "PASS",
+      "query": "SELECT x.NguoiXuLyID actor,x.NoiDungXuLy content,k.TrangThai status FROM dbo.XULY_KHIEUNAI x JOIN dbo.KHIEUNAI k ON k.KhieuNaiID=x.KhieuNaiID WHERE x.KhieuNaiID=@ID;",
+      "inputs": {
+        "ID": 71
+      },
+      "rows": [
+        {
+          "actor": 4,
+          "content": "R82 Support processed",
+          "status": "Đang xử lý"
+        }
+      ]
+    },
+    {
+      "id": "SQL-SUPPORT-STATUS",
+      "status": "PASS",
+      "query": "SELECT k.TrangThai status,COUNT(x.XuLyID) events FROM dbo.KHIEUNAI k JOIN dbo.XULY_KHIEUNAI x ON x.KhieuNaiID=k.KhieuNaiID WHERE k.KhieuNaiID=@ID GROUP BY k.TrangThai;",
+      "inputs": {
+        "ID": 71
+      },
+      "rows": [
+        {
+          "status": "Đã giải quyết",
+          "events": 2
+        }
+      ]
+    },
+    {
+      "id": "SQL-SUPPORT-INVALID-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.XULY_KHIEUNAI WHERE KhieuNaiID=@ID;",
+      "inputs": {
+        "ID": 71
+      },
+      "rows": [
+        {
+          "n": 2
+        }
+      ]
+    },
+    {
+      "id": "SQL-SUPPORT-DENIED-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.XULY_KHIEUNAI WHERE KhieuNaiID=@ID;",
+      "inputs": {
+        "ID": 71
+      },
+      "rows": [
+        {
+          "n": 2
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-CREATE-STAFF",
+      "status": "PASS",
+      "query": "SELECT u.NguoiDungID id,v.MaVaiTro role,COUNT(h.NguoiDungID) profiles FROM dbo.NGUOIDUNG u JOIN dbo.VAITRO v ON v.VaiTroID=u.VaiTroID LEFT JOIN dbo.HOSOKHACHHANG h ON h.NguoiDungID=u.NguoiDungID WHERE u.Email='r82.journey.staff@example.invalid' GROUP BY u.NguoiDungID,v.MaVaiTro;",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 17,
+          "role": "CSKH",
+          "profiles": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-LOCK",
+      "status": "PASS",
+      "query": "SELECT TrangThai status FROM dbo.NGUOIDUNG WHERE NguoiDungID=@ID;",
+      "inputs": {
+        "ID": 17
+      },
+      "rows": [
+        {
+          "status": "Bị khóa"
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-UNLOCK",
+      "status": "PASS",
+      "query": "SELECT TrangThai status FROM dbo.NGUOIDUNG WHERE NguoiDungID=@ID;",
+      "inputs": {
+        "ID": 17
+      },
+      "rows": [
+        {
+          "status": "Hoạt động"
+        }
+      ]
+    },
+    {
+      "id": "SQL-ROLE-CREATE",
+      "status": "PASS",
+      "query": "SELECT VaiTroID id FROM dbo.VAITRO WHERE MaVaiTro='R82_JOURNEY_ROLE';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 5
+        }
+      ]
+    },
+    {
+      "id": "SQL-ROLE-UPDATE",
+      "status": "PASS",
+      "query": "SELECT TenVaiTro name FROM dbo.VAITRO WHERE VaiTroID=@ID;",
+      "inputs": {
+        "ID": 5
+      },
+      "rows": [
+        {
+          "name": "R82 Journey Role Updated"
+        }
+      ]
+    },
+    {
+      "id": "SQL-PERMISSION-CREATE",
+      "status": "PASS",
+      "query": "SELECT QuyenID id FROM dbo.QUYEN WHERE MaQuyen='R82_JOURNEY_PERMISSION';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 24
+        }
+      ]
+    },
+    {
+      "id": "SQL-PERMISSION-UPDATE",
+      "status": "PASS",
+      "query": "SELECT TenQuyen name FROM dbo.QUYEN WHERE QuyenID=@ID;",
+      "inputs": {
+        "ID": 24
+      },
+      "rows": [
+        {
+          "name": "R82 Journey Permission Updated"
+        }
+      ]
+    },
+    {
+      "id": "SQL-GRANT-REPLACE",
+      "status": "PASS",
+      "query": "SELECT QuyenID id FROM dbo.VAITRO_QUYEN WHERE VaiTroID=@ID;",
+      "inputs": {
+        "ID": 5
+      },
+      "rows": [
+        {
+          "id": 24
+        }
+      ]
+    },
+    {
+      "id": "SQL-GRANT-CLEAR",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.VAITRO_QUYEN WHERE VaiTroID=@ID;",
+      "inputs": {
+        "ID": 5
+      },
+      "rows": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "SQL-ASSIGNMENT",
+      "status": "PASS",
+      "query": "SELECT PhanCongID id,TrangThai status FROM dbo.PHANCONG_RAP WHERE NguoiDungID=@Manager AND RapID=@Cinema;",
+      "inputs": {
+        "Manager": 2,
+        "Cinema": 2
+      },
+      "rows": [
+        {
+          "id": 7,
+          "status": "Hiệu lực"
+        }
+      ]
+    },
+    {
+      "id": "SQL-CINEMA",
+      "status": "PASS",
+      "query": "SELECT RapID id FROM dbo.RAPCHIEUPHIM WHERE TenRap=N'R82 Admin Cinema';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 8
+        }
+      ]
+    },
+    {
+      "id": "SQL-CINEMA-UPDATE",
+      "status": "PASS",
+      "query": "SELECT DiaChi address FROM dbo.RAPCHIEUPHIM WHERE RapID=@ID;",
+      "inputs": {
+        "ID": 8
+      },
+      "rows": [
+        {
+          "address": "R82 updated address"
+        }
+      ]
+    },
+    {
+      "id": "SQL-CINEMA-IMAGES",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n,SUM(CASE WHEN LaAnhDaiDien=1 THEN 1 ELSE 0 END) covers FROM dbo.HINHANH_RAPCHIEUPHIM WHERE RapID=@ID;",
+      "inputs": {
+        "ID": 8
+      },
+      "rows": [
+        {
+          "n": 2,
+          "covers": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-ROOM",
+      "status": "PASS",
+      "query": "SELECT PhongID id FROM dbo.PHONGCHIEU WHERE TenPhong=N'R82 Admin Room';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 11
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-SEAT",
+      "status": "PASS",
+      "query": "SELECT GheID id,TrangThai status FROM dbo.GHE WHERE PhongID=@ID;",
+      "inputs": {
+        "ID": 11
+      },
+      "rows": [
+        {
+          "id": 289,
+          "status": "Hoạt động"
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-SEAT-UPDATE",
+      "status": "PASS",
+      "query": "SELECT TrangThai status FROM dbo.GHE WHERE GheID=@ID;",
+      "inputs": {
+        "ID": 289
+      },
+      "rows": [
+        {
+          "status": "Bảo trì"
+        }
+      ]
+    },
+    {
+      "id": "SQL-GENRE",
+      "status": "PASS",
+      "query": "SELECT TheLoaiID id FROM dbo.THELOAI WHERE TenTheLoai=N'R82 Journey Genre';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 8
+        }
+      ]
+    },
+    {
+      "id": "SQL-ACTOR",
+      "status": "PASS",
+      "query": "SELECT DienVienID id FROM dbo.DIENVIEN WHERE HoTen=N'R82 Journey Actor';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 7
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-MOVIE",
+      "status": "PASS",
+      "query": "SELECT PhimID id FROM dbo.PHIM WHERE TenPhim=N'R82 Admin Movie';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 9
+        }
+      ]
+    },
+    {
+      "id": "SQL-CAST-AND-GENRE",
+      "status": "PASS",
+      "query": "SELECT (SELECT COUNT(*) FROM dbo.PHIM_DIENVIEN WHERE PhimID=@Movie AND DienVienID=@Actor) actors,(SELECT COUNT(*) FROM dbo.PHIM_THELOAI WHERE PhimID=@Movie AND TheLoaiID=@Genre) genres;",
+      "inputs": {
+        "Movie": 9,
+        "Actor": 7,
+        "Genre": 8
+      },
+      "rows": [
+        {
+          "actors": 1,
+          "genres": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-PRODUCT-DECIMAL",
+      "status": "PASS",
+      "query": "SELECT Gia price FROM dbo.SANPHAM WHERE TenSanPham=N'R82 Admin Product';",
+      "inputs": {},
+      "rows": [
+        {
+          "price": 200.75
+        }
+      ]
+    },
+    {
+      "id": "SQL-PROMOTION-DECIMAL",
+      "status": "PASS",
+      "query": "SELECT GiaTriGiam discount,DonHangToiThieu minimumOrder,GiamToiDa maximumDiscount FROM dbo.KHUYENMAI WHERE MaCode='R82ADMINPROMO';",
+      "inputs": {},
+      "rows": [
+        {
+          "discount": 30.75,
+          "minimumOrder": 100.25,
+          "maximumDiscount": 50.75
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-PRICING",
+      "status": "PASS",
+      "query": "SELECT GiaID id,PhuThu surcharge FROM dbo.BANGGIA WHERE RapID=@ID;",
+      "inputs": {
+        "ID": 8
+      },
+      "rows": [
+        {
+          "id": 8,
+          "surcharge": 10.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-SHOW",
+      "status": "PASS",
+      "query": "SELECT SuatChieuID id,GiaVeCoBan price FROM dbo.SUATCHIEU WHERE PhongID=@ID;",
+      "inputs": {
+        "ID": 11
+      },
+      "rows": [
+        {
+          "id": 41,
+          "price": 100.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-SHOW-UPDATE",
+      "status": "PASS",
+      "query": "SELECT GiaVeCoBan price FROM dbo.SUATCHIEU WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 41
+      },
+      "rows": [
+        {
+          "price": 200.75
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-COMPLAINT",
+      "status": "PASS",
+      "query": "SELECT NguoiXuLyID actor,NoiDungXuLy content FROM dbo.XULY_KHIEUNAI WHERE KhieuNaiID=@ID ORDER BY XuLyID;",
+      "inputs": {
+        "ID": 71
+      },
+      "rows": [
+        {
+          "actor": 4,
+          "content": "R82 Support processed"
+        },
+        {
+          "actor": 4,
+          "content": "Cập nhật trạng thái khiếu nại."
+        },
+        {
+          "actor": 1,
+          "content": "R82 Admin processed"
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-RECEIPTS",
+      "status": "PASS",
+      "query": "SELECT SUM(p.SoTien) receipts,COUNT(*) payments,COUNT(DISTINCT d.DonDatVeID) orders FROM dbo.THANHTOAN p JOIN dbo.DONDATVE d ON d.DonDatVeID=p.DonDatVeID WHERE p.TrangThai=N'Thành công' AND dbo.fn_NgayKinhDoanh(p.NgayThanhToan)=@Day;",
+      "inputs": {
+        "Day": "2026-10-10"
+      },
+      "rows": [
+        {
+          "receipts": 1175.5,
+          "payments": 1,
+          "orders": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-ADMIN-DENIED-NO-WRITE",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.XULY_KHIEUNAI WHERE KhieuNaiID=@ID;",
+      "inputs": {
+        "ID": 71
+      },
+      "rows": [
+        {
+          "n": 3
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-ASSIGNMENT",
+      "status": "PASS",
+      "query": "SELECT COUNT(*) n FROM dbo.PHANCONG_RAP WHERE NguoiDungID=@Manager AND RapID=@Cinema AND TrangThai=N'Hiệu lực';",
+      "inputs": {
+        "Manager": 2,
+        "Cinema": 7
+      },
+      "rows": [
+        {
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-ROOM",
+      "status": "PASS",
+      "query": "SELECT PhongID id,RapID cinema FROM dbo.PHONGCHIEU WHERE TenPhong=N'R82 Manager Room';",
+      "inputs": {},
+      "rows": [
+        {
+          "id": 12,
+          "cinema": 7
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-ROOM-UPDATE",
+      "status": "PASS",
+      "query": "SELECT TenPhong name FROM dbo.PHONGCHIEU WHERE PhongID=@ID;",
+      "inputs": {
+        "ID": 12
+      },
+      "rows": [
+        {
+          "name": "R82 Manager Room Updated"
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-SEAT",
+      "status": "PASS",
+      "query": "SELECT GheID id,LoaiGhe type FROM dbo.GHE WHERE PhongID=@ID;",
+      "inputs": {
+        "ID": 12
+      },
+      "rows": [
+        {
+          "id": 290,
+          "type": "VIP"
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-SEAT-UPDATE",
+      "status": "PASS",
+      "query": "SELECT TrangThai status FROM dbo.GHE WHERE GheID=@ID;",
+      "inputs": {
+        "ID": 290
+      },
+      "rows": [
+        {
+          "status": "Bảo trì"
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-CREATE-SHOW",
+      "status": "PASS",
+      "query": "SELECT SuatChieuID id,GiaVeCoBan price FROM dbo.SUATCHIEU WHERE PhongID=@ID;",
+      "inputs": {
+        "ID": 12
+      },
+      "rows": [
+        {
+          "id": 42,
+          "price": 100.25
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-UPDATE-SHOW",
+      "status": "PASS",
+      "query": "SELECT GiaVeCoBan price FROM dbo.SUATCHIEU WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 42
+      },
+      "rows": [
+        {
+          "price": 200.75
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-CANCEL",
+      "status": "PASS",
+      "query": "SELECT TrangThai status FROM dbo.SUATCHIEU WHERE SuatChieuID=@ID;",
+      "inputs": {
+        "ID": 42
+      },
+      "rows": [
+        {
+          "status": "Đã hủy"
+        }
+      ]
+    },
+    {
+      "id": "SQL-MANAGER-PRICING",
+      "status": "PASS",
+      "query": "SELECT GiaID id,PhuThu surcharge FROM dbo.BANGGIA WHERE RapID=@ID;",
+      "inputs": {
+        "ID": 7
+      },
+      "rows": [
+        {
+          "id": 9,
+          "surcharge": 12.25
+        }
+      ]
+    }
+  ]
+}

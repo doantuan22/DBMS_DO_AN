@@ -1,0 +1,173 @@
+{
+  "phase": "reproduce-p2",
+  "checks": [
+    {
+      "id": "P2-ADM02-ROLE-CONTROL",
+      "UCs": [
+        "ADM-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:00:18.362Z",
+      "error": "Allowed role select missing\n\n0 !== 3\n",
+      "screenshot": "P2-ADM02-ROLE-CONTROL-FAIL.png",
+      "networkRange": [
+        2,
+        5
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:00:18.620Z"
+    },
+    {
+      "id": "P2-ADM-11-DECIMAL",
+      "UCs": [
+        "ADM-11"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:00:18.620Z",
+      "assertions": [
+        {
+          "valid": true,
+          "stepMismatch": false,
+          "step": "",
+          "value": "100.25"
+        }
+      ],
+      "networkRange": [
+        5,
+        6
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:00:18.775Z"
+    },
+    {
+      "id": "P2-ADM-12-DECIMAL",
+      "UCs": [
+        "ADM-12"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:00:18.777Z",
+      "assertions": [
+        {
+          "valid": true,
+          "stepMismatch": false,
+          "step": "",
+          "value": "100.25"
+        }
+      ],
+      "networkRange": [
+        6,
+        7
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:00:18.909Z"
+    },
+    {
+      "id": "P2-ADM-13-DECIMAL",
+      "UCs": [
+        "ADM-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:00:18.909Z",
+      "assertions": [
+        {
+          "valid": true,
+          "stepMismatch": false,
+          "step": "",
+          "value": "100.25"
+        }
+      ],
+      "networkRange": [
+        7,
+        8
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:00:19.059Z"
+    },
+    {
+      "id": "P2-ADM-14-DECIMAL",
+      "UCs": [
+        "ADM-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:00:19.059Z",
+      "assertions": [
+        {
+          "valid": true,
+          "stepMismatch": false,
+          "step": "",
+          "value": "100.25"
+        }
+      ],
+      "networkRange": [
+        8,
+        9
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:00:19.211Z"
+    },
+    {
+      "id": "P2-ADM16-REVENUE-SECTIONS",
+      "UCs": [
+        "ADM-16"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:00:19.211Z",
+      "error": "Missing approved DTO dimension Tổng hợp doanh thu",
+      "screenshot": "P2-ADM16-REVENUE-SECTIONS-FAIL.png",
+      "networkRange": [
+        9,
+        10
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:00:19.408Z"
+    }
+  ]
+}

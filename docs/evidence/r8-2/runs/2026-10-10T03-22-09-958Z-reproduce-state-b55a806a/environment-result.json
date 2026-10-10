@@ -1,0 +1,473 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-10-10T03:22:19.551Z",
+  "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+  "targetIdentity": {
+    "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+    "database_id": 48,
+    "create_date": "2026-10-10T08:59:01.693",
+    "state_desc": "ONLINE",
+    "is_read_only": false,
+    "database_guid": "33876608-D109-43B5-ACEC-0B84C2639A73",
+    "files": [
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+        "type_desc": "ROWS",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44.mdf"
+      },
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44_log",
+        "type_desc": "LOG",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44_log.ldf"
+      }
+    ]
+  },
+  "server": "DESKTOP-E67DPCV",
+  "phases": [],
+  "smoke": [
+    {
+      "id": "P3-KH01-REGISTER",
+      "UCs": [
+        "KH-01"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:22.376Z",
+      "networkRange": [
+        0,
+        2
+      ],
+      "sqlRange": [
+        0,
+        2
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:29.332Z"
+    },
+    {
+      "id": "P3-KH02-LOGIN",
+      "UCs": [
+        "KH-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:29.332Z",
+      "networkRange": [
+        2,
+        14
+      ],
+      "sqlRange": [
+        2,
+        2
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:30.374Z"
+    },
+    {
+      "id": "P3-KH03-PROFILE",
+      "UCs": [
+        "KH-03"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:30.374Z",
+      "networkRange": [
+        14,
+        17
+      ],
+      "sqlRange": [
+        2,
+        3
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:30.857Z"
+    },
+    {
+      "id": "P3-KH04-CATALOG",
+      "UCs": [
+        "KH-04"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:30.858Z",
+      "networkRange": [
+        17,
+        28
+      ],
+      "sqlRange": [
+        3,
+        4
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:31.986Z"
+    },
+    {
+      "id": "P3-KH05-SCHEDULE",
+      "UCs": [
+        "KH-05"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:31.986Z",
+      "networkRange": [
+        28,
+        35
+      ],
+      "sqlRange": [
+        4,
+        5
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:32.269Z"
+    },
+    {
+      "id": "P3-KH06-SEATS",
+      "UCs": [
+        "KH-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:32.269Z",
+      "networkRange": [
+        35,
+        35
+      ],
+      "sqlRange": [
+        5,
+        6
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:32.519Z"
+    },
+    {
+      "id": "P3-KH08-FOOD",
+      "UCs": [
+        "KH-08"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:32.519Z",
+      "networkRange": [
+        35,
+        35
+      ],
+      "sqlRange": [
+        6,
+        7
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:32.589Z"
+    },
+    {
+      "id": "P3-KH09-PROMOTION",
+      "UCs": [
+        "KH-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:32.590Z",
+      "networkRange": [
+        35,
+        37
+      ],
+      "sqlRange": [
+        7,
+        8
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:32.847Z"
+    },
+    {
+      "id": "P3-KH07-BOOKING",
+      "UCs": [
+        "KH-07",
+        "KH-08",
+        "KH-09"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:32.847Z",
+      "networkRange": [
+        37,
+        39
+      ],
+      "sqlRange": [
+        8,
+        9
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:33.019Z"
+    },
+    {
+      "id": "P3-KH10-PAYMENT",
+      "UCs": [
+        "KH-10"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:33.019Z",
+      "networkRange": [
+        39,
+        46
+      ],
+      "sqlRange": [
+        9,
+        10
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:33.488Z"
+    },
+    {
+      "id": "P3-KH11-ORDERS",
+      "UCs": [
+        "KH-11"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:33.488Z",
+      "networkRange": [
+        46,
+        58
+      ],
+      "sqlRange": [
+        10,
+        12
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:34.107Z"
+    },
+    {
+      "id": "P3-KH12-ORDER-DETAIL",
+      "UCs": [
+        "KH-12"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:34.107Z",
+      "networkRange": [
+        58,
+        67
+      ],
+      "sqlRange": [
+        12,
+        12
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:34.651Z"
+    },
+    {
+      "id": "P3-KH13-ELIGIBILITY",
+      "UCs": [
+        "KH-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:34.651Z",
+      "networkRange": [
+        67,
+        77
+      ],
+      "sqlRange": [
+        12,
+        14
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:35.286Z"
+    },
+    {
+      "id": "P3-KH14-COMPLAINT",
+      "UCs": [
+        "KH-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:35.287Z",
+      "networkRange": [
+        77,
+        86
+      ],
+      "sqlRange": [
+        14,
+        15
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:35.775Z"
+    },
+    {
+      "id": "P3-CUSTOMER-FOREIGN-OWNERSHIP",
+      "UCs": [
+        "KH-11",
+        "KH-12",
+        "KH-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T03:22:35.776Z",
+      "networkRange": [
+        86,
+        104
+      ],
+      "sqlRange": [
+        15,
+        16
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T03:22:36.741Z"
+    },
+    {
+      "id": "EDGE-COMPLAINT-LATE-DETAIL",
+      "UCs": [
+        "KH-14"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:22:37.325Z",
+      "error": "Late complaint A overwrites B\n+ actual - expected\n\n+ 'R82 Journey Complaint'\n- 'R82 Smoke Thấp'\n       ^\n",
+      "screenshot": "EDGE-COMPLAINT-LATE-DETAIL-FAIL.png",
+      "networkRange": [
+        111,
+        119
+      ],
+      "sqlRange": [
+        16,
+        16
+      ],
+      "controlRange": [
+        0,
+        1
+      ],
+      "finishedAt": "2026-10-10T03:22:38.831Z"
+    },
+    {
+      "id": "EDGE-ORDER-LATE-DETAIL",
+      "UCs": [
+        "KH-12"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:22:38.831Z",
+      "error": "Late order A overwrites B\n+ actual - expected\n\n+ 'ĐƠN #14'\n- 'ĐƠN #15'\n         ^\n",
+      "screenshot": "EDGE-ORDER-LATE-DETAIL-FAIL.png",
+      "networkRange": [
+        119,
+        125
+      ],
+      "sqlRange": [
+        16,
+        16
+      ],
+      "controlRange": [
+        1,
+        2
+      ],
+      "finishedAt": "2026-10-10T03:22:40.400Z"
+    },
+    {
+      "id": "EDGE-PAYMENT-LATE-READ",
+      "UCs": [
+        "KH-10"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:22:40.400Z",
+      "error": "Late paid order A overwrites pending payment B\n+ actual - expected\n\n+ 'Đơn #14'\n- 'Đơn #15'\n         ^\n",
+      "screenshot": "EDGE-PAYMENT-LATE-READ-FAIL.png",
+      "networkRange": [
+        125,
+        131
+      ],
+      "sqlRange": [
+        16,
+        16
+      ],
+      "controlRange": [
+        2,
+        3
+      ],
+      "finishedAt": "2026-10-10T03:22:41.881Z"
+    },
+    {
+      "id": "EDGE-PAYMENT-DOUBLE-SUBMIT",
+      "UCs": [
+        "KH-10"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T03:22:41.882Z",
+      "error": "Immediate double click created multiple payment attempts\n\n2 !== 1\n",
+      "screenshot": "EDGE-PAYMENT-DOUBLE-SUBMIT-FAIL.png",
+      "networkRange": [
+        131,
+        140
+      ],
+      "sqlRange": [
+        16,
+        16
+      ],
+      "controlRange": [
+        3,
+        5
+      ],
+      "finishedAt": "2026-10-10T03:22:43.782Z"
+    },
+    {
+      "id": "ISOLATION-CLEANUP",
+      "result": "PASS",
+      "assertions": [
+        "Test backend exact identity + login denied main",
+        "Owned fixture cleanup restores all27 data/metadata fingerprints; main unchanged"
+      ]
+    }
+  ],
+  "scope": "R8.2 verification; no UC acceptance upgrade",
+  "browserStatus": "REPRODUCED",
+  "cleanup": "PASS",
+  "mainPreservation": "PASS",
+  "readiness": "READY",
+  "finishedAt": "2026-10-10T03:22:45.155Z"
+}

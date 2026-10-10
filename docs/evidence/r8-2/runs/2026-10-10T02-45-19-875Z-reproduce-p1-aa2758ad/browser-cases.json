@@ -1,0 +1,88 @@
+{
+  "phase": "reproduce-p1",
+  "checks": [
+    {
+      "id": "P1-I11-LATE-DETAIL",
+      "UCs": [
+        "ADM-15"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T02:45:38.326Z",
+      "error": "Late A overwrites visible complaint B",
+      "screenshot": "P1-I11-LATE-DETAIL-FAIL.png",
+      "networkRange": [
+        25,
+        29
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:45:39.978Z"
+    },
+    {
+      "id": "P1-I15-LATE-QUEUE",
+      "UCs": [
+        "CSKH-02"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T02:45:40.459Z",
+      "error": "Old filter overwrites current queue",
+      "screenshot": "P1-I15-LATE-QUEUE-FAIL.png",
+      "networkRange": [
+        56,
+        58
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:45:41.890Z"
+    },
+    {
+      "id": "P1-I19-CONTEXT-RESET",
+      "UCs": [
+        "KH-05",
+        "KH-06",
+        "KH-08",
+        "KH-09"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T02:45:42.419Z",
+      "error": "Object reference chain is too long",
+      "screenshot": "P1-I19-CONTEXT-RESET-FAIL.png",
+      "networkRange": [
+        85,
+        99
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:45:42.781Z"
+    },
+    {
+      "id": "P1-I21-ORDER-LOOKUP",
+      "UCs": [
+        "KH-14"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T02:45:42.782Z",
+      "error": "Wait document.body.innerText.includes('Khiếu nại của tôi')",
+      "screenshot": "P1-I21-ORDER-LOOKUP-FAIL.png",
+      "networkRange": [
+        99,
+        109
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:45:57.946Z"
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "phase": "p1",
+  "checks": [
+    {
+      "id": "P1-I11-LATE-DETAIL",
+      "UCs": [
+        "ADM-15"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:53:53.296Z",
+      "assertions": [
+        "Real backend detail A delayed1000ms; B latest detail remains after A arrives"
+      ],
+      "networkRange": [
+        5,
+        8
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:53:54.849Z"
+    },
+    {
+      "id": "P1-I15-LATE-QUEUE",
+      "UCs": [
+        "CSKH-02"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:53:55.314Z",
+      "assertions": [
+        "Real SQL filtered response A delayed; only B rows remain"
+      ],
+      "networkRange": [
+        12,
+        14
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:53:56.780Z"
+    },
+    {
+      "id": "P1-I19-CONTEXT-RESET",
+      "UCs": [
+        "KH-05",
+        "KH-06",
+        "KH-08",
+        "KH-09"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:53:57.295Z",
+      "assertions": [
+        "BrowserRouter same mounted route transition A→B resets seats/code/products"
+      ],
+      "networkRange": [
+        20,
+        28
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:53:57.747Z"
+    },
+    {
+      "id": "P1-I21-ORDER-LOOKUP",
+      "UCs": [
+        "KH-14"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:53:57.748Z",
+      "assertions": [
+        "503 order lookup produces error, manual retry returns legitimate successful empty"
+      ],
+      "networkRange": [
+        28,
+        34
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:53:58.710Z"
+    },
+    {
+      "id": "P1-I11-MODULE-INVALIDATION",
+      "UCs": [
+        "ADM-15"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:53:59.211Z",
+      "assertions": [
+        "Pending old detail cannot reappear on module return"
+      ],
+      "networkRange": [
+        42,
+        45
+      ],
+      "sqlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T02:54:00.463Z"
+    },
+    {
+      "id": "P1-I11-WRITE-TARGET",
+      "UCs": [
+        "ADM-15"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:54:00.463Z",
+      "assertions": [
+        "Double-click creates exactly one processing at confirmed A; late write never restores selection A after switch B"
+      ],
+      "networkRange": [
+        45,
+        51
+      ],
+      "sqlRange": [
+        0,
+        1
+      ],
+      "finishedAt": "2026-10-10T02:54:01.796Z"
+    },
+    {
+      "id": "P1-I21-ADMIN-REFERENCE-RETRY",
+      "UCs": [
+        "ADM-15"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:54:01.796Z",
+      "assertions": [
+        "500 reference distinct from successful order:null, current reference retry"
+      ],
+      "networkRange": [
+        51,
+        54
+      ],
+      "sqlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T02:54:02.039Z"
+    },
+    {
+      "id": "P1-PRIORITY-AND",
+      "UCs": [
+        "CSKH-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:54:02.521Z",
+      "assertions": [
+        "All four priority values sent to SQL; AND type produces true empty; omitting priority restores all four"
+      ],
+      "networkRange": [
+        61,
+        69
+      ],
+      "sqlRange": [
+        1,
+        1
+      ],
+      "finishedAt": "2026-10-10T02:54:02.774Z"
+    },
+    {
+      "id": "P1-SUPPORT-PROCESS-STATUS",
+      "UCs": [
+        "CSKH-03",
+        "CSKH-04",
+        "CSKH-05",
+        "CSKH-06"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T02:54:02.774Z",
+      "assertions": [
+        "Support detail, unlinked reference, processing and status append SQL timeline on B"
+      ],
+      "networkRange": [
+        69,
+        82
+      ],
+      "sqlRange": [
+        1,
+        2
+      ],
+      "finishedAt": "2026-10-10T02:54:03.186Z"
+    },
+    {
+      "id": "P1-BOOKING-PERSISTENCE",
+      "UCs": [
+        "KH-05",
+        "KH-06",
+        "KH-07",
+        "KH-08"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T02:54:03.600Z",
+      "error": "Expected values to be strictly equal:\n\n1 !== 10\n",
+      "screenshot": "P1-BOOKING-PERSISTENCE-FAIL.png",
+      "networkRange": [
+        87,
+        96
+      ],
+      "sqlRange": [
+        2,
+        2
+      ],
+      "finishedAt": "2026-10-10T02:54:04.064Z"
+    }
+  ]
+}

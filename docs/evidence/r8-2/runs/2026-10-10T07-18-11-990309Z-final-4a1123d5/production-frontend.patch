@@ -1,0 +1,887 @@
+diff --git a/frontend/src/components/CinemaImageManager.jsx b/frontend/src/components/CinemaImageManager.jsx
+index edf81e2..50eb0c4 100644
+--- a/frontend/src/components/CinemaImageManager.jsx
++++ b/frontend/src/components/CinemaImageManager.jsx
+@@ -19,6 +19,10 @@ export default function CinemaImageManager() {
+   const [selected, setSelected] = useState(null);
+   const [form, setForm] = useState(blank);
+   const imageRequest = useRef(0);
++  const writePending = useRef(false);
++  const mounted = useRef(true);
++  const [busy, setBusy] = useState(false);
++  useEffect(() => { mounted.current = true; const request = imageRequest; return () => { mounted.current = false; request.current++; }; }, []);
+ 
+   useEffect(() => {
+     if (!canManage) return;
+@@ -46,28 +50,33 @@ export default function CinemaImageManager() {
+   };
+ 
+   const submit = async (event) => {
+-    event.preventDefault(); if (!canManage) return; setNotice(null);
++    event.preventDefault(); if (!canManage || writePending.current) return; writePending.current = true; setBusy(true); setNotice(null);
+     const requestId = imageRequest.current;
+     try {
+       const payload = { url: form.url, description: form.description, displayOrder: Number(form.displayOrder), status: form.status };
+       if (selected) await adminApi.updateCinemaImage(cinemaId, selected.HinhAnhRapID, payload);
+       else await adminApi.createCinemaImage(cinemaId, { ...payload, cover: form.cover });
+-      if (requestId !== imageRequest.current) return;
++      if (!mounted.current || requestId !== imageRequest.current) return;
+       setSelected(null); setForm(blank()); setNotice({ ok: true, text: 'Đã lưu ảnh rạp.' }); await loadImages();
+-    } catch (requestError) { if (requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
++    } catch (requestError) { if (mounted.current && requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
++    finally { writePending.current = false; if (mounted.current) setBusy(false); }
+   };
+ 
+   const remove = async (image) => {
+-    if (!canManage) return;
++    if (!canManage || writePending.current) return;
+     if (!window.confirm('Xác nhận xóa ảnh rạp?')) return;
+-    try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); if (selected?.HinhAnhRapID === image.HinhAnhRapID) { setSelected(null); setForm(blank()); } setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
+-    catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
++    writePending.current = true; setBusy(true); const requestId = imageRequest.current;
++    try { await adminApi.deleteCinemaImage(cinemaId, image.HinhAnhRapID); if (!mounted.current || requestId !== imageRequest.current) return; if (selected?.HinhAnhRapID === image.HinhAnhRapID) { setSelected(null); setForm(blank()); } setNotice({ ok: true, text: 'Đã xóa ảnh rạp.' }); await loadImages(); }
++    catch (requestError) { if (mounted.current && requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
++    finally { writePending.current = false; if (mounted.current) setBusy(false); }
+   };
+ 
+   const setCover = async (image) => {
+-    if (!canManage) return;
+-    try { await adminApi.setCinemaImageCover(cinemaId, image.HinhAnhRapID); setNotice({ ok: true, text: 'Đã chọn ảnh đại diện.' }); await loadImages(); }
+-    catch (requestError) { setNotice({ ok: false, text: requestError.message }); }
++    if (!canManage || writePending.current) return;
++    writePending.current = true; setBusy(true); const requestId = imageRequest.current;
++    try { await adminApi.setCinemaImageCover(cinemaId, image.HinhAnhRapID); if (!mounted.current || requestId !== imageRequest.current) return; setNotice({ ok: true, text: 'Đã chọn ảnh đại diện.' }); await loadImages(); }
++    catch (requestError) { if (mounted.current && requestId === imageRequest.current) setNotice({ ok: false, text: requestError.message }); }
++    finally { writePending.current = false; if (mounted.current) setBusy(false); }
+   };
+ 
+   if (!canManage) return <EmptyState>Bạn chưa được cấp quyền quản lý ảnh rạp.</EmptyState>;
+@@ -82,10 +91,10 @@ export default function CinemaImageManager() {
+       <label>Thứ tự hiển thị<input required min="0" type="number" value={form.displayOrder} onChange={(event) => setForm((value) => ({ ...value, displayOrder: event.target.value }))} /></label>
+       <label>Trạng thái<select required value={form.status} onChange={(event) => setForm((value) => ({ ...value, status: event.target.value }))}>{CINEMA_IMAGE_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}</select></label>
+       {!selected && <label><input type="checkbox" checked={form.cover} onChange={(event) => setForm((value) => ({ ...value, cover: event.target.checked }))} /> Ảnh đại diện</label>}
+-      <div className="catalog-actions"><button className="catalog-button">Lưu</button>{selected && <button type="button" className="catalog-button catalog-button--secondary" onClick={() => { setSelected(null); setForm(blank()); }}>Bỏ chọn</button>}</div>
++      <div className="catalog-actions"><button className="catalog-button" disabled={busy}>Lưu</button>{selected && <button type="button" disabled={busy} className="catalog-button catalog-button--secondary" onClick={() => { setSelected(null); setForm(blank()); }}>Bỏ chọn</button>}</div>
+     </form>}
+     {loading && <LoadingState>Đang tải ảnh rạp…</LoadingState>}
+     {!loading && cinemaId && images.length === 0 && <EmptyState>Rạp này chưa có ảnh.</EmptyState>}
+-    {!loading && images.length > 0 && <div className="catalog-table-wrap"><table className="catalog-table"><thead><tr><th>Ảnh</th><th>Mô tả</th><th>Thứ tự</th><th>Trạng thái</th><th>Đại diện</th><th>Thao tác</th></tr></thead><tbody>{images.map((image) => <tr key={image.HinhAnhRapID}><td><a href={image.URL} target="_blank" rel="noreferrer">Mở ảnh</a></td><td>{image.MoTa ?? '—'}</td><td>{image.ThuTuHienThi}</td><td>{image.TrangThai}</td><td>{image.LaAnhDaiDien ? 'Có' : 'Không'}</td><td className="catalog-actions"><button type="button" className="catalog-button catalog-button--secondary" onClick={() => edit(image)}>Sửa</button>{!image.LaAnhDaiDien && <button type="button" className="catalog-button" onClick={() => setCover(image)}>Chọn đại diện</button>}<button type="button" className="catalog-button" onClick={() => remove(image)}>Xóa</button></td></tr>)}</tbody></table></div>}
++    {!loading && images.length > 0 && <div className="catalog-table-wrap"><table className="catalog-table"><thead><tr><th>Ảnh</th><th>Mô tả</th><th>Thứ tự</th><th>Trạng thái</th><th>Đại diện</th><th>Thao tác</th></tr></thead><tbody>{images.map((image) => <tr key={image.HinhAnhRapID}><td><a href={image.URL} target="_blank" rel="noreferrer">Mở ảnh</a></td><td>{image.MoTa ?? '—'}</td><td>{image.ThuTuHienThi}</td><td>{image.TrangThai}</td><td>{image.LaAnhDaiDien ? 'Có' : 'Không'}</td><td className="catalog-actions"><button type="button" disabled={busy} className="catalog-button catalog-button--secondary" onClick={() => edit(image)}>Sửa</button>{!image.LaAnhDaiDien && <button type="button" disabled={busy} className="catalog-button" onClick={() => setCover(image)}>Chọn đại diện</button>}<button type="button" disabled={busy} className="catalog-button" onClick={() => remove(image)}>Xóa</button></td></tr>)}</tbody></table></div>}
+   </section>;
+ }
+diff --git a/frontend/src/components/MovieReviews.jsx b/frontend/src/components/MovieReviews.jsx
+index e5e3675..821972d 100644
+--- a/frontend/src/components/MovieReviews.jsx
++++ b/frontend/src/components/MovieReviews.jsx
+@@ -1,6 +1,6 @@
+ import { userCanAct } from '../utils/authorization';
+ import { formatDateTime } from '../utils/dateTime';
+-import { useCallback, useEffect, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ import { createReview, getReviews } from '../api/feedbackApi';
+ import { useAuth } from '../context/AuthContext';
+ import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
+@@ -12,22 +12,45 @@ function errorMessage(error) {
+ }
+ 
+ export default function MovieReviews({ movieId }) {
++  const { user } = useAuth();
++  const scope = `${movieId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
++  return <ReviewContext key={scope} movieId={movieId} />;
++}
++
++function ReviewContext({ movieId }) {
+   const { user } = useAuth();
+   const canReview = userCanAct(user, 'KHACH_HANG', 'DANH_GIA');
+   const [resource, setResource] = useState({ status: 'loading' });
+   const [rating, setRating] = useState('5');
+   const [content, setContent] = useState('');
+   const [submit, setSubmit] = useState({ status: 'idle' });
+-  const load = useCallback(async () => { setResource({ status: 'loading' }); try { setResource({ status: 'success', data: (await getReviews(movieId)).reviews }); } catch (error) { setResource({ status: 'error', error }); } }, [movieId]);
++  const mounted = useRef(true);
++  const readGeneration = useRef(0);
++  const writePending = useRef(false);
++  const errorFeedback = useRef(null);
++  useEffect(() => { mounted.current = true; return () => { mounted.current = false; readGeneration.current++; }; }, []);
++  useEffect(() => { if (submit.status === 'error') errorFeedback.current?.focus(); }, [submit.status]);
++  const load = useCallback(async () => {
++    const request = ++readGeneration.current;
++    setResource({ status: 'loading' });
++    try { const result = await getReviews(movieId); if (mounted.current && request === readGeneration.current) setResource({ status: 'success', data: result.reviews }); }
++    catch (error) { if (mounted.current && request === readGeneration.current) setResource({ status: 'error', error }); }
++  }, [movieId]);
+   useEffect(() => { void Promise.resolve().then(load); }, [load]);
+   async function onSubmit(event) {
+-    event.preventDefault(); if (!canReview) return; setSubmit({ status: 'loading' });
+-    try { const { review } = await createReview(movieId, { rating: Number(rating), content: content || null }); setContent(''); setSubmit({ status: 'success', message: 'Đã gửi đánh giá.' }); setResource((current) => current.status === 'success' ? { status: 'success', data: [{ ...review, reviewerName: user?.name ?? 'Bạn' }, ...current.data] } : current); } catch (error) { setSubmit({ status: 'error', message: errorMessage(error) }); }
++    event.preventDefault(); if (!canReview || writePending.current) return;
++    writePending.current = true; setSubmit({ status: 'loading' });
++    try {
++      await createReview(movieId, { rating: Number(rating), content: content || null });
++      if (!mounted.current) return;
++      setContent(''); setSubmit({ status: 'success', message: 'Đã gửi đánh giá.' }); await load();
++    } catch (error) { if (mounted.current) setSubmit({ status: 'error', message: errorMessage(error) }); }
++    finally { writePending.current = false; }
+   }
+   return <section className="catalog-section" aria-labelledby="movie-reviews"><h2 id="movie-reviews">Đánh giá</h2>
+     {resource.status === 'loading' && <LoadingState>Đang tải đánh giá…</LoadingState>}{resource.status === 'error' && <ErrorState error={resource.error} onRetry={load} />}
+     {resource.status === 'success' && resource.data.length === 0 && <EmptyState>Chưa có đánh giá.</EmptyState>}{resource.status === 'success' && resource.data.length > 0 && <div className="review-list">{resource.data.map((review) => <article className="review-card" key={review.id}><strong>{review.reviewerName} · {review.rating}/5</strong>{review.content && <p>{review.content}</p>}<small>{formatDateTime(review.createdAt)}</small></article>)}</div>}
+-    {canReview && <form className="catalog-form" onSubmit={onSubmit}><h3>Viết đánh giá</h3><label>Điểm <select value={rating} onChange={(event) => setRating(event.target.value)} disabled={submit.status === 'loading'}>{[1, 2, 3, 4, 5].map((value) => <option key={value} value={value}>{value}/5</option>)}</select></label><label>Nội dung (không bắt buộc)<textarea value={content} maxLength="1000" onChange={(event) => setContent(event.target.value)} disabled={submit.status === 'loading'} /></label>{submit.status === 'error' && <p role="alert">{submit.message}</p>}{submit.status === 'success' && <p role="status">{submit.message}</p>}<button className="catalog-button" type="submit" disabled={submit.status === 'loading'}>{submit.status === 'loading' ? 'Đang gửi…' : 'Gửi đánh giá'}</button></form>}
++    {canReview && <form className="catalog-form" onSubmit={onSubmit}><h3>Viết đánh giá</h3><label>Điểm <select value={rating} onChange={(event) => setRating(event.target.value)} disabled={submit.status === 'loading'}>{[1, 2, 3, 4, 5].map((value) => <option key={value} value={value}>{value}/5</option>)}</select></label><label>Nội dung (không bắt buộc)<textarea value={content} maxLength="1000" onChange={(event) => setContent(event.target.value)} disabled={submit.status === 'loading'} /></label>{submit.status === 'error' && <p role="alert" tabIndex="-1" ref={errorFeedback}>{submit.message}</p>}{submit.status === 'success' && <p role="status">{submit.message}</p>}<button className="catalog-button" type="submit" disabled={submit.status === 'loading'}>{submit.status === 'loading' ? 'Đang gửi…' : 'Gửi đánh giá'}</button></form>}
+     {!user && <p>Đăng nhập với tài khoản khách hàng để gửi đánh giá.</p>}
+   </section>;
+ }
+diff --git a/frontend/src/pages/AdminPortal.jsx b/frontend/src/pages/AdminPortal.jsx
+index 8a6337c..2bc5b5c 100644
+--- a/frontend/src/pages/AdminPortal.jsx
++++ b/frontend/src/pages/AdminPortal.jsx
+@@ -3,11 +3,13 @@ import { userCanAct, ADMIN_SECTION_PERMISSIONS } from '../utils/authorization';
+ import { formatApiValue } from '../utils/dateTime';
+ import { adminForms as forms, formFields, inputValue, toBody } from '../utils/adminForms';
+ import { DAY_TYPES, RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
+-import { useCallback, useEffect, useRef, useState } from 'react';
++import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+ import { adminApi } from '../api/adminApi';
+ import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
+ import CinemaImageManager from '../components/CinemaImageManager';
+ import { bookingErrorMessage } from '../utils/bookingLimits';
++import { OrderReferenceDetails } from '../components/ComplaintOrderReference';
++import AdminRevenue from '../components/AdminRevenue';
+ 
+ const sections = [
+   ['dashboard', 'Tổng quan'], ['users', 'Tài khoản'], ['roles', 'Vai trò'], ['permissions', 'Quyền'],
+@@ -37,7 +39,21 @@ const dataRows = (value, key) => {
+   return Object.entries(value).map(([label, count]) => ({ label, value: count }));
+ };
+ 
++function ComplaintReferenceState({ resource, onRetry }) {
++  if (!resource) return null;
++  if (resource.status === 'loading') return <LoadingState>Đang tải tham chiếu đơn…</LoadingState>;
++  if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={onRetry} />;
++  if (resource.status === 'denied') return <p>Bạn chưa được cấp quyền tra cứu đơn.</p>;
++  return resource.order ? <OrderReferenceDetails order={resource.order} /> : <EmptyState>{resource.message ?? 'Không có đơn hàng liên kết.'}</EmptyState>;
++}
++
+ export default function AdminPortal() {
++  const { user } = useAuth();
++  const scope = `${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
++  return <AdminWorkspace key={scope} />;
++}
++
++function AdminWorkspace() {
+   const { user } = useAuth();
+   const allowedSections = sections.filter(([key]) => userCanAct(user, 'ADMIN', ADMIN_SECTION_PERMISSIONS[key]));
+   const [selectedSection, setActive] = useState('dashboard');
+@@ -52,8 +68,23 @@ export default function AdminPortal() {
+   const grantRequest = useRef(0);
+   const editorResource = useRef(active);
+   const [notice, setNotice] = useState(null);
++  const editorGeneration = useRef(0);
++  const editorWritePending = useRef(false);
++  const [editorBusy, setEditorBusy] = useState(false);
+   const [complaint, setComplaint] = useState(null);
+   const [orderReference, setOrderReference] = useState(null);
++  const complaintRequest = useRef(0);
++  const complaintSelection = useRef(null);
++  const currentModule = useRef(active);
++  const mounted = useRef(true);
++  const complaintWritePending = useRef(false);
++  const [complaintBusy, setComplaintBusy] = useState(false);
++  useLayoutEffect(() => { currentModule.current = active; }, [active]);
++  useEffect(() => {
++    mounted.current = true;
++    const requests = [complaintRequest, loadRequest, grantRequest];
++    return () => { mounted.current = false; requests.forEach(request => { request.current++; }); };
++  }, []);
+   const [processingForm, setProcessingForm] = useState({ content: '', nextStatus: 'Đang xử lý' });
+   const [reportInput, setReportInput] = useState({ fromDate: '', toDate: '' });
+   const [reportRange, setReportRange] = useState({});
+@@ -66,23 +97,36 @@ export default function AdminPortal() {
+     catch (error) { if (requestId === grantRequest.current) setNotice({ ok: false, text: error.message }); }
+   };
+   const saveGrants = async (event) => {
+-    event.preventDefault(); if (!canGrant) return;
+-    try { await adminApi.update(`roles/${grantRoleId}/permissions`, { permissionIds: grantIds.split(',').filter(value => value.trim()).map(Number) }); setNotice({ ok: true, text: 'Đã cập nhật quyền của vai trò.' }); }
+-    catch (error) { setNotice({ ok: false, text: error.message }); }
++    event.preventDefault(); if (!canGrant || editorWritePending.current) return;
++    editorWritePending.current = true; setEditorBusy(true); setNotice(null);
++    const requestId = grantRequest.current, target = grantRoleId;
++    try { await adminApi.update(`roles/${target}/permissions`, { permissionIds: grantIds.split(',').filter(value => value.trim()).map(Number) }); if (mounted.current && requestId === grantRequest.current && currentModule.current === 'permissions') setNotice({ ok: true, text: 'Đã cập nhật quyền của vai trò.' }); }
++    catch (error) { if (mounted.current && requestId === grantRequest.current) setNotice({ ok: false, text: error.message }); }
++    finally { editorWritePending.current = false; if (mounted.current) setEditorBusy(false); }
+   };
+   const load = useCallback(async () => {
+     if (editorResource.current !== active) { editorResource.current = active; setSelected(null); setValues({}); }
+     if (!active) { setState({ status: 'idle' }); return; }
+     const requestId = ++loadRequest.current;
+     setState({ status: 'loading' });
+-    try { const data = await loaders[active](adminApi, reportRange); if (requestId === loadRequest.current) setState({ status: 'success', data }); }
++    try {
++      const data = await loaders[active](adminApi, reportRange);
++      if (active === 'users' && userCanAct(user, 'ADMIN', 'QL_VAITRO')) {
++        try { data.roleChoices = (await adminApi.roles()).roles; } catch { /* Authorized user-list mappings remain usable if optional role lookup fails. */ }
++      }
++      if (requestId === loadRequest.current) setState({ status: 'success', data, resource: active });
++    }
+     catch (error) { if (requestId === loadRequest.current) setState({ status: 'error', error }); }
+-  }, [active, reportRange]);
++  }, [active, reportRange, user]);
+   useEffect(() => { void Promise.resolve().then(load); }, [load]);
+-  const rows = state.status === 'success' ? dataRows(state.data?.[active] ?? state.data?.dashboard ?? state.data, active) : [];
++  const rows = state.status === 'success' && state.resource === active ? dataRows(state.data?.[active] ?? state.data?.dashboard ?? state.data, active) : [];
+   const definition = forms[active];
++  const accountRoles = [...new Map((state.resource === 'users' ? state.data?.roleChoices ?? rows : [])
++    .filter(row => ['QUAN_LY_RAP', 'CSKH', 'ADMIN'].includes(row.MaVaiTro))
++    .map(row => [row.VaiTroID, { id: row.VaiTroID, name: row.TenVaiTro }])).values()];
+   const editableFields = definition ? formFields(definition, Boolean(selected)) : [];
+   const onSelect = (row) => {
++    editorGeneration.current++;
+     setSelected(row);
+     const rowValues = Object.fromEntries(formFields(definition, true).map(([name, , kind, column]) => [name, inputValue(row[column], kind)]));
+     if (active === 'movies') {
+@@ -91,70 +135,110 @@ export default function AdminPortal() {
+     }
+     setValues(rowValues);
+   };
+-  const clearForm = () => { setSelected(null); setValues({}); };
++  const clearForm = () => { editorGeneration.current++; setSelected(null); setValues({}); };
+   const switchSection = (key) => {
+     if (key !== active) loadRequest.current += 1;
++    complaintRequest.current++; complaintSelection.current = null;
++    setState({ status: 'loading' });
+     grantRequest.current += 1;
+     setActive(key); clearForm(); setNotice(null); setComplaint(null); setOrderReference(null);
+     setGrantRoleId(''); setGrantIds(''); setProcessingForm({ content: '', nextStatus: 'Đang xử lý' });
+   };
+   const submit = async (event) => {
+-    event.preventDefault(); setNotice(null);
++    event.preventDefault();
++    if (editorWritePending.current || !definition) return;
++    if (active === 'users' && !selected && !accountRoles.some(role => role.id === Number(values.roleId))) return;
++    editorWritePending.current = true; setEditorBusy(true); setNotice(null);
+     const requestId = loadRequest.current;
++    const editor = editorGeneration.current;
+     try {
+       const payload = toBody(values, editableFields);
+       await (selected
+         ? adminApi.update(`${definition.path}/${selected[definition.id]}${active === 'users' ? '/status' : ''}`, payload)
+         : adminApi.create(definition.path, payload));
+       if (requestId !== loadRequest.current) return;
+-      setNotice({ ok: true, text: 'Đã lưu thay đổi.' }); clearForm(); await load();
++      if (editor === editorGeneration.current) { setNotice({ ok: true, text: 'Đã lưu thay đổi.' }); clearForm(); }
++      await load();
+     } catch (error) { if (requestId === loadRequest.current) setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message }); }
++    finally { editorWritePending.current = false; if (mounted.current) setEditorBusy(false); }
+   };
+   const remove = async (row) => {
+-    if (!definition || !window.confirm('Xác nhận xóa mục này? Ràng buộc nghiệp vụ sẽ từ chối xóa dữ liệu đang được sử dụng.')) return;
+-    try { const response = await adminApi.remove(`${definition.path}/${row[definition.id]}`); setNotice({ ok: true, text: active === 'rooms' ? response.result.Message : 'Đã xóa.' }); await load(); }
+-    catch (error) { setNotice({ ok: false, text: error.message }); }
++    if (!definition || editorWritePending.current || !window.confirm('Xác nhận xóa mục này? Ràng buộc nghiệp vụ sẽ từ chối xóa dữ liệu đang được sử dụng.')) return;
++    editorWritePending.current = true; setEditorBusy(true); setNotice(null);
++    const request = loadRequest.current, resource = active, target = `${definition.path}/${row[definition.id]}`;
++    try { const response = await adminApi.remove(target); if (!mounted.current || request !== loadRequest.current || resource !== currentModule.current) return; setNotice({ ok: true, text: resource === 'rooms' ? response.result.Message : 'Đã xóa.' }); await load(); }
++    catch (error) { if (mounted.current && request === loadRequest.current && resource === currentModule.current) setNotice({ ok: false, text: error.message }); }
++    finally { editorWritePending.current = false; if (mounted.current) setEditorBusy(false); }
+   };
+   const changeUserStatus = async (row) => {
+     const activeStatus = 'Hoạt động';
+     const lockedStatus = 'Bị khóa';
+-    if (![activeStatus, lockedStatus].includes(row.TrangThai)) return;
++    if (editorWritePending.current || ![activeStatus, lockedStatus].includes(row.TrangThai)) return;
+     const next = row.TrangThai === activeStatus ? lockedStatus : activeStatus;
+     if (!window.confirm(`Xác nhận ${next === lockedStatus ? 'khóa' : 'mở khóa'} tài khoản này?`)) return;
+-    try { await adminApi.update(`users/${row.NguoiDungID}/status`, { status: next }); setNotice({ ok: true, text: 'Đã cập nhật tài khoản.' }); await load(); }
+-    catch (error) { setNotice({ ok: false, text: error.message }); }
++    editorWritePending.current = true; setEditorBusy(true); setNotice(null);
++    const request = loadRequest.current, target = row.NguoiDungID;
++    try { await adminApi.update(`users/${target}/status`, { status: next }); if (!mounted.current || request !== loadRequest.current || currentModule.current !== 'users') return; setNotice({ ok: true, text: 'Đã cập nhật tài khoản.' }); await load(); }
++    catch (error) { if (mounted.current && request === loadRequest.current && currentModule.current === 'users') setNotice({ ok: false, text: error.message }); }
++    finally { editorWritePending.current = false; if (mounted.current) setEditorBusy(false); }
+   };
+   const cancelShowtime = async (row) => {
+-    if (!window.confirm('Xác nhận hủy suất chiếu? Đơn đang giữ ghế sẽ khiến thao tác bị từ chối.')) return;
+-    try { await adminApi.create(`showtimes/${row.SuatChieuID}/cancel`, {}); setNotice({ ok: true, text: 'Đã hủy suất chiếu.' }); await load(); }
+-    catch (error) { setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message }); }
++    if (editorWritePending.current || !window.confirm('Xác nhận hủy suất chiếu? Đơn đang giữ ghế sẽ khiến thao tác bị từ chối.')) return;
++    editorWritePending.current = true; setEditorBusy(true); setNotice(null);
++    const request = loadRequest.current, target = row.SuatChieuID;
++    try { await adminApi.create(`showtimes/${target}/cancel`, {}); if (!mounted.current || request !== loadRequest.current || currentModule.current !== 'showtimes') return; setNotice({ ok: true, text: 'Đã hủy suất chiếu.' }); await load(); }
++    catch (error) { if (mounted.current && request === loadRequest.current && currentModule.current === 'showtimes') setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message }); }
++    finally { editorWritePending.current = false; if (mounted.current) setEditorBusy(false); }
++  };
++  const loadComplaintReference = async (id, request) => {
++    if (!canReference) { setOrderReference({ status: 'denied' }); return; }
++    setOrderReference({ status: 'loading' });
++    try {
++      const reference = await adminApi.complaintOrderReference(id);
++      if (mounted.current && request === complaintRequest.current) setOrderReference({ status: 'success', ...reference });
++    } catch (error) { if (mounted.current && request === complaintRequest.current) setOrderReference({ status: 'error', error }); }
+   };
+   const openComplaint = async (row) => {
+-    setSelected(row); setComplaint({ status: 'loading' }); setOrderReference(null);
++    const request = ++complaintRequest.current;
++    complaintSelection.current = row.id;
++    setSelected(row); setComplaint({ status: 'loading' }); setOrderReference(null); setNotice(null);
++    setProcessingForm({ content: '', nextStatus: 'Đang xử lý' });
+     try {
+       const detail = await adminApi.complaint(row.id);
+-      const reference = canReference ? await adminApi.complaintOrderReference(row.id).catch((error) => ({ message: error.message })) : { message: 'Bạn chưa được cấp quyền tra cứu đơn.' };
+-      setComplaint({ status: 'success', data: detail.complaint }); setOrderReference(reference);
++      if (!mounted.current || request !== complaintRequest.current) return;
++      setComplaint({ status: 'success', data: detail.complaint });
+       const status = detail.complaint.status === 'Mới' ? 'Đang xử lý' : detail.complaint.status;
+       setProcessingForm((current) => ({ ...current, nextStatus: status || current.nextStatus }));
+-    } catch (error) { setComplaint({ status: 'error', error }); }
++      await loadComplaintReference(row.id, request);
++    } catch (error) { if (mounted.current && request === complaintRequest.current) setComplaint({ status: 'error', error }); }
+   };
+   const writeComplaint = async (event, action) => {
+-    event.preventDefault(); if (!canProcess) return;
++    event.preventDefault();
++    if (!canProcess || complaintWritePending.current || complaint?.status !== 'success' || complaint.data.id !== selected?.id) return;
++    const target = selected, request = complaintRequest.current, payload = { ...processingForm };
++    complaintWritePending.current = true; setComplaintBusy(true); setNotice(null);
+     try {
+-      if (action === 'processing') await adminApi.addComplaintProcessing(selected.id, processingForm);
+-      else await adminApi.updateComplaintStatus(selected.id, { status: processingForm.nextStatus });
++      if (action === 'processing') await adminApi.addComplaintProcessing(target.id, payload);
++      else await adminApi.updateComplaintStatus(target.id, { status: payload.nextStatus });
++      if (!mounted.current || currentModule.current !== 'complaints') return;
++      await load();
++      if (request !== complaintRequest.current || complaintSelection.current !== target.id) return;
++      await openComplaint(target);
++      if (complaintSelection.current !== target.id || complaintRequest.current !== request + 1) return;
+       setNotice({ ok: true, text: 'Đã cập nhật khiếu nại và ghi lịch sử.' });
+-      if (action === 'processing') setProcessingForm((current) => ({ ...current, content: '' }));
+-      await load(); await openComplaint(selected);
+-    } catch (error) { setNotice({ ok: false, text: error.message }); }
++    } catch (error) { if (mounted.current && request === complaintRequest.current) setNotice({ ok: false, text: error.message }); }
++    finally { complaintWritePending.current = false; if (mounted.current) setComplaintBusy(false); }
+   };
+   const writeCast = async (event) => {
+-    event.preventDefault(); setNotice(null);
++    event.preventDefault(); if (editorWritePending.current || !selected) return;
++    editorWritePending.current = true; setEditorBusy(true); setNotice(null);
++    const requestId = loadRequest.current, editor = editorGeneration.current, target = selected.PhimID;
+     try {
+-      await adminApi.update(`movies/${selected.PhimID}/actors`, { cast: JSON.parse(values.castJson ?? '') });
++      await adminApi.update(`movies/${target}/actors`, { cast: JSON.parse(values.castJson ?? '') });
++      if (!mounted.current || requestId !== loadRequest.current || editor !== editorGeneration.current) return;
+       setNotice({ ok: true, text: 'Đã cập nhật danh sách diễn viên.' }); await load();
+-    } catch { setNotice({ ok: false, text: 'Không thể lưu danh sách diễn viên. Kiểm tra JSON và mã diễn viên.' }); }
++    } catch { if (mounted.current && requestId === loadRequest.current && editor === editorGeneration.current) setNotice({ ok: false, text: 'Không thể lưu danh sách diễn viên. Kiểm tra JSON và mã diễn viên.' }); }
++    finally { editorWritePending.current = false; if (mounted.current) setEditorBusy(false); }
+   };
+ 
+   if (!active) return <EmptyState>Bạn chưa được cấp quyền quản trị chức năng nào.</EmptyState>;
+@@ -174,32 +258,33 @@ export default function AdminPortal() {
+     <h2>{sections.find(([key]) => key === active)?.[1]}</h2>
+     {active === 'permissions' && canGrant && <form className="catalog-form" onSubmit={saveGrants}>
+       <h3>Gán quyền cho vai trò</h3><label>Mã vai trò<input aria-label="Mã vai trò nhận quyền" type="number" min="1" required value={grantRoleId} onChange={event => { grantRequest.current += 1; setGrantRoleId(event.target.value); setGrantIds(''); }} /></label>
+-      <button type="button" onClick={() => void readGrants()}>Đọc quyền hiện tại</button><label>QuyenID (phân cách dấu phẩy)<input value={grantIds} onChange={event => setGrantIds(event.target.value)} /></label><button className="catalog-button">Lưu quyền vai trò</button>
++      <button type="button" onClick={() => void readGrants()}>Đọc quyền hiện tại</button><label>QuyenID (phân cách dấu phẩy)<input value={grantIds} onChange={event => setGrantIds(event.target.value)} /></label><button className="catalog-button" disabled={editorBusy}>Lưu quyền vai trò</button>
+     </form>}
+-    {active === 'revenue' && <form className="catalog-actions" onSubmit={(event) => { event.preventDefault(); setReportRange(reportInput); }}><label>Từ ngày<input type="date" value={reportInput.fromDate} onChange={(event) => setReportInput((v) => ({ ...v, fromDate: event.target.value }))} /></label><label>Đến ngày<input type="date" value={reportInput.toDate} onChange={(event) => setReportInput((v) => ({ ...v, toDate: event.target.value }))} /></label><button className="catalog-button">Lọc doanh thu</button></form>}
+-    {active === 'movies' && selected && <form className="catalog-form" onSubmit={writeCast}><h3>Diễn viên phim #{selected.PhimID}</h3><label>Danh sách JSON (actorId, role)<textarea aria-label="Danh sách diễn viên phim" value={values.castJson ?? '[]'} onChange={(event) => setValues((current) => ({ ...current, castJson: event.target.value }))} /></label><button className="catalog-button">Lưu diễn viên</button></form>}
++    {active === 'revenue' && <form className="catalog-actions" onSubmit={(event) => { event.preventDefault(); setReportRange(reportInput); }}><label>Từ ngày<input type="date" value={reportInput.fromDate} onChange={(event) => setReportInput((v) => ({ ...v, fromDate: event.target.value }))} /></label><label>Đến ngày<input type="date" value={reportInput.toDate} onChange={(event) => setReportInput((v) => ({ ...v, toDate: event.target.value }))} /></label><button className="catalog-button" disabled={editorBusy}>Lọc doanh thu</button></form>}
++    {active === 'movies' && selected && <form className="catalog-form" onSubmit={writeCast}><h3>Diễn viên phim #{selected.PhimID}</h3><label>Danh sách JSON (actorId, role)<textarea aria-label="Danh sách diễn viên phim" value={values.castJson ?? '[]'} onChange={(event) => setValues((current) => ({ ...current, castJson: event.target.value }))} /></label><button className="catalog-button" disabled={editorBusy}>Lưu diễn viên</button></form>}
+     {active === 'complaints' && <ul className="catalog-list">{rows.map((row) => <li key={row.id}><button type="button" className="catalog-button catalog-button--secondary" onClick={() => void openComplaint(row)}>Mở khiếu nại #{row.id} · {row.title}</button></li>)}</ul>}
+     {active === 'complaints' && complaint?.status === 'loading' && <LoadingState>Đang tải hồ sơ khiếu nại…</LoadingState>}
+     {active === 'complaints' && complaint?.status === 'error' && <ErrorState error={complaint.error} onRetry={() => selected && void openComplaint(selected)} />}
+-    {active === 'complaints' && complaint?.status === 'success' && <section className="catalog-section"><h3>#{complaint.data.id} · {complaint.data.title}</h3><p>{complaint.data.senderName} · {complaint.data.type} · {complaint.data.status}</p><p>{complaint.data.content}</p><h4>Đơn hàng liên quan</h4><p>{orderReference?.message ?? (orderReference?.order ? formatApiValue(orderReference.order) : 'Không có đơn hàng liên quan.')}</p><h4>Lịch sử xử lý</h4><ol>{complaint.data.processings.map((item) => <li key={item.id}>{item.processorName} · {item.status} · {item.content}</li>)}</ol>{canProcess && <><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'processing')}><label>Nội dung xử lý<textarea required value={processingForm.content} onChange={(event) => setProcessingForm((v) => ({ ...v, content: event.target.value }))} /></label><label>Trạng thái sau xử lý<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button">Ghi diễn biến</button></form><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'status')}><label>Trạng thái khiếu nại<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button">Cập nhật trạng thái</button></form></>}</section>}
++    {active === 'complaints' && complaint?.status === 'success' && <section className="catalog-section"><h3>#{complaint.data.id} · {complaint.data.title}</h3><p>{complaint.data.senderName} · {complaint.data.type} · {complaint.data.status}</p><p>{complaint.data.content}</p><h4>Đơn hàng liên quan</h4><ComplaintReferenceState resource={orderReference} onRetry={() => void loadComplaintReference(selected.id, complaintRequest.current)} /><h4>Lịch sử xử lý</h4><ol>{complaint.data.processings.map((item) => <li key={item.id}>{item.processorName} · {item.status} · {item.content}</li>)}</ol>{canProcess && <><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'processing')}><label>Nội dung xử lý<textarea required value={processingForm.content} onChange={(event) => setProcessingForm((v) => ({ ...v, content: event.target.value }))} /></label><label>Trạng thái sau xử lý<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button" disabled={complaintBusy}>Ghi diễn biến</button></form><form className="catalog-form" onSubmit={(event) => void writeComplaint(event, 'status')}><label>Trạng thái khiếu nại<input required value={processingForm.nextStatus} onChange={(event) => setProcessingForm((v) => ({ ...v, nextStatus: event.target.value }))} /></label><button className="catalog-button" disabled={complaintBusy}>Cập nhật trạng thái</button></form></>}</section>}
+     {notice && <p role={notice.ok ? 'status' : 'alert'}>{notice.text}</p>}
+     {definition && <form className="catalog-form" onSubmit={submit}>
+       <h3>{selected ? 'Cập nhật' : 'Tạo mới'}</h3>
+       {selected && <p>#{selected[definition.id]}</p>}
+-      {editableFields.map(([name, label, kind]) => <label key={name}>{label}{name === 'status' && RESOURCE_STATUSES[active]
++      {editableFields.map(([name, label, kind]) => <label key={name}>{label}{active === 'users' && name === 'roleId' ? <select aria-label={label} required value={values[name] ?? ''} onChange={event => setValues(current => ({ ...current, [name]: event.target.value }))}><option value="" />{accountRoles.map(role => <option key={role.id} value={role.id}>{role.name}</option>)}</select> : name === 'status' && RESOURCE_STATUSES[active]
+         ? <select aria-label={label} required value={values[name] ?? ''} onChange={event => setValues(current => ({ ...current, [name]: event.target.value }))}><option value="">Chọn trạng thái</option>{RESOURCE_STATUSES[active].filter(status => active !== 'assignments' || selected || status === 'Hiệu lực').map(status => <option key={status}>{status}</option>)}</select>
+         : active === 'pricing' && name === 'dayType'
+           ? <select aria-label={label} required value={values[name] ?? ''} onChange={event => setValues(current => ({ ...current, [name]: event.target.value }))}><option value="">Chọn loại ngày</option>{DAY_TYPES.map(day => <option key={day}>{day}</option>)}</select>
+-          : <input aria-label={label} type={kind === 'csv' ? 'text' : kind} step={kind === 'datetime-local' ? '0.001' : undefined} value={values[name] ?? ''} onChange={(event) => setValues((current) => ({ ...current, [name]: event.target.value }))} required={!['description', 'phone', 'image', 'endsOn', 'endDate', 'maximumDiscount', 'minimumOrder', 'operatingSince', 'birthDate', 'language', 'subtitle', 'ageRating', 'director', 'posterUrl', 'trailerUrl', 'status'].includes(name)} />}</label>)}
+-      <div className="catalog-actions"><button className="catalog-button">Lưu</button>{selected && <button className="catalog-button catalog-button--secondary" type="button" onClick={clearForm}>Bỏ chọn</button>}</div>
++          : <input aria-label={label} type={kind === 'csv' ? 'text' : kind} step={kind === 'datetime-local' ? '0.001' : ['price', 'discountValue', 'minimumOrder', 'maximumDiscount', 'surcharge', 'basePrice'].includes(name) ? '0.01' : undefined} value={values[name] ?? ''} onChange={(event) => setValues((current) => ({ ...current, [name]: event.target.value }))} required={!['description', 'phone', 'image', 'endsOn', 'endDate', 'maximumDiscount', 'minimumOrder', 'operatingSince', 'birthDate', 'language', 'subtitle', 'ageRating', 'director', 'posterUrl', 'trailerUrl', 'status', 'genreIds', 'nationality'].includes(name)} />}</label>)}
++      <div className="catalog-actions"><button className="catalog-button" disabled={editorBusy}>Lưu</button>{selected && <button className="catalog-button catalog-button--secondary" type="button" onClick={clearForm}>Bỏ chọn</button>}</div>
+     </form>}
+     {active === 'showtimes' && <p>Chọn suất chiếu trong bảng để sửa hoặc dùng nút Hủy; thời gian chồng lấp được kiểm tra trong SQL.</p>}
+     {state.status === 'loading' && <LoadingState>Đang tải dữ liệu…</LoadingState>}
+     {state.status === 'error' && <ErrorState error={state.error} onRetry={load} />}
+-    {state.status === 'success' && (rows.length === 0 ? <EmptyState>Không có dữ liệu để hiển thị.</EmptyState> :
++    {state.status === 'success' && state.resource === active && active === 'revenue' && <AdminRevenue report={state.data} />}
++    {state.status === 'success' && state.resource === active && active !== 'revenue' && (rows.length === 0 ? <EmptyState>Không có dữ liệu để hiển thị.</EmptyState> :
+       <div className="catalog-table-wrap"><table className="catalog-table"><thead><tr>{Object.keys(rows[0]).map((key) => <th key={key}>{key.replace(/([a-z])([A-Z])/g, '$1 $2').replaceAll('_', ' ')}</th>)}{(definition || active === 'users' || active === 'showtimes') && <th>Thao tác</th>}</tr></thead>
+         <tbody>{rows.map((row, index) => <tr key={row[definition?.id ?? idColumns[active]] ?? row.id ?? index}>{Object.entries(row).map(([key, value]) => <td key={key}>{formatApiValue(value)}</td>)}
+-          {(definition || active === 'users' || active === 'showtimes') && <td className="catalog-actions"><button type="button" className="catalog-button catalog-button--secondary" onClick={() => onSelect(row)}>{active === 'users' ? 'Trạng thái' : 'Sửa'}</button>{definition && !['assignments', 'pricing', 'showtimes', 'users'].includes(active) && <button type="button" className="catalog-button" onClick={() => void remove(row)}>Xóa</button>}{active === 'users' && <button type="button" className="catalog-button" onClick={() => void changeUserStatus(row)}>{row.TrangThai === 'Hoạt động' ? 'Khóa' : 'Mở khóa'}</button>}{active === 'showtimes' && <button type="button" className="catalog-button" onClick={() => void cancelShowtime(row)}>Hủy</button>}</td>}
++          {(definition || active === 'users' || active === 'showtimes') && <td className="catalog-actions"><button type="button" className="catalog-button catalog-button--secondary" disabled={editorBusy} onClick={() => onSelect(row)}>{active === 'users' ? 'Trạng thái' : 'Sửa'}</button>{definition && !['assignments', 'pricing', 'showtimes', 'users'].includes(active) && <button type="button" className="catalog-button" disabled={editorBusy} onClick={() => void remove(row)}>Xóa</button>}{active === 'users' && <button type="button" className="catalog-button" disabled={editorBusy} onClick={() => void changeUserStatus(row)}>{row.TrangThai === 'Hoạt động' ? 'Khóa' : 'Mở khóa'}</button>}{active === 'showtimes' && <button type="button" className="catalog-button" disabled={editorBusy} onClick={() => void cancelShowtime(row)}>Hủy</button>}</td>}
+         </tr>)}</tbody>
+       </table></div>)}
+   </section>;
+diff --git a/frontend/src/pages/BookingPreparation.jsx b/frontend/src/pages/BookingPreparation.jsx
+index 1d03a89..c9437c8 100644
+--- a/frontend/src/pages/BookingPreparation.jsx
++++ b/frontend/src/pages/BookingPreparation.jsx
+@@ -20,6 +20,12 @@ function toProducts(quantities) {
+ 
+ export default function BookingPreparation() {
+   const { showtimeId } = useParams();
++  const { user } = useAuth();
++  const scope = `${user?.userId ?? 'guest'}:${user?.permissions?.map(item => item.code).sort().join(',') ?? ''}`;
++  return <BookingContext key={`${showtimeId}:${scope}`} showtimeId={showtimeId} />;
++}
++
++function BookingContext({ showtimeId }) {
+   const { user } = useAuth();
+   const canBook = userCanAct(user, 'KHACH_HANG', 'DAT_VE');
+   const [state, setState] = useState({ status: 'loading' });
+@@ -35,17 +41,30 @@ export default function BookingPreparation() {
+   const previewVersion = useRef(0);
+   const [bookingState, setBookingState] = useState({ status: 'idle' });
+   const [seatLimitNotice, setSeatLimitNotice] = useState(null);
++  const mounted = useRef(true);
++  const seatRequest = useRef(0);
++  const bookingPending = useRef(false);
++  const promotionRequest = useRef(0);
++  useEffect(() => {
++    mounted.current = true;
++    const requests = [seatRequest, previewVersion, promotionRequest];
++    return () => { mounted.current = false; requests.forEach(request => { request.current++; }); };
++  }, []);
+ 
+   const loadSeats = useCallback(async (signal) => {
++    if (signal?.aborted || !mounted.current) return;
++    const request = ++seatRequest.current;
+     previewVersion.current += 1;
+     setPromotion(null);
++    setSeatsState({ status: 'loading' });
+     try {
+       const rows = await getSeats(showtimeId, { signal });
++      if (!mounted.current || signal?.aborted || request !== seatRequest.current) return;
+       setSeats(rows);
+       setSelectedSeatIds((previous) => previous.filter((id) => rows.some((seat) => seat.id === id && seat.status === 'Trống')));
+       setSeatsState({ status: 'success' });
+     } catch (error) {
+-      if (error.name !== 'AbortError') {
++      if (mounted.current && request === seatRequest.current && error.name !== 'AbortError') {
+         setSeats([]);
+         setSelectedSeatIds([]);
+         setSeatsState({ status: 'error', error });
+@@ -89,35 +108,39 @@ export default function BookingPreparation() {
+   }
+ 
+   async function applyPromotion() {
+-    if (!canBook) return;
++    if (!canBook || promotionBusy || bookingPending.current) return;
+     if (selectedSeatIds.length === 0) {
+       setPromotion({ isValid: false, message: 'Hãy chọn ít nhất một ghế trước khi áp dụng khuyến mãi.' });
+       return;
+     }
+     setPromotionBusy(true);
++    const request = ++promotionRequest.current;
+     const version = ++previewVersion.current;
+     try {
+       const result = await validatePromotion({ showtimeId: Number(showtimeId), seatIds: selectedSeatIds, products: selectedProducts, promotionCode });
+-      if (version === previewVersion.current) setPromotion(result.promotion);
++      if (mounted.current && version === previewVersion.current) setPromotion(result.promotion);
+     } catch (error) {
+-      if (version === previewVersion.current) setPromotion({ isValid: false, message: error.message });
+-    } finally { setPromotionBusy(false); }
++      if (mounted.current && version === previewVersion.current) setPromotion({ isValid: false, message: error.message });
++    } finally { if (mounted.current && request === promotionRequest.current) setPromotionBusy(false); }
+   }
+ 
+   async function submitBooking() {
+-    if (!canBook) return;
++    if (!canBook || bookingPending.current) return;
+     if (selectedSeatIds.length === 0) {
+       setBookingState({ status: 'error', message: 'Hãy chọn ít nhất một ghế.' });
+       return;
+     }
++    bookingPending.current = true;
+     setBookingState({ status: 'loading' });
+     previewVersion.current += 1;
+     try {
+       const result = await createBooking({ showtimeId: Number(showtimeId), seatIds: selectedSeatIds, products: selectedProducts, promotionCode: promotionCode.trim() || undefined });
++      if (!mounted.current) return;
+       setBookingState({ status: 'success', booking: result.booking });
+       setSelectedSeatIds([]);
+       await loadSeats();
+     } catch (error) {
++      if (!mounted.current) return;
+       const friendly = bookingErrorMessage(error);
+       if (error.code === 'PROMOTION_NOT_AVAILABLE') {
+         setPromotion({ isValid: false, message: friendly });
+@@ -132,7 +155,7 @@ export default function BookingPreparation() {
+         setBookingState({ status: 'conflict', message: error.message });
+         await loadSeats();
+       } else setBookingState({ status: 'error', message: friendly ?? error.message });
+-    }
++    } finally { bookingPending.current = false; }
+   }
+ 
+   if (state.status === 'loading') return <LoadingState>Đang xác nhận suất chiếu…</LoadingState>;
+diff --git a/frontend/src/pages/ComplaintDetail.jsx b/frontend/src/pages/ComplaintDetail.jsx
+index cd782b0..3a5a26c 100644
+--- a/frontend/src/pages/ComplaintDetail.jsx
++++ b/frontend/src/pages/ComplaintDetail.jsx
+@@ -1,16 +1,27 @@
+ import { formatDateTime } from '../utils/dateTime';
+-import { useCallback, useEffect, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ import { Link, useParams } from 'react-router-dom';
+ import { getComplaint } from '../api/feedbackApi';
+ import { ErrorState, LoadingState } from '../components/CatalogStates';
+ import StatusBadge from '../components/primitives/StatusBadge';
++import { useAuth } from '../context/AuthContext';
+ 
+ export default function ComplaintDetail() {
+   const { complaintId } = useParams();
++  const { user } = useAuth();
++  const scope = `${complaintId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
++  return <ComplaintContext key={scope} complaintId={complaintId} />;
++}
++
++function ComplaintContext({ complaintId }) {
+   const [resource, setResource] = useState({ status: 'loading' });
++  const request = useRef(0);
++  const mounted = useRef(true);
++  useEffect(() => { mounted.current = true; const generation = request; return () => { mounted.current = false; generation.current++; }; }, []);
+   const load = useCallback(async () => {
++    const generation = ++request.current;
+     setResource({ status: 'loading' });
+-    try { setResource({ status: 'success', data: (await getComplaint(complaintId)).complaint }); } catch (error) { setResource({ status: 'error', error }); }
++    try { const result = await getComplaint(complaintId); if (mounted.current && generation === request.current) setResource({ status: 'success', data: result.complaint }); } catch (error) { if (mounted.current && generation === request.current) setResource({ status: 'error', error }); }
+   }, [complaintId]);
+   useEffect(() => { void Promise.resolve().then(load); }, [load]);
+   if (resource.status === 'loading') return <LoadingState>Đang tải khiếu nại…</LoadingState>;
+diff --git a/frontend/src/pages/Complaints.jsx b/frontend/src/pages/Complaints.jsx
+index 97ea138..c215a0a 100644
+--- a/frontend/src/pages/Complaints.jsx
++++ b/frontend/src/pages/Complaints.jsx
+@@ -1,6 +1,6 @@
+ import { useAuth } from '../context/AuthContext';
+ import { userCanAct } from '../utils/authorization';
+-import { useCallback, useEffect, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ import { Link, useSearchParams } from 'react-router-dom';
+ import { createComplaint, getComplaints } from '../api/feedbackApi';
+ import { getOrders } from '../api/ordersApi';
+@@ -16,11 +16,23 @@ export default function Complaints() {
+   const queryOrderId = searchParams.get('orderId') ?? '';
+   const canCreate = userCanAct(user, 'KHACH_HANG', 'GUI_KHIEU_NAI');
+   const [resource, setResource] = useState({ status: 'loading' }); const [orders, setOrders] = useState([]); const [form, setForm] = useState(() => ({ ...initialForm, orderId: queryOrderId })); const [submit, setSubmit] = useState({ status: 'idle' });
++  const [orderLookup, setOrderLookup] = useState({ status: 'loading' });
++  const orderRequest = useRef(0);
++  const pending = useRef(false);
+   const load = useCallback(async () => { setResource({ status: 'loading' }); try { setResource({ status: 'success', data: (await getComplaints()).complaints }); } catch (error) { setResource({ status: 'error', error }); } }, []);
+   // Drop a prefilled order id that is not one of this customer's orders.
+   const applyOrders = useCallback((list) => { setOrders(list); setForm((current) => (list.some((order) => String(order.id) === current.orderId) ? current : { ...current, orderId: '' })); }, []);
+-  useEffect(() => { void Promise.resolve().then(load); Promise.resolve().then(getOrders).then((result) => applyOrders(result.orders)).catch(() => applyOrders([])); }, [load, applyOrders]);
++  const loadOrders = useCallback(async () => {
++    const request = ++orderRequest.current;
++    setOrderLookup({ status: 'loading' });
++    try {
++      const result = await getOrders();
++      if (request !== orderRequest.current) return;
++      applyOrders(result.orders); setOrderLookup({ status: 'success' });
++    } catch (error) { if (request === orderRequest.current) setOrderLookup({ status: 'error', error }); }
++  }, [applyOrders]);
++  useEffect(() => { const request = orderRequest; void Promise.resolve().then(load); void Promise.resolve().then(loadOrders); return () => { request.current++; }; }, [load, loadOrders]);
+   const update = (key) => (event) => setForm((current) => ({ ...current, [key]: event.target.value }));
+-  async function onSubmit(event) { event.preventDefault(); if (!canCreate) return; setSubmit({ status: 'loading' }); try { const { complaint } = await createComplaint({ ...form, orderId: form.orderId || null }); setForm(initialForm); setSubmit({ status: 'success', message: 'Đã gửi khiếu nại.' }); setResource((current) => current.status === 'success' ? { status: 'success', data: [complaint, ...current.data] } : current); } catch (error) { setSubmit({ status: 'error', message: error.message }); } }
+-  return <section className="catalog-page"><p className="catalog-eyebrow">TÀI KHOẢN</p><h1>Khiếu nại của tôi</h1>{canCreate && <form className="catalog-form" onSubmit={onSubmit}><h2>Gửi khiếu nại</h2><label>Loại khiếu nại<input value={form.type} maxLength="100" onChange={update('type')} required disabled={submit.status === 'loading'} /></label><label>Tiêu đề<input value={form.title} maxLength="200" onChange={update('title')} required disabled={submit.status === 'loading'} /></label><label>Nội dung<textarea value={form.content} onChange={update('content')} required disabled={submit.status === 'loading'} /></label><label>Đơn liên quan (không bắt buộc)<select value={form.orderId} onChange={update('orderId')} disabled={submit.status === 'loading'}><option value="">Không liên kết đơn</option>{orders.map((order) => <option key={order.id} value={order.id}>Đơn #{order.id} · {order.movieTitle}</option>)}</select></label>{submit.status === 'error' && <p role="alert">{submit.message}</p>}{submit.status === 'success' && <p role="status">{submit.message}</p>}<button className="catalog-button" disabled={submit.status === 'loading'}>{submit.status === 'loading' ? 'Đang gửi…' : 'Gửi khiếu nại'}</button></form>}<h2>Lịch sử khiếu nại</h2>{resource.status === 'loading' && <LoadingState>Đang tải khiếu nại…</LoadingState>}{resource.status === 'error' && <ErrorState error={resource.error} onRetry={load} />}{resource.status === 'success' && resource.data.length === 0 && <EmptyState>Chưa có khiếu nại.</EmptyState>}{resource.status === 'success' && resource.data.length > 0 && <div className="catalog-list">{resource.data.map((complaint) => <article className="catalog-card" key={complaint.id}><h3>{complaint.title}</h3><p>#{complaint.id} · {complaint.type} · <StatusBadge status={complaint.status} /></p><p>Đơn liên quan: {complaint.orderId ?? 'Không có'}</p><Link className="catalog-button" to={`/complaints/${complaint.id}`}>Xem chi tiết</Link></article>)}</div>}</section>;
++  async function onSubmit(event) { event.preventDefault(); if (!canCreate || pending.current || (form.orderId && orderLookup.status !== 'success')) return; pending.current = true; setSubmit({ status: 'loading' }); try { const { complaint } = await createComplaint({ ...form, orderId: form.orderId || null }); setForm(initialForm); setSubmit({ status: 'success', message: 'Đã gửi khiếu nại.' }); setResource((current) => current.status === 'success' ? { status: 'success', data: [complaint, ...current.data] } : current); } catch (error) { setSubmit({ status: 'error', message: error.message }); } finally { pending.current = false; } }
++  return <section className="catalog-page"><p className="catalog-eyebrow">TÀI KHOẢN</p><h1>Khiếu nại của tôi</h1>{canCreate && <form className="catalog-form" onSubmit={onSubmit}><h2>Gửi khiếu nại</h2><label>Loại khiếu nại<input value={form.type} maxLength="100" onChange={update('type')} required disabled={submit.status === 'loading'} /></label><label>Tiêu đề<input value={form.title} maxLength="200" onChange={update('title')} required disabled={submit.status === 'loading'} /></label><label>Nội dung<textarea value={form.content} onChange={update('content')} required disabled={submit.status === 'loading'} /></label><label>Đơn liên quan (không bắt buộc)<select value={form.orderId} onChange={update('orderId')} disabled={submit.status === 'loading' || orderLookup.status !== 'success'}><option value="">Không liên kết đơn</option>{orders.map((order) => <option key={order.id} value={order.id}>Đơn #{order.id} · {order.movieTitle}</option>)}</select></label>{orderLookup.status === 'loading' && <LoadingState />}{orderLookup.status === 'error' && <ErrorState error={orderLookup.error} onRetry={loadOrders} />}{orderLookup.status === 'success' && orders.length === 0 && <EmptyState />}{submit.status === 'error' && <p role="alert">{submit.message}</p>}{submit.status === 'success' && <p role="status">{submit.message}</p>}<button className="catalog-button" disabled={submit.status === 'loading'}>{submit.status === 'loading' ? 'Đang gửi…' : 'Gửi khiếu nại'}</button></form>}<h2>Lịch sử khiếu nại</h2>{resource.status === 'loading' && <LoadingState>Đang tải khiếu nại…</LoadingState>}{resource.status === 'error' && <ErrorState error={resource.error} onRetry={load} />}{resource.status === 'success' && resource.data.length === 0 && <EmptyState>Chưa có khiếu nại.</EmptyState>}{resource.status === 'success' && resource.data.length > 0 && <div className="catalog-list">{resource.data.map((complaint) => <article className="catalog-card" key={complaint.id}><h3>{complaint.title}</h3><p>#{complaint.id} · {complaint.type} · <StatusBadge status={complaint.status} /></p><p>Đơn liên quan: {complaint.orderId ?? 'Không có'}</p><Link className="catalog-button" to={`/complaints/${complaint.id}`}>Xem chi tiết</Link></article>)}</div>}</section>;
+ }
+diff --git a/frontend/src/pages/ManagerPortal.jsx b/frontend/src/pages/ManagerPortal.jsx
+index 3d7e9ac..d49131e 100644
+--- a/frontend/src/pages/ManagerPortal.jsx
++++ b/frontend/src/pages/ManagerPortal.jsx
+@@ -49,6 +49,7 @@ function ManagerWorkspace({ cinemaId, user }) {
+   const generation = useRef(0);
+   const seatGeneration = useRef(0);
+   const mounted = useRef(true);
++  const writePending = useRef(false);
+   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+   const load = useCallback(async () => {
+     const current = ++generation.current;
+@@ -75,7 +76,8 @@ function ManagerWorkspace({ cinemaId, user }) {
+     } catch (error) { if (mounted.current && current === seatGeneration.current) setSeats({ status: 'error', rows: [], error }); }
+   };
+   const run = async (action, success, reloadSeats = false) => {
+-    if (busy) return;
++    if (writePending.current) return;
++    writePending.current = true;
+     setBusy(true); setNotice(null);
+     try {
+       const result = await action();
+@@ -86,7 +88,7 @@ function ManagerWorkspace({ cinemaId, user }) {
+     } catch (error) {
+       if (mounted.current) setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message });
+       throw error;
+-    } finally { if (mounted.current) setBusy(false); }
++    } finally { writePending.current = false; if (mounted.current) setBusy(false); }
+   };
+   const action = (fn, text, refreshSeats) => { void run(fn, text, refreshSeats).catch(() => {}); };
+   const list = section => data.sections?.[section]?.data?.[section] ?? [];
+diff --git a/frontend/src/pages/OrderDetail.jsx b/frontend/src/pages/OrderDetail.jsx
+index bcb98e9..7f5a0b3 100644
+--- a/frontend/src/pages/OrderDetail.jsx
++++ b/frontend/src/pages/OrderDetail.jsx
+@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext';
+ import { userCanAct } from '../utils/authorization';
+ import HoldDeadline from '../components/HoldDeadline';
+ import { formatDateTime } from '../utils/dateTime';
+-import { useCallback, useEffect, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ import { Link, useParams } from 'react-router-dom';
+ import { getOrder } from '../api/ordersApi';
+ import { ErrorState, LoadingState } from '../components/CatalogStates';
+@@ -13,7 +13,15 @@ const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', cur
+ export default function OrderDetail() {
+   const { user } = useAuth();
+   const { orderId } = useParams();
++  const scope = `${orderId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
++  return <OrderContext key={scope} orderId={orderId} user={user} />;
++}
++
++function OrderContext({ orderId, user }) {
+   const [resource, setResource] = useState({ status: 'loading' });
++  const request = useRef(0);
++  const mounted = useRef(true);
++  useEffect(() => { mounted.current = true; const generation = request; return () => { mounted.current = false; generation.current++; }; }, []);
+   const [elapsedDeadline, setElapsedDeadline] = useState(null);
+   const [now, setNow] = useState(() => Date.now());
+   useEffect(() => {
+@@ -21,8 +29,9 @@ export default function OrderDetail() {
+     return () => clearInterval(timer);
+   }, []);
+   const load = useCallback(async () => {
++    const generation = ++request.current;
+     setResource({ status: 'loading' });
+-    try { setResource({ status: 'success', data: (await getOrder(orderId)).order }); } catch (error) { setResource({ status: 'error', error }); }
++    try { const result = await getOrder(orderId); if (mounted.current && generation === request.current) setResource({ status: 'success', data: result.order }); } catch (error) { if (mounted.current && generation === request.current) setResource({ status: 'error', error }); }
+   }, [orderId]);
+   useEffect(() => { void Promise.resolve().then(load); }, [load]);
+   const onElapsed = useCallback(() => {
+diff --git a/frontend/src/pages/PaymentPage.jsx b/frontend/src/pages/PaymentPage.jsx
+index 0f90f94..f67f189 100644
+--- a/frontend/src/pages/PaymentPage.jsx
++++ b/frontend/src/pages/PaymentPage.jsx
+@@ -1,7 +1,7 @@
+ import { useAuth } from '../context/AuthContext';
+ import { userCanAct } from '../utils/authorization';
+ import HoldDeadline from '../components/HoldDeadline';
+-import { useCallback, useEffect, useState } from 'react';
++import { useCallback, useEffect, useRef, useState } from 'react';
+ import { Link, useParams } from 'react-router-dom';
+ import { createPaymentAttempt, getOrder, submitPaymentResult } from '../api/ordersApi';
+ import { ErrorState, LoadingState } from '../components/CatalogStates';
+@@ -14,9 +14,18 @@ const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', cur
+ 
+ export default function PaymentPage() {
+   const { user } = useAuth();
+-  const canPay = userCanAct(user, 'KHACH_HANG', 'THANH_TOAN');
+   const { orderId } = useParams();
++  const scope = `${orderId}:${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
++  return <PaymentContext key={scope} orderId={orderId} user={user} />;
++}
++
++function PaymentContext({ orderId, user }) {
++  const canPay = userCanAct(user, 'KHACH_HANG', 'THANH_TOAN');
+   const [resource, setResource] = useState({ status: 'loading' });
++  const request = useRef(0);
++  const mounted = useRef(true);
++  const pending = useRef(false);
++  useEffect(() => { mounted.current = true; const generation = request; return () => { mounted.current = false; generation.current++; }; }, []);
+   const [method, setMethod] = useState(METHODS[0]);
+   const [elapsedDeadline, setElapsedDeadline] = useState(null);
+   const [busy, setBusy] = useState(false);
+@@ -27,8 +36,9 @@ export default function PaymentPage() {
+     return () => clearInterval(timer);
+   }, []);
+   const load = useCallback(async () => {
++    const generation = ++request.current;
+     setResource({ status: 'loading' });
+-    try { setResource({ status: 'success', data: (await getOrder(orderId)).order }); } catch (error) { setResource({ status: 'error', error }); }
++    try { const result = await getOrder(orderId); if (mounted.current && generation === request.current) setResource({ status: 'success', data: result.order }); } catch (error) { if (mounted.current && generation === request.current) setResource({ status: 'error', error }); }
+   }, [orderId]);
+   useEffect(() => { void Promise.resolve().then(load); }, [load]);
+ 
+@@ -45,18 +55,22 @@ export default function PaymentPage() {
+   }, [elapsedDeadline, resource.data?.status, load]);
+ 
+   async function confirmPayment() {
+-    if (busy || !canConfirm) return;
++    if (pending.current || !canConfirm) return;
++    pending.current = true;
+     setBusy(true); setMessage(null);
+     try {
+       const { payment } = await createPaymentAttempt(orderId, method);
+       const result = await submitPaymentResult(orderId, payment.id, 'Thành công');
++      if (!mounted.current) return;
++      request.current++;
+       setResource({ status: 'success', data: result.order });
+       setMessage('Đã xác nhận thanh toán thành công.');
+     } catch (error) {
++      if (!mounted.current) return;
+       setMessage(bookingErrorMessage(error) ?? error.message);
+       await load();
+       if (resource.data?.showtimeId) void getSeats(resource.data.showtimeId).catch(() => {});
+-    } finally { setBusy(false); }
++    } finally { pending.current = false; if (mounted.current) setBusy(false); }
+   }
+   if (resource.status === 'loading') return <LoadingState>Đang tải thông tin thanh toán…</LoadingState>;
+   if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;
+diff --git a/frontend/src/pages/SupportPortal.jsx b/frontend/src/pages/SupportPortal.jsx
+index 12e2da8..e6035ac 100644
+--- a/frontend/src/pages/SupportPortal.jsx
++++ b/frontend/src/pages/SupportPortal.jsx
+@@ -1,7 +1,7 @@
+ import { useAuth } from '../context/AuthContext';
+ import { userCanAct } from '../utils/authorization';
+ import { formatDateTime as formatTime } from '../utils/dateTime';
+-import { useCallback, useEffect, useRef, useState } from 'react';
++import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+ import * as api from '../api/supportApi';
+ import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
+ import ComplaintOrderReference from '../components/ComplaintOrderReference';
+@@ -11,26 +11,52 @@ const processingStatuses = ['Đang xử lý', 'Đã giải quyết', 'Đã đón
+ 
+ 
+ export default function SupportPortal() {
++  const { user } = useAuth();
++  const scope = `${user?.userId}:${user?.permissions?.map(item => item.code).sort().join(',')}`;
++  return <SupportWorkspace key={scope} />;
++}
++
++function SupportWorkspace() {
+   const { user } = useAuth();
+   const canProcess = userCanAct(user, 'CSKH', 'QL_KHIEUNAI', 'XULY_KHIEUNAI');
+   const canReference = userCanAct(user, 'CSKH', 'QL_KHIEUNAI', 'TRA_CUU_DON');
+-  const [filters, setFilters] = useState({ status: '', type: '', search: '' });
++  const [filters, setFilters] = useState({ status: '', type: '', search: '', priority: '' });
+   const [queue, setQueue] = useState({ status: 'loading', rows: [] });
+   const [selectedId, setSelectedId] = useState(null);
+   const [detail, setDetail] = useState({ status: 'idle' });
+   const detailGeneration = useRef(0);
++  const queueGeneration = useRef(0);
++  const selection = useRef(null);
++  const currentQueueLoader = useRef(null);
++  const writePending = useRef(false);
++  const mounted = useRef(true);
++  const [busy, setBusy] = useState(false);
+   const [processing, setProcessing] = useState({ content: '', nextStatus: 'Đang xử lý' });
+   const [statusValue, setStatusValue] = useState('Đang xử lý');
+   const [notice, setNotice] = useState(null);
+ 
+   const loadQueue = useCallback(async () => {
++    const current = ++queueGeneration.current;
+     setQueue({ status: 'loading', rows: [] });
+-    try { const result = await api.getSupportComplaints(filters); setQueue({ status: 'success', rows: result.complaints }); }
+-    catch (error) { setQueue({ status: 'error', error, rows: [] }); }
++    try {
++      const result = await api.getSupportComplaints(filters);
++      if (current !== queueGeneration.current || !mounted.current) return;
++      setQueue({ status: 'success', rows: result.complaints });
++      if (selection.current && !result.complaints.some(item => item.id === selection.current)) {
++        selection.current = null; detailGeneration.current++; setSelectedId(null); setDetail({ status: 'idle' });
++      }
++    } catch (error) { if (current === queueGeneration.current && mounted.current) setQueue({ status: 'error', error, rows: [] }); }
+   }, [filters]);
++  useLayoutEffect(() => { currentQueueLoader.current = loadQueue; }, [loadQueue]);
++  const changeFilter = (key, value) => {
++    queueGeneration.current++; detailGeneration.current++; selection.current = null;
++    setSelectedId(null); setDetail({ status: 'idle' }); setNotice(null);
++    setFilters(current => ({ ...current, [key]: value }));
++  };
+   const selectComplaint = useCallback(async (complaintId) => {
+     const current = ++detailGeneration.current;
+-    setSelectedId(complaintId); setDetail({ status: 'loading' }); setNotice(null);
++    selection.current = complaintId; setSelectedId(complaintId); setDetail({ status: 'loading' }); setNotice(null);
++    setProcessing({ content: '', nextStatus: 'Đang xử lý' });
+     try {
+       const complaint = await api.getSupportComplaint(complaintId);
+       if (current !== detailGeneration.current) return;
+@@ -38,17 +64,36 @@ export default function SupportPortal() {
+       setStatusValue(processingStatuses.includes(complaint.complaint.status) ? complaint.complaint.status : 'Đang xử lý');
+     } catch (error) { if (current === detailGeneration.current) setDetail({ status: 'error', error }); }
+   }, []);
+-  useEffect(() => () => { detailGeneration.current++; }, []);
++  useEffect(() => {
++    mounted.current = true;
++    const requests = [detailGeneration, queueGeneration];
++    return () => { mounted.current = false; requests.forEach(request => { request.current++; }); };
++  }, []);
+   useEffect(() => { void Promise.resolve().then(loadQueue); }, [loadQueue]);
+-  const afterWrite = async (message) => { setNotice({ ok: true, text: message }); await loadQueue(); if (selectedId) await selectComplaint(selectedId); };
+-  const submitProcessing = async (event) => { event.preventDefault(); if (!canProcess) return; try { await api.addComplaintProcessing(selectedId, processing); setProcessing((value) => ({ ...value, content: '' })); await afterWrite('Đã thêm diễn biến xử lý.'); } catch (error) { setNotice({ ok: false, text: error.message }); } };
+-  const submitStatus = async (event) => { event.preventDefault(); if (!canProcess) return; try { await api.updateComplaintStatus(selectedId, { status: statusValue }); await afterWrite('Đã cập nhật trạng thái và ghi vào lịch sử.'); } catch (error) { setNotice({ ok: false, text: error.message }); } };
++  const writeComplaint = async (event, action) => {
++    event.preventDefault();
++    if (!canProcess || writePending.current || detail.status !== 'success' || detail.complaint.id !== selectedId) return;
++    const id = selectedId, generation = detailGeneration.current;
++    writePending.current = true; setBusy(true); setNotice(null);
++    try {
++      if (action === 'processing') await api.addComplaintProcessing(id, { ...processing });
++      else await api.updateComplaintStatus(id, { status: statusValue });
++      if (!mounted.current) return;
++      await currentQueueLoader.current();
++      if (selection.current !== id || generation !== detailGeneration.current) return;
++      await selectComplaint(id);
++      if (selection.current !== id || detailGeneration.current !== generation + 1) return;
++      setNotice({ ok: true, text: action === 'processing' ? 'Đã thêm diễn biến xử lý.' : 'Đã cập nhật trạng thái và ghi vào lịch sử.' });
++    } catch (error) { if (mounted.current && generation === detailGeneration.current) setNotice({ ok: false, text: error.message }); }
++    finally { writePending.current = false; if (mounted.current) setBusy(false); }
++  };
+ 
+   return <section className="catalog-page"><p className="catalog-eyebrow">CHĂM SÓC KHÁCH HÀNG</p><h1>CSKH Portal</h1>
+     <form className="catalog-form" onSubmit={(event) => { event.preventDefault(); void loadQueue(); }}>
+-      <select aria-label="Lọc trạng thái" value={filters.status} onChange={(event) => setFilters({ ...filters, status: event.target.value })}><option value="">Mọi trạng thái</option>{complaintStatuses.map((value) => <option key={value}>{value}</option>)}</select>
+-      <input aria-label="Lọc loại khiếu nại" placeholder="Loại khiếu nại" value={filters.type} onChange={(event) => setFilters({ ...filters, type: event.target.value })} />
+-      <input aria-label="Tìm khiếu nại" placeholder="Tìm tiêu đề, nội dung, người gửi" value={filters.search} onChange={(event) => setFilters({ ...filters, search: event.target.value })} />
++      <select aria-label="Lọc trạng thái" value={filters.status} onChange={(event) => changeFilter('status', event.target.value)}><option value="">Mọi trạng thái</option>{complaintStatuses.map((value) => <option key={value}>{value}</option>)}</select>
++      <select aria-label="Lọc mức ưu tiên" value={filters.priority} onChange={(event) => changeFilter('priority', event.target.value)}><option value="">Mọi mức ưu tiên</option>{['Thấp', 'Trung bình', 'Cao', 'Khẩn cấp'].map(value => <option key={value}>{value}</option>)}</select>
++      <input aria-label="Lọc loại khiếu nại" placeholder="Loại khiếu nại" value={filters.type} onChange={(event) => changeFilter('type', event.target.value)} />
++      <input aria-label="Tìm khiếu nại" placeholder="Tìm tiêu đề, nội dung, người gửi" value={filters.search} onChange={(event) => changeFilter('search', event.target.value)} />
+       <button className="catalog-button">Lọc hàng chờ</button>
+     </form>
+     {queue.status === 'loading' && <LoadingState>Đang tải hàng chờ khiếu nại…</LoadingState>}{queue.status === 'error' && <ErrorState error={queue.error} onRetry={loadQueue} />}
+@@ -58,8 +103,8 @@ export default function SupportPortal() {
+     {detail.status === 'success' && <section className="catalog-section"><h2>#{detail.complaint.id} · {detail.complaint.title}</h2><p>{detail.complaint.senderName} · {detail.complaint.type} · {detail.complaint.status}</p><p>{detail.complaint.content}</p>
+       <ComplaintOrderReference key={`${selectedId}:${canReference}`} complaintId={selectedId} allowed={canReference} />
+       <h3>Timeline xử lý</h3>{detail.complaint.processings.length ? <ol>{detail.complaint.processings.map((item) => <li key={item.id}><strong>{item.processorName ?? `Nhân viên #${item.processorId}`}</strong> · {formatTime(item.processedAt)} · {item.status}<br />{item.content}</li>)}</ol> : <EmptyState>Chưa có diễn biến xử lý.</EmptyState>}
+-      {canProcess && <><form className="catalog-form" onSubmit={submitProcessing}><h3>Thêm diễn biến</h3><textarea aria-label="Nội dung xử lý" value={processing.content} onChange={(event) => setProcessing({ ...processing, content: event.target.value })} required /><select aria-label="Trạng thái sau xử lý" value={processing.nextStatus} onChange={(event) => setProcessing({ ...processing, nextStatus: event.target.value })}>{processingStatuses.map((value) => <option key={value}>{value}</option>)}</select><button className="catalog-button">Ghi diễn biến</button></form>
+-      <form className="catalog-form" onSubmit={submitStatus}><h3>Đổi trạng thái</h3><select aria-label="Trạng thái mới" value={statusValue} onChange={(event) => setStatusValue(event.target.value)}>{processingStatuses.map((value) => <option key={value}>{value}</option>)}</select><button className="catalog-button">Cập nhật trạng thái</button></form></>}
++      {canProcess && <><form className="catalog-form" onSubmit={event => void writeComplaint(event, 'processing')}><h3>Thêm diễn biến</h3><textarea aria-label="Nội dung xử lý" value={processing.content} onChange={(event) => setProcessing({ ...processing, content: event.target.value })} required disabled={busy} /><select aria-label="Trạng thái sau xử lý" value={processing.nextStatus} onChange={(event) => setProcessing({ ...processing, nextStatus: event.target.value })} disabled={busy}>{processingStatuses.map((value) => <option key={value}>{value}</option>)}</select><button className="catalog-button" disabled={busy}>Ghi diễn biến</button></form>
++      <form className="catalog-form" onSubmit={event => void writeComplaint(event, 'status')}><h3>Đổi trạng thái</h3><select aria-label="Trạng thái mới" value={statusValue} onChange={(event) => setStatusValue(event.target.value)} disabled={busy}>{processingStatuses.map((value) => <option key={value}>{value}</option>)}</select><button className="catalog-button" disabled={busy}>Cập nhật trạng thái</button></form></>}
+     </section>}
+   </section>;
+ }
+diff --git a/frontend/src/components/AdminRevenue.jsx b/frontend/src/components/AdminRevenue.jsx
+new file mode 100644
+--- /dev/null
++++ b/frontend/src/components/AdminRevenue.jsx
+@@ -0,0 +1,21 @@
++import { formatApiValue } from '../utils/dateTime';
++import { EmptyState } from './CatalogStates';
++
++function RevenueTable({ title, rows, identity }) {
++  return <section className="catalog-section"><h3>{title}</h3>
++    {rows.length === 0 ? <EmptyState>Không có dữ liệu trong kỳ này.</EmptyState> :
++      <div className="catalog-table-wrap"><table className="catalog-table">
++        <thead><tr>{Object.keys(rows[0]).map(field => <th key={field}>{field}</th>)}</tr></thead>
++        <tbody>{rows.map(row => <tr key={identity === 'summary' ? 'summary' : row[identity]}>{Object.entries(row).map(([field, value]) => <td key={field}>{formatApiValue(value)}</td>)}</tr>)}</tbody>
++      </table></div>}
++  </section>;
++}
++
++export default function AdminRevenue({ report }) {
++  return <>
++    <RevenueTable title="Tổng hợp doanh thu" rows={report.summary ? [report.summary] : []} identity="summary" />
++    <RevenueTable title="Theo rạp" rows={report.byCinema ?? []} identity="RapID" />
++    <RevenueTable title="Theo phim" rows={report.byMovie ?? []} identity="PhimID" />
++    <RevenueTable title="Theo ngày" rows={report.byDate ?? []} identity="Ngay" />
++  </>;
++}

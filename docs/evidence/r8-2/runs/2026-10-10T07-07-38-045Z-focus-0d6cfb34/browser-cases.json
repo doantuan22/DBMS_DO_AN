@@ -1,0 +1,51 @@
+{
+  "phase": "focus",
+  "checks": [
+    {
+      "id": "FOCUS-ACTUAL-ELIGIBLE-REVIEW-SETUP",
+      "UCs": [
+        "KH-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T07:08:15.350Z",
+      "networkRange": [
+        4,
+        23
+      ],
+      "sqlRange": [
+        0,
+        1
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T07:08:16.997Z"
+    },
+    {
+      "id": "CRITICAL-FOCUS-AFTER-ERROR",
+      "UCs": [
+        "KH-13"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "FAIL",
+      "startedAt": "2026-10-10T07:08:16.998Z",
+      "error": "The expression evaluated to a falsy value:\n\n  assert.ok(await evaluate(\"document.activeElement===document.querySelector('section[aria-labelledby=movie-reviews] button[type=submit]')&&!document.activeElement.disabled\"))\n",
+      "screenshot": "CRITICAL-FOCUS-AFTER-ERROR-FAIL.png",
+      "networkRange": [
+        23,
+        24
+      ],
+      "sqlRange": [
+        1,
+        1
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T07:08:17.426Z"
+    }
+  ]
+}

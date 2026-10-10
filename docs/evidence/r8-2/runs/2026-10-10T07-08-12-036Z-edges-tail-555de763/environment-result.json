@@ -1,0 +1,174 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-10-10T07:10:24.967Z",
+  "database": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+  "targetIdentity": {
+    "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+    "database_id": 48,
+    "create_date": "2026-10-10T08:59:01.693",
+    "state_desc": "ONLINE",
+    "is_read_only": false,
+    "database_guid": "33876608-D109-43B5-ACEC-0B84C2639A73",
+    "files": [
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44",
+        "type_desc": "ROWS",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44.mdf"
+      },
+      {
+        "name": "CinemaBookingDB_R0_R81_20261010_3d49fc44_log",
+        "type_desc": "LOG",
+        "physical_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\DATA\\CinemaBookingDB_R0_R81_20261010_3d49fc44_log.ldf"
+      }
+    ]
+  },
+  "server": "DESKTOP-E67DPCV",
+  "phases": [],
+  "smoke": [
+    {
+      "id": "TAIL-REAL-READ-ERROR-FIXTURE",
+      "UCs": [
+        "KH-07",
+        "KH-10",
+        "KH-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T07:10:35.219Z",
+      "networkRange": [
+        4,
+        35
+      ],
+      "sqlRange": [
+        0,
+        1
+      ],
+      "controlRange": [
+        0,
+        0
+      ],
+      "finishedAt": "2026-10-10T07:10:37.305Z"
+    },
+    {
+      "id": "EDGE-ERROR-RETRY-PAGES",
+      "UCs": [
+        "KH-04",
+        "KH-11",
+        "KH-12",
+        "KH-14",
+        "CSKH-02",
+        "CSKH-03",
+        "CSKH-04",
+        "ADM-03",
+        "ADM-16",
+        "QLR-09"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T07:10:38.588Z",
+      "networkRange": [
+        54,
+        137
+      ],
+      "sqlRange": [
+        1,
+        1
+      ],
+      "controlRange": [
+        0,
+        15
+      ],
+      "finishedAt": "2026-10-10T07:10:43.648Z"
+    },
+    {
+      "id": "EDGE-PRIORITY-ALL-AND",
+      "UCs": [
+        "CSKH-02"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T07:10:43.649Z",
+      "networkRange": [
+        137,
+        156
+      ],
+      "sqlRange": [
+        1,
+        1
+      ],
+      "controlRange": [
+        15,
+        15
+      ],
+      "finishedAt": "2026-10-10T07:10:44.649Z"
+    },
+    {
+      "id": "EDGE-REGISTER-INVALID-AND-429",
+      "UCs": [
+        "KH-01"
+      ],
+      "kind": "CONTROLLED_TRANSPORT",
+      "status": "PASS",
+      "startedAt": "2026-10-10T07:10:44.649Z",
+      "networkRange": [
+        156,
+        160
+      ],
+      "sqlRange": [
+        1,
+        2
+      ],
+      "controlRange": [
+        15,
+        16
+      ],
+      "finishedAt": "2026-10-10T07:10:46.335Z"
+    },
+    {
+      "id": "EDGE-RESPONSIVE-A11Y",
+      "UCs": [
+        "ADM-02",
+        "ADM-11",
+        "ADM-12",
+        "ADM-13",
+        "ADM-14",
+        "ADM-15",
+        "ADM-16",
+        "CSKH-02",
+        "KH-07",
+        "KH-10",
+        "KH-14"
+      ],
+      "kind": "REAL_BROWSER_SQL",
+      "status": "PASS",
+      "startedAt": "2026-10-10T07:10:46.336Z",
+      "networkRange": [
+        160,
+        234
+      ],
+      "sqlRange": [
+        2,
+        2
+      ],
+      "controlRange": [
+        16,
+        16
+      ],
+      "finishedAt": "2026-10-10T07:10:51.557Z"
+    },
+    {
+      "id": "ISOLATION-CLEANUP",
+      "result": "PASS",
+      "assertions": [
+        "Test backend exact identity + login denied main",
+        "Owned fixture cleanup restores all27 data/metadata fingerprints; main unchanged"
+      ]
+    }
+  ],
+  "scope": "R8.2 verification; no UC acceptance upgrade",
+  "browserStatus": "PASS",
+  "cleanup": "PASS",
+  "mainPreservation": "PASS",
+  "readiness": "READY",
+  "finishedAt": "2026-10-10T07:10:55.059Z"
+}

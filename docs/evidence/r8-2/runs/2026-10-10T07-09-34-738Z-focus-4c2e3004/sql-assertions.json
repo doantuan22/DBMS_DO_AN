@@ -1,0 +1,20 @@
+{
+  "status": "CAPTURED",
+  "assertions": [
+    {
+      "id": "SQL-FOCUS-REAL-REVIEW",
+      "status": "PASS",
+      "query": "SELECT SoSao rating,NoiDung content FROM dbo.DANHGIAPHIM WHERE PhimID=@ID AND NguoiDungID=@Owner;",
+      "inputs": {
+        "ID": 48,
+        "Owner": 5
+      },
+      "rows": [
+        {
+          "rating": 5,
+          "content": "R82 focused review"
+        }
+      ]
+    }
+  ]
+}
