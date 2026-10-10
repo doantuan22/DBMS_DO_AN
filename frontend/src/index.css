@@ -1,6 +1,7 @@
 :root {
   /* Design Tokens — Cinema Booking System */
-  --font-sans: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans:
+    'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   /* Brand & Theme Colors */
   --color-primary: #1e3a8a;
   --color-primary-hover: #1e40af;
@@ -179,7 +180,7 @@ body {
 }
 
 .area__nav-link.active,
-.area__nav-link[aria-current="page"] {
+.area__nav-link[aria-current='page'] {
   color: var(--color-primary);
   background: var(--color-primary-subtle);
   font-weight: 700;
@@ -331,7 +332,10 @@ body {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .movie-card:hover,
@@ -505,7 +509,12 @@ body {
 .seat-map__screen-bar {
   width: 100%;
   height: 6px;
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.9) 50%, rgba(59, 130, 246, 0.1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(59, 130, 246, 0.9) 50%,
+    rgba(59, 130, 246, 0.1) 100%
+  );
   border-radius: 9999px;
   box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
 }
@@ -574,7 +583,7 @@ body {
   background: #334155;
 }
 
-.seat-button[aria-pressed="true"] {
+.seat-button[aria-pressed='true'] {
   background: var(--color-accent) !important;
   color: #0f172a !important;
   border-color: #f59e0b !important;
@@ -582,14 +591,14 @@ body {
   box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
 }
 
-.seat-button[data-type="VIP"]:not([aria-pressed="true"]) {
+.seat-button[data-type='VIP']:not([aria-pressed='true']) {
   border-color: #eab308;
   background: #2a2517;
   color: #fef08a;
 }
 
-.seat-button[data-type="Sweetbox"]:not([aria-pressed="true"]),
-.seat-button[data-type="Đôi"]:not([aria-pressed="true"]) {
+.seat-button[data-type='Sweetbox']:not([aria-pressed='true']),
+.seat-button[data-type='Đôi']:not([aria-pressed='true']) {
   border-color: #f472b6;
   background: #2d1c26;
   color: #fbcfe8;
@@ -605,14 +614,14 @@ body {
 }
 
 .seat-button:disabled,
-.seat-button[data-status="Đã đặt"],
-.seat-button[data-status="Đang giữ"] {
+.seat-button[data-status='Đã đặt'],
+.seat-button[data-status='Đang giữ'] {
   border-style: dashed;
   text-decoration: line-through;
 }
 
-.seat-button[data-status="Đã đặt"],
-.seat-button[data-status="Đang giữ"] {
+.seat-button[data-status='Đã đặt'],
+.seat-button[data-status='Đang giữ'] {
   background: #334155;
   color: #64748b;
   border-color: #475569;
@@ -696,7 +705,9 @@ body {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .auth-card input:focus,
@@ -711,7 +722,7 @@ body {
   color: var(--color-text-muted);
 }
 
-.auth-card button[type="submit"] {
+.auth-card button[type='submit'] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -726,18 +737,21 @@ body {
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
   box-shadow: var(--shadow-sm);
   margin-top: 0.5rem;
 }
 
-.auth-card button[type="submit"]:hover:not(:disabled) {
+.auth-card button[type='submit']:hover:not(:disabled) {
   background-color: var(--color-primary-hover);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
-.auth-card button[type="submit"]:disabled {
+.auth-card button[type='submit']:disabled {
   opacity: 0.65;
   cursor: not-allowed;
 }
@@ -888,7 +902,7 @@ body {
   margin: 1.5rem 0;
 }
 
-.catalog-actions [aria-pressed="true"] {
+.catalog-actions [aria-pressed='true'] {
   outline: 3px solid var(--color-primary-border);
   outline-offset: 2px;
   background-color: var(--color-primary);
@@ -913,7 +927,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .catalog-card:hover {

@@ -21,14 +21,34 @@ function bindInputs(request, params = {}) {
     if (!type) throw new Error(`Parameter "${name}" must declare a type`);
     const sqlType = type.type ?? type;
     if (value != null && sqlType === sql.Int) sqlInteger(value, name, -2147483648);
-    if (value != null && [sql.Decimal, sql.Numeric].includes(sqlType)) sqlDecimal(value, name, type.precision ?? 18, type.scale ?? 0);
-    if (typeof value === 'string' && [sql.NVarChar, sql.VarChar, sql.NChar, sql.Char].includes(sqlType) && type.length !== sql.MAX && type.length && value.length > type.length) {
+    if (value != null && [sql.Decimal, sql.Numeric].includes(sqlType))
+      sqlDecimal(value, name, type.precision ?? 18, type.scale ?? 0);
+    if (
+      typeof value === 'string' &&
+      [sql.NVarChar, sql.VarChar, sql.NChar, sql.Char].includes(sqlType) &&
+      type.length !== sql.MAX &&
+      type.length &&
+      value.length > type.length
+    ) {
       throw new HttpError(400, 'INVALID_REQUEST', `${name} exceeds its SQL parameter length.`);
     }
-    const instantType = [sql.DateTime, sql.DateTime2, sql.SmallDateTime, sql.DateTimeOffset].includes(sqlType);
-    request.input(name, type, value == null ? null : sqlType === sql.Date
-      ? serializeDateOnly(value)
-      : instantType && !(value instanceof Date) ? parseApiInstant(value, name) : value);
+    const instantType = [
+      sql.DateTime,
+      sql.DateTime2,
+      sql.SmallDateTime,
+      sql.DateTimeOffset,
+    ].includes(sqlType);
+    request.input(
+      name,
+      type,
+      value == null
+        ? null
+        : sqlType === sql.Date
+          ? serializeDateOnly(value)
+          : instantType && !(value instanceof Date)
+            ? parseApiInstant(value, name)
+            : value,
+    );
   }
 }
 
@@ -42,13 +62,19 @@ export function normalizeTemporalResult(result, outputs = {}) {
         if (!(value instanceof Date)) continue;
         const type = recordset.columns?.[name]?.type;
         if (type === sql.Date) row[name] = serializeDateOnly(value);
-        else if (type === sql.Time) row[name] = `${String(value.getUTCHours()).padStart(2, '0')}:${String(value.getUTCMinutes()).padStart(2, '0')}:${String(value.getUTCSeconds()).padStart(2, '0')}`;
+        else if (type === sql.Time)
+          row[name] =
+            `${String(value.getUTCHours()).padStart(2, '0')}:${String(value.getUTCMinutes()).padStart(2, '0')}:${String(value.getUTCSeconds()).padStart(2, '0')}`;
         else row[name] = serializeInstant(value);
       }
     }
   }
   for (const [name, value] of Object.entries(result.output ?? {})) {
-    if (value instanceof Date) result.output[name] = (outputs[name]?.type ?? outputs[name]) === sql.Date ? serializeDateOnly(value) : serializeInstant(value);
+    if (value instanceof Date)
+      result.output[name] =
+        (outputs[name]?.type ?? outputs[name]) === sql.Date
+          ? serializeDateOnly(value)
+          : serializeInstant(value);
   }
   return result;
 }

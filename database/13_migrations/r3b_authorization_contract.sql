@@ -1,5 +1,5 @@
 -- R3B: in-place module update. No table/permission/role/grant DML or schema changes.
--- Execute through scripts/r3b/deploy.mjs for atomic application, backup and data preservation.
+-- Historical R3B deployment used a phase runner that has since been retired.
 :on error exit
 :r ./05_functions/fn_KiemTraQuanLyRapScope.sql
 :r ./05_functions/fn_KiemTraQuyenNguoiDung.sql

@@ -50,51 +50,20 @@ nguyên, cancel lần hai không cộng điểm hoặc trả quota lần nữa.
 
 Order Completed và ticket Used: N/A cho workflow vì hệ thống chưa có hoàn tất/check-in.
 Past paid history đủ điều kiện review theo contract; không tạo invalid review lưu
-vào DB hay refund mechanism. Xem [báo cáo R5.4](../../../docs/R5_4_TRANSACTION_FIXTURE_REPORT.md).
+vào DB hay refund mechanism. Xem [fixture matrix](fixture-matrix.md) và [quy trình Test DB](../../../scripts/db/TEST_PIPELINE.md).
 
-Kiểm nguồn offline (không kết nối DB): `node scripts/r54/checks.mjs` từ repo root.
-Trạng thái tại thời điểm R5.4: **SOURCE IMPLEMENTATION DONE; LIVE SQL VERIFICATION NOT RUN**.
-R5.5 đã kiểm chứng SQL thật, rollback/commit/negative probes và hai rebuild: **PASS**.
-Xem [runtime evidence R5.5](../../../docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md).
-Không include fixture vào seed/build/reset hoặc thay runner; không phải R5.5/R6/R7.
+Phase-specific offline checkers and fixture runners have been retired. The R5.4/R5.5
+statuses above are historical records, not replayable commands. Current Test DB
+preflight and target limits are in the [test pipeline](../../../scripts/db/TEST_PIPELINE.md).
 
-## Danh mục legacy giữ nguyên
+## Test fixtures
 
-Nhóm logic phục vụ kiểm thử, tách khỏi seed ứng dụng. R5.1 không tạo fixture giao
-dịch mới và không đưa fixture vào `seed-all.sql`. Các fixture hiện có giữ vị trí
-vì gắn với suite, import, guard database, transaction và cleanup riêng.
+Fixtures remain separate from application seed data. The default SQL regression suite
+runs through `npm run db:test` and `database/11_tests/test-all.sql`. JavaScript suites
+that can write data are described in the [concurrency guide](../../11_tests/concurrency/README.md)
+and require a separate disposable database.
 
-| Vị trí hiện có | Mục đích / dữ liệu | Caller và dependency |
-| --- | --- | --- |
-| `database/11_tests/procedures/smoke.sql` | Auth/catalog/booking/payment/review/complaint/manager/support/admin smoke; dữ liệu ghi trong rollback fixture | `11_tests/test-all.sql`; cần baseline catalog |
-| `database/11_tests/{timezone,pricing,payment,triggers,integrity,permissions}/*.sql` | Biên thời gian/giá, bồi thường, multirow, FK/CHECK và EXECUTE-only | `test-all.sql`; một số probe permission tạo/xóa test principal riêng |
-| `database/11_tests/{rooms,showtimes,booking,admin,history,complaints,profile,orders}/*.sql` | SQL rollback/regression task chuyên biệt | Suite task tương ứng; không phải tất cả được include bởi test-all |
-| `database/11_tests/concurrency/*.mjs` | Race phòng/lịch/booking/promotion/cast/history/complaint | Import task tooling; có commit nên yêu cầu disposable |
-| `database/11_tests/schema/*.sql` | Tamper/restore định nghĩa/trigger để chứng minh verify fail | Verification chuyên biệt; không seed ứng dụng |
-| `scripts/r11/common.mjs` | Phòng và ghế tạm cho delete-vs-showtime | r11 suites; r12, r21…r47 common dùng lại helper |
-| `scripts/r21/fixtures.mjs` | Rạp/phim/phòng/ghế/suất/sản phẩm/promotion và booking helper | r21/r22; r31/r32/r33; r42/r44; concurrency SQL |
-| `scripts/r31/fixtures.mjs` | Phim/diễn viên/cast cho kiểm thử atomic replacement | r31 SQL/API/concurrency; r32/r33 regression |
-| `scripts/r32/fixtures.mjs` | Mở rộng r21 với tiền/sản phẩm/bảng giá/historical metadata | r32 suites; r33 regression; r42 report; r43 pricing/browser |
-| `scripts/r33/fixtures.mjs` | Khiếu nại, processing và bulk history | r33 SQL/API/concurrency; cleanup và trạng thái theo fixture |
-| `scripts/r46/fixtures.mjs` | User 4 vai trò + custom role/profile, snapshot/reset/cleanup | r46 profile/browser; không tạo base RBAC |
-| `scripts/r47/fixtures.mjs` | Catalog riêng, booking/payment/expiry phục vụ read-only order detail | r47 detail-before/detail-tests; cleanup riêng |
-| `scripts/r1/sql-fixtures.mjs` | Biên hold/timezone/giá; clock/DDL probe rollback-only | npm r1:sql-tests; r2 checks; chỉ R1 disposable |
-| `scripts/r1/migration-fixture.mjs`, `scripts/r2fix/migration-tests.mjs`, `scripts/r3b/migration-fixture.mjs` | Dựng/replay schema/seed lịch sử để test migration | Pinned commit hoặc source build; giữ path theo đúng phiên bản |
-| `scripts/r0/{pricing-api,verify}.mjs` | Pricing rows và legacy-precondition fixture | R0 disposable guard; không dùng làm seed demo |
-| `scripts/r3b/probes.mjs`, `scripts/r42/report-tests.mjs`, `scripts/r43/pricing-tests.mjs`, `scripts/r44/ownership-tests.mjs` | Quyền tạm, booking/payment/financial/pricing fixtures dùng lại helpers | Checks tương ứng; có cleanup/rollback riêng |
-| `scripts/r5/integration.mjs`, `scripts/r7/integration.mjs`, `scripts/r8/{flows,browser-run,security,transactions}.mjs` | Fixture HTTP/SQL lịch sử: paid/review/complaint/security/concurrency | Suite cũ; không phải roadmap R5.1–R5.5, không tự chạy lại |
-| `scripts/db/backend-smoke.mjs`, `scripts/audit-full-20261003/*.mjs`, `scripts/uiux/audit.mjs` | HTTP/browser flow tạo/đọc fixture theo suite/manifest | Có thể ghi qua API dù không có INSERT; phải đọc target/guard trước chạy |
-| `frontend/tests/*browser-fixture*.jsx`, `scripts/r1/browser-forms.mjs` | Mock HTTP/browser fixture | Không phải SQL seed; giữ nguyên frontend |
-
-Không kết luận file hết sử dụng từ việc không có import trực tiếp. Nhiều suite được
-gọi qua npm, command line, subprocess, regression source replay hoặc pinned commit.
-Danh mục chi tiết các caller/tables/include hiện có:
-[seed-inventory.json](../../../docs/evidence/r51/seed-inventory.json).
-
-SQL fixture không tự động đồng nghĩa rollback an toàn: concurrency có commit,
-schema tamper có DDL, rollback vẫn có thể tiêu thụ identity; một số tooling cũ
-phụ thuộc audit artifact hoặc nhắm main. Không chạy toàn bộ thư mục như một seed group.
-
-Ghi nhận tại R5.1: nhóm này mới có convention/danh mục, chưa có SQL placeholder hay
-entry point cho fixture mới. R5.4 hiện bổ sung hai SQL thủ công ở phần canonical
-phía trên. Test DB/rebuild pipeline thuộc R5.5.
+Shared concurrency helpers are maintained in `scripts/db/concurrency-support/`.
+Current SQL test files remain under `database/11_tests/`; retired phase runners and
+historical caller inventories were removed. Never include test fixtures in
+`seed-all.sql`, reset, or production build workflows.

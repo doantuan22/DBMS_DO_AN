@@ -9,8 +9,13 @@ export default function AccessErrorHandler() {
     const onForbidden = async () => {
       if (refreshing) return;
       refreshing = true;
-      try { await refreshCurrentUser(); } catch { /* The operation error remains visible. */ }
-      finally { refreshing = false; }
+      try {
+        await refreshCurrentUser();
+      } catch {
+        /* The operation error remains visible. */
+      } finally {
+        refreshing = false;
+      }
     };
     window.addEventListener('auth:forbidden', onForbidden);
     return () => window.removeEventListener('auth:forbidden', onForbidden);

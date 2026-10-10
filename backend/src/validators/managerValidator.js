@@ -1,7 +1,12 @@
 import { isDateOnly, isApiInstant } from '../utils/dateTime.js';
 import { HttpError } from '../utils/httpError.js';
 import { sqlId, sqlInteger, sqlDecimal } from '../utils/inputContract.js';
-import { ROOM_TYPES as roomTypes, SEAT_TYPES as seatTypes, DAY_TYPES as dayTypes, RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
+import {
+  ROOM_TYPES as roomTypes,
+  SEAT_TYPES as seatTypes,
+  DAY_TYPES as dayTypes,
+  RESOURCE_STATUSES,
+} from '../../../shared/resourceContract.mjs';
 
 const ROOM_TYPES = new Set(roomTypes);
 const ROOM_STATUSES = new Set(RESOURCE_STATUSES.rooms);
@@ -34,7 +39,11 @@ function text(value, field, maxLength) {
 
 function enumValue(value, field, supportedValues) {
   if (typeof value !== 'string' || !supportedValues.has(value)) {
-    throw new HttpError(400, 'INVALID_REQUEST', `${field} is not supported by the database contract.`);
+    throw new HttpError(
+      400,
+      'INVALID_REQUEST',
+      `${field} is not supported by the database contract.`,
+    );
   }
   return value;
 }
@@ -56,7 +65,11 @@ function validDate(value, field) {
 
 function validDateTime(value, field) {
   if (!isApiInstant(value)) {
-    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be an ISO datetime with Z or an explicit offset.`);
+    throw new HttpError(
+      400,
+      'INVALID_REQUEST',
+      `${field} must be an ISO datetime with Z or an explicit offset.`,
+    );
   }
   return value;
 }
@@ -95,8 +108,14 @@ export function roomUpdate(value) {
 
 export function seatCreate(value) {
   const body = objectOnly(value, ['row', 'number', 'type']);
-  if (typeof body.row !== 'string' || !body.row.trim() || body.row.trim().length > 10
-    || !Number.isInteger(body.number) || body.number <= 0 || body.number > 2147483647) {
+  if (
+    typeof body.row !== 'string' ||
+    !body.row.trim() ||
+    body.row.trim().length > 10 ||
+    !Number.isInteger(body.number) ||
+    body.number <= 0 ||
+    body.number > 2147483647
+  ) {
     throw new HttpError(400, 'INVALID_REQUEST', 'Seat row or number is invalid.');
   }
   return {
@@ -115,7 +134,14 @@ export function seatUpdate(value) {
 }
 
 export function showtimeCreate(value) {
-  const body = objectOnly(value, ['movieId', 'roomId', 'startsAt', 'endsAt', 'format', 'basePrice']);
+  const body = objectOnly(value, [
+    'movieId',
+    'roomId',
+    'startsAt',
+    'endsAt',
+    'format',
+    'basePrice',
+  ]);
   return {
     movieId: sqlInteger(body.movieId, 'movieId'),
     roomId: sqlInteger(body.roomId, 'roomId'),
@@ -126,7 +152,14 @@ export function showtimeCreate(value) {
 }
 
 export function showtimeUpdate(value) {
-  const body = objectOnly(value, ['movieId', 'startsAt', 'endsAt', 'format', 'basePrice', 'status']);
+  const body = objectOnly(value, [
+    'movieId',
+    'startsAt',
+    'endsAt',
+    'format',
+    'basePrice',
+    'status',
+  ]);
   return {
     movieId: sqlInteger(body.movieId, 'movieId'),
     ...showtimeTimes(body),
@@ -137,11 +170,19 @@ export function showtimeUpdate(value) {
 }
 
 export function pricingCreate(value) {
-  const body = objectOnly(value, ['seatType', 'dayType', 'format', 'surcharge', 'startsOn', 'endsOn']);
+  const body = objectOnly(value, [
+    'seatType',
+    'dayType',
+    'format',
+    'surcharge',
+    'startsOn',
+    'endsOn',
+  ]);
   const startsOn = validDate(body.startsOn, 'startsOn');
-  const endsOn = body.endsOn === null || body.endsOn === undefined || body.endsOn === ''
-    ? null
-    : validDate(body.endsOn, 'endsOn');
+  const endsOn =
+    body.endsOn === null || body.endsOn === undefined || body.endsOn === ''
+      ? null
+      : validDate(body.endsOn, 'endsOn');
   if (endsOn && endsOn < startsOn) {
     throw new HttpError(400, 'INVALID_REQUEST', 'endsOn must not precede startsOn.');
   }
@@ -161,7 +202,9 @@ export function pricingUpdate(value) {
   // Existing surcharge/status updates remain valid. A full condition edit carries
   // the complete date range, including an explicit null for an open end date.
   const conditions = dimensions.some((field) => Object.hasOwn(body, field))
-    ? pricingCreate(Object.fromEntries([...dimensions, 'surcharge'].map((field) => [field, body[field]])))
+    ? pricingCreate(
+        Object.fromEntries([...dimensions, 'surcharge'].map((field) => [field, body[field]])),
+      )
     : {};
   return {
     ...conditions,
@@ -171,9 +214,17 @@ export function pricingUpdate(value) {
 }
 
 export function dateRange(query = {}) {
-  if (!query || typeof query !== 'object' || Array.isArray(query)
-    || Object.keys(query).some((key) => !['fromDate', 'toDate'].includes(key))) {
-    throw new HttpError(400, 'UNKNOWN_QUERY_PARAMETER', 'Request contains unsupported query parameters.');
+  if (
+    !query ||
+    typeof query !== 'object' ||
+    Array.isArray(query) ||
+    Object.keys(query).some((key) => !['fromDate', 'toDate'].includes(key))
+  ) {
+    throw new HttpError(
+      400,
+      'UNKNOWN_QUERY_PARAMETER',
+      'Request contains unsupported query parameters.',
+    );
   }
   const fromDate = query.fromDate ? validDate(query.fromDate, 'fromDate') : null;
   const toDate = query.toDate ? validDate(query.toDate, 'toDate') : null;

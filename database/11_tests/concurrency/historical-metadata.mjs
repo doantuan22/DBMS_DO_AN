@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import { sql,disposable,database,connect,snapshot,summarize,write,evidenceRoot } from '../../../scripts/r32/common.mjs';
-import { createFixture,cleanupFixture,state,bookingRequest,updateShow,updateSeat,cleanSession } from '../../../scripts/r32/fixtures.mjs';
+import { sql,disposable,database,connect,snapshot,summarize,write,evidenceRoot } from '../../../scripts/db/concurrency-support/common-r32.mjs';
+import { createFixture,cleanupFixture,state,bookingRequest,updateShow,updateSeat,cleanSession } from '../../../scripts/db/concurrency-support/fixtures-r32.mjs';
 disposable();const a=await connect(),b=await connect(),observer=await connect();
 const e={database,startedAt:new Date().toISOString(),status:'RUNNING',cases:[]};let f;
 const outcome=p=>p.then(r=>({success:true,outputs:r.output,rows:r.recordset}),r=>({success:false,error:{number:r.number,message:r.message}}));

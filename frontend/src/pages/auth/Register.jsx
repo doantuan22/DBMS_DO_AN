@@ -2,7 +2,14 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-const emptyForm = { HoTen: '', Email: '', MatKhau: '', SoDienThoai: '', NgaySinh: '', GioiTinh: '' };
+const emptyForm = {
+  HoTen: '',
+  Email: '',
+  MatKhau: '',
+  SoDienThoai: '',
+  NgaySinh: '',
+  GioiTinh: '',
+};
 
 export default function Register() {
   const { register } = useAuth();
@@ -37,7 +44,7 @@ export default function Register() {
         messages[err.code] ??
           (err.status === 503
             ? 'Dịch vụ đăng ký hiện chưa sẵn sàng.'
-            : 'Không thể đăng ký lúc này. Vui lòng thử lại.')
+            : 'Không thể đăng ký lúc này. Vui lòng thử lại.'),
       );
     } finally {
       setBusy(false);
@@ -51,7 +58,9 @@ export default function Register() {
   return (
     <section className="auth-card">
       <h1>Đăng ký khách hàng</h1>
-      <p className="subtitle">Tạo tài khoản thành viên để tích lũy điểm thưởng và nhận ưu đãi khi đặt vé.</p>
+      <p className="subtitle">
+        Tạo tài khoản thành viên để tích lũy điểm thưởng và nhận ưu đãi khi đặt vé.
+      </p>
       <form onSubmit={submit}>
         <label>
           Họ tên *
@@ -112,14 +121,21 @@ export default function Register() {
         </label>
         <label>
           Giới tính
-          <select value={form.GioiTinh} onChange={(event) => update('GioiTinh', event.target.value)}>
+          <select
+            value={form.GioiTinh}
+            onChange={(event) => update('GioiTinh', event.target.value)}
+          >
             <option value="">Không cung cấp</option>
             <option>Nam</option>
             <option>Nữ</option>
             <option>Khác</option>
           </select>
         </label>
-        {error && <p className="form-error" role="alert">{error}</p>}
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
         <button type="submit" disabled={busy}>
           {busy ? 'Đang tạo tài khoản…' : 'Tạo tài khoản'}
         </button>

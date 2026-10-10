@@ -26,8 +26,14 @@ test('auth routes reject missing credentials and role escalation before database
     assert.equal((await missingToken.json()).error.code, 'UNAUTHENTICATED');
 
     const escalation = await fetch(`http://127.0.0.1:${port}/api/auth/register`, {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ HoTen: 'Test', Email: 'test@example.com', MatKhau: 'password-123', role: 'ADMIN' }),
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        HoTen: 'Test',
+        Email: 'test@example.com',
+        MatKhau: 'password-123',
+        role: 'ADMIN',
+      }),
     });
     assert.equal(escalation.status, 400);
     assert.equal((await escalation.json()).error.code, 'ACCESS_FIELDS_NOT_ALLOWED');
@@ -48,7 +54,9 @@ test('catalog read routes are public and reject invalid filters before a DB call
     assert.equal(invalidFilter.status, 400);
     assert.equal((await invalidFilter.json()).error.code, 'UNKNOWN_QUERY_PARAMETER');
 
-    const invalidDate = await fetch(`http://127.0.0.1:${port}/api/movies/1/showtimes?date=2026-02-30`);
+    const invalidDate = await fetch(
+      `http://127.0.0.1:${port}/api/movies/1/showtimes?date=2026-02-30`,
+    );
     assert.equal(invalidDate.status, 400);
     assert.equal((await invalidDate.json()).error.code, 'INVALID_REQUEST');
   } finally {
@@ -61,7 +69,9 @@ test('booking requires a customer identity and seat routes validate the showtime
   const { port } = server.address();
   try {
     const booking = await fetch(`http://127.0.0.1:${port}/api/bookings`, {
-      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ showtimeId: 1, seatIds: [1] }),
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ showtimeId: 1, seatIds: [1] }),
     });
     assert.equal(booking.status, 401);
     assert.equal((await booking.json()).error.code, 'UNAUTHENTICATED');
@@ -82,7 +92,9 @@ test('order and payment routes require an authenticated customer before database
     assert.equal((await orders.json()).error.code, 'UNAUTHENTICATED');
     const invalid = await fetch(`http://127.0.0.1:${port}/api/orders/0`);
     assert.equal(invalid.status, 401);
-  } finally { server.close(); }
+  } finally {
+    server.close();
+  }
 });
 
 test('review creation and complaint routes require an authenticated customer before database access', async () => {
@@ -90,14 +102,18 @@ test('review creation and complaint routes require an authenticated customer bef
   const { port } = server.address();
   try {
     const review = await fetch(`http://127.0.0.1:${port}/api/movies/1/reviews`, {
-      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ rating: 5 }),
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ rating: 5 }),
     });
     assert.equal(review.status, 401);
     const complaints = await fetch(`http://127.0.0.1:${port}/api/complaints`);
     assert.equal(complaints.status, 401);
     const complaint = await fetch(`http://127.0.0.1:${port}/api/complaints/0`);
     assert.equal(complaint.status, 401);
-  } finally { server.close(); }
+  } finally {
+    server.close();
+  }
 });
 
 test('manager APIs reject unauthenticated callers before scoped procedures execute', async () => {
@@ -107,5 +123,7 @@ test('manager APIs reject unauthenticated callers before scoped procedures execu
     const result = await fetch(`http://127.0.0.1:${port}/api/manager/cinemas`);
     assert.equal(result.status, 401);
     assert.equal((await result.json()).error.code, 'UNAUTHENTICATED');
-  } finally { server.close(); }
+  } finally {
+    server.close();
+  }
 });

@@ -8,15 +8,34 @@ let vite;
 let CinemaImageManager;
 let AuthContext;
 before(async () => {
-  vite = await createServer({ configFile: 'vite.config.js', server: { middlewareMode: true, hmr: false }, appType: 'custom' });
-  ({ default: CinemaImageManager } = await vite.ssrLoadModule('/src/components/CinemaImageManager.jsx'));
+  vite = await createServer({
+    configFile: 'vite.config.js',
+    server: { middlewareMode: true, hmr: false },
+    appType: 'custom',
+  });
+  ({ default: CinemaImageManager } = await vite.ssrLoadModule(
+    '/src/components/CinemaImageManager.jsx',
+  ));
   ({ AuthContext } = await vite.ssrLoadModule('/src/context/AuthContext.jsx'));
 });
-after(async () => { await vite?.close(); });
-const render = user => renderToStaticMarkup(React.createElement(AuthContext.Provider, { value: { user } }, React.createElement(CinemaImageManager)));
+after(async () => {
+  await vite?.close();
+});
+const render = (user) =>
+  renderToStaticMarkup(
+    React.createElement(
+      AuthContext.Provider,
+      { value: { user } },
+      React.createElement(CinemaImageManager),
+    ),
+  );
 
 test('image management requires Admin and QL_RAP together', () => {
-  for (const user of [null, { role: 'ADMIN', permissions: [] }, { role: 'CSKH', permissions: [{ code: 'QL_RAP' }] }]) {
+  for (const user of [
+    null,
+    { role: 'ADMIN', permissions: [] },
+    { role: 'CSKH', permissions: [{ code: 'QL_RAP' }] },
+  ]) {
     const html = render(user);
     assert.match(html, /Bạn chưa được cấp quyền quản lý ảnh rạp/);
     assert.doesNotMatch(html, /<form|<select|<button/);

@@ -19,12 +19,22 @@ export const queries = {
   rowcounts: `SELECT t.name tableName,SUM(p.rows) rows FROM sys.tables t JOIN sys.partitions p ON p.object_id=t.object_id AND p.index_id IN(0,1) GROUP BY t.name ORDER BY t.name`,
 };
 export function inventory(database, integrated) {
-  return Object.fromEntries(Object.entries(queries).map(([name, sql]) => [name, query(sql, { database, integrated })]));
+  return Object.fromEntries(
+    Object.entries(queries).map(([name, sql]) => [name, query(sql, { database, integrated })]),
+  );
 }
 if (process.argv[1] === import.meta.filename) {
-  const database = process.argv.find(a => a.startsWith('--database='))?.split('=')[1] || 'CinemaBookingDB';
-  const prefix = process.argv.find(a => a.startsWith('--prefix='))?.split('=')[1] || 'before';
+  const database =
+    process.argv.find((a) => a.startsWith('--database='))?.split('=')[1] || 'CinemaBookingDB';
+  const prefix = process.argv.find((a) => a.startsWith('--prefix='))?.split('=')[1] || 'before';
   const data = inventory(database, process.argv.includes('--integrated'));
   write(path.join(audit, `${prefix}-metadata.json`), data);
-  console.log(JSON.stringify(data.objects.reduce((counts, o) => (counts[o.type] = (counts[o.type] || 0) + 1, counts), {})));
+  console.log(
+    JSON.stringify(
+      data.objects.reduce(
+        (counts, o) => ((counts[o.type] = (counts[o.type] || 0) + 1), counts),
+        {},
+      ),
+    ),
+  );
 }

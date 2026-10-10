@@ -25,13 +25,26 @@ import SupportPortal from '../pages/SupportPortal';
 import AdminPortal from '../pages/AdminPortal';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
-const PUBLIC_LINKS = [{ to: '/', label: 'Trang chủ' }, { to: '/movies', label: 'Phim' }, { to: '/cinemas', label: 'Rạp chiếu' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }];
+const PUBLIC_LINKS = [
+  { to: '/', label: 'Trang chủ' },
+  { to: '/movies', label: 'Phim' },
+  { to: '/cinemas', label: 'Rạp chiếu' },
+  { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER },
+];
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AreaLayout links={PUBLIC_LINKS} />}>
-        <Route index element={<><Home /><DatabaseHealth /></>} />
+        <Route
+          index
+          element={
+            <>
+              <Home />
+              <DatabaseHealth />
+            </>
+          }
+        />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetail />} />
         <Route path="cinemas" element={<Cinemas />} />
@@ -50,36 +63,102 @@ export default function AppRoutes() {
       </Route>
 
       <Route element={<RequireRole role={ROLES.CUSTOMER} />}>
-        <Route path="/orders" element={<AreaLayout title="Đơn đặt vé" links={[{ to: '/', label: 'Trang chủ' }, { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER }]} />}>
+        <Route
+          path="/orders"
+          element={
+            <AreaLayout
+              title="Đơn đặt vé"
+              links={[
+                { to: '/', label: 'Trang chủ' },
+                { to: '/orders', label: 'Đơn của tôi', role: ROLES.CUSTOMER },
+              ]}
+            />
+          }
+        >
           <Route index element={<Orders />} />
           <Route path=":orderId" element={<OrderDetail />} />
           <Route path=":orderId/payment" element={<PaymentPage />} />
         </Route>
-        <Route path="/complaints" element={<AreaLayout title="Khiếu nại" links={[{ to: '/', label: 'Trang chủ' }, { to: '/complaints', label: 'Khiếu nại' }]} />}>
+        <Route
+          path="/complaints"
+          element={
+            <AreaLayout
+              title="Khiếu nại"
+              links={[
+                { to: '/', label: 'Trang chủ' },
+                { to: '/complaints', label: 'Khiếu nại' },
+              ]}
+            />
+          }
+        >
           <Route index element={<Complaints />} />
           <Route path=":complaintId" element={<ComplaintDetail />} />
         </Route>
       </Route>
 
       <Route element={<RequireRole role={ROLES.MANAGER} />}>
-        <Route path="/manager" element={<AreaLayout title="Quản lý rạp" links={[{ to: '/', label: 'Trang chủ' }, { to: '/manager', label: 'Dashboard' }]} />}>
+        <Route
+          path="/manager"
+          element={
+            <AreaLayout
+              title="Quản lý rạp"
+              links={[
+                { to: '/', label: 'Trang chủ' },
+                { to: '/manager', label: 'Dashboard' },
+              ]}
+            />
+          }
+        >
           <Route index element={<ManagerPortal />} />
         </Route>
       </Route>
 
-      <Route element={<RequireRole role={ROLES.SUPPORT} permission={ROLE_AREAS[ROLES.SUPPORT].permission} />}>
-        <Route path="/support" element={<AreaLayout title="Chăm sóc khách hàng" links={[{ to: '/', label: 'Trang chủ' }, { to: '/support', label: 'CSKH' }]} />}>
+      <Route
+        element={
+          <RequireRole role={ROLES.SUPPORT} permission={ROLE_AREAS[ROLES.SUPPORT].permission} />
+        }
+      >
+        <Route
+          path="/support"
+          element={
+            <AreaLayout
+              title="Chăm sóc khách hàng"
+              links={[
+                { to: '/', label: 'Trang chủ' },
+                { to: '/support', label: 'CSKH' },
+              ]}
+            />
+          }
+        >
           <Route index element={<SupportPortal />} />
         </Route>
       </Route>
 
-      <Route element={<RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />}>
-        <Route path={ROLE_AREAS[ROLES.CUSTOMER].path} element={<AreaLayout title={ROLE_AREAS[ROLES.CUSTOMER].label} />}>
+      <Route
+        element={
+          <RequireRole role={ROLES.CUSTOMER} permission={ROLE_AREAS[ROLES.CUSTOMER].permission} />
+        }
+      >
+        <Route
+          path={ROLE_AREAS[ROLES.CUSTOMER].path}
+          element={<AreaLayout title={ROLE_AREAS[ROLES.CUSTOMER].label} />}
+        >
           <Route index element={<CustomerArea />} />
         </Route>
       </Route>
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
-        <Route path="/admin" element={<AreaLayout title="Quản trị hệ thống" links={[{ to: '/', label: 'Trang chủ' }, { to: '/admin', label: 'Admin' }]} />}>
+        <Route
+          path="/admin"
+          element={
+            <AreaLayout
+              title="Quản trị hệ thống"
+              links={[
+                { to: '/', label: 'Trang chủ' },
+                { to: '/admin', label: 'Admin' },
+              ]}
+            />
+          }
+        >
           <Route index element={<AdminPortal />} />
         </Route>
       </Route>

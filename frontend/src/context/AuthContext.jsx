@@ -27,12 +27,17 @@ export function AuthProvider({ children }) {
     window.addEventListener('auth:unauthorized', onUnauthorized);
 
     if (authTokenStorage.get()) {
-      authApi.getCurrentUser({ signal: controller.signal })
-        .then((result) => { if (active) setUser(result.user); })
+      authApi
+        .getCurrentUser({ signal: controller.signal })
+        .then((result) => {
+          if (active) setUser(result.user);
+        })
         .catch((error) => {
           if (active && error.name !== 'AbortError') setUser(null);
         })
-        .finally(() => { if (active) setInitializing(false); });
+        .finally(() => {
+          if (active) setInitializing(false);
+        });
     }
 
     return () => {
@@ -44,33 +49,42 @@ export function AuthProvider({ children }) {
 
   const register = useCallback((fields) => session.register(fields), [session]);
 
-  const login = useCallback(async (credentials) => {
-    const currentUser = await session.login(credentials);
-    setUser(currentUser);
-    return currentUser;
-  }, [session]);
+  const login = useCallback(
+    async (credentials) => {
+      const currentUser = await session.login(credentials);
+      setUser(currentUser);
+      return currentUser;
+    },
+    [session],
+  );
 
   const logout = useCallback(() => {
     session.logout();
     setUser(null);
   }, [session]);
 
-  const updateProfile = useCallback(async (fields) => {
-    const currentUser = await session.updateProfile(fields);
-    setUser(currentUser);
-    return currentUser;
-  }, [session]);
+  const updateProfile = useCallback(
+    async (fields) => {
+      const currentUser = await session.updateProfile(fields);
+      setUser(currentUser);
+      return currentUser;
+    },
+    [session],
+  );
 
-  const value = useMemo(() => ({
-    user,
-    initializing,
-    authenticated: Boolean(user),
-    login,
-    register,
-    logout,
-    refreshCurrentUser,
-    updateProfile,
-  }), [user, initializing, login, register, logout, refreshCurrentUser, updateProfile]);
+  const value = useMemo(
+    () => ({
+      user,
+      initializing,
+      authenticated: Boolean(user),
+      login,
+      register,
+      logout,
+      refreshCurrentUser,
+      updateProfile,
+    }),
+    [user, initializing, login, register, logout, refreshCurrentUser, updateProfile],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

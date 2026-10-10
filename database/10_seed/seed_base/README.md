@@ -16,7 +16,7 @@ Không bổ sung dữ liệu R5.2 trong R5.1.
 R5.2 đã đối chiếu toàn bộ 16 script với schema, constraint, business contract,
 Stored Procedure và caller/test hiện có. Không phát hiện thiếu/sai dữ liệu nền cần sửa;
 giữ nguyên nội dung SQL, ID, business key và số lượng. Xem
-[báo cáo và evidence R5.2](../../../docs/R5_2_BASE_SEED_REPORT.md).
+[quy trình Test DB](../../../scripts/db/TEST_PIPELINE.md) và [database guide](../../README.md).
 
 | Nhóm | Dữ liệu hiện có |
 |---|---|
@@ -51,12 +51,6 @@ verification hiện có cũng không kiểm tra đầy đủ mọi bản ghi bas
 orchestration cần xử lý ở R5.5, không phải cam kết upsert của thư mục này.
 Không chạy từng script riêng để repair: các script không có tính idempotent riêng.
 
-Kiểm tra offline trực tiếp từ repository root:
-
-```powershell
-node scripts/r52/checks.mjs
-```
-
-Checker chỉ đọc nguồn, dựng mô hình dữ liệu trong bộ nhớ và ghi evidence; không kết nối
-database, không thực thi SQL. Live SQL verification: **NOT RUN** do chưa xác định
-database disposable an toàn cho task. Không dùng kết quả static để tuyên bố runtime PASS.
+The phase-specific offline checker has been retired. Historical static results
+do not replace SQL verification. Current Test DB commands and target safety rules are
+in the [test pipeline](../../../scripts/db/TEST_PIPELINE.md).

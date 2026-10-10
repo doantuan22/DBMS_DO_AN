@@ -2,7 +2,7 @@
 
 [014_reference.sql](014_reference.sql) tạo **8 suất quá khứ Hoàn thành** và
 **24 suất tương lai Mở bán** trên database mới. Lịch phủ 4 phim, 6 phòng và 3 rạp
-từ Base Seed đã audit ở R5.2. Xem [báo cáo R5.3](../../../docs/R5_3_DYNAMIC_SHOWTIME_REPORT.md).
+từ Base Seed hiện hành. Xem [database guide](../../README.md) và [quy trình Test DB](../../../scripts/db/TEST_PIPELINE.md).
 
 Script lấy một lần `dbo.fn_BayGio()` (SQL Server UTC), tính ngày địa phương bằng
 `fn_NgayKinhDoanh`, rồi đổi các giờ địa phương về UTC qua `fn_UtcTuGioRap`.
@@ -43,7 +43,6 @@ Chạy qua [seed-all.sql](../seed-all.sql), sau seed phòng/ghế/phim; không c
 refresh theo DB clock. Khi nhánh insert chạy, dynamic yêu cầu bảng suất chiếu trống;
 không upsert, repair hoặc sửa lịch có sẵn. Không tự reset database đang dùng.
 
-Kiểm tra offline tại repository root: `node scripts/r53/checks.mjs`.
-Evidence là **static source/boundary analysis**; không phải SQL integration.
-**LIVE SQL: NOT RUN** vì chưa xác minh được database disposable an toàn. Cần kiểm
-seed/trigger/public SP/booking trên target an toàn trong R5.5; R5.4 chưa triển khai.
+Phase-specific offline checker has been retired; this is not a SQL integration test.
+Use the [current Test DB pipeline](../../../scripts/db/TEST_PIPELINE.md) for maintained
+commands and target safety rules.

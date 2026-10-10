@@ -23,13 +23,23 @@ export default function Home() {
         <p className="catalog-eyebrow">CINEMA STAR</p>
         <h1>Chọn phim hay, tìm suất chiếu phù hợp</h1>
         <p>Khám phá danh mục phim và lịch chiếu thực tế tại các rạp.</p>
-        <Link className="catalog-button" to="/movies">Khám phá phim</Link>
+        <Link className="catalog-button" to="/movies">
+          Khám phá phim
+        </Link>
       </section>
       <section className="catalog-section">
-        <div className="catalog-section-heading"><div><p className="catalog-eyebrow">DANH MỤC</p><h2>Phim</h2></div><Link to="/movies">Xem tất cả</Link></div>
+        <div className="catalog-section-heading">
+          <div>
+            <p className="catalog-eyebrow">DANH MỤC</p>
+            <h2>Phim</h2>
+          </div>
+          <Link to="/movies">Xem tất cả</Link>
+        </div>
         {resource.status === 'loading' && <LoadingState>Đang tải danh sách phim…</LoadingState>}
         {resource.status === 'empty' && <EmptyState>Hiện chưa có phim trong danh mục.</EmptyState>}
-        {resource.status === 'error' && <ErrorState error={resource.error} onRetry={() => setAttempt((value) => value + 1)} />}
+        {resource.status === 'error' && (
+          <ErrorState error={resource.error} onRetry={() => setAttempt((value) => value + 1)} />
+        )}
         {resource.status === 'success' && <MovieGrid movies={resource.data.slice(0, 8)} />}
       </section>
     </div>

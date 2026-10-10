@@ -1,4 +1,4 @@
--- Disposable-only injected write-phase failure. Installed/dropped by scripts/r31/sql-tests.mjs.
+-- Disposable-only injected write-phase failure. Historical R3.1 installer was retired with phase runners.
 -- The session target ensures other movies cannot trigger this test failure.
 CREATE TRIGGER dbo.R31_InjectFailure ON dbo.PHIM_DIENVIEN AFTER INSERT AS
 BEGIN

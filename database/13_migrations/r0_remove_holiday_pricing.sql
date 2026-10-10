@@ -1,5 +1,5 @@
 -- Run with sqlcmd -b in the intended database. No data conversion or deletion.
--- Existing 13_migrations convention; function source is deployed separately by scripts/r0/verify.mjs.
+-- Existing 13_migrations convention; function-source deployment is verified by the current DB pipeline.
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
 BEGIN TRY

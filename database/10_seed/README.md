@@ -81,21 +81,14 @@ Khả năng chạy lại là **skip toàn bộ theo sentinel**, không phải up
 
 Các giới hạn này đã tồn tại; R5.1 chỉ ghi nhận, giữ nguyên SQL và transaction.
 
-## Tooling và lịch sử
+## Tooling and history
 
-`scripts/db/generate-seed.mjs` là extraction R0 một lần, không phải entry point seed
-hằng ngày. Nó cần `_legacy_snapshot/seed/07_seed_data.sql` hiện không có trong checkout,
-và template cũ không tái tạo đầy đủ cập nhật timezone/verification hiện hành. Chỉ cập
-nhật output path theo tổ chức mới; không chạy generator hoặc dùng nó ghi đè source.
-`scripts/r1/migrate-seed.mjs` là migration timezone có fingerprint riêng, không phải
-seed thay thế. Pinned-commit replay dùng đường dẫn của commit cũ, giữ nguyên.
+`scripts/db/generate-seed.mjs` is a one-time R0 extraction tool, not a routine seed
+entry point. It depends on `_legacy_snapshot/seed/07_seed_data.sql`, which is absent
+from this checkout, and its old template does not include current timezone and
+verification updates. Do not run it to overwrite canonical seed source.
 
-Các reader live-source `scripts/r3a/inventory.mjs`, `scripts/r6a/provenance.mjs` đã
-cập nhật path; scan recursive `10_seed/` và entry point `seed-all.sql` vẫn hoạt động.
-Đường dẫn trong snapshot audit/evidence lịch sử giữ nguyên; xem mapping trong
-[báo cáo R5.1](../../docs/R5_1_SEED_REPORT.md).
-
-Kiểm tra dynamic offline, không kết nối DB: `node scripts/r53/checks.mjs`.
-Các checker R5.1/R5.2 chứa whole-source hash của thời điểm nghiệm thu; chúng là
-kiểm tra parity lịch sử, không chạy lại để ghi đè evidence sau thay đổi dynamic có
-chủ đích. Checker R5.3 xác nhận base và chuỗi expanded SQL ngoài body dynamic giữ nguyên.
+Phase-specific seed runners and checkers have been retired. The current seed entry
+point remains `seed-all.sql`; current Test DB safety rules and commands are in the
+[test pipeline](../../scripts/db/TEST_PIPELINE.md). Script names in older phase
+reports describe the tools used at the time and are not replay instructions.

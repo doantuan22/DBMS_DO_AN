@@ -3,7 +3,9 @@
   "private": true,
   "description": "Convenience scripts only. frontend/ and backend/ are independent packages (no workspaces).",
   "scripts": {
-    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install",
+    "format": "prettier --write \"backend/src/**/*.js\" \"backend/tests/**/*.js\" \"frontend/src/**/*.{js,jsx,css}\" \"frontend/tests/**/*.js\" \"frontend/*.js\" \"frontend/index.html\" \"scripts/**/*.mjs\" \"shared/**/*.{js,mjs}\"",
+    "format:check": "prettier --check \"backend/src/**/*.js\" \"backend/tests/**/*.js\" \"frontend/src/**/*.{js,jsx,css}\" \"frontend/tests/**/*.js\" \"frontend/*.js\" \"frontend/index.html\" \"scripts/**/*.mjs\" \"shared/**/*.{js,mjs}\"",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build",
@@ -21,16 +23,9 @@
     "db:test:preflight": "node scripts/db/run.mjs preflight-test",
     "db:test:build": "node scripts/db/run.mjs build-test",
     "db:test:fixture": "node scripts/db/run.mjs fixture-test",
-    "db:test:rebuild": "node scripts/db/run.mjs rebuild-test",
-    "r1:checks": "node scripts/r1/checks.mjs",
-    "r1:integration": "node scripts/r1/integration.mjs",
-    "r1:sql-tests": "node scripts/r1/sql-fixtures.mjs",
-    "r1:browser": "node scripts/r1/browser.mjs",
-    "r1:migrate-seed": "node scripts/r1/migrate-seed.mjs",
-    "r2:integration": "node scripts/r2/integration.mjs",
-    "r2:browser": "node scripts/r2/browser.mjs",
-    "r2:checks": "node scripts/r2/checks.mjs",
-    "r2fix:migrate": "node scripts/r2fix/migrate.mjs",
-    "r2fix:migration-tests": "node scripts/r2fix/migration-tests.mjs"
+    "db:test:rebuild": "node scripts/db/run.mjs rebuild-test"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9"
   }
 }

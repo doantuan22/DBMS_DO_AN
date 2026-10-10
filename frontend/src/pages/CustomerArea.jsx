@@ -14,7 +14,11 @@ export default function CustomerArea() {
       <h1>Tài khoản khách hàng</h1>
       <p className="catalog-muted">Chọn một tác vụ để tiếp tục.</p>
       <div className="catalog-actions">
-        {SHORTCUTS.map(({ to, label }) => <Link key={to} className="catalog-button catalog-button--secondary" to={to}>{label}</Link>)}
+        {SHORTCUTS.map(({ to, label }) => (
+          <Link key={to} className="catalog-button catalog-button--secondary" to={to}>
+            {label}
+          </Link>
+        ))}
       </div>
     </section>
   );

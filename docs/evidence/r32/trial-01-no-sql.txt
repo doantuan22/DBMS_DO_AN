@@ -1,4 +1,0 @@
-Scanned 94 files.
-Reviewed non-SQL keyword matches: 23.
-NO RAW BUSINESS SQL IN BACKEND = FAIL
-  backend/tests/r32-historical-metadata.test.js:18 for(const field of ['movieId','startsAt','endsAt','format','basePrice']){const omitted={...show};delete omitted[field];assert.throws(()=>validate(omitted));assert.throws(()=>validate({...show,[field]:null}));} (/(?<!\.)\bDELETE\b/i)

@@ -52,13 +52,13 @@ identity counters are intentionally excluded. Negative probes use their own roll
 transactions and the same full fingerprint comparison. Main is hashed read-only
 before/after both success and failure; no row contents/secrets are exported.
 
-Each invocation writes an immutable directory under `docs/evidence/r55/runs/`:
+Each invocation writes an immutable directory under `.audit-output/database-test/runs/`:
 `result.json` carries Test ID/scenario/expected/actual/status/exit code; SQL logs carry
 runtime outputs; fingerprints prove isolation. On any error the next stage stops.
 Review failed runs; rerunning does not overwrite their evidence. A committed fixture
-cannot be loaded again over itself; obtain reset permission or use a separate target.
+cannot be loaded again over itself; use a separate disposable target.
 
-Current safety/regression checks: `node scripts/r55/checks.mjs`. Optional original
-checker replay: `node scripts/r55/regression.mjs`; it redirects output only, keeps
-historical expectations unchanged and labels phase parity differences. Never rewrite
-old evidence to make parity pass. See [R5.5 report](../../docs/R5_5_TEST_DATABASE_REBUILD_REPORT.md).
+Use `npm run db:test:preflight`, `npm run db:test:build`,
+`npm run db:test:fixture`, or `npm run db:test:rebuild` for the maintained pipeline.
+The retired phase-specific R5.5 checkers are not part of the current toolset. See
+[the database guide](../../database/README.md) for the canonical layout and safety boundary.

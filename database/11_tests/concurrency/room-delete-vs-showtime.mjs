@@ -1,7 +1,7 @@
 // Real SQL sessions; synchronization transactions are SQL batches, not application transactions.
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { sql, disposable, database, connect, actors, fixture, cleanupRoom, roomState, snapshot, summarize, write, evidenceRoot } from '../../../scripts/r11/common.mjs';
+import { sql, disposable, database, connect, actors, fixture, cleanupRoom, roomState, snapshot, summarize, write, evidenceRoot } from '../../../scripts/db/concurrency-support/common-r11.mjs';
 disposable();
 const [a,b,observer]=await Promise.all([connect(),connect(),connect()]);
 const evidence={ database,startedAt:new Date().toISOString(),status:'RUNNING',cases:[] };

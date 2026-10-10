@@ -18,8 +18,12 @@ function requiredText(value, field) {
 }
 
 function assertOnlyFields(value, fields, errorCode) {
-  if (!value || typeof value !== 'object' || Array.isArray(value)
-    || Object.keys(value).some((key) => !fields.includes(key))) {
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    Array.isArray(value) ||
+    Object.keys(value).some((key) => !fields.includes(key))
+  ) {
     throw new HttpError(400, errorCode, 'Request contains unsupported fields.');
   }
 }

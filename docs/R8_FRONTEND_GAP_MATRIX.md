@@ -1,10 +1,13 @@
-# R8 Frontend Gap Matrix — work package R8.1
+# R8 Frontend Gap Matrix — R8.1 baseline and R8.3 final status
 
-45 UC được khảo sát; giữ **2 provisional FE PASS / 43 PARTIAL** và tất cả `R71-FE-*` IDs. Đây là mapping/inspection, không Final Frontend Acceptance.
+> **Ghi chú lưu trữ (10/10/2026):** Theo yêu cầu thu gọn `docs`, evidence, contracts, archive và tài liệu hỗ trợ đã được xóa khỏi workspace. Các nhãn case/selector trong báo cáo là tham chiếu lịch sử, không còn liên kết tới raw artifact. Kết quả và verdict được ghi trong báo cáo không thay đổi.
+
+
+R8.1 inspection ban đầu ghi **2 provisional FE PASS / 43 PARTIAL**; đây là baseline classification bên dưới. Formal re-acceptance hiện hành là **45/45 Frontend PASS, 43/43 gaps RESOLVED; Phase R8 DONE**. Xem [R8.3 re-acceptance](R8_3_REACCEPTANCE_REPORT.md) và accepted 45-UC manifest. Giữ nguyên toàn bộ `R71-FE-*` IDs để trace với baseline.
 
 Work package R8.1 hiện tại là inspection/environment; roadmap R8.1/I-11 vẫn pending fix R8.2. SOURCE_MAPPED/BROWSER_PARTIAL/BROWSER_MISSING/CONTRACT_MISMATCH/STATE_RACE_RISK/KNOWN_UI_DEFECT/READY_FOR_R8_2 là classification hỗ trợ, không thay thế grade. READY_FOR_R8_2 nghĩa là có kế hoạch và environment dùng được; không có nghĩa mọi scenario fixture đã tạo.
 
-Nguồn: [baseline45](USE_CASE_BASELINE_45.md), [matrix lịch sử](USE_CASE_MATRIX_45.md), [R7.3](R7_3_FINAL_ACCEPTANCE_REPORT.md), [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Nguồn: baseline45, [matrix lịch sử](USE_CASE_MATRIX_45.md), [R7.3](R7_3_FINAL_ACCEPTANCE_REPORT.md), frontend-mapping.json.
 
 | UC / Actor | FE baseline | Gap | Mounted route / component | Classification | R8.2 action / order |
 | --- | --- | --- | --- | --- | --- |
@@ -81,7 +84,7 @@ Nguồn: [baseline45](USE_CASE_BASELINE_45.md), [matrix lịch sử](USE_CASE_MA
 | --- | --- |
 | POST /api/auth/register | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.register → authService.registerCustomer → AUTH_REGISTER_CUSTOMER → dbo.sp_Auth_RegisterCustomer |
 
-Current UI source: [Register.jsx](../frontend/src/pages/auth/Register.jsx). Raw mapping selector `/UCs/0` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Register.jsx](../frontend/src/pages/auth/Register.jsx). Raw mapping selector `/UCs/0` tại frontend-mapping.json.
 
 <a id="uc-kh-02"></a>
 
@@ -112,7 +115,7 @@ Current UI source: [Register.jsx](../frontend/src/pages/auth/Register.jsx). Raw 
 | GET /api/auth/me | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentUser → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 | GET /api/auth/permissions | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentPermissions → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 
-Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx). Raw mapping selector `/UCs/1` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx). Raw mapping selector `/UCs/1` tại frontend-mapping.json.
 
 <a id="uc-kh-03"></a>
 
@@ -142,7 +145,7 @@ Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx). Raw mappin
 | GET /api/auth/me | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentUser → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 | PUT /api/auth/me | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.updateCurrentUser → authService.updateProfile → USER_UPDATE_PROFILE → dbo.sp_User_UpdateProfile; USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 
-Current UI source: [Profile.jsx](../frontend/src/pages/auth/Profile.jsx). Raw mapping selector `/UCs/2` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Profile.jsx](../frontend/src/pages/auth/Profile.jsx). Raw mapping selector `/UCs/2` tại frontend-mapping.json.
 
 <a id="uc-kh-04"></a>
 
@@ -173,7 +176,7 @@ Current UI source: [Profile.jsx](../frontend/src/pages/auth/Profile.jsx). Raw ma
 | GET /api/movies/:movieId | [movieRoutes.js](../backend/src/routes/movieRoutes.js) → catalogController.getMovieDetail → catalogService.getMovieDetail → MOVIE_GET_DETAIL → dbo.sp_Movie_GetDetail |
 | GET /api/genres | [genreRoutes.js](../backend/src/routes/genreRoutes.js) → catalogController.listGenres → catalogService.listGenres → GENRE_LIST → dbo.sp_Genre_List |
 
-Current UI source: [Movies.jsx](../frontend/src/pages/Movies.jsx), [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx). Raw mapping selector `/UCs/3` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Movies.jsx](../frontend/src/pages/Movies.jsx), [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx). Raw mapping selector `/UCs/3` tại frontend-mapping.json.
 
 <a id="uc-kh-05"></a>
 
@@ -204,7 +207,7 @@ Current UI source: [Movies.jsx](../frontend/src/pages/Movies.jsx), [MovieDetail.
 | GET /api/movies/:movieId/showtimes | [movieRoutes.js](../backend/src/routes/movieRoutes.js) → catalogController.listShowtimes → catalogService.listShowtimes → SHOWTIME_LIST_BY_MOVIE → dbo.sp_Showtime_ListByMovie |
 | GET /api/showtimes/:showtimeId | [showtimeRoutes.js](../backend/src/routes/showtimeRoutes.js) → catalogController.getShowtimeDetail → catalogService.getShowtimeDetail → SHOWTIME_GET_DETAIL → dbo.sp_Showtime_GetDetail |
 
-Current UI source: [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx), [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/4` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx), [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/4` tại frontend-mapping.json.
 
 <a id="uc-kh-06"></a>
 
@@ -234,7 +237,7 @@ Current UI source: [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx), [Bo
 | GET /api/showtimes/:showtimeId | [showtimeRoutes.js](../backend/src/routes/showtimeRoutes.js) → catalogController.getShowtimeDetail → catalogService.getShowtimeDetail → SHOWTIME_GET_DETAIL → dbo.sp_Showtime_GetDetail |
 | GET /api/showtimes/:showtimeId/seats | [showtimeRoutes.js](../backend/src/routes/showtimeRoutes.js) → bookingController.listSeats → bookingService.listSeats → SEAT_LIST_BY_SHOWTIME → dbo.sp_Seat_ListByShowtime |
 
-Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/5` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/5` tại frontend-mapping.json.
 
 <a id="uc-kh-07"></a>
 
@@ -263,7 +266,7 @@ Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPrepara
 | --- | --- |
 | POST /api/bookings | [bookingRoutes.js](../backend/src/routes/bookingRoutes.js) → bookingController.createBooking → bookingService.createBooking → BOOKING_CREATE → dbo.sp_Booking_Create |
 
-Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/6` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/6` tại frontend-mapping.json.
 
 <a id="uc-kh-08"></a>
 
@@ -293,7 +296,7 @@ Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPrepara
 | GET /api/products | [productRoutes.js](../backend/src/routes/productRoutes.js) → bookingController.listProducts → bookingService.listProducts → PRODUCT_LIST_ACTIVE → dbo.sp_Product_ListActive |
 | POST /api/bookings | [bookingRoutes.js](../backend/src/routes/bookingRoutes.js) → bookingController.createBooking → bookingService.createBooking → BOOKING_CREATE → dbo.sp_Booking_Create |
 
-Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/7` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/7` tại frontend-mapping.json.
 
 <a id="uc-kh-09"></a>
 
@@ -323,7 +326,7 @@ Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPrepara
 | POST /api/promotions/validate | [promotionRoutes.js](../backend/src/routes/promotionRoutes.js) → bookingController.validatePromotion → bookingService.validatePromotion → SEAT_LIST_BY_SHOWTIME → dbo.sp_Seat_ListByShowtime; PRODUCT_LIST_ACTIVE → dbo.sp_Product_ListActive; PROMOTION_VALIDATE → dbo.sp_Promotion_Validate |
 | POST /api/bookings | [bookingRoutes.js](../backend/src/routes/bookingRoutes.js) → bookingController.createBooking → bookingService.createBooking → BOOKING_CREATE → dbo.sp_Booking_Create |
 
-Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/8` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx). Raw mapping selector `/UCs/8` tại frontend-mapping.json.
 
 <a id="uc-kh-10"></a>
 
@@ -354,7 +357,7 @@ Current UI source: [BookingPreparation.jsx](../frontend/src/pages/BookingPrepara
 | POST /api/orders/:orderId/payments/:paymentId/result | [orderRoutes.js](../backend/src/routes/orderRoutes.js) → orderController.updatePayment → orderService.updatePaymentResult → PAYMENT_UPDATE_RESULT → dbo.sp_Payment_UpdateResult; ORDER_GET_DETAIL_BY_CUSTOMER → dbo.sp_Order_GetDetailByCustomer |
 | GET /api/orders/:orderId | [orderRoutes.js](../backend/src/routes/orderRoutes.js) → orderController.getOrder → orderService.getOrderDetail → ORDER_GET_DETAIL_BY_CUSTOMER → dbo.sp_Order_GetDetailByCustomer |
 
-Current UI source: [PaymentPage.jsx](../frontend/src/pages/PaymentPage.jsx). Raw mapping selector `/UCs/9` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [PaymentPage.jsx](../frontend/src/pages/PaymentPage.jsx). Raw mapping selector `/UCs/9` tại frontend-mapping.json.
 
 <a id="uc-kh-11"></a>
 
@@ -383,7 +386,7 @@ Current UI source: [PaymentPage.jsx](../frontend/src/pages/PaymentPage.jsx). Raw
 | --- | --- |
 | GET /api/orders | [orderRoutes.js](../backend/src/routes/orderRoutes.js) → orderController.listOrders → orderService.listOrders → ORDER_LIST_BY_CUSTOMER → dbo.sp_Order_ListByCustomer |
 
-Current UI source: [Orders.jsx](../frontend/src/pages/Orders.jsx). Raw mapping selector `/UCs/10` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Orders.jsx](../frontend/src/pages/Orders.jsx). Raw mapping selector `/UCs/10` tại frontend-mapping.json.
 
 <a id="uc-kh-12"></a>
 
@@ -412,7 +415,7 @@ Current UI source: [Orders.jsx](../frontend/src/pages/Orders.jsx). Raw mapping s
 | --- | --- |
 | GET /api/orders/:orderId | [orderRoutes.js](../backend/src/routes/orderRoutes.js) → orderController.getOrder → orderService.getOrderDetail → ORDER_GET_DETAIL_BY_CUSTOMER → dbo.sp_Order_GetDetailByCustomer |
 
-Current UI source: [OrderDetail.jsx](../frontend/src/pages/OrderDetail.jsx). Raw mapping selector `/UCs/11` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [OrderDetail.jsx](../frontend/src/pages/OrderDetail.jsx). Raw mapping selector `/UCs/11` tại frontend-mapping.json.
 
 <a id="uc-kh-13"></a>
 
@@ -442,7 +445,7 @@ Current UI source: [OrderDetail.jsx](../frontend/src/pages/OrderDetail.jsx). Raw
 | GET /api/movies/:movieId/reviews | [movieRoutes.js](../backend/src/routes/movieRoutes.js) → feedbackController.listReviews → feedbackService.listReviews → REVIEW_LIST_BY_MOVIE → dbo.sp_Review_ListByMovie |
 | POST /api/movies/:movieId/reviews | [movieRoutes.js](../backend/src/routes/movieRoutes.js) → feedbackController.createReview → feedbackService.createReview → REVIEW_CREATE → dbo.sp_Review_Create |
 
-Current UI source: [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx). Raw mapping selector `/UCs/12` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx). Raw mapping selector `/UCs/12` tại frontend-mapping.json.
 
 <a id="uc-kh-14"></a>
 
@@ -473,7 +476,7 @@ Current UI source: [MovieDetail.jsx](../frontend/src/pages/MovieDetail.jsx). Raw
 | GET /api/complaints | [complaintRoutes.js](../backend/src/routes/complaintRoutes.js) → feedbackController.listComplaints → feedbackService.listComplaints → COMPLAINT_LIST_BY_CUSTOMER → dbo.sp_Complaint_ListByCustomer |
 | GET /api/complaints/:complaintId | [complaintRoutes.js](../backend/src/routes/complaintRoutes.js) → feedbackController.getComplaint → feedbackService.getComplaint → COMPLAINT_GET_BY_CUSTOMER → dbo.sp_Complaint_GetByCustomer |
 
-Current UI source: [Complaints.jsx](../frontend/src/pages/Complaints.jsx), [ComplaintDetail.jsx](../frontend/src/pages/ComplaintDetail.jsx). Raw mapping selector `/UCs/13` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Complaints.jsx](../frontend/src/pages/Complaints.jsx), [ComplaintDetail.jsx](../frontend/src/pages/ComplaintDetail.jsx). Raw mapping selector `/UCs/13` tại frontend-mapping.json.
 
 <a id="uc-qlr-01"></a>
 
@@ -505,7 +508,7 @@ Current UI source: [Complaints.jsx](../frontend/src/pages/Complaints.jsx), [Comp
 | GET /api/auth/permissions | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentPermissions → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 | GET /api/manager/cinemas | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.listCinemas → managerService.listCinemas → MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 
-Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/14` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/14` tại frontend-mapping.json.
 
 <a id="uc-qlr-02"></a>
 
@@ -537,7 +540,7 @@ Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [ManagerPo
 | PUT /api/manager/rooms/:roomId | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.updateRoom → managerService.updateRoom → MANAGER_ROOM_UPDATE → dbo.sp_Manager_Room_Update |
 | DELETE /api/manager/rooms/:roomId | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.deleteRoom → managerService.deleteRoom → MANAGER_ROOM_DELETE → dbo.sp_Manager_Room_Delete |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/15` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/15` tại frontend-mapping.json.
 
 <a id="uc-qlr-03"></a>
 
@@ -569,7 +572,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | PUT /api/manager/seats/:seatId | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.updateSeat → managerService.updateSeat → MANAGER_SEAT_UPDATE → dbo.sp_Manager_Seat_Update |
 | DELETE /api/manager/seats/:seatId | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.deleteSeat → managerService.deleteSeat → MANAGER_SEAT_DELETE → dbo.sp_Manager_Seat_Delete |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/16` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/16` tại frontend-mapping.json.
 
 <a id="uc-qlr-04"></a>
 
@@ -599,7 +602,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | GET /api/manager/cinemas/:cinemaId/showtimes | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.listShowtimes → managerService.listShowtimes → MANAGER_SHOWTIME_LIST → dbo.sp_Manager_Showtime_List |
 | POST /api/manager/showtimes | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.createShowtime → managerService.createShowtime → MANAGER_SHOWTIME_CREATE → dbo.sp_Manager_Showtime_Create |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/17` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/17` tại frontend-mapping.json.
 
 <a id="uc-qlr-05"></a>
 
@@ -629,7 +632,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | GET /api/manager/cinemas/:cinemaId/showtimes | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.listShowtimes → managerService.listShowtimes → MANAGER_SHOWTIME_LIST → dbo.sp_Manager_Showtime_List |
 | PUT /api/manager/showtimes/:showtimeId | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.updateShowtime → managerService.updateShowtime → MANAGER_SHOWTIME_UPDATE → dbo.sp_Manager_Showtime_Update |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/18` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/18` tại frontend-mapping.json.
 
 <a id="uc-qlr-06"></a>
 
@@ -658,7 +661,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | --- | --- |
 | POST /api/manager/showtimes/:showtimeId/cancel | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.cancelShowtime → managerService.cancelShowtime → MANAGER_SHOWTIME_CANCEL → dbo.sp_Manager_Showtime_Cancel |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/19` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/19` tại frontend-mapping.json.
 
 <a id="uc-qlr-07"></a>
 
@@ -689,7 +692,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | POST /api/manager/cinemas/:cinemaId/pricing | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.createPricing → managerService.createPricing → MANAGER_PRICING_CREATE → dbo.sp_Manager_Pricing_Create |
 | PUT /api/manager/pricing/:pricingId | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.updatePricing → managerService.updatePricing → MANAGER_PRICING_UPDATE → dbo.sp_Manager_Pricing_Update |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/20` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/20` tại frontend-mapping.json.
 
 <a id="uc-qlr-08"></a>
 
@@ -718,7 +721,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | --- | --- |
 | GET /api/manager/cinemas/:cinemaId/dashboard | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.dashboard → managerService.dashboard → MANAGER_DASHBOARD → dbo.sp_Manager_Dashboard |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/21` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/21` tại frontend-mapping.json.
 
 <a id="uc-qlr-09"></a>
 
@@ -747,7 +750,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | --- | --- |
 | GET /api/manager/cinemas/:cinemaId/revenue | [managerRoutes.js](../backend/src/routes/managerRoutes.js) → managerController.revenue → managerService.revenue → MANAGER_REVENUE → dbo.sp_Manager_Revenue |
 
-Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/22` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx). Raw mapping selector `/UCs/22` tại frontend-mapping.json.
 
 <a id="uc-cskh-01"></a>
 
@@ -778,7 +781,7 @@ Current UI source: [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx).
 | GET /api/auth/me | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentUser → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 | GET /api/auth/permissions | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentPermissions → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 
-Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/23` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/23` tại frontend-mapping.json.
 
 <a id="uc-cskh-02"></a>
 
@@ -807,7 +810,7 @@ Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [SupportPo
 | --- | --- |
 | GET /api/support/complaints | [supportRoutes.js](../backend/src/routes/supportRoutes.js) → supportController.list → supportService.list → SUPPORT_COMPLAINT_LIST → dbo.sp_Support_Complaint_List |
 
-Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/24` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/24` tại frontend-mapping.json.
 
 <a id="uc-cskh-03"></a>
 
@@ -836,7 +839,7 @@ Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx).
 | --- | --- |
 | GET /api/support/complaints/:complaintId | [supportRoutes.js](../backend/src/routes/supportRoutes.js) → supportController.detail → supportService.detail → SUPPORT_COMPLAINT_GET_DETAIL → dbo.sp_Support_Complaint_GetDetail |
 
-Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/25` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/25` tại frontend-mapping.json.
 
 <a id="uc-cskh-04"></a>
 
@@ -865,7 +868,7 @@ Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx).
 | --- | --- |
 | GET /api/support/complaints/:complaintId/order-reference | [supportRoutes.js](../backend/src/routes/supportRoutes.js) → supportController.orderReference → supportService.orderReference → SUPPORT_COMPLAINT_GET_ORDER_REFERENCE → dbo.sp_Support_Complaint_GetOrderReference |
 
-Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/26` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/26` tại frontend-mapping.json.
 
 <a id="uc-cskh-05"></a>
 
@@ -894,7 +897,7 @@ Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx).
 | --- | --- |
 | POST /api/support/complaints/:complaintId/processings | [supportRoutes.js](../backend/src/routes/supportRoutes.js) → supportController.addProcessing → supportService.addProcessing → SUPPORT_COMPLAINT_ADD_PROCESSING → dbo.sp_Support_Complaint_AddProcessing |
 
-Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/27` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/27` tại frontend-mapping.json.
 
 <a id="uc-cskh-06"></a>
 
@@ -923,7 +926,7 @@ Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx).
 | --- | --- |
 | PUT /api/support/complaints/:complaintId/status | [supportRoutes.js](../backend/src/routes/supportRoutes.js) → supportController.updateStatus → supportService.updateStatus → SUPPORT_COMPLAINT_UPDATE_STATUS → dbo.sp_Support_Complaint_UpdateStatus |
 
-Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/28` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx). Raw mapping selector `/UCs/28` tại frontend-mapping.json.
 
 <a id="uc-adm-01"></a>
 
@@ -954,7 +957,7 @@ Current UI source: [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx).
 | GET /api/auth/me | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentUser → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 | GET /api/auth/permissions | [authRoutes.js](../backend/src/routes/authRoutes.js) → authController.currentPermissions → authenticate → authService.getCurrentUser → USER_GET_CURRENT → dbo.sp_User_GetCurrent; RBAC_GET_PERMISSIONS_BY_USER → dbo.sp_RBAC_GetPermissionsByUser; MANAGER_LIST_ASSIGNED_CINEMAS → dbo.sp_Manager_ListAssignedCinemas |
 
-Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/29` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/29` tại frontend-mapping.json.
 
 <a id="uc-adm-02"></a>
 
@@ -985,7 +988,7 @@ Current UI source: [Login.jsx](../frontend/src/pages/auth/Login.jsx), [AdminPort
 | POST /api/admin/users | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.createUser → adminService.createUser → ADMIN_USER_CREATE → dbo.sp_Admin_User_Create |
 | PUT /api/admin/users/:userId/status | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateUserStatus → adminService.setUserStatus → ADMIN_USER_UPDATE_STATUS → dbo.sp_Admin_User_UpdateStatus |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/30` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/30` tại frontend-mapping.json.
 
 <a id="uc-adm-03"></a>
 
@@ -1017,7 +1020,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/roles/:roleId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateRole → adminService.updateRole → ADMIN_ROLE_UPDATE → dbo.sp_Admin_Role_Update |
 | DELETE /api/admin/roles/:roleId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deleteRole → adminService.deleteRole → ADMIN_ROLE_DELETE → dbo.sp_Admin_Role_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/31` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/31` tại frontend-mapping.json.
 
 <a id="uc-adm-04"></a>
 
@@ -1049,7 +1052,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/permissions/:permissionId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updatePermission → adminService.updatePermission → ADMIN_PERMISSION_UPDATE → dbo.sp_Admin_Permission_Update |
 | DELETE /api/admin/permissions/:permissionId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deletePermission → adminService.deletePermission → ADMIN_PERMISSION_DELETE → dbo.sp_Admin_Permission_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/32` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/32` tại frontend-mapping.json.
 
 <a id="uc-adm-05"></a>
 
@@ -1079,7 +1082,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | GET /api/admin/roles/:roleId/permissions | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.rolePermissions → adminService.rolePermissions → ADMIN_ROLE_PERMISSION_LIST → dbo.usp_Admin_RolePermission_List |
 | PUT /api/admin/roles/:roleId/permissions | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.setRolePermissions → adminService.setRolePermissions → ADMIN_ROLE_PERMISSION_SET → dbo.sp_Admin_RolePermission_Set |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/33` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/33` tại frontend-mapping.json.
 
 <a id="uc-adm-06"></a>
 
@@ -1110,7 +1113,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | POST /api/admin/assignments | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.createAssignment → adminService.createAssignment → ADMIN_ASSIGNMENT_CREATE → dbo.sp_Admin_Assignment_Create |
 | PUT /api/admin/assignments/:assignmentId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateAssignment → adminService.updateAssignment → ADMIN_ASSIGNMENT_UPDATE → dbo.usp_Admin_Assignment_Update |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/34` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/34` tại frontend-mapping.json.
 
 <a id="uc-adm-07"></a>
 
@@ -1147,7 +1150,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | DELETE /api/admin/cinemas/:cinemaId/images/:imageId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deleteCinemaImage → adminService.deleteCinemaImage → ADMIN_CINEMA_IMAGE_DELETE → dbo.usp_Admin_CinemaImage_Delete |
 | PATCH /api/admin/cinemas/:cinemaId/images/:imageId/cover | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.setCinemaImageCover → adminService.setCinemaImageCover → ADMIN_CINEMA_IMAGE_SET_COVER → dbo.usp_Admin_CinemaImage_SetCover |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/35` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/35` tại frontend-mapping.json.
 
 <a id="uc-adm-08"></a>
 
@@ -1183,7 +1186,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/seats/:seatId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateSeat → adminService.updateSeat → ADMIN_SEAT_UPDATE → dbo.usp_Admin_Seat_Update |
 | DELETE /api/admin/seats/:seatId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deleteSeat → adminService.deleteSeat → ADMIN_SEAT_DELETE → dbo.usp_Admin_Seat_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/36` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/36` tại frontend-mapping.json.
 
 <a id="uc-adm-09"></a>
 
@@ -1220,7 +1223,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/actors/:actorId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateActor → adminService.updateActor → ADMIN_ACTOR_UPDATE → dbo.sp_Admin_Actor_Update |
 | DELETE /api/admin/actors/:actorId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deleteActor → adminService.deleteActor → ADMIN_ACTOR_DELETE → dbo.sp_Admin_Actor_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/37` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/37` tại frontend-mapping.json.
 
 <a id="uc-adm-10"></a>
 
@@ -1252,7 +1255,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/genres/:genreId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateGenre → adminService.updateGenre → ADMIN_GENRE_UPDATE → dbo.sp_Admin_Genre_Update |
 | DELETE /api/admin/genres/:genreId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deleteGenre → adminService.deleteGenre → ADMIN_GENRE_DELETE → dbo.sp_Admin_Genre_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/38` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/38` tại frontend-mapping.json.
 
 <a id="uc-adm-11"></a>
 
@@ -1284,7 +1287,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/products/:productId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateProduct → adminService.updateProduct → ADMIN_PRODUCT_UPDATE → dbo.sp_Admin_Product_Update |
 | DELETE /api/admin/products/:productId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deleteProduct → adminService.deleteProduct → ADMIN_PRODUCT_DELETE → dbo.sp_Admin_Product_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/39` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/39` tại frontend-mapping.json.
 
 <a id="uc-adm-12"></a>
 
@@ -1316,7 +1319,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/promotions/:promotionId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updatePromotion → adminService.updatePromotion → ADMIN_PROMOTION_UPDATE → dbo.sp_Admin_Promotion_Update |
 | DELETE /api/admin/promotions/:promotionId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.deletePromotion → adminService.deletePromotion → ADMIN_PROMOTION_DELETE → dbo.sp_Admin_Promotion_Delete |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/40` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/40` tại frontend-mapping.json.
 
 <a id="uc-adm-13"></a>
 
@@ -1347,7 +1350,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | POST /api/admin/pricing | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.createPricing → adminService.createPricing → ADMIN_PRICING_CREATE → dbo.usp_Admin_Pricing_Create |
 | PUT /api/admin/pricing/:pricingId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updatePricing → adminService.updatePricing → ADMIN_PRICING_UPDATE → dbo.usp_Admin_Pricing_Update |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/41` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/41` tại frontend-mapping.json.
 
 <a id="uc-adm-14"></a>
 
@@ -1379,7 +1382,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | PUT /api/admin/showtimes/:showtimeId | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.updateShowtime → adminService.updateShowtime → ADMIN_SHOWTIME_UPDATE → dbo.usp_Admin_Showtime_Update |
 | POST /api/admin/showtimes/:showtimeId/cancel | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.cancelShowtime → adminService.cancelShowtime → ADMIN_SHOWTIME_CANCEL → dbo.usp_Admin_Showtime_Cancel |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/42` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/42` tại frontend-mapping.json.
 
 <a id="uc-adm-15"></a>
 
@@ -1412,7 +1415,7 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | POST /api/admin/complaints/:complaintId/processings | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → wrapSupport → supportService.addProcessing → SUPPORT_COMPLAINT_ADD_PROCESSING → dbo.sp_Support_Complaint_AddProcessing |
 | PUT /api/admin/complaints/:complaintId/status | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → wrapSupport → supportService.updateStatus → SUPPORT_COMPLAINT_UPDATE_STATUS → dbo.sp_Support_Complaint_UpdateStatus |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/43` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/43` tại frontend-mapping.json.
 
 <a id="uc-adm-16"></a>
 
@@ -1442,59 +1445,59 @@ Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw
 | GET /api/admin/dashboard | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.dashboard → adminService.dashboard → ADMIN_DASHBOARD → dbo.sp_Admin_Dashboard |
 | GET /api/admin/reports/revenue | [adminRoutes.js](../backend/src/routes/adminRoutes.js) → adminController.revenue → adminService.revenue → ADMIN_REPORT_REVENUE → dbo.sp_Admin_Report_Revenue |
 
-Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/44` tại [frontend-mapping.json](evidence/r8-1/runs/2026-10-10T02-06-45-496193Z-b20ed2ee/frontend-mapping.json).
+Current UI source: [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx). Raw mapping selector `/UCs/44` tại frontend-mapping.json.
 
 ---
 
 # R8.2 — Kết quả xử lý 43 inherited gaps
 
-Bảng dưới là kết quả R8.2 hiện hành, ngày 10/10/2026 (UTC+7). Toàn bộ nội dung R8.1 phía trên được giữ nguyên làm lịch sử; bản byte-identical có seal tại [R8_FRONTEND_GAP_MATRIX_R8_1.md](evidence/r8-2/runs/2026-10-10T02-38-55-539905Z-d8a165c2/R8_FRONTEND_GAP_MATRIX_R8_1.md). Không thay đổi category gốc; shared fixes không được cộng thành gap mới. Hai UC KH-02/KH-03 được regression riêng tại Verification Matrix.
+Bảng dưới là kết quả R8.2 hiện hành, ngày 10/10/2026 (UTC+7). Toàn bộ nội dung R8.1 phía trên được giữ nguyên làm lịch sử; bản byte-identical có seal tại R8_FRONTEND_GAP_MATRIX_R8_1.md. Không thay đổi category gốc; shared fixes không được cộng thành gap mới. Hai UC KH-02/KH-03 được regression riêng tại Verification Matrix.
 
 | Gap ID | UC ID | Original category | Priority | Production fix | Browser test IDs | SQL evidence | Final gap status | Candidate acceptance | Outstanding issue |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| R71-FE-KH-01 | KH-01 | TEST_REQUIRED | P3 | N/A — verification only | [P3-KH01-REGISTER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-REGISTER-INVALID-AND-429](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-REGISTER-DUPLICATE-PHONE](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json) | [KH-01 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-04 | KH-04 | TEST_REQUIRED | P3 | N/A — verification only | [P3-KH04-CATALOG](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[FINAL-CATALOG-FILTER-RACES-404](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [KH-04 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-05 | KH-05 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | [P3-KH05-SCHEDULE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[CRITICAL-I19-A-B-A-PRODUCTS-PENDING](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I19-CONTEXT-RESET](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-BOOKING-PERSISTENCE](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[FINAL-CATALOG-FILTER-RACES-404](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [KH-05 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-06 | KH-06 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | [P3-KH06-SEATS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-BOOKING-CONFLICT-REFRESH](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-FOOD-SEAT-LIMITS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[CRITICAL-I19-A-B-A-PRODUCTS-PENDING](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I19-CONTEXT-RESET](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-BOOKING-PERSISTENCE](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [KH-06 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-07 | KH-07 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | [P3-KH07-BOOKING](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-BOOKING-CONFLICT-REFRESH](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-FOOD-SEAT-LIMITS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[P1-BOOKING-PERSISTENCE](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-I19-LATE-BOOKING](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[TAIL-REAL-READ-ERROR-FIXTURE](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json) | [KH-07 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-08 | KH-08 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | [P3-KH08-FOOD](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-KH07-BOOKING](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-FOOD-SEAT-LIMITS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[CRITICAL-I19-A-B-A-PRODUCTS-PENDING](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I19-CONTEXT-RESET](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-BOOKING-PERSISTENCE](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [KH-08 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-09 | KH-09 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | [P3-KH09-PROMOTION](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-KH07-BOOKING](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PROMOTION-INVALID-STATES](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[CRITICAL-I19-A-B-A-PRODUCTS-PENDING](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-PROMOTION-EDIT-WHILE-PENDING](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I19-CONTEXT-RESET](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-BOOKING-PERSISTENCE](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [KH-09 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-10 | KH-10 | TEST_REQUIRED | P3 | [PaymentPage.jsx](../frontend/src/pages/PaymentPage.jsx) | [P3-KH10-PAYMENT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-PAYMENT-LATE-READ](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAYMENT-DOUBLE-SUBMIT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAYMENT-FOREIGN-TERMINAL-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAID-CANCEL-COMPENSATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-PAYMENT-FAILED-THEN-UI-RETRY](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[TAIL-REAL-READ-ERROR-FIXTURE](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json) | [KH-10 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-11 | KH-11 | TEST_REQUIRED | P3 | N/A — verification only | [P3-KH11-ORDERS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-CUSTOMER-FOREIGN-OWNERSHIP](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAID-CANCEL-COMPENSATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json) | [KH-11 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-12 | KH-12 | TEST_REQUIRED | P3 | [OrderDetail.jsx](../frontend/src/pages/OrderDetail.jsx) | [P3-KH12-ORDER-DETAIL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-CUSTOMER-FOREIGN-OWNERSHIP](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ORDER-LATE-DETAIL](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAYMENT-FOREIGN-TERMINAL-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAID-CANCEL-COMPENSATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-HOLD-EXPIRY-AND-MULTI-FOOD](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json) | [KH-12 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-13 | KH-13 | TEST_REQUIRED | P3 | [MovieReviews.jsx](../frontend/src/components/MovieReviews.jsx) | [P3-KH13-ELIGIBILITY](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[CRITICAL-REVIEW-INVALID-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[FINAL-REVIEW-IMMEDIATE-DOUBLE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[FOCUS-ACTUAL-ELIGIBLE-REVIEW-SETUP](evidence/r8-2/runs/2026-10-10T07-09-34-738Z-focus-4c2e3004/browser-cases.json)<br>[CRITICAL-FOCUS-AFTER-ERROR](evidence/r8-2/runs/2026-10-10T07-09-34-738Z-focus-4c2e3004/browser-cases.json) | [KH-13 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-KH-14 | KH-14 | FIX_REQUIRED | P1 | [Complaints.jsx](../frontend/src/pages/Complaints.jsx)<br>[ComplaintDetail.jsx](../frontend/src/pages/ComplaintDetail.jsx) | [P3-KH14-COMPLAINT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-CUSTOMER-FOREIGN-OWNERSHIP](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-COMPLAINT-LATE-DETAIL](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-CUSTOMER-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-I21-CUSTOMER-STATUS-NETWORK-RETRY](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-CUSTOMER-UNLINKED-CREATE](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I21-ORDER-LOOKUP](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[TAIL-REAL-READ-ERROR-FIXTURE](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json) | [KH-14 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-01 | QLR-01 | TEST_REQUIRED | P3 | N/A — verification only | [P3-QLR01-LOGIN-SCOPE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-AUTH-LOCKED-CURRENT-JWT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-MANAGER-REVOKED-ASSIGNMENT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[CRITICAL-MANAGER-METRIC-SEMANTICS](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-MANAGER-NO-ASSIGNMENTS](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json) | [QLR-01 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-02 | QLR-02 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | [P3-QLR02-ROOM](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-DOUBLE-CREATE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-MANAGER-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-MANAGER-REVOKED-ASSIGNMENT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[FINAL-MANAGER-EMPTY-SEAT-ROOM-DELETE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [QLR-02 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-03 | QLR-03 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | [P3-QLR03-SEAT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[FINAL-MANAGER-EMPTY-SEAT-ROOM-DELETE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [QLR-03 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-04 | QLR-04 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | [P3-QLR04-CREATE-SHOW](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [QLR-04 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-05 | QLR-05 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | [P3-QLR05-UPDATE-SHOW](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [QLR-05 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-06 | QLR-06 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | [P3-QLR06-CANCEL-SHOW](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAID-CANCEL-COMPENSATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [QLR-06 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-07 | QLR-07 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | [P3-QLR07-PRICING](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [QLR-07 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-08 | QLR-08 | TEST_REQUIRED | P3 | N/A — verification only | [P3-QLR08-DASHBOARD](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-REVOKED-ASSIGNMENT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[CRITICAL-MANAGER-METRIC-SEMANTICS](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-REPORT-UTC7-FAILED-RECEIPT](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P2-QLR08-FOUR-METRICS](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json) | [QLR-08 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-QLR-09 | QLR-09 | TEST_REQUIRED | P3 | N/A — verification only | [P3-QLR09-REVENUE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-MANAGER-SCOPE-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MANAGER-REVOKED-ASSIGNMENT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-PAID-CANCEL-COMPENSATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-REPORT-UTC7-FAILED-RECEIPT](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json) | [QLR-09 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-CSKH-01 | CSKH-01 | TEST_REQUIRED | P3 | N/A — verification only | [P3-CSKH01-LOGIN](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-AUTH-LOCKED-CURRENT-JWT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [CSKH-01 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-CSKH-02 | CSKH-02 | CONTRACT_ALIGNMENT_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | [P3-CSKH02-QUEUE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-SUPPORT-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[EDGE-PRIORITY-ALL-AND](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-I15-STALE-ERROR-AFTER-SUCCESS](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I15-LATE-QUEUE](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-PRIORITY-AND](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json) | [CSKH-02 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-CSKH-03 | CSKH-03 | TEST_REQUIRED | P3 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | [P3-CSKH03-DETAIL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-SUPPORT-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-CSKH-EXISTING-REFERENCE-GUARD](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-SUPPORT-PROCESS-STATUS](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json) | [CSKH-03 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-CSKH-04 | CSKH-04 | TEST_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | [P3-CSKH04-REFERENCE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-SUPPORT-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-CSKH-EXISTING-REFERENCE-GUARD](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-SUPPORT-PROCESS-STATUS](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json) | [CSKH-04 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-CSKH-05 | CSKH-05 | TEST_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | [P3-CSKH05-PROCESS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-SUPPORT-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-SUPPORT-PROCESS-STATUS](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json) | [CSKH-05 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-CSKH-06 | CSKH-06 | TEST_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | [P3-CSKH06-STATUS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-SUPPORT-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-SUPPORT-PROCESS-STATUS](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json) | [CSKH-06 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-01 | ADM-01 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM01-LOGIN](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-AUTH-LOCKED-CURRENT-JWT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [ADM-01 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-02 | ADM-02 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM02-USERS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-ROLE-ALLOWLIST-WITHOUT-ROLE-GRANT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[P2-ADM02-ROLE-CONTROL](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json)<br>[FINAL-ADMIN-STATUS-PENDING](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [ADM-02 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-03 | ADM-03 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM03-ROLES](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[FINAL-ADMIN-LATE-DELETE-MODULE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [ADM-03 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-04 | ADM-04 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM04-PERMISSIONS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [ADM-04 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-05 | ADM-05 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM05-GRANTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-GRANTS-DOUBLE-SUBMIT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [ADM-05 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-06 | ADM-06 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM06-ASSIGNMENTS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[FINAL-ADMIN-PRICING-ASSIGNMENT-EDIT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [ADM-06 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-07 | ADM-07 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx)<br>[CinemaImageManager.jsx](../frontend/src/components/CinemaImageManager.jsx) | [P3-ADM07-CINEMAS](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-IMAGE-DOUBLE-CREATE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [ADM-07 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-08 | ADM-08 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM08-ROOM-SEAT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-HISTORICAL-ROOM-DEACTIVATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json) | [ADM-08 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-09 | ADM-09 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM09-MOVIES-CAST](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-MOVIE-EMPTY-GENRES](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-CAST-DOUBLE-SUBMIT](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[FINAL-ADMIN-LATE-DELETE-MODULE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[FINAL-ADMIN-OPTIONAL-MOVIE-ACTOR-GENRE-CRUD](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[OPTIONAL-ACTOR-NATIONALITY](evidence/r8-2/runs/2026-10-10T03-57-09-992Z-optional-625ff85b/browser-cases.json) | [ADM-09 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-10 | ADM-10 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM10-GENRES](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[FINAL-ADMIN-OPTIONAL-MOVIE-ACTOR-GENRE-CRUD](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [ADM-10 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-11 | ADM-11 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM11-PRODUCT-DECIMAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[P2-ADM-11-DECIMAL](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json) | [ADM-11 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-12 | ADM-12 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM12-PROMOTION-DECIMAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[P2-ADM-12-DECIMAL](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json) | [ADM-12 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-13 | ADM-13 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM13-PRICING-DECIMAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[P2-ADM-13-DECIMAL](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json)<br>[FINAL-ADMIN-PRICING-ASSIGNMENT-EDIT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json) | [ADM-13 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-14 | ADM-14 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM14-SHOW-DECIMAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ADMIN-INVALID-HISTORY-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[P2-ADM-14-DECIMAL](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json) | [ADM-14 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-15 | ADM-15 | FIX_REQUIRED | P1 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | [P3-ADM15-COMPLAINT](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-ADMIN-WRITE-GRANTS-NO-WRITE](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-I11-LATE-REFERENCE](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[CRITICAL-I21-ADMIN-STATUS-NETWORK-RETRY](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P1-I11-LATE-DETAIL](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-I11-MODULE-INVALIDATION](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-I11-WRITE-TARGET](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json)<br>[P1-I21-ADMIN-REFERENCE-RETRY](evidence/r8-2/runs/2026-10-10T07-11-40-089Z-p1-398b7bc0/browser-cases.json) | [ADM-15 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
-| R71-FE-ADM-16 | ADM-16 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx)<br>[AdminRevenue.jsx](../frontend/src/components/AdminRevenue.jsx) | [P3-ADM16-REVENUE](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[P3-ADMIN-GRANT-DENIAL](evidence/r8-2/runs/2026-10-10T04-05-08-484Z-final-edges-ee0b133b/browser-cases.json)<br>[EDGE-PAID-CANCEL-COMPENSATION](evidence/r8-2/runs/2026-10-10T04-06-45-653Z-edges-ee272475/browser-cases.json)<br>[EDGE-ERROR-RETRY-PAGES](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[EDGE-RESPONSIVE-A11Y](evidence/r8-2/runs/2026-10-10T07-08-12-036Z-edges-tail-555de763/browser-cases.json)<br>[CRITICAL-REPORT-UTC7-FAILED-RECEIPT](evidence/r8-2/runs/2026-10-10T04-08-48-987Z-critical-ebbbc731/browser-cases.json)<br>[P2-ADM16-REVENUE-SECTIONS](evidence/r8-2/runs/2026-10-10T03-01-25-688Z-p2-a35e3c6f/browser-cases.json) | [ADM-16 SQL/SP/no-write](evidence/r8-2/runs/2026-10-10T07-18-11-990309Z-final-4a1123d5/verification-45.json) | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-01 | KH-01 | TEST_REQUIRED | P3 | N/A — verification only | P3-KH01-REGISTER<br>EDGE-REGISTER-INVALID-AND-429<br>CRITICAL-REGISTER-DUPLICATE-PHONE | KH-01 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-04 | KH-04 | TEST_REQUIRED | P3 | N/A — verification only | P3-KH04-CATALOG<br>EDGE-ERROR-RETRY-PAGES<br>FINAL-CATALOG-FILTER-RACES-404 | KH-04 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-05 | KH-05 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | P3-KH05-SCHEDULE<br>CRITICAL-I19-A-B-A-PRODUCTS-PENDING<br>P1-I19-CONTEXT-RESET<br>P1-BOOKING-PERSISTENCE<br>FINAL-CATALOG-FILTER-RACES-404<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER | KH-05 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-06 | KH-06 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | P3-KH06-SEATS<br>EDGE-BOOKING-CONFLICT-REFRESH<br>EDGE-FOOD-SEAT-LIMITS-NO-WRITE<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>CRITICAL-I19-A-B-A-PRODUCTS-PENDING<br>P1-I19-CONTEXT-RESET<br>P1-BOOKING-PERSISTENCE<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER | KH-06 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-07 | KH-07 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | P3-KH07-BOOKING<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-BOOKING-CONFLICT-REFRESH<br>EDGE-FOOD-SEAT-LIMITS-NO-WRITE<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>EDGE-RESPONSIVE-A11Y<br>P1-BOOKING-PERSISTENCE<br>P1-I19-LATE-BOOKING<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER<br>TAIL-REAL-READ-ERROR-FIXTURE | KH-07 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-08 | KH-08 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | P3-KH08-FOOD<br>P3-KH07-BOOKING<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-FOOD-SEAT-LIMITS-NO-WRITE<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>CRITICAL-I19-A-B-A-PRODUCTS-PENDING<br>P1-I19-CONTEXT-RESET<br>P1-BOOKING-PERSISTENCE<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER | KH-08 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-09 | KH-09 | FIX_REQUIRED | P1 | [BookingPreparation.jsx](../frontend/src/pages/BookingPreparation.jsx) | P3-KH09-PROMOTION<br>P3-KH07-BOOKING<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-PROMOTION-INVALID-STATES<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>CRITICAL-I19-A-B-A-PRODUCTS-PENDING<br>CRITICAL-PROMOTION-EDIT-WHILE-PENDING<br>P1-I19-CONTEXT-RESET<br>P1-BOOKING-PERSISTENCE<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER | KH-09 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-10 | KH-10 | TEST_REQUIRED | P3 | [PaymentPage.jsx](../frontend/src/pages/PaymentPage.jsx) | P3-KH10-PAYMENT<br>EDGE-PAYMENT-LATE-READ<br>EDGE-PAYMENT-DOUBLE-SUBMIT<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-PAYMENT-FOREIGN-TERMINAL-NO-WRITE<br>EDGE-PAID-CANCEL-COMPENSATION<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>EDGE-RESPONSIVE-A11Y<br>CRITICAL-PAYMENT-FAILED-THEN-UI-RETRY<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER<br>TAIL-REAL-READ-ERROR-FIXTURE | KH-10 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-11 | KH-11 | TEST_REQUIRED | P3 | N/A — verification only | P3-KH11-ORDERS<br>P3-CUSTOMER-FOREIGN-OWNERSHIP<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-PAID-CANCEL-COMPENSATION<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>EDGE-ERROR-RETRY-PAGES | KH-11 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-12 | KH-12 | TEST_REQUIRED | P3 | [OrderDetail.jsx](../frontend/src/pages/OrderDetail.jsx) | P3-KH12-ORDER-DETAIL<br>P3-CUSTOMER-FOREIGN-OWNERSHIP<br>EDGE-ORDER-LATE-DETAIL<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-PAYMENT-FOREIGN-TERMINAL-NO-WRITE<br>EDGE-PAID-CANCEL-COMPENSATION<br>EDGE-HOLD-EXPIRY-AND-MULTI-FOOD<br>EDGE-ERROR-RETRY-PAGES | KH-12 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-13 | KH-13 | TEST_REQUIRED | P3 | [MovieReviews.jsx](../frontend/src/components/MovieReviews.jsx) | P3-KH13-ELIGIBILITY<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>CRITICAL-REVIEW-INVALID-NO-WRITE<br>FINAL-REVIEW-IMMEDIATE-DOUBLE<br>FOCUS-ACTUAL-ELIGIBLE-REVIEW-SETUP<br>CRITICAL-FOCUS-AFTER-ERROR | KH-13 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-KH-14 | KH-14 | FIX_REQUIRED | P1 | [Complaints.jsx](../frontend/src/pages/Complaints.jsx)<br>[ComplaintDetail.jsx](../frontend/src/pages/ComplaintDetail.jsx) | P3-KH14-COMPLAINT<br>P3-CUSTOMER-FOREIGN-OWNERSHIP<br>EDGE-COMPLAINT-LATE-DETAIL<br>EDGE-CUSTOMER-GRANTS-NO-WRITE<br>EDGE-ERROR-RETRY-PAGES<br>EDGE-RESPONSIVE-A11Y<br>CRITICAL-I21-CUSTOMER-STATUS-NETWORK-RETRY<br>CRITICAL-CUSTOMER-UNLINKED-CREATE<br>P1-I21-ORDER-LOOKUP<br>TAIL-REAL-READ-ERROR-FIXTURE | KH-14 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-01 | QLR-01 | TEST_REQUIRED | P3 | N/A — verification only | P3-QLR01-LOGIN-SCOPE<br>EDGE-AUTH-LOCKED-CURRENT-JWT<br>EDGE-MANAGER-REVOKED-ASSIGNMENT<br>CRITICAL-MANAGER-METRIC-SEMANTICS<br>CRITICAL-MANAGER-NO-ASSIGNMENTS | QLR-01 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-02 | QLR-02 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | P3-QLR02-ROOM<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-DOUBLE-CREATE<br>EDGE-MANAGER-WRITE-GRANTS-NO-WRITE<br>EDGE-MANAGER-REVOKED-ASSIGNMENT<br>FINAL-MANAGER-EMPTY-SEAT-ROOM-DELETE<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER | QLR-02 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-03 | QLR-03 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | P3-QLR03-SEAT<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-WRITE-GRANTS-NO-WRITE<br>FINAL-MANAGER-EMPTY-SEAT-ROOM-DELETE<br>FINAL-RESPONSIVE-BOOKING-PAYMENT-MANAGER | QLR-03 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-04 | QLR-04 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | P3-QLR04-CREATE-SHOW<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-WRITE-GRANTS-NO-WRITE | QLR-04 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-05 | QLR-05 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | P3-QLR05-UPDATE-SHOW<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-WRITE-GRANTS-NO-WRITE | QLR-05 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-06 | QLR-06 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | P3-QLR06-CANCEL-SHOW<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-WRITE-GRANTS-NO-WRITE<br>EDGE-PAID-CANCEL-COMPENSATION | QLR-06 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-07 | QLR-07 | TEST_REQUIRED | P3 | [ManagerPortal.jsx](../frontend/src/pages/ManagerPortal.jsx) | P3-QLR07-PRICING<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-WRITE-GRANTS-NO-WRITE | QLR-07 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-08 | QLR-08 | TEST_REQUIRED | P3 | N/A — verification only | P3-QLR08-DASHBOARD<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-REVOKED-ASSIGNMENT<br>CRITICAL-MANAGER-METRIC-SEMANTICS<br>CRITICAL-REPORT-UTC7-FAILED-RECEIPT<br>P2-QLR08-FOUR-METRICS | QLR-08 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-QLR-09 | QLR-09 | TEST_REQUIRED | P3 | N/A — verification only | P3-QLR09-REVENUE<br>P3-MANAGER-SCOPE-GRANTS<br>EDGE-MANAGER-REVOKED-ASSIGNMENT<br>EDGE-PAID-CANCEL-COMPENSATION<br>EDGE-ERROR-RETRY-PAGES<br>CRITICAL-REPORT-UTC7-FAILED-RECEIPT | QLR-09 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-CSKH-01 | CSKH-01 | TEST_REQUIRED | P3 | N/A — verification only | P3-CSKH01-LOGIN<br>EDGE-AUTH-LOCKED-CURRENT-JWT | CSKH-01 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-CSKH-02 | CSKH-02 | CONTRACT_ALIGNMENT_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | P3-CSKH02-QUEUE<br>P3-SUPPORT-GRANT-DENIAL<br>EDGE-ERROR-RETRY-PAGES<br>EDGE-PRIORITY-ALL-AND<br>EDGE-RESPONSIVE-A11Y<br>CRITICAL-I15-STALE-ERROR-AFTER-SUCCESS<br>CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER<br>P1-I15-LATE-QUEUE<br>P1-PRIORITY-AND | CSKH-02 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-CSKH-03 | CSKH-03 | TEST_REQUIRED | P3 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | P3-CSKH03-DETAIL<br>P3-SUPPORT-GRANT-DENIAL<br>EDGE-ERROR-RETRY-PAGES<br>CRITICAL-CSKH-EXISTING-REFERENCE-GUARD<br>CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER<br>P1-SUPPORT-PROCESS-STATUS | CSKH-03 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-CSKH-04 | CSKH-04 | TEST_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | P3-CSKH04-REFERENCE<br>P3-SUPPORT-GRANT-DENIAL<br>EDGE-ERROR-RETRY-PAGES<br>CRITICAL-CSKH-EXISTING-REFERENCE-GUARD<br>P1-SUPPORT-PROCESS-STATUS | CSKH-04 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-CSKH-05 | CSKH-05 | TEST_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | P3-CSKH05-PROCESS<br>P3-SUPPORT-GRANT-DENIAL<br>CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER<br>P1-SUPPORT-PROCESS-STATUS | CSKH-05 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-CSKH-06 | CSKH-06 | TEST_REQUIRED | P1 | [SupportPortal.jsx](../frontend/src/pages/SupportPortal.jsx) | P3-CSKH06-STATUS<br>P3-SUPPORT-GRANT-DENIAL<br>CRITICAL-CSKH-PENDING-WRITES-CURRENT-FILTER<br>P1-SUPPORT-PROCESS-STATUS | CSKH-06 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-01 | ADM-01 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM01-LOGIN<br>EDGE-AUTH-LOCKED-CURRENT-JWT | ADM-01 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-02 | ADM-02 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM02-USERS<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-ROLE-ALLOWLIST-WITHOUT-ROLE-GRANT<br>EDGE-RESPONSIVE-A11Y<br>P2-ADM02-ROLE-CONTROL<br>FINAL-ADMIN-STATUS-PENDING | ADM-02 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-03 | ADM-03 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM03-ROLES<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>EDGE-ERROR-RETRY-PAGES<br>FINAL-ADMIN-LATE-DELETE-MODULE | ADM-03 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-04 | ADM-04 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM04-PERMISSIONS<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE | ADM-04 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-05 | ADM-05 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM05-GRANTS<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-GRANTS-DOUBLE-SUBMIT<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE | ADM-05 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-06 | ADM-06 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM06-ASSIGNMENTS<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>FINAL-ADMIN-PRICING-ASSIGNMENT-EDIT | ADM-06 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-07 | ADM-07 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx)<br>[CinemaImageManager.jsx](../frontend/src/components/CinemaImageManager.jsx) | P3-ADM07-CINEMAS<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-IMAGE-DOUBLE-CREATE<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE | ADM-07 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-08 | ADM-08 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM08-ROOM-SEAT<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>EDGE-ADMIN-HISTORICAL-ROOM-DEACTIVATION | ADM-08 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-09 | ADM-09 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM09-MOVIES-CAST<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-MOVIE-EMPTY-GENRES<br>EDGE-CAST-DOUBLE-SUBMIT<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>FINAL-ADMIN-LATE-DELETE-MODULE<br>FINAL-ADMIN-OPTIONAL-MOVIE-ACTOR-GENRE-CRUD<br>OPTIONAL-ACTOR-NATIONALITY | ADM-09 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-10 | ADM-10 | TEST_REQUIRED | P3 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM10-GENRES<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>FINAL-ADMIN-OPTIONAL-MOVIE-ACTOR-GENRE-CRUD | ADM-10 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-11 | ADM-11 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM11-PRODUCT-DECIMAL<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>EDGE-RESPONSIVE-A11Y<br>P2-ADM-11-DECIMAL | ADM-11 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-12 | ADM-12 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM12-PROMOTION-DECIMAL<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>EDGE-RESPONSIVE-A11Y<br>P2-ADM-12-DECIMAL | ADM-12 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-13 | ADM-13 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM13-PRICING-DECIMAL<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>EDGE-RESPONSIVE-A11Y<br>P2-ADM-13-DECIMAL<br>FINAL-ADMIN-PRICING-ASSIGNMENT-EDIT | ADM-13 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-14 | ADM-14 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM14-SHOW-DECIMAL<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-ADMIN-INVALID-HISTORY-NO-WRITE<br>EDGE-RESPONSIVE-A11Y<br>P2-ADM-14-DECIMAL | ADM-14 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-15 | ADM-15 | FIX_REQUIRED | P1 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx) | P3-ADM15-COMPLAINT<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-ADMIN-WRITE-GRANTS-NO-WRITE<br>EDGE-RESPONSIVE-A11Y<br>CRITICAL-I11-LATE-REFERENCE<br>CRITICAL-I21-ADMIN-STATUS-NETWORK-RETRY<br>P1-I11-LATE-DETAIL<br>P1-I11-MODULE-INVALIDATION<br>P1-I11-WRITE-TARGET<br>P1-I21-ADMIN-REFERENCE-RETRY | ADM-15 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
+| R71-FE-ADM-16 | ADM-16 | CONTRACT_ALIGNMENT_REQUIRED | P2 | [AdminPortal.jsx](../frontend/src/pages/AdminPortal.jsx)<br>[AdminRevenue.jsx](../frontend/src/components/AdminRevenue.jsx) | P3-ADM16-REVENUE<br>P3-ADMIN-GRANT-DENIAL<br>EDGE-PAID-CANCEL-COMPENSATION<br>EDGE-ERROR-RETRY-PAGES<br>EDGE-RESPONSIVE-A11Y<br>CRITICAL-REPORT-UTC7-FAILED-RECEIPT<br>P2-ADM16-REVENUE-SECTIONS | ADM-16 SQL/SP/no-write | RESOLVED | PASS_CANDIDATE | Không có defect mở trong phạm vi; Final Acceptance chờ R8.3 |
 
 
 # R8.3 — Final acceptance of 43 inherited gaps
@@ -1508,54 +1511,54 @@ Bảng dưới là kết quả R8.2 hiện hành, ngày 10/10/2026 (UTC+7). Toà
 | TEST_REQUIRED | 29 | 28 | 1 | 0 |
 | **Tổng** | **43** | **42** | **1** | **0** |
 
-Frontend: **44 PASS / 0 PARTIAL / 1 BROKEN / 0 MISSING**. ADM-07 BROKEN vì stale image collection/wrong-resource DELETE và retry che lỗi cinema list. Mở lại đúng gap **R71-FE-ADM-07**; hai defect không mở rộng baseline 43 gaps/45 UC. Không sửa production trong R8.3. [Báo cáo nghiệm thu](R8_3_FINAL_ACCEPTANCE_REPORT.md); [Independent audit](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/independent-evidence-audit.json); [43 gap records](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/gaps-43.json).
+Frontend: **44 PASS / 0 PARTIAL / 1 BROKEN / 0 MISSING**. ADM-07 BROKEN vì stale image collection/wrong-resource DELETE và retry che lỗi cinema list. Mở lại đúng gap **R71-FE-ADM-07**; hai defect không mở rộng baseline 43 gaps/45 UC. Không sửa production trong R8.3. [Báo cáo nghiệm thu](R8_3_FINAL_ACCEPTANCE_REPORT.md); Independent audit; 43 gap records.
 
 | Gap ID | UC | Original category | Final acceptance | Verified evidence selector | Lý do / việc còn lại |
 | --- | --- | --- | --- | --- | --- |
-| R71-FE-KH-01 | KH-01 | TEST_REQUIRED | **RESOLVED** | [KH-01](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/0` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-04 | KH-04 | TEST_REQUIRED | **RESOLVED** | [KH-04](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/3` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-05 | KH-05 | FIX_REQUIRED | **RESOLVED** | [KH-05](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/4` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-06 | KH-06 | FIX_REQUIRED | **RESOLVED** | [KH-06](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/5` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-07 | KH-07 | FIX_REQUIRED | **RESOLVED** | [KH-07](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/6` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-08 | KH-08 | FIX_REQUIRED | **RESOLVED** | [KH-08](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/7` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-09 | KH-09 | FIX_REQUIRED | **RESOLVED** | [KH-09](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/8` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-10 | KH-10 | TEST_REQUIRED | **RESOLVED** | [KH-10](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/9` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-11 | KH-11 | TEST_REQUIRED | **RESOLVED** | [KH-11](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/10` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-12 | KH-12 | TEST_REQUIRED | **RESOLVED** | [KH-12](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/11` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-13 | KH-13 | TEST_REQUIRED | **RESOLVED** | [KH-13](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/12` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-KH-14 | KH-14 | FIX_REQUIRED | **RESOLVED** | [KH-14](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/13` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-01 | QLR-01 | TEST_REQUIRED | **RESOLVED** | [QLR-01](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/14` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-02 | QLR-02 | TEST_REQUIRED | **RESOLVED** | [QLR-02](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/15` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-03 | QLR-03 | TEST_REQUIRED | **RESOLVED** | [QLR-03](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/16` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-04 | QLR-04 | TEST_REQUIRED | **RESOLVED** | [QLR-04](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/17` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-05 | QLR-05 | TEST_REQUIRED | **RESOLVED** | [QLR-05](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/18` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-06 | QLR-06 | TEST_REQUIRED | **RESOLVED** | [QLR-06](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/19` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-07 | QLR-07 | TEST_REQUIRED | **RESOLVED** | [QLR-07](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/20` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-08 | QLR-08 | TEST_REQUIRED | **RESOLVED** | [QLR-08](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/21` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-QLR-09 | QLR-09 | TEST_REQUIRED | **RESOLVED** | [QLR-09](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/22` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-CSKH-01 | CSKH-01 | TEST_REQUIRED | **RESOLVED** | [CSKH-01](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/23` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-CSKH-02 | CSKH-02 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [CSKH-02](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/24` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-CSKH-03 | CSKH-03 | TEST_REQUIRED | **RESOLVED** | [CSKH-03](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/25` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-CSKH-04 | CSKH-04 | TEST_REQUIRED | **RESOLVED** | [CSKH-04](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/26` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-CSKH-05 | CSKH-05 | TEST_REQUIRED | **RESOLVED** | [CSKH-05](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/27` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-CSKH-06 | CSKH-06 | TEST_REQUIRED | **RESOLVED** | [CSKH-06](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/28` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-01 | ADM-01 | TEST_REQUIRED | **RESOLVED** | [ADM-01](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/29` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-02 | ADM-02 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [ADM-02](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/30` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-03 | ADM-03 | TEST_REQUIRED | **RESOLVED** | [ADM-03](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/31` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-04 | ADM-04 | TEST_REQUIRED | **RESOLVED** | [ADM-04](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/32` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-05 | ADM-05 | TEST_REQUIRED | **RESOLVED** | [ADM-05](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/33` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-06 | ADM-06 | TEST_REQUIRED | **RESOLVED** | [ADM-06](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/34` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-07 | ADM-07 | TEST_REQUIRED | **REOPENED** | [ADM-07](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/35` | R83-FE-01, R83-FE-02; chuyển R8.2 |
-| R71-FE-ADM-08 | ADM-08 | TEST_REQUIRED | **RESOLVED** | [ADM-08](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/36` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-09 | ADM-09 | TEST_REQUIRED | **RESOLVED** | [ADM-09](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/37` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-10 | ADM-10 | TEST_REQUIRED | **RESOLVED** | [ADM-10](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/38` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-11 | ADM-11 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [ADM-11](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/39` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-12 | ADM-12 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [ADM-12](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/40` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-13 | ADM-13 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [ADM-13](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/41` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-14 | ADM-14 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [ADM-14](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/42` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-15 | ADM-15 | FIX_REQUIRED | **RESOLVED** | [ADM-15](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/43` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
-| R71-FE-ADM-16 | ADM-16 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | [ADM-16](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/verification-45.json) `/UCs/44` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-01 | KH-01 | TEST_REQUIRED | **RESOLVED** | KH-01 `/UCs/0` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-04 | KH-04 | TEST_REQUIRED | **RESOLVED** | KH-04 `/UCs/3` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-05 | KH-05 | FIX_REQUIRED | **RESOLVED** | KH-05 `/UCs/4` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-06 | KH-06 | FIX_REQUIRED | **RESOLVED** | KH-06 `/UCs/5` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-07 | KH-07 | FIX_REQUIRED | **RESOLVED** | KH-07 `/UCs/6` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-08 | KH-08 | FIX_REQUIRED | **RESOLVED** | KH-08 `/UCs/7` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-09 | KH-09 | FIX_REQUIRED | **RESOLVED** | KH-09 `/UCs/8` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-10 | KH-10 | TEST_REQUIRED | **RESOLVED** | KH-10 `/UCs/9` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-11 | KH-11 | TEST_REQUIRED | **RESOLVED** | KH-11 `/UCs/10` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-12 | KH-12 | TEST_REQUIRED | **RESOLVED** | KH-12 `/UCs/11` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-13 | KH-13 | TEST_REQUIRED | **RESOLVED** | KH-13 `/UCs/12` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-KH-14 | KH-14 | FIX_REQUIRED | **RESOLVED** | KH-14 `/UCs/13` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-01 | QLR-01 | TEST_REQUIRED | **RESOLVED** | QLR-01 `/UCs/14` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-02 | QLR-02 | TEST_REQUIRED | **RESOLVED** | QLR-02 `/UCs/15` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-03 | QLR-03 | TEST_REQUIRED | **RESOLVED** | QLR-03 `/UCs/16` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-04 | QLR-04 | TEST_REQUIRED | **RESOLVED** | QLR-04 `/UCs/17` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-05 | QLR-05 | TEST_REQUIRED | **RESOLVED** | QLR-05 `/UCs/18` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-06 | QLR-06 | TEST_REQUIRED | **RESOLVED** | QLR-06 `/UCs/19` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-07 | QLR-07 | TEST_REQUIRED | **RESOLVED** | QLR-07 `/UCs/20` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-08 | QLR-08 | TEST_REQUIRED | **RESOLVED** | QLR-08 `/UCs/21` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-QLR-09 | QLR-09 | TEST_REQUIRED | **RESOLVED** | QLR-09 `/UCs/22` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-CSKH-01 | CSKH-01 | TEST_REQUIRED | **RESOLVED** | CSKH-01 `/UCs/23` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-CSKH-02 | CSKH-02 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | CSKH-02 `/UCs/24` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-CSKH-03 | CSKH-03 | TEST_REQUIRED | **RESOLVED** | CSKH-03 `/UCs/25` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-CSKH-04 | CSKH-04 | TEST_REQUIRED | **RESOLVED** | CSKH-04 `/UCs/26` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-CSKH-05 | CSKH-05 | TEST_REQUIRED | **RESOLVED** | CSKH-05 `/UCs/27` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-CSKH-06 | CSKH-06 | TEST_REQUIRED | **RESOLVED** | CSKH-06 `/UCs/28` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-01 | ADM-01 | TEST_REQUIRED | **RESOLVED** | ADM-01 `/UCs/29` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-02 | ADM-02 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | ADM-02 `/UCs/30` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-03 | ADM-03 | TEST_REQUIRED | **RESOLVED** | ADM-03 `/UCs/31` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-04 | ADM-04 | TEST_REQUIRED | **RESOLVED** | ADM-04 `/UCs/32` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-05 | ADM-05 | TEST_REQUIRED | **RESOLVED** | ADM-05 `/UCs/33` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-06 | ADM-06 | TEST_REQUIRED | **RESOLVED** | ADM-06 `/UCs/34` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-07 | ADM-07 | TEST_REQUIRED | **RESOLVED** | Historical ADM-07 record `/UCs/35`; current re-acceptance manifest | R83-FE-01/R83-FE-02 fixed; fresh 19/19 browser checks PASS |
+| R71-FE-ADM-08 | ADM-08 | TEST_REQUIRED | **RESOLVED** | ADM-08 `/UCs/36` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-09 | ADM-09 | TEST_REQUIRED | **RESOLVED** | ADM-09 `/UCs/37` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-10 | ADM-10 | TEST_REQUIRED | **RESOLVED** | ADM-10 `/UCs/38` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-11 | ADM-11 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | ADM-11 `/UCs/39` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-12 | ADM-12 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | ADM-12 `/UCs/40` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-13 | ADM-13 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | ADM-13 `/UCs/41` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-14 | ADM-14 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | ADM-14 `/UCs/42` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-15 | ADM-15 | FIX_REQUIRED | **RESOLVED** | ADM-15 `/UCs/43` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
+| R71-FE-ADM-16 | ADM-16 | CONTRACT_ALIGNMENT_REQUIRED | **RESOLVED** | ADM-16 `/UCs/44` | Source + browser/HTTP/SP/SQL selectors được đối chiếu |
 
-R83-FE-01/R83-FE-02 cần xử lý qua R8.2 rồi kiểm tra lại ADM-07 và shared regression. Main SQL preservation/cleanup/canonical PASS; quality unit/lint/build PASS; targeted ADM-07 có hai FAIL nên toàn Phase R8 chưa ACCEPTED. [Failed browser assertions](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/browser-cases.json) `/checks/1`, `/checks/2`; [Real DELETE404](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/image-wrong-resource-request.json); [Missing retry request](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/image-list-retry-observation.json).
+Historical R8.3 checkpoint reproduced R83-FE-01/R83-FE-02 and correctly withheld acceptance. The hotfix was rechecked with fresh 19-case browser/API/SQL regression, 15 SQL assertions, fixture cleanup and Main preservation; both issues now PASS. See [formal re-acceptance](R8_3_REACCEPTANCE_REPORT.md) and the acceptance manifest referenced at that time. Historical failure artifacts remained unchanged through re-acceptance, then were removed from docs during the later report-only cleanup.
 
-Archive trước cập nhật R8.3: [R8_FRONTEND_GAP_MATRIX_BEFORE_R8_3.md](evidence/r8-3/runs/2026-10-10T08-11-05-697609Z-acceptance-0d746c88/R8_FRONTEND_GAP_MATRIX_BEFORE_R8_3.md). Mọi selector R8.2 vẫn trỏ evidence cũ, không chỉnh FAIL thành PASS.
+Archive trước cập nhật R8.3: R8_FRONTEND_GAP_MATRIX_BEFORE_R8_3.md. Mọi selector R8.2 vẫn trỏ evidence cũ, không chỉnh FAIL thành PASS.

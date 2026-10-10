@@ -1,17 +1,23 @@
 # Hệ thống đặt vé xem phim — DBMS-first
 
-React → REST API → Express → Stored Procedure → SQL Server. Baseline chính thức **45 UC: KH14, QLR9, CSKH6, Admin16**. Xem [baseline](docs/USE_CASE_BASELINE_45.md), [roadmap bắt buộc](ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md), [accepted constraints](docs/PROJECT_ACCEPTED_CONSTRAINTS.md) và [báo cáo R0](docs/R0_TASK_1_REPORT.md).
+Kiến trúc của dự án là React → REST API → Express → Stored Procedure → SQL Server. Baseline chính thức có 45 Use Case: Customer 14, Manager 9, CSKH 6 và Admin 16; ADM-17 nằm ngoài phạm vi.
 
-SQL Server `sa` được chấp nhận cho đồ án/local; kiến trúc Stored-Procedure-Only vẫn bắt buộc. Pricing có đúng Ngày thường / Cuối tuần / Tất cả. Source database và hướng dẫn chi tiết: [database/README.md](database/README.md). Các script `r1`…`r8` là tooling của các đợt trước, không tự chạy để triển khai Phase tiếp theo.
+Tài liệu chuẩn: [phân tích và thiết kế](<Phân Tích _ Thiết Kế.md>), [database](database/README.md), [Use Case matrix](docs/USE_CASE_MATRIX_45.md), [Frontend gap matrix](docs/R8_FRONTEND_GAP_MATRIX.md), [final system audit](docs/FINAL_SYSTEM_AUDIT.md) và [R8.3 re-acceptance](docs/R8_3_REACCEPTANCE_REPORT.md).
 
-Tổ chức seed R5.1: [nhóm seed, dependency và cách chạy](database/10_seed/README.md),
-[báo cáo và verification](docs/R5_1_SEED_REPORT.md). Entry point `db:seed` giữ nguyên;
-chưa triển khai dữ liệu/pipeline R5.2–R5.5. Kiểm tra hồ sơ tổ chức offline bằng
-`node scripts/r51/checks.mjs` (hash snapshot tại thời điểm bàn giao R5.1).
+Backend chỉ gọi Stored Procedure đã whitelist bằng tham số SQL có kiểu. Quy tắc nghiệp vụ, tiền, trạng thái booking, quyền, phạm vi rạp, transaction và concurrency do SQL Server quyết định. Không thêm ORM, query builder hay SQL nghiệp vụ vào Backend.
 
-Kiểm tra ứng dụng từ repo root sau khi cài dependencies ở backend/frontend:
+## Cài đặt và kiểm tra
+
+Từ thư mục gốc, cài formatter và dependencies của ứng dụng:
 
 ```powershell
+npm.cmd run install:all
+```
+
+Các lệnh kiểm tra source, unit tests và production build:
+
+```powershell
+npm.cmd run format:check
 npm.cmd --prefix backend test
 npm.cmd --prefix frontend test
 npm.cmd --prefix frontend run lint
@@ -20,22 +26,10 @@ node scripts/audit-no-sql.mjs
 node scripts/db/contract-check.mjs
 ```
 
-Kiểm tra R0 trên một database disposable **mới**, với cấu hình SQL local trong `backend/.env` hoặc environment:
+`npm.cmd run format` áp dụng quy tắc Prettier cho Frontend, Backend, tests, shared contracts và JavaScript tooling. SQL Server scripts giữ nguyên batch `GO` và được kiểm tra bằng SQL verification/integration suites thay vì một formatter không hiểu batch semantics.
 
-```powershell
-node scripts/db/run.mjs build --database=CinemaBookingDB_R0_MyFreshRun
-node scripts/r0/verify.mjs --database=CinemaBookingDB_R0_MyFreshRun --apply
-node scripts/r0/pricing-api.mjs --database=CinemaBookingDB_R0_MyFreshRun --stress
-node scripts/r0/run-checks.mjs --database=CinemaBookingDB_R0_MyFreshRun
-```
+Các file kết quả audit mới được ghi dưới `.audit-output/` và không đưa vào Git. Không chạy lệnh reset, build, seed, migration hay test mutation trỏ tới database chính `CinemaBookingDB`; browser/integration tests phải xác minh target độc lập trước khi ghi dữ liệu.
 
-Test precondition cần một disposable khác, có seed và không dùng tiếp để kiểm thử contract mới:
+## Database tooling
 
-```powershell
-node scripts/db/run.mjs build --database=CinemaBookingDB_R0_MyLegacyFixture
-node scripts/r0/verify.mjs --database=CinemaBookingDB_R0_MyLegacyFixture --exercise-precondition
-```
-
-Migration hiện hành: [database/13_migrations/r0_remove_holiday_pricing.sql](database/13_migrations/r0_remove_holiday_pricing.sql). Áp dụng local tại chỗ bằng `node scripts/r0/verify.mjs --database=CinemaBookingDB --apply` sau evidence disposable PASS; script backup/verify restore, kiểm tra dữ liệu legacy, transaction, parity và fingerprints. Không reset/seed database đang dùng. Nếu có dòng legacy, dừng và cần quyết định nghiệp vụ riêng, không tự đổi/xóa.
-
-Tooling DB dùng `sqlcmd`; riêng lỗi khởi tạo TLS của client ODBC trước khi chạy SQL được fallback sang `mssql`, giữ UTF-8 và session qua GO. Backend không import tooling này. Evidence [R0](docs/r0-20261007/README.md) tách khỏi [snapshot audit lịch sử](docs/audit-20261007/README.md).
+SQL Server local dùng cấu hình trong `backend/.env` hoặc biến môi trường. `db:inventory` chỉ đọc metadata của database đã chỉ định; output nằm ở `.audit-output/database/`. Lệnh reset/build/seed và phase scripts có thể thay đổi dữ liệu, vì vậy chỉ dùng với database disposable đã được xác minh.

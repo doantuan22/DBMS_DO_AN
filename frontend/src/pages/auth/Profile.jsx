@@ -37,8 +37,8 @@ export default function Profile() {
         err.code === 'PHONE_IN_USE'
           ? 'Số điện thoại đã được sử dụng.'
           : err.status === 400
-          ? err.message
-          : 'Không thể cập nhật hồ sơ lúc này.'
+            ? err.message
+            : 'Không thể cập nhật hồ sơ lúc này.',
       );
     } finally {
       setBusy(false);
@@ -86,27 +86,40 @@ export default function Profile() {
             onChange={(event) => update('SoDienThoai', event.target.value)}
           />
         </label>
-        {isCustomer && <>
-        <label>
-          Ngày sinh
-          <input
-            type="date"
-            value={form.NgaySinh}
-            onChange={(event) => update('NgaySinh', event.target.value)}
-          />
-        </label>
-        <label>
-          Giới tính
-          <select value={form.GioiTinh} onChange={(event) => update('GioiTinh', event.target.value)}>
-            <option value="">Không cung cấp</option>
-            <option>Nam</option>
-            <option>Nữ</option>
-            <option>Khác</option>
-          </select>
-        </label>
-        </>}
-        {error && <p className="form-error" role="alert">{error}</p>}
-        {notice && <p className="form-success" role="status">{notice}</p>}
+        {isCustomer && (
+          <>
+            <label>
+              Ngày sinh
+              <input
+                type="date"
+                value={form.NgaySinh}
+                onChange={(event) => update('NgaySinh', event.target.value)}
+              />
+            </label>
+            <label>
+              Giới tính
+              <select
+                value={form.GioiTinh}
+                onChange={(event) => update('GioiTinh', event.target.value)}
+              >
+                <option value="">Không cung cấp</option>
+                <option>Nam</option>
+                <option>Nữ</option>
+                <option>Khác</option>
+              </select>
+            </label>
+          </>
+        )}
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
+        {notice && (
+          <p className="form-success" role="status">
+            {notice}
+          </p>
+        )}
         <button type="submit" disabled={busy}>
           {busy ? 'Đang lưu…' : 'Lưu hồ sơ'}
         </button>

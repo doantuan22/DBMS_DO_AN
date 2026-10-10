@@ -1,9 +1,0 @@
-{"executable":"C:\\Program Files\\nodejs\\node.exe","args":["scripts/audit-no-sql.mjs"],"cwd":"C:\\Users\\Admin\\AppData\\Local\\Temp\\dbms-r47-regression-8M31Ko","exitCode":1,"signal":null}
-Scanned 101 files.
-Reviewed non-SQL keyword matches: 26.
-NO RAW BUSINESS SQL IN BACKEND = FAIL
-  backend/tests/orderDetailReadOnly.test.js:35 assert.doesNotMatch(source,/\b(?:EXEC(?:UTE)?|INSERT|UPDATE|DELETE|MERGE|TRUNCATE)\b/i,name); (/\bINSERT\b/i)
-  backend/tests/orderDetailReadOnly.test.js:35 assert.doesNotMatch(source,/\b(?:EXEC(?:UTE)?|INSERT|UPDATE|DELETE|MERGE|TRUNCATE)\b/i,name); (/\bUPDATE\b/i)
-  backend/tests/orderDetailReadOnly.test.js:35 assert.doesNotMatch(source,/\b(?:EXEC(?:UTE)?|INSERT|UPDATE|DELETE|MERGE|TRUNCATE)\b/i,name); (/(?<!\.)\bDELETE\b/i)
-  backend/tests/orderDetailReadOnly.test.js:35 assert.doesNotMatch(source,/\b(?:EXEC(?:UTE)?|INSERT|UPDATE|DELETE|MERGE|TRUNCATE)\b/i,name); (/\bMERGE\b/i)
-

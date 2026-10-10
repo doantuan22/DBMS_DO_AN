@@ -30,7 +30,12 @@ function productDto(row) {
 }
 
 function bookingDto(row) {
-  if (!row) throw new HttpError(500, 'BOOKING_RESPONSE_INVALID', 'Booking procedure did not return an order.');
+  if (!row)
+    throw new HttpError(
+      500,
+      'BOOKING_RESPONSE_INVALID',
+      'Booking procedure did not return an order.',
+    );
   return {
     id: row.DonDatVeID,
     userId: row.NguoiDungID,
@@ -57,32 +62,76 @@ function sqlErrorNumber(error) {
 
 function mapBookingError(error) {
   if (error instanceof HttpError) throw error;
-  if (isNumericRangeError(error)) throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
+  if (isNumericRangeError(error))
+    throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
   switch (sqlErrorNumber(error)) {
-    case 50020: throw new HttpError(401, 'ACCOUNT_UNAVAILABLE', 'This account cannot place orders.');
-    case 50402: throw new HttpError(400, 'INVALID_PRODUCT', 'Every booking product must exist, be on sale and have a valid integer quantity.');
-    case 50021: throw new HttpError(404, 'SHOWTIME_NOT_FOUND', 'Showtime was not found.');
-    case 50023: throw new HttpError(400, 'INVALID_REQUEST', 'Select at least one seat.');
-    case 50022: throw new HttpError(409, 'SHOWTIME_UNAVAILABLE', 'This showtime is no longer available for booking.');
-    case 50024: throw new HttpError(409, 'SEAT_UNAVAILABLE', 'One or more selected seats are unavailable.');
-    case 50026: throw new HttpError(400, 'SEAT_LIMIT_EXCEEDED', 'An order can contain at most 10 seats.');
-    case 50027: throw new HttpError(400, 'PRODUCT_QUANTITY_LIMIT_EXCEEDED', 'Each product quantity must be at most 10.');
-    case 50028: throw new HttpError(409, 'ACTIVE_ORDER_LIMIT_REACHED', 'You already hold the maximum number of unpaid orders. Pay for one or wait for it to expire.');
-    case 50029: throw new HttpError(409, 'PROMOTION_NOT_AVAILABLE', 'The requested promotion is no longer available. Review your order before booking.');
+    case 50020:
+      throw new HttpError(401, 'ACCOUNT_UNAVAILABLE', 'This account cannot place orders.');
+    case 50402:
+      throw new HttpError(
+        400,
+        'INVALID_PRODUCT',
+        'Every booking product must exist, be on sale and have a valid integer quantity.',
+      );
+    case 50021:
+      throw new HttpError(404, 'SHOWTIME_NOT_FOUND', 'Showtime was not found.');
+    case 50023:
+      throw new HttpError(400, 'INVALID_REQUEST', 'Select at least one seat.');
+    case 50022:
+      throw new HttpError(
+        409,
+        'SHOWTIME_UNAVAILABLE',
+        'This showtime is no longer available for booking.',
+      );
+    case 50024:
+      throw new HttpError(409, 'SEAT_UNAVAILABLE', 'One or more selected seats are unavailable.');
+    case 50026:
+      throw new HttpError(400, 'SEAT_LIMIT_EXCEEDED', 'An order can contain at most 10 seats.');
+    case 50027:
+      throw new HttpError(
+        400,
+        'PRODUCT_QUANTITY_LIMIT_EXCEEDED',
+        'Each product quantity must be at most 10.',
+      );
+    case 50028:
+      throw new HttpError(
+        409,
+        'ACTIVE_ORDER_LIMIT_REACHED',
+        'You already hold the maximum number of unpaid orders. Pay for one or wait for it to expire.',
+      );
+    case 50029:
+      throw new HttpError(
+        409,
+        'PROMOTION_NOT_AVAILABLE',
+        'The requested promotion is no longer available. Review your order before booking.',
+      );
     case 50025:
-    case 50003: throw new HttpError(409, 'SEAT_CONFLICT', 'One or more selected seats were just booked by another customer.');
-    default: throw error;
+    case 50003:
+      throw new HttpError(
+        409,
+        'SEAT_CONFLICT',
+        'One or more selected seats were just booked by another customer.',
+      );
+    default:
+      throw error;
   }
 }
 
 function productJson(items) {
-  return items.length === 0 ? null : JSON.stringify(items.map((item) => ({ SanPhamID: item.productId, SoLuong: item.quantity })));
+  return items.length === 0
+    ? null
+    : JSON.stringify(items.map((item) => ({ SanPhamID: item.productId, SoLuong: item.quantity })));
 }
 
-export function createBookingService({ execute = executeProcedure, executeWithOutputs = executeProcedureWithOutputs } = {}) {
+export function createBookingService({
+  execute = executeProcedure,
+  executeWithOutputs = executeProcedureWithOutputs,
+} = {}) {
   async function listSeats(showtimeId) {
     try {
-      const result = await execute('SEAT_LIST_BY_SHOWTIME', { SuatChieuID: { type: DbTypes.Int, value: showtimeId } });
+      const result = await execute('SEAT_LIST_BY_SHOWTIME', {
+        SuatChieuID: { type: DbTypes.Int, value: showtimeId },
+      });
       return (result.recordset ?? []).map(seatDto);
     } catch (error) {
       mapBookingError(error);
@@ -97,32 +146,46 @@ export function createBookingService({ execute = executeProcedure, executeWithOu
   async function validatePromotion(userId, input) {
     // Values supplied to this procedure are derived only from current DB procedure
     // responses. They are a preview; sp_Booking_Create recalculates and revalidates.
-    const [seats, availableProducts] = await Promise.all([listSeats(input.showtimeId), listProducts()]);
+    const [seats, availableProducts] = await Promise.all([
+      listSeats(input.showtimeId),
+      listProducts(),
+    ]);
     const selectedSeats = input.seatIds.map((id) => seats.find((seat) => seat.id === id));
     if (selectedSeats.some((seat) => !seat || seat.status !== SEAT_AVAILABLE)) {
       throw new HttpError(409, 'SEAT_UNAVAILABLE', 'One or more selected seats are unavailable.');
     }
-    const selectedProducts = input.products.map((item) => ({ ...item, product: availableProducts.find((product) => product.id === item.productId) }));
+    const selectedProducts = input.products.map((item) => ({
+      ...item,
+      product: availableProducts.find((product) => product.id === item.productId),
+    }));
     if (selectedProducts.some((item) => !item.product)) {
       throw new HttpError(400, 'PRODUCT_NOT_AVAILABLE', 'One or more products are unavailable.');
     }
-    const provisionalSum = selectedSeats.reduce((total, seat) => total + Number(seat.price), 0)
-      + selectedProducts.reduce((total, item) => total + (Number(item.product.price) * item.quantity), 0);
+    const provisionalSum =
+      selectedSeats.reduce((total, seat) => total + Number(seat.price), 0) +
+      selectedProducts.reduce(
+        (total, item) => total + Number(item.product.price) * item.quantity,
+        0,
+      );
     // DB prices are DECIMAL(18,2). Remove binary addition/multiplication noise
     // at that same scale before the typed preview bind; booking still recalculates.
     const provisionalTotal = Number(provisionalSum.toFixed(2));
-    const result = await executeWithOutputs('PROMOTION_VALIDATE', {
-      NguoiDungID: { type: DbTypes.Int, value: userId },
-      MaCode: { type: DbTypes.VarChar(50), value: input.promotionCode },
-      TongTienDon: { type: DbTypes.Decimal(18, 2), value: provisionalTotal },
-    }, {
-      KhuyenMaiID: DbTypes.Int,
-      LoaiGiamGia: DbTypes.NVarChar(20),
-      GiaTriGiam: DbTypes.Decimal(18, 2),
-      TienGiam: DbTypes.Decimal(18, 2),
-      IsValid: DbTypes.Bit,
-      Message: DbTypes.NVarChar(255),
-    });
+    const result = await executeWithOutputs(
+      'PROMOTION_VALIDATE',
+      {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
+        MaCode: { type: DbTypes.VarChar(50), value: input.promotionCode },
+        TongTienDon: { type: DbTypes.Decimal(18, 2), value: provisionalTotal },
+      },
+      {
+        KhuyenMaiID: DbTypes.Int,
+        LoaiGiamGia: DbTypes.NVarChar(20),
+        GiaTriGiam: DbTypes.Decimal(18, 2),
+        TienGiam: DbTypes.Decimal(18, 2),
+        IsValid: DbTypes.Bit,
+        Message: DbTypes.NVarChar(255),
+      },
+    );
     const row = result.recordset?.[0] ?? {};
     return {
       isValid: Boolean(row.IsValid ?? result.output?.IsValid),
@@ -138,13 +201,20 @@ export function createBookingService({ execute = executeProcedure, executeWithOu
 
   async function createBooking(userId, input) {
     try {
-      const result = await executeWithOutputs('BOOKING_CREATE', {
-        NguoiDungID: { type: DbTypes.Int, value: userId },
-        SuatChieuID: { type: DbTypes.Int, value: input.showtimeId },
-        MaKhuyenMai: { type: DbTypes.VarChar(50), value: input.promotionCode },
-        DanhSachGheId: { type: DbTypes.VarChar(DbTypes.MAX), value: input.seatIds.toString() },
-        DanhSachDoAnJson: { type: DbTypes.NVarChar(DbTypes.MAX), value: productJson(input.products) },
-      }, { NewDonDatVeID: DbTypes.Int });
+      const result = await executeWithOutputs(
+        'BOOKING_CREATE',
+        {
+          NguoiDungID: { type: DbTypes.Int, value: userId },
+          SuatChieuID: { type: DbTypes.Int, value: input.showtimeId },
+          MaKhuyenMai: { type: DbTypes.VarChar(50), value: input.promotionCode },
+          DanhSachGheId: { type: DbTypes.VarChar(DbTypes.MAX), value: input.seatIds.toString() },
+          DanhSachDoAnJson: {
+            type: DbTypes.NVarChar(DbTypes.MAX),
+            value: productJson(input.products),
+          },
+        },
+        { NewDonDatVeID: DbTypes.Int },
+      );
       return bookingDto(bookingRow(result));
     } catch (error) {
       mapBookingError(error);

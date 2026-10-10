@@ -12,7 +12,7 @@ const STATUS_VARIANTS = {
   'Thất bại': 'danger',
   'Đã hoàn tiền': 'info',
   // Khiếu nại
-  'Mới': 'info',
+  Mới: 'info',
   'Đang xử lý': 'warning',
   'Đã giải quyết': 'success',
   'Đã đóng': 'muted',

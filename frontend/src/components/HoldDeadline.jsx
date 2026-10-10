@@ -19,7 +19,9 @@ export default function HoldDeadline({ deadline, onElapsed }) {
   return (
     <span className="hold-deadline">
       <span aria-hidden="true">⏱</span> Giữ ghế đến: {formatDateTime(deadline)} · Còn{' '}
-      <strong>{String(Math.floor(seconds / 60)).padStart(2, '0')}:{String(seconds % 60).padStart(2, '0')}</strong>
+      <strong>
+        {String(Math.floor(seconds / 60)).padStart(2, '0')}:{String(seconds % 60).padStart(2, '0')}
+      </strong>
     </span>
   );
 }

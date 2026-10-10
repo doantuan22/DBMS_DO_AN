@@ -19,7 +19,8 @@ export async function request(path, { method = 'GET', body, headers, signal } = 
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
     if (response.status === 401) expireAuthToken();
-    if (response.status === 403 && typeof window !== 'undefined') window.dispatchEvent(new Event('auth:forbidden'));
+    if (response.status === 403 && typeof window !== 'undefined')
+      window.dispatchEvent(new Event('auth:forbidden'));
     const error = new Error(payload?.error?.message ?? `HTTP ${response.status}`);
     error.status = response.status;
     error.code = payload?.error?.code;

@@ -1,4 +1,4 @@
-// Real React components and isolated HTTP fixtures; server security is tested by scripts/r3b/probes.mjs.
+// Real React components and isolated HTTP fixtures; server security is covered by backend authorization tests.
 export async function testR3BPages() {
   const [{default:React},client,router,{AuthContext,AuthProvider},{default:Manager},{default:Admin},{default:Support},{default:Payment},{default:Booking},{default:Reviews},{default:Complaints},{default:AccessErrorHandler}] = await Promise.all([
     import('react'),import('react-dom/client'),import('react-router-dom'),import('/src/context/AuthContext.jsx'),import('/src/pages/ManagerPortal.jsx'),import('/src/pages/AdminPortal.jsx'),import('/src/pages/SupportPortal.jsx'),import('/src/pages/PaymentPage.jsx'),import('/src/pages/BookingPreparation.jsx'),import('/src/components/MovieReviews.jsx'),import('/src/pages/Complaints.jsx'),import('/src/components/AccessErrorHandler.jsx'),

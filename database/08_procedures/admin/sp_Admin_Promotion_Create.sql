@@ -32,9 +32,49 @@ BEGIN
         ;THROW 50072, N'Mã khuyến mãi đã tồn tại.', 1;
     END
 
-    INSERT INTO dbo.KHUYENMAI (MaCode, MoTa, LoaiGiamGia, GiaTriGiam, DonHangToiThieu, GiamToiDa, NgayBatDau, NgayKetThuc, SoLuong, SoLuongDaDung, TrangThai)
-    VALUES (@MaCode, @MoTa, @LoaiGiamGia, @GiaTriGiam, @DonHangToiThieu, @GiamToiDa, @NgayBatDau, @NgayKetThuc, @SoLuong, 0, N'Hoạt động');
+    INSERT INTO dbo.KHUYENMAI
+    (
+        MaCode,
+        MoTa,
+        LoaiGiamGia,
+        GiaTriGiam,
+        DonHangToiThieu,
+        GiamToiDa,
+        NgayBatDau,
+        NgayKetThuc,
+        SoLuong,
+        SoLuongDaDung,
+        TrangThai
+    )
+    VALUES
+    (
+        @MaCode,
+        @MoTa,
+        @LoaiGiamGia,
+        @GiaTriGiam,
+        @DonHangToiThieu,
+        @GiamToiDa,
+        @NgayBatDau,
+        @NgayKetThuc,
+        @SoLuong,
+        0,
+        N'Hoạt động'
+    );
 
-    SELECT [KhuyenMaiID], [MaCode], [MoTa], [LoaiGiamGia], [GiaTriGiam], [DonHangToiThieu], [GiamToiDa], [NgayBatDau], [NgayKetThuc], [SoLuong], [SoLuongDaDung], [TrangThai] FROM dbo.KHUYENMAI WHERE KhuyenMaiID = SCOPE_IDENTITY();
+    SELECT
+        [KhuyenMaiID],
+        [MaCode],
+        [MoTa],
+        [LoaiGiamGia],
+        [GiaTriGiam],
+        [DonHangToiThieu],
+        [GiamToiDa],
+        [NgayBatDau],
+        [NgayKetThuc],
+        [SoLuong],
+        [SoLuongDaDung],
+        [TrangThai]
+    FROM dbo.KHUYENMAI
+    WHERE KhuyenMaiID = SCOPE_IDENTITY();
 END;
 GO

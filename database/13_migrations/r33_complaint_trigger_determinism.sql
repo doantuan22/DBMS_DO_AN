@@ -1,5 +1,5 @@
 :on error exit
--- Existing trigger only; SQL-owned atomic DDL supplied by scripts/r33/deploy.mjs.
+-- Historical R3.3 deployment used a phase runner that has since been retired.
 USE CinemaBookingDB;
 GO
 :r ./07_triggers/TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai.sql

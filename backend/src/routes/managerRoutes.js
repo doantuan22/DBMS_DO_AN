@@ -15,10 +15,18 @@ router.get('/rooms/:roomId/seats', requirePermission('QL_GHE'), manager.listSeat
 router.post('/rooms/:roomId/seats', requirePermission('QL_GHE'), manager.createSeat);
 router.put('/seats/:seatId', requirePermission('QL_GHE'), manager.updateSeat);
 router.delete('/seats/:seatId', requirePermission('QL_GHE'), manager.deleteSeat);
-router.get('/cinemas/:cinemaId/showtimes', requirePermission('QL_SUAT_CHIEU'), manager.listShowtimes);
+router.get(
+  '/cinemas/:cinemaId/showtimes',
+  requirePermission('QL_SUAT_CHIEU'),
+  manager.listShowtimes,
+);
 router.post('/showtimes', requirePermission('QL_SUAT_CHIEU'), manager.createShowtime);
 router.put('/showtimes/:showtimeId', requirePermission('QL_SUAT_CHIEU'), manager.updateShowtime);
-router.post('/showtimes/:showtimeId/cancel', requirePermission('QL_SUAT_CHIEU'), manager.cancelShowtime);
+router.post(
+  '/showtimes/:showtimeId/cancel',
+  requirePermission('QL_SUAT_CHIEU'),
+  manager.cancelShowtime,
+);
 router.get('/cinemas/:cinemaId/pricing', requirePermission('QL_BANG_GIA'), manager.listPricing);
 router.post('/cinemas/:cinemaId/pricing', requirePermission('QL_BANG_GIA'), manager.createPricing);
 router.put('/pricing/:pricingId', requirePermission('QL_BANG_GIA'), manager.updatePricing);

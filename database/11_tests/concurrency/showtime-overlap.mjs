@@ -1,7 +1,7 @@
 // Two real SQL sessions. Barriers/transactions live in SQL Server; no runtime JS mutex.
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { sql,disposable,database,connect,actors,fixture,cleanupRoom,roomState,snapshot,summarize,write,evidenceRoot } from '../../../scripts/r12/common.mjs';
+import { sql,disposable,database,connect,actors,fixture,cleanupRoom,roomState,snapshot,summarize,write,evidenceRoot } from '../../../scripts/db/concurrency-support/common-r12.mjs';
 disposable();
 const [a,b,observer]=await Promise.all([connect(),connect(),connect()]);
 const evidence={database,startedAt:new Date().toISOString(),status:'RUNNING',scenarios:[],stress:[]};

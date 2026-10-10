@@ -138,5 +138,4 @@ export const PROCEDURES = Object.freeze({
   ASSIGN_CINEMA_MANAGER: 'dbo.sp_PhanCongQuanLyRap',
 });
 
-export const isKnownProcedure = (key) =>
-  Object.prototype.hasOwnProperty.call(PROCEDURES, key);
+export const isKnownProcedure = (key) => Object.prototype.hasOwnProperty.call(PROCEDURES, key);

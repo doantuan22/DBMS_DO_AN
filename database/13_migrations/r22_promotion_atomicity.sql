@@ -1,5 +1,5 @@
 :on error exit
--- Existing modules only; SQL-owned transaction supplied by scripts/r22/deploy.mjs.
+-- Historical R2.2 deployment used a phase runner that has since been retired.
 USE CinemaBookingDB;
 GO
 :r ./08_procedures/public/sp_Promotion_Validate.sql

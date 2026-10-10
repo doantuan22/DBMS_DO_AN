@@ -1,9 +1,12 @@
 # Main Database Sync — R7.2 Approved Procedures
 
+> **Ghi chú lưu trữ (10/10/2026):** Theo yêu cầu thu gọn `docs`, evidence, contracts, archive và tài liệu hỗ trợ đã được xóa khỏi workspace. Các nhãn case/selector trong báo cáo là tham chiếu lịch sử, không còn liên kết tới raw artifact. Kết quả và verdict được ghi trong báo cáo không thay đổi.
+
+
 **MAIN DATABASE SYNC: DONE**  
 **CinemaBookingDB: CANONICAL 159/159 VERIFIED**  
 **DATA PRESERVATION: PASS**  
-**READY FOR R8 FRONTEND STABILIZATION**
+**FOLLOW-UP: R8.3 ACCEPTED — PHASE R8 DONE**
 
 ## A. Deployment Summary
 
@@ -23,13 +26,13 @@
 
 Người dùng cấp quyền triển khai trực tiếp trong attachment “Deploy R7.2 Approved Stored Procedures to CinemaBookingDB — Direct Execution Authorized”. Đã thực thi deployment, không chỉ chuẩn bị script. Không đổi SQL source/backend/frontend/manifest, không seed/reset/rebuild/drop database, không sửa table/trigger/function/view/SP thứ ba, không thay đổi RBAC hoặc dữ liệu nghiệp vụ. Dừng tại Database Sync; chưa thực hiện R8.
 
-Evidence chính: [result.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/result.json), [final-state.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/final-state.json). Scope, strategy và commands: [deployment plan](../database/deployments/r7-2-main/PLAN.md), [README](../database/deployments/r7-2-main/README.md).
+Evidence chính: result.json, final-state.json. Scope, strategy và commands: [deployment plan](../database/deployments/r7-2-main/PLAN.md), [README](../database/deployments/r7-2-main/README.md).
 
 ## B. Preflight
 
-Đọc [R7.3 acceptance](R7_3_FINAL_ACCEPTANCE_REPORT.md), [R7.2 regression](R7_2_REGRESSION_REPORT.md), [approved policies](contracts/R7_2_APPROVED_POLICIES.md), manifest, hai canonical source files và existing deployment/backup/verification tools. Kiểm tra Git working tree; 262 source/test hashes và toàn bộ artifact seal R7.3 vẫn khớp. Các R7.2 modifications đã có trước task được giữ nguyên; không có production source change mới làm acceptance stale. Không triển khai từ bốn embedded manifest snapshots cũ.
+Đọc [R7.3 acceptance](R7_3_FINAL_ACCEPTANCE_REPORT.md), approved policies, manifest, hai canonical source files và existing deployment/backup/verification tools. Kiểm tra Git working tree; 262 source/test hashes và toàn bộ artifact seal R7.3 vẫn khớp. Các R7.2 modifications đã có trước task được giữ nguyên; không có production source change mới làm acceptance stale. Không triển khai từ bốn embedded manifest snapshots cũ. Trạng thái frontend sau đó được chốt riêng tại [R8.3 re-acceptance](R8_3_REACCEPTANCE_REPORT.md).
 
-Actual SQL connection dùng project configuration, không hardcode/ghi password. [preflight.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/preflight.json) và [execution-preflight.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/execution-preflight.json) xác nhận:
+Actual SQL connection dùng project configuration, không hardcode/ghi password. preflight.json và execution-preflight.json xác nhận:
 
 - ServerName/MachineName DESKTOP-E67DPCV, version17.0.1000.7; actual database name/GUID đúng, ONLINE, writable.
 - Có VIEW DEFINITION và ALTER trên đúng hai dbo procedures; existing object type P.
@@ -41,9 +44,9 @@ Actual SQL connection dùng project configuration, không hardcode/ghi password.
 
 Agent không có quyền đọc trực tiếp file .bak qua filesystem do ACL thư mục backup của SQL Server; không tính SHA256 của toàn file hoặc thay đổi ACL. Kết quả backup PASS dựa trên RESTORE VERIFYONLY WITH CHECKSUM và HEADERONLY thực tế của SQL Server. Hai private rollback SQL files có thể đọc và kiểm tra SHA256 riêng.
 
-[backup.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backup.json) có exact server backup path và private rollback directory. Hai original definitions được trích xuất đầy đủ thành SQL rollback riêng, kèm raw/normalized SHA256, signature/dependencies/metadata, database identity, source version, timestamp, deployment ID. Private SQL/metadata nằm ngoài repository tại OS temp directory, được tạo trước ALTER và không sửa sau đó. PARSEONLY kiểm tra syntax trên separate connection PASS; execution bị tắt trong bước này. Hai rollback files còn tồn tại và hash được xác minh trong quality check. Temp files cần lưu vào private archive nếu muốn giữ lâu dài; full backup nằm ở server backup directory.
+backup.json có exact server backup path và private rollback directory. Hai original definitions được trích xuất đầy đủ thành SQL rollback riêng, kèm raw/normalized SHA256, signature/dependencies/metadata, database identity, source version, timestamp, deployment ID. Private SQL/metadata nằm ngoài repository tại OS temp directory, được tạo trước ALTER và không sửa sau đó. PARSEONLY kiểm tra syntax trên separate connection PASS; execution bị tắt trong bước này. Hai rollback files còn tồn tại và hash được xác minh trong quality check. Temp files cần lưu vào private archive nếu muốn giữ lâu dài; full backup nằm ở server backup directory.
 
-Initial read-only diagnostic từng thấy `@@TRANCOUNT=0, XACT_STATE=1` khi lấy state cùng batch đọc metadata. Standalone XACT_STATE, session open_transaction_count và DMV đều xác nhận không có user transaction. Đã sửa **verification tooling mới** để sample standalone sau batch, không nới safety gate hoặc sửa production. [preflight-diagnostic.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/preflight-diagnostic.json) giữ observed values và resolution; chưa có DDL/DML ở thời điểm diagnostic này.
+Initial read-only diagnostic từng thấy `@@TRANCOUNT=0, XACT_STATE=1` khi lấy state cùng batch đọc metadata. Standalone XACT_STATE, session open_transaction_count và DMV đều xác nhận không có user transaction. Đã sửa **verification tooling mới** để sample standalone sau batch, không nới safety gate hoặc sửa production. preflight-diagnostic.json giữ observed values và resolution; chưa có DDL/DML ở thời điểm diagnostic này.
 
 ## C. Execution
 
@@ -54,7 +57,7 @@ Initial read-only diagnostic từng thấy `@@TRANCOUNT=0, XACT_STATE=1` khi l�
 
 [deploy.mjs](../database/deployments/r7-2-main/deploy.mjs) lấy nguyên canonical SQL files hiện hành, split GO đúng batch rules; SET ANSI_NULLS/QUOTED_IDENTIFIER trong batch riêng, CREATE OR ALTER PROCEDURE đầu batch DDL. Không tự viết lại business logic. Hai apply nằm trong cùng pinned mssql Transaction, SERIALIZABLE/XACT_ABORT ON. Bounded shared TABLOCK/HOLDLOCK reads trên 27 tables tạo baseline nhất quán và tạm chặn concurrent writes trong cửa sổ DDL; không dùng việc khác nhau do concurrent writes để kết luận mất dữ liệu.
 
-Trước COMMIT, [before-atomic.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/before-atomic.json) và [applied-before-commit.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/applied-before-commit.json) chứng minh đúng hai definitions thay đổi, all159 source parity PASS, cùng27-table data/identity hashes, không object/schema ngoài scope thay đổi. Source seal được kiểm lại trước COMMIT. Commit cả hai lúc00:10:57.735 UTC+7; không partial deployment.
+Trước COMMIT, before-atomic.json và applied-before-commit.json chứng minh đúng hai definitions thay đổi, all159 source parity PASS, cùng27-table data/identity hashes, không object/schema ngoài scope thay đổi. Source seal được kiểm lại trước COMMIT. Commit cả hai lúc00:10:57.735 UTC+7; không partial deployment.
 
 Rollback strategy đã chuẩn bị và parse-check, không cần thực thi trên successful run. Trước COMMIT có lỗi thì rollback transaction và so original fingerprints; nếu mandatory post-check lỗi sau COMMIT thì runner atomically restore chỉ hai saved definitions/SET options, so complete normalized original definitions/data/unrelated metadata. CREATE/ALTER spelling của SQL module header có thể khác khi restore; original raw backup bytes/hash vẫn giữ, normalized comparison bảo toàn SQL literals/logic. Nếu targeted restore lỗi thì stop writes/report actual state. Không tự restore toàn database hoặc sửa business rows để ép fingerprints.
 
@@ -72,7 +75,7 @@ Actual main **159/159 MATCH** trước COMMIT, sau COMMIT và final state. Khôn
 
 Tất cả27 tables có exact before/after row counts và SHA256 fingerprint giống nhau; kiểm tra trước/sau atomic DDL, sau COMMIT, trước/sau safe functional probes và final transaction release. `sys.identity_columns.last_value` không đổi: không có successful insert hoặc identity advance do hậu kiểm. Bảo toàn users/profile, order/ticket/seat/payment, complaints/history, pricing/promotion và mọi bảng khác. Metadata ngoài scope hai SP không đổi; chỉ expected procedure definition/modify_date/signature/dependency thay đổi. Không seed/reset, không disable constraints/triggers, không DML business data.
 
-Post-check dùng một read-only verification transaction, XACT_ABORT OFF để expected-denial/savepoint probes giữ caller transaction committable. Sau probes transactionCount1/XACT_STATE1 đúng vì verification transaction còn mở; snapshot chứng minh data/metadata/identity không đổi. Sau explicit ROLLBACK read-only transaction, final @@TRANCOUNT0/XACT_STATE0, không active main request/open user transaction hoặc locks bất thường còn lại. [postdeploy.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/postdeploy.json) và [final-state.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/final-state.json) ghi từng state.
+Post-check dùng một read-only verification transaction, XACT_ABORT OFF để expected-denial/savepoint probes giữ caller transaction committable. Sau probes transactionCount1/XACT_STATE1 đúng vì verification transaction còn mở; snapshot chứng minh data/metadata/identity không đổi. Sau explicit ROLLBACK read-only transaction, final @@TRANCOUNT0/XACT_STATE0, không active main request/open user transaction hoặc locks bất thường còn lại. postdeploy.json và final-state.json ghi từng state.
 
 ### Backend compatibility — mức chứng cứ
 
@@ -97,18 +100,18 @@ Thư mục immutable run: `docs/evidence/main-db-deployment/runs/2026-10-09T17-0
 
 | Artifact | Nội dung / selectors |
 | --- | --- |
-| [preflight.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/preflight.json) | `/identity`, `/activity`, `/state`, `/parity`:actual target và157match/2pending |
-| [execution-preflight.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/execution-preflight.json) | Final gate trước backup/ALTER |
-| [backup.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backup.json) | `/fullBackup`, `/procedures/0`, `/procedures/1`:backup header/paths/hashes/parsecheck |
-| [before-atomic.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/before-atomic.json) | `/fingerprints`, `/metadata`, `/session`:consistent pre-ALTER baseline |
-| [applied-before-commit.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/applied-before-commit.json) | `/parity`, `/preservation`, `/state`:159match/data unchanged before COMMIT |
-| [postdeploy.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/postdeploy.json) | `/functional/cases/0`–`/functional/cases/13`, `/functionalPreservation`:14 safe runtime cases/data unchanged |
-| [final-state.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/final-state.json) | `/metadata/parameters`, `/fingerprints`, `/protections`, `/session`:actual final main state |
-| [backend-compatibility.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backend-compatibility.json) | Fresh test execution192/192,No-SQL,typed checks |
-| [backend-regression.log](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backend-regression.log) | TAP192pass/fail0/skipped0 |
-| [no-sql.log](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/no-sql.log) / [backend-contract-check.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backend-contract-check.json) | Fresh architecture audit / typed inputs and whitelist |
-| [result.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/result.json) | `/steps`, `/changedModules`, `/finalParity`, `/dataPreservation`, `/finalSession`, `/finalActivity`:SUCCESS/VERIFIED |
-| [quality.json](evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/quality.json) | Evidence/tool/report hashes,paths/selectors,private backup existence/hashes,2243original-file preservation |
+| preflight.json | `/identity`, `/activity`, `/state`, `/parity`:actual target và157match/2pending |
+| execution-preflight.json | Final gate trước backup/ALTER |
+| backup.json | `/fullBackup`, `/procedures/0`, `/procedures/1`:backup header/paths/hashes/parsecheck |
+| before-atomic.json | `/fingerprints`, `/metadata`, `/session`:consistent pre-ALTER baseline |
+| applied-before-commit.json | `/parity`, `/preservation`, `/state`:159match/data unchanged before COMMIT |
+| postdeploy.json | `/functional/cases/0`–`/functional/cases/13`, `/functionalPreservation`:14 safe runtime cases/data unchanged |
+| final-state.json | `/metadata/parameters`, `/fingerprints`, `/protections`, `/session`:actual final main state |
+| backend-compatibility.json | Fresh test execution192/192,No-SQL,typed checks |
+| backend-regression.log | TAP192pass/fail0/skipped0 |
+| no-sql.log / backend-contract-check.json | Fresh architecture audit / typed inputs and whitelist |
+| result.json | `/steps`, `/changedModules`, `/finalParity`, `/dataPreservation`, `/finalSession`, `/finalActivity`:SUCCESS/VERIFIED |
+| quality.json | Evidence/tool/report hashes,paths/selectors,private backup existence/hashes,2243original-file preservation |
 
 Rollback SQL files và full .bak nằm ngoài Git, không được copy vào evidence public. Fingerprints chỉ xuất counts/hashes; queue case JSON không xuất complaint contents/email/name hoặc bcrypt payload. Timestamps của runner dùng UTC/ISO; SQL backup header datetime là server-local clock được driver biểu diễn qua Date, không tự coi suffixZ của header là clock UTC thật.
 

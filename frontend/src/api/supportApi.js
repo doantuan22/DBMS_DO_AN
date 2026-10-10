@@ -8,7 +8,11 @@ const query = (filters = {}) => {
 };
 
 export const getSupportComplaints = (filters) => request(`/support/complaints${query(filters)}`);
-export const getSupportComplaint = (complaintId) => request(`/support/complaints/${id(complaintId)}`);
-export const getComplaintOrderReference = (complaintId) => request(`/support/complaints/${id(complaintId)}/order-reference`);
-export const addComplaintProcessing = (complaintId, body) => request(`/support/complaints/${id(complaintId)}/processings`, { method: 'POST', body });
-export const updateComplaintStatus = (complaintId, body) => request(`/support/complaints/${id(complaintId)}/status`, { method: 'PUT', body });
+export const getSupportComplaint = (complaintId) =>
+  request(`/support/complaints/${id(complaintId)}`);
+export const getComplaintOrderReference = (complaintId) =>
+  request(`/support/complaints/${id(complaintId)}/order-reference`);
+export const addComplaintProcessing = (complaintId, body) =>
+  request(`/support/complaints/${id(complaintId)}/processings`, { method: 'POST', body });
+export const updateComplaintStatus = (complaintId, body) =>
+  request(`/support/complaints/${id(complaintId)}/status`, { method: 'PUT', body });

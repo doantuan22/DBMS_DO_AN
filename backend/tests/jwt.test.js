@@ -19,6 +19,11 @@ test('rejects tampered tokens and refuses weak/missing secrets', () => {
   const { token } = jwt.issue(1);
   const [header, payload, signature] = token.split('.');
   const tamperedSignature = `${signature[0] === 'a' ? 'b' : 'a'}${signature.slice(1)}`;
-  assert.throws(() => jwt.verify(`${header}.${payload}.${tamperedSignature}`), { code: 'UNAUTHENTICATED' });
-  assert.throws(() => createJwtService({ secret: '' }).issue(1), { code: 'AUTH_NOT_CONFIGURED', status: 503 });
+  assert.throws(() => jwt.verify(`${header}.${payload}.${tamperedSignature}`), {
+    code: 'UNAUTHENTICATED',
+  });
+  assert.throws(() => createJwtService({ secret: '' }).issue(1), {
+    code: 'AUTH_NOT_CONFIGURED',
+    status: 503,
+  });
 });

@@ -4,7 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { ROLE_AREAS, ROLES } from '../../constants/roles';
 
 // RequireAuth/RequireRole pass the page the visitor was refused as a plain path string.
-const isInternalPath = (path) => typeof path === 'string' && path.startsWith('/') && !path.startsWith('//');
+const isInternalPath = (path) =>
+  typeof path === 'string' && path.startsWith('/') && !path.startsWith('//');
 
 export default function Login() {
   const { login } = useAuth();
@@ -28,10 +29,10 @@ export default function Login() {
         err.status === 401
           ? 'Email hoặc mật khẩu không đúng, hoặc tài khoản chưa hoạt động.'
           : err.status === 503
-          ? 'Dịch vụ đăng nhập hiện chưa sẵn sàng.'
-          : err.status === 400
-          ? err.message
-          : 'Không thể đăng nhập lúc này. Vui lòng thử lại.'
+            ? 'Dịch vụ đăng nhập hiện chưa sẵn sàng.'
+            : err.status === 400
+              ? err.message
+              : 'Không thể đăng nhập lúc này. Vui lòng thử lại.',
       );
     } finally {
       setBusy(false);
@@ -42,7 +43,11 @@ export default function Login() {
     <section className="auth-card">
       <h1>Đăng nhập</h1>
       <p className="subtitle">Chào mừng bạn quay lại CinemaStar. Vui lòng đăng nhập để tiếp tục.</p>
-      {location.state?.message && <p className="form-success" role="status">{location.state.message}</p>}
+      {location.state?.message && (
+        <p className="form-success" role="status">
+          {location.state.message}
+        </p>
+      )}
       <form onSubmit={submit}>
         <label>
           Email
@@ -67,7 +72,11 @@ export default function Login() {
             onChange={(event) => setForm({ ...form, MatKhau: event.target.value })}
           />
         </label>
-        {error && <p className="form-error" role="alert">{error}</p>}
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
         <button type="submit" disabled={busy}>
           {busy ? 'Đang đăng nhập…' : 'Đăng nhập'}
         </button>

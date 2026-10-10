@@ -6,8 +6,12 @@ export default function NotFound() {
       <h1 id="not-found-heading">404 - Không tìm thấy trang</h1>
       <p>Đường dẫn bạn yêu cầu không tồn tại hoặc đã được di chuyển.</p>
       <div className="catalog-actions">
-        <Link className="catalog-button" to="/">Về trang chủ</Link>
-        <Link className="catalog-button catalog-button--secondary" to="/movies">Xem phim đang chiếu</Link>
+        <Link className="catalog-button" to="/">
+          Về trang chủ
+        </Link>
+        <Link className="catalog-button catalog-button--secondary" to="/movies">
+          Xem phim đang chiếu
+        </Link>
       </div>
     </section>
   );

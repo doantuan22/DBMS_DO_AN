@@ -35,7 +35,16 @@ BEGIN
         IF @CurrentPayment=@TrangThaiThanhToan
         BEGIN
             IF @OwnTran=1 COMMIT TRANSACTION;
-            SELECT d.DonDatVeID,d.TrangThai AS TrangThaiDon,t.ThanhToanID,t.MaGiaoDich,t.TrangThai AS TrangThaiThanhToan,t.NgayThanhToan FROM dbo.DONDATVE d JOIN dbo.THANHTOAN t ON t.DonDatVeID=d.DonDatVeID WHERE t.ThanhToanID=@ThanhToanID;
+            SELECT
+                d.DonDatVeID,
+                d.TrangThai AS TrangThaiDon,
+                t.ThanhToanID,
+                t.MaGiaoDich,
+                t.TrangThai AS TrangThaiThanhToan,
+                t.NgayThanhToan
+            FROM dbo.DONDATVE d
+            JOIN dbo.THANHTOAN t ON t.DonDatVeID = d.DonDatVeID
+            WHERE t.ThanhToanID = @ThanhToanID;
             RETURN;
         END
         IF @CurrentPayment<>N'Đang xử lý' THROW 50115, N'Giao dịch đã có kết quả cuối cùng, không thể đổi.', 1;

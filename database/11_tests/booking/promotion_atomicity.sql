@@ -1,4 +1,4 @@
--- Run only through scripts/r22/sql-tests.mjs against a fresh disposable database.
+-- Historical R2.2 phase runner retired; use the current disposable Test DB workflow documented in scripts/db/TEST_PIPELINE.md.
 SET NOCOUNT ON;
 SET XACT_ABORT OFF;
 IF DB_NAME() NOT LIKE 'CinemaBookingDB[_]R0[_]%'

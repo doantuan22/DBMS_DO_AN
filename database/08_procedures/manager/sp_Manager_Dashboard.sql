@@ -32,7 +32,14 @@ BEGIN
         r.ThanhPho,
         (SELECT COUNT(*) FROM dbo.PHONGCHIEU pc WHERE pc.RapID = @RapID AND pc.TrangThai = N'Hoạt động') AS TongPhongChieu,
         (SELECT COUNT(*) FROM dbo.GHE g INNER JOIN dbo.PHONGCHIEU pc ON g.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND g.TrangThai = N'Hoạt động') AS TongGhe,
-        (SELECT COUNT(*) FROM dbo.SUATCHIEU sc INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID WHERE pc.RapID = @RapID AND dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau) = dbo.fn_HomNay() AND sc.TrangThai<>N'Đã hủy') AS SuatChieuHomNay,
+        (
+            SELECT COUNT(*)
+            FROM dbo.SUATCHIEU sc
+            INNER JOIN dbo.PHONGCHIEU pc ON sc.PhongID = pc.PhongID
+            WHERE pc.RapID = @RapID
+              AND dbo.fn_NgayKinhDoanh(sc.ThoiGianBatDau) = dbo.fn_HomNay()
+              AND sc.TrangThai <> N'Đã hủy'
+        ) AS SuatChieuHomNay,
         (SELECT COUNT(DISTINCT ddv.DonDatVeID)
          FROM dbo.DONDATVE ddv
          INNER JOIN dbo.SUATCHIEU sc ON ddv.SuatChieuID = sc.SuatChieuID

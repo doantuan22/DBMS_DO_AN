@@ -1,4 +1,4 @@
--- R5: ALTER existing modules in one transaction via scripts/r5/deploy.mjs.
+-- Historical R5 deployment used a phase runner that has since been retired.
 -- No table/index/constraint changes; existing data and historical anomalies are preserved.
 :r ../06_views/vw_ThongKePhim.sql
 :r ../08_procedures/admin/sp_Admin_Cinema_Update.sql

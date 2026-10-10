@@ -15,16 +15,31 @@ export default function DatabaseHealth() {
   }, []);
 
   if (state.status === 'loading') {
-    return <section className="health-card" aria-live="polite">Đang kiểm tra kết nối cơ sở dữ liệu…</section>;
+    return (
+      <section className="health-card" aria-live="polite">
+        Đang kiểm tra kết nối cơ sở dữ liệu…
+      </section>
+    );
   }
 
   const healthy = state.status === 'healthy';
   return (
-    <section className={`health-card health-card--${healthy ? 'healthy' : 'unavailable'}`} aria-live="polite">
+    <section
+      className={`health-card health-card--${healthy ? 'healthy' : 'unavailable'}`}
+      aria-live="polite"
+    >
       <h2>Trạng thái hệ thống</h2>
-      <p><strong>API:</strong> đang hoạt động</p>
-      <p><strong>SQL Server:</strong> {healthy ? 'sẵn sàng' : 'chưa kết nối được'}</p>
-      {healthy && <p><strong>Cơ sở dữ liệu:</strong> {state.result.database}</p>}
+      <p>
+        <strong>API:</strong> đang hoạt động
+      </p>
+      <p>
+        <strong>SQL Server:</strong> {healthy ? 'sẵn sàng' : 'chưa kết nối được'}
+      </p>
+      {healthy && (
+        <p>
+          <strong>Cơ sở dữ liệu:</strong> {state.result.database}
+        </p>
+      )}
       {!healthy && <p>Kiểm tra lại cấu hình kết nối hoặc thử tải lại sau.</p>}
     </section>
   );

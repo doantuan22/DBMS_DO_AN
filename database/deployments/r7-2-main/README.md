@@ -1,6 +1,8 @@
 # R7.2 main database synchronization
 
-Completed deployment: [MAIN_DATABASE_SYNC_REPORT.md](../../../docs/MAIN_DATABASE_SYNC_REPORT.md). Evidence: [result.json](../../../docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/result.json). The original R7.3 pending state remains historical; this separate deployment verified main synchronization.
+The deployment is complete; current system acceptance is tracked in [FINAL_SYSTEM_AUDIT.md](../../../docs/FINAL_SYSTEM_AUDIT.md). This guide retains the reviewed target guards and recovery procedure for auditability.
+
+Completed deployment: [MAIN_DATABASE_SYNC_REPORT.md](../../../docs/MAIN_DATABASE_SYNC_REPORT.md). Evidence: result.json (raw artifact removed during docs cleanup). The original R7.3 pending state remains historical; this separate deployment verified main synchronization.
 
 `deploy.mjs` implements the [scoped plan](PLAN.md); `verify.mjs` provides reusable read-only identity, activity, inventory, definition/metadata parity and data preservation checks. These are offline tools, not application code. Credentials come from the existing backend environment and are never printed. Main name, server, GUID and baseline inventory are fixed guards; there is no arbitrary database/object override.
 
@@ -35,7 +37,7 @@ try {
 
 Backups and rollback:
 
-- A unique full COPY_ONLY/CHECKSUM .bak is in SQL Server's configured backup directory, outside Git. RESTORE VERIFYONLY WITH CHECKSUM and backup header checks passed. The exact file/backup-set GUID are recorded in [backup.json](../../../docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backup.json).
+- A unique full COPY_ONLY/CHECKSUM .bak is in SQL Server's configured backup directory, outside Git. RESTORE VERIFYONLY WITH CHECKSUM and backup header checks passed. The exact file/backup-set GUID are recorded in backup.json (raw artifact removed during docs cleanup).
 - Two private rollback SQL files and metadata are outside the repository in the OS temp directory recorded by backup.json. Each captures the original SQL/SET options, raw and normalized definition SHA256, target GUID, object metadata and deployment ID. Private files were created before ALTER and never rewritten. Rollback SQL was PARSEONLY-checked against the actual server. Temp cleanup may remove local copies; retain these files in a private deployment archive if long-term targeted rollback is needed. The full database backup remains at its server backup path.
 - The runner automatically rolls back uncommitted DDL. If a required check fails after COMMIT, it restores only the two saved definitions in a pinned transaction, verifies normalized original definitions and preservation, then reports ROLLED_BACK. If restoration fails it stops writes and reports that state. No whole-database restore is performed.
 - Manual targeted recovery must load the reviewed private backup, recheck identity/GUID and current state, apply both saved bodies with their captured SET options in one transaction, compare original normalized hashes/data/unrelated metadata before COMMIT, then verify transaction/session release. The private SQL files contain guarded USE/GO batches; do not combine their CREATE/ALTER bodies into a batch after unrelated T-SQL. Use the existing restoreOwnedDefinitions routine as the reviewed implementation reference; no manual rollback was executed on this successful deployment.
