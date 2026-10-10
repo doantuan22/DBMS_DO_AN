@@ -50,7 +50,7 @@ export default function CinemaImageManager() {
     try {
       const result = await adminApi.cinemaImages(id);
       if (mounted.current && requestId === imageRequest.current && id === currentCinema.current) {
-        setImageList({ status: 'success', cinemaId: id, requestId, rows: result.images ?? [] });
+        setImageList({ status: 'success', cinemaId: id, rows: result.images ?? [] });
       }
     } catch (error) {
       if (mounted.current && requestId === imageRequest.current && id === currentCinema.current) setImageList({ status: 'error', cinemaId: id, rows: [], error });
@@ -68,8 +68,7 @@ export default function CinemaImageManager() {
   const imagesReady = canManage && cinemaList.status === 'success' && imageList.status === 'success'
     && Boolean(cinemaId) && imageList.cinemaId === cinemaId && currentCinema.current === cinemaId;
   const images = imagesReady ? imageList.rows : [];
-  const canUseImages = () => imagesReady && currentCinema.current === cinemaId && imageRequest.current === imageList.requestId;
-  const ownsImage = image => canUseImages() && String(image.RapID) === cinemaId
+  const ownsImage = image => imagesReady && String(image.RapID) === cinemaId
     && images.some(row => row.HinhAnhRapID === image.HinhAnhRapID && String(row.RapID) === cinemaId);
   const isCurrent = (id, generation) => mounted.current && id === currentCinema.current && generation === contextGeneration.current;
 
@@ -80,7 +79,7 @@ export default function CinemaImageManager() {
   };
 
   const submit = async (event) => {
-    event.preventDefault(); if (!canUseImages() || writePending.current || (selected && !ownsImage(selected))) return;
+    event.preventDefault(); if (!imagesReady || writePending.current || (selected && !ownsImage(selected))) return;
     writePending.current = true; setBusy(true); setNotice(null);
     const target = cinemaId, generation = contextGeneration.current;
     try {
