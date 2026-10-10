@@ -1,0 +1,24 @@
+{
+  "status": "FAIL",
+  "startedAt": "2026-10-09T15:30:11.099Z",
+  "checks": [
+    {
+      "id": "targeted-backend",
+      "args": [
+        "--test",
+        "tests/feedbackService.test.js",
+        "tests/feedbackValidator.test.js",
+        "tests/managerService.test.js",
+        "tests/supportService.test.js",
+        "tests/adminService.test.js",
+        "tests/r3bAuthorization.test.js",
+        "tests/r7-contract.test.js"
+      ],
+      "cwd": "backend",
+      "exitCode": 1,
+      "status": "FAIL"
+    }
+  ],
+  "error": "targeted-backend failed; review preserved log.\n\n1 !== 0\n",
+  "completedAt": "2026-10-09T15:30:11.887Z"
+}

@@ -1,0 +1,292 @@
+{
+  "phase": "R7.3",
+  "phaseStatus": "DONE",
+  "phaseR7": "DONE - DATABASE/BACKEND REGRESSION ACCEPTED",
+  "verifiedScope": "Canonical source and task-owned verified Test DB; not deployed-main or final system acceptance",
+  "completedAt": "2026-10-09T16:43:46.871161+00:00",
+  "approval": "APPROVED",
+  "UCCount": 45,
+  "DBBE": {
+    "PASS": 45,
+    "PARTIAL": 0,
+    "BROKEN": 0,
+    "MISSING": 0
+  },
+  "FE": {
+    "PASS": 2,
+    "PARTIAL": 43,
+    "BROKEN": 0,
+    "MISSING": 0
+  },
+  "Overall": {
+    "PASS": 2,
+    "PARTIAL": 43,
+    "BROKEN": 0,
+    "MISSING": 0
+  },
+  "gaps": [
+    {
+      "gapId": "R71-DB-01",
+      "ucId": "KH-13",
+      "caseCount": 12,
+      "status": "RESOLVED",
+      "registryId": "E432"
+    },
+    {
+      "gapId": "R71-DB-02",
+      "ucId": "QLR-07",
+      "caseCount": 13,
+      "status": "RESOLVED",
+      "registryId": "E433"
+    },
+    {
+      "gapId": "R71-DB-03",
+      "ucId": "QLR-08",
+      "caseCount": 9,
+      "status": "RESOLVED",
+      "registryId": "E434"
+    },
+    {
+      "gapId": "R71-DB-04",
+      "ucId": "QLR-09",
+      "caseCount": 17,
+      "status": "RESOLVED",
+      "registryId": "E435"
+    },
+    {
+      "gapId": "R71-CT-01",
+      "ucId": "CSKH-02",
+      "caseCount": 15,
+      "status": "RESOLVED",
+      "registryId": "E436"
+    },
+    {
+      "gapId": "R71-CT-02",
+      "ucId": "ADM-02",
+      "caseCount": 17,
+      "status": "RESOLVED",
+      "registryId": "E437"
+    }
+  ],
+  "environments": {
+    "canonical": "CANONICAL_SOURCE_VERIFIED",
+    "test": "TEST_DB_VERIFIED",
+    "main": "MAIN_DB_DEPLOYMENT_PENDING"
+  },
+  "gates": [
+    {
+      "gate": "Baseline 45 UC",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/baseline",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "No-SQL Backend",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/backendRegression",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Backend Regression",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/backendRegression",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Canonical DB parity",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/environment.json",
+      "pointer": "/environments/0",
+      "sha256": "2b2e3a11e9bf91a0fcae566a2cb55684f76684e18f17f9e00b1f0023390d8d66",
+      "basis": "R7.3 read-only verification"
+    },
+    {
+      "gate": "Authorization",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/UCs",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Manager Scope",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/result.json",
+      "pointer": "/checks",
+      "sha256": "d7d04d806761d32365c800472b8f6ab31b6ed5a8299ac4fe547229bf49164c29",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Customer Ownership",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-a/runs/2026-10-09T10-38-48-967Z-91393232/result.json",
+      "pointer": "/cases",
+      "sha256": "a992629a786c778ca2e2013e863e9c4a3d396ab3997910c9a91987de91e24064",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Historical Integrity",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/result.json",
+      "pointer": "/checks",
+      "sha256": "d7d04d806761d32365c800472b8f6ab31b6ed5a8299ac4fe547229bf49164c29",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Transaction/Rollback",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/result.json",
+      "pointer": "/checks",
+      "sha256": "d7d04d806761d32365c800472b8f6ab31b6ed5a8299ac4fe547229bf49164c29",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Booking Concurrency",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-a/runs/2026-10-09T10-38-48-967Z-91393232/result.json",
+      "pointer": "/cases/14",
+      "sha256": "a992629a786c778ca2e2013e863e9c4a3d396ab3997910c9a91987de91e24064",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Showtime Concurrency",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/result.json",
+      "pointer": "/integrity",
+      "sha256": "d7d04d806761d32365c800472b8f6ab31b6ed5a8299ac4fe547229bf49164c29",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Room Delete Atomicity",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/result.json",
+      "pointer": "/checks",
+      "sha256": "d7d04d806761d32365c800472b8f6ab31b6ed5a8299ac4fe547229bf49164c29",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Complaint Trigger",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/result.json",
+      "pointer": "/checks",
+      "sha256": "2fa158095b9d2c59f00dbc7da26747800907e2269626d4ea3a384e77987e6b25",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Admin Permissions",
+      "status": "PASS",
+      "artifact": "docs/evidence/r6-group-c/runs/2026-10-09T13-01-28-044Z-ddfffac3/result.json",
+      "pointer": "/checks",
+      "sha256": "2fa158095b9d2c59f00dbc7da26747800907e2269626d4ea3a384e77987e6b25",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "R7.2 Contract Fixes",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/R72",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "R7.2 Six Gaps",
+      "status": "RESOLVED",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/R72/perUCCounts",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Evidence Integrity",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/registry",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Database/Backend BROKEN",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/knownMaterialDBBEDefects",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    },
+    {
+      "gate": "Database/Backend MISSING",
+      "status": "PASS",
+      "artifact": "docs/evidence/r7-3/runs/2026-10-09T16-23-18-873Z-ecf5beee/audit-final.json",
+      "pointer": "/baseline/actorCounts",
+      "sha256": "494a04dca1fc5470f590501c292a708ef8bc7abfe1d7174f9f0c7c861ee2582e",
+      "basis": "Existing runtime evidence independently reconciled with source/selector/hash; offline audit is not a new runtime run"
+    }
+  ],
+  "nonblockingArtifactFindings": [
+    {
+      "name": "sp_Admin_Report_Revenue",
+      "source": "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "canonicalSHA256": "6c59143552a1bba647a8568c8fb0ef56a4ed42063e9b3b348e2205b389ed15f1",
+      "embeddedSHA256": "a84ace71db6814fd2b120b97a6cedf90b726f30d05e685e8a60668f877ca3bc0",
+      "classification": "NONBLOCKING_UNUSED_MANIFEST_SNAPSHOT_STALE",
+      "reason": "Effective definition verifier uses manifest.modules source paths; inventory verifier compares schema/name/type. Test DB definition parity is verified separately for all 159 sources."
+    },
+    {
+      "name": "sp_Order_GetDetailByCustomer",
+      "source": "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "canonicalSHA256": "05f3018cbd1f761e7bd47de129d76696ee98bdfcfa7fe9e4656dca021db6d91b",
+      "embeddedSHA256": "569670b55f65b98bf94508683befffa35c86e2cf7ae3478eaa6428eeab1e9437",
+      "classification": "NONBLOCKING_UNUSED_MANIFEST_SNAPSHOT_STALE",
+      "reason": "Effective definition verifier uses manifest.modules source paths; inventory verifier compares schema/name/type. Test DB definition parity is verified separately for all 159 sources."
+    },
+    {
+      "name": "sp_User_UpdateProfile",
+      "source": "database/08_procedures/auth/sp_User_UpdateProfile.sql",
+      "canonicalSHA256": "9f1159578ea535236a2edcbef0b506f38570a3c736daa323cbe78cf019413190",
+      "embeddedSHA256": "2a03209c55d66fffeaef4f8f5852e216c115f55b95f24a142a057303445a96ce",
+      "classification": "NONBLOCKING_UNUSED_MANIFEST_SNAPSHOT_STALE",
+      "reason": "Effective definition verifier uses manifest.modules source paths; inventory verifier compares schema/name/type. Test DB definition parity is verified separately for all 159 sources."
+    },
+    {
+      "name": "usp_Admin_Pricing_Update",
+      "source": "database/08_procedures/admin/usp_Admin_Pricing_Update.sql",
+      "canonicalSHA256": "dea59e024ff8df1d2359d307e934439dfdceaf97966612190c82d50c28bf2ccd",
+      "embeddedSHA256": "fdcc0e4c43f689dee294321ee42edf2c6dfd8404a41146d676c75f1def16ac0b",
+      "classification": "NONBLOCKING_UNUSED_MANIFEST_SNAPSHOT_STALE",
+      "reason": "Effective definition verifier uses manifest.modules source paths; inventory verifier compares schema/name/type. Test DB definition parity is verified separately for all 159 sources."
+    }
+  ],
+  "resolvedIndexErrata": [
+    {
+      "caseId": "R6.4-r32-sql-precision-001",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/r32-sql/sql-tests.json",
+      "originalSelector": "precision/0",
+      "correctedJSONPointer": "/precision",
+      "classification": "INDEX_SELECTOR_CORRECTED_IN_R73_WITHOUT_OVERWRITING_R6",
+      "actualStatus": "PASS",
+      "sourceSHA256": "0b10af013311b8559110e83c13367548f4e2c64b76f5eb12199a4d99a3225a78"
+    },
+    {
+      "caseId": "R6.4-r32-sql-outerTransaction-001",
+      "artifact": "docs/evidence/r6-group-b/runs/2026-10-09T12-02-23-892Z-64ec76fa/r32-sql/sql-tests.json",
+      "originalSelector": "outerTransaction/0",
+      "correctedJSONPointer": "/outerTransaction",
+      "classification": "INDEX_SELECTOR_CORRECTED_IN_R73_WITHOUT_OVERWRITING_R6",
+      "actualStatus": "PASS",
+      "sourceSHA256": "0b10af013311b8559110e83c13367548f4e2c64b76f5eb12199a4d99a3225a78"
+    }
+  ],
+  "frontendHandoff": {
+    "status": "DEFER_TO_R8",
+    "gapCount": 43,
+    "backlog": "docs/R7_2_VERIFICATION_BACKLOG.md"
+  },
+  "productionEditsInR73": 0,
+  "SQLWritesInR73": 0,
+  "stressRerunsInR73": 0
+}

@@ -2,6 +2,7 @@ import { HttpError } from '../utils/httpError.js';
 import { sqlId } from '../utils/inputContract.js';
 
 const COMPLAINT_STATUSES = new Set(['Mới', 'Đang xử lý', 'Đã giải quyết', 'Đã đóng', 'Từ chối']);
+const COMPLAINT_PRIORITIES = new Set(['Thấp', 'Trung bình', 'Cao', 'Khẩn cấp']);
 // CK_XULY_KHIEUNAI_TrangThaiSauXuLy deliberately excludes the initial state.
 const PROCESSING_STATUSES = new Set(['Đang xử lý', 'Đã giải quyết', 'Đã đóng', 'Từ chối']);
 
@@ -33,13 +34,18 @@ function optionalText(value, field, maxLength) {
 export const complaintId = positiveId;
 
 export function listFilters(query = {}) {
-  assertOnlyFields(query, ['status', 'type', 'search'], 'UNKNOWN_QUERY_PARAMETER');
+  assertOnlyFields(query, ['status', 'type', 'search', 'priority'], 'UNKNOWN_QUERY_PARAMETER');
   const status = optionalText(query.status, 'status', 50);
   if (status && !COMPLAINT_STATUSES.has(status)) {
     throw new HttpError(400, 'INVALID_REQUEST', 'status is not supported.');
   }
+  const priority = optionalText(query.priority, 'priority', 50);
+  if (priority && !COMPLAINT_PRIORITIES.has(priority)) {
+    throw new HttpError(400, 'INVALID_PRIORITY', 'priority is not supported.');
+  }
   return {
     status,
+    priority,
     type: optionalText(query.type, 'type', 100),
     search: optionalText(query.search, 'search', 100),
   };

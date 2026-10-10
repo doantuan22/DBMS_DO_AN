@@ -32,6 +32,7 @@ export function mapAdminProcedureError(error) {
   if (error instanceof HttpError) throw error;
   const number = error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
   switch (number) {
+    case 50404: throw new HttpError(403, 'ROLE_CREATE_FORBIDDEN', 'Admin may create only Manager, Support or Admin accounts.');
     case 50403: throw new HttpError(404, 'USER_NOT_FOUND', 'User was not found.');
     case 50120: throw new HttpError(409, 'SHOWTIME_HAS_ORDERS', 'A showtime with order history cannot change its film, room, times, format or base price.');
     case 50123: throw new HttpError(409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED', 'Use the separate showtime cancellation operation.');

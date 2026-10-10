@@ -149,6 +149,7 @@ test('BUG-002: cinema image status must be in the whitelist for create and updat
 
 // SQL error number -> [HTTP status, error code] for every business error an admin procedure can throw.
 const ADMIN_ERROR_TABLE = {
+  50404: [403, 'ROLE_CREATE_FORBIDDEN'],
   50217: [409, 'ROOM_DELETE_CONFLICT'],
   50120: [409, 'SHOWTIME_HAS_ORDERS'], 50123: [409, 'SHOWTIME_CANCEL_ROUTE_REQUIRED'], 50216: [400, 'SHOWTIME_TIME_INVALID'],
   50400: [400, 'INVALID_BIRTH_DATE'], 50401: [409, 'ASSIGNMENT_DUPLICATE'], 50403: [404, 'USER_NOT_FOUND'],
@@ -288,6 +289,11 @@ test('writes that bypass write() still get constraint errors mapped', async () =
   await assert.rejects(service.createMovie(1, movie), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
   await assert.rejects(service.updateMovie(1, 1, { ...movie, status: 'Đang chiếu' }), (error) => error.status === 400 && error.code === 'INVALID_REFERENCE');
   await assert.rejects(createAdminService({ execute: async () => { throw { number: 2627 }; } }).createUser(1, { name: 'N', email: 'a@b.invalid', password: 'StrongPass1!', roleId: 2 }), (error) => error.status === 409 && error.code === 'DUPLICATE_RECORD');
+});
+
+test('Admin account role policy returns a safe forbidden response from SQL', async () => {
+  const service = createAdminService({ execute: async () => { throw { number: 50404 }; } });
+  await assert.rejects(service.createUser(1, { name: 'N', email: 'a@b.invalid', password: 'StrongPass1!', roleId: 2 }), { status: 403, code: 'ROLE_CREATE_FORBIDDEN' });
 });
 
 test('promotion validator: percent discounts are limited to (0, 99], fixed discounts only need to be positive', () => {

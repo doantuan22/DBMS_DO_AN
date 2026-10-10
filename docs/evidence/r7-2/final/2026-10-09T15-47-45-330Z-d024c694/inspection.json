@@ -1,0 +1,75 @@
+{
+  "baselineCommit": "9d68c6dbad0750de5ccb84eccbd6959dcf735845",
+  "decisions": {
+    "source": "User reply in this task on 2026-10-09",
+    "complaintPriority": "Bắt buộc thêm bộ lọc ưu tiên",
+    "adminCreateRoles": [
+      "QUAN_LY_RAP",
+      "CSKH",
+      "ADMIN"
+    ],
+    "dashboard": "Bốn số liệu hiện tại đủ cho R7.2"
+  },
+  "gaps": [
+    {
+      "gapId": "R71-DB-01",
+      "ucId": "KH-13",
+      "currentContract": "Eligible paid/completed order for started movie; authenticated Customer + DANH_GIA; rating integer 1–5; one review per movie/customer.",
+      "existingEvidence": "R55 SQL eligibility exists; current HTTP create201/public readback/permission/identity proof was missing.",
+      "inspectedChain": "sp_Review_Create; sp_Review_ListByMovie; review trigger; feedback validator/service/routes.",
+      "action": "TEST ONLY",
+      "newCaseCount": 12,
+      "result": "PASS"
+    },
+    {
+      "gapId": "R71-DB-02",
+      "ucId": "QLR-07",
+      "currentContract": "Current Manager assignment + QL_BANG_GIA; SQL pricing with three day types, inclusive date range/null end, overlap conflict.",
+      "existingEvidence": "R6 Manager list/PUT exists; POST201, create condition readback and current assignment/grant proof were missing.",
+      "inspectedChain": "Manager pricing List/Create/Update; fn_TinhGiaVe; overlap trigger; manager typed service/validator/routes.",
+      "action": "TEST ONLY",
+      "newCaseCount": 13,
+      "result": "PASS"
+    },
+    {
+      "gapId": "R71-DB-03",
+      "ucId": "QLR-08",
+      "currentContract": "Four approved current metrics, scoped to current assignment; UTC+7 business date; GET read-only.",
+      "existingEvidence": "Historical dashboard shape only; independent numeric/current scoped HTTP oracle was missing.",
+      "inspectedChain": "sp_Manager_Dashboard; manager service/controller; XEM_BAO_CAO_RAP.",
+      "action": "TEST ONLY",
+      "newCaseCount": 9,
+      "result": "PASS"
+    },
+    {
+      "gapId": "R71-DB-04",
+      "ucId": "QLR-09",
+      "currentContract": "Successful receipt snapshots by business payment date; inclusive filters/default; scoped Manager grant; GET read-only.",
+      "existingEvidence": "Historical empty response and Admin revenue evidence do not prove Manager behavior.",
+      "inspectedChain": "sp_Manager_Revenue; manager service/controller/date validator; persisted independent receipt ledger.",
+      "action": "TEST ONLY",
+      "newCaseCount": 17,
+      "result": "PASS"
+    },
+    {
+      "gapId": "R71-CT-01",
+      "ucId": "CSKH-02",
+      "currentContract": "Approved mandatory priority filter, AND status/type/search; official four priorities; SQL filtering and QL_KHIEUNAI.",
+      "existingEvidence": "R6 proves old filters only; required priority HTTP was400 before fix.",
+      "inspectedChain": "sp_Support_Complaint_List; supportValidator/list service; shared Admin complaint consumer.",
+      "action": "REPRODUCE → MINIMAL SQL/BE FIX → TARGETED REGRESSION",
+      "newCaseCount": 15,
+      "result": "PASS"
+    },
+    {
+      "gapId": "R71-CT-02",
+      "ucId": "ADM-02",
+      "currentContract": "Approved target role codes QUAN_LY_RAP/CSKH/ADMIN only; active Admin + QL_NGUOIDUNG; typed roleId.",
+      "existingEvidence": "R6 proves Manager create/status; pre-fix real HTTP created Customer + profile contrary to approved policy.",
+      "inspectedChain": "sp_Admin_User_Create/List/UpdateStatus; admin validator/service/controller/routes.",
+      "action": "REPRODUCE → MINIMAL SQL/BE FIX → TARGETED REGRESSION",
+      "newCaseCount": 17,
+      "result": "PASS"
+    }
+  ]
+}

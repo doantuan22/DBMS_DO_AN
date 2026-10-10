@@ -23,6 +23,8 @@ function rethrowMappedError(error) {
   if (error instanceof HttpError) throw error;
 
   switch (getSqlErrorNumber(error)) {
+    case 50405:
+      throw new HttpError(400, 'INVALID_PRIORITY', 'priority is not supported.');
     case 50030:
       throw new HttpError(404, 'ORDER_NOT_FOUND', 'Referenced order was not found.');
     case SQL_ERROR.SUPPORT_FORBIDDEN:
@@ -84,6 +86,7 @@ export function createSupportService({ execute = executeProcedure } = {}) {
         TrangThai: text(50, filters.status),
         LoaiKhieuNai: text(100, filters.type),
         SearchTerm: text(100, filters.search),
+        MucDoUuTien: text(50, filters.priority ?? null),
       });
       return getRows(result).map(mapComplaint);
     },

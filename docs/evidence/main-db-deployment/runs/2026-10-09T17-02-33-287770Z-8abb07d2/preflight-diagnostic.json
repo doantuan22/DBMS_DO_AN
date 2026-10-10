@@ -1,0 +1,17 @@
+{
+  "status": "RESOLVED_TOOLING_DIAGNOSTIC_BEFORE_DDL",
+  "at": "2026-10-09T17:04:41.472Z",
+  "observedInInitialReadOnlyProbe": {
+    "combinedMetadataBatch": {
+      "transactionCount": 0,
+      "xactState": 1
+    },
+    "standaloneXACT_STATE": 0,
+    "sessionOpenTransactionCount": 0,
+    "DMVUserTransactions": []
+  },
+  "cause": "XACT_STATE evaluated inside a metadata-reading batch observed its autocommit read transaction; not a leaked explicit/user transaction.",
+  "resolution": "Sample XACT_STATE in a standalone statement after the metadata/fingerprint batch and verify @@TRANCOUNT/session/DMVs. New verification tooling corrected; no production source changed.",
+  "deploymentAtThisPoint": "NOT_STARTED",
+  "businessWrites": 0
+}

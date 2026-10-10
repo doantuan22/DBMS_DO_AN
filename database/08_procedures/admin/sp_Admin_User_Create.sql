@@ -27,6 +27,11 @@ BEGIN
     DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
     BEGIN TRY
     IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminCreateUser;
+    -- R7.2 approved policy: internal Manager/CSKH/Admin accounts only.
+    -- Lock the role through insertion; an unknown role retains its existing FK contract.
+    IF EXISTS (SELECT 1 FROM dbo.VAITRO WITH (HOLDLOCK) WHERE VaiTroID = @VaiTroID
+               AND MaVaiTro NOT IN ('QUAN_LY_RAP', 'CSKH', 'ADMIN'))
+        THROW 50404, N'Admin chỉ được tạo tài khoản Manager, CSKH hoặc Admin.', 1;
     IF EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE Email = @Email)
     BEGIN
         ;THROW 50070, N'Email đã tồn tại.', 1;
@@ -36,9 +41,6 @@ BEGIN
     VALUES (@VaiTroID, @HoTen, @Email, @MatKhauHash, @SoDienThoai, dbo.fn_BayGio(), N'Hoạt động');
 
     DECLARE @NewUserID INT = SCOPE_IDENTITY();
-    IF EXISTS (SELECT 1 FROM dbo.VAITRO WITH (HOLDLOCK) WHERE VaiTroID = @VaiTroID AND MaVaiTro = 'KHACH_HANG')
-        INSERT dbo.HOSOKHACHHANG (NguoiDungID, NgaySinh, GioiTinh, DiemTichLuy)
-        VALUES (@NewUserID, NULL, NULL, 0);
 
     IF @OwnTran = 1 COMMIT TRANSACTION;
 

@@ -1,0 +1,1655 @@
+[
+  {
+    "sequence": 0,
+    "url": "http://127.0.0.1:53120/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T15:30:48.669Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 5,
+        "name": "Đoàn Anh Tuấn",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "KHACH_HANG",
+        "roleName": "Khách hàng",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 150,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T15:30:49.061Z"
+  },
+  {
+    "sequence": 1,
+    "url": "http://127.0.0.1:53120/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T15:30:49.061Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 2,
+        "name": "Nguyễn Văn Quản Lý 1",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "QUAN_LY_RAP",
+        "roleName": "Quản lý rạp",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          }
+        ],
+        "cinemaAssignments": [
+          {
+            "cinemaId": 1,
+            "name": "Cinema Star Hai Bà Trưng",
+            "city": "Hồ Chí Minh",
+            "assignmentStatus": "Hiệu lực"
+          }
+        ]
+      }
+    },
+    "completedAt": "2026-10-09T15:30:49.133Z"
+  },
+  {
+    "sequence": 2,
+    "url": "http://127.0.0.1:53120/api/auth/login",
+    "method": "POST",
+    "input": {
+      "Email": "[REDACTED]",
+      "MatKhau": "[REDACTED]"
+    },
+    "startedAt": "2026-10-09T15:30:49.134Z",
+    "status": 200,
+    "response": {
+      "token": "[REDACTED]",
+      "expiresIn": "1h",
+      "user": {
+        "userId": 1,
+        "name": "Quản trị viên Hệ thống",
+        "email": "[REDACTED]",
+        "phone": "[REDACTED]",
+        "createdAt": null,
+        "status": "Hoạt động",
+        "role": "ADMIN",
+        "roleName": "Quản trị viên",
+        "birthday": null,
+        "gender": null,
+        "loyaltyPoints": 0,
+        "permissions": [
+          {
+            "code": "XEM_PHIM",
+            "name": "Xem thông tin phim và lịch chiếu"
+          },
+          {
+            "code": "DAT_VE",
+            "name": "Đặt vé xem phim"
+          },
+          {
+            "code": "THANH_TOAN",
+            "name": "Thanh toán đơn hàng"
+          },
+          {
+            "code": "DANH_GIA",
+            "name": "Đánh giá phim đã xem"
+          },
+          {
+            "code": "GUI_KHIEU_NAI",
+            "name": "Gửi khiếu nại"
+          },
+          {
+            "code": "QL_PHONG",
+            "name": "Quản lý phòng chiếu rạp"
+          },
+          {
+            "code": "QL_GHE",
+            "name": "Quản lý sơ đồ ghế rạp"
+          },
+          {
+            "code": "QL_SUAT_CHIEU",
+            "name": "Quản lý suất chiếu rạp"
+          },
+          {
+            "code": "QL_BANG_GIA",
+            "name": "Cấu hình bảng giá rạp"
+          },
+          {
+            "code": "XEM_BAO_CAO_RAP",
+            "name": "Xem báo cáo doanh thu rạp"
+          },
+          {
+            "code": "QL_KHIEUNAI",
+            "name": "Xem danh sách khiếu nại"
+          },
+          {
+            "code": "XULY_KHIEUNAI",
+            "name": "Ghi nhận xử lý khiếu nại"
+          },
+          {
+            "code": "TRA_CUU_DON",
+            "name": "Tra cứu đơn tham chiếu"
+          },
+          {
+            "code": "QL_NGUOIDUNG",
+            "name": "Quản lý tài khoản"
+          },
+          {
+            "code": "QL_VAITRO",
+            "name": "Quản lý vai trò"
+          },
+          {
+            "code": "QL_QUYEN",
+            "name": "Quản lý quyền"
+          },
+          {
+            "code": "PHANCONG_RAP",
+            "name": "Phân công quản lý rạp"
+          },
+          {
+            "code": "QL_RAP",
+            "name": "Quản lý rạp chiếu phim"
+          },
+          {
+            "code": "QL_DANHMUC_PHIM",
+            "name": "Quản lý phim"
+          },
+          {
+            "code": "QL_THELOAI",
+            "name": "Quản lý thể loại"
+          },
+          {
+            "code": "QL_SANPHAM",
+            "name": "Quản lý sản phẩm đồ ăn"
+          },
+          {
+            "code": "QL_KHUYENMAI",
+            "name": "Quản lý khuyến mãi"
+          },
+          {
+            "code": "XEM_BAO_CAO_TOANHE",
+            "name": "Báo cáo doanh thu toàn hệ thống"
+          }
+        ],
+        "cinemaAssignments": []
+      }
+    },
+    "completedAt": "2026-10-09T15:30:49.201Z"
+  },
+  {
+    "sequence": 3,
+    "url": "http://127.0.0.1:53120/api/movies/5/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 5,
+      "content": "  R72 valid review  "
+    },
+    "startedAt": "2026-10-09T15:30:49.556Z",
+    "status": 201,
+    "response": {
+      "review": {
+        "id": 1,
+        "movieId": 5,
+        "rating": 5,
+        "content": "R72 valid review",
+        "createdAt": "2026-10-09T15:30:49.587Z"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:49.599Z"
+  },
+  {
+    "sequence": 4,
+    "url": "http://127.0.0.1:53120/api/movies/5/reviews",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:49.607Z",
+    "status": 200,
+    "response": {
+      "reviews": [
+        {
+          "id": 1,
+          "movieId": 5,
+          "reviewerName": "Đoàn Anh Tuấn",
+          "rating": 5,
+          "content": "R72 valid review",
+          "createdAt": "2026-10-09T15:30:49.587Z"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:49.614Z"
+  },
+  {
+    "sequence": 5,
+    "url": "http://127.0.0.1:53120/api/movies/6/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 4
+    },
+    "startedAt": "2026-10-09T15:30:50.117Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "REVIEW_NOT_ELIGIBLE",
+        "message": "Only customers who watched this movie may review it."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:50.124Z"
+  },
+  {
+    "sequence": 6,
+    "url": "http://127.0.0.1:53120/api/movies/6/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 4
+    },
+    "startedAt": "2026-10-09T15:30:50.302Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "REVIEW_NOT_ELIGIBLE",
+        "message": "Only customers who watched this movie may review it."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:50.309Z"
+  },
+  {
+    "sequence": 7,
+    "url": "http://127.0.0.1:53120/api/movies/6/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 4
+    },
+    "startedAt": "2026-10-09T15:30:50.483Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "REVIEW_NOT_ELIGIBLE",
+        "message": "Only customers who watched this movie may review it."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:50.489Z"
+  },
+  {
+    "sequence": 8,
+    "url": "http://127.0.0.1:53120/api/movies/7/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 4
+    },
+    "startedAt": "2026-10-09T15:30:50.748Z",
+    "status": 201,
+    "response": {
+      "review": {
+        "id": 5,
+        "movieId": 7,
+        "rating": 4,
+        "content": null,
+        "createdAt": "2026-10-09T15:30:50.752Z"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:50.754Z"
+  },
+  {
+    "sequence": 9,
+    "url": "http://127.0.0.1:53120/api/movies/7/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 5
+    },
+    "startedAt": "2026-10-09T15:30:50.835Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "REVIEW_ALREADY_EXISTS",
+        "message": "You have already reviewed this movie."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:50.841Z"
+  },
+  {
+    "sequence": 10,
+    "url": "http://127.0.0.1:53120/api/movies/8/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 0
+    },
+    "startedAt": "2026-10-09T15:30:51.176Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_RATING",
+        "message": "rating must be an integer from 1 to 5."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:51.180Z"
+  },
+  {
+    "sequence": 11,
+    "url": "http://127.0.0.1:53120/api/movies/8/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 6
+    },
+    "startedAt": "2026-10-09T15:30:51.344Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_RATING",
+        "message": "rating must be an integer from 1 to 5."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:51.347Z"
+  },
+  {
+    "sequence": 12,
+    "url": "http://127.0.0.1:53120/api/movies/8/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 1.5
+    },
+    "startedAt": "2026-10-09T15:30:51.515Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_RATING",
+        "message": "rating must be an integer from 1 to 5."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:51.519Z"
+  },
+  {
+    "sequence": 13,
+    "url": "http://127.0.0.1:53120/api/movies/8/reviews",
+    "method": "POST",
+    "input": {
+      "rating": "5"
+    },
+    "startedAt": "2026-10-09T15:30:51.698Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_RATING",
+        "message": "rating must be an integer from 1 to 5."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:51.702Z"
+  },
+  {
+    "sequence": 14,
+    "url": "http://127.0.0.1:53120/api/movies/9/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 5
+    },
+    "startedAt": "2026-10-09T15:30:52.058Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:52.061Z"
+  },
+  {
+    "sequence": 15,
+    "url": "http://127.0.0.1:53120/api/movies/10/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 5
+    },
+    "startedAt": "2026-10-09T15:30:52.419Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "CUSTOMER_REQUIRED",
+        "message": "Booking is available to customer accounts only."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:52.444Z"
+  },
+  {
+    "sequence": 16,
+    "url": "http://127.0.0.1:53120/api/movies/10/reviews",
+    "method": "POST",
+    "input": {
+      "rating": 5,
+      "userId": 2
+    },
+    "startedAt": "2026-10-09T15:30:52.619Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "UNKNOWN_REQUEST_FIELD",
+        "message": "Request contains unsupported fields."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:52.623Z"
+  },
+  {
+    "sequence": 17,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/10/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:53.007Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 8,
+        "cinemaId": 10,
+        "seatType": "Thường",
+        "dayType": "Tất cả",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:53.052Z"
+  },
+  {
+    "sequence": 18,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/10/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:53.057Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "id": 8,
+          "cinemaId": 10,
+          "seatType": "Thường",
+          "dayType": "Tất cả",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:53.072Z"
+  },
+  {
+    "sequence": 19,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/11/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:53.373Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 9,
+        "cinemaId": 11,
+        "seatType": "Thường",
+        "dayType": "Tất cả",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:53.381Z"
+  },
+  {
+    "sequence": 20,
+    "url": "http://127.0.0.1:53120/api/manager/pricing/9",
+    "method": "PUT",
+    "input": {
+      "seatType": "VIP",
+      "dayType": "Ngày thường",
+      "format": "3D",
+      "surcharge": 10.1,
+      "startsOn": "2026-10-19",
+      "endsOn": "2026-10-19",
+      "status": "Tạm dừng"
+    },
+    "startedAt": "2026-10-09T15:30:53.471Z",
+    "status": 200,
+    "response": {
+      "pricing": {
+        "id": 9,
+        "cinemaId": 11,
+        "seatType": "VIP",
+        "dayType": "Ngày thường",
+        "format": "3D",
+        "surcharge": 10.1,
+        "startsOn": "2026-10-19",
+        "endsOn": "2026-10-19",
+        "status": "Tạm dừng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:53.493Z"
+  },
+  {
+    "sequence": 21,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/11/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:53.495Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "id": 9,
+          "cinemaId": 11,
+          "seatType": "VIP",
+          "dayType": "Ngày thường",
+          "format": "3D",
+          "surcharge": 10.1,
+          "startsOn": "2026-10-19",
+          "endsOn": "2026-10-19",
+          "status": "Tạm dừng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:53.501Z"
+  },
+  {
+    "sequence": 22,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Ngày thường",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:53.858Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 10,
+        "cinemaId": 12,
+        "seatType": "Thường",
+        "dayType": "Ngày thường",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:53.864Z"
+  },
+  {
+    "sequence": 23,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:53.866Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "id": 10,
+          "cinemaId": 12,
+          "seatType": "Thường",
+          "dayType": "Ngày thường",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:53.871Z"
+  },
+  {
+    "sequence": 24,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Cuối tuần",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:54.031Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 11,
+        "cinemaId": 12,
+        "seatType": "Thường",
+        "dayType": "Cuối tuần",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:54.038Z"
+  },
+  {
+    "sequence": 25,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:54.040Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "id": 11,
+          "cinemaId": 12,
+          "seatType": "Thường",
+          "dayType": "Cuối tuần",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        },
+        {
+          "id": 10,
+          "cinemaId": 12,
+          "seatType": "Thường",
+          "dayType": "Ngày thường",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:54.045Z"
+  },
+  {
+    "sequence": 26,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:54.203Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 12,
+        "cinemaId": 12,
+        "seatType": "Thường",
+        "dayType": "Tất cả",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:54.210Z"
+  },
+  {
+    "sequence": 27,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:54.212Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "id": 11,
+          "cinemaId": 12,
+          "seatType": "Thường",
+          "dayType": "Cuối tuần",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        },
+        {
+          "id": 10,
+          "cinemaId": 12,
+          "seatType": "Thường",
+          "dayType": "Ngày thường",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        },
+        {
+          "id": 12,
+          "cinemaId": 12,
+          "seatType": "Thường",
+          "dayType": "Tất cả",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:54.216Z"
+  },
+  {
+    "sequence": 28,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/12/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Ngày lễ",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:54.378Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "dayType is not supported by the database contract."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:54.382Z"
+  },
+  {
+    "sequence": 29,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/13/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": "2026-10-19"
+    },
+    "startedAt": "2026-10-09T15:30:54.639Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 13,
+        "cinemaId": 13,
+        "seatType": "Thường",
+        "dayType": "Tất cả",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": "2026-10-19",
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:54.646Z"
+  },
+  {
+    "sequence": 30,
+    "url": "http://127.0.0.1:53120/api/manager/pricing/13",
+    "method": "PUT",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null,
+      "status": "Áp dụng"
+    },
+    "startedAt": "2026-10-09T15:30:54.730Z",
+    "status": 200,
+    "response": {
+      "pricing": {
+        "id": 13,
+        "cinemaId": 13,
+        "seatType": "Thường",
+        "dayType": "Tất cả",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:54.737Z"
+  },
+  {
+    "sequence": 31,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/13/pricing",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:54.739Z",
+    "status": 200,
+    "response": {
+      "pricing": [
+        {
+          "id": 13,
+          "cinemaId": 13,
+          "seatType": "Thường",
+          "dayType": "Tất cả",
+          "format": "2D",
+          "surcharge": 20.25,
+          "startsOn": "2026-10-19",
+          "endsOn": null,
+          "status": "Áp dụng"
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:54.743Z"
+  },
+  {
+    "sequence": 32,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/14/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:55.024Z",
+    "status": 201,
+    "response": {
+      "pricing": {
+        "id": 14,
+        "cinemaId": 14,
+        "seatType": "Thường",
+        "dayType": "Tất cả",
+        "format": "2D",
+        "surcharge": 20.25,
+        "startsOn": "2026-10-19",
+        "endsOn": null,
+        "status": "Áp dụng"
+      }
+    },
+    "completedAt": "2026-10-09T15:30:55.030Z"
+  },
+  {
+    "sequence": 33,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/14/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:55.121Z",
+    "status": 409,
+    "response": {
+      "error": {
+        "code": "PRICING_OVERLAP",
+        "message": "An active pricing rule with the same conditions already covers part of this period."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:55.128Z"
+  },
+  {
+    "sequence": 34,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/15/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:55.492Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:55.497Z"
+  },
+  {
+    "sequence": 35,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/16/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:55.837Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:55.842Z"
+  },
+  {
+    "sequence": 36,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/16/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:56.007Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:56.012Z"
+  },
+  {
+    "sequence": 37,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/17/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:56.391Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:56.399Z"
+  },
+  {
+    "sequence": 38,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/17/pricing",
+    "method": "POST",
+    "input": {
+      "seatType": "Thường",
+      "dayType": "Tất cả",
+      "format": "2D",
+      "surcharge": 20.25,
+      "startsOn": "2026-10-19",
+      "endsOn": null
+    },
+    "startedAt": "2026-10-09T15:30:56.571Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_REQUIRED",
+        "message": "Manager access is required."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:56.574Z"
+  },
+  {
+    "sequence": 39,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/18/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:56.986Z",
+    "status": 200,
+    "response": {
+      "dashboard": {
+        "cinemaId": 18,
+        "cinemaName": "R21 API",
+        "city": "HCM",
+        "activeRooms": 1,
+        "activeSeats": 9,
+        "showtimesToday": 2,
+        "paidOrdersToday": 3
+      }
+    },
+    "completedAt": "2026-10-09T15:30:57.024Z"
+  },
+  {
+    "sequence": 40,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/19/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:57.410Z",
+    "status": 200,
+    "response": {
+      "dashboard": {
+        "cinemaId": 19,
+        "cinemaName": "R21 API",
+        "city": "HCM",
+        "activeRooms": 1,
+        "activeSeats": 9,
+        "showtimesToday": 2,
+        "paidOrdersToday": 3
+      }
+    },
+    "completedAt": "2026-10-09T15:30:57.417Z"
+  },
+  {
+    "sequence": 41,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/20/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:57.598Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:57.603Z"
+  },
+  {
+    "sequence": 42,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/21/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:57.997Z",
+    "status": 200,
+    "response": {
+      "dashboard": {
+        "cinemaId": 21,
+        "cinemaName": "R21 API",
+        "city": "HCM",
+        "activeRooms": 1,
+        "activeSeats": 9,
+        "showtimesToday": 2,
+        "paidOrdersToday": 3
+      }
+    },
+    "completedAt": "2026-10-09T15:30:58.003Z"
+  },
+  {
+    "sequence": 43,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/22/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:58.368Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:58.373Z"
+  },
+  {
+    "sequence": 44,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/22/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:58.535Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:58.539Z"
+  },
+  {
+    "sequence": 45,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/23/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:58.895Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:58.899Z"
+  },
+  {
+    "sequence": 46,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/23/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:59.065Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_REQUIRED",
+        "message": "Manager access is required."
+      }
+    },
+    "completedAt": "2026-10-09T15:30:59.068Z"
+  },
+  {
+    "sequence": 47,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/24/dashboard",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:59.419Z",
+    "status": 200,
+    "response": {
+      "dashboard": {
+        "cinemaId": 24,
+        "cinemaName": "R21 API",
+        "city": "HCM",
+        "activeRooms": 1,
+        "activeSeats": 9,
+        "showtimesToday": 2,
+        "paidOrdersToday": 3
+      }
+    },
+    "completedAt": "2026-10-09T15:30:59.425Z"
+  },
+  {
+    "sequence": 48,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/25/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:30:59.793Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-10",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        },
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        },
+        {
+          "date": "2026-10-08",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:30:59.825Z"
+  },
+  {
+    "sequence": 49,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/26/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:00.201Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-10",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        },
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        },
+        {
+          "date": "2026-10-08",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:00.206Z"
+  },
+  {
+    "sequence": 50,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/27/revenue?fromDate=2026-10-08&toDate=2026-10-09",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:00.562Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        },
+        {
+          "date": "2026-10-08",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:00.567Z"
+  },
+  {
+    "sequence": 51,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/27/revenue?fromDate=2026-10-09&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:00.726Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-10",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        },
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:00.732Z"
+  },
+  {
+    "sequence": 52,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/27/revenue?fromDate=2026-10-09&toDate=2026-10-09",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:00.887Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:00.893Z"
+  },
+  {
+    "sequence": 53,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/27/revenue",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:01.056Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        },
+        {
+          "date": "2026-10-08",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:01.062Z"
+  },
+  {
+    "sequence": 54,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/28/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:01.436Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-10",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        },
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        },
+        {
+          "date": "2026-10-08",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:01.442Z"
+  },
+  {
+    "sequence": 55,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/29/revenue",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:01.608Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:01.613Z"
+  },
+  {
+    "sequence": 56,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/30/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:01.971Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:01.975Z"
+  },
+  {
+    "sequence": 57,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/30/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:02.132Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_CINEMA_FORBIDDEN",
+        "message": "You are not assigned to this cinema."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:02.138Z"
+  },
+  {
+    "sequence": 58,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/31/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:02.495Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "FORBIDDEN",
+        "message": "You do not have permission to perform this action."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:02.499Z"
+  },
+  {
+    "sequence": 59,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/31/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:02.656Z",
+    "status": 403,
+    "response": {
+      "error": {
+        "code": "MANAGER_REQUIRED",
+        "message": "Manager access is required."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:02.659Z"
+  },
+  {
+    "sequence": 60,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/32/revenue?fromDate=not-a-date",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:03.006Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "fromDate must be YYYY-MM-DD."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:03.009Z"
+  },
+  {
+    "sequence": 61,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/32/revenue?fromDate=2026-10-10&toDate=2026-10-08",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:03.165Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "INVALID_REQUEST",
+        "message": "fromDate must not be after toDate."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:03.169Z"
+  },
+  {
+    "sequence": 62,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/32/revenue?actorId=999",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:03.331Z",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": "UNKNOWN_QUERY_PARAMETER",
+        "message": "Request contains unsupported query parameters."
+      }
+    },
+    "completedAt": "2026-10-09T15:31:03.336Z"
+  },
+  {
+    "sequence": 63,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/32/revenue?fromDate=2000-01-01&toDate=2000-01-02",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:03.502Z",
+    "status": 200,
+    "response": {
+      "revenue": []
+    },
+    "completedAt": "2026-10-09T15:31:03.508Z"
+  },
+  {
+    "sequence": 64,
+    "url": "http://127.0.0.1:53120/api/manager/cinemas/33/revenue?fromDate=2026-10-08&toDate=2026-10-10",
+    "method": "GET",
+    "input": null,
+    "startedAt": "2026-10-09T15:31:03.895Z",
+    "status": 200,
+    "response": {
+      "revenue": [
+        {
+          "date": "2026-10-10",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        },
+        {
+          "date": "2026-10-09",
+          "orderCount": 3,
+          "ticketCount": 2,
+          "ticketRevenue": 300.3,
+          "productRevenue": 75.75,
+          "discount": 15.15,
+          "totalRevenue": 360.9
+        },
+        {
+          "date": "2026-10-08",
+          "orderCount": 1,
+          "ticketCount": 1,
+          "ticketRevenue": 100.1,
+          "productRevenue": 25.25,
+          "discount": 5.05,
+          "totalRevenue": 120.3
+        }
+      ]
+    },
+    "completedAt": "2026-10-09T15:31:03.900Z"
+  }
+]

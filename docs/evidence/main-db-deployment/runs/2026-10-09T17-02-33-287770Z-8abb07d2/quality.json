@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-09T17:22:39.994360+00:00",
+  "deploymentID": "2026-10-09T17-02-33-287770Z-8abb07d2",
+  "preservedOriginalFiles": 2243,
+  "changedOriginalFiles": 0,
+  "productionSourceChanges": 0,
+  "oldEvidenceChanges": 0,
+  "testedSourceHashesVerified": 262,
+  "R73ArtifactHashesVerified": 12,
+  "canonicalParity": "159/159",
+  "changedMainModules": [
+    "sp_Admin_User_Create",
+    "sp_Support_Complaint_List"
+  ],
+  "businessTablesPreserved": 27,
+  "identityCountersUnchanged": true,
+  "mainMutationFixtures": 0,
+  "mainProbeCases": 14,
+  "mainHTTPBrowser": "NOT_RUN",
+  "emptyQueueEvidence": "10 reads; nonempty filter evidence remains Test DB",
+  "backendTests": {
+    "tests": 192,
+    "pass": 192,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "noSQL": "PASS",
+  "typedContracts": "PASS",
+  "backupVerificationMethod": "SQL_SERVER_RESTORE_VERIFYONLY_WITH_CHECKSUM_AND_HEADERONLY",
+  "fullBackupVerification": "PASS",
+  "agentBackupFilesystemAccess": "ACCESS_DENIED_BY_OS_ACL",
+  "fullBackupFileSHA256": "NOT_COMPUTED",
+  "privateRollbackFiles": [
+    {
+      "name": "sp_Admin_User_Create",
+      "file": "C:\\Users\\Admin\\AppData\\Local\\Temp\\cinema-r72-main-2026-10-09T17-02-33-287770Z-8abb07d2-PNgLVV\\sp_Admin_User_Create.rollback.sql",
+      "sha256": "85d3c0671c826b14cabde2a5065cb910bebb51bf7859c610199fd774c9baa8b0",
+      "parseOnly": "PASS"
+    },
+    {
+      "name": "sp_Support_Complaint_List",
+      "file": "C:\\Users\\Admin\\AppData\\Local\\Temp\\cinema-r72-main-2026-10-09T17-02-33-287770Z-8abb07d2-PNgLVV\\sp_Support_Complaint_List.rollback.sql",
+      "sha256": "2d83d44c32a5137d882ff43763242078e39eee558024dbc17f1c26dd016385f4",
+      "parseOnly": "PASS"
+    }
+  ],
+  "rollbackExecuted": false,
+  "markdownLinksChecked": 35,
+  "JSONSelectorsChecked": 26,
+  "brokenLinks": [],
+  "gitDiffCheck": "PASS",
+  "toolingSyntax": "PASS",
+  "finalSession": {
+    "transactionCount": 0,
+    "spid": 53,
+    "xactState": 0
+  },
+  "artifacts": {
+    "database/deployments/r7-2-main/check-quality.py": "edf146d748ddd20fedbb11b399e7f8383fea3c2f67ed5d4c758bfbbba5bf659c",
+    "database/deployments/r7-2-main/deploy.mjs": "37d868fc97c0fb315ccc6fcf668f4ffeca839953966ad78304a508c8aee26a5d",
+    "database/deployments/r7-2-main/PLAN.md": "8504feb3ab9b7dacf1477565eb8320d1e62db5b71940bebf80560ef65d2bfd1e",
+    "database/deployments/r7-2-main/README.md": "1677d960dc004fdf1b2d96bbb65fb9a88f1ef7e818b68797f2f9fe02e36a8887",
+    "database/deployments/r7-2-main/verify.mjs": "4289a6ea4317689f350db5496d1c2163cf92c2ba5f84814ff3c25553136b9af7",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/applied-before-commit.json": "b1e0ddc751272c20c138b1de3382580f48bf6342d5d76c920c9abd9758d57858",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backend-compatibility.json": "e80ed8857e2c2eaefe2d9952a606f56ed1d3b701c41e39f5b921edd8efa7cc37",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backend-contract-check.json": "b6ad0239ff8c49bb5f3bbab0b604721612a42a852b3d87b9c3badb47ac024fe4",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backend-regression.log": "6c7577f8cc5ecc49c9c3a7fd2168b2236e55e9cc68074a0efd87831ab9742eac",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/backup.json": "b1b9b5c87542fef5a48547bdca43978f59250d7692cd552d513862504d90b0e5",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/before-atomic.json": "f02ff82f86e8bec568cce61eae238ee902c7bac3fbba1c4bbdd9ebe60973375f",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/execution-preflight.json": "17e8444bbf7aea2106f9b5de903e0d4af4b933e581b74a938b128a389bcfcd8f",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/final-state.json": "d2016a43f6a4f3e891679af7e224b5c20165c375a5fb5c669e12a9a43e362a66",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/no-sql.log": "3895f2155ac843321a91e56d190c719ca7c9bf4628914759a84be7c962e56510",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/postdeploy.json": "6d40afcaaa750ce3732494cf2f5eb8375bc334452b849a9a77350e3cb40075cb",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/preflight-diagnostic.json": "867eaa6eddcb1a2c21164fa22c8d59eb28be364b7daab9e424fe032127d2ab6f",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/preflight.json": "876e505e41a16b807a16169e4ccbb5c5e5a508d02f37848e34cc662efc6954d7",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/repository-before.json": "7c22baaddc4f5cb582c027bbb683ee2861e9b832a90b83625e4c47f739698a8f",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/result.json": "a33e6559ec0112afb3288a2a7db2adb008dbd943a975a6903687a03209874dbc",
+    "docs/evidence/main-db-deployment/runs/2026-10-09T17-02-33-287770Z-8abb07d2/typed-contracts.log": "3c78721d25755091951911b52193a52db7d0bff33c40f742e98c230f8908e265",
+    "docs/MAIN_DATABASE_SYNC_REPORT.md": "99882e7f7d2069c13d0e87ea6f719e88783c653fb1e883336ccd2fcf195d1d5f"
+  },
+  "sealExcludesSelf": true
+}
