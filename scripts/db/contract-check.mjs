@@ -143,8 +143,7 @@ for (const [area, service] of Object.entries(services))
       if (method === 'updateCinemaImage') args = [1, 1, input];
       if (method === 'deleteCinemaImage') args = [1, 1];
       if (method === 'setCinemaImageCover') args = [1, 1, true];
-      if (method === 'setRolePermissions') args = [1, [1]];
-      if (method === 'rolePermissions' || method === 'cinemaImages') args = [1];
+      if (method === 'cinemaImages') args = [1];
       if (method === 'setMovieActors') args = [1, [{ actorId: 1, role: 'AUDIT' }]];
       if (method === 'setUserStatus') args = [1, 'Hoạt động'];
       args.unshift(1);

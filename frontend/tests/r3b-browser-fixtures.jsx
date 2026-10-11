@@ -26,7 +26,6 @@ export async function testR3BPages() {
     else if(route==='/api/manager/cinemas')data={cinemas:liveUser?.role==='QUAN_LY_RAP'&&liveUser.cinemaAssignments?.length===0?[]:[{id:1,name:'Fixture',city:'Test'}]};
     else if(route==='/api/admin/cinemas')data={cinemas:[{RapID:1,TenRap:'Fixture'}]};
     else if(route.startsWith('/api/admin/cinemas/'))data={images:[{HinhAnhRapID:1,URL:'/favicon.svg',TrangThai:'Hoạt động'}]};
-    else if(route.startsWith('/api/admin/permissions'))data={permissions:[{QuyenID:1,MaQuyen:'QL_QUYEN'}]};
     else if(route==='/api/admin/users')data={users:[]};
     else if(route==='/api/admin/reports/revenue')data={cinemas:[],totals:{}};
     else if(route==='/api/admin/dashboard')data={dashboard:{TongRap:1}};
@@ -58,11 +57,14 @@ export async function testR3BPages() {
       check('Manager skips unauthorized reads '+permission,!calls.some(c=>forbiddenReads.some(part=>c.route.endsWith('/'+part))));
       if(permission==='QL_GHE'){const input=container.querySelector('[aria-label="Mã phòng xem ghế"]');const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;setter.call(input,'1');input.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,30));button('Tải ghế').click();await wait(()=>button('Tạo ghế'));check('seat-only workflow without QL_PHONG',calls.some(c=>c.route==='/api/manager/rooms/1/seats'));}
     }
-    for(const [permission,present,absent,route] of [['XEM_BAO_CAO_TOANHE','Doanh thu','Tài khoản','/api/admin/dashboard'],['QL_NGUOIDUNG','Tài khoản','Doanh thu','/api/admin/users'],['QL_QUYEN','Lưu quyền vai trò','Tài khoản','/api/admin/permissions']]){
+    for(const [permission,present,absent,route] of [['XEM_BAO_CAO_TOANHE','Doanh thu','Tài khoản','/api/admin/dashboard'],['QL_NGUOIDUNG','Tài khoản','Doanh thu','/api/admin/users']]){
       calls.length=0;render(actor('ADMIN',[permission]),React.createElement(Admin));await wait(()=>calls.some(c=>c.route===route)&&!container.textContent.includes('Đang tải dữ liệu'));
       await wait(()=>button(present));
       check('Admin partial '+permission,Boolean(button(present))&&!button(absent));check('Admin skips unauthorized default dashboard '+permission,permission==='XEM_BAO_CAO_TOANHE'||!calls.some(c=>c.route==='/api/admin/dashboard'));
     }
+    calls.length=0;render(actor('ADMIN',['QL_QUYEN','QL_VAITRO']),React.createElement(Admin));
+    await wait(()=>container.textContent.includes('Bạn chưa được cấp quyền quản trị chức năng nào.'));
+    check('Retired grants expose no workflow or reads',!button('Vai trò')&&!button('Quyền')&&!button('Lưu quyền vai trò')&&calls.length===0);
     for(const codes of [['QL_KHIEUNAI'],['QL_KHIEUNAI','XULY_KHIEUNAI'],['QL_KHIEUNAI','TRA_CUU_DON']]){
       calls.length=0;render(actor('CSKH',codes),React.createElement(Support));await wait(()=>container.textContent.includes('#1 · RBAC fixture'));
       [...container.querySelectorAll('button')].find(b=>b.textContent.includes('#1 · RBAC fixture')).click();await wait(()=>container.textContent.includes('Timeline xử lý'));

@@ -52,6 +52,10 @@ export function mapAdminProcedureError(error) {
   if (error instanceof HttpError) throw error;
   const number = error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
   switch (number) {
+    case 50405:
+      throw new HttpError(403, 'RBAC_FIXED', 'Roles and permissions are fixed and cannot be changed.');
+    case 50406:
+      throw new HttpError(403, 'USER_ROLE_IMMUTABLE', 'An existing account role cannot be changed.');
     case 50404:
       throw new HttpError(
         403,
@@ -289,9 +293,6 @@ export function createAdminService({
     async roles(actorId) {
       return rows(await executeFor(actorId, 'ADMIN_ROLE_LIST'));
     },
-    async permissions(actorId) {
-      return rows(await executeFor(actorId, 'ADMIN_PERMISSION_LIST'));
-    },
     async assignments(actorId, filters = {}) {
       return rows(
         await executeFor(actorId, 'ADMIN_ASSIGNMENT_LIST', {
@@ -356,57 +357,6 @@ export function createAdminService({
         NguoiDungID: int(userId),
         TrangThai: text(50, status),
       });
-    },
-    async createRole(actorId, input) {
-      return this.write(actorId, 'ADMIN_ROLE_CREATE', {
-        MaVaiTro: { type: DbTypes.VarChar(50), value: input.code },
-        TenVaiTro: text(100, input.name),
-        MoTa: text(255, input.description),
-      });
-    },
-    async updateRole(actorId, id, input) {
-      return this.write(actorId, 'ADMIN_ROLE_UPDATE', {
-        VaiTroID: int(id),
-        TenVaiTro: text(100, input.name),
-        MoTa: text(255, input.description),
-      });
-    },
-    async deleteRole(actorId, id) {
-      return this.write(actorId, 'ADMIN_ROLE_DELETE', { VaiTroID: int(id) });
-    },
-    async createPermission(actorId, input) {
-      return this.write(actorId, 'ADMIN_PERMISSION_CREATE', {
-        MaQuyen: { type: DbTypes.VarChar(50), value: input.code },
-        TenQuyen: text(100, input.name),
-        MoTa: text(255, input.description),
-      });
-    },
-    async updatePermission(actorId, id, input) {
-      return this.write(actorId, 'ADMIN_PERMISSION_UPDATE', {
-        QuyenID: int(id),
-        TenQuyen: text(100, input.name),
-        MoTa: text(255, input.description),
-      });
-    },
-    async deletePermission(actorId, id) {
-      return this.write(actorId, 'ADMIN_PERMISSION_DELETE', { QuyenID: int(id) });
-    },
-    async setRolePermissions(actorId, roleId, permissionIds) {
-      try {
-        return rows(
-          await executeFor(actorId, 'ADMIN_ROLE_PERMISSION_SET', {
-            VaiTroID: int(roleId),
-            QuyenIdList: { type: DbTypes.VarChar(DbTypes.MAX), value: permissionIds.join(',') },
-          }),
-        );
-      } catch (error) {
-        mapAdminProcedureError(error);
-      }
-    },
-    async rolePermissions(actorId, roleId) {
-      return rows(
-        await executeFor(actorId, 'ADMIN_ROLE_PERMISSION_LIST', { VaiTroID: int(roleId) }),
-      );
     },
     async createAssignment(actorId, input) {
       return this.write(actorId, 'ADMIN_ASSIGNMENT_CREATE', {

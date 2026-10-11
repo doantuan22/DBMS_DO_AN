@@ -16,3 +16,13 @@ Suite dùng `node:test` hiện có. Dữ liệu kiểm thử nằm trong test/so
 The R4.1 clean-clone replay runner has been retired with the phase tooling.
 Run the maintained backend unit/contract suite with `npm test` from `backend`; the
 recorded R4.1 acceptance result is historical and is not a replay command.
+
+## Fixed RBAC integration (11 October 2026)
+
+From the repository root, against an explicitly selected disposable database already built and seeded from canonical source:
+
+```powershell
+node scripts/db/fixed-rbac-smoke.mjs --database=CinemaBookingDB_R0_FIXED_RBAC_20261011
+```
+
+This is real HTTP/SP/SQL integration, separate from `npm test`: four-role login and authorization, rejected legacy RBAC writes, immutable account roles, allowed account creation, Manager assignment/transfer and immediate scope enforcement with the original JWT. The runner validates the test target, applies the fixed RBAC migration there, and writes evidence under ignored `.audit-output/`. Never point integration or fixture runners at Main. The Backend runs native ESM and has no package build/lint scripts; use `node --check` for syntax and the existing Oxlint executable for lint without adding dependencies. Current executed results and deployment limitations are in [FINAL_SYSTEM_AUDIT.md](../docs/FINAL_SYSTEM_AUDIT.md).

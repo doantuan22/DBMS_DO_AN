@@ -14,7 +14,7 @@ INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID) VALUES
 INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID) VALUES
 (3, 1), (3, 11), (3, 12), (3, 13);
 
--- Admin: mọi quyền hiện hành trong baseline 16 Use Case.
+-- Admin: giữ 23 mã quyền/mapping lịch sử; ADM-03/04/05 RETIRED, còn 13 UC hoạt động.
 INSERT INTO dbo.VAITRO_QUYEN (VaiTroID, QuyenID)
 SELECT 1, QuyenID FROM dbo.QUYEN;
 -- Seed fixture timestamp is fixed by SeedDate, rather than wall-clock timing.

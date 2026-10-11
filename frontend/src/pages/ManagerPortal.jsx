@@ -181,7 +181,7 @@ function ManagerWorkspace({ cinemaId, user }) {
               <ErrorState key={name} error={section.error} onRetry={load} />
             ))}
           {can('XEM_BAO_CAO_RAP') && data.sections.dashboard?.status === 'success' && (
-            <section className="catalog-section">
+            <section className="catalog-section" id="manager-overview">
               <h2>Dashboard</h2>
               <p>
                 Phòng hoạt động: {data.sections.dashboard.data.dashboard?.activeRooms ?? 0} · Ghế:{' '}
@@ -192,7 +192,7 @@ function ManagerWorkspace({ cinemaId, user }) {
             </section>
           )}
           {can('QL_PHONG') && (
-            <section className="catalog-section" aria-label="Phòng chiếu">
+            <section className="catalog-section" aria-label="Phòng chiếu" id="manager-rooms">
               <h2>Phòng chiếu</h2>
               {form('room', (body) => api.createRoom(cinemaId, body), api.updateRoom)}
               {data.sections.rooms?.status === 'success' &&
@@ -234,7 +234,7 @@ function ManagerWorkspace({ cinemaId, user }) {
             </section>
           )}
           {can('QL_GHE') && (
-            <section className="catalog-section" aria-label="Ghế">
+            <section className="catalog-section" aria-label="Ghế" id="manager-seats">
               <h2>Ghế {seats.roomId ? `phòng #${seats.roomId}` : ''}</h2>
               <label>
                 Mã phòng
@@ -288,7 +288,7 @@ function ManagerWorkspace({ cinemaId, user }) {
             </section>
           )}
           {can('QL_SUAT_CHIEU') && (
-            <section className="catalog-section" aria-label="Suất chiếu">
+            <section className="catalog-section" aria-label="Suất chiếu" id="manager-showtimes">
               <h2>Suất chiếu</h2>
               {form('showtime', api.createManagerShowtime, api.updateManagerShowtime)}
               {data.sections.showtimes?.status === 'success' &&
@@ -327,7 +327,7 @@ function ManagerWorkspace({ cinemaId, user }) {
             </section>
           )}
           {can('QL_BANG_GIA') && (
-            <section className="catalog-section" aria-label="Bảng giá">
+            <section className="catalog-section" aria-label="Bảng giá" id="manager-pricing">
               <h2>Bảng giá</h2>
               {form('pricing', (body) => api.createPricing(cinemaId, body), api.updatePricing)}
               <label>
@@ -371,7 +371,11 @@ function ManagerWorkspace({ cinemaId, user }) {
           )}
         </>
       )}
-      {can('XEM_BAO_CAO_RAP') && <ManagerRevenue cinemaId={cinemaId} refresh={refresh} />}
+      {can('XEM_BAO_CAO_RAP') && (
+        <div id="manager-revenue">
+          <ManagerRevenue cinemaId={cinemaId} refresh={refresh} />
+        </div>
+      )}
     </>
   );
 }

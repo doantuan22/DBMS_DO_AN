@@ -139,7 +139,7 @@ function SupportWorkspace() {
   };
 
   return (
-    <section className="catalog-page">
+    <section className="catalog-page" id="support-queue">
       <p className="catalog-eyebrow">CHĂM SÓC KHÁCH HÀNG</p>
       <h1>CSKH Portal</h1>
       <form

@@ -19,7 +19,11 @@ const STATUS_VARIANTS = {
   'Từ chối': 'danger',
 };
 
-export default function StatusBadge({ status }) {
+export default function StatusBadge({ status, className = '' }) {
   if (!status) return null;
-  return <span className={`badge badge--${STATUS_VARIANTS[status] ?? 'muted'}`}>{status}</span>;
+  return (
+    <span className={['badge', `badge--${STATUS_VARIANTS[status] ?? 'muted'}`, className].filter(Boolean).join(' ')}>
+      {status}
+    </span>
+  );
 }

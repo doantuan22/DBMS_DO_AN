@@ -2,7 +2,7 @@
 
 > **Project:** Hệ thống đặt vé xem phim  
 > **Status:** Đề xuất kiến trúc UX; chưa triển khai source code  
-> **Baseline:** 45 Use Case (Customer 14, Manager 9, CSKH 6, Admin 16); `ADM-17` ngoài phạm vi  
+> **Baseline:** 42 Use Case hoạt động (Customer 14, Manager 9, CSKH 6, Admin 13); 45 ID lịch sử; `ADM-17` ngoài phạm vi
 > **Design standard:** [`docs/standards/FRONTEND_UIUX_DESIGN_STANDARDS.md`](standards/FRONTEND_UIUX_DESIGN_STANDARDS.md)  
 > **Audit basis:** [`docs/audits/frontend-deep-audit/FRONTEND_DEEP_AUDIT_REPORT.md`](audits/frontend-deep-audit/FRONTEND_DEEP_AUDIT_REPORT.md)
 
@@ -12,22 +12,24 @@ Blueprint này xác định kiến trúc điều hướng, bố cục và compon
 
 Phase 1 chỉ cập nhật chuẩn màu và tạo tài liệu này. Không thay đổi React/CSS, API, backend, database, RBAC, manager scope hoặc business logic. Mọi path mới bên dưới chỉ tổ chức lại các năng lực đang có; không tạo Use Case hoặc API mới.
 
+**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
+
 ### 1.1. Nguồn đối chiếu
 
 | Nguồn | Điều được dùng trong blueprint |
 |---|---|
 | Frontend deep audit | Route/source hiện tại, điểm nghẽn IA, ownership, trạng thái kiểm chứng và regression risk |
 | Frontend UI/UX Design Standards v1.1.0 | Palette chính thức, WCAG, patterns và ràng buộc không mở rộng nghiệp vụ |
-| `USE_CASE_MATRIX_45.md` và bảng traceability trong audit | Phạm vi và ID của 45 UC; không tính `ADM-17` |
+| `USE_CASE_MATRIX_45.md` và bảng traceability trong audit | Phạm vi và ID của 42 UC; không tính `ADM-17` |
 | Frontend source | `routes/index.jsx`, `AreaLayout`, `AdminPortal`, `SupportPortal`, `ManagerPortal`, customer pages/components và API modules |
 
 ### 1.2. Hiện trạng ảnh hưởng đến kiến trúc
 
 - Customer đã có route theo hành trình từ phim/rạp đến booking, đơn, thanh toán và khiếu nại.
-- Admin hiện có 18 section phẳng ở `/admin`; trang 906 dòng chịu trách nhiệm navigation, dữ liệu, form, quyền và mutation. Bảng tổng quát lấy cột từ response object; grant role/permission còn lộ ID và CSV.
+- Audit lịch sử ghi nhận 18 section Admin; sau fixed RBAC còn 16 section. Quản lý vai trò/quyền/grant bị loại khỏi ứng dụng; account và phân công giữ workflow hiện có.
 - CSKH hiện gom filter, queue, detail, order reference, timeline và hai form xử lý vào `/support`. Filter đổi là gọi lại queue và xóa case đang chọn; detail/filter không được phục hồi bằng URL.
 - Manager hiện gom dashboard, phòng/ghế, suất chiếu, giá và doanh thu tại `/manager`. Rạp được chọn là ngữ cảnh quan trọng nhưng chưa gắn với route.
-- Source có shared async states, status badge, API clients và permission helpers cần giữ. Audit là static review: browser hiện tại chưa được chạy lại theo 45 UC; matrix lưu verdict ACCEPTED nhưng raw evidence cũ đã bị dọn. Không coi audit/source scan là bằng chứng nghiệm thu Phase 2.
+- Source có shared async states, status badge, API clients và permission helpers cần giữ. Audit là static review: browser hiện tại chưa được chạy lại theo 42 UC; matrix lưu verdict ACCEPTED nhưng raw evidence cũ đã bị dọn. Không coi audit/source scan là bằng chứng nghiệm thu Phase 2.
 
 ## 2. Design direction và chuẩn màu
 
@@ -86,10 +88,8 @@ Public / Customer (PublicShell)
 Staff (StaffShell; role guard/scope hiện hành)
 ├── Admin                                  /admin → /admin/overview
 │   ├── Tổng quan                          /admin/overview
-│   ├── Tài khoản & phân quyền
+│   ├── Tài khoản & phân công
 │   │   ├── Người dùng                     /admin/access/users
-│   │   ├── Vai trò                        /admin/access/roles
-│   │   ├── Quyền + gán quyền vai trò      /admin/access/permissions
 │   │   └── Phân công quản lý              /admin/access/assignments
 │   ├── Rạp & cơ sở vật chất
 │   │   ├── Rạp                             /admin/cinemas
@@ -121,18 +121,18 @@ Staff (StaffShell; role guard/scope hiện hành)
 
 `/admin` và `/manager` tiếp tục là entry point tương thích. `/admin` mở overview nếu được phép; nếu không, mở section đầu tiên được cấp quyền, còn không có section phù hợp thì hiển thị 403. `/manager` mở overview trong scope rạp được phân công. Customer routes hiện có được giữ. Không có route ADM-17. Route con là đề xuất front-end cho các màn hình dùng năng lực/API hiện tại; cần xác nhận route guard/permission tương ứng trước khi triển khai.
 
-### 3.2. Sidebar Admin: 18 section, 6 nhóm
+### 3.2. Sidebar Admin: 16 section, 6 nhóm
 
 | Nhóm sidebar | Section hiện tại được tổ chức | Route đề xuất | UC |
 |---|---|---|---|
 | Tổng quan | Tổng quan | `/admin/overview` | ADM-16 (dashboard) |
-| Tài khoản & phân quyền | Tài khoản; Vai trò; Quyền (danh mục và gán quyền); Phân công | `/admin/access/users`, `/admin/access/roles`, `/admin/access/permissions`, `/admin/access/assignments` | ADM-02–ADM-06 |
+| Tài khoản & phân công | Tài khoản; Phân công/chuyển rạp | `/admin/access/users`, `/admin/access/assignments` | ADM-02, ADM-06 |
 | Rạp & cơ sở vật chất | Rạp; Ảnh rạp; Phòng; Ghế | `/admin/cinemas`, `/admin/cinemas/images`, `/admin/facilities/rooms`, `/admin/facilities/seats` | ADM-07–ADM-08 |
 | Nội dung | Phim; Thể loại; Diễn viên | `/admin/catalog/movies`, `/admin/catalog/genres`, `/admin/catalog/actors` | ADM-09–ADM-10 |
 | Kinh doanh & vận hành | Sản phẩm; Khuyến mãi; Bảng giá; Suất chiếu | `/admin/commerce/products`, `/admin/commerce/promotions`, `/admin/operations/pricing`, `/admin/operations/showtimes` | ADM-11–ADM-14 |
 | Chăm sóc & báo cáo | Khiếu nại; Doanh thu | `/admin/service/complaints`, `/admin/reports/revenue` | ADM-15–ADM-16 |
 
-Đếm theo section đang có: 1 + 4 + 4 + 3 + 4 + 2 = **18**. Quyền catalog và thao tác grant cùng nằm trong section Quyền, không tạo một UC hay section nghiệp vụ mới. `ADM-01` là xác thực/truy cập, không phải mục CRUD.
+Đếm theo section hoạt động: 1 + 2 + 4 + 3 + 4 + 2 = **16**. `ADM-03/04/05` RETIRED. `ADM-01` là xác thực/truy cập, không phải mục CRUD.
 
 ### 3.3. Quy tắc route và state
 
@@ -172,7 +172,7 @@ MOBILE
 └────────────────────────────────────────────┘
 ```
 
-Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợp quyền. Mobile dùng drawer, đóng sau khi chọn route. Không biến 18 section thành 18 nút ngang.
+Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợp quyền. Mobile dùng drawer, đóng sau khi chọn route. Không biến 16 section thành 16 nút ngang.
 
 #### Mẫu trang danh sách/CRUD
 
@@ -190,7 +190,7 @@ Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợ
 | Màn hình | Bố cục / component | Acceptance criteria |
 |---|---|---|
 | Overview + revenue | KPI/summary chỉ lấy dữ liệu dashboard/revenue hiện có; tên, đơn vị, khoảng thời gian, phạm vi; chart chỉ khi có ích | Không tự tính authoritative revenue ở client; không thêm KPI/endpoint; loading/empty/error hiển thị đúng |
-| Users, roles, permissions, assignments | Table + form; role/permission có tên/mô tả; grant review hiển thị `hiện tại → thêm/bỏ → xác nhận`; assignment chọn quản lý/rạp theo nhãn | Grant không nhập `RoleID`/`QuyenID` hay CSV; trước submit thấy rõ thay đổi; giữ quyền API/backend là cuối cùng |
+| Users, assignments | Table + form; chọn vai trò cố định lúc tạo tài khoản; vai trò hiện hữu chỉ đọc; chọn Manager/rạp theo tên; hiển thị phân công hiện tại | Không có CRUD/grant RBAC; chuyển rạp xác nhận tên Manager, rạp cũ → mới; SQL kiểm tra role/scope/transaction |
 | Cinemas/images | Rạp làm đối tượng cha; ảnh gắn đúng cinema đang chọn; giữ ownership/request-generation guard của `CinemaImageManager` | Khi đổi rạp A→B, response/draft A không được ghi vào B; action ảnh chỉ áp dụng đúng rạp |
 | Rooms/seats | Hierarchy `Rạp → Phòng → Ghế`; selector theo tên; sơ đồ không gian cho ghế khi phù hợp dữ liệu | Luôn thấy ngữ cảnh cha; status ghế có text/legend/icon và màu; không nới rule lịch sử |
 | Movies/genres/actors | Movie list có poster/tiêu đề/metadata có sẵn; cast chọn actor tên/role nếu contract hỗ trợ | Không sửa cast qua JSON thô trong luồng thông thường; không giả định field/API mới |
@@ -200,8 +200,8 @@ Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợ
 
 #### Rủi ro và điểm quyết định
 
-- **Cao:** route extraction có thể làm mất permission filtering, async ownership hoặc mutation guards. Chuyển từng module, kiểm thử role/partial grant và deep-link.
-- **Cao:** gán quyền và ảnh rạp có hậu quả lớn; cần xác nhận diff trước khi save và regression A→B→A cho cinema image.
+- **Cao:** route extraction có thể làm mất permission filtering, async ownership hoặc mutation guards. Chuyển từng module, kiểm thử bốn vai trò cố định và forbidden RBAC writes và deep-link.
+- **Cao:** chuyển rạp và ảnh rạp có hậu quả lớn; cần xác nhận diff trước khi save và regression A→B→A cho cinema image.
 - **Trung bình:** curated table có thể bỏ sót metadata hữu ích; xác nhận cột với resource field hiện có trước khi triển khai.
 
 ### 4.2. CSKH — Case Management Workspace
@@ -211,9 +211,9 @@ Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợ
 ```text
 DESKTOP ≥ 1280
 ┌──────────────────────┬──────────────────────────────┬─────────────────────┐
-│ Hàng chờ              │ Chi tiết case                │ Ngữ cảnh / thao tác │
-│ Tìm kiếm              │ Người gửi + trạng thái       │ Đơn tham chiếu      │
-│ 4 filter + Áp dụng    │ Nội dung                     │ Lịch sử/timeline    │
+│ VÙNG 1 — QUEUE         │ VÙNG 2 — CHI TIẾT + TIMELINE │ VÙNG 3 — REFERENCE + │
+│ Tìm kiếm              │ Người gửi + trạng thái       │ ACTIONS             │
+│ 4 filter + Áp dụng    │ Nội dung khiếu nại           │ Đơn tham chiếu      │
 │ Kết quả / case list   │ Timeline theo thứ tự        │ Ghi lần xử lý       │
 │ Selected case rõ ràng │                              │ Đổi trạng thái      │
 └──────────────────────┴──────────────────────────────┴─────────────────────┘
@@ -222,14 +222,12 @@ TABLET / MOBILE
 ┌───────────────────────────────────────────┐
 │ Queue list + filter panel                 │
 │ Chọn case → mở trang detail riêng         │
-│ ← Hàng chờ | case | đơn tham chiếu        │
-│ Timeline                                  │
-│ Ghi xử lý (form riêng)                    │
-│ Đổi trạng thái (form riêng)               │
+│ ← Hàng chờ | Chi tiết + Timeline          │
+│ Đơn tham chiếu + Hành động (panel/card)   │
 └───────────────────────────────────────────┘
 ```
 
-Desktop dùng queue/detail/context ba vùng nếu chiều rộng đọc đủ; nếu không, context chuyển thành panel/drawer. Mobile xử lý một case tại một thời điểm và có lối quay lại queue rõ.
+Desktop giữ ba vùng không trùng lặp: **Queue | Chi tiết + Timeline | Đơn tham chiếu + Hành động**. Timeline chỉ nằm cùng nội dung chi tiết; vùng thứ ba chỉ chứa trạng thái/reference order và hai mutation hiện có. Ở tablet/mobile, vùng 1 chuyển thành bước/list riêng; vùng 2 vẫn chứa chi tiết và timeline; vùng 3 thành card hoặc panel bên dưới, không nhân đôi timeline/reference.
 
 | Vùng | Đặc tả | Acceptance criteria |
 |---|---|---|
@@ -367,6 +365,32 @@ Không đặt giá trị mới cho semantic success/warning/error, font, radius 
 | `SeatMap`, `ProductPicker`, `HoldDeadline` | Booking visual controls và hold feedback dùng hiện có | Authoritative pricing, reservation/payment business rules |
 | `ComplaintTimeline`, `OrderReferencePanel` | Hiển thị lịch sử/tham chiếu như visual primitives | Hợp nhất permission/mutation giữa Admin và CSKH |
 
+### 5.2.1. Component API contract
+
+Các API dưới đây là component-level contract, không phải REST/API backend. Props có thể nhận thêm native HTML attributes tương ứng; không cho phép prop ghi đè semantic/accessibility behavior cốt lõi.
+
+| Component | Props / variants / states | Responsive | Accessibility và interaction |
+|---|---|---|---|
+| `Button` | `variant`: primary/secondary/tertiary/danger/quiet; `size`: sm/md/lg; `loading`, `disabled`, native button props | Chiều rộng theo nội dung; caller có thể truyền class cho full-width mobile | Native `<button>`, type rõ (`button` mặc định), disabled ngăn submit/click; loading có accessible label và khóa lặp |
+| `Input` | Native input props + `size`, `invalid`; states default/focus/disabled/invalid | Width 100% trong field container; không ép chiều rộng cố định | Luôn liên kết label/hint/error từ `FormField`; `aria-invalid`, focus visible, không xóa native keyboard behavior |
+| `Select` | Native select props + `size`, `invalid`; children là option hiện có | Width 100%; option native dùng được trên touch | Label rõ, keyboard native; không dùng ID kỹ thuật làm visible option khi có label lookup |
+| `FormField` | `id`, `label`, `required`, `hint`, `error`, `children` (một control) | Label/control/error xếp dọc ở mọi viewport | `htmlFor`, `aria-describedby`, `aria-invalid`, error announcement; không tự đặt domain validation |
+| `Dialog` | `open`, `onOpenChange`, `title`, `description`, `size` sm/md/lg, `children`, `footer`, `closeLabel` | Giới hạn chiều rộng/cao theo viewport; mobile gần full width, nội dung scroll nội bộ | Native modal dialog, `aria-labelledby/describedby`, Escape đóng, focus vào/ra, không đóng âm thầm khi pending |
+| `ConfirmDialog` | Dialog props + `confirmLabel`, `cancelLabel`, `variant` primary/danger, `busy`, `onConfirm` | Full-width actions trên mobile | Có mô tả hậu quả; cancel/confirm phân biệt; `busy` khóa duplicate; callback không gọi API bên trong; lỗi callback hiện trong dialog |
+| `PageHeader` | `title`, `description`, `breadcrumbs`, `actions` | Actions wrap/stack khi thiếu chiều rộng | H1 duy nhất theo page; heading hierarchy không bị component tự nhảy cấp |
+| `Breadcrumbs` | `items: [{label, to?}]`; item cuối là trang hiện tại | Wrap hoặc cuộn có chủ đích trên viewport hẹp | `<nav aria-label="Breadcrumb">`, ordered list, `aria-current="page"`; link keyboardable |
+| `DataTable` | `columns`, `rows`, `getRowKey`, `caption`, `status`, `emptyMessage`, `error`, `onRetry` | Table nằm trong horizontal-scroll region có label; không chuyển table thành card mặc định | `<table>`, caption, `scope=col`, row key ổn định, `aria-busy`; không tự giả server sort/page |
+| `FilterBar` | `onSubmit`, `onReset`, `actions`, `children`, `label`; state do caller sở hữu | Fields wrap/stack; action không tràn ngang | `<form>` và accessible name; Enter submit; reset gọi callback rõ ràng, không tự gọi API |
+| `StatusBadge` | `status`, `className` tùy chọn; semantic variant lấy từ mapping status hiện tại | Inline, wrap được | Luôn hiển thị status text; màu không phải tín hiệu duy nhất; giữ status mapping đã có |
+| `AsyncState` | `status: idle/loading/success/empty/error`, `children`, `loadingMessage`, `emptyMessage`, `error`, `onRetry` | Trải hết bề rộng vùng nội dung, không ép chiều cao | Loading/success dùng status phù hợp; error dùng alert; retry là button có tên; không coi denied là empty |
+
+### 5.2.2. Definition of done cho component
+
+- Có typed/prop documentation, default values, variants và state matrix; callback semantics và event behavior được nêu rõ.
+- Bàn phím, visible focus, accessible name/label, disabled/loading, reduced motion và high zoom đã được review.
+- Breakpoint behavior được xác định; content không cắt, action không khuất, không tạo cuộn lồng nhau ngoài chủ đích.
+- Component không gọi API, không chứa permission/business rules của Admin/Manager/CSKH/Customer; side effect chỉ giới hạn ở tương tác UI được mô tả.
+
 ### 5.3. Ownership đề xuất
 
 | Layer/feature | Ownership | Source hiện có làm điểm xuất phát |
@@ -384,9 +408,9 @@ Không đặt giá trị mới cho semantic success/warning/error, font, radius 
 
 Architecture is a target ownership map, not an instruction to create empty folders or add dependencies. A shared visual component must not silently combine role-specific business rules.
 
-## 6. Mapping đủ 45 Use Case
+## 6. Mapping đủ 42 Use Case hoạt động + 3 RETIRED
 
-Các destination bên phải là kiến trúc đề xuất. `Risk` chỉ mức độ cần kiểm thử hồi quy khi di chuyển UI; không đánh giá chất lượng nghiệp vụ. ADM-04 và ADM-05 dùng cùng trang Quyền vì hiện thuộc cùng section.
+Các destination bên phải là kiến trúc đề xuất cho 42 UC hoạt động. Ba ID RETIRED được giữ để truy vết; không có route/workflow đích cho chúng. Risk chỉ mức độ regression khi di chuyển UI.
 
 | UC | Chức năng baseline | Route/source hiện tại | Destination/screen đề xuất | Risk |
 |---|---|---|---|---|
@@ -420,10 +444,10 @@ Các destination bên phải là kiến trúc đề xuất. `Risk` chỉ mức �
 | CSKH-05 | Ghi lần xử lý | `/support` — processing form | Case detail / Processing form | Cao: unsaved draft/duplicate write |
 | CSKH-06 | Đổi trạng thái | `/support` — status form | Case detail / Status form | Cao: status contract/write lock |
 | ADM-01 | Đăng nhập | `/login`, `/admin` — `RequireRole` | `/login`, `/admin/overview` — Admin shell | Cao: auth/section guard |
-| ADM-02 | Tài khoản người dùng | `/admin` → users | `/admin/access/users` — Users | Trung bình-cao: status/action permissions |
-| ADM-03 | Vai trò | `/admin` → roles | `/admin/access/roles` — Roles | Cao: role CRUD/permissions |
-| ADM-04 | Danh mục quyền | `/admin` → permissions | `/admin/access/permissions` — Permission catalog area | Cao: catalog accuracy |
-| ADM-05 | Gán quyền vai trò | `/admin` → permissions/grants | `/admin/access/permissions` — Named role/permission review | Cao: high-consequence grants |
+| ADM-02 | Tài khoản người dùng | `/admin` → users | `/admin/access/users` — Users | Trung bình-cao: role bất biến; tạo đúng role, khóa/mở |
+| ADM-03 | Vai trò — RETIRED | Lịch sử: `/admin` → roles | Không có route/UI | Kiểm tra API/SP ghi bị từ chối |
+| ADM-04 | Danh mục quyền — RETIRED | Lịch sử: `/admin` → permissions | Không có route/UI | Kiểm tra danh mục bất biến |
+| ADM-05 | Gán quyền — RETIRED | Lịch sử: permissions/grants | Không có route/UI | Kiểm tra ma trận bất biến |
 | ADM-06 | Phân công quản lý | `/admin` → assignments | `/admin/access/assignments` — Assignments | Cao: manager/cinema scope |
 | ADM-07 | Rạp và hình ảnh | `/admin` → cinemas/cinemaImages | `/admin/cinemas`, `/admin/cinemas/images` | Cao: image ownership/request guards |
 | ADM-08 | Phòng và ghế toàn hệ | `/admin` → rooms/seats | `/admin/facilities/rooms`, `/admin/facilities/seats` | Cao: hierarchy/resource link |
@@ -436,33 +460,31 @@ Các destination bên phải là kiến trúc đề xuất. `Risk` chỉ mức �
 | ADM-15 | Xử lý khiếu nại | `/admin` → complaints | `/admin/service/complaints` | Cao: distinct Admin permissions/workflow |
 | ADM-16 | Báo cáo toàn hệ | `/admin` → dashboard/revenue | `/admin/overview`, `/admin/reports/revenue` | Trung bình-cao: metric provenance |
 
-Coverage check: 14 KH + 9 QLR + 6 CSKH + 16 ADM = **45 UC**. Không thêm `ADM-17`; không biến route con thành UC mới.
+Coverage check: 14 KH + 9 QLR + 6 CSKH + 13 ADM = **42 UC hoạt động**; 3 ADM RETIRED = 45 ID truy vết. Không thêm `ADM-17`; không biến route con thành UC mới.
 
 ## 7. Mapping giao diện cũ → kiến trúc đề xuất và migration
 
 | Hiện trạng/source | Đích thiết kế | Rủi ro hồi quy | Điều kiện chuyển đổi |
 |---|---|---|---|
 | `AreaLayout` dùng chung cho public/staff | `PublicShell` và `StaffShell` với shared token/primitives | Cao nếu nav/auth/skip link bị mất | Giữ session, guards, account actions, keyboard landmarks và các URL hiện tại |
-| `AdminPortal.jsx` 18 section/local state | 6 sidebar groups, 18 route-backed destinations, feature-owned pages | Cao | Verify 16 Admin UC, route refresh/back, permission-filtered nav, guards; giữ `/admin` redirect |
+| `AdminPortal.jsx` 16 section/local state | 6 sidebar groups, 16 route-backed destinations, feature-owned pages | Cao | Verify 13 Admin UC, route refresh/back, permission-filtered nav, guards; giữ `/admin` redirect |
 | Generic Admin table / generic form | Per-resource column config + field/selector mapping | Trung bình-cao | So field cũ với DTO/API; empty/loading/error, extra fields, long values và action permissions |
-| Role grants nhập ID/CSV | Named role/permission selector + before/after review | Cao | Test grants hiện có/partial, add/remove, reload result, API deny/failure và submit lặp |
+| Role/permission CRUD và grants lịch sử | RETIRED: bỏ UI/API ghi; SP giữ signature nhưng từ chối | Cao | Bốn vai trò đăng nhập đúng quyền; ma trận seed không đổi; mọi API/SP ghi RBAC bị từ chối |
 | Admin `CinemaImageManager` | Cinema parent context + image subroute | Cao | A→B→A, ownership, stale response, failed upload/update và không gửi nhầm resource |
 | `SupportPortal` một trang, filter local, case local | Queue route + deep-link detail + safe query state | Cao | 6 CSKH UC, request behavior, browser history, stale cases, unsaved notes, duplicate writes, denied reference |
 | `ManagerPortal` một trang | Overview/rooms/seats/showtimes/pricing/revenue routes với persistent cinema context | Cao | 9 QLR UC, assigned-cinema only, switch/reset context, timezone, old route redirect |
 | Customer route pages và booking components | Giữ route; chuẩn hóa PublicShell/cards/discovery/booking layout | Cao ở booking, trung bình ở catalog | Replay 14 KH UC; seat, hold, promotion, price, payment, reviews, complaint và auth states |
 | Global `index.css` 1,635 dòng, breakpoint 768 px | Token + shell/pattern/feature ownership, tách dần style | Cao do shared selector side effects | Baseline screenshots trước/sau; check các route/role/viewport; không làm palette khác chuẩn |
 
-### 7.1. Trình tự đề xuất cho Phase 2 (chỉ sau phê duyệt blueprint)
+### 7.1. Ranh giới Phase 2/3/4
 
-1. **Baseline và route map:** chụp/ghi nhận hành vi UI hiện tại theo 45 UC, role, viewport, API/module; bổ sung evidence browser vì audit gần nhất chỉ static.
-2. **Token và shell:** áp dụng palette trắng–xanh; phân biệt Public/Staff shell; xác nhận keyboard/focus và responsive shell trước khi tách module.
-3. **Admin grant P1 và module navigation:** cải thiện named selector/review; sau đó tách routes theo nhóm, bắt đầu với access modules. Từng PR giữ API clients và guard hiện tại.
-4. **CSKH workflow:** applied/debounced filter nhất quán, case deep link, unsaved draft protection; bảo toàn hai mutation riêng.
-5. **Manager workspace:** tách route theo nhóm; kiểm thử scope/context trước và sau khi đổi rạp.
-6. **Customer visual architecture:** home/cards/detail; sau đó booking UI với regression gate riêng cho seats/hold/payment.
-7. **Style ownership và final acceptance:** tách CSS theo shell/pattern/feature có screenshot baseline; nghiệm thu đủ 45 UC và accessibility/responsive.
+| Phase | Phạm vi | Không nằm trong phase |
+|---|---|---|
+| **Phase 2 — Design System & Component Architecture** | Tokens/base styles; PublicShell/StaffShell; responsive grouped navigation tương thích với route hiện tại; shared UI components và API contracts ở §5.2.1 | Không chuyển toàn bộ portal sang route mới; không thay CRUD, workflow, API, RBAC, manager scope hoặc business logic |
+| **Phase 3 — Portal Refactor** | Từng bước chuyển Admin/CSKH/Manager/Customer sang grouped routes và screen workflows ở §3–4; dùng shared system | Không thay 42 UC hoặc contract chỉ để đơn giản hóa giao diện |
+| **Phase 4 — Overall Acceptance** | Browser smoke và regression 42 UC, viewport, keyboard/accessibility, contrast, screenshots và evidence; xử lý lỗi trong phạm vi được duyệt | Không tuyên bố PASS cho case/viewport chưa chạy thực tế |
 
-Mỗi bước phải có design review và tiêu chí chấp nhận ở mục 8; sequence không cho phép đổi contract, RBAC, data semantics hoặc business rule.
+Phase 2 verification chỉ xác nhận nền tảng component/shell và route legacy còn hoạt động; nghiệm thu toàn bộ workflow 42 UC thuộc Phase 4 sau Phase 3.
 
 ## 8. Checklist nghiệm thu trước Phase 2
 
@@ -470,9 +492,9 @@ Mỗi bước phải có design review và tiêu chí chấp nhận ở mục 8;
 
 - [ ] Palette trắng–xanh tại chuẩn thiết kế được xác nhận là nguồn màu chính thức; semantic success/warning/error vẫn được giữ.
 - [ ] Các cặp màu text/control/focus có kế hoạch đo WCAG AA; không lấy các tỷ lệ mẫu trong tài liệu làm chứng nhận toàn sản phẩm.
-- [ ] Sitemap 4 portal và 18 section Admin được duyệt; xác nhận rõ ADM-04/05 cùng trang Quyền.
+- [ ] Sitemap 4 portal và 16 section Admin được duyệt; xác nhận 6 nhóm sidebar, ADM-03/04/05 RETIRED và không có route quản lý RBAC.
 - [ ] Paths là front-end routes đề xuất trên capability hiện có; `/admin`, `/manager`, customer URL hiện tại có compatibility plan.
-- [ ] Không có `ADM-17`; 45 UC được mapping đủ 14/9/6/16.
+- [ ] Không có `ADM-17`; 42 UC hoạt động mapping đủ 14/9/6/13; giữ 3 ID RETIRED.
 - [ ] Admin sidebar groups, CSKH queue/detail/context, Manager cinema context và Customer discovery/booking wireframes được duyệt.
 - [ ] Owner của shared components và feature-specific workflows được thống nhất; không có shared component chứa business rules của nhiều role.
 
@@ -482,10 +504,10 @@ Mỗi bước phải có design review và tiêu chí chấp nhận ở mục 8;
 - [ ] Mỗi screen family có columns/fields/actions được trace tới source/API hiện tại; lookup selector chỉ dùng data đang có.
 - [ ] Query params chỉ chứa state không nhạy cảm; support free-text search được phân loại trước khi đưa vào URL.
 - [ ] Định nghĩa test/evidence cho refresh, deep-link, back/forward, 401/403/404, loading/empty/error/retry, stale response, duplicate write và unsaved form.
-- [ ] Có baseline browser evidence cho 45 UC trước khi di chuyển; matrix ACCEPTED lịch sử không thay thế replay hiện tại.
+- [ ] Có baseline browser evidence cho 42 UC trước khi di chuyển; matrix ACCEPTED lịch sử không thay thế replay hiện tại.
 - [ ] Có viewport review tại 390, 768, 1280, 1440 và 1920 px (standard); kiểm tra bàn phím, zoom/reflow và reduced motion.
 - [ ] Booking regression bao gồm seat availability/conflict, hold expiry, product/promotion payload, authoritative total, payment attempt/failure, order history.
-- [ ] Admin regression bao gồm permission partial grants, named selectors, CRUD fields, image A→B→A ownership, cancellation conflict và revenue source.
+- [ ] Admin regression bao gồm RBAC fixed matrix/no-write, role immutable, named Manager/cinema selectors và confirm transfer, CRUD fields, image A→B→A ownership, cancellation conflict và revenue source.
 - [ ] CSKH regression bao gồm filter application/request count, case deep link, status/note riêng biệt, dirty draft, reference denied/empty/error và stale write.
 - [ ] Manager regression bao gồm assigned-cinema allowlist, đổi rạp khi có request/form đang mở, phòng/ghế/suất/giá/doanh thu đúng context.
 - [ ] Migration được review theo từng module; có rollback path hoặc tương thích route rõ trước khi cutover.
@@ -497,11 +519,11 @@ Chỉ bắt đầu thay đổi source sau khi blueprint, palette, route map, scr
 ## 9. Giới hạn và giả định cần xác nhận trong thiết kế triển khai
 
 - Chưa có browser screenshot/inspection trong audit gần nhất; wireframe là cấu trúc, không phải mockup pixel-perfect.
-- Matrix 45 UC ghi ACCEPTED, nhưng raw evidence trong `docs` đã bị dọn. Phase 2 phải tái lập baseline trước khi tuyên bố không regression.
+- Matrix lịch sử 45 ID ghi ACCEPTED trước retirement; fixed RBAC chưa nghiệm thu ở thời điểm cập nhật thiết kế, nhưng raw evidence trong `docs` đã bị dọn. Phase 2 phải tái lập baseline trước khi tuyên bố không regression.
 - Dashboard, schedule, `Đang chiếu`/`Sắp chiếu`, lookup labels, filters, chart và table pagination chỉ thiết kế khi source/API hiện tại cung cấp dữ liệu phù hợp.
 - Khi thiết kế không thể hoàn tất selector/field/cột bằng data và contract hiện có, ghi blocker thay vì bổ sung API, DB column hoặc business rule.
 - Không yêu cầu thêm UI library, calendar library, state library hoặc API mới trong Phase 1.
 
 ---
 
-**Phase 1 deliverable:** kiến trúc UX và acceptance plan sẵn sàng để review. **Chưa có React/CSS/backend/database/API thay đổi nào được thực hiện trong blueprint này.**
+**Phase 1 deliverable:** kiến trúc UX và acceptance plan sẵn sàng để review. Phase 2 triển khai design system/shell/shared components; Phase 3 refactor portal; Phase 4 nghiệm thu tổng thể. **Tài liệu này không tự chuyển business logic hoặc route portal trong Phase 2.**

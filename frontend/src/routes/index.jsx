@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
+import StaffShell from '../layouts/StaffShell';
 import DatabaseHealth from '../components/DatabaseHealth';
 import RequireRole from './RequireRole';
 import RequireAuth from './RequireAuth';
@@ -97,18 +98,7 @@ export default function AppRoutes() {
       </Route>
 
       <Route element={<RequireRole role={ROLES.MANAGER} />}>
-        <Route
-          path="/manager"
-          element={
-            <AreaLayout
-              title="Quản lý rạp"
-              links={[
-                { to: '/', label: 'Trang chủ' },
-                { to: '/manager', label: 'Dashboard' },
-              ]}
-            />
-          }
-        >
+        <Route path="/manager" element={<StaffShell portal="manager" />}>
           <Route index element={<ManagerPortal />} />
         </Route>
       </Route>
@@ -118,18 +108,7 @@ export default function AppRoutes() {
           <RequireRole role={ROLES.SUPPORT} permission={ROLE_AREAS[ROLES.SUPPORT].permission} />
         }
       >
-        <Route
-          path="/support"
-          element={
-            <AreaLayout
-              title="Chăm sóc khách hàng"
-              links={[
-                { to: '/', label: 'Trang chủ' },
-                { to: '/support', label: 'CSKH' },
-              ]}
-            />
-          }
-        >
+        <Route path="/support" element={<StaffShell portal="support" />}>
           <Route index element={<SupportPortal />} />
         </Route>
       </Route>
@@ -147,18 +126,7 @@ export default function AppRoutes() {
         </Route>
       </Route>
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
-        <Route
-          path="/admin"
-          element={
-            <AreaLayout
-              title="Quản trị hệ thống"
-              links={[
-                { to: '/', label: 'Trang chủ' },
-                { to: '/admin', label: 'Admin' },
-              ]}
-            />
-          }
-        >
+        <Route path="/admin" element={<StaffShell portal="admin" />}>
           <Route index element={<AdminPortal />} />
         </Route>
       </Route>

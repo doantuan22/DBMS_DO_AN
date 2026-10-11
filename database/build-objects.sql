@@ -205,6 +205,7 @@
 :r ./08_procedures/admin/usp_Admin_Showtime_Create.sql
 :r ./08_procedures/admin/usp_Admin_Showtime_List.sql
 :r ./08_procedures/admin/usp_Admin_Showtime_Update.sql
+:r ./07_triggers/TRG_NguoiDung_VaiTroBatBien.sql
 :r ./09_security/001_execute_role.sql
 
 :r ./08_procedures/admin/sp_Admin_Genre_List.sql

@@ -1,6 +1,8 @@
 # Hệ thống đặt vé xem phim — DBMS-first
 
-Kiến trúc của dự án là React → REST API → Express → Stored Procedure → SQL Server. Baseline chính thức có 45 Use Case: Customer 14, Manager 9, CSKH 6 và Admin 16; ADM-17 nằm ngoài phạm vi.
+Kiến trúc của dự án là React → REST API → Express → Stored Procedure → SQL Server. Baseline chính thức có 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6 và Admin 13; ADM-17 nằm ngoài phạm vi.
+
+**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
 
 Tài liệu chuẩn: [phân tích và thiết kế](<Phân Tích _ Thiết Kế.md>), [database](database/README.md), [Use Case matrix](docs/USE_CASE_MATRIX_45.md), [Frontend gap matrix](docs/R8_FRONTEND_GAP_MATRIX.md), [final system audit](docs/FINAL_SYSTEM_AUDIT.md) và [R8.3 re-acceptance](docs/R8_3_REACCEPTANCE_REPORT.md).
 

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { hashPassword, verifyPassword, validatePassword } from '../src/utils/password.js';
-import { userCreate, roleWrite } from '../src/validators/adminValidator.js';
+import { userCreate, userStatus } from '../src/validators/adminValidator.js';
 import { validateRegister, validateLogin } from '../src/validators/authValidator.js';
 const invalid = (err) => err.status === 400;
 test('all new account entry points enforce UTF-8 byte boundaries and preserve password whitespace', async () => {
@@ -38,7 +38,9 @@ test('all new account entry points enforce UTF-8 byte boundaries and preserve pa
     assert.throws(() => verifyPassword(password, 'unused'), invalid);
   }
 });
-test('role metadata rejects blank/oversized names without accepting grant fields', () => {
-  for (const name of ['', ' ', 'a'.repeat(101)]) assert.throws(() => roleWrite({ name }), invalid);
-  assert.throws(() => roleWrite({ name: 'R4', permissionIds: [] }), invalid);
+test('account creation validates names and existing accounts reject role/grant fields', () => {
+  for (const name of ['', ' ', 'a'.repeat(101)])
+    assert.throws(() => userCreate({ name, email: 'r4@example.test', password: 'password8', roleId: 2 }), invalid);
+  assert.throws(() => userStatus({ status: 'Hoạt động', roleId: 1 }), invalid);
+  assert.throws(() => userStatus({ status: 'Hoạt động', permissionIds: [] }), invalid);
 });

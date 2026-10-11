@@ -5,23 +5,23 @@ import { requireAdmin } from '../middleware/requireAdmin.js';
 import { requirePermission } from '../middleware/requirePermission.js';
 import * as validators from '../validators/supportValidator.js';
 import { supportService } from '../services/supportService.js';
+import { HttpError } from '../utils/httpError.js';
 
 const router = Router();
 router.use(authenticate, requireAdmin);
+// Retired RBAC URLs remain explicit refusal points for old clients.
+router.all(
+  ['/roles', '/roles/:roleId', '/roles/:roleId/permissions', '/permissions', '/permissions/:permissionId'],
+  (req, res, next) => {
+    if (req.method === 'GET' || req.method === 'HEAD') return next();
+    next(new HttpError(403, 'RBAC_FIXED', 'Roles and permissions are fixed and cannot be changed.'));
+  },
+);
 router.get('/dashboard', requirePermission('XEM_BAO_CAO_TOANHE'), admin.dashboard);
 router.get('/users', requirePermission('QL_NGUOIDUNG'), admin.users);
 router.post('/users', requirePermission('QL_NGUOIDUNG'), admin.createUser);
 router.put('/users/:userId/status', requirePermission('QL_NGUOIDUNG'), admin.updateUserStatus);
-router.get('/roles', requirePermission('QL_VAITRO'), admin.roles);
-router.get('/roles/:roleId/permissions', requirePermission('QL_QUYEN'), admin.rolePermissions);
-router.post('/roles', requirePermission('QL_VAITRO'), admin.createRole);
-router.put('/roles/:roleId', requirePermission('QL_VAITRO'), admin.updateRole);
-router.delete('/roles/:roleId', requirePermission('QL_VAITRO'), admin.deleteRole);
-router.get('/permissions', requirePermission('QL_QUYEN'), admin.permissions);
-router.post('/permissions', requirePermission('QL_QUYEN'), admin.createPermission);
-router.put('/permissions/:permissionId', requirePermission('QL_QUYEN'), admin.updatePermission);
-router.delete('/permissions/:permissionId', requirePermission('QL_QUYEN'), admin.deletePermission);
-router.put('/roles/:roleId/permissions', requirePermission('QL_QUYEN'), admin.setRolePermissions);
+router.get('/roles', requirePermission('QL_NGUOIDUNG'), admin.roles);
 router.get('/assignments', requirePermission('PHANCONG_RAP'), admin.assignments);
 router.post('/assignments', requirePermission('PHANCONG_RAP'), admin.createAssignment);
 router.put('/assignments/:assignmentId', requirePermission('PHANCONG_RAP'), admin.updateAssignment);

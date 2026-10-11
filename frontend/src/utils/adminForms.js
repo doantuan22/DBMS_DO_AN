@@ -9,35 +9,19 @@ export const adminForms = {
       ['name', 'Họ tên', 'text', 'HoTen'],
       ['email', 'Email', 'email', 'Email'],
       ['phone', 'Điện thoại', 'text', 'SoDienThoai'],
-      ['roleId', 'Mã vai trò', 'number', 'VaiTroID'],
     ],
-    createOnly: [['password', 'Mật khẩu ban đầu', 'password', '']],
+    createOnly: [
+      ['roleId', 'Vai trò khi tạo tài khoản', 'number', 'VaiTroID'],
+      ['password', 'Mật khẩu ban đầu', 'password', ''],
+    ],
     editFields: [['status', 'Trạng thái', 'text', 'TrangThai']],
-  },
-  roles: {
-    path: 'roles',
-    id: 'VaiTroID',
-    fields: [
-      ['name', 'Tên vai trò', 'text', 'TenVaiTro'],
-      ['description', 'Mô tả', 'text', 'MoTa'],
-    ],
-    createOnly: [['code', 'Mã vai trò', 'text', 'MaVaiTro']],
-  },
-  permissions: {
-    path: 'permissions',
-    id: 'QuyenID',
-    fields: [
-      ['name', 'Tên quyền', 'text', 'TenQuyen'],
-      ['description', 'Mô tả', 'text', 'MoTa'],
-    ],
-    createOnly: [['code', 'Mã quyền', 'text', 'MaQuyen']],
   },
   assignments: {
     path: 'assignments',
     id: 'PhanCongID',
     fields: [
-      ['userId', 'Mã quản lý', 'number', 'NguoiDungID'],
-      ['cinemaId', 'Mã rạp', 'number', 'RapID'],
+      ['userId', 'Quản lý', 'number', 'NguoiDungID'],
+      ['cinemaId', 'Rạp phân công', 'number', 'RapID'],
       ['startsOn', 'Ngày bắt đầu', 'date', 'NgayBatDau'],
       ['endsOn', 'Ngày kết thúc', 'date', 'NgayKetThuc'],
       ['status', 'Trạng thái', 'text', 'TrangThai'],

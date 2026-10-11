@@ -22,7 +22,6 @@ test('migration-008 procedures avoid SQL Server system-procedure prefix resoluti
     'ADMIN_PRODUCT_LIST',
     'ADMIN_MOVIE_LIST',
     'ADMIN_ASSIGNMENT_UPDATE',
-    'ADMIN_ROLE_PERMISSION_LIST',
     'ADMIN_ROOM_LIST',
     'ADMIN_ROOM_CREATE',
     'ADMIN_ROOM_UPDATE',
@@ -117,12 +116,9 @@ test('admin writes bind only fixed procedures and hash staff passwords', async (
   assert.equal(calls[0].key, 'ADMIN_USER_CREATE');
   assert.notEqual(calls[0].params.MatKhauHash.value, 'StrongPass1!');
   assert.match(calls[0].params.MatKhauHash.value, /^\$2[aby]\$/);
-  await service.setRolePermissions(1, 2, [14, 15]);
-  assert.equal(calls[1].key, 'ADMIN_ROLE_PERMISSION_SET');
-  assert.equal(calls[1].params.QuyenIdList.value, '14,15');
   await service.rooms(1, { cinemaId: 99 });
-  assert.equal(calls[2].key, 'ADMIN_ROOM_LIST');
-  assert.equal(calls[2].params.RapID.value, 99);
+  assert.equal(calls[1].key, 'ADMIN_ROOM_LIST');
+  assert.equal(calls[1].params.RapID.value, 99);
 });
 
 test('admin maps seat history, held showtime, and assignment role SQL errors to business HTTP errors', async () => {
@@ -301,6 +297,8 @@ test('BUG-002: cinema image status must be in the whitelist for create and updat
 
 // SQL error number -> [HTTP status, error code] for every business error an admin procedure can throw.
 const ADMIN_ERROR_TABLE = {
+  50405: [403, 'RBAC_FIXED'],
+  50406: [403, 'USER_ROLE_IMMUTABLE'],
   50404: [403, 'ROLE_CREATE_FORBIDDEN'],
   50217: [409, 'ROOM_DELETE_CONFLICT'],
   50120: [409, 'SHOWTIME_HAS_ORDERS'],
@@ -647,10 +645,6 @@ test('writes that bypass write() still get constraint errors mapped', async () =
     },
   });
   const movie = { title: 'T', durationMinutes: 90, releaseDate: '2031-01-01', genreIds: [999999] };
-  await assert.rejects(
-    service.setRolePermissions(1, 1, [999999]),
-    (error) => error.status === 400 && error.code === 'INVALID_REFERENCE',
-  );
   await assert.rejects(
     service.createMovie(1, movie),
     (error) => error.status === 400 && error.code === 'INVALID_REFERENCE',

@@ -22,6 +22,7 @@ const FLOW_SERVICES = {
 
 // Which flow(s) a code belongs to. Triggers and the pricing trigger are shared, so they are listed by code first.
 const CODE_FLOWS = {
+  50406: ['admin'], // Account role immutability; the admin mapper preserves a safe refusal.
   50001: ['manager', 'admin'],
   50002: ['booking'],
   50003: ['booking'],

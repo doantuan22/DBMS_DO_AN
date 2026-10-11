@@ -1,5 +1,8 @@
 # Frontend Deep Audit — Consolidated Report
 
+> **Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có. Các verdict, wireframe, route và kế hoạch 45 UC/RBAC CRUD trong báo cáo này là lịch sử trước quyết định; yêu cầu triển khai ADM-03/04/05 và partial grant bị hủy. Nghiệm thu mới không kế thừa PASS lịch sử.
+
+
 Audit date: 2026-10-11 (Asia/Bangkok). This file consolidates the audit reports and collected evidence summaries. The source reports were merged without changing application code.
 
 ## Contents
@@ -402,7 +405,7 @@ Dashboard and revenue are separate sections, and revenue has a date range. Data 
 
 - FE-01: flat navigation and oversized orchestration component.
 - FE-02: generic DTO-driven tables.
-- FE-03: manual numeric permission grant flow.
+- FE-03: historical manual numeric permission grant flow; RETIRED on 11/10/2026.
 - FE-06: global style and responsive ownership limits.
 
 ## Evidence
@@ -926,7 +929,9 @@ The source fields below are confirmed by static inspection. “Observed behavior
 **Estimated complexity:** Medium  
 **Regression risk:** Medium
 
-## FE-03 — Role grants require manual numeric IDs
+## FE-03 — RETIRED: historical role grants require manual numeric IDs
+
+**Current decision:** remove the entire grant workflow. The diagnosis below is historical; no selector, grant editor or write route will replace it.
 
 **Severity:** P1  
 **Category:** Admin workflow / permission safety  
@@ -1197,7 +1202,7 @@ Proposal only. Nothing in this backlog was implemented during the audit.
 | Task ID | Objective | Affected modules | Related issues | Expected UX improvement | Architecture dependency | Complexity | Risk | Priority | Acceptance criteria | Regression test requirements |
 |---|---|---|---|---|---|---|---|---|---|---|
 | FE-BL-00 | Restore reproducible browser baseline for 45 UCs and current ADM-07 cases | All portals; test fixtures; evidence | All | Gives teams verifiable current behavior before redesign | Test-only accounts and isolated data/backend required | High | High | P1 | Each official UC has a browser entry point, assertions, role, route and evidence status; no production data mutation | 45 primary journeys; auth/RBAC; 390/1440 widths; errors/retry; ADM-07 A→B→A and no-write rejection |
-| FE-BL-01 | Replace numeric grant editing with name-based permission review | Admin permissions/grants | FE-03 | Reduces operator error and makes grant changes reviewable | Existing role and permission APIs; no contract change assumed | Medium | High | P1 | Select role by name; choose permissions by name; show exact grants to add/remove; submit confirmation; denied/invalid requests remain clear | role CRUD/grant regression, partial grants, current grant refresh, unauthorized action, API failure, audit/no-write expectations |
+| FE-BL-01 | RETIRED — remove RBAC mutation workflows | Historical Admin permissions/grants | FE-03; ADM-03/04/05 RETIRED | Four fixed roles and immutable seed matrix | Retire write APIs and disable seven write SPs; preserve auth reads | Closed by fixed RBAC decision | High | RETIRED | No role/permission/grant menu, form or mutation; account role selected only at creation | API/SP no-write checks; fixed matrix; four-role login; immutable account role; Manager assignment scope |
 | FE-BL-02 | Split Admin modules and add stable section routes | Admin routing, AdminPortal features | FE-01 | Direct links, clearer groups and smaller task screens | Preserve current shell, auth guard and API modules | High | High | P1 | Every permitted section has stable path; denied section remains inaccessible; refresh/back restores active section; no route loses current API behavior | ADM-01..16, partial grants, direct URLs, refresh/back, route fallback, write/error/async guards |
 | FE-BL-03 | Define curated tables per Admin resource | Admin table and resource definitions | FE-02 | Improves scanability and focuses row actions | Feature column contracts and current DTOs | Medium | Medium | P2 | Each resource documents columns, human labels, primary identifiers and row actions; long list behavior is explicit | all Admin list/edit flows, empty response, extra DTO property, long values, horizontal viewport, keyboard actions |
 | FE-BL-04 | Make CSKH filters deliberate and cases deep-linkable | Support routes, queue, detail, forms | FE-04, FE-05 | Less request churn and better context recovery | Add safe route/query state; preserve permission checks | Medium-high | High | P1 | Search is debounced or applied explicitly; changing filters has defined selection behavior; selected case survives refresh/back; drafts are protected | CSKH-01..06, request-count test, reordered responses, failed retry, unsaved text, duplicate writes, forbidden reference |

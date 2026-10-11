@@ -22,8 +22,6 @@ export const ADMIN_SECTION_PERMISSIONS = Object.freeze({
   dashboard: 'XEM_BAO_CAO_TOANHE',
   revenue: 'XEM_BAO_CAO_TOANHE',
   users: 'QL_NGUOIDUNG',
-  roles: 'QL_VAITRO',
-  permissions: 'QL_QUYEN',
   assignments: 'PHANCONG_RAP',
   cinemas: 'QL_RAP',
   cinemaImages: 'QL_RAP',

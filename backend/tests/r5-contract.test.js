@@ -1,4 +1,4 @@
-﻿import assert from 'node:assert/strict';
+import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 import {
@@ -27,7 +27,7 @@ test('R5 BUG009/010: route, query, body, FK, array and count reject SQL INT over
   for (const v of [0, -1, 1.5, NaN, Infinity, 2147483648, '1', null, []]) {
     invalid(() => sqlInteger(v, 'id'));
     invalid(() => admin.movieWrite({ ...movie, durationMinutes: v }, true));
-    invalid(() => admin.rolePermissionSet({ permissionIds: [v] }));
+    invalid(() => admin.movieWrite({ ...movie, genreIds: [v] }, true));
     invalid(() => admin.movieCast({ cast: [{ actorId: v, role: 'R5' }] }));
     invalid(() => manager.showtimeCreate({ ...show, roomId: v }));
     invalid(() => manager.seatCreate({ row: 'A', number: v }));
@@ -38,7 +38,7 @@ test('R5 BUG009/010: route, query, body, FK, array and count reject SQL INT over
   }
   assert.equal(sqlId('2147483647'), 2147483647);
   assert.equal(sqlInteger(1, 'count'), 1);
-  assert.deepEqual(admin.rolePermissionSet({ permissionIds: [] }), { permissionIds: [] });
+  assert.deepEqual(admin.movieWrite(movie, true).genreIds, []);
   assert.equal(admin.cinemaImageWrite({ url: '/r5.svg', displayOrder: 0 }, true).displayOrder, 0);
   for (const v of [1.5, '1', NaN, -1, 2147483648])
     invalid(() => admin.cinemaImageWrite({ url: '/r5.svg', displayOrder: v }, true));
@@ -125,8 +125,6 @@ test('R5 BUG011: resource-specific string limits accept the boundary and reject 
       100,
       (v) => admin.userCreate({ name: v, email: 'r5@test.com', password: 'password8', roleId: 1 }),
     ],
-    ['role', 100, (v) => admin.roleWrite({ code: 'R5', name: v }, true)],
-    ['permission', 100, (v) => admin.permissionWrite({ code: 'R5', name: v }, true)],
     ['cinema', 150, (v) => admin.cinemaWrite({ name: v, address: 'R5', city: 'R5' }, true)],
     ['room', 100, (v) => admin.roomWrite({ cinemaId: 1, name: v, type: '2D' }, true)],
     [

@@ -159,6 +159,7 @@ export function generateVerification(metadata) {
         'dependencies',
         'security',
         'seed',
+        'fixed_rbac',
       ]
         .map((n) => `:r ./12_verify/verify_${n}.sql`)
         .join('\n'),

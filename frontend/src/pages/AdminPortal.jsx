@@ -10,12 +10,13 @@ import CinemaImageManager from '../components/CinemaImageManager';
 import { bookingErrorMessage } from '../utils/bookingLimits';
 import { OrderReferenceDetails } from '../components/ComplaintOrderReference';
 import AdminRevenue from '../components/AdminRevenue';
+import { ManagerAssignmentSelect, ManagerAssignmentsContext } from '../components/ManagerAssignmentFields';
+import { assignmentTransferMessage } from '../utils/managerAssignments';
+import { useStaffShell } from '../layouts/StaffShellContext';
 
 const sections = [
   ['dashboard', 'Tổng quan'],
   ['users', 'Tài khoản'],
-  ['roles', 'Vai trò'],
-  ['permissions', 'Quyền'],
   ['assignments', 'Phân công'],
   ['cinemas', 'Rạp'],
   ['cinemaImages', 'Ảnh rạp'],
@@ -34,9 +35,14 @@ const sections = [
 const loaders = {
   dashboard: (api) => api.dashboard(),
   users: (api) => api.users(),
-  roles: (api) => api.roles(),
-  permissions: (api) => api.permissions(),
-  assignments: (api) => api.assignments(),
+  assignments: async (api) => {
+    const [data, users, cinemas] = await Promise.all([api.assignments(), api.users(), api.cinemas()]);
+    return {
+      ...data,
+      managerChoices: users.users.filter((row) => row.MaVaiTro === 'QUAN_LY_RAP'),
+      cinemaChoices: cinemas.cinemas,
+    };
+  },
   cinemas: (api) => api.cinemas(),
   rooms: (api) => api.rooms(),
   seats: (api) => api.seats(),
@@ -87,23 +93,23 @@ export default function AdminPortal() {
 
 function AdminWorkspace() {
   const { user } = useAuth();
+  const shell = useStaffShell();
   const allowedSections = sections.filter(([key]) =>
     userCanAct(user, 'ADMIN', ADMIN_SECTION_PERMISSIONS[key]),
   );
-  const [selectedSection, setActive] = useState('dashboard');
+  const [standaloneSection, setStandaloneSection] = useState('dashboard');
+  const selectedSection = shell?.portal === 'admin' ? shell.activeAdminSection : standaloneSection;
   const active = String(
     allowedSections.some(([key]) => key === selectedSection)
       ? selectedSection
       : (allowedSections[0]?.[0] ?? ''),
   );
-  const canGrant = userCanAct(user, 'ADMIN', 'QL_QUYEN');
   const canProcess = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'XULY_KHIEUNAI');
   const canReference = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'TRA_CUU_DON');
   const [state, setState] = useState({ status: 'loading' });
   const [selected, setSelected] = useState(null);
   const [values, setValues] = useState({});
   const loadRequest = useRef(0);
-  const grantRequest = useRef(0);
   const editorResource = useRef(active);
   const [notice, setNotice] = useState(null);
   const editorGeneration = useRef(0);
@@ -122,7 +128,7 @@ function AdminWorkspace() {
   }, [active]);
   useEffect(() => {
     mounted.current = true;
-    const requests = [complaintRequest, loadRequest, grantRequest];
+    const requests = [complaintRequest, loadRequest];
     return () => {
       mounted.current = false;
       requests.forEach((request) => {
@@ -133,48 +139,6 @@ function AdminWorkspace() {
   const [processingForm, setProcessingForm] = useState({ content: '', nextStatus: 'Đang xử lý' });
   const [reportInput, setReportInput] = useState({ fromDate: '', toDate: '' });
   const [reportRange, setReportRange] = useState({});
-  const [grantRoleId, setGrantRoleId] = useState('');
-  const [grantIds, setGrantIds] = useState('');
-  const readGrants = async () => {
-    if (!canGrant || !grantRoleId) return;
-    const requestId = ++grantRequest.current;
-    try {
-      const result = await adminApi.rolePermissions(grantRoleId);
-      if (requestId === grantRequest.current)
-        setGrantIds(result.permissions.map((item) => item.QuyenID).join(','));
-    } catch (error) {
-      if (requestId === grantRequest.current) setNotice({ ok: false, text: error.message });
-    }
-  };
-  const saveGrants = async (event) => {
-    event.preventDefault();
-    if (!canGrant || editorWritePending.current) return;
-    editorWritePending.current = true;
-    setEditorBusy(true);
-    setNotice(null);
-    const requestId = grantRequest.current,
-      target = grantRoleId;
-    try {
-      await adminApi.update(`roles/${target}/permissions`, {
-        permissionIds: grantIds
-          .split(',')
-          .filter((value) => value.trim())
-          .map(Number),
-      });
-      if (
-        mounted.current &&
-        requestId === grantRequest.current &&
-        currentModule.current === 'permissions'
-      )
-        setNotice({ ok: true, text: 'Đã cập nhật quyền của vai trò.' });
-    } catch (error) {
-      if (mounted.current && requestId === grantRequest.current)
-        setNotice({ ok: false, text: error.message });
-    } finally {
-      editorWritePending.current = false;
-      if (mounted.current) setEditorBusy(false);
-    }
-  };
   const load = useCallback(async () => {
     if (editorResource.current !== active) {
       editorResource.current = active;
@@ -189,7 +153,7 @@ function AdminWorkspace() {
     setState({ status: 'loading' });
     try {
       const data = await loaders[active](adminApi, reportRange);
-      if (active === 'users' && userCanAct(user, 'ADMIN', 'QL_VAITRO')) {
+      if (active === 'users' && userCanAct(user, 'ADMIN', 'QL_NGUOIDUNG')) {
         try {
           data.roleChoices = (await adminApi.roles()).roles;
         } catch {
@@ -217,6 +181,10 @@ function AdminWorkspace() {
         .map((row) => [row.VaiTroID, { id: row.VaiTroID, name: row.TenVaiTro }]),
     ).values(),
   ];
+  const managerChoices = state.resource === 'assignments' ? (state.data?.managerChoices ?? []) : [];
+  const cinemaChoices = state.resource === 'assignments' ? (state.data?.cinemaChoices ?? []) : [];
+  const assignmentReady = managerChoices.some((row) => row.NguoiDungID === Number(values.userId))
+    && cinemaChoices.some((row) => row.RapID === Number(values.cinemaId));
   const editableFields = definition ? formFields(definition, Boolean(selected)) : [];
   const onSelect = (row) => {
     editorGeneration.current++;
@@ -233,26 +201,35 @@ function AdminWorkspace() {
     }
     setValues(rowValues);
   };
-  const clearForm = () => {
+  const shellPortal = shell?.portal;
+  const setShellActiveAdminSection = shell?.setActiveAdminSection;
+  const registerAdminNavigation = shell?.registerAdminNavigation;
+  const clearForm = useCallback(() => {
     editorGeneration.current++;
     setSelected(null);
     setValues({});
-  };
-  const switchSection = (key) => {
+  }, []);
+  const switchSection = useCallback((key) => {
     if (key !== active) loadRequest.current += 1;
     complaintRequest.current++;
     complaintSelection.current = null;
     setState({ status: 'loading' });
-    grantRequest.current += 1;
-    setActive(key);
+    setStandaloneSection(key);
+    if (shellPortal === 'admin') setShellActiveAdminSection(key);
     clearForm();
     setNotice(null);
     setComplaint(null);
     setOrderReference(null);
-    setGrantRoleId('');
-    setGrantIds('');
     setProcessingForm({ content: '', nextStatus: 'Đang xử lý' });
-  };
+  }, [active, clearForm, setShellActiveAdminSection, shellPortal]);
+  const switchSectionRef = useRef(switchSection);
+  useLayoutEffect(() => {
+    switchSectionRef.current = switchSection;
+  }, [switchSection]);
+  useEffect(() => {
+    if (shellPortal !== 'admin' || !registerAdminNavigation) return undefined;
+    return registerAdminNavigation((key) => switchSectionRef.current(key));
+  }, [shellPortal, registerAdminNavigation]);
   const submit = async (event) => {
     event.preventDefault();
     if (editorWritePending.current || !definition) return;
@@ -262,6 +239,11 @@ function AdminWorkspace() {
       !accountRoles.some((role) => role.id === Number(values.roleId))
     )
       return;
+    if (active === 'assignments') {
+      if (!assignmentReady) return;
+      const transfer = assignmentTransferMessage(selected, values, managerChoices, cinemaChoices);
+      if (transfer && !window.confirm(transfer)) return;
+    }
     editorWritePending.current = true;
     setEditorBusy(true);
     setNotice(null);
@@ -485,6 +467,30 @@ function AdminWorkspace() {
     return (
       <section className="catalog-section" aria-label="Quản lý ảnh rạp">
         <h1>Quản trị hệ thống</h1>
+        {!shell && (
+          <nav className="catalog-actions" aria-label="Phân hệ quản trị">
+            {allowedSections.map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                aria-pressed={active === key}
+                className="catalog-button"
+                onClick={() => switchSection(key)}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+        )}
+        <h2>Ảnh rạp</h2>
+        <CinemaImageManager />
+      </section>
+    );
+
+  return (
+    <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
+      <h1>Quản trị hệ thống</h1>
+      {!shell && (
         <nav className="catalog-actions" aria-label="Phân hệ quản trị">
           {allowedSections.map(([key, label]) => (
             <button
@@ -498,58 +504,8 @@ function AdminWorkspace() {
             </button>
           ))}
         </nav>
-        <h2>Ảnh rạp</h2>
-        <CinemaImageManager />
-      </section>
-    );
-
-  return (
-    <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
-      <h1>Quản trị hệ thống</h1>
-      <nav className="catalog-actions" aria-label="Phân hệ quản trị">
-        {allowedSections.map(([key, label]) => (
-          <button
-            key={key}
-            type="button"
-            aria-pressed={active === key}
-            className="catalog-button"
-            onClick={() => switchSection(key)}
-          >
-            {label}
-          </button>
-        ))}
-      </nav>
-      <h2>{sections.find(([key]) => key === active)?.[1]}</h2>
-      {active === 'permissions' && canGrant && (
-        <form className="catalog-form" onSubmit={saveGrants}>
-          <h3>Gán quyền cho vai trò</h3>
-          <label>
-            Mã vai trò
-            <input
-              aria-label="Mã vai trò nhận quyền"
-              type="number"
-              min="1"
-              required
-              value={grantRoleId}
-              onChange={(event) => {
-                grantRequest.current += 1;
-                setGrantRoleId(event.target.value);
-                setGrantIds('');
-              }}
-            />
-          </label>
-          <button type="button" onClick={() => void readGrants()}>
-            Đọc quyền hiện tại
-          </button>
-          <label>
-            QuyenID (phân cách dấu phẩy)
-            <input value={grantIds} onChange={(event) => setGrantIds(event.target.value)} />
-          </label>
-          <button className="catalog-button" disabled={editorBusy}>
-            Lưu quyền vai trò
-          </button>
-        </form>
       )}
+      <h2>{sections.find(([key]) => key === active)?.[1]}</h2>
       {active === 'revenue' && (
         <form
           className="catalog-actions"
@@ -700,6 +656,10 @@ function AdminWorkspace() {
         <form className="catalog-form" onSubmit={submit}>
           <h3>{selected ? 'Cập nhật' : 'Tạo mới'}</h3>
           {selected && <p>#{selected[definition.id]}</p>}
+          {active === 'users' && selected && <p>Vai trò: {selected.TenVaiTro ?? selected.MaVaiTro} (cố định)</p>}
+          {active === 'assignments' && (
+            <ManagerAssignmentsContext managerId={values.userId} assignments={rows} />
+          )}
           {editableFields.map(([name, label, kind]) => (
             <label key={name}>
               {label}
@@ -719,6 +679,17 @@ function AdminWorkspace() {
                     </option>
                   ))}
                 </select>
+              ) : active === 'assignments' && ['userId', 'cinemaId'].includes(name) ? (
+                <ManagerAssignmentSelect
+                  field={name}
+                  label={label}
+                  value={values[name] ?? ''}
+                  managers={managerChoices}
+                  cinemas={cinemaChoices}
+                  disabled={editorBusy || state.status !== 'success'}
+                  editing={Boolean(selected)}
+                  onChange={(value) => setValues((current) => ({ ...current, [name]: value }))}
+                />
               ) : name === 'status' && RESOURCE_STATUSES[active] ? (
                 <select
                   aria-label={label}
@@ -800,7 +771,7 @@ function AdminWorkspace() {
             </label>
           ))}
           <div className="catalog-actions">
-            <button className="catalog-button" disabled={editorBusy}>
+            <button className="catalog-button" disabled={editorBusy || (active === 'assignments' && !assignmentReady)}>
               Lưu
             </button>
             {selected && (

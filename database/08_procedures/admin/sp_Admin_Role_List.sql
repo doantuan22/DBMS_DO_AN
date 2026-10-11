@@ -13,9 +13,11 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
                    WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))
         THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
-    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_VAITRO') = 0
+    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_NGUOIDUNG') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
-    SELECT VaiTroID, MaVaiTro, TenVaiTro, MoTa FROM dbo.VAITRO ORDER BY VaiTroID;
+    -- Read-only lookup for the existing internal-account creation workflow.
+    SELECT VaiTroID, MaVaiTro, TenVaiTro, MoTa FROM dbo.VAITRO
+    WHERE MaVaiTro IN ('ADMIN', 'QUAN_LY_RAP', 'CSKH', 'KHACH_HANG') ORDER BY VaiTroID;
 END;
 GO

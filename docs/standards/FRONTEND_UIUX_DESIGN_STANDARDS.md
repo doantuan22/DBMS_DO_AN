@@ -29,7 +29,9 @@ Mọi thay đổi giao diện phải hướng tới đồng thời:
 
 Áp dụng cho: trang công khai, trang chủ, trang phim/rạp, booking, lịch sử đơn, thanh toán, khiếu nại khách hàng, Admin Portal, Manager Portal, CSKH Portal, shared shell, navigation, CSS/tokens, interaction, responsive, accessibility và UI testing.
 
-**Baseline nghiệp vụ chính thức là 45 Use Case:** Customer 14, Manager 9, CSKH 6, Admin 16. `ADM-17 – Cấu hình hệ thống` **không thuộc phạm vi**. Không dựng menu/màn hình ADM-17 hoặc coi nó là phần còn thiếu.
+**Baseline nghiệp vụ chính thức là 42 Use Case đang hoạt động:** Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-17 – Cấu hình hệ thống` **không thuộc phạm vi**. Không dựng menu/màn hình ADM-17 hoặc coi nó là phần còn thiếu.
+
+**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
 
 ### 0.3. Mức độ quy định
 
@@ -40,7 +42,7 @@ Mọi thay đổi giao diện phải hướng tới đồng thời:
 
 ### 0.4. Thứ tự ưu tiên khi có mâu thuẫn
 
-1. Quyết định nghiệp vụ/baseline mới nhất đã chốt trong repo; 45 UC, giới hạn role và quyền.
+1. Quyết định nghiệp vụ/baseline mới nhất đã chốt trong repo; 42 UC, giới hạn role và quyền.
 2. Ràng buộc DBMS-first và API contract, điều kiện an toàn dữ liệu/quyền.
 3. Các điều **MUST** trong tài liệu này.
 4. Thiết kế đã được duyệt cho màn hình/feature tương ứng.
@@ -55,6 +57,15 @@ Mọi thay đổi giao diện phải hướng tới đồng thời:
 - **Được phép redesign mạnh** về information architecture, layout và workflow Admin/CSKH khi đã có thiết kế mục tiêu. Không được lấy lý do “giữ nguyên giao diện cũ” để duy trì một màn hình gây khó dùng.
 - **MUST giữ nhận diện thương hiệu hiện tại**: logo, ý nghĩa trạng thái và tinh thần thị giác. Bảng màu trắng–xanh tại mục 2.2 là chuẩn màu chính thức, thay thế mọi token màu cũ của Frontend; không cần giữ palette cũ nếu nó mâu thuẫn với chuẩn này.
 - Tham khảo thiết kế bên ngoài nhằm học **pattern**, **không sao chép giao diện, mã nguồn, hình ảnh hoặc nhận diện** của nhà cung cấp.
+
+### 0.6. Phân kỳ triển khai
+
+- **Phase 1 — UX Architecture:** chốt chuẩn màu, sitemap, wireframe, component contract và regression plan; chưa sửa source.
+- **Phase 2 — Design System & Component Architecture:** triển khai tokens/base styles, `PublicShell`, `StaffShell` và shared UI primitives; giữ URL hiện tại và không refactor workflow nghiệp vụ từng portal.
+- **Phase 3 — Portal Refactor:** chuyển Admin, Manager, CSKH và Customer theo nhóm/route đã được duyệt; giữ nguyên 42 UC, API contract, RBAC, manager scope và business logic.
+- **Phase 4 — Overall Acceptance:** kiểm thử tổng thể theo 42 UC, browser/role/viewport, accessibility, regression và evidence. Không đánh dấu PASS khi chưa có kết quả thực tế.
+
+Mỗi phase có review/acceptance riêng. Hoàn thành Phase 2 không tự động cho phép bắt đầu Phase 3.
 
 ---
 
@@ -190,36 +201,37 @@ App
 Các path sau là **đề xuất**, không được giả định API hoặc route đã có:
 
 ```text
-/admin                         -> redirect/overview
-/admin/users
-/admin/access/roles
-/admin/access/permissions
-/admin/access/role-grants
-/admin/assignments
+/admin                         -> compatible entry; default overview / first allowed section
+/admin/overview
+/admin/access/users
+/admin/access/assignments
 /admin/cinemas
-/admin/cinemas/:cinemaId
-/admin/rooms
-/admin/seats
-/admin/movies
-/admin/genres
-/admin/actors
-/admin/products
-/admin/promotions
-/admin/pricing
-/admin/showtimes
-/admin/complaints
-/admin/revenue
+/admin/cinemas/images
+/admin/facilities/rooms
+/admin/facilities/seats
+/admin/catalog/movies
+/admin/catalog/genres
+/admin/catalog/actors
+/admin/commerce/products
+/admin/commerce/promotions
+/admin/operations/pricing
+/admin/operations/showtimes
+/admin/service/complaints
+/admin/reports/revenue
 
 /support                       -> queue
 /support/complaints/:complaintId
 
-/manager                       -> overview
+/manager                       -> compatible entry / overview
+/manager/overview
 /manager/rooms
 /manager/seats
 /manager/showtimes
 /manager/pricing
 /manager/revenue
 ```
+
+Nhóm Admin có 16 section chia thành đúng 6 nhóm: Tổng quan; Tài khoản & phân công; Rạp & cơ sở vật chất; Nội dung; Kinh doanh & vận hành; Chăm sóc & báo cáo. ADM-03/04/05 RETIRED; không có route hoặc workflow quản lý RBAC.
 
 Không tạo thêm Use Case mới chỉ vì có một route mới; nhiều route có thể phục vụ cùng một Use Case. Route access phải phản ánh permission/scope đang tồn tại.
 
@@ -253,7 +265,7 @@ Mỗi trang nghiệp vụ (trừ trang đặc biệt có lý do riêng) nên tri
 ### 4.3. Form — MUST
 
 - **MUST** có label dễ hiểu; input thể hiện kiểu dữ liệu và giới hạn hợp lệ.
-- **MUST** dùng selector có tên cho rạp, phòng, phim, ghế, role, permission, resource reference khi có danh mục phù hợp.
+- **MUST** dùng selector có tên cho rạp, phòng, phim, ghế, vai trò khi tạo tài khoản, resource reference khi có danh mục phù hợp.
 - **MUST NOT** yêu cầu nhân viên nhập raw database ID/CSV ID/JSON nghiệp vụ để thực hiện tác vụ thường xuyên, trừ khi đó thật sự là payload chuyên gia được chốt trong yêu cầu. ID nội bộ có thể hiển thị read-only để tra cứu.
 - **MUST** có validation tại field + thông báo lỗi cạnh field hoặc ở vùng gần tác vụ; không chỉ toast chung chung.
 - **MUST** hỗ trợ loading/submitting, chống double-submit và kết quả thành công/thất bại rõ ràng.
@@ -265,7 +277,7 @@ Mỗi trang nghiệp vụ (trừ trang đặc biệt có lý do riêng) nên tri
 
 ### 4.4. Dialog, drawer và destructive actions
 
-- **MUST** dùng modal xác nhận cho thao tác có hậu quả nghiêm trọng (khóa tài khoản, thay quyền, hủy suất chiếu, xóa khi phù hợp).
+- **MUST** dùng modal xác nhận cho thao tác có hậu quả nghiêm trọng (khóa tài khoản, chuyển rạp Manager, hủy suất chiếu, xóa khi phù hợp).
 - Nội dung xác nhận **MUST** nêu rõ đối tượng, hành động, hậu quả; không dùng chỉ “Bạn chắc chắn?” mà thiếu ngữ cảnh.
 - **MUST** tránh đặt destructive action ngay cạnh primary action theo cách dễ nhấn nhầm.
 - **MUST** focus vào modal khi mở, trap focus phù hợp, trả focus về vị trí hợp lý khi đóng; `Esc` không được vô ý bỏ mất dữ liệu.
@@ -293,6 +305,23 @@ Không hiển thị raw SQL, stack trace, token, internal error detail hoặc th
 - **MUST** bảo vệ logic hiện có của `CinemaImageManager` (ownership, request-generation, retry), CSKH stale response/write locks và booking context reset.
 - **SHOULD** chuẩn hóa async-state pattern dùng lại, nhưng không thay thế toàn bộ bằng thư viện mới nếu không có chứng cứ nhu cầu.
 
+### 4.7. Component contract — MUST
+
+Mỗi shared component được thêm hoặc chuẩn hóa phải có đặc tả API trước khi merge; tối thiểu ghi rõ:
+
+| Thuộc tính | Nội dung phải có |
+|---|---|
+| Props | Tên, kiểu, required/optional, default, callback semantics; kế thừa native HTML props khi hợp lý |
+| Variants | Các biến thể được hỗ trợ và mục đích (ví dụ `primary/secondary/danger`, `sm/md/lg`) |
+| States | Default, hover, focus, active, disabled, loading, invalid/error và empty khi áp dụng |
+| Responsive | Hành vi ở desktop/tablet/mobile; overflow, wrapping, drawer hoặc stacked layout |
+| Accessibility | Semantic element, accessible name/label, keyboard, focus, ARIA, contrast, screen reader behavior |
+| Interaction | Click/submit/cancel/escape/outside click, pending/duplicate behavior và kết quả callback |
+
+- Không dùng prop mơ hồ như `type` nếu nó đồng thời biểu diễn nhiều ý nghĩa; ưu tiên API nhỏ và rõ.
+- Shared component nhận dữ liệu/hành động qua props và không gọi API, kiểm tra permission nghiệp vụ hoặc tự tạo business state theo role.
+- Component có side effect (ví dụ dialog) phải mô tả lifecycle, focus entry/return và hành vi khi đóng/mở.
+
 ---
 
 ## 5. ADMIN PORTAL — ENTERPRISE CONTROL CENTER
@@ -306,12 +335,13 @@ Admin cần tìm đúng module nhanh, nhìn thấy bản ghi quan trọng, hiể
 | Nhóm | Module/chức năng cần có | Baseline liên quan |
 |---|---|---|
 | Tổng quan | Dashboard tổng hợp | ADM-16 (nếu dashboard có dữ liệu đã hỗ trợ) |
-| Tài khoản & phân quyền | Người dùng; Vai trò; Quyền; Gán quyền vai trò; Phân công quản lý | ADM-02–ADM-06 |
-| Cơ sở vật chất | Rạp; phòng; ghế; ảnh rạp nếu tính năng đã triển khai | ADM-07–ADM-08 |
-| Nội dung & bán vé | Phim; thể loại; diễn viên; sản phẩm; khuyến mãi; bảng giá; suất chiếu | ADM-09–ADM-14 |
+| Tài khoản & phân công | Người dùng; Phân công/chuyển rạp cho Manager | ADM-02, ADM-06 |
+| Rạp & cơ sở vật chất | Rạp; phòng; ghế; ảnh rạp nếu tính năng đã triển khai | ADM-07–ADM-08 |
+| Nội dung | Phim; thể loại; diễn viên | ADM-09–ADM-10 |
+| Kinh doanh & vận hành | Sản phẩm; khuyến mãi; bảng giá; suất chiếu | ADM-11–ADM-14 |
 | Chăm sóc & báo cáo | Khiếu nại; doanh thu/báo cáo | ADM-15–ADM-16 |
 
-`ADM-01` là truy cập/xác thực, không phải mục CRUD riêng. **Không có ADM-17.** Các mục chỉ hiển thị khi có quyền thích hợp; tên menu phù hợp nội dung thật của API.
+Sáu nhóm sidebar là **Tổng quan; Tài khoản & phân công; Rạp & cơ sở vật chất; Nội dung; Kinh doanh & vận hành; Chăm sóc & báo cáo**. Sử dụng route architecture của Blueprint làm nguồn chuẩn; `ADM-01` là truy cập/xác thực, không phải mục CRUD riêng. **Không có ADM-17.** Các mục chỉ hiển thị khi có quyền thích hợp; tên menu phù hợp nội dung thật của API.
 
 ### 5.3. Layout từng trang quản trị
 
@@ -335,9 +365,9 @@ StaffShell / Admin sidebar
 
 **Người dùng:** tên/email/trạng thái/vai trò và hành động khóa/mở phải dễ nhận; thao tác khóa phải xác nhận tên hoặc email đối tượng.
 
-**Vai trò và quyền:** role được chọn bằng tên; danh sách permission được phân nhóm, có tên/mô tả; màn hình grant hiển thị **hiện tại → dự kiến thêm/bỏ → xác nhận**. Không nhập chuỗi `QuyenID` thủ công. Backend vẫn là thẩm quyền cuối.
+**Vai trò và quyền:** chỉ chọn vai trò cố định bằng tên khi tạo tài khoản; vai trò hiện hữu chỉ đọc. Không có màn hình CRUD vai trò/quyền hoặc gán/thu hồi quyền. Backend/SQL từ chối mọi thao tác ghi RBAC.
 
-**Phân công rạp:** chọn quản lý và rạp bằng nhãn có nghĩa; hiển thị thời hạn/phạm vi nếu API có dữ liệu. Không tạo quyền vượt scope từ frontend.
+**Phân công rạp:** chọn Manager và rạp bằng tên; hiển thị phân công hiện tại, thời hạn và trạng thái. Chuyển rạp phải xác nhận Manager, rạp cũ và rạp mới trước khi gọi API cập nhật phân công. Giữ hỗ trợ nhiều phân công hiện có; không tự đặt giới hạn một rạp.
 
 **Rạp/phòng/ghế:** giữ hierarchy `Rạp → Phòng → Ghế`; hiển thị ngữ cảnh cha ở header/breadcrumb. Quản lý sơ đồ ghế bằng pattern không gian khi phù hợp, nhưng giữ hành động trên ghế và trạng thái lịch sử rõ ràng.
 
@@ -353,9 +383,9 @@ StaffShell / Admin sidebar
 
 ### 5.5. Admin MUST NOT
 
-- 18 nút section phẳng trong một hàng/khối điều hướng.
+- 16 nút section phẳng trong một hàng/khối điều hướng.
 - Table tự động xuất tất cả field JSON/DTO.
-- Tác vụ role-permission bằng ID/CSV nhập tay.
+- Mọi thao tác thêm/sửa/xóa vai trò/quyền hoặc gán/thu hồi quyền.
 - Editor cast JSON cho người quản trị phổ thông khi có thể biểu diễn bằng lựa chọn có nhãn.
 - Dồn data fetch, permission checks, form hydration và mutation của mọi domain vào một component khổng lồ.
 - Hiển thị action thiếu quyền rồi dựa vào việc API trả 403 như UX mặc định.
@@ -374,12 +404,13 @@ Chỉ thực hiện nghiệp vụ trong `CSKH-01...CSKH-06`; **không tự thêm
 
 ```text
 StaffShell / CSKH
-├── Queue panel: tìm kiếm, filter, danh sách, count/status
-├── Case detail: người gửi, nội dung, timeline
-└── Context/actions: đơn tham chiếu (nếu có), ghi xử lý, đổi trạng thái
+├── Vùng 1 — Queue: tìm kiếm, filter, danh sách, count/status
+├── Vùng 2 — Chi tiết + Timeline: người gửi, nội dung case, lịch sử theo thứ tự
+└── Vùng 3 — Đơn tham chiếu + Hành động: reference/denied/empty/error, ghi xử lý, đổi trạng thái
 ```
 
-- **SHOULD** áp dụng `master–detail` (2–3 vùng) ở desktop nếu duy trì được không gian đọc; không ép 3 cột ở viewport hẹp.
+- **MUST** trên desktop rộng phân định ba vùng không trùng lặp: **Queue | Chi tiết + Timeline | Đơn tham chiếu + Hành động**. Timeline chỉ xuất hiện trong vùng chi tiết; vùng thứ ba dành cho đơn tham chiếu và hai thao tác hiện có.
+- **SHOULD** giữ queue và detail đọc được; khi chiều rộng không đủ, chuyển vùng context/action thành panel hoặc drawer, không ép ba cột chật.
 - **MUST** phân tách rõ **dữ liệu đọc** và **hành động ghi**; thao tác trạng thái không bị lẫn với ghi chú xử lý.
 - **MUST** trường hợp không có đơn tham chiếu hiển thị “Không gắn đơn đặt vé”; API error phải hiện error/retry riêng.
 - **MUST** hiển thị timeline theo thứ tự được định nghĩa, bao gồm người xử lý, thời gian, nội dung và trạng thái nếu dữ liệu có.
@@ -542,6 +573,7 @@ frontend/src/
 - Không lặp lại UI pattern phổ biến ở mỗi portal nếu có thể tái sử dụng hợp lý.
 - **MUST** giữ permission/ownership/request-generation guards khi extract component; không refactor theo cách làm mất tính an toàn.
 - **MUST** giữ current public URLs và API contract hoặc cung cấp redirect/migration có test.
+- **MUST** công bố component contract (props, variants, states, responsive, accessibility, interaction) theo mục 4.7 cho shared components mới/đã chuẩn hóa.
 
 ### 9.3. CSS ownership
 
@@ -609,7 +641,7 @@ Mục tiêu thiết kế và kiểm thử: **WCAG 2.2 AA** ở các tiêu chí �
 - **MUST** giữ chính sách giá không có `Ngày lễ`.
 - **MUST** giữ biến đổi thời gian/timezone và snapshot/history semantics hiện có.
 - **MUST** tránh regression của ADM-07 cinema images, booking held seats, complaint stale selection và duplicate writes.
-- **MUST** không thêm bảng DB, feature nghiệp vụ hay dịch vụ ngoài phạm vi 45 UC từ một ý tưởng UI.
+- **MUST** không thêm bảng DB, feature nghiệp vụ hay dịch vụ ngoài phạm vi 42 UC từ một ý tưởng UI.
 
 ---
 
@@ -668,7 +700,7 @@ Acceptance criteria:
 - Kiểm tra permission, refresh, deep links, back/forward, stale response, double submit, error/retry.
 - Chụp screenshot các viewport quan trọng; kiểm tra visual regression thực tế.
 - Axe + keyboard focus; kiểm tra empty/loading/error với data fixture phù hợp.
-- Đối chiếu 45 UC để chứng minh không mất chức năng. Với phase đơn lẻ chỉ cần regression đầy đủ UC bị ảnh hưởng + smoke chung; final nghiệm thu phải kiểm 45/45.
+- Đối chiếu 42 UC để chứng minh không mất chức năng. Với phase đơn lẻ chỉ cần regression đầy đủ UC bị ảnh hưởng + smoke chung; final nghiệm thu phải kiểm 42/42.
 - Không được ghi `PASS` khi chỉ phân tích source hoặc chỉ có build PASS; dùng `NOT VERIFIED`/`BLOCKED` kèm lý do.
 
 ### Gate 5 — Delivery
@@ -681,9 +713,9 @@ Mỗi task UI/UX cần báo cáo ngắn: issue đã xử lý, routes/components,
 
 | Audit ID | Ràng buộc khắc phục | Mức ưu tiên theo audit |
 |---|---|---|
-| FE-01 | Admin sidebar theo nhóm, module riêng, route-backed; không dồn 18 section vào trang đơn khối | P2 |
+| FE-01 | Admin sidebar theo nhóm, module riêng, route-backed; không dồn 16 section vào trang đơn khối | P2 |
 | FE-02 | Curated columns/action và table patterns; không expose toàn bộ DTO | P2 |
-| FE-03 | Role/permission chọn theo tên + preview diff + confirm; không nhập raw IDs/CSV | P1 |
+| FE-03 | RETIRED phần quản lý RBAC; giữ selector vai trò lúc tạo tài khoản và selector Manager/rạp + xác nhận chuyển rạp | P1 |
 | FE-04 | CSKH filter có commit boundary, không duplicate request và không xóa draft âm thầm | P2 |
 | FE-05 | CSKH case deep link và restore ngữ cảnh làm việc | P2 |
 | FE-06 | CSS ownership theo shell/primitives/features, giữ tokens/identity | P2 |
@@ -747,7 +779,7 @@ Rule / section:
 Affected feature / route:
 Why the standard is not appropriate here:
 Alternative UX and security/accessibility approach:
-Impact on 45 UC / API / RBAC / Design System:
+Impact on 42 UC / API / RBAC / Design System:
 Evidence / prototype / test plan:
 Decision owner / approval:
 Review date:
@@ -762,8 +794,8 @@ Không tự ý thay đổi quy chuẩn hoặc bỏ check khi không có quyết 
 ### 16.1. Nguồn nội bộ của dự án
 
 - `FRONTEND_DEEP_AUDIT_REPORT.md` — Frontend Deep Audit (2026-10-11), issue FE-01...FE-07, source/static audit, readiness.
-- `ROADMAP_HOAN_THIEN_HE_THONG_SAU_AUDIT.md` — baseline 45 UC, ADM-17 out of scope, DBMS-first, rollback/authorization constraints.
-- Các tài liệu phân tích thiết kế/Use Case và ma trận 45 UC hiện hành trong repository (nếu đường dẫn thay đổi, tra file thực tế thay vì đoán path).
+- Lộ trình hiện có trong `UX_ARCHITECTURE_BLUEPRINT.md` §7.2 — baseline 42 UC; roadmap cũ đã được thu gọn khỏi repo, không yêu cầu tái tạo.
+- Các tài liệu phân tích thiết kế/Use Case và ma trận 42 UC hiện hành trong repository (nếu đường dẫn thay đổi, tra file thực tế thay vì đoán path).
 
 ### 16.2. Nguồn chính thức tham khảo pattern (không phải phụ thuộc thư viện)
 
@@ -790,6 +822,6 @@ Không tự ý thay đổi quy chuẩn hoặc bỏ check khi không có quyết 
 
 ## 17. DIRECTIVE NGẮN DÀNH CHO AI CODING AGENT
 
-> Khi triển khai hoặc sửa bất kỳ màn hình React nào, **đọc và tuân thủ** `FRONTEND_UIUX_DESIGN_STANDARDS.md` trước. Trước khi code, xác định role, UC, task, route, information hierarchy, component patterns, API contract, async/permission risks và trạng thái UX. Dùng **Modern Cinematic Commerce** cho Customer; **Enterprise Control Center** cho Admin; **Case Management Workspace** cho CSKH; **Cinema Operations Workspace** cho Manager. Áp dụng palette trắng–xanh chính thức ở mục 2.2, giữ logo và ý nghĩa trạng thái, cùng 45 UC, DBMS-first, REST contract và các guards hiện hữu. Không tự thêm feature, không sửa backend/database, không đưa ID/CSV/JSON kỹ thuật làm thao tác chính, không render raw DTO thành bảng, không chuyển mọi module thành nút ngang cấp. Chỉ triển khai từng slice nhỏ sau khi có design specification; đo/kiểm thử bằng browser, responsive, accessibility và regression. Nếu yêu cầu xung đột hoặc thiếu bằng chứng, dừng và ghi clarification; không tự đoán.
+> Khi triển khai hoặc sửa bất kỳ màn hình React nào, **đọc và tuân thủ** `FRONTEND_UIUX_DESIGN_STANDARDS.md` trước. Trước khi code, xác định role, UC, task, route, information hierarchy, component patterns, API contract, async/permission risks và trạng thái UX. Dùng **Modern Cinematic Commerce** cho Customer; **Enterprise Control Center** cho Admin; **Case Management Workspace** cho CSKH; **Cinema Operations Workspace** cho Manager. Áp dụng palette trắng–xanh chính thức ở mục 2.2, giữ logo và ý nghĩa trạng thái, cùng 42 UC, DBMS-first, REST contract và các guards hiện hữu. Không tự thêm feature, không sửa backend/database, không đưa ID/CSV/JSON kỹ thuật làm thao tác chính, không render raw DTO thành bảng, không chuyển mọi module thành nút ngang cấp. Chỉ triển khai từng slice nhỏ sau khi có design specification; đo/kiểm thử bằng browser, responsive, accessibility và regression. Nếu yêu cầu xung đột hoặc thiếu bằng chứng, dừng và ghi clarification; không tự đoán.
 
 **Kết luận ràng buộc:** Frontend phải được thiết kế **theo nhiệm vụ người dùng, có ngữ cảnh rõ, bố cục nhất quán, dữ liệu trình bày có chủ đích, và hành vi an toàn**. Đẹp nhưng khó dùng hoặc chạy được nhưng tổ chức rối đều **không đạt chuẩn**.

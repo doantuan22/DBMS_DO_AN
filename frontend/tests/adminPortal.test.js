@@ -37,8 +37,6 @@ test('Admin portal exposes the ADM resource work areas, including global cinema 
   );
   for (const label of [
     'Tài khoản',
-    'Vai trò',
-    'Quyền',
     'Phân công',
     'Rạp',
     'Ảnh rạp',
@@ -54,6 +52,7 @@ test('Admin portal exposes the ADM resource work areas, including global cinema 
   ]) {
     assert.ok(html.includes(label), `missing Admin area: ${label}`);
   }
+  assert.doesNotMatch(html, />Vai trò<|>Quyền<|Gán quyền|Lưu quyền vai trò/);
   assert.match(html, /aria-label="Cổng quản trị hệ thống"/);
 });
 
@@ -68,4 +67,25 @@ test('cinema image status is chosen from the whitelist, not typed freely', async
   );
   assert.match(source, /<label>\s*Trạng thái\s*<select\b/);
   assert.doesNotMatch(source, /<label>\s*Trạng thái\s*<input\b/);
+});
+
+test('fixed roles remain creation-only and Manager references use named selectors', async () => {
+  const { adminForms, formFields } = await vite.ssrLoadModule('/src/utils/adminForms.js');
+  assert.equal(adminForms.roles, undefined);
+  assert.equal(adminForms.permissions, undefined);
+  assert.ok(formFields(adminForms.users, false).some(([name]) => name === 'roleId'));
+  assert.ok(formFields(adminForms.users, true).every(([name]) => name !== 'roleId'));
+  const { ManagerAssignmentSelect, ManagerAssignmentsContext } = await vite.ssrLoadModule('/src/components/ManagerAssignmentFields.jsx');
+  const managers = [{ NguoiDungID: 2, HoTen: 'Quản lý Q1', Email: 'manager@example.test' }];
+  const cinemas = [{ RapID: 1, TenRap: 'Rạp Quận 1' }];
+  const html = renderToStaticMarkup(React.createElement(ManagerAssignmentSelect, { field: 'userId', label: 'Quản lý', value: 2, managers, cinemas, editing: true, onChange() {} }));
+  assert.match(html, /<select[^>]*aria-label="Quản lý"[^>]*disabled/);
+  assert.match(html, /Quản lý Q1 · manager@example.test/);
+  assert.doesNotMatch(html, /<input/);
+  const context = renderToStaticMarkup(React.createElement(ManagerAssignmentsContext, { managerId: 2, assignments: [
+    { PhanCongID: 1, NguoiDungID: 2, TenRap: 'Rạp Quận 1', NgayBatDau: '2026-01-01', NgayKetThuc: null, TrangThai: 'Hiệu lực' },
+    { PhanCongID: 2, NguoiDungID: 3, TenRap: 'Rạp của Manager khác' },
+  ] }));
+  assert.match(context, /Rạp Quận 1/);
+  assert.doesNotMatch(context, /Rạp của Manager khác/);
 });

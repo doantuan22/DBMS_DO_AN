@@ -1,11 +1,23 @@
-# Use Case Matrix ? 45 UC
+# Use Case Matrix — 42 hoạt động / 3 RETIRED (45 ID lịch sử)
 
 > **Ghi chú lưu trữ (10/10/2026):** Theo yêu cầu thu gọn `docs`, evidence, contracts, archive và tài liệu hỗ trợ đã được xóa khỏi workspace. Các nhãn case/selector trong báo cáo là tham chiếu lịch sử, không còn liên kết tới raw artifact. Kết quả và verdict được ghi trong báo cáo không thay đổi.
 
 
-**Tr?ng th?i hi?n h?nh:** R8.3 ACCEPTED ? Phase R8 DONE. Ph?m vi gi? nguy?n 45 UC; ADM-17 ngo?i ph?m vi.
+**Trạng thái hiện hành:** fixed RBAC, 42 UC hoạt động; R8.3 ACCEPTED/45 UC bên dưới là lịch sử, không phải PASS cho thay đổi mới. ADM-17 ngoài phạm vi.
 
-## K?t qu? theo vai tr?
+**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
+
+## Baseline đang hoạt động
+
+| Vai trò | UC hoạt động | RETIRED |
+|---|---:|---:|
+| Customer | 14 | 0 |
+| Manager | 9 | 0 |
+| CSKH | 6 | 0 |
+| Admin | 13 | 3 |
+| Tổng | 42 | 3 |
+
+## Kết quả R8.3 theo vai trò — lịch sử trước retirement
 
 | Vai tr? | T?ng | PASS | PARTIAL | BROKEN | MISSING |
 |---|---:|---:|---:|---:|---:|
@@ -54,9 +66,9 @@ Evidence types ???c gi? t?ch bi?t: primary journeys l? REAL_BROWSER_SQL; c?c tes
 | 29 | CSKH-06 | CSKH | Đổi trạng thái | **PASS** | P3-CSKH06-STATUS /checks/21; REAL_BROWSER_SQL | PASS |
 | 30 | ADM-01 | Admin | Đăng nhập | **PASS** | P3-ADM01-LOGIN /checks/23; REAL_BROWSER_SQL | PASS |
 | 31 | ADM-02 | Admin | Tài khoản người dùng | **PASS** | P3-ADM02-USERS /checks/24; REAL_BROWSER_SQL | PASS |
-| 32 | ADM-03 | Admin | Vai trò | **PASS** | P3-ADM03-ROLES /checks/25; REAL_BROWSER_SQL | PASS |
-| 33 | ADM-04 | Admin | Danh mục quyền | **PASS** | P3-ADM04-PERMISSIONS /checks/26; REAL_BROWSER_SQL | PASS |
-| 34 | ADM-05 | Admin | Gán quyền vai trò | **PASS** | P3-ADM05-GRANTS /checks/27; REAL_BROWSER_SQL | PASS |
+| 32 | ADM-03 | Admin | Vai trò | **RETIRED** | P3-ADM03-ROLES /checks/25; REAL_BROWSER_SQL | PASS |
+| 33 | ADM-04 | Admin | Danh mục quyền | **RETIRED** | P3-ADM04-PERMISSIONS /checks/26; REAL_BROWSER_SQL | PASS |
+| 34 | ADM-05 | Admin | Gán quyền vai trò | **RETIRED** | P3-ADM05-GRANTS /checks/27; REAL_BROWSER_SQL | PASS |
 | 35 | ADM-06 | Admin | Phân công quản lý | **PASS** | P3-ADM06-ASSIGNMENTS /checks/28; REAL_BROWSER_SQL | PASS |
 | 36 | ADM-07 | Admin | Rạp và hình ảnh | **PASS** | P3-ADM07-CINEMAS /checks/29; REAL_BROWSER_SQL | **BROKEN** |
 | 37 | ADM-08 | Admin | Phòng và ghế toàn hệ | **PASS** | P3-ADM08-ROOM-SEAT /checks/30; REAL_BROWSER_SQL | PASS |

@@ -28,9 +28,9 @@ BEGIN
     BEGIN TRY
     IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminCreateUser;
     -- R7.2 approved policy: internal Manager/CSKH/Admin accounts only.
-    -- Lock the role through insertion; an unknown role retains its existing FK contract.
-    IF EXISTS (SELECT 1 FROM dbo.VAITRO WITH (HOLDLOCK) WHERE VaiTroID = @VaiTroID
-               AND MaVaiTro NOT IN ('QUAN_LY_RAP', 'CSKH', 'ADMIN'))
+    -- Only fixed internal roles may be assigned at account creation.
+    IF NOT EXISTS (SELECT 1 FROM dbo.VAITRO WITH (HOLDLOCK) WHERE VaiTroID = @VaiTroID
+                   AND MaVaiTro IN ('QUAN_LY_RAP', 'CSKH', 'ADMIN'))
         THROW 50404, N'Admin chỉ được tạo tài khoản Manager, CSKH hoặc Admin.', 1;
     IF EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE Email = @Email)
     BEGIN

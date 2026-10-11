@@ -181,25 +181,6 @@ export const userStatus = (v) => {
   const result = bodyShape(v, { status: 'string:50' });
   return enums(result, 'users');
 };
-export const roleWrite = (v, create = false) => {
-  const result = bodyShape(
-    v,
-    create
-      ? { code: 'string:50', name: 'string:100', description: 'string:255?' }
-      : { name: 'string:100', description: 'string:255?' },
-  );
-  if (result.name.length > 100)
-    throw new HttpError(400, 'INVALID_REQUEST', 'name must be at most 100 characters.');
-  return result;
-};
-export const permissionWrite = (v, create = false) =>
-  bodyShape(
-    v,
-    create
-      ? { code: 'string:50', name: 'string:100', description: 'string:255?' }
-      : { name: 'string:100', description: 'string:255?' },
-  );
-export const rolePermissionSet = (v) => bodyShape(v, { permissionIds: 'ids' });
 export const assignmentWrite = (v, create = false) => {
   const result = enums(
     bodyShape(v, {

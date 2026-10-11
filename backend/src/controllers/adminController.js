@@ -18,9 +18,6 @@ export const users = handle(async (req) => ({
   users: await adminService.users(req.user.userId, validators.userFilters(req.query)),
 }));
 export const roles = handle(async (req) => ({ roles: await adminService.roles(req.user.userId) }));
-export const permissions = handle(async (req) => ({
-  permissions: await adminService.permissions(req.user.userId),
-}));
 export const assignments = handle(async (req) => ({
   assignments: await adminService.assignments(
     req.user.userId,
@@ -57,54 +54,6 @@ export const updateUserStatus = handle(async (req) => ({
     req.user.userId,
     validators.pathId(req.params.userId, 'userId'),
     validators.userStatus(req.body).status,
-  ),
-}));
-export const createRole = handle(async (req) => ({
-  role: await adminService.createRole(req.user.userId, validators.roleWrite(req.body, true)),
-}));
-export const updateRole = handle(async (req) => ({
-  role: await adminService.updateRole(
-    req.user.userId,
-    validators.pathId(req.params.roleId, 'roleId'),
-    validators.roleWrite(req.body),
-  ),
-}));
-export const deleteRole = handle(async (req) => ({
-  result: await adminService.deleteRole(
-    req.user.userId,
-    validators.pathId(req.params.roleId, 'roleId'),
-  ),
-}));
-export const createPermission = handle(async (req) => ({
-  permission: await adminService.createPermission(
-    req.user.userId,
-    validators.permissionWrite(req.body, true),
-  ),
-}));
-export const updatePermission = handle(async (req) => ({
-  permission: await adminService.updatePermission(
-    req.user.userId,
-    validators.pathId(req.params.permissionId, 'permissionId'),
-    validators.permissionWrite(req.body),
-  ),
-}));
-export const deletePermission = handle(async (req) => ({
-  result: await adminService.deletePermission(
-    req.user.userId,
-    validators.pathId(req.params.permissionId, 'permissionId'),
-  ),
-}));
-export const setRolePermissions = handle(async (req) => ({
-  permissions: await adminService.setRolePermissions(
-    req.user.userId,
-    validators.pathId(req.params.roleId, 'roleId'),
-    validators.rolePermissionSet(req.body).permissionIds,
-  ),
-}));
-export const rolePermissions = handle(async (req) => ({
-  permissions: await adminService.rolePermissions(
-    req.user.userId,
-    validators.pathId(req.params.roleId, 'roleId'),
   ),
 }));
 export const createAssignment = handle(async (req) => ({
