@@ -2,7 +2,7 @@
 
 The database is authoritative for business rules, authorization, money, transaction boundaries and concurrency. The application calls typed stored procedures through the procedure client; business SQL does not belong in Backend code. Current project constraints are in [accepted constraints](../docs/FINAL_SYSTEM_AUDIT.md).
 
-The canonical database contains **27 tables and 160 SQL modules**: 125 procedures, 6 views, 21 functions and 8 triggers. Source files and `baseline-manifest.json` are authoritative. The current system audit records the latest parity and safety checks in [FINAL_SYSTEM_AUDIT.md](../docs/FINAL_SYSTEM_AUDIT.md).
+The canonical database contains **27 tables and 169 SQL modules**: 134 procedures, 6 views, 21 functions and 8 triggers. Source files and `baseline-manifest.json` are authoritative. The current system audit records the latest parity and safety checks in [FINAL_SYSTEM_AUDIT.md](../docs/FINAL_SYSTEM_AUDIT.md).
 
 ## Build and test
 
@@ -16,7 +16,7 @@ The npm commands are defined in the repository root `package.json`. Before runni
 
 Only Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH and Admin (`ADMIN`) are supported. Seed definitions remain 4 roles, 23 permission entries and 40 Role–Permission pairs. Historical permission codes are retained for dependencies; their presence does not expose retired management workflows. Account roles are immutable after creation. Customer registration creates Customer only; Admin creates Manager/CSKH/Admin only. Manager cinema assignments remain editable through existing procedures and scope checks.
 
-`ADM-03`, `ADM-04` and `ADM-05` are RETIRED: 42 active Use Cases and 45 historical IDs. The seven legacy RBAC write procedures keep their signatures but throw `50405`; `db_executor` is explicitly denied execution. The account-role trigger rejects changes with `50406`. No table, constraint or procedure is dropped.
+`ADM-03`, `ADM-04` and `ADM-05` are RETIRED. With QLR-10 and ADM-18, the current baseline is 44 active Use Cases and 47 traceable IDs; the prior fixed-RBAC-only baseline was 42 active. The seven legacy RBAC write procedures keep their signatures but throw `50405`; `db_executor` is explicitly denied execution. The account-role trigger rejects changes with `50406`. No table, constraint or procedure is dropped.
 
 The reviewed source migration is [r9_fixed_rbac.sql](13_migrations/r9_fixed_rbac.sql). It uses the connection's selected database, asserts the existing catalog/matrix before mutation and applies changes transactionally without reseeding. A catalog mismatch blocks deployment rather than replacing existing grants. Main deployment requires explicit authorization and target review under the rule above; repository changes alone do not protect direct SQL calls on an unmigrated database.
 
@@ -39,3 +39,22 @@ The smoke runner starts the real Backend against the selected test database, exe
 - `deployments/` — scoped deployment tooling and plans. The completed R7.2 main-database change is documented in [MAIN_DATABASE_SYNC_REPORT.md](../docs/MAIN_DATABASE_SYNC_REPORT.md); its [deployment plan](deployments/r7-2-main/PLAN.md) and [tool guide](deployments/r7-2-main/README.md) contain target protections and rollback behavior.
 
 See [the final system audit](../docs/FINAL_SYSTEM_AUDIT.md) for current acceptance and verification status.
+
+## Staff booking management — QLR-10 / ADM-18
+
+Nine new procedures in `08_procedures/staff_booking/` perform actor authorization, active Customer validation, scope validation, parent locks, list/detail/lookups, pending creation, approved seat edits and logical cancellation. Creation delegates to the unchanged Customer booking SP. No fixed RBAC seed, Customer SP, table, constraint or payment contract changes. Inventory: 27 tables / 169 modules (134 SP, 6 views, 21 functions, 8 triggers).
+
+The migration [r10_staff_booking.sql](13_migrations/r10_staff_booking.sql) verifies the fixed RBAC matrix and adds modules transactionally to the explicitly selected database; no reset/reseed, no hardcoded USE or physical deletion. Apply r9 first if the target has not yet received fixed RBAC. Main deployment still requires authorization and target review; this task verified only `CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2`.
+
+Approved edit rules: same show; unexpired hold; pending order; no payment attempts, products, promotions or used tickets. Retained tickets keep code/price/ID; removed tickets remain canceled; new tickets use current authoritative prices. Expected active ticket IDs prevent concurrent edits overwriting each other. Owner/show/hold remain unchanged. Paid/used orders are read-only; no voluntary refund or physical deletion.
+
+On a built/seeded isolated target, run sequentially:
+
+```powershell
+node scripts/db/run.mjs test --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
+node scripts/db/staff-booking-smoke.mjs --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
+node scripts/db/staff-booking-browser.mjs --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
+node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
+```
+
+The SQL regression rolls fixtures back. HTTP smoke intentionally retains a paid order and canceled histories on the test target; its result provides the paid/foreign IDs consumed by the browser runner. Browser testing uses installed Edge and native CDP with a temporary profile under ignored `.audit-output/`, a real Backend, and a Vite proxy explicitly pointed to that Backend/Test DB. No browser/UI dependency is installed. Run canonical SQL tests before browser tests, because legacy smoke chooses the first seat without checking availability; a failed browser fixture can temporarily hold that seat. A failed first build target remains isolated and is not a valid test target. See the current [audit](../docs/FINAL_SYSTEM_AUDIT.md) for actual results and deployment limits.

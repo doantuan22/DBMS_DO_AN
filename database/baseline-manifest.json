@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "provenance": "Rebuilt exclusively from source: 2026-10-11T08:53:13.386Z",
+  "provenance": "Rebuilt exclusively from source: 2026-10-11T09:27:01.074Z",
   "steps": [
     "00_database/002_create_database.sql",
     "00_database/003_database_options.sql",
@@ -209,6 +209,15 @@
     "08_procedures/admin/usp_Admin_Showtime_List.sql",
     "08_procedures/admin/usp_Admin_Showtime_Update.sql",
     "07_triggers/TRG_NguoiDung_VaiTroBatBien.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_Authorize.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_LockShow.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_Customers.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_Options.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_List.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_Detail.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_Create.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_UpdateSeats.sql",
+    "08_procedures/staff_booking/sp_StaffBooking_Cancel.sql",
     "09_security/001_execute_role.sql",
     "08_procedures/admin/sp_Admin_Genre_List.sql"
   ],
@@ -372,12 +381,21 @@
     "usp_Admin_Showtime_List": "08_procedures/admin/usp_Admin_Showtime_List.sql",
     "usp_Admin_Showtime_Update": "08_procedures/admin/usp_Admin_Showtime_Update.sql",
     "TRG_NguoiDung_VaiTroBatBien": "07_triggers/TRG_NguoiDung_VaiTroBatBien.sql",
+    "sp_StaffBooking_Authorize": "08_procedures/staff_booking/sp_StaffBooking_Authorize.sql",
+    "sp_StaffBooking_LockShow": "08_procedures/staff_booking/sp_StaffBooking_LockShow.sql",
+    "sp_StaffBooking_Customers": "08_procedures/staff_booking/sp_StaffBooking_Customers.sql",
+    "sp_StaffBooking_Options": "08_procedures/staff_booking/sp_StaffBooking_Options.sql",
+    "sp_StaffBooking_List": "08_procedures/staff_booking/sp_StaffBooking_List.sql",
+    "sp_StaffBooking_Detail": "08_procedures/staff_booking/sp_StaffBooking_Detail.sql",
+    "sp_StaffBooking_Create": "08_procedures/staff_booking/sp_StaffBooking_Create.sql",
+    "sp_StaffBooking_UpdateSeats": "08_procedures/staff_booking/sp_StaffBooking_UpdateSeats.sql",
+    "sp_StaffBooking_Cancel": "08_procedures/staff_booking/sp_StaffBooking_Cancel.sql",
     "sp_Admin_Genre_List": "08_procedures/admin/sp_Admin_Genre_List.sql"
   },
   "expected": {
     "environment": [
       {
-        "databaseName": "CinemaBookingDB_R0_FIXED_RBAC_20261011",
+        "databaseName": "CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2",
         "version": "17.0.1000.7",
         "collation_name": "Vietnamese_CI_AS",
         "compatibility_level": 170,
@@ -2464,6 +2482,87 @@
         "type": "P ",
         "type_desc": "SQL_STORED_PROCEDURE",
         "definition": "CREATE   PROCEDURE dbo.sp_Showtime_ValidateTimes\r\n    @PhimID INT, @ThoiGianBatDau DATETIME2, @ThoiGianKetThuc DATETIME2,\r\n    @PhongID INT = NULL, @SuatChieuID INT = NULL, @TrangThai NVARCHAR(50) = N'Mở bán'\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @ThoiLuong INT = (SELECT ThoiLuong FROM dbo.PHIM WHERE PhimID=@PhimID);\r\n    DECLARE @Span DECIMAL(20,7)=DATEDIFF_BIG(SECOND,@ThoiGianBatDau,@ThoiGianKetThuc)\r\n        +(CONVERT(DECIMAL(20,7),DATEPART(NANOSECOND,@ThoiGianKetThuc))-DATEPART(NANOSECOND,@ThoiGianBatDau))/1000000000;\r\n    -- Unknown movie retains the existing FK/resource handling; no unrelated validation change.\r\n    IF @ThoiGianBatDau IS NULL OR @ThoiGianKetThuc IS NULL\r\n       OR @ThoiGianBatDau < dbo.fn_BayGio() OR @ThoiGianKetThuc <= @ThoiGianBatDau\r\n       OR @Span>28800\r\n       OR (@ThoiLuong IS NOT NULL AND\r\n           (@Span < CONVERT(BIGINT,@ThoiLuong)*60 OR @Span > (CONVERT(BIGINT,@ThoiLuong)+120)*60))\r\n        THROW 50216, N'Thời gian suất phải từ hiện tại, dài từ thời lượng phim đến thời lượng phim +120 phút và tối đa 8 giờ.', 1;\r\n    -- Writers hold the room UPDLOCK/HOLDLOCK in their transaction before calling.\r\n    -- Current committed read, including when the caller uses RCSI; no broad empty-range locks.\r\n    IF @PhongID IS NOT NULL AND @TrangThai<>N'Đã hủy' AND EXISTS (\r\n        SELECT 1 FROM dbo.SUATCHIEU WITH (READCOMMITTEDLOCK)\r\n        WHERE PhongID=@PhongID AND (@SuatChieuID IS NULL OR SuatChieuID<>@SuatChieuID)\r\n          AND TrangThai<>N'Đã hủy' AND ThoiGianBatDau<@ThoiGianKetThuc AND ThoiGianKetThuc>@ThoiGianBatDau\r\n    ) THROW 50001,N'Lỗi ràng buộc [BR01]: Phòng chiếu đã có suất chiếu khác trong khoảng thời gian này.',1;\r\nEND;\r\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_Authorize",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_Authorize\n    @ActorID int, @PortalRole varchar(50), @RapID int = NULL\nAS\nBEGIN\n    SET NOCOUNT ON;\n    IF NOT EXISTS(SELECT 1 FROM dbo.NGUOIDUNG WITH (HOLDLOCK) WHERE NguoiDungID=@ActorID AND TrangThai=N'Hoạt động')\n        THROW 50300, N'Tài khoản nhân viên không còn hoạt động.', 1;\n    IF @PortalRole IS NULL OR @PortalRole NOT IN ('ADMIN','QUAN_LY_RAP') OR NOT EXISTS(\n        SELECT 1 FROM dbo.NGUOIDUNG n JOIN dbo.VAITRO r ON r.VaiTroID=n.VaiTroID\n        WHERE n.NguoiDungID=@ActorID AND r.MaVaiTro=@PortalRole)\n        THROW 50301, N'Vai trò không được phép quản lý đặt vé tại portal này.', 1;\n    IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID,'DAT_VE')=0\n        THROW 50302, N'Không có quyền quản lý đặt vé.', 1;\n    IF @PortalRole='QUAN_LY_RAP' AND @RapID IS NOT NULL\n    BEGIN\n        -- Assignment writers take TABLOCKX: retain scope through the caller's transaction.\n        DECLARE @Assignments bigint;\n        SELECT @Assignments=COUNT_BIG(*) FROM dbo.PHANCONG_RAP WITH (HOLDLOCK)\n        WHERE NguoiDungID=@ActorID AND RapID=@RapID;\n        IF dbo.fn_KiemTraQuanLyRapScope(@ActorID,@RapID)=0\n            THROW 50303, N'Rạp không thuộc phân công còn hiệu lực của Manager.', 1;\n    END;\nEND;\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_Cancel",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_Cancel\r\n    @ActorID int, @PortalRole varchar(50), @DonDatVeID int\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @Own bit=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @Own=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION StaffBookingCancel;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole;\r\n        DECLARE @Customer int,@Show int,@Rap int,@Status nvarchar(50),@Promotion int,@Locked int;\r\n        SELECT @Customer=d.NguoiDungID,@Show=d.SuatChieuID,@Rap=p.RapID FROM dbo.DONDATVE d\r\n        JOIN dbo.SUATCHIEU s ON s.SuatChieuID=d.SuatChieuID JOIN dbo.PHONGCHIEU p ON p.PhongID=s.PhongID WHERE d.DonDatVeID=@DonDatVeID;\r\n        IF @Customer IS NULL THROW 50033,N'Đơn đặt vé không tồn tại.',1;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@Rap;\r\n        -- Match payment lock order: customer -> show -> order -> payment/tickets -> promotion.\r\n        SELECT @Locked=NguoiDungID FROM dbo.NGUOIDUNG WITH (UPDLOCK,HOLDLOCK) WHERE NguoiDungID=@Customer;\r\n        SELECT @Locked=SuatChieuID FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@Show;\r\n        SELECT @Status=TrangThai,@Promotion=KhuyenMaiID FROM dbo.DONDATVE WITH (UPDLOCK,HOLDLOCK)\r\n        WHERE DonDatVeID=@DonDatVeID AND NguoiDungID=@Customer AND SuatChieuID=@Show;\r\n        IF @Status IS NULL OR @Status<>N'Chờ thanh toán'\r\n          OR EXISTS(SELECT 1 FROM dbo.CHITIETVE WHERE DonDatVeID=@DonDatVeID AND TrangThai=N'Đã sử dụng')\r\n            THROW 50512,N'Chỉ hủy toàn bộ đơn Chờ thanh toán, không có vé đã sử dụng.',1;\r\n        IF EXISTS(SELECT 1 FROM dbo.THANHTOAN WITH (UPDLOCK,HOLDLOCK)\r\n            WHERE DonDatVeID=@DonDatVeID AND TrangThai IN(N'Đang xử lý',N'Thành công',N'Đã hoàn tiền'))\r\n            THROW 50514,N'Đơn có giao dịch đang xử lý/đã thanh toán; không thể hủy.',1;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@Rap;\r\n        -- Same logical cancellation as existing sp_Order_Cancel; no physical deletion/refund.\r\n        UPDATE dbo.DONDATVE SET TrangThai=N'Đã hủy' WHERE DonDatVeID=@DonDatVeID;\r\n        UPDATE dbo.CHITIETVE SET TrangThai=N'Đã hủy' WHERE DonDatVeID=@DonDatVeID AND TrangThai<>N'Đã hủy';\r\n        IF @Promotion IS NOT NULL UPDATE dbo.KHUYENMAI\r\n            SET SoLuongDaDung=CASE WHEN SoLuongDaDung>0 THEN SoLuongDaDung-1 ELSE 0 END WHERE KhuyenMaiID=@Promotion;\r\n        EXEC dbo.sp_StaffBooking_Detail @ActorID,@PortalRole,@DonDatVeID;\r\n        IF @Own=1 COMMIT TRANSACTION;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @Own=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION StaffBookingCancel; END;\r\n        THROW;\r\n    END CATCH;\r\nEND;\r\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_Create",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_Create\n    @ActorID int, @PortalRole varchar(50), @CustomerID int, @SuatChieuID int,\n    @DanhSachGheId varchar(max), @NewDonDatVeID int OUTPUT\nAS\nBEGIN\n    SET NOCOUNT ON;\n    DECLARE @Own bit=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\n    BEGIN TRY\n        IF @Own=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION StaffBookingCreate;\n        DECLARE @Rap int,@Room int;\n        EXEC dbo.sp_StaffBooking_LockShow @ActorID,@PortalRole,@CustomerID,@SuatChieuID,@Rap OUTPUT,@Room OUTPUT;\n        IF @DanhSachGheId IS NULL OR EXISTS(SELECT 1 FROM STRING_SPLIT(@DanhSachGheId,',')\n            WHERE TRY_CONVERT(int,value) IS NULL OR TRY_CONVERT(int,value)<=0 OR value LIKE '%[^0-9]%')\n            OR (SELECT COUNT(*) FROM STRING_SPLIT(@DanhSachGheId,','))<>(SELECT COUNT(DISTINCT value) FROM STRING_SPLIT(@DanhSachGheId,','))\n            THROW 50511,N'Danh sách ghế không hợp lệ hoặc bị lặp.',1;\n        -- Delegate unchanged Customer rules, limits, locks, pricing and hold creation.\n        EXEC dbo.sp_Booking_Create @NguoiDungID=@CustomerID,@SuatChieuID=@SuatChieuID,\n            @DanhSachGheId=@DanhSachGheId,@MaKhuyenMai=NULL,@DanhSachDoAnJson=NULL,@NewDonDatVeID=@NewDonDatVeID OUTPUT;\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@Rap;\n        IF @Own=1 COMMIT TRANSACTION;\n    END TRY\n    BEGIN CATCH\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\n        ELSE IF XACT_STATE()=1 BEGIN IF @Own=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION StaffBookingCreate; END;\n        THROW;\n    END CATCH;\nEND;\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_Customers",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_Customers\n    @ActorID int, @PortalRole varchar(50), @Search nvarchar(100)\nAS\nBEGIN\n    SET NOCOUNT ON;\n    EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole;\n    SET @Search=LTRIM(RTRIM(@Search));\n    IF @Search IS NULL OR LEN(@Search)<2 THROW 50511, N'Nhập ít nhất hai ký tự để tìm khách hàng.',1;\n    -- CHARINDEX treats %, _ and [ as literal search input.\n    SELECT TOP (50) n.NguoiDungID,n.HoTen,n.Email,n.SoDienThoai,\n        COUNT(*) OVER() AS TotalMatches\n    FROM dbo.NGUOIDUNG n JOIN dbo.VAITRO r ON r.VaiTroID=n.VaiTroID\n    WHERE r.MaVaiTro='KHACH_HANG' AND n.TrangThai=N'Hoạt động'\n      AND (CHARINDEX(@Search,n.HoTen)>0 OR CHARINDEX(@Search,n.Email)>0 OR CHARINDEX(@Search,ISNULL(n.SoDienThoai,''))>0)\n    ORDER BY n.HoTen,n.NguoiDungID;\nEND;\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_Detail",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_Detail\r\n    @ActorID int, @PortalRole varchar(50), @DonDatVeID int\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @Own bit=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @Own=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION StaffBookingDetail;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole;\r\n        DECLARE @Rap int;\r\n        SELECT @Rap=p.RapID FROM dbo.DONDATVE d JOIN dbo.SUATCHIEU s ON s.SuatChieuID=d.SuatChieuID\r\n        JOIN dbo.PHONGCHIEU p ON p.PhongID=s.PhongID WHERE d.DonDatVeID=@DonDatVeID;\r\n        IF @Rap IS NULL THROW 50033,N'Đơn đặt vé không tồn tại.',1;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@Rap;\r\n    SELECT\r\n        v.[DonDatVeID],\r\n        v.[NguoiDungID],\r\n        v.[HoTenKhachHang],\r\n        v.[Email],\r\n        v.[SoDienThoai],\r\n        v.[SuatChieuID],\r\n        v.[PhimID],\r\n        v.[TenPhim],\r\n        v.[PosterURL],\r\n        v.[DoTuoi],\r\n        v.[ThoiLuong],\r\n        v.[RapID],\r\n        v.[TenRap],\r\n        v.[DiaChiRap],\r\n        v.[PhongID],\r\n        v.[TenPhong],\r\n        v.[LoaiPhong],\r\n        v.[ThoiGianBatDau],\r\n        v.[ThoiGianKetThuc],\r\n        v.[DinhDang],\r\n        v.[NgayDat],\r\n        v.[TongTienVe],\r\n        v.[TongTienDoAn],\r\n        v.[TienGiamGia],\r\n        v.[TongTienThanhToan],\r\n        v.[TrangThaiDon],\r\n        v.[HanGiuCho],\r\n        v.[MaKhuyenMai],\r\n        v.[MoTaKhuyenMai],\r\n        v.[DanhSachGhe],\r\n        v.[DanhSachMaVe],\r\n        d.LyDoHuy,\r\n        d.ThongBaoHuy,\r\n        CONVERT(bit,CASE WHEN d.TrangThai=N'Chờ thanh toán' AND d.HanGiuCho>dbo.fn_BayGio()\r\n            AND d.KhuyenMaiID IS NULL AND NOT EXISTS(SELECT 1 FROM dbo.CHITIETDOAN WHERE DonDatVeID=d.DonDatVeID)\r\n            AND NOT EXISTS(SELECT 1 FROM dbo.THANHTOAN WHERE DonDatVeID=d.DonDatVeID)\r\n            AND NOT EXISTS(SELECT 1 FROM dbo.CHITIETVE WHERE DonDatVeID=d.DonDatVeID AND TrangThai=N'Đã sử dụng')\r\n            AND EXISTS(SELECT 1 FROM dbo.NGUOIDUNG n JOIN dbo.VAITRO r ON r.VaiTroID=n.VaiTroID\r\n                WHERE n.NguoiDungID=d.NguoiDungID AND n.TrangThai=N'Hoạt động' AND r.MaVaiTro='KHACH_HANG')\r\n            AND EXISTS(SELECT 1 FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=d.SuatChieuID AND IsBookable=1)\r\n            THEN 1 ELSE 0 END) AS CanEdit,\r\n        CONVERT(bit,CASE WHEN d.TrangThai=N'Chờ thanh toán'\r\n            AND NOT EXISTS(SELECT 1 FROM dbo.THANHTOAN WHERE DonDatVeID=d.DonDatVeID AND TrangThai IN(N'Đang xử lý',N'Thành công',N'Đã hoàn tiền'))\r\n            AND NOT EXISTS(SELECT 1 FROM dbo.CHITIETVE WHERE DonDatVeID=d.DonDatVeID AND TrangThai=N'Đã sử dụng')\r\n            THEN 1 ELSE 0 END) AS CanCancel,\r\n        (SELECT COUNT(*) FROM dbo.CHITIETVE WHERE DonDatVeID=d.DonDatVeID AND TrangThai<>N'Đã hủy') AS SoLuongVe,\r\n        b.DiemBoiThuong,\r\n        b.NgayBoiThuong\r\n    FROM dbo.vw_ChiTietDonDatVe v\r\n    INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = v.DonDatVeID\r\n    LEFT JOIN dbo.BOITHUONG_HUYSUAT b ON b.DonDatVeID = d.DonDatVeID\r\n    WHERE v.DonDatVeID = @DonDatVeID;\r\n\r\n    SELECT\r\n        cv.VeID,\r\n        cv.MaVe,\r\n        g.GheID,\r\n        g.HangGhe,\r\n        g.SoGhe,\r\n        (g.HangGhe + CAST(g.SoGhe AS VARCHAR(10))) AS TenGhe,\r\n        g.LoaiGhe,\r\n        cv.GiaVe,\r\n        cv.TrangThai AS TrangThaiVe\r\n    FROM dbo.CHITIETVE cv\r\n    INNER JOIN dbo.GHE g ON g.GheID = cv.GheID\r\n    WHERE cv.DonDatVeID = @DonDatVeID;\r\n\r\n    SELECT\r\n        cda.ChiTietDoAnID,\r\n        sp.SanPhamID,\r\n        sp.TenSanPham,\r\n        sp.LoaiSanPham,\r\n        cda.SoLuong,\r\n        cda.DonGia,\r\n        cda.SoLuong * cda.DonGia AS ThanhTien\r\n    FROM dbo.CHITIETDOAN cda\r\n    INNER JOIN dbo.SANPHAM sp ON sp.SanPhamID = cda.SanPhamID\r\n    WHERE cda.DonDatVeID = @DonDatVeID;\r\n\r\n    SELECT\r\n        ThanhToanID,\r\n        PhuongThuc,\r\n        SoTien,\r\n        NgayTao,\r\n        NgayThanhToan,\r\n        MaGiaoDich,\r\n        TrangThai,\r\n        GhiChu\r\n    FROM dbo.THANHTOAN\r\n    WHERE DonDatVeID = @DonDatVeID\r\n    ORDER BY ThanhToanID;\r\n        IF @Own=1 COMMIT TRANSACTION;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @Own=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION StaffBookingDetail; END;\r\n        THROW;\r\n    END CATCH;\r\nEND;\r\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_List",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_List\n    @ActorID int, @PortalRole varchar(50), @Search nvarchar(100)=NULL, @Status nvarchar(50)=NULL,\n    @RapID int=NULL, @Page int=1, @PageSize int=20\nAS\nBEGIN\n    SET NOCOUNT ON;\n    EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@RapID;\n    IF @Page<1 OR @Page>100000 OR @PageSize<1 OR @PageSize>100 OR @Page IS NULL OR @PageSize IS NULL\n        THROW 50511,N'Tham số phân trang không hợp lệ.',1;\n    SELECT v.DonDatVeID,v.NguoiDungID,v.HoTenKhachHang,v.Email,v.SoDienThoai,v.SuatChieuID,v.TenPhim,\n        v.RapID,v.TenRap,v.TenPhong,v.ThoiGianBatDau,v.NgayDat,v.TongTienThanhToan,v.TrangThaiDon,v.HanGiuCho,\n        v.SoLuongVe,v.TrangThaiThanhToanMoiNhat,\n        (SELECT STRING_AGG(CONCAT(g.HangGhe,g.SoGhe),', ') FROM dbo.CHITIETVE t JOIN dbo.GHE g ON g.GheID=t.GheID\n            WHERE t.DonDatVeID=v.DonDatVeID AND t.TrangThai<>N'Đã hủy') AS DanhSachGhe\n    INTO #Filtered FROM dbo.vw_LichSuDatVe v\n    WHERE (@RapID IS NULL OR v.RapID=@RapID) AND (@Status IS NULL OR v.TrangThaiDon=@Status)\n      AND (@PortalRole='ADMIN' OR dbo.fn_KiemTraQuanLyRapScope(@ActorID,v.RapID)=1)\n      AND (@Search IS NULL OR @Search='' OR CHARINDEX(@Search,v.HoTenKhachHang)>0 OR CHARINDEX(@Search,v.Email)>0\n        OR CHARINDEX(@Search,ISNULL(v.SoDienThoai,''))>0 OR CHARINDEX(@Search,v.TenPhim)>0\n        OR CONVERT(varchar(20),v.DonDatVeID)=@Search OR EXISTS(SELECT 1 FROM dbo.CHITIETVE t\n            WHERE t.DonDatVeID=v.DonDatVeID AND CHARINDEX(@Search,t.MaVe)>0));\n    SELECT DonDatVeID,NguoiDungID,HoTenKhachHang,Email,SoDienThoai,SuatChieuID,TenPhim,RapID,TenRap,TenPhong,\n        ThoiGianBatDau,NgayDat,TongTienThanhToan,TrangThaiDon,HanGiuCho,SoLuongVe,TrangThaiThanhToanMoiNhat,DanhSachGhe\n    FROM #Filtered ORDER BY NgayDat DESC,DonDatVeID DESC OFFSET (@Page-1)*@PageSize ROWS FETCH NEXT @PageSize ROWS ONLY;\n    SELECT COUNT(*) AS Total,@Page AS Page,@PageSize AS PageSize FROM #Filtered;\nEND;\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_LockShow",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "-- Internal transaction helper; identical parent lock order to Customer booking.\nCREATE   PROCEDURE dbo.sp_StaffBooking_LockShow\n    @ActorID int, @PortalRole varchar(50), @CustomerID int, @SuatChieuID int,\n    @RapID int OUTPUT, @PhongID int OUTPUT\nAS\nBEGIN\n    SET NOCOUNT ON;\n    IF @@TRANCOUNT=0 THROW 50516, N'Thao tác đặt vé yêu cầu transaction.',1;\n    EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole;\n    IF NOT EXISTS(SELECT 1 FROM dbo.NGUOIDUNG n WITH (UPDLOCK,HOLDLOCK)\n        JOIN dbo.VAITRO r ON r.VaiTroID=n.VaiTroID\n        WHERE n.NguoiDungID=@CustomerID AND n.TrangThai=N'Hoạt động' AND r.MaVaiTro='KHACH_HANG')\n        THROW 50510, N'Khách hàng phải tồn tại, đang hoạt động và có vai trò Customer.',1;\n    DECLARE @MovieID int,@Locked int;\n    SET @PhongID=NULL;\n    SET @RapID=NULL;\n    SELECT @PhongID=s.PhongID,@MovieID=s.PhimID,@RapID=p.RapID\n    FROM dbo.SUATCHIEU s JOIN dbo.PHONGCHIEU p ON p.PhongID=s.PhongID WHERE s.SuatChieuID=@SuatChieuID;\n    IF @PhongID IS NULL THROW 50021, N'Suất chiếu không tồn tại.',1;\n    EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@RapID;\n    SELECT @Locked=PhimID FROM dbo.PHIM WITH (HOLDLOCK) WHERE PhimID=@MovieID;\n    SELECT @Locked=RapID FROM dbo.RAPCHIEUPHIM WITH (HOLDLOCK) WHERE RapID=@RapID;\n    SET @Locked=NULL;\n    SELECT @Locked=PhongID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@PhongID AND RapID=@RapID;\n    IF @Locked IS NULL THROW 50022, N'Phòng chiếu đã thay đổi. Vui lòng tải lại.',1;\n    SET @Locked=NULL;\n    SELECT @Locked=SuatChieuID FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK)\n    WHERE SuatChieuID=@SuatChieuID AND PhongID=@PhongID AND PhimID=@MovieID;\n    IF @Locked IS NULL OR NOT EXISTS(SELECT 1 FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=@SuatChieuID AND IsBookable=1)\n        THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.',1;\nEND;\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_Options",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_Options\n    @ActorID int, @PortalRole varchar(50), @RapID int = NULL,\n    @SuatChieuID int = NULL, @DonDatVeID int = NULL\nAS\nBEGIN\n    SET NOCOUNT ON;\n    EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@RapID;\n    IF @SuatChieuID IS NOT NULL\n    BEGIN\n        DECLARE @ShowRap int;\n        SELECT @ShowRap=p.RapID FROM dbo.SUATCHIEU s JOIN dbo.PHONGCHIEU p ON p.PhongID=s.PhongID WHERE s.SuatChieuID=@SuatChieuID;\n        IF @ShowRap IS NULL THROW 50021, N'Suất chiếu không tồn tại.',1;\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@ShowRap;\n        IF @RapID IS NOT NULL AND @RapID<>@ShowRap THROW 50511, N'Suất chiếu không thuộc rạp đã chọn.',1;\n        IF NOT EXISTS(SELECT 1 FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=@SuatChieuID AND IsBookable=1)\n            THROW 50022, N'Suất chiếu không còn mở bán.',1;\n    END;\n    IF @DonDatVeID IS NOT NULL AND NOT EXISTS(SELECT 1 FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID AND SuatChieuID=@SuatChieuID)\n        THROW 50033, N'Đơn đặt vé không tồn tại trong suất chiếu đã chọn.',1;\n    SELECT RapID,TenRap,ThanhPho FROM dbo.RAPCHIEUPHIM\n    WHERE @PortalRole='ADMIN' OR dbo.fn_KiemTraQuanLyRapScope(@ActorID,RapID)=1 ORDER BY TenRap,RapID;\n    SELECT TOP (200) SuatChieuID,RapID,TenRap,PhongID,TenPhong,PhimID,TenPhim,ThoiGianBatDau,DinhDang,GiaVeCoBan,\n        COUNT(*) OVER() AS TotalMatches\n    FROM dbo.vw_LichChieuChiTiet\n    WHERE IsBookable=1 AND (@RapID IS NULL OR RapID=@RapID)\n      AND (@PortalRole='ADMIN' OR dbo.fn_KiemTraQuanLyRapScope(@ActorID,RapID)=1)\n    ORDER BY ThoiGianBatDau,SuatChieuID;\n    SELECT f.GheID,f.PhongID,f.HangGhe,f.SoGhe,f.TenGhe,f.LoaiGhe,\n        COALESCE(t.GiaVe,f.GiaVe) AS GiaVe,\n        CASE WHEN t.VeID IS NOT NULL THEN N'Trống' ELSE f.TrangThaiGhe END AS TrangThaiGhe\n    FROM dbo.fn_DanhSachGheSuatChieu(@SuatChieuID) f\n    OUTER APPLY(SELECT TOP(1) VeID,GiaVe FROM dbo.CHITIETVE\n        WHERE DonDatVeID=@DonDatVeID AND GheID=f.GheID AND TrangThai=N'Đã đặt' ORDER BY VeID DESC) t\n    WHERE @SuatChieuID IS NOT NULL ORDER BY f.HangGhe,f.SoGhe;\nEND;\n",
+        "uses_ansi_nulls": true,
+        "uses_quoted_identifier": true
+      },
+      {
+        "schemaName": "dbo",
+        "name": "sp_StaffBooking_UpdateSeats",
+        "type": "P ",
+        "type_desc": "SQL_STORED_PROCEDURE",
+        "definition": "CREATE   PROCEDURE dbo.sp_StaffBooking_UpdateSeats\r\n    @ActorID int, @PortalRole varchar(50), @DonDatVeID int,\r\n    @DanhSachGheId varchar(max), @ExpectedVeIdList varchar(max)\r\nAS\r\nBEGIN\r\n    SET NOCOUNT ON;\r\n    DECLARE @Own bit=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;\r\n    BEGIN TRY\r\n        IF @Own=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION StaffBookingUpdate;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole;\r\n        DECLARE @Customer int,@Show int,@Room int,@Rap int,@Hold datetime2,@Status nvarchar(50),@Promotion int;\r\n        SELECT @Customer=NguoiDungID,@Show=SuatChieuID FROM dbo.DONDATVE WHERE DonDatVeID=@DonDatVeID;\r\n        IF @Customer IS NULL THROW 50033,N'Đơn đặt vé không tồn tại.',1;\r\n        EXEC dbo.sp_StaffBooking_LockShow @ActorID,@PortalRole,@Customer,@Show,@Rap OUTPUT,@Room OUTPUT;\r\n        SELECT @Status=TrangThai,@Hold=HanGiuCho,@Promotion=KhuyenMaiID FROM dbo.DONDATVE WITH (UPDLOCK,HOLDLOCK)\r\n        WHERE DonDatVeID=@DonDatVeID AND NguoiDungID=@Customer AND SuatChieuID=@Show;\r\n        IF @Status IS NULL OR @Status<>N'Chờ thanh toán' OR @Promotion IS NOT NULL\r\n            OR EXISTS(SELECT 1 FROM dbo.CHITIETDOAN WHERE DonDatVeID=@DonDatVeID)\r\n            OR EXISTS(SELECT 1 FROM dbo.CHITIETVE WHERE DonDatVeID=@DonDatVeID AND TrangThai=N'Đã sử dụng')\r\n            THROW 50512,N'Chỉ sửa ghế của đơn chưa thanh toán, không khuyến mãi/đồ ăn/vé đã sử dụng.',1;\r\n        IF @Hold IS NULL OR @Hold<=dbo.fn_BayGio() THROW 50513,N'Đơn đã hết thời gian giữ ghế.',1;\r\n        IF EXISTS(SELECT 1 FROM dbo.THANHTOAN WITH (UPDLOCK,HOLDLOCK) WHERE DonDatVeID=@DonDatVeID)\r\n            THROW 50514,N'Đơn đã có lần thử thanh toán; không thể sửa ghế.',1;\r\n        IF @DanhSachGheId IS NULL OR @ExpectedVeIdList IS NULL\r\n          OR EXISTS(SELECT 1 FROM STRING_SPLIT(@DanhSachGheId,',') WHERE TRY_CONVERT(int,value) IS NULL OR TRY_CONVERT(int,value)<=0 OR value LIKE '%[^0-9]%')\r\n          OR EXISTS(SELECT 1 FROM STRING_SPLIT(@ExpectedVeIdList,',') WHERE TRY_CONVERT(int,value) IS NULL OR TRY_CONVERT(int,value)<=0 OR value LIKE '%[^0-9]%')\r\n            THROW 50511,N'Danh sách ghế/vé không hợp lệ.',1;\r\n        DECLARE @Seats TABLE(id int PRIMARY KEY);\r\n        DECLARE @Expected TABLE(id int PRIMARY KEY);\r\n        IF (SELECT COUNT(*) FROM STRING_SPLIT(@DanhSachGheId,','))<>(SELECT COUNT(DISTINCT value) FROM STRING_SPLIT(@DanhSachGheId,','))\r\n          OR (SELECT COUNT(*) FROM STRING_SPLIT(@ExpectedVeIdList,','))<>(SELECT COUNT(DISTINCT value) FROM STRING_SPLIT(@ExpectedVeIdList,','))\r\n            THROW 50511,N'Danh sách ghế/vé bị lặp.',1;\r\n        INSERT @Seats SELECT CONVERT(int,value) FROM STRING_SPLIT(@DanhSachGheId,',');\r\n        INSERT @Expected SELECT CONVERT(int,value) FROM STRING_SPLIT(@ExpectedVeIdList,',');\r\n        IF NOT EXISTS(SELECT 1 FROM @Seats) OR (SELECT COUNT(*) FROM @Seats)>dbo.fn_GioiHanGheMoiDon()\r\n            THROW 50026,N'Chọn từ 1 đến 10 ghế.',1;\r\n        IF EXISTS(SELECT id FROM @Expected EXCEPT SELECT VeID FROM dbo.CHITIETVE WHERE DonDatVeID=@DonDatVeID AND TrangThai=N'Đã đặt')\r\n          OR EXISTS(SELECT VeID FROM dbo.CHITIETVE WHERE DonDatVeID=@DonDatVeID AND TrangThai=N'Đã đặt' EXCEPT SELECT id FROM @Expected)\r\n            THROW 50515,N'Đơn đã được chỉnh sửa. Tải lại chi tiết trước khi lưu.',1;\r\n        DECLARE @Count int;\r\n        SELECT @Count=COUNT(*) FROM dbo.GHE g WITH (UPDLOCK,HOLDLOCK) JOIN @Seats s ON s.id=g.GheID\r\n        WHERE g.PhongID=@Room AND g.TrangThai=N'Hoạt động';\r\n        IF @Count<>(SELECT COUNT(*) FROM @Seats) THROW 50024,N'Ghế không thuộc phòng hoặc không hoạt động.',1;\r\n        IF EXISTS(SELECT 1 FROM dbo.CHITIETVE t WITH (UPDLOCK,HOLDLOCK) JOIN dbo.DONDATVE d ON d.DonDatVeID=t.DonDatVeID\r\n            JOIN @Seats s ON s.id=t.GheID WHERE d.SuatChieuID=@Show AND d.DonDatVeID<>@DonDatVeID\r\n            AND t.TrangThai<>N'Đã hủy' AND dbo.fn_DonDangGiuGhe(d.TrangThai,d.HanGiuCho,dbo.fn_BayGio())=1)\r\n            THROW 50025,N'Ghế vừa được giữ/bán trong đơn khác.',1;\r\n        EXEC dbo.sp_StaffBooking_Authorize @ActorID,@PortalRole,@Rap;\r\n        IF @Hold<=dbo.fn_BayGio() THROW 50513,N'Đơn đã hết thời gian giữ ghế.',1;\r\n        -- Keep IDs/codes/prices of retained tickets. Never delete historical rows.\r\n        UPDATE dbo.CHITIETVE SET TrangThai=N'Đã hủy'\r\n        WHERE DonDatVeID=@DonDatVeID AND TrangThai=N'Đã đặt' AND GheID NOT IN(SELECT id FROM @Seats);\r\n        INSERT dbo.CHITIETVE(DonDatVeID,GheID,GiaVe,MaVe,TrangThai)\r\n        SELECT @DonDatVeID,s.id,dbo.fn_TinhGiaVe(@Show,s.id),CONCAT('TK-',CONVERT(varchar(36),NEWID())),N'Đã đặt'\r\n        FROM @Seats s WHERE NOT EXISTS(SELECT 1 FROM dbo.CHITIETVE WHERE DonDatVeID=@DonDatVeID AND GheID=s.id AND TrangThai=N'Đã đặt');\r\n        UPDATE dbo.DONDATVE SET TongTienVe=dbo.fn_TinhTongTienVe(@DonDatVeID) WHERE DonDatVeID=@DonDatVeID;\r\n        EXEC dbo.sp_StaffBooking_Detail @ActorID,@PortalRole,@DonDatVeID;\r\n        IF @Own=1 COMMIT TRANSACTION;\r\n    END TRY\r\n    BEGIN CATCH\r\n        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;\r\n        ELSE IF XACT_STATE()=1 BEGIN IF @Own=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION StaffBookingUpdate; END;\r\n        THROW;\r\n    END CATCH;\r\nEND;\r\n",
         "uses_ansi_nulls": true,
         "uses_quoted_identifier": true
       },
@@ -11469,6 +11568,498 @@
         "name": "@TrangThai",
         "typeName": "nvarchar",
         "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Authorize",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Authorize",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Authorize",
+        "parameter_id": 3,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Cancel",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Cancel",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Cancel",
+        "parameter_id": 3,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Create",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Create",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Create",
+        "parameter_id": 3,
+        "name": "@CustomerID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Create",
+        "parameter_id": 4,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Create",
+        "parameter_id": 5,
+        "name": "@DanhSachGheId",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Create",
+        "parameter_id": 6,
+        "name": "@NewDonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Customers",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Customers",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Customers",
+        "parameter_id": 3,
+        "name": "@Search",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Detail",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Detail",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Detail",
+        "parameter_id": 3,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 3,
+        "name": "@Search",
+        "typeName": "nvarchar",
+        "max_length": 200,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 4,
+        "name": "@Status",
+        "typeName": "nvarchar",
+        "max_length": 100,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 5,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 6,
+        "name": "@Page",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_List",
+        "parameter_id": 7,
+        "name": "@PageSize",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_LockShow",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_LockShow",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_LockShow",
+        "parameter_id": 3,
+        "name": "@CustomerID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_LockShow",
+        "parameter_id": 4,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_LockShow",
+        "parameter_id": 5,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_LockShow",
+        "parameter_id": 6,
+        "name": "@PhongID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": true,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Options",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Options",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Options",
+        "parameter_id": 3,
+        "name": "@RapID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Options",
+        "parameter_id": 4,
+        "name": "@SuatChieuID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_Options",
+        "parameter_id": 5,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "parameter_id": 1,
+        "name": "@ActorID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "parameter_id": 2,
+        "name": "@PortalRole",
+        "typeName": "varchar",
+        "max_length": 50,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "parameter_id": 3,
+        "name": "@DonDatVeID",
+        "typeName": "int",
+        "max_length": 4,
+        "precision": 10,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "parameter_id": 4,
+        "name": "@DanhSachGheId",
+        "typeName": "varchar",
+        "max_length": -1,
+        "precision": 0,
+        "scale": 0,
+        "is_output": false,
+        "has_default_value": false
+      },
+      {
+        "schemaName": "dbo",
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "parameter_id": 5,
+        "name": "@ExpectedVeIdList",
+        "typeName": "varchar",
+        "max_length": -1,
         "precision": 0,
         "scale": 0,
         "is_output": false,
@@ -21380,6 +21971,636 @@
         "objectName": "sp_Showtime_ValidateTimes",
         "referenced_schema_name": "dbo",
         "referenced_entity_name": "SUATCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Authorize",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_KiemTraQuanLyRapScope",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Authorize",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_KiemTraQuyenNguoiDung",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Authorize",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Authorize",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "PHANCONG_RAP",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Authorize",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "VAITRO",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "DONDATVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "KHUYENMAI",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "PHONGCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Detail",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "SUATCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Cancel",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "THANHTOAN",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Create",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_Booking_Create",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Create",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Create",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_LockShow",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Customers",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Customers",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Customers",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "VAITRO",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "BOITHUONG_HUYSUAT",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETDOAN",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "DONDATVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_BayGio",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": true,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "GHE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "PHONGCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "SANPHAM",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "SUATCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "THANHTOAN",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "VAITRO",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_ChiTietDonDatVe",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Detail",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_LichChieuChiTiet",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_List",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_List",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_KiemTraQuanLyRapScope",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": true,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_List",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "GHE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_List",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_List",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_LichSuDatVe",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "NGUOIDUNG",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "PHIM",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "PHONGCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "RAPCHIEUPHIM",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "SUATCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "VAITRO",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_LockShow",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_LichChieuChiTiet",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "DONDATVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_DanhSachGheSuatChieu",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_KiemTraQuanLyRapScope",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": true,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "PHONGCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "RAPCHIEUPHIM",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "SUATCHIEU",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_Options",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "vw_LichChieuChiTiet",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETDOAN",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "CHITIETVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "DONDATVE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_BayGio",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_DonDangGiuGhe",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_GioiHanGheMoiDon",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_TinhGiaVe",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": true,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "fn_TinhTongTienVe",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": true,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "GHE",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Authorize",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_Detail",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "sp_StaffBooking_LockShow",
+        "referenced_database_name": null,
+        "referenced_server_name": null,
+        "is_ambiguous": false,
+        "is_schema_bound_reference": false
+      },
+      {
+        "objectName": "sp_StaffBooking_UpdateSeats",
+        "referenced_schema_name": "dbo",
+        "referenced_entity_name": "THANHTOAN",
         "referenced_database_name": null,
         "referenced_server_name": null,
         "is_ambiguous": false,

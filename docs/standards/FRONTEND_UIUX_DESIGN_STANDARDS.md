@@ -1,5 +1,18 @@
 # FRONTEND UI/UX DESIGN STANDARDS
 
+## Bổ sung quản lý đặt vé nhân viên — baseline hiện hành
+
+**44 Use Case hoạt động:** Customer 14, Manager 10, CSKH 6, Admin 14. `QLR-10` quản lý đặt vé trong rạp được phân công còn hiệu lực; `ADM-18` quản lý đặt vé toàn hệ thống. `ADM-17` vẫn là cấu hình hệ thống ngoài phạm vi. Giữ ba ID `ADM-03/04/05` RETIRED: tổng 47 ID truy vết; số 45 chỉ còn trong snapshot nghiệm thu cũ và tên file giữ để tương thích liên kết.
+
+Bốn role và ma trận seed cố định giữ nguyên. Module mới yêu cầu role chính xác ADMIN/QUAN_LY_RAP và quyền `DAT_VE` hiện có; mọi SP tự kiểm tra actor còn hoạt động và Manager scope. Customer chỉ được chọn từ tài khoản KHACH_HANG đang hoạt động bằng tên/email/SĐT, không nhập ID hay tạo tài khoản thay trong luồng này.
+
+**Quy tắc được chủ dự án chấp thuận:** tạo đơn Chờ thanh toán bằng nghiệp vụ booking hiện có (giới hạn giữ chỗ/ghế, khóa concurrency, giá snapshot); không tự thanh toán. Chỉ sửa ghế trong cùng suất chiếu khi đơn còn hạn giữ chỗ, chưa có bất kỳ lần thử thanh toán, không có khuyến mãi/đồ ăn hoặc vé đã sử dụng. Customer, suất chiếu, thời hạn giữ, tiền đồ ăn/giảm giá không sửa. Ghế giữ nguyên giữ snapshot/mã vé; ghế bỏ chuyển Đã hủy và giữ bản ghi; ghế mới tính giá hiện tại và mã vé mới. Không xóa vật lý. Hủy toàn bộ đơn Chờ thanh toán bằng quy tắc hiện có, giữ lịch sử vé/payment. Chặn hủy khi có thanh toán đang xử lý/thành công hoặc vé đã sử dụng để không đua với thanh toán. Đơn đã thanh toán/hoàn thành chỉ xem: source chưa có hoàn tiền tự nguyện; đây là blocker của hủy/hoàn tiền loại đơn này, không dùng hủy suất chiếu để giả lập.
+
+**Kiến trúc triển khai:** route `/admin/bookings` và `/manager/bookings` riêng cho module mới, không refactor portal cũ. API dưới `/api/admin/bookings` và `/api/manager/bookings`: GET list (search/status/cinemaId/page/pageSize), GET customers (search tên/email/SĐT, tối thiểu 2 ký tự, tối đa 50 kết quả mỗi tìm kiếm), GET options (cinemaId/showtimeId/orderId khi sửa), GET `/:orderId`, POST create, PUT `/:orderId/seats`, POST `/:orderId/cancel`. DELETE bị từ chối 405, không ghi/xóa dữ liệu; không có API ghi payment/RBAC mới. Pagination danh sách thực hiện ở SQL; lookup suất tối đa 200 kết quả, trả total/truncated rõ và lọc theo rạp.
+
+**Nghiệm thu bắt buộc:** hai role list/search/filter/detail/create/edit/cancel; Customer không tồn tại/sai role/khóa; Manager ngoài scope/hết hiệu lực; invalid show/room/seat; cùng ghế race/double-submit; paid/used/payment-in-flight từ chối và no-write; snapshot/history giữ nguyên; browser desktop/mobile, keyboard/modal/dirty/stale-request. Không kế thừa PASS lịch sử; ghi kết quả thực chạy trong FINAL_SYSTEM_AUDIT.md. Main deployment vẫn cần review và phê duyệt theo database/README.md.
+
+
 > **Quy chuẩn thiết kế và tổ chức giao diện bắt buộc — Hệ thống đặt vé xem phim trực tuyến cho chuỗi rạp**  
 > **Version:** 1.1.0  
 > **Ngày ban hành:** 2026-10-11  
@@ -29,9 +42,9 @@ Mọi thay đổi giao diện phải hướng tới đồng thời:
 
 Áp dụng cho: trang công khai, trang chủ, trang phim/rạp, booking, lịch sử đơn, thanh toán, khiếu nại khách hàng, Admin Portal, Manager Portal, CSKH Portal, shared shell, navigation, CSS/tokens, interaction, responsive, accessibility và UI testing.
 
-**Baseline nghiệp vụ chính thức là 42 Use Case đang hoạt động:** Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-17 – Cấu hình hệ thống` **không thuộc phạm vi**. Không dựng menu/màn hình ADM-17 hoặc coi nó là phần còn thiếu.
+**Baseline nghiệp vụ chính thức là 44 Use Case đang hoạt động:** Customer 14, Manager 10, CSKH 6, Admin 14. `ADM-17 – Cấu hình hệ thống` **không thuộc phạm vi**. Không dựng menu/màn hình ADM-17 hoặc coi nó là phần còn thiếu.
 
-**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
+**Quyết định RBAC cố định (11/10/2026):** 44 Use Case hoạt động: Customer 14, Manager 10, CSKH 6, Admin 14. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 47 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
 
 ### 0.3. Mức độ quy định
 
@@ -42,7 +55,7 @@ Mọi thay đổi giao diện phải hướng tới đồng thời:
 
 ### 0.4. Thứ tự ưu tiên khi có mâu thuẫn
 
-1. Quyết định nghiệp vụ/baseline mới nhất đã chốt trong repo; 42 UC, giới hạn role và quyền.
+1. Quyết định nghiệp vụ/baseline mới nhất đã chốt trong repo; 44 UC, giới hạn role và quyền.
 2. Ràng buộc DBMS-first và API contract, điều kiện an toàn dữ liệu/quyền.
 3. Các điều **MUST** trong tài liệu này.
 4. Thiết kế đã được duyệt cho màn hình/feature tương ứng.
@@ -62,8 +75,8 @@ Mọi thay đổi giao diện phải hướng tới đồng thời:
 
 - **Phase 1 — UX Architecture:** chốt chuẩn màu, sitemap, wireframe, component contract và regression plan; chưa sửa source.
 - **Phase 2 — Design System & Component Architecture:** triển khai tokens/base styles, `PublicShell`, `StaffShell` và shared UI primitives; giữ URL hiện tại và không refactor workflow nghiệp vụ từng portal.
-- **Phase 3 — Portal Refactor:** chuyển Admin, Manager, CSKH và Customer theo nhóm/route đã được duyệt; giữ nguyên 42 UC, API contract, RBAC, manager scope và business logic.
-- **Phase 4 — Overall Acceptance:** kiểm thử tổng thể theo 42 UC, browser/role/viewport, accessibility, regression và evidence. Không đánh dấu PASS khi chưa có kết quả thực tế.
+- **Phase 3 — Portal Refactor:** chuyển Admin, Manager, CSKH và Customer theo nhóm/route đã được duyệt; giữ nguyên 44 UC, API contract, RBAC, manager scope và business logic.
+- **Phase 4 — Overall Acceptance:** kiểm thử tổng thể theo 44 UC, browser/role/viewport, accessibility, regression và evidence. Không đánh dấu PASS khi chưa có kết quả thực tế.
 
 Mỗi phase có review/acceptance riêng. Hoàn thành Phase 2 không tự động cho phép bắt đầu Phase 3.
 
@@ -229,9 +242,11 @@ Các path sau là **đề xuất**, không được giả định API hoặc rou
 /manager/showtimes
 /manager/pricing
 /manager/revenue
+/manager/bookings
+/admin/bookings
 ```
 
-Nhóm Admin có 16 section chia thành đúng 6 nhóm: Tổng quan; Tài khoản & phân công; Rạp & cơ sở vật chất; Nội dung; Kinh doanh & vận hành; Chăm sóc & báo cáo. ADM-03/04/05 RETIRED; không có route hoặc workflow quản lý RBAC.
+Nhóm Admin có 16 section legacy và 1 module đặt vé route riêng, tổng 17 destinations chia thành đúng 6 nhóm: Tổng quan; Tài khoản & phân công; Rạp & cơ sở vật chất; Nội dung; Kinh doanh & vận hành; Chăm sóc & báo cáo. ADM-03/04/05 RETIRED; không có route hoặc workflow quản lý RBAC.
 
 Không tạo thêm Use Case mới chỉ vì có một route mới; nhiều route có thể phục vụ cùng một Use Case. Route access phải phản ánh permission/scope đang tồn tại.
 
@@ -338,7 +353,7 @@ Admin cần tìm đúng module nhanh, nhìn thấy bản ghi quan trọng, hiể
 | Tài khoản & phân công | Người dùng; Phân công/chuyển rạp cho Manager | ADM-02, ADM-06 |
 | Rạp & cơ sở vật chất | Rạp; phòng; ghế; ảnh rạp nếu tính năng đã triển khai | ADM-07–ADM-08 |
 | Nội dung | Phim; thể loại; diễn viên | ADM-09–ADM-10 |
-| Kinh doanh & vận hành | Sản phẩm; khuyến mãi; bảng giá; suất chiếu | ADM-11–ADM-14 |
+| Kinh doanh & vận hành | Sản phẩm; khuyến mãi; bảng giá; suất chiếu; quản lý đặt vé | ADM-11–ADM-14, ADM-18 |
 | Chăm sóc & báo cáo | Khiếu nại; doanh thu/báo cáo | ADM-15–ADM-16 |
 
 Sáu nhóm sidebar là **Tổng quan; Tài khoản & phân công; Rạp & cơ sở vật chất; Nội dung; Kinh doanh & vận hành; Chăm sóc & báo cáo**. Sử dụng route architecture của Blueprint làm nguồn chuẩn; `ADM-01` là truy cập/xác thực, không phải mục CRUD riêng. **Không có ADM-17.** Các mục chỉ hiển thị khi có quyền thích hợp; tên menu phù hợp nội dung thật của API.
@@ -641,7 +656,7 @@ Mục tiêu thiết kế và kiểm thử: **WCAG 2.2 AA** ở các tiêu chí �
 - **MUST** giữ chính sách giá không có `Ngày lễ`.
 - **MUST** giữ biến đổi thời gian/timezone và snapshot/history semantics hiện có.
 - **MUST** tránh regression của ADM-07 cinema images, booking held seats, complaint stale selection và duplicate writes.
-- **MUST** không thêm bảng DB, feature nghiệp vụ hay dịch vụ ngoài phạm vi 42 UC từ một ý tưởng UI.
+- **MUST** không thêm bảng DB, feature nghiệp vụ hay dịch vụ ngoài phạm vi 44 UC từ một ý tưởng UI.
 
 ---
 
@@ -700,7 +715,7 @@ Acceptance criteria:
 - Kiểm tra permission, refresh, deep links, back/forward, stale response, double submit, error/retry.
 - Chụp screenshot các viewport quan trọng; kiểm tra visual regression thực tế.
 - Axe + keyboard focus; kiểm tra empty/loading/error với data fixture phù hợp.
-- Đối chiếu 42 UC để chứng minh không mất chức năng. Với phase đơn lẻ chỉ cần regression đầy đủ UC bị ảnh hưởng + smoke chung; final nghiệm thu phải kiểm 42/42.
+- Đối chiếu 44 UC để chứng minh không mất chức năng. Với phase đơn lẻ chỉ cần regression đầy đủ UC bị ảnh hưởng + smoke chung; final nghiệm thu phải kiểm 44/44.
 - Không được ghi `PASS` khi chỉ phân tích source hoặc chỉ có build PASS; dùng `NOT VERIFIED`/`BLOCKED` kèm lý do.
 
 ### Gate 5 — Delivery
@@ -713,7 +728,7 @@ Mỗi task UI/UX cần báo cáo ngắn: issue đã xử lý, routes/components,
 
 | Audit ID | Ràng buộc khắc phục | Mức ưu tiên theo audit |
 |---|---|---|
-| FE-01 | Admin sidebar theo nhóm, module riêng, route-backed; không dồn 16 section vào trang đơn khối | P2 |
+| FE-01 | Admin sidebar theo nhóm, module riêng, route-backed; không dồn 16 section legacy và module đặt vé vào trang đơn khối | P2 |
 | FE-02 | Curated columns/action và table patterns; không expose toàn bộ DTO | P2 |
 | FE-03 | RETIRED phần quản lý RBAC; giữ selector vai trò lúc tạo tài khoản và selector Manager/rạp + xác nhận chuyển rạp | P1 |
 | FE-04 | CSKH filter có commit boundary, không duplicate request và không xóa draft âm thầm | P2 |
@@ -779,7 +794,7 @@ Rule / section:
 Affected feature / route:
 Why the standard is not appropriate here:
 Alternative UX and security/accessibility approach:
-Impact on 42 UC / API / RBAC / Design System:
+Impact on 44 UC / API / RBAC / Design System:
 Evidence / prototype / test plan:
 Decision owner / approval:
 Review date:
@@ -794,8 +809,8 @@ Không tự ý thay đổi quy chuẩn hoặc bỏ check khi không có quyết 
 ### 16.1. Nguồn nội bộ của dự án
 
 - `FRONTEND_DEEP_AUDIT_REPORT.md` — Frontend Deep Audit (2026-10-11), issue FE-01...FE-07, source/static audit, readiness.
-- Lộ trình hiện có trong `UX_ARCHITECTURE_BLUEPRINT.md` §7.2 — baseline 42 UC; roadmap cũ đã được thu gọn khỏi repo, không yêu cầu tái tạo.
-- Các tài liệu phân tích thiết kế/Use Case và ma trận 42 UC hiện hành trong repository (nếu đường dẫn thay đổi, tra file thực tế thay vì đoán path).
+- Lộ trình hiện có trong `UX_ARCHITECTURE_BLUEPRINT.md` §7.1 và §10 — baseline 44 UC; roadmap cũ đã được thu gọn khỏi repo, không yêu cầu tái tạo.
+- Các tài liệu phân tích thiết kế/Use Case và ma trận 44 UC hiện hành trong repository (nếu đường dẫn thay đổi, tra file thực tế thay vì đoán path).
 
 ### 16.2. Nguồn chính thức tham khảo pattern (không phải phụ thuộc thư viện)
 
@@ -822,6 +837,10 @@ Không tự ý thay đổi quy chuẩn hoặc bỏ check khi không có quyết 
 
 ## 17. DIRECTIVE NGẮN DÀNH CHO AI CODING AGENT
 
-> Khi triển khai hoặc sửa bất kỳ màn hình React nào, **đọc và tuân thủ** `FRONTEND_UIUX_DESIGN_STANDARDS.md` trước. Trước khi code, xác định role, UC, task, route, information hierarchy, component patterns, API contract, async/permission risks và trạng thái UX. Dùng **Modern Cinematic Commerce** cho Customer; **Enterprise Control Center** cho Admin; **Case Management Workspace** cho CSKH; **Cinema Operations Workspace** cho Manager. Áp dụng palette trắng–xanh chính thức ở mục 2.2, giữ logo và ý nghĩa trạng thái, cùng 42 UC, DBMS-first, REST contract và các guards hiện hữu. Không tự thêm feature, không sửa backend/database, không đưa ID/CSV/JSON kỹ thuật làm thao tác chính, không render raw DTO thành bảng, không chuyển mọi module thành nút ngang cấp. Chỉ triển khai từng slice nhỏ sau khi có design specification; đo/kiểm thử bằng browser, responsive, accessibility và regression. Nếu yêu cầu xung đột hoặc thiếu bằng chứng, dừng và ghi clarification; không tự đoán.
+> Khi triển khai hoặc sửa bất kỳ màn hình React nào, **đọc và tuân thủ** `FRONTEND_UIUX_DESIGN_STANDARDS.md` trước. Trước khi code, xác định role, UC, task, route, information hierarchy, component patterns, API contract, async/permission risks và trạng thái UX. Dùng **Modern Cinematic Commerce** cho Customer; **Enterprise Control Center** cho Admin; **Case Management Workspace** cho CSKH; **Cinema Operations Workspace** cho Manager. Áp dụng palette trắng–xanh chính thức ở mục 2.2, giữ logo và ý nghĩa trạng thái, cùng 44 UC, DBMS-first, REST contract và các guards hiện hữu. Không tự thêm feature hoặc sửa backend/database ngoài phạm vi task đã được chủ dự án cho phép, không đưa ID/CSV/JSON kỹ thuật làm thao tác chính, không render raw DTO thành bảng, không chuyển mọi module thành nút ngang cấp. Chỉ triển khai từng slice nhỏ sau khi có design specification; đo/kiểm thử bằng browser, responsive, accessibility và regression. Nếu yêu cầu xung đột hoặc thiếu bằng chứng, dừng và ghi clarification; không tự đoán.
 
 **Kết luận ràng buộc:** Frontend phải được thiết kế **theo nhiệm vụ người dùng, có ngữ cảnh rõ, bố cục nhất quán, dữ liệu trình bày có chủ đích, và hành vi an toàn**. Đẹp nhưng khó dùng hoặc chạy được nhưng tổ chức rối đều **không đạt chuẩn**.
+
+## 18. Quản lý đặt vé Admin/Manager — yêu cầu bắt buộc
+
+Dùng đặc tả Blueprint §10: route riêng và feature boundary, DataTable/FilterBar phân trang SQL, Customer selector qua tìm tên/email/SĐT, scope rạp rõ, SeatMap, ConfirmDialog và feedback đủ states. Giá hiển thị là snapshot/preview server, không phải authoritative calculation tại client. Mọi hạn chế sửa/hủy và lỗi được hiển thị từ API; không thêm payment action, role/grant editor hoặc nhập raw ID. Khi draft/pending không được đổi context hoặc gửi lặp âm thầm. Browser kiểm tra desktop/mobile và bàn phím trước khi ghi PASS.

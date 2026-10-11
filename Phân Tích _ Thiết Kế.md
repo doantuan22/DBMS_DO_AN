@@ -1,5 +1,18 @@
 **BỘ GIÁO DỤC VÀ ĐÀO TẠO**
 
+## Bổ sung quản lý đặt vé nhân viên — baseline hiện hành
+
+**44 Use Case hoạt động:** Customer 14, Manager 10, CSKH 6, Admin 14. `QLR-10` quản lý đặt vé trong rạp được phân công còn hiệu lực; `ADM-18` quản lý đặt vé toàn hệ thống. `ADM-17` vẫn là cấu hình hệ thống ngoài phạm vi. Giữ ba ID `ADM-03/04/05` RETIRED: tổng 47 ID truy vết; số 45 chỉ còn trong snapshot nghiệm thu cũ và tên file giữ để tương thích liên kết.
+
+Bốn role và ma trận seed cố định giữ nguyên. Module mới yêu cầu role chính xác ADMIN/QUAN_LY_RAP và quyền `DAT_VE` hiện có; mọi SP tự kiểm tra actor còn hoạt động và Manager scope. Customer chỉ được chọn từ tài khoản KHACH_HANG đang hoạt động bằng tên/email/SĐT, không nhập ID hay tạo tài khoản thay trong luồng này.
+
+**Quy tắc được chủ dự án chấp thuận:** tạo đơn Chờ thanh toán bằng nghiệp vụ booking hiện có (giới hạn giữ chỗ/ghế, khóa concurrency, giá snapshot); không tự thanh toán. Chỉ sửa ghế trong cùng suất chiếu khi đơn còn hạn giữ chỗ, chưa có bất kỳ lần thử thanh toán, không có khuyến mãi/đồ ăn hoặc vé đã sử dụng. Customer, suất chiếu, thời hạn giữ, tiền đồ ăn/giảm giá không sửa. Ghế giữ nguyên giữ snapshot/mã vé; ghế bỏ chuyển Đã hủy và giữ bản ghi; ghế mới tính giá hiện tại và mã vé mới. Không xóa vật lý. Hủy toàn bộ đơn Chờ thanh toán bằng quy tắc hiện có, giữ lịch sử vé/payment. Chặn hủy khi có thanh toán đang xử lý/thành công hoặc vé đã sử dụng để không đua với thanh toán. Đơn đã thanh toán/hoàn thành chỉ xem: source chưa có hoàn tiền tự nguyện; đây là blocker của hủy/hoàn tiền loại đơn này, không dùng hủy suất chiếu để giả lập.
+
+**Kiến trúc triển khai:** route `/admin/bookings` và `/manager/bookings` riêng cho module mới, không refactor portal cũ. API dưới `/api/admin/bookings` và `/api/manager/bookings`: GET list (search/status/cinemaId/page/pageSize), GET customers (search tên/email/SĐT, tối thiểu 2 ký tự, tối đa 50 kết quả mỗi tìm kiếm), GET options (cinemaId/showtimeId/orderId khi sửa), GET `/:orderId`, POST create, PUT `/:orderId/seats`, POST `/:orderId/cancel`. DELETE bị từ chối 405, không ghi/xóa dữ liệu; không có API ghi payment/RBAC mới. Pagination danh sách thực hiện ở SQL; lookup suất tối đa 200 kết quả, trả total/truncated rõ và lọc theo rạp.
+
+**Nghiệm thu bắt buộc:** hai role list/search/filter/detail/create/edit/cancel; Customer không tồn tại/sai role/khóa; Manager ngoài scope/hết hiệu lực; invalid show/room/seat; cùng ghế race/double-submit; paid/used/payment-in-flight từ chối và no-write; snapshot/history giữ nguyên; browser desktop/mobile, keyboard/modal/dirty/stale-request. Không kế thừa PASS lịch sử; ghi kết quả thực chạy trong FINAL_SYSTEM_AUDIT.md. Main deployment vẫn cần review và phê duyệt theo database/README.md.
+
+
 **TRƯỜNG ĐẠI HỌC CÔNG NGHỆ KỸ THUẬT THÀNH PHỐ HỒ CHÍ MINH**
 
 **KHOA CÔNG NGHỆ THÔNG TIN**
@@ -23,13 +36,13 @@
 
 _Thành phố Hồ Chí Minh, tháng 09 năm 2026_
 
-**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
+**Quyết định RBAC cố định (11/10/2026):** 44 Use Case hoạt động: Customer 14, Manager 10, CSKH 6, Admin 14. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 47 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
 
 **CHƯƠNG 1: TỔNG QUAN VÀ YÊU CẦU HỆ THỐNG**
 
 **1.1. Phát biểu bài toán**
 
-Xây dựng ứng dụng web quản lý đặt vé xem phim trực tuyến cho một chuỗi rạp. Khách hàng tự thực hiện toàn bộ quy trình mua vé online: xem phim và lịch chiếu, chọn ghế, mua thêm đồ ăn/thức uống, áp mã khuyến mãi, thanh toán, xem lịch sử đơn, đánh giá phim đã xem và gửi khiếu nại khi phát hiện vấn đề. Nhân sự nội bộ không tạo đơn thay khách tại quầy.
+Xây dựng ứng dụng web quản lý đặt vé xem phim trực tuyến cho một chuỗi rạp. Khách hàng tự thực hiện toàn bộ quy trình mua vé online: xem phim và lịch chiếu, chọn ghế, mua thêm đồ ăn/thức uống, áp mã khuyến mãi, thanh toán, xem lịch sử đơn, đánh giá phim đã xem và gửi khiếu nại khi phát hiện vấn đề. Admin và Manager được tạo đơn Chờ thanh toán cho Customer có sẵn qua module quản lý đặt vé, theo phạm vi quyền/rạp và quy tắc đã duyệt; thanh toán tiếp tục dùng luồng Customer hiện có.
 
 Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả tài khoản và phân quyền theo bốn vai trò: KHACH_HANG, QUAN_LY_RAP, CSKH và ADMIN. Quyền chức năng được xác định bằng VAITRO_QUYEN, trong khi phạm vi rạp mà quản lý được thao tác được giới hạn bởi PHANCONG_RAP.
 
@@ -45,7 +58,7 @@ Hệ thống sử dụng một bảng NGUOIDUNG thống nhất cho tất cả t�
 
 | **Trong phạm vi** | **Ngoài phạm vi** |
 | --- | --- |
-| Tài khoản, vai trò, quyền và phân công quản lý rạp | Bán vé trực tiếp tại quầy |
+| Tài khoản với role/quyền cố định, phân công Manager; quản lý đặt vé QLR-10/ADM-18 | POS/thu tiền mặt tại quầy, tự đánh dấu đơn đã thanh toán |
 | Rạp, phòng chiếu, ghế, phim, thể loại, diễn viên, suất chiếu | Ứng dụng mobile native |
 | Bảng giá, khuyến mãi, sản phẩm, đặt vé và thanh toán | Hệ thống kế toán/ERP ngoài phạm vi đặt vé |
 | Đánh giá phim, khiếu nại và lịch sử xử lý | Tích hợp cổng thanh toán thật |
@@ -601,14 +614,14 @@ _Hình 3.1: Mô hình ERD hệ thống quản lý đặt vé xem phim trực tuy
 | **Quan hệ** | **Ý nghĩa thiết kế** |
 | --- | --- |
 | VAITRO 1 - n NGUOIDUNG | Mỗi tài khoản có một vai trò hiện tại; một vai trò có nhiều tài khoản. |
-| VAITRO n - n QUYEN qua VAITRO_QUYEN | Tách permission khỏi tài khoản, dễ quản trị RBAC. |
+| VAITRO n - n QUYEN qua VAITRO_QUYEN | Tách permission khỏi tài khoản, ma trận seed cố định, ứng dụng chỉ đọc. |
 | NGUOIDUNG 1 - 0..1 HOSOKHACHHANG | Hồ sơ mở rộng chỉ cần cho tài khoản khách hàng. |
 | NGUOIDUNG n - n RAPCHIEUPHIM qua PHANCONG_RAP | Một quản lý có thể quản lý nhiều rạp; một rạp có thể có nhiều phân công theo thời gian. |
 | RAPCHIEUPHIM 1 - n PHONGCHIEU 1 - n GHE | Mỗi ghế thuộc đúng một phòng; mỗi phòng thuộc đúng một rạp. |
 | RAPCHIEUPHIM 1 - n HINHANH_RAPCHIEUPHIM | Một rạp có thể chưa có hoặc có nhiều ảnh URL/metadata; mỗi ảnh thuộc đúng một rạp. Một filtered unique index bảo đảm tối đa một ảnh đại diện/rạp. |
 | PHONGCHIEU 1 - n SUATCHIEU; PHIM 1 - n SUATCHIEU | Mỗi suất chiếu gắn một phim và một phòng. |
 | PHIM n - n THELOAI / DIENVIEN | Dùng PHIM_THELOAI và PHIM_DIENVIEN để chuẩn hóa quan hệ nhiều-nhiều. |
-| NGUOIDUNG 1 - n DONDATVE; SUATCHIEU 1 - n DONDATVE | Mỗi đơn do một người dùng tạo cho một suất chiếu. |
+| NGUOIDUNG 1 - n DONDATVE; SUATCHIEU 1 - n DONDATVE | Mỗi đơn thuộc một Customer và một suất chiếu; Admin/Manager tạo thay qua SP kiểm tra actor/scope, không đổi owner thành nhân viên. |
 | DONDATVE 1 - n CHITIETVE; GHE 1 - n CHITIETVE | Chi tiết vé xác định ghế của đơn; khóa nghiệp vụ SuatChieuID + GheID được suy qua đơn. |
 | DONDATVE 1 - n THANHTOAN | Một đơn có thể có nhiều lần thử thanh toán hoặc hoàn tiền. |
 | NGUOIDUNG 1 - n KHIEUNAI; DONDATVE 0..1 - n KHIEUNAI | Người gửi là bắt buộc; đơn tham chiếu là tùy chọn. |
@@ -822,7 +835,7 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | **Function** | **Loại** | **Tham số** | **Ý nghĩa** |
 | --- | --- | --- | --- |
 | fn_TinhGiaVe | Scalar | @SuatChieuID, @GheID | Giá cơ bản + phụ thu BANGGIA hợp lệ. |
-| fn_TinhTongTienVe | Scalar | @DonDatVeID | SUM(CHITIETVE.GiaVe). |
+| fn_TinhTongTienVe | Scalar | @DonDatVeID | Tổng snapshot CHITIETVE.GiaVe, loại vé Đã hủy khỏi tiền đơn. |
 | fn_TinhTongTienDoAn | Scalar | @DonDatVeID | SUM(SoLuong \* DonGia). |
 | fn_TinhTongTienDon | Scalar | @DonDatVeID | Tổng vé + đồ ăn - giảm giá. |
 | fn_DanhSachGheSuatChieu | Table-Valued | @SuatChieuID | Danh sách ghế, loại ghế, giá và trạng thái Trống/Đã đặt. |
@@ -833,7 +846,7 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | --- | --- | --- |
 | Đặt vé | DONDATVE, CHITIETVE, KHUYENMAI | Kiểm tra lại ghế/giá, tạo đơn/vé, rollback khi một bước lỗi. |
 | Thanh toán | THANHTOAN, DONDATVE | Ghi giao dịch và đổi trạng thái đơn đồng bộ. |
-| Hủy đơn chưa thanh toán / hết hạn giữ ghế | DONDATVE, CHITIETVE, KHUYENMAI | Đổi trạng thái đơn, hủy vé để nhả ghế và hoàn lại lượt dùng mã khuyến mãi như một giao dịch logic. Hệ thống không có hoàn tiền: đơn đã thanh toán không thể hủy. |
+| Hủy đơn chưa thanh toán / hết hạn giữ ghế | DONDATVE, CHITIETVE, KHUYENMAI | Đổi trạng thái đơn, hủy vé để nhả ghế và hoàn lại lượt dùng mã khuyến mãi như một giao dịch logic. Chưa có hoàn tiền tự nguyện: không hủy đơn đã thanh toán bằng luồng này; hủy suất chiếu có nghiệp vụ bồi thường riêng hiện hữu, không dùng thay thế. |
 | Xử lý khiếu nại | KHIEUNAI, XULY_KHIEUNAI | Ghi lịch sử và cập nhật trạng thái cùng lúc. |
 | Phân công rạp | PHANCONG_RAP, NGUOIDUNG | Tạo/điều chỉnh phân công nhất quán. |
 
@@ -842,9 +855,9 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | **Role** | **Phạm vi** | **Quyền nghiệp vụ chính** |
 | --- | --- | --- |
 | KHACH_HANG | Dữ liệu cá nhân/đơn của mình | Đặt vé, thanh toán, lịch sử, đánh giá, khiếu nại. |
-| QUAN_LY_RAP | Rạp được phân công | Phòng, ghế, suất chiếu, bảng giá, doanh thu trong phạm vi. |
+| QUAN_LY_RAP | Rạp được phân công còn hiệu lực | Phòng, ghế, suất chiếu, bảng giá, quản lý đặt vé QLR-10 và doanh thu trong phạm vi. |
 | CSKH | Dữ liệu hỗ trợ | Xem/tra cứu khiếu nại và ghi lịch sử xử lý. |
-| ADMIN | Toàn hệ thống | Người dùng, rạp, phân công/chuyển rạp, danh mục, suất chiếu, khiếu nại và báo cáo. |
+| ADMIN | Toàn hệ thống | Người dùng, rạp, phân công/chuyển rạp, danh mục, suất chiếu, quản lý đặt vé ADM-18, khiếu nại và báo cáo. |
 
 Backend Node.js kiểm tra cả quyền chức năng và phạm vi rạp trước khi gọi SQL. Ở SQL Server cần tạo Role/Login tương ứng và minh họa GRANT, REVOKE, DENY theo yêu cầu project. Không cấp quyền trực tiếp quá rộng cho tài khoản ứng dụng; ưu tiên quyền thực thi Stored Procedure/View cần thiết.
 
@@ -852,7 +865,7 @@ _Hình 4.1. Luồng xác thực, RBAC và kiểm tra phạm vi rạp_
 
 **4.8. Tích hợp React.js với Node.js và SQL Server**
 
-React.js không kết nối trực tiếp SQL Server. Frontend gọi REST API của Express.js bằng JSON. Backend dùng connection pool của package mssql, truyền tham số có kiểu dữ liệu rõ ràng và gọi Stored Procedure/View/Function. Cách tách này giúp không lộ chuỗi kết nối CSDL, tập trung kiểm soát quyền ở server và tránh việc client tự quyết định nghiệp vụ.
+React.js không kết nối trực tiếp SQL Server. Frontend gọi REST API của Express.js bằng JSON. Backend dùng connection pool của package mssql, truyền tham số có kiểu dữ liệu rõ ràng và chỉ execute Stored Procedure. View/Function được dùng bên trong DBMS, không query trực tiếp từ Backend. Cách tách này giúp không lộ chuỗi kết nối CSDL, tập trung kiểm soát quyền ở server và tránh việc client tự quyết định nghiệp vụ.
 
 | **Nhóm API** | **React.js** | **Node.js/Express.js** | **Đối tượng SQL** |
 | --- | --- | --- | --- |
@@ -871,6 +884,24 @@ React.js không kết nối trực tiếp SQL Server. Frontend gọi REST API c�
 | Route | Khai báo endpoint và HTTP method | Không truy vấn SQL trực tiếp. |
 | Middleware | Xác thực, RBAC, phạm vi rạp, validate cơ bản | Không chứa nghiệp vụ đặt vé. |
 | Controller | Nhận request, gọi service, chuẩn hóa response | Mỏng; không tự điều phối transaction. |
-| Service | Điều phối use case và dữ liệu đầu vào | Gọi SP/View/Function đúng nghiệp vụ. |
-| Data Access | mssql pool/request/execute/query | Không chứa logic giao diện. |
+| Service | Điều phối use case và dữ liệu đầu vào | Chỉ gọi Stored Procedure; View/Function và business SQL nằm trong DBMS. |
+| Data Access | mssql pool/request/execute | Typed SP RPC, không query business SQL hoặc chứa logic giao diện. |
 | SQL Server | Toàn vẹn, transaction, SP/Trigger/View/Function/Index | Là lớp bảo vệ cuối cho dữ liệu. |
+
+**Use Case bổ sung QLR-10 / ADM-18:** Luồng danh sách/tìm/lọc → chi tiết → tạo thay Customer có sẵn → sửa ghế đủ điều kiện hoặc hủy logic. Tác nhân, tiền điều kiện, trạng thái, quyền, scope, hậu điều kiện và acceptance criteria theo quyết định tại đầu tài liệu. ERD không đổi bảng/quan hệ; CHITIETVE giữ các vé bị hủy, THANHTOAN giữ mọi lần thử. Không hoàn tiền tự nguyện hoặc xóa vật lý.
+
+**Đặc tả Use Case QLR-10 / ADM-18 (44 UC hoạt động)**
+
+| Thuộc tính | QLR-10 | ADM-18 |
+| --- | --- | --- |
+| Tác nhân / phạm vi | Manager đang hoạt động, rạp phân công còn hiệu lực | Admin đang hoạt động, toàn hệ thống |
+| Quyền | DAT_VE trong ma trận cố định | DAT_VE trong ma trận cố định |
+| Tiền điều kiện tạo | Customer KHACH_HANG có sẵn, hoạt động; show mở bán/bookable; ghế đúng phòng, hoạt động, chưa bị giữ/bán; đúng scope | Cùng điều kiện Customer/show/phòng/ghế, scope toàn hệ |
+| Luồng chính | Tìm/lọc danh sách → xem Customer/phim/show/rạp/phòng/ghế/trạng thái/giá/history → chọn Customer theo tên/email/SĐT → rạp/show/ghế → tạo đơn Chờ thanh toán | Cùng luồng, nhìn thấy rạp toàn hệ |
+| Sửa được duyệt | Đổi ghế cùng show, còn hold, chưa thử payment, không promotion/food/used; gửi active ticket IDs để chặn stale edit | Cùng quy tắc, SQL xác nhận lại toàn bộ |
+| Hủy được duyệt | Hủy toàn bộ pending order, không used/in-flight/success/refunded payment; không xóa row | Cùng quy tắc; không tự hoàn tiền |
+| Hậu điều kiện | Giữ Customer/show/hold, snapshot vé giữ nguyên; vé bỏ Đã hủy; vé mới giá hiện tại; tiền đơn loại vé hủy; giữ payment history | Cùng hậu điều kiện |
+| Ngoại lệ | 401/403, Customer sai role/khóa/không tồn tại, 404, show/seat conflict, expired hold, paid/used/payment attempt, stale edit; rollback/no-write | Cùng ngoại lệ, không có scope rạp hạn chế |
+| Nghiệm thu | HTTP/SQL + browser list/create/edit/cancel, foreign/expired scope, concurrency/snapshot/history; Test DB, không kế thừa PASS lịch sử | HTTP/SQL + browser toàn hệ; paid/read-only; giữ fixed RBAC; Test DB |
+
+DBMS bổ sung 9 SP `sp_StaffBooking_*`; Backend chỉ expose 7 nghiệp vụ đọc/ghi cần thiết qua typed RPC. `Authorize` và `LockShow` là helper nội bộ, không có API. ERD giữ nguyên bảng/FK; không thêm cột người tạo hoặc đổi owner thành nhân viên. Xem API và kết quả kiểm thử trong `docs/FINAL_SYSTEM_AUDIT.md`.

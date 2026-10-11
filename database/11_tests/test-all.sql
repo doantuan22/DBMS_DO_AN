@@ -10,3 +10,4 @@ GO
 :r ./11_tests/integrity/constraints.sql
 :r ./11_tests/permissions/execute_only.sql
 :r ./11_tests/permissions/fixed_rbac.sql
+:r ./11_tests/staff_booking/regression.sql

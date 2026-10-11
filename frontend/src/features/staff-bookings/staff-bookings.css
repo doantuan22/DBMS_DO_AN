@@ -1,0 +1,12 @@
+.staff-bookings { display: grid; gap: var(--space-4, 16px); min-width: 0; }
+.staff-bookings__actions { display: flex; align-items: end; flex-wrap: wrap; gap: var(--space-3, 12px); }
+.staff-bookings__actions .ui-form-field { flex: 1 1 250px; }
+.staff-bookings__detail, .staff-bookings__editor { display: grid; gap: var(--space-3); padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); min-width: 0; }
+.staff-bookings__detail h2, .staff-bookings__detail p, .staff-bookings__editor h2, .staff-bookings__editor p { margin: 0; }
+.staff-bookings__seat-fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.staff-bookings__success { color: var(--color-success-text); }
+.staff-bookings__error { color: var(--color-danger-text); }
+@media (max-width: 768px) {
+  .staff-bookings__detail, .staff-bookings__editor { padding: var(--space-3, 12px); }
+  .staff-bookings__actions > .ui-button { flex: 1 1 auto; }
+}

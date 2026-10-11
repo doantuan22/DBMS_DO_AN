@@ -24,6 +24,7 @@ import ComplaintDetail from '../pages/ComplaintDetail';
 import ManagerPortal from '../pages/ManagerPortal';
 import SupportPortal from '../pages/SupportPortal';
 import AdminPortal from '../pages/AdminPortal';
+import StaffBookings from '../features/staff-bookings/StaffBookings';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
 const PUBLIC_LINKS = [
@@ -100,6 +101,7 @@ export default function AppRoutes() {
       <Route element={<RequireRole role={ROLES.MANAGER} />}>
         <Route path="/manager" element={<StaffShell portal="manager" />}>
           <Route index element={<ManagerPortal />} />
+          <Route path="bookings" element={<StaffBookings portal="manager" />} />
         </Route>
       </Route>
 
@@ -128,6 +130,7 @@ export default function AppRoutes() {
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<StaffShell portal="admin" />}>
           <Route index element={<AdminPortal />} />
+          <Route path="bookings" element={<StaffBookings portal="admin" />} />
         </Route>
       </Route>
     </Routes>

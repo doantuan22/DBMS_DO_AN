@@ -3,9 +3,11 @@ import * as manager from '../controllers/managerController.js';
 import { authenticate } from '../middleware/authenticate.js';
 import { requireManager } from '../middleware/requireManager.js';
 import { requirePermission } from '../middleware/requirePermission.js';
+import { createStaffBookingRouter } from './staffBookingRoutes.js';
 
 const router = Router();
 router.use(authenticate, requireManager);
+router.use('/bookings', requirePermission('DAT_VE'), createStaffBookingRouter('QUAN_LY_RAP'));
 router.get('/cinemas', manager.listCinemas);
 router.get('/cinemas/:cinemaId/rooms', requirePermission('QL_PHONG'), manager.listRooms);
 router.post('/cinemas/:cinemaId/rooms', requirePermission('QL_PHONG'), manager.createRoom);

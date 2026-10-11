@@ -11,6 +11,7 @@ import { createBookingService } from '../../backend/src/services/bookingService.
 import { createOrderService } from '../../backend/src/services/orderService.js';
 import { createFeedbackService } from '../../backend/src/services/feedbackService.js';
 import { createSupportService } from '../../backend/src/services/supportService.js';
+import { createStaffBookingService } from '../../backend/src/services/staffBookingService.js';
 import { checkDatabase } from '../../backend/src/services/healthService.js';
 import { startExpirePendingOrdersJob } from '../../backend/src/jobs/expirePendingOrders.js';
 
@@ -125,6 +126,7 @@ const services = {
   order: createOrderService(opts),
   feedback: createFeedbackService(opts),
   support: createSupportService(opts),
+  staffBooking: createStaffBookingService(opts),
 };
 for (const [area, service] of Object.entries(services))
   for (const method of Object.keys(service)) {
@@ -178,6 +180,12 @@ for (const [area, service] of Object.entries(services))
           : method === 'createComplaint'
             ? [1, input]
             : [1, 1];
+    } else if (area === 'staffBooking') {
+      args = method === 'customers' ? [1, 'ADMIN', 'AUDIT']
+        : method === 'create' ? [1, 'ADMIN', { ...input, customerId: 5 }]
+          : method === 'updateSeats' ? [1, 'ADMIN', 1, { seatIds: [1], expectedTicketIds: [1] }]
+            : ['detail', 'cancel'].includes(method) ? [1, 'ADMIN', 1]
+              : [1, 'ADMIN', input];
     } else if (area === 'support') {
       args = method === 'list' ? [1, input] : [1, 1, input];
     }

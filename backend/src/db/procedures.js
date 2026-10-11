@@ -2,6 +2,13 @@
 // Callers pass a key from PROCEDURES; a procedure name is never accepted from a request.
 // Add an entry here only after the procedure exists under database/08_procedures/.
 export const PROCEDURES = Object.freeze({
+  STAFF_BOOKING_LIST: 'dbo.sp_StaffBooking_List',
+  STAFF_BOOKING_CUSTOMERS: 'dbo.sp_StaffBooking_Customers',
+  STAFF_BOOKING_OPTIONS: 'dbo.sp_StaffBooking_Options',
+  STAFF_BOOKING_DETAIL: 'dbo.sp_StaffBooking_Detail',
+  STAFF_BOOKING_CREATE: 'dbo.sp_StaffBooking_Create',
+  STAFF_BOOKING_UPDATE_SEATS: 'dbo.sp_StaffBooking_UpdateSeats',
+  STAFF_BOOKING_CANCEL: 'dbo.sp_StaffBooking_Cancel',
   SYSTEM_HEALTH_CHECK: 'dbo.sp_System_HealthCheck',
   EXPIRE_PENDING_ORDERS: 'dbo.sp_Order_ExpirePending',
 

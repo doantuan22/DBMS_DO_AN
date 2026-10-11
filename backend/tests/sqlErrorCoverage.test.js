@@ -18,6 +18,7 @@ const FLOW_SERVICES = {
   manager: ['managerService.js'],
   support: ['supportService.js'],
   admin: ['adminService.js'],
+  staffBooking: ['staffBookingService.js'],
 };
 
 // Which flow(s) a code belongs to. Triggers and the pricing trigger are shared, so they are listed by code first.
@@ -31,6 +32,7 @@ const CODE_FLOWS = {
   50215: ['manager', 'admin'],
 };
 const FOLDER_FLOWS = [
+  ['08_procedures/staff_booking/', ['staffBooking']],
   ['08_procedures/auth/', ['auth']],
   ['08_procedures/manager/', ['manager']],
   ['08_procedures/support/', ['support']],

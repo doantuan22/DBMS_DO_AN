@@ -1,6 +1,86 @@
 # Final System Re-Audit
 
-## Fixed RBAC cleanup & implementation — 11/10/2026
+## Quản lý đặt vé Admin / Manager — 11/10/2026
+
+**Kết quả task:** đã triển khai repository và xác minh phạm vi đã được chủ dự án chấp thuận trên DB kiểm thử riêng. **Chưa triển khai migration vào Main.** Dừng ở task này; Phase 3 chưa được mở. Baseline mới **44 Use Case hoạt động**: Customer 14, Manager 10, CSKH 6, Admin 14; 3 RETIRED, tổng 47 ID truy vết. Thêm `QLR-10` và `ADM-18`; không thêm `ADM-17`. Các báo cáo R8.3 và fixed RBAC bên dưới là snapshot lịch sử, không phải nghiệm thu 44/44 mới.
+
+### Nghiệp vụ đã triển khai
+
+- Admin quản lý đơn toàn hệ; Manager chỉ trong các rạp được phân công còn hiệu lực. Role chính xác và quyền `DAT_VE` hiện có được kiểm tra ở API và SP. Ma trận cố định 4 role / 23 quyền / 40 mapping giữ nguyên; không thêm quyền, gán quyền hoặc đổi vai trò.
+- Danh sách phân trang SQL, tìm theo mã đơn/vé, tên/email/SĐT Customer và phim; lọc trạng thái/rạp. Chi tiết gồm Customer, phim, show, rạp/phòng, ghế, loại vé, snapshot giá, hold, trạng thái, vé đã hủy, payment history và đồ ăn/khuyến mãi nếu có.
+- Tạo chỉ cho tài khoản Customer có sẵn, đúng `KHACH_HANG`, đang hoạt động; selector tên/email/SĐT, không nhập ID. SP giữ lock Customer và các parent, scope, show bookability, đúng phòng/ghế và giữ/bán ghế; delegates `sp_Booking_Create` hiện hữu. Đơn luôn Chờ thanh toán, không có payment do nhân viên tạo.
+- **Sửa đúng phạm vi được phê duyệt:** chỉ đổi ghế cùng show khi pending còn hold, chưa có bất kỳ payment attempt, không promotion/food/used. Retained ticket giữ ID/code/giá; vé bỏ lưu Đã hủy; vé mới lấy giá hiện tại và mã mới. Owner/show/hold không đổi. `expectedTicketIds` là optimistic concurrency guard, không phải quyền do client quyết định. SQL rechecks authoritative state và locks, transaction rollback khi lỗi.
+- Hủy toàn bộ pending order theo quy tắc hiện có, nhả ghế, giữ order/ticket/payment history và xử lý quota khuyến mãi hiện hữu. Chặn used/in-flight/success/refunded payment. Paid/used chỉ xem, không xóa vật lý hoặc hoàn tiền tự nguyện. DELETE trả 405, không ghi dữ liệu.
+- `/admin/bookings` và `/manager/bookings` dùng StaffShell, shared DataTable/FilterBar/FormField/Select/Button/StatusBadge/AsyncState/ConfirmDialog và SeatMap. Có named selectors, dirty confirmation, GET abort guards, immediate busy ref, loading/error/empty/denied/conflict/success. Giữ sáu nhóm Admin, legacy portal routes và palette trắng–xanh.
+
+### File thay đổi
+
+| Nhóm | File / phạm vi |
+| --- | --- |
+| Baseline, phân tích và roadmap | `README.md`, `Phân Tích _ Thiết Kế.md`, `docs/USE_CASE_MATRIX_45.md`, báo cáo này; ma trận 44 active / 47 ID, UC specification và ERD dependency/history; roadmap hiện hành nằm trong Blueprint §7.1/§10 |
+| Thiết kế | `docs/UX_ARCHITECTURE_BLUEPRINT.md`, `docs/standards/FRONTEND_UIUX_DESIGN_STANDARDS.md`: route/menu, 17 Admin destinations (16 legacy + 1 module), workflow, component ownership, trạng thái và acceptance rules |
+| DBMS mới | `database/08_procedures/staff_booking/sp_StaffBooking_{Authorize,LockShow,Customers,Options,List,Detail,Create,UpdateSeats,Cancel}.sql` — 9 SP; không sửa Customer SP/table/FK/seed |
+| DBMS build/migration/verification | `database/build-objects.sql`, `13_migrations/r10_staff_booking.sql`, `baseline-manifest.json`, `12_verify/verify_objects.sql`, `12_verify/verify_procedures.sql`, `database/README.md` |
+| SQL regression | `database/11_tests/staff_booking/regression.sql`, `11_tests/test-all.sql` |
+| Backend | mới `backend/src/routes/staffBookingRoutes.js`, `services/staffBookingService.js`, `validators/staffBookingValidator.js`; cập nhật `routes/adminRoutes.js`, `routes/managerRoutes.js`, `db/procedures.js` |
+| Frontend | mới `frontend/src/features/staff-bookings/StaffBookings.jsx`, `useBookingDraftGuard.js`, `staff-bookings.css`, `frontend/src/api/staffBookingApi.js`; cập nhật `layouts/StaffShell.jsx`, `routes/index.jsx`, `utils/authorization.js` |
+| Tests / tooling | mới `backend/tests/staffBooking.test.js`, `frontend/tests/staffBookings.test.js`, `scripts/db/staff-booking-smoke.mjs`, `staff-booking-browser.mjs`; cập nhật `backend/tests/sqlErrorCoverage.test.js`, `scripts/db/contract-check.mjs` |
+
+Canonical inventory: **27 bảng / 169 module** = **134 SP, 6 view, 21 function, 8 trigger**. Hai helper SP không có API/Backend whitelist; bảy nghiệp vụ gọi qua typed RPC. Không cài dependency hoặc UI framework.
+
+### API module mới
+
+Hai prefix `/api/admin/bookings` và `/api/manager/bookings` có cùng contract; actor lấy từ authenticated user, portal role cố định phía server, không nhận authority/price/payment fields từ body.
+
+| Method / suffix | Input / output chính |
+| --- | --- |
+| GET `/` | search/status/cinemaId/page/pageSize; orders + total/page/pageSize; pageSize tối đa 100 |
+| GET `/customers` | search 2–100 ký tự; top 50 active Customer tên/email/SĐT + total |
+| GET `/options` | cinemaId/showtimeId/orderId khi sửa; scoped cinemas, top 200 bookable shows + total, seats/giá/trạng thái; own retained seats trả snapshot |
+| GET `/:orderId` | authoritative detail/history + SQL `canEdit`/`canCancel` |
+| POST `/` | customerId/showtimeId/seatIds; 201 orderId pending |
+| PUT `/:orderId/seats` | seatIds/expectedTicketIds; authoritative updated detail/history |
+| POST `/:orderId/cancel` | body trống; authoritative canceled detail/history |
+| DELETE `/:orderId` | 405 HISTORY_PRESERVED; không gọi SP ghi |
+
+### Kết quả kiểm thử thực tế
+
+Target: **`CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2`**, SQL Server `DoanTuanIT`, seed day 2026-10-11. Preflight trước khi tạo; build/seed từ source, migration áp dụng lại trên target này. Main không dùng làm test target, không reset/seed/deploy Main.
+
+| Kiểm tra | Kết quả |
+| --- | --- |
+| Backend tests | **198/198 PASS**, 0 failed/skipped, gồm validator/service/router/error coverage module mới |
+| Frontend tests | **69/69 PASS**, 0 failed/skipped, gồm exact role/DAT_VE, SSR shell/filter/loading/menu và client portal whitelist |
+| Frontend lint | **PASS**, không warning |
+| Backend lint bằng Oxlint hiện có | Exit 0; **1 warning có sẵn** ở `backend/tests/adminPricing.test.js:30` (`endsOn` không dùng); không thêm warning |
+| Backend syntax / build | `node --check` **106 file PASS**. Backend native ESM không có build/lint script; không ghi production build Backend PASS |
+| Frontend production build | **PASS**, 114 module; JS 577.91 kB / gzip 167.85 kB, CSS 45.74 kB. Chunk >500 kB warning. Default dist bị EPERM khi Vite dọn assets; build được chạy ở output riêng rồi lưu dưới `.audit-output/staff-booking-production-build/` |
+| Real HTTP / SQL | **79 checks PASS**: 4 role login; unauth/cross-role deny; list/lookup; missing/wrong-role/locked Customer; bad show/room/seat/dupe/status spoof; Admin và Manager create/edit/cancel; paid/in-flight refusal; 405 physical delete; foreign scope/no-leak; unchanged snapshots/hold/history |
+| Concurrency | **PASS thực tế**: hai HTTP create cùng ghế → đúng một 201, một 409; hai edit cùng expected version → một 200, một ORDER_CHANGED. Customer payment sau edit lấy đúng total snapshot, payment thất bại rồi logical cancel giữ history |
+| SQL approved-edit rules | **PASS**: đổi bảng giá trong rollback fixture; vé giữ giá/ID, vé bỏ giữ canceled row, vé mới current price, total đúng và owner/show/hold unchanged. Stale/missing/wrong-role Customer, role spoof, duplicate seats, expired hold, promotion/product order, used-ticket edit/cancel, failed/in-flight payment và foreign/expired Manager scope bị từ chối; closed show không tạo được |
+| Canonical SQL regression | **PASS**: auth/public/booking/payment/orders/reviews/complaints/Manager/CSKH/Admin/reports, timezone/pricing/compensation, trigger/integrity/execute-only/fixed RBAC và staff booking. Fixtures SQL rollback |
+| Source parity / DB verify | **PASS 169/169 module**; fixed RBAC exact catalog/matrix còn nguyên |
+| DBMS-first audit | **PASS**, 69 runtime files, không raw business SQL Backend |
+| SP contracts | **PASS**, 110 service methods / 118 captured calls, 0 missing source, problems=[]; stub binding check bổ sung cho real HTTP/SQL evidence |
+| Real browser Edge | **32 checks PASS**, actual React/Vite → Express → SQL target trên cả Admin và Manager; create/edit/cancel, empty filter, named Customer, single mutation khi double-click, discard cancel retains draft, dialog focus/Tab excludes background/Escape, paid read-only deep link, Manager foreign detail denial, real competing-seat 409 retains draft, quay về module legacy đúng menu/hash, 0 Runtime exceptions |
+| Responsive screenshots | **PASS 390/768/1280/1440/1920 px** cho cả hai portal, không document horizontal overflow; table/SeatMap cuộn nội bộ. 14 screenshots, có edited-history và conflict. Đã mở xem ảnh 390px/1440px |
+| Toàn bộ 44 browser journeys / full WCAG audit | **NOT RUN**, không kế thừa PASS lịch sử. Không kiểm thử controlled out-of-order responses, tất cả permission-revocation race hoặc stress/load lớn |
+| Diff whitespace | **PASS**; chỉ cảnh báo LF/CRLF từ Git |
+
+Các lần thử đầu không được ghi PASS: build Test DB đầu lỗi khai báo table variable, đã sửa và build fresh V2; browser đầu cần headless Edge tắt sandbox renderer, một assertion Tab đã chỉnh để phản ánh native dialog cho phép focus browser chrome nhưng không background controls; legacy SQL smoke một lần đụng seat đang được fixture browser lỗi giữ, chạy lại đạt sau fixture hết hiệu lực. Không quy các lần lỗi này thành nghiệp vụ PASS chưa chạy lại.
+
+Evidence ignored trên máy này: [HTTP results](../.audit-output/staff-booking-http-results.json), [browser results](../.audit-output/staff-booking-browser-results.json), [screenshots](../.audit-output/staff-booking-browser/), [Backend tests](../.audit-output/staff-booking-backend-final.log), [Frontend tests](../.audit-output/staff-booking-frontend-tests.log), [build](../.audit-output/staff-booking-build.log), [SQL regression run](../.audit-output/staff-booking-full-sql.log), [verify](../.audit-output/staff-booking-final-verify.log), [contracts](../.audit-output/staff-booking-contract.log), [DBMS-first](../.audit-output/staff-booking-dbms-first.log). Đây là local artifacts, không đưa profile/session token hoặc screenshot vào git.
+
+### Regression risk, giới hạn và blocker
+
+1. **Main chưa có r10 migration.** `database/README.md` yêu cầu deployment Main được phê duyệt rõ ràng và review target; task yêu cầu repository, không chỉ định deployment Main. Source routes cần 9 SP mới trên DB chạy ứng dụng. [r10_staff_booking.sql](../database/13_migrations/r10_staff_booking.sql) sẵn sàng review, không reset/reseed, yêu cầu fixed RBAC; target chưa có r9 cần áp dụng r9 trước. Chưa chứng minh upgrade Main bằng deployment thực tế.
+2. **Hoàn tiền tự nguyện/hủy paid hoặc xóa riêng vé đã thanh toán không có quy tắc hiện hữu.** Phạm vi được duyệt giữ read-only; không dùng hủy show/bồi thường thay thế, không xóa lịch sử. Đây là giới hạn nghiệp vụ đã nêu, không bổ sung quy tắc suy đoán.
+3. Lookup giới hạn 50 Customer/200 show, danh sách phân trang SQL. Chọn rạp/thu hẹp keyword khi bị cắt kết quả. Không thêm API lịch hay tìm show mới ngoài phạm vi.
+4. Parent/show locks bảo vệ availability/pricing/payment và scope; booking/mutation trên cùng show có thể chờ nhau. Đã test tranh chấp thực tế, chưa benchmark tải lớn. CSV params do Backend typed arrays tạo, SQL kiểm tra lại; API không cho sửa owner/show/payment/giá/role.
+5. DB đầu `CinemaBookingDB_R0_STAFF_BOOKING_20261011` build dang dở được giữ riêng; không reset/drop hoặc sử dụng làm evidence thành công. HTTP/browser histories chỉ ở V2. Không cleanup DB bằng xóa lịch sử nghiệp vụ.
+6. Giữ production chunk warning và Backend lint warning có sẵn; không refactor bundling/pricing/portal khác. Frontend routes cũ vẫn giữ source; regression toàn bộ UI 44 UC thuộc nghiệm thu riêng, không tự mở Phase 3.
+
+## Snapshot lịch sử — Fixed RBAC cleanup & implementation, trước module đặt vé
 
 **Trạng thái:** đã triển khai source theo phạm vi task và kiểm thử trên database riêng; **chưa triển khai migration vào Main**, chưa nghiệm thu toàn bộ 42 hành trình UI. Kết quả R8.3 bên dưới là snapshot lịch sử, không phải verdict cho thay đổi này. Không chuyển Phase 3.
 

@@ -41,6 +41,7 @@ const ADMIN_GROUPS = [
       { key: 'promotions', label: 'Khuyến mãi' },
       { key: 'pricing', label: 'Bảng giá' },
       { key: 'showtimes', label: 'Suất chiếu' },
+      { key: 'bookings', label: 'Quản lý đặt vé', to: '/admin/bookings' },
     ],
   },
   {
@@ -66,6 +67,7 @@ const MANAGER_GROUPS = [
     items: [
       { key: 'showtimes', label: 'Suất chiếu', permission: 'QL_SUAT_CHIEU' },
       { key: 'pricing', label: 'Bảng giá', permission: 'QL_BANG_GIA' },
+      { key: 'bookings', label: 'Quản lý đặt vé', permission: 'DAT_VE', to: '/manager/bookings' },
     ],
   },
   { label: 'Báo cáo', items: [{ key: 'revenue', label: 'Doanh thu', permission: 'XEM_BAO_CAO_RAP' }] },
@@ -231,15 +233,18 @@ export default function StaffShell({ portal, children }) {
                     {group.items.map((item) => {
                       const active =
                         portal === 'admin'
-                          ? activeAdminSection === item.key
+                          ? item.to ? location.pathname === item.to : location.pathname === '/admin' && activeAdminSection === item.key
                           : portal === 'manager'
-                            ? location.hash === `#manager-${item.key}` ||
-                              (!location.hash && item.key === groups[0]?.items[0]?.key)
+                            ? item.to ? location.pathname === item.to : location.pathname === '/manager' && (location.hash === `#manager-${item.key}` ||
+                              (!location.hash && item.key === groups[0]?.items[0]?.key))
                             : item.key === 'queue';
                       const className = navItemClass(active);
                       return (
                         <li key={item.key}>
-                          {portal === 'admin' ? (
+                          {item.to || (portal === 'admin' && location.pathname !== '/admin') ? (
+                            <Link className={className} to={item.to ?? '/admin'} aria-current={active ? 'page' : undefined}
+                              onClick={() => { if (!item.to) navigateAdminSection(item.key); closeMenu(); }}>{item.label}</Link>
+                          ) : portal === 'admin' ? (
                             <button
                               type="button"
                               className={className}
@@ -254,7 +259,7 @@ export default function StaffShell({ portal, children }) {
                           ) : (
                             <a
                               className={className}
-                              href={portal === 'manager' ? `#manager-${item.key}` : item.href}
+                              href={portal === 'manager' ? `/manager#manager-${item.key}` : item.href}
                               aria-current={active ? 'location' : undefined}
                               onClick={closeMenu}
                             >

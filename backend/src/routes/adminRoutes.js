@@ -6,9 +6,11 @@ import { requirePermission } from '../middleware/requirePermission.js';
 import * as validators from '../validators/supportValidator.js';
 import { supportService } from '../services/supportService.js';
 import { HttpError } from '../utils/httpError.js';
+import { createStaffBookingRouter } from './staffBookingRoutes.js';
 
 const router = Router();
 router.use(authenticate, requireAdmin);
+router.use('/bookings', requirePermission('DAT_VE'), createStaffBookingRouter('ADMIN'));
 // Retired RBAC URLs remain explicit refusal points for old clients.
 router.all(
   ['/roles', '/roles/:roleId', '/roles/:roleId/permissions', '/permissions', '/permissions/:permissionId'],

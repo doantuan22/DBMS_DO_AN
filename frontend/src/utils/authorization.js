@@ -19,6 +19,7 @@ export const userCanAct = (user, role, ...permissions) =>
   );
 
 export const ADMIN_SECTION_PERMISSIONS = Object.freeze({
+  bookings: 'DAT_VE',
   dashboard: 'XEM_BAO_CAO_TOANHE',
   revenue: 'XEM_BAO_CAO_TOANHE',
   users: 'QL_NGUOIDUNG',

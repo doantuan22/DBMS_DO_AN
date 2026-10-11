@@ -1,8 +1,21 @@
 # UX Architecture Blueprint — Phase 1
 
+## Bổ sung quản lý đặt vé nhân viên — baseline hiện hành
+
+**44 Use Case hoạt động:** Customer 14, Manager 10, CSKH 6, Admin 14. `QLR-10` quản lý đặt vé trong rạp được phân công còn hiệu lực; `ADM-18` quản lý đặt vé toàn hệ thống. `ADM-17` vẫn là cấu hình hệ thống ngoài phạm vi. Giữ ba ID `ADM-03/04/05` RETIRED: tổng 47 ID truy vết; số 45 chỉ còn trong snapshot nghiệm thu cũ và tên file giữ để tương thích liên kết.
+
+Bốn role và ma trận seed cố định giữ nguyên. Module mới yêu cầu role chính xác ADMIN/QUAN_LY_RAP và quyền `DAT_VE` hiện có; mọi SP tự kiểm tra actor còn hoạt động và Manager scope. Customer chỉ được chọn từ tài khoản KHACH_HANG đang hoạt động bằng tên/email/SĐT, không nhập ID hay tạo tài khoản thay trong luồng này.
+
+**Quy tắc được chủ dự án chấp thuận:** tạo đơn Chờ thanh toán bằng nghiệp vụ booking hiện có (giới hạn giữ chỗ/ghế, khóa concurrency, giá snapshot); không tự thanh toán. Chỉ sửa ghế trong cùng suất chiếu khi đơn còn hạn giữ chỗ, chưa có bất kỳ lần thử thanh toán, không có khuyến mãi/đồ ăn hoặc vé đã sử dụng. Customer, suất chiếu, thời hạn giữ, tiền đồ ăn/giảm giá không sửa. Ghế giữ nguyên giữ snapshot/mã vé; ghế bỏ chuyển Đã hủy và giữ bản ghi; ghế mới tính giá hiện tại và mã vé mới. Không xóa vật lý. Hủy toàn bộ đơn Chờ thanh toán bằng quy tắc hiện có, giữ lịch sử vé/payment. Chặn hủy khi có thanh toán đang xử lý/thành công hoặc vé đã sử dụng để không đua với thanh toán. Đơn đã thanh toán/hoàn thành chỉ xem: source chưa có hoàn tiền tự nguyện; đây là blocker của hủy/hoàn tiền loại đơn này, không dùng hủy suất chiếu để giả lập.
+
+**Kiến trúc triển khai:** route `/admin/bookings` và `/manager/bookings` riêng cho module mới, không refactor portal cũ. API dưới `/api/admin/bookings` và `/api/manager/bookings`: GET list (search/status/cinemaId/page/pageSize), GET customers (search tên/email/SĐT, tối thiểu 2 ký tự, tối đa 50 kết quả mỗi tìm kiếm), GET options (cinemaId/showtimeId/orderId khi sửa), GET `/:orderId`, POST create, PUT `/:orderId/seats`, POST `/:orderId/cancel`. DELETE bị từ chối 405, không ghi/xóa dữ liệu; không có API ghi payment/RBAC mới. Pagination danh sách thực hiện ở SQL; lookup suất tối đa 200 kết quả, trả total/truncated rõ và lọc theo rạp.
+
+**Nghiệm thu bắt buộc:** hai role list/search/filter/detail/create/edit/cancel; Customer không tồn tại/sai role/khóa; Manager ngoài scope/hết hiệu lực; invalid show/room/seat; cùng ghế race/double-submit; paid/used/payment-in-flight từ chối và no-write; snapshot/history giữ nguyên; browser desktop/mobile, keyboard/modal/dirty/stale-request. Không kế thừa PASS lịch sử; ghi kết quả thực chạy trong FINAL_SYSTEM_AUDIT.md. Main deployment vẫn cần review và phê duyệt theo database/README.md.
+
+
 > **Project:** Hệ thống đặt vé xem phim  
 > **Status:** Đề xuất kiến trúc UX; chưa triển khai source code  
-> **Baseline:** 42 Use Case hoạt động (Customer 14, Manager 9, CSKH 6, Admin 13); 45 ID lịch sử; `ADM-17` ngoài phạm vi
+> **Baseline:** 44 Use Case hoạt động (Customer 14, Manager 10, CSKH 6, Admin 14); 47 ID truy vết; `ADM-17` ngoài phạm vi
 > **Design standard:** [`docs/standards/FRONTEND_UIUX_DESIGN_STANDARDS.md`](standards/FRONTEND_UIUX_DESIGN_STANDARDS.md)  
 > **Audit basis:** [`docs/audits/frontend-deep-audit/FRONTEND_DEEP_AUDIT_REPORT.md`](audits/frontend-deep-audit/FRONTEND_DEEP_AUDIT_REPORT.md)
 
@@ -12,7 +25,7 @@ Blueprint này xác định kiến trúc điều hướng, bố cục và compon
 
 Phase 1 chỉ cập nhật chuẩn màu và tạo tài liệu này. Không thay đổi React/CSS, API, backend, database, RBAC, manager scope hoặc business logic. Mọi path mới bên dưới chỉ tổ chức lại các năng lực đang có; không tạo Use Case hoặc API mới.
 
-**Quyết định RBAC cố định (11/10/2026):** 42 Use Case hoạt động: Customer 14, Manager 9, CSKH 6, Admin 13. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 45 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
+**Quyết định RBAC cố định (11/10/2026):** 44 Use Case hoạt động: Customer 14, Manager 10, CSKH 6, Admin 14. `ADM-03`, `ADM-04`, `ADM-05` là **RETIRED**; giữ ID/evidence lịch sử trong ma trận 47 ID. Chỉ có Customer (`KHACH_HANG`), Manager (`QUAN_LY_RAP`), CSKH và Admin (`ADMIN`). Vai trò xác định khi tạo tài khoản và bất biến sau đó; danh mục quyền và Role–Permission bất biến đối với ứng dụng. Customer tự đăng ký; Admin chỉ tạo Manager/CSKH/Admin. Admin tiếp tục phân công/chuyển rạp cho Manager bằng selector tên, hiển thị phân công hiện tại và xác nhận chuyển rạp; giữ scope/thời hạn và khả năng nhiều phân công hiện có.
 
 ### 1.1. Nguồn đối chiếu
 
@@ -20,16 +33,16 @@ Phase 1 chỉ cập nhật chuẩn màu và tạo tài liệu này. Không thay 
 |---|---|
 | Frontend deep audit | Route/source hiện tại, điểm nghẽn IA, ownership, trạng thái kiểm chứng và regression risk |
 | Frontend UI/UX Design Standards v1.1.0 | Palette chính thức, WCAG, patterns và ràng buộc không mở rộng nghiệp vụ |
-| `USE_CASE_MATRIX_45.md` và bảng traceability trong audit | Phạm vi và ID của 42 UC; không tính `ADM-17` |
+| `USE_CASE_MATRIX_45.md` và bảng traceability trong audit | Phạm vi và ID của 44 UC; không tính `ADM-17` |
 | Frontend source | `routes/index.jsx`, `AreaLayout`, `AdminPortal`, `SupportPortal`, `ManagerPortal`, customer pages/components và API modules |
 
 ### 1.2. Hiện trạng ảnh hưởng đến kiến trúc
 
 - Customer đã có route theo hành trình từ phim/rạp đến booking, đơn, thanh toán và khiếu nại.
-- Audit lịch sử ghi nhận 18 section Admin; sau fixed RBAC còn 16 section. Quản lý vai trò/quyền/grant bị loại khỏi ứng dụng; account và phân công giữ workflow hiện có.
+- Audit lịch sử ghi nhận 18 section Admin; sau fixed RBAC còn 16 section legacy; module đặt vé mới nâng tổng navigation destinations lên 17. Quản lý vai trò/quyền/grant bị loại khỏi ứng dụng; account và phân công giữ workflow hiện có.
 - CSKH hiện gom filter, queue, detail, order reference, timeline và hai form xử lý vào `/support`. Filter đổi là gọi lại queue và xóa case đang chọn; detail/filter không được phục hồi bằng URL.
 - Manager hiện gom dashboard, phòng/ghế, suất chiếu, giá và doanh thu tại `/manager`. Rạp được chọn là ngữ cảnh quan trọng nhưng chưa gắn với route.
-- Source có shared async states, status badge, API clients và permission helpers cần giữ. Audit là static review: browser hiện tại chưa được chạy lại theo 42 UC; matrix lưu verdict ACCEPTED nhưng raw evidence cũ đã bị dọn. Không coi audit/source scan là bằng chứng nghiệm thu Phase 2.
+- Source có shared async states, status badge, API clients và permission helpers cần giữ. Audit là static review: browser hiện tại chưa được chạy lại theo 44 UC; matrix lưu verdict ACCEPTED nhưng raw evidence cũ đã bị dọn. Không coi audit/source scan là bằng chứng nghiệm thu Phase 2.
 
 ## 2. Design direction và chuẩn màu
 
@@ -104,7 +117,8 @@ Staff (StaffShell; role guard/scope hiện hành)
 │   │   ├── Sản phẩm                        /admin/commerce/products
 │   │   ├── Khuyến mãi                      /admin/commerce/promotions
 │   │   ├── Bảng giá                        /admin/operations/pricing
-│   │   └── Suất chiếu                      /admin/operations/showtimes
+│   │   ├── Suất chiếu                      /admin/operations/showtimes
+│   │   └── Quản lý đặt vé                   /admin/bookings
 │   └── Chăm sóc & báo cáo
 │       ├── Khiếu nại                       /admin/service/complaints
 │       └── Doanh thu                       /admin/reports/revenue
@@ -114,6 +128,7 @@ Staff (StaffShell; role guard/scope hiện hành)
 │   ├── Ghế                                /manager/seats
 │   ├── Suất chiếu                         /manager/showtimes
 │   ├── Bảng giá                           /manager/pricing
+│   ├── Quản lý đặt vé                      /manager/bookings
 │   └── Doanh thu                          /manager/revenue
 └── CSKH                                   /support → queue
     └── Chi tiết case                      /support/complaints/:complaintId
@@ -121,7 +136,7 @@ Staff (StaffShell; role guard/scope hiện hành)
 
 `/admin` và `/manager` tiếp tục là entry point tương thích. `/admin` mở overview nếu được phép; nếu không, mở section đầu tiên được cấp quyền, còn không có section phù hợp thì hiển thị 403. `/manager` mở overview trong scope rạp được phân công. Customer routes hiện có được giữ. Không có route ADM-17. Route con là đề xuất front-end cho các màn hình dùng năng lực/API hiện tại; cần xác nhận route guard/permission tương ứng trước khi triển khai.
 
-### 3.2. Sidebar Admin: 16 section, 6 nhóm
+### 3.2. Sidebar Admin: 16 section legacy + 1 module đặt vé, 6 nhóm
 
 | Nhóm sidebar | Section hiện tại được tổ chức | Route đề xuất | UC |
 |---|---|---|---|
@@ -129,10 +144,10 @@ Staff (StaffShell; role guard/scope hiện hành)
 | Tài khoản & phân công | Tài khoản; Phân công/chuyển rạp | `/admin/access/users`, `/admin/access/assignments` | ADM-02, ADM-06 |
 | Rạp & cơ sở vật chất | Rạp; Ảnh rạp; Phòng; Ghế | `/admin/cinemas`, `/admin/cinemas/images`, `/admin/facilities/rooms`, `/admin/facilities/seats` | ADM-07–ADM-08 |
 | Nội dung | Phim; Thể loại; Diễn viên | `/admin/catalog/movies`, `/admin/catalog/genres`, `/admin/catalog/actors` | ADM-09–ADM-10 |
-| Kinh doanh & vận hành | Sản phẩm; Khuyến mãi; Bảng giá; Suất chiếu | `/admin/commerce/products`, `/admin/commerce/promotions`, `/admin/operations/pricing`, `/admin/operations/showtimes` | ADM-11–ADM-14 |
+| Kinh doanh & vận hành | Sản phẩm; Khuyến mãi; Bảng giá; Suất chiếu; Quản lý đặt vé | `/admin/commerce/products`, `/admin/commerce/promotions`, `/admin/operations/pricing`, `/admin/operations/showtimes` | ADM-11–ADM-14 |
 | Chăm sóc & báo cáo | Khiếu nại; Doanh thu | `/admin/service/complaints`, `/admin/reports/revenue` | ADM-15–ADM-16 |
 
-Đếm theo section hoạt động: 1 + 2 + 4 + 3 + 4 + 2 = **16**. `ADM-03/04/05` RETIRED. `ADM-01` là xác thực/truy cập, không phải mục CRUD.
+Đếm theo section hoạt động: 1 + 2 + 4 + 3 + 5 + 2 = **17** (16 legacy + 1 module route riêng). `ADM-03/04/05` RETIRED. `ADM-01` là xác thực/truy cập, không phải mục CRUD.
 
 ### 3.3. Quy tắc route và state
 
@@ -172,7 +187,7 @@ MOBILE
 └────────────────────────────────────────────┘
 ```
 
-Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợp quyền. Mobile dùng drawer, đóng sau khi chọn route. Không biến 16 section thành 16 nút ngang.
+Sidebar desktop phân nhóm có thể thu gọn; chỉ hiển thị section hợp quyền. Mobile dùng drawer, đóng sau khi chọn route. Không biến 17 destinations thành dãy nút ngang.
 
 #### Mẫu trang danh sách/CRUD
 
@@ -408,9 +423,9 @@ Các API dưới đây là component-level contract, không phải REST/API back
 
 Architecture is a target ownership map, not an instruction to create empty folders or add dependencies. A shared visual component must not silently combine role-specific business rules.
 
-## 6. Mapping đủ 42 Use Case hoạt động + 3 RETIRED
+## 6. Mapping đủ 44 Use Case hoạt động + 3 RETIRED
 
-Các destination bên phải là kiến trúc đề xuất cho 42 UC hoạt động. Ba ID RETIRED được giữ để truy vết; không có route/workflow đích cho chúng. Risk chỉ mức độ regression khi di chuyển UI.
+Các destination bên phải là kiến trúc đề xuất cho 44 UC hoạt động. Ba ID RETIRED được giữ để truy vết; không có route/workflow đích cho chúng. Risk chỉ mức độ regression khi di chuyển UI.
 
 | UC | Chức năng baseline | Route/source hiện tại | Destination/screen đề xuất | Risk |
 |---|---|---|---|---|
@@ -460,14 +475,17 @@ Các destination bên phải là kiến trúc đề xuất cho 42 UC hoạt đ�
 | ADM-15 | Xử lý khiếu nại | `/admin` → complaints | `/admin/service/complaints` | Cao: distinct Admin permissions/workflow |
 | ADM-16 | Báo cáo toàn hệ | `/admin` → dashboard/revenue | `/admin/overview`, `/admin/reports/revenue` | Trung bình-cao: metric provenance |
 
-Coverage check: 14 KH + 9 QLR + 6 CSKH + 13 ADM = **42 UC hoạt động**; 3 ADM RETIRED = 45 ID truy vết. Không thêm `ADM-17`; không biến route con thành UC mới.
+| QLR-10 | Quản lý đặt vé tại rạp | Module mới | `/manager/bookings` | Cao: scope, concurrency, payment/snapshot |
+| ADM-18 | Quản lý đặt vé toàn hệ | Module mới | `/admin/bookings` | Cao: Customer eligibility, trạng thái/history |
+
+Coverage check: 14 KH + 10 QLR + 6 CSKH + 14 ADM = **44 UC hoạt động**; 3 ADM RETIRED = 47 ID truy vết. Không thêm `ADM-17`; không biến route con thành UC mới.
 
 ## 7. Mapping giao diện cũ → kiến trúc đề xuất và migration
 
 | Hiện trạng/source | Đích thiết kế | Rủi ro hồi quy | Điều kiện chuyển đổi |
 |---|---|---|---|
 | `AreaLayout` dùng chung cho public/staff | `PublicShell` và `StaffShell` với shared token/primitives | Cao nếu nav/auth/skip link bị mất | Giữ session, guards, account actions, keyboard landmarks và các URL hiện tại |
-| `AdminPortal.jsx` 16 section/local state | 6 sidebar groups, 16 route-backed destinations, feature-owned pages | Cao | Verify 13 Admin UC, route refresh/back, permission-filtered nav, guards; giữ `/admin` redirect |
+| `AdminPortal.jsx` 16 section/local state | 6 sidebar groups, 16 legacy destinations + `/admin/bookings`, feature-owned pages | Cao | Verify 14 Admin UC, route refresh/back, permission-filtered nav, guards; giữ `/admin` redirect |
 | Generic Admin table / generic form | Per-resource column config + field/selector mapping | Trung bình-cao | So field cũ với DTO/API; empty/loading/error, extra fields, long values và action permissions |
 | Role/permission CRUD và grants lịch sử | RETIRED: bỏ UI/API ghi; SP giữ signature nhưng từ chối | Cao | Bốn vai trò đăng nhập đúng quyền; ma trận seed không đổi; mọi API/SP ghi RBAC bị từ chối |
 | Admin `CinemaImageManager` | Cinema parent context + image subroute | Cao | A→B→A, ownership, stale response, failed upload/update và không gửi nhầm resource |
@@ -481,10 +499,10 @@ Coverage check: 14 KH + 9 QLR + 6 CSKH + 13 ADM = **42 UC hoạt động**; 3 AD
 | Phase | Phạm vi | Không nằm trong phase |
 |---|---|---|
 | **Phase 2 — Design System & Component Architecture** | Tokens/base styles; PublicShell/StaffShell; responsive grouped navigation tương thích với route hiện tại; shared UI components và API contracts ở §5.2.1 | Không chuyển toàn bộ portal sang route mới; không thay CRUD, workflow, API, RBAC, manager scope hoặc business logic |
-| **Phase 3 — Portal Refactor** | Từng bước chuyển Admin/CSKH/Manager/Customer sang grouped routes và screen workflows ở §3–4; dùng shared system | Không thay 42 UC hoặc contract chỉ để đơn giản hóa giao diện |
-| **Phase 4 — Overall Acceptance** | Browser smoke và regression 42 UC, viewport, keyboard/accessibility, contrast, screenshots và evidence; xử lý lỗi trong phạm vi được duyệt | Không tuyên bố PASS cho case/viewport chưa chạy thực tế |
+| **Phase 3 — Portal Refactor** | Từng bước chuyển Admin/CSKH/Manager/Customer sang grouped routes và screen workflows ở §3–4; dùng shared system | Không thay 44 UC hoặc contract chỉ để đơn giản hóa giao diện |
+| **Phase 4 — Overall Acceptance** | Browser smoke và regression 44 UC, viewport, keyboard/accessibility, contrast, screenshots và evidence; xử lý lỗi trong phạm vi được duyệt | Không tuyên bố PASS cho case/viewport chưa chạy thực tế |
 
-Phase 2 verification chỉ xác nhận nền tảng component/shell và route legacy còn hoạt động; nghiệm thu toàn bộ workflow 42 UC thuộc Phase 4 sau Phase 3.
+Phase 2 verification chỉ xác nhận nền tảng component/shell và route legacy còn hoạt động; nghiệm thu toàn bộ workflow 44 UC thuộc Phase 4 sau Phase 3.
 
 ## 8. Checklist nghiệm thu trước Phase 2
 
@@ -492,9 +510,9 @@ Phase 2 verification chỉ xác nhận nền tảng component/shell và route le
 
 - [ ] Palette trắng–xanh tại chuẩn thiết kế được xác nhận là nguồn màu chính thức; semantic success/warning/error vẫn được giữ.
 - [ ] Các cặp màu text/control/focus có kế hoạch đo WCAG AA; không lấy các tỷ lệ mẫu trong tài liệu làm chứng nhận toàn sản phẩm.
-- [ ] Sitemap 4 portal và 16 section Admin được duyệt; xác nhận 6 nhóm sidebar, ADM-03/04/05 RETIRED và không có route quản lý RBAC.
+- [ ] Sitemap 4 portal, 16 section Admin legacy và module đặt vé riêng được duyệt; xác nhận 6 nhóm sidebar, ADM-03/04/05 RETIRED và không có route quản lý RBAC.
 - [ ] Paths là front-end routes đề xuất trên capability hiện có; `/admin`, `/manager`, customer URL hiện tại có compatibility plan.
-- [ ] Không có `ADM-17`; 42 UC hoạt động mapping đủ 14/9/6/13; giữ 3 ID RETIRED.
+- [ ] Không có `ADM-17`; 44 UC hoạt động mapping đủ 14/10/6/14; giữ 3 ID RETIRED.
 - [ ] Admin sidebar groups, CSKH queue/detail/context, Manager cinema context và Customer discovery/booking wireframes được duyệt.
 - [ ] Owner của shared components và feature-specific workflows được thống nhất; không có shared component chứa business rules của nhiều role.
 
@@ -504,7 +522,7 @@ Phase 2 verification chỉ xác nhận nền tảng component/shell và route le
 - [ ] Mỗi screen family có columns/fields/actions được trace tới source/API hiện tại; lookup selector chỉ dùng data đang có.
 - [ ] Query params chỉ chứa state không nhạy cảm; support free-text search được phân loại trước khi đưa vào URL.
 - [ ] Định nghĩa test/evidence cho refresh, deep-link, back/forward, 401/403/404, loading/empty/error/retry, stale response, duplicate write và unsaved form.
-- [ ] Có baseline browser evidence cho 42 UC trước khi di chuyển; matrix ACCEPTED lịch sử không thay thế replay hiện tại.
+- [ ] Có baseline browser evidence cho 44 UC trước khi di chuyển; matrix ACCEPTED lịch sử không thay thế replay hiện tại.
 - [ ] Có viewport review tại 390, 768, 1280, 1440 và 1920 px (standard); kiểm tra bàn phím, zoom/reflow và reduced motion.
 - [ ] Booking regression bao gồm seat availability/conflict, hold expiry, product/promotion payload, authoritative total, payment attempt/failure, order history.
 - [ ] Admin regression bao gồm RBAC fixed matrix/no-write, role immutable, named Manager/cinema selectors và confirm transfer, CRUD fields, image A→B→A ownership, cancellation conflict và revenue source.
@@ -527,3 +545,15 @@ Chỉ bắt đầu thay đổi source sau khi blueprint, palette, route map, scr
 ---
 
 **Phase 1 deliverable:** kiến trúc UX và acceptance plan sẵn sàng để review. Phase 2 triển khai design system/shell/shared components; Phase 3 refactor portal; Phase 4 nghiệm thu tổng thể. **Tài liệu này không tự chuyển business logic hoặc route portal trong Phase 2.**
+
+## 10. Đặc tả module quản lý đặt vé (task độc lập, không phải Phase 3)
+
+Desktop: PageHeader + scope rạp → FilterBar tìm kiếm/trạng thái/rạp → DataTable phân trang → chi tiết đơn/vé/payment và form tạo/sửa ghế. Mobile: xếp các vùng dọc; bảng và SeatMap cuộn nội bộ; actions wrap và dialog không tràn viewport. Menu Admin nằm trong Kinh doanh & vận hành, vẫn sáu nhóm; Manager có Quản lý đặt vé. Route riêng giữ deep link qua `?orderId=...` (chỉ ID đối tượng, không đưa email/search PII vào URL).
+
+DataTable cột mã đơn, khách hàng tên/email, phim, suất/rạp/phòng, ghế, số vé, tổng snapshot, trạng thái, xem chi tiết. Detail hiển thị vé gồm mã/ghế/loại/giá/trạng thái và lịch sử payment/đồ ăn/khuyến mãi nếu đã có. CTA tạo → tìm Customer → chọn Customer → chọn rạp/suất → SeatMap → tạo đơn Chờ thanh toán. Edit khóa Customer/suất, chỉ SeatMap với ghế đang thuộc đơn vẫn chọn được. ConfirmDialog mô tả mã đơn/khách hàng, ghế cũ/mới hoặc hậu quả hủy. Không có control sửa giá, payment hoặc DELETE. Pending/dirty khóa đổi context; request generations bảo vệ customer/options/list/detail; busy ref khóa duplicate trước gửi API. Lỗi 403 hiện denied, 409 giữ draft và báo conflict, retry chỉ GET.
+
+Feature owner: `StaffBookings` sở hữu API/draft/permission/scope/guards; shared Button/Input/Select/FormField/PageHeader/DataTable/FilterBar/StatusBadge/AsyncState/ConfirmDialog và SeatMap chỉ nhận props, không thêm business logic. Ràng buộc edit/cancel và flags khả dụng đến từ DBMS. Props trang `portal: admin|manager`; variants theo shell hiện hữu; states loading/empty/error/denied/conflict/submitting/success; responsive 390/768/1280/1440/1920; keyboard native selector, labeled controls, modal focus/return, status live region, token trắng–xanh chính thức.
+
+### Roadmap cập nhật trong phạm vi được duyệt
+
+Tài liệu/baseline 44 → SP và migration chỉ bổ sung module, không đổi Customer booking → Backend typed RPC/role guards → route và workspace mới → unit/API/SQL/concurrency/browser regression → báo cáo kết quả/blocker. Phase 3 refactor portal cũ vẫn chưa được mở. Hoàn tiền tự nguyện/xóa vật lý vé không có quy tắc và không nằm trong triển khai này.
