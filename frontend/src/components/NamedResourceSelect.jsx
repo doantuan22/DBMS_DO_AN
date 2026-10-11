@@ -1,0 +1,109 @@
+import { useId, useState } from 'react';
+
+const normalize = (value) => String(value ?? '').trim().toLocaleLowerCase();
+
+export default function NamedResourceSelect({
+  label,
+  value,
+  options = [],
+  lookupStatus = 'loading',
+  lookupError,
+  onRetry,
+  onChange,
+  fallbackOption,
+  disabled = false,
+  readOnly = false,
+  required = true,
+  emptyMessage = 'Không có lựa chọn phù hợp.',
+}) {
+  const id = useId();
+  const [search, setSearch] = useState('');
+  const selectedValue = value === null || value === undefined ? '' : String(value);
+  const available = options.map((option) => ({
+    ...option,
+    id: String(option.id),
+    label: String(option.label ?? option.name ?? option.title ?? ''),
+  }));
+  if (
+    fallbackOption?.id !== null &&
+    fallbackOption?.id !== undefined &&
+    !available.some((option) => option.id === String(fallbackOption.id))
+  ) {
+    available.unshift({
+      ...fallbackOption,
+      id: String(fallbackOption.id),
+      label: String(fallbackOption.label ?? fallbackOption.name ?? fallbackOption.title ?? ''),
+    });
+  }
+
+  const query = normalize(search);
+  const filtered = query
+    ? available.filter((option) => normalize(option.label).includes(query))
+    : available;
+  const selected = available.find((option) => option.id === selectedValue);
+  const visible =
+    selected && !filtered.some((option) => option.id === selected.id)
+      ? [selected, ...filtered]
+      : filtered;
+  const lookupFailed = lookupStatus === 'error';
+  const lookupLoading = lookupStatus === 'loading';
+  const isDisabled = disabled || readOnly || lookupLoading || lookupFailed;
+
+  return (
+    <div className="manager-resource-select">
+      <label htmlFor={`${id}-search`}>
+        Tìm {label.toLocaleLowerCase()}
+        <input
+          id={`${id}-search`}
+          type="search"
+          value={search}
+          disabled={disabled || readOnly || lookupLoading || lookupFailed}
+          autoComplete="off"
+          onChange={(event) => setSearch(event.target.value)}
+          aria-describedby={`${id}-help`}
+        />
+      </label>
+      <label htmlFor={id}>
+        {label}
+        <select
+          id={id}
+          aria-label={label}
+          value={selectedValue}
+          disabled={isDisabled || (!available.length && lookupStatus === 'success')}
+          required={required && !readOnly}
+          onChange={(event) => onChange(event.target.value)}
+        >
+          <option value="">Chọn {label.toLocaleLowerCase()}</option>
+          {visible.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <p id={`${id}-help`} className="manager-resource-select__help" aria-live="polite">
+        {lookupLoading
+          ? `Đang tải danh sách ${label.toLocaleLowerCase()}…`
+          : lookupFailed
+            ? ''
+            : !available.length
+              ? emptyMessage
+              : query && !filtered.length
+                ? `Không tìm thấy ${label.toLocaleLowerCase()} khớp từ khóa.`
+                : readOnly
+                  ? 'Theo hợp đồng hiện tại, không thể đổi phòng khi sửa suất chiếu.'
+                  : 'Có thể tìm theo tên hoặc dùng phím mũi tên để chọn.'}
+      </p>
+      {lookupFailed && (
+        <div className="manager-resource-select__error" role="alert">
+          <span>{lookupError?.message ?? `Không tải được danh sách ${label.toLocaleLowerCase()}.`}</span>
+          {onRetry && (
+            <button type="button" disabled={disabled} onClick={onRetry}>
+              Tải lại
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

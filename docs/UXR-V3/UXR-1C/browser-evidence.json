@@ -1,0 +1,254 @@
+{
+  "baselineCommit": "5d2dcac1752947a5aed2095b15dbeaae97d35f64",
+  "browser": "Microsoft Edge headless via CDP; React fixture mounts the existing StaffShell and role-specific navigation groups",
+  "data": "Static UI authorization fixtures only; no API, Backend, Database or booking data requests",
+  "viewports": [
+    {
+      "portal": "admin",
+      "width": 390,
+      "bodyWidth": 390,
+      "layoutWidth": 390,
+      "mobileSidebarInertWhenClosed": true,
+      "desktopSidebarRemainsInteractive": false
+    },
+    {
+      "portal": "admin",
+      "width": 768,
+      "bodyWidth": 768,
+      "layoutWidth": 768,
+      "mobileSidebarInertWhenClosed": true,
+      "desktopSidebarRemainsInteractive": false
+    },
+    {
+      "portal": "admin",
+      "width": 1280,
+      "bodyWidth": 1280,
+      "layoutWidth": 1280,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "admin",
+      "width": 1440,
+      "bodyWidth": 1440,
+      "layoutWidth": 1440,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "admin",
+      "width": 1920,
+      "bodyWidth": 1920,
+      "layoutWidth": 1920,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "manager",
+      "width": 390,
+      "bodyWidth": 390,
+      "layoutWidth": 390,
+      "mobileSidebarInertWhenClosed": true,
+      "desktopSidebarRemainsInteractive": false
+    },
+    {
+      "portal": "manager",
+      "width": 768,
+      "bodyWidth": 768,
+      "layoutWidth": 768,
+      "mobileSidebarInertWhenClosed": true,
+      "desktopSidebarRemainsInteractive": false
+    },
+    {
+      "portal": "manager",
+      "width": 1280,
+      "bodyWidth": 1280,
+      "layoutWidth": 1280,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "manager",
+      "width": 1440,
+      "bodyWidth": 1440,
+      "layoutWidth": 1440,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "manager",
+      "width": 1920,
+      "bodyWidth": 1920,
+      "layoutWidth": 1920,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "support",
+      "width": 390,
+      "bodyWidth": 390,
+      "layoutWidth": 390,
+      "mobileSidebarInertWhenClosed": true,
+      "desktopSidebarRemainsInteractive": false
+    },
+    {
+      "portal": "support",
+      "width": 768,
+      "bodyWidth": 768,
+      "layoutWidth": 768,
+      "mobileSidebarInertWhenClosed": true,
+      "desktopSidebarRemainsInteractive": false
+    },
+    {
+      "portal": "support",
+      "width": 1280,
+      "bodyWidth": 1280,
+      "layoutWidth": 1280,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "support",
+      "width": 1440,
+      "bodyWidth": 1440,
+      "layoutWidth": 1440,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    },
+    {
+      "portal": "support",
+      "width": 1920,
+      "bodyWidth": 1920,
+      "layoutWidth": 1920,
+      "mobileSidebarInertWhenClosed": false,
+      "desktopSidebarRemainsInteractive": true
+    }
+  ],
+  "keyboard": [
+    {
+      "portal": "admin",
+      "width": 390,
+      "sequence": "Open → Tab → Shift+Tab → boundary wrap → Escape → Reopen → Navigate → auto-close",
+      "escapeFocusRestored": true,
+      "navigationFocusVisible": true
+    },
+    {
+      "portal": "admin",
+      "width": 768,
+      "sequence": "Open → Tab → Shift+Tab → boundary wrap → Escape → Reopen → Navigate → auto-close",
+      "escapeFocusRestored": true,
+      "navigationFocusVisible": true
+    },
+    {
+      "portal": "manager",
+      "width": 390,
+      "sequence": "Open → Tab → Shift+Tab → boundary wrap → Escape → Reopen → Navigate → auto-close",
+      "escapeFocusRestored": true,
+      "navigationFocusVisible": true
+    },
+    {
+      "portal": "manager",
+      "width": 768,
+      "sequence": "Open → Tab → Shift+Tab → boundary wrap → Escape → Reopen → Navigate → auto-close",
+      "escapeFocusRestored": true,
+      "navigationFocusVisible": true
+    },
+    {
+      "portal": "support",
+      "width": 390,
+      "sequence": "Open → Tab → Shift+Tab → boundary wrap → Escape → Reopen → Navigate → auto-close",
+      "escapeFocusRestored": true,
+      "navigationFocusVisible": true
+    },
+    {
+      "portal": "support",
+      "width": 768,
+      "sequence": "Open → Tab → Shift+Tab → boundary wrap → Escape → Reopen → Navigate → auto-close",
+      "escapeFocusRestored": true,
+      "navigationFocusVisible": true
+    },
+    {
+      "portal": "manager",
+      "width": 390,
+      "scenario": "no permitted navigation items",
+      "result": "drawer focuses its close control; Tab remains inside; Escape restores menu button"
+    },
+    {
+      "portal": "admin",
+      "scenario": "open then resize 390→1280→390",
+      "desktopFocusRestored": true,
+      "desktopTabDefaultNotPrevented": true,
+      "focusStayedInSidebarAfterTab": false,
+      "drawerClosedOnReturnToMobile": true
+    },
+    {
+      "portal": "manager",
+      "scenario": "open then resize 390→1280→390",
+      "desktopFocusRestored": true,
+      "desktopTabDefaultNotPrevented": true,
+      "focusStayedInSidebarAfterTab": false,
+      "drawerClosedOnReturnToMobile": true
+    },
+    {
+      "portal": "support",
+      "scenario": "open then resize 390→1280→390",
+      "desktopFocusRestored": true,
+      "desktopTabDefaultNotPrevented": true,
+      "focusStayedInSidebarAfterTab": false,
+      "drawerClosedOnReturnToMobile": true
+    }
+  ],
+  "accessibilityTree": [
+    {
+      "portal": "admin",
+      "width": 390,
+      "role": "dialog",
+      "name": "Điều hướng · Quản trị hệ thống",
+      "modal": true
+    },
+    {
+      "portal": "admin",
+      "width": 768,
+      "role": "dialog",
+      "name": "Điều hướng · Quản trị hệ thống",
+      "modal": true
+    },
+    {
+      "portal": "manager",
+      "width": 390,
+      "role": "dialog",
+      "name": "Điều hướng · Vận hành rạp",
+      "modal": true
+    },
+    {
+      "portal": "manager",
+      "width": 768,
+      "role": "dialog",
+      "name": "Điều hướng · Vận hành rạp",
+      "modal": true
+    },
+    {
+      "portal": "support",
+      "width": 390,
+      "role": "dialog",
+      "name": "Điều hướng · Chăm sóc khách hàng",
+      "modal": true
+    },
+    {
+      "portal": "support",
+      "width": 768,
+      "role": "dialog",
+      "name": "Điều hướng · Chăm sóc khách hàng",
+      "modal": true
+    }
+  ],
+  "axe": "NOT AVAILABLE: axe-core and @axe-core/playwright are not installed; no dependency added",
+  "result": {
+    "status": "PASS",
+    "viewportRoleCombinations": 15,
+    "keyboardScenarios": 10,
+    "accessibilityTreeChecks": 6,
+    "runtimeExceptions": 0,
+    "consoleErrors": 0
+  }
+}

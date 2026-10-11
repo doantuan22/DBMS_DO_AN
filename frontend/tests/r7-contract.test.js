@@ -3,7 +3,7 @@ import test, { before, after } from 'node:test';
 import { createServer } from 'vite';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-let vite, forms, gallery, Gallery, Details;
+let vite, forms, gallery, Gallery, Details, NamedResourceSelect;
 before(async () => {
   vite = await createServer({
     configFile: 'vite.config.js',
@@ -15,6 +15,9 @@ before(async () => {
   ({ default: Gallery } = await vite.ssrLoadModule('/src/components/CinemaGallery.jsx'));
   ({ OrderReferenceDetails: Details } = await vite.ssrLoadModule(
     '/src/components/ComplaintOrderReference.jsx',
+  ));
+  ({ default: NamedResourceSelect } = await vite.ssrLoadModule(
+    '/src/components/NamedResourceSelect.jsx',
   ));
 });
 after(async () => {
@@ -36,6 +39,7 @@ test('R7 edit hydration roundtrips UTC and DATE_ONLY, excluding immutable IDs/ro
     Object.entries(row).filter(([key]) => !['id', 'roomId'].includes(key)),
   );
   assert.deepEqual(body, expected);
+  assert.ok(forms.fieldsFor('showtime', true).some((field) => field.name === 'roomId' && field.readOnly));
   assert.deepEqual(
     forms.managerBody(
       'seat',
@@ -64,6 +68,42 @@ test('R7 edit hydration roundtrips UTC and DATE_ONLY, excluding immutable IDs/ro
     pricing,
   );
   assert.throws(() => forms.managerBody('pricing', { ...pricing, endsOn: '2026-12-31' }, true));
+});
+
+test('Manager showtime resource selectors serialize the selected named option IDs as numeric API fields', () => {
+  const values = forms.initialManagerValues('showtime');
+  values.movieId = '23';
+  values.roomId = '41';
+  const body = forms.managerBody('showtime', values, false);
+  assert.equal(body.movieId, 23);
+  assert.equal(body.roomId, 41);
+  assert.equal(typeof body.movieId, 'number');
+  assert.equal(typeof body.roomId, 'number');
+  assert.equal(forms.fieldsFor('showtime').find((field) => field.name === 'movieId').label, 'Phim');
+  assert.equal(forms.fieldsFor('showtime').find((field) => field.name === 'roomId').label, 'Phòng');
+  assert.throws(() => forms.managerBody('showtime', { ...values, roomId: '' }, false), /chọn phòng/i);
+});
+
+test('Manager resource selector renders accessible loading, empty, error, and named option states', () => {
+  const render = (props) =>
+    renderToStaticMarkup(
+      React.createElement(NamedResourceSelect, {
+        label: 'Phim',
+        value: '',
+        onChange: () => {},
+        ...props,
+      }),
+    );
+  assert.match(render({ lookupStatus: 'loading' }), /Đang tải danh sách phim/);
+  assert.match(render({ lookupStatus: 'success', options: [] }), /Không có lựa chọn phù hợp/);
+  assert.match(
+    render({ lookupStatus: 'error', lookupError: new Error('Lookup failed'), onRetry: () => {} }),
+    /role="alert"[\s\S]*Lookup failed[\s\S]*Tải lại/,
+  );
+  const populated = render({ lookupStatus: 'success', options: [{ id: 123, label: 'Tên phim thật' }] });
+  assert.match(populated, /Tên phim thật/);
+  assert.doesNotMatch(populated, />\s*123\s*</);
+  assert.match(populated, /<select[^>]*aria-label="Phim"/);
 });
 test('R7 gallery excludes inactive images, sorts cover first then display order, and has accessible empty/single/multi output', () => {
   const rows = [

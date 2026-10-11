@@ -34,7 +34,7 @@ export async function testR44Ownership(f){
   check('booking payload contains only IDs quantities and code',Object.keys(created.body).sort().join('|')==='products|promotionCode|seatIds|showtimeId');
   root.unmount();box.replaceChildren();root=createRoot(box);render(Payment,`/orders/${booking.id}/payment`,'/orders/:orderId/payment');
   await wait(()=>button('Xác nhận thanh toán')&&!button('Xác nhận thanh toán').disabled);
-  check('payment page displays authoritative order amount',box.textContent.includes('Database chốt tổng thanh toán')&&box.textContent.includes('93.000'));
+  check('payment page displays authoritative order amount without infrastructure details',box.textContent.includes('Tổng thanh toán:')&&!/SQL Server|cơ sở dữ liệu|Database|máy chủ/i.test(box.textContent)&&box.textContent.includes('93.000'));
   button('Xác nhận thanh toán').click();await wait(()=>box.textContent.includes('Đã xác nhận thanh toán thành công'));
   const attempt=calls.find(c=>c.route===`/api/orders/${booking.id}/payments`);
   check('payment amount comes from stored order without client money',JSON.stringify(attempt.body)===JSON.stringify({paymentMethod:'VNPAY'})&&attempt.response.payment.amount===93000);

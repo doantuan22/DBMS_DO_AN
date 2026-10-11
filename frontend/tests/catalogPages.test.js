@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test, { after, before } from 'node:test';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -207,6 +208,16 @@ test('guest can render the public movie route without authentication', () => {
   assert.match(html, /Danh sách phim/);
   assert.match(html, /Đang tải danh sách phim/);
   assert.match(html, /Đăng nhập/);
+});
+
+test('customer booking and payment copy omits infrastructure details', async () => {
+  for (const path of ['../src/pages/BookingPreparation.jsx', '../src/pages/PaymentPage.jsx']) {
+    const source = await readFile(new URL(path, import.meta.url), 'utf8');
+    assert.doesNotMatch(
+      source,
+      /SQL\s*Server|cơ sở dữ liệu|Database|connection string|connection details|với máy chủ/i,
+    );
+  }
 });
 
 test('order history, detail and payment pages render database-backed loading shells', () => {

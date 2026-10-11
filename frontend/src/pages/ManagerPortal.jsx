@@ -6,13 +6,16 @@ import * as api from '../api/managerApi';
 import { bookingErrorMessage } from '../utils/bookingLimits';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import ManagerResourceForm from '../components/ManagerResourceForm';
+import NamedResourceSelect from '../components/NamedResourceSelect';
 import ManagerRevenue from '../components/ManagerRevenue';
 import { RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
+import { getMovies } from '../api/catalogApi';
 
 export default function ManagerPortal() {
   const { user } = useAuth();
   const [cinemas, setCinemas] = useState({ status: 'loading' });
   const [cinemaId, setCinemaId] = useState('');
+  const [dirtyForms, setDirtyForms] = useState({});
   useEffect(() => {
     let active = true;
     api
@@ -51,6 +54,33 @@ export default function ManagerPortal() {
     ?.map((permission) => permission.code)
     .sort()
     .join(',')}`;
+  const hasDirtyForms = Object.keys(dirtyForms).some((key) => key.startsWith(`${allowedCinema}:`));
+  const changeCinema = (nextCinemaId) => {
+    if (nextCinemaId === allowedCinema) return;
+    if (
+      hasDirtyForms &&
+      !window.confirm('Bạn có thay đổi chưa lưu. Bỏ các thay đổi này và chuyển rạp?')
+    )
+      return;
+    if (hasDirtyForms) {
+      setDirtyForms((current) =>
+        Object.fromEntries(
+          Object.entries(current).filter(([key]) => !key.startsWith(`${allowedCinema}:`)),
+        ),
+      );
+    }
+    setCinemaId(nextCinemaId);
+  };
+  const reportFormDirty = (scopeCinemaId, formKey, dirty) => {
+    const key = `${scopeCinemaId}:${formKey}`;
+    setDirtyForms((current) => {
+      if (dirty) return { ...current, [key]: true };
+      if (!(key in current)) return current;
+      const next = { ...current };
+      delete next[key];
+      return next;
+    });
+  };
   return (
     <section className="catalog-page">
       <p className="catalog-eyebrow">QUẢN LÝ RẠP</p>
@@ -60,7 +90,7 @@ export default function ManagerPortal() {
         <select
           aria-label="Rạp hiện tại"
           value={allowedCinema}
-          onChange={(event) => setCinemaId(event.target.value)}
+          onChange={(event) => changeCinema(event.target.value)}
         >
           {assigned.map((cinema) => (
             <option key={cinema.id} value={cinema.id}>
@@ -69,14 +99,20 @@ export default function ManagerPortal() {
           ))}
         </select>
       </label>
-      <ManagerWorkspace key={scopeKey} cinemaId={allowedCinema} user={user} />
+      <ManagerWorkspace
+        key={scopeKey}
+        cinemaId={allowedCinema}
+        user={user}
+        onFormDirtyChange={reportFormDirty}
+      />
     </section>
   );
 }
 
-function ManagerWorkspace({ cinemaId, user }) {
+function ManagerWorkspace({ cinemaId, user, onFormDirtyChange }) {
   const can = (permission) => userCanAct(user, 'QUAN_LY_RAP', permission);
   const [data, setData] = useState({ status: 'loading' });
+  const [moviesLookup, setMoviesLookup] = useState({ status: 'loading', rows: [] });
   const [editing, setEditing] = useState(null);
   const [notice, setNotice] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -86,6 +122,8 @@ function ManagerWorkspace({ cinemaId, user }) {
   const [pricingStatus, setPricingStatus] = useState('');
   const generation = useRef(0);
   const seatGeneration = useRef(0);
+  const movieGeneration = useRef(0);
+  const movieController = useRef(null);
   const mounted = useRef(true);
   const writePending = useRef(false);
   useEffect(() => {
@@ -105,17 +143,66 @@ function ManagerWorkspace({ cinemaId, user }) {
     });
     if (mounted.current && current === generation.current) setData({ status: 'success', sections });
   }, [cinemaId, user]);
+  const loadMovies = useCallback(async () => {
+    movieController.current?.abort();
+    const controller = new AbortController();
+    movieController.current = controller;
+    const current = ++movieGeneration.current;
+    setMoviesLookup({ status: 'loading', rows: [] });
+    try {
+      const rows = await getMovies({}, { signal: controller.signal });
+      if (mounted.current && current === movieGeneration.current)
+        setMoviesLookup({ status: 'success', rows });
+    } catch (error) {
+      if (
+        mounted.current &&
+        current === movieGeneration.current &&
+        error.name !== 'AbortError'
+      )
+        setMoviesLookup({ status: 'error', rows: [], error });
+    }
+  }, []);
   useEffect(() => {
     void Promise.resolve().then(load);
   }, [load]);
+  useEffect(() => {
+    let active = true;
+    void Promise.resolve().then(() => {
+      if (active) void loadMovies();
+    });
+    return () => {
+      active = false;
+      movieGeneration.current += 1;
+      movieController.current?.abort();
+    };
+  }, [loadMovies]);
+  const roomOptions = data.sections?.rooms?.data?.rooms ?? [];
+  const roomsLookup = {
+    status: can('QL_PHONG') ? (data.sections?.rooms?.status ?? 'loading') : 'error',
+    error: can('QL_PHONG')
+      ? data.sections?.rooms?.error
+      : new Error('Tài khoản không có quyền tải danh sách phòng.'),
+    options: roomOptions.map((room) => ({ id: room.id, label: room.name })),
+    onRetry: load,
+  };
+  const movies = {
+    status: moviesLookup.status,
+    error: moviesLookup.error,
+    options: moviesLookup.rows.map((movie) => ({ id: movie.id, label: movie.title })),
+    onRetry: loadMovies,
+  };
   const loadSeats = async (id) => {
     if (!can('QL_GHE')) return;
+    if (!roomOptions.some((room) => String(room.id) === String(id))) {
+      setSeats({ status: 'error', rows: [], error: new Error('Vui lòng chọn phòng thuộc rạp hiện tại.') });
+      return;
+    }
     const current = ++seatGeneration.current;
     setSeats({ status: 'loading', rows: [] });
     try {
       const result = await api.getSeats(id);
       if (mounted.current && current === seatGeneration.current) {
-        setSeats({ status: 'success', rows: result.seats, roomId: id });
+        setSeats({ status: 'success', rows: result.seats, roomId: String(id) });
         setRoomId(String(id));
         setEditing((selection) => (selection?.kind === 'seat' ? null : selection));
       }
@@ -158,6 +245,10 @@ function ManagerWorkspace({ cinemaId, user }) {
         kind={kind}
         row={row}
         busy={busy}
+        lookups={{ movies, rooms: roomsLookup }}
+        onDirtyChange={(dirty) =>
+          onFormDirtyChange(cinemaId, `${kind}:${row?.id ?? 'create'}`, dirty)
+        }
         onCancel={() => setEditing(null)}
         onSave={(body) =>
           run(
@@ -235,18 +326,33 @@ function ManagerWorkspace({ cinemaId, user }) {
           )}
           {can('QL_GHE') && (
             <section className="catalog-section" aria-label="Ghế" id="manager-seats">
-              <h2>Ghế {seats.roomId ? `phòng #${seats.roomId}` : ''}</h2>
-              <label>
-                Mã phòng
-                <input
-                  aria-label="Mã phòng xem ghế"
-                  type="number"
-                  min="1"
-                  value={roomId}
-                  onChange={(event) => setRoomId(event.target.value)}
-                />
-              </label>
-              <button type="button" disabled={busy} onClick={() => void loadSeats(roomId)}>
+              <h2>
+                Ghế{seats.roomId
+                  ? ` · ${roomOptions.find((room) => String(room.id) === seats.roomId)?.name ?? ''}`
+                  : ''}
+              </h2>
+              <NamedResourceSelect
+                label="Phòng xem ghế"
+                value={roomId}
+                options={roomsLookup.options}
+                lookupStatus={roomsLookup.status}
+                lookupError={roomsLookup.error}
+                onRetry={roomsLookup.onRetry}
+                onChange={(value) => {
+                  seatGeneration.current += 1;
+                  setRoomId(value);
+                  setSeats({ status: 'idle', rows: [] });
+                  setEditing((selection) => (selection?.kind === 'seat' ? null : selection));
+                }}
+                emptyMessage="Rạp hiện tại chưa có phòng để chọn."
+              />
+              <button
+                type="button"
+                disabled={
+                  busy || !roomId || !roomOptions.some((room) => String(room.id) === roomId)
+                }
+                onClick={() => void loadSeats(roomId)}
+              >
                 Tải ghế
               </button>
               {seats.status === 'loading' && <LoadingState>Đang tải ghế…</LoadingState>}

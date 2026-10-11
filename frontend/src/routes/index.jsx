@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
 import StaffShell from '../layouts/StaffShell';
-import DatabaseHealth from '../components/DatabaseHealth';
 import RequireRole from './RequireRole';
 import RequireAuth from './RequireAuth';
 import Login from '../pages/auth/Login';
@@ -38,15 +37,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AreaLayout links={PUBLIC_LINKS} />}>
-        <Route
-          index
-          element={
-            <>
-              <Home />
-              <DatabaseHealth />
-            </>
-          }
-        />
+        <Route index element={<Home />} />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetail />} />
         <Route path="cinemas" element={<Cinemas />} />

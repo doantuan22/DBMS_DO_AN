@@ -315,7 +315,7 @@ function BookingContext({ showtimeId }) {
             : 'Không có'}
         </p>
         <p className="catalog-muted">
-          Giá cuối cùng, giảm giá và hạn giữ ghế sẽ do Database xác nhận khi tạo đơn.
+          Hệ thống xác nhận giá cuối cùng, ưu đãi và thời gian giữ ghế khi bạn tạo đơn.
         </p>
         {!user && (
           <p>

@@ -121,7 +121,7 @@ function PaymentContext({ orderId, user }) {
         {order.movieTitle} · {order.cinemaName}
       </p>
       <p>
-        Database chốt tổng thanh toán: <strong>{money(order.total)}</strong>
+        Tổng thanh toán: <strong>{money(order.total)}</strong>
       </p>
       <p>
         Trạng thái đơn: <StatusBadge status={order.status} />
@@ -158,7 +158,7 @@ function PaymentContext({ orderId, user }) {
         </div>
       )}
       {payable && canPay && !canConfirm && (
-        <p role="status">Đang kiểm tra hạn giữ ghế với máy chủ…</p>
+        <p role="status">Đang xác minh thời gian giữ ghế…</p>
       )}
       {order.status === 'Hết hạn' && (
         <p role="alert">

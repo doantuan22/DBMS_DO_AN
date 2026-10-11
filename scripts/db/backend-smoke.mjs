@@ -43,7 +43,7 @@ try {
   await request('/health');
   const health = await request('/health/db');
   assert.equal(health.ok, true);
-  assert.equal(health.database, database);
+  assert.deepEqual(health, { ok: true });
   const { movies } = await request('/movies');
   assert.ok(movies.length > 0);
   const movie = movies[0];

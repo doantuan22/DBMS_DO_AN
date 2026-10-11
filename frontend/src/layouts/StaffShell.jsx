@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ROLES } from '../constants/roles';
@@ -109,16 +110,35 @@ function navItemClass(active) {
   return active ? 'staff-shell__nav-item is-active' : 'staff-shell__nav-item';
 }
 
+const mobileViewportMatches = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 960px)').matches;
+
+function drawerTransitionDelay(element) {
+  const style = window.getComputedStyle(element);
+  const times = (value) => value.split(',').map((time) => {
+    const amount = Number.parseFloat(time);
+    return time.trim().endsWith('ms') ? amount : amount * 1000;
+  });
+  const durations = times(style.transitionDuration);
+  const delays = times(style.transitionDelay);
+  return Math.max(0, ...durations.map((duration, index) => duration + (delays[index % delays.length] ?? 0))) + 20;
+}
+
 export default function StaffShell({ portal, children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
   const groups = groupsForUser(portal, user);
+  const [isMobile, setIsMobile] = useState(mobileViewportMatches);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeAdminSection, setActiveAdminSection] = useState(
     () => groups[0]?.items[0]?.key ?? 'dashboard',
   );
   const menuToggleRef = useRef(null);
   const sidebarRef = useRef(null);
+  const mainContentRef = useRef(null);
+  const restoreToggleFocusRef = useRef(false);
+  const initialFocusTimerRef = useRef(null);
+  const mobileDialogOpen = isMobile && menuOpen;
   const adminNavigationHandler = useRef(null);
   const registerAdminNavigation = useCallback((handler) => {
     adminNavigationHandler.current = handler;
@@ -140,44 +160,90 @@ export default function StaffShell({ portal, children }) {
     }),
     [portal, activeAdminSection, registerAdminNavigation, navigateAdminSection],
   );
-  const closeMenu = useCallback(() => {
+  const closeMenu = useCallback(({ restoreFocus = true } = {}) => {
+    restoreToggleFocusRef.current = restoreFocus && mobileViewportMatches();
+    clearTimeout(initialFocusTimerRef.current);
     setMenuOpen(false);
-    if (window.matchMedia('(max-width: 960px)').matches) menuToggleRef.current?.focus();
+  }, []);
+  const openMenu = useCallback(() => {
+    flushSync(() => setMenuOpen(true));
+    const initialTarget = sidebarRef.current?.querySelector('nav a, nav button')
+      ?? sidebarRef.current?.querySelector('.staff-shell__drawer-close');
+    const sidebar = sidebarRef.current;
+    clearTimeout(initialFocusTimerRef.current);
+    if (sidebar && initialTarget) {
+      initialFocusTimerRef.current = setTimeout(() => {
+        if (mobileViewportMatches() && sidebar.classList.contains('is-open')) initialTarget.focus();
+      }, drawerTransitionDelay(sidebar));
+    }
   }, []);
 
   useEffect(() => {
-    if (!menuOpen) return undefined;
-    sidebarRef.current?.querySelector('a, button')?.focus();
+    const media = window.matchMedia('(max-width: 960px)');
+    const onViewportChange = (event) => {
+      const active = document.activeElement;
+      const focusWasInDrawer = sidebarRef.current?.contains(active);
+      const focusWasOnToggle = menuToggleRef.current === active;
+      setIsMobile(event.matches);
+      clearTimeout(initialFocusTimerRef.current);
+      setMenuOpen(false);
+      if (focusWasInDrawer || focusWasOnToggle) {
+        requestAnimationFrame(() => {
+          if (event.matches) menuToggleRef.current?.focus();
+          else mainContentRef.current?.focus({ preventScroll: true });
+        });
+      }
+    };
+    media.addEventListener('change', onViewportChange);
+    return () => media.removeEventListener('change', onViewportChange);
+  }, []);
 
+  useLayoutEffect(() => {
+    if (menuOpen || !restoreToggleFocusRef.current) return;
+    restoreToggleFocusRef.current = false;
+    if (isMobile) menuToggleRef.current?.focus();
+  }, [isMobile, menuOpen]);
+
+  useLayoutEffect(() => {
+    if (!mobileDialogOpen) return undefined;
     const onKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         closeMenu();
         return;
       }
-      if (event.key !== 'Tab' || !window.matchMedia('(max-width: 960px)').matches) return;
+      if (event.key !== 'Tab') return;
 
-      const sidebarItems = [...(sidebarRef.current?.querySelectorAll('a, button') ?? [])];
-      const focusableItems = [menuToggleRef.current, ...sidebarItems].filter(Boolean);
+      const focusableItems = [
+        ...(sidebarRef.current?.querySelectorAll(
+          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        ) ?? []),
+      ].filter((item) => !item.closest('[inert]') && item.getClientRects().length > 0);
       const first = focusableItems[0];
       const last = focusableItems.at(-1);
-      if (event.shiftKey && document.activeElement === first) {
+      const focusIsInDrawer = sidebarRef.current?.contains(document.activeElement);
+      if (!focusableItems.length) {
+        event.preventDefault();
+      } else if (event.shiftKey && (document.activeElement === first || !focusIsInDrawer)) {
         event.preventDefault();
         last?.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
+      } else if (!event.shiftKey && (document.activeElement === last || !focusIsInDrawer)) {
         event.preventDefault();
         first?.focus();
       }
     };
 
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, [menuOpen, closeMenu]);
+    document.addEventListener('keydown', onKeyDown, true);
+    return () => {
+      clearTimeout(initialFocusTimerRef.current);
+      document.removeEventListener('keydown', onKeyDown, true);
+    };
+  }, [mobileDialogOpen, closeMenu]);
 
   return (
     <StaffShellContext.Provider value={shellContext}>
       <div className={`staff-shell staff-shell--${portal}`}>
-        <a className="skip-link" href="#main-content">
+        <a className="skip-link" href="#main-content" inert={mobileDialogOpen}>
           Chuyển đến nội dung chính
         </a>
         <header className="staff-shell__header">
@@ -187,21 +253,23 @@ export default function StaffShell({ portal, children }) {
             className="staff-shell__menu-toggle"
             aria-expanded={menuOpen}
             aria-controls="staff-sidebar"
-            onClick={() => setMenuOpen((open) => !open)}
+            aria-hidden={mobileDialogOpen ? 'true' : undefined}
+            tabIndex={mobileDialogOpen ? -1 : undefined}
+            onClick={() => (menuOpen ? closeMenu() : openMenu())}
           >
             <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
             <span className="ui-visually-hidden">
-              {menuOpen ? 'Đóng điều hướng nhân viên' : 'Mở điều hướng nhân viên'}
+              {menuOpen ? 'Điều hướng nhân viên đang mở' : 'Mở điều hướng nhân viên'}
             </span>
           </button>
-          <Link className="staff-shell__brand" to="/">
+          <Link className="staff-shell__brand" to="/" inert={mobileDialogOpen}>
             <span className="area__brand-logo" aria-hidden="true">
               ★
             </span>
             <span>Cinema<span className="staff-shell__brand-accent">Star</span></span>
           </Link>
-          <span className="staff-shell__portal-title">{PORTAL_LABELS[portal]}</span>
-          <div className="staff-shell__account">
+          <span className="staff-shell__portal-title" inert={mobileDialogOpen}>{PORTAL_LABELS[portal]}</span>
+          <div className="staff-shell__account" inert={mobileDialogOpen}>
             <span className="staff-shell__user-name">{user?.name || user?.email}</span>
             <button className="ui-button ui-button--secondary ui-button--sm" type="button" onClick={logout}>
               Đăng xuất
@@ -214,6 +282,8 @@ export default function StaffShell({ portal, children }) {
             className="staff-shell__scrim"
             type="button"
             aria-label="Đóng điều hướng"
+            aria-hidden="true"
+            tabIndex={-1}
             onClick={closeMenu}
           />
         )}
@@ -224,7 +294,21 @@ export default function StaffShell({ portal, children }) {
             className={menuOpen ? 'staff-shell__sidebar is-open' : 'staff-shell__sidebar'}
             id="staff-sidebar"
             aria-label="Điều hướng nhân viên"
+            role={mobileDialogOpen ? 'dialog' : undefined}
+            aria-modal={mobileDialogOpen ? 'true' : undefined}
+            aria-labelledby={mobileDialogOpen ? 'staff-sidebar-title' : undefined}
+            aria-hidden={isMobile && !menuOpen ? 'true' : undefined}
+            inert={isMobile && !menuOpen}
           >
+            {mobileDialogOpen && (
+              <div className="staff-shell__drawer-heading">
+                <h2 id="staff-sidebar-title">Điều hướng · {PORTAL_LABELS[portal]}</h2>
+                <button className="staff-shell__drawer-close" type="button" onClick={closeMenu}>
+                  <span aria-hidden="true">×</span>
+                  <span className="ui-visually-hidden">Đóng điều hướng nhân viên</span>
+                </button>
+              </div>
+            )}
             <nav aria-label="Điều hướng nhân viên">
               {groups.map((group, groupIndex) => (
                 <section className="staff-shell__nav-group" key={group.label}>
@@ -273,9 +357,12 @@ export default function StaffShell({ portal, children }) {
                   {groupIndex < groups.length - 1 && <div className="staff-shell__nav-divider" />}
                 </section>
               ))}
+              {groups.length === 0 && (
+                <p className="staff-shell__nav-empty">Bạn không có mục điều hướng được cấp quyền.</p>
+              )}
             </nav>
           </aside>
-          <main id="main-content" className="staff-shell__main">
+          <main id="main-content" ref={mainContentRef} tabIndex={-1} inert={mobileDialogOpen} className="staff-shell__main">
             {children ?? <Outlet />}
           </main>
         </div>

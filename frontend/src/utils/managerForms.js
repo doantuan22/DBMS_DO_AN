@@ -20,8 +20,8 @@ export const managerFields = {
     field('type', 'Loại ghế', 'select', SEAT_TYPES),
   ],
   showtime: [
-    field('movieId', 'Movie ID', 'number'),
-    field('roomId', 'Mã phòng suất chiếu', 'number'),
+    { ...field('movieId', 'Phim', 'resource'), lookup: 'movies' },
+    { ...field('roomId', 'Phòng', 'resource'), lookup: 'rooms' },
     field('startsAt', 'Bắt đầu', 'datetime-local'),
     field('endsAt', 'Kết thúc', 'datetime-local'),
     field('format', 'Định dạng', 'select', ROOM_TYPES),
@@ -41,7 +41,9 @@ export function fieldsFor(kind, editing = false) {
     editing && kind === 'seat'
       ? managerFields.seat.filter((f) => f.name === 'type')
       : editing && kind === 'showtime'
-        ? managerFields.showtime.filter((f) => f.name !== 'roomId')
+        ? managerFields.showtime.map((f) =>
+            f.name === 'roomId' ? { ...f, readOnly: true, submit: false } : f,
+          )
         : managerFields[kind];
   const resource = { room: 'rooms', seat: 'seats', showtime: 'showtimes', pricing: 'pricing' }[
     kind
@@ -65,7 +67,11 @@ export function initialManagerValues(kind, row) {
     return Object.fromEntries(
       fieldsFor(kind, true).map(({ name, type }) => [
         name,
-        type === 'datetime-local' ? instantToBusinessLocal(row[name]) : (row[name] ?? ''),
+        type === 'datetime-local'
+          ? instantToBusinessLocal(row[name])
+          : type === 'resource'
+            ? String(row[name] ?? '')
+            : (row[name] ?? ''),
       ]),
     );
   return {
@@ -95,15 +101,25 @@ export function managerBody(kind, values, editing = false) {
   if (kind === 'pricing' && values.endsOn && values.endsOn < values.startsOn)
     throw new Error('Ngày kết thúc không được trước ngày áp dụng.');
   return Object.fromEntries(
-    fieldsFor(kind, editing).map(({ name, type }) => [
-      name,
-      type === 'number'
-        ? Number(values[name])
-        : type === 'datetime-local'
-          ? businessLocalToInstant(values[name])
-          : name === 'endsOn'
-            ? values[name] || null
-            : values[name],
-    ]),
+    fieldsFor(kind, editing)
+      .filter(({ submit }) => submit !== false)
+      .map(({ name, type }) => {
+        const value = values[name];
+        if (type === 'resource') {
+          if (!/^[1-9]\d*$/.test(String(value ?? '')) || !Number.isSafeInteger(Number(value)))
+            throw new Error(`Vui lòng chọn ${name === 'movieId' ? 'phim' : 'phòng'} hợp lệ.`);
+          return [name, Number(value)];
+        }
+        return [
+          name,
+          type === 'number'
+            ? Number(value)
+            : type === 'datetime-local'
+              ? businessLocalToInstant(value)
+              : name === 'endsOn'
+                ? value || null
+                : value,
+        ];
+      }),
   );
 }
