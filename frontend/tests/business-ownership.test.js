@@ -33,9 +33,10 @@ test('R4.4 current booking and payment pages distinguish preview and authoritati
     new URL('../src/pages/BookingPreparation.jsx', import.meta.url),
     'utf8',
   );
-  assert.match(booking, /Kết quả khuyến mãi là tạm tính; mã sẽ được kiểm tra lại khi đặt vé/);
-  assert.match(booking, /Giảm tạm tính/);
-  assert.match(booking, /money\(bookingState\.booking\.total\)/);
+  const view = fs.readFileSync(new URL('../src/features/customer/BookingExperience.jsx', import.meta.url), 'utf8');
+  assert.match(view, /Mã sẽ được kiểm tra lại khi bạn tạo đơn/);
+  assert.match(view, /Giảm tạm tính/);
+  assert.match(view, /customerMoney\(booking\.total\)/);
   assert.match(booking, /PROMOTION_NOT_AVAILABLE[\s\S]*setPromotion\(\{ isValid: false/);
   assert.match(
     booking,

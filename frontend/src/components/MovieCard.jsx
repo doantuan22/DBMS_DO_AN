@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import MediaFrame from '../features/customer/MediaFrame';
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, headingLevel = 2 }) {
+  const Heading = `h${headingLevel}`;
   return (
     <article className="movie-card">
       <Link
@@ -8,25 +10,12 @@ export default function MovieCard({ movie }) {
         to={`/movies/${movie.id}`}
         aria-label={`Xem chi tiết ${movie.title}`}
       >
-        {movie.posterUrl && (
-          <img
-            src={movie.posterUrl}
-            alt={`Poster ${movie.title}`}
-            loading="lazy"
-            onError={(event) => {
-              event.currentTarget.hidden = true;
-              event.currentTarget.nextElementSibling.hidden = false;
-            }}
-          />
-        )}
-        <span className="movie-card__fallback" hidden={Boolean(movie.posterUrl)}>
-          Chưa có poster
-        </span>
+        <MediaFrame src={movie.posterUrl} alt={`Poster ${movie.title}`} />
       </Link>
       <div className="movie-card__body">
-        <h2>
+        <Heading>
           <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-        </h2>
+        </Heading>
         <p>
           {[
             movie.durationMinutes ? `${movie.durationMinutes} phút` : null,
@@ -38,7 +27,7 @@ export default function MovieCard({ movie }) {
         </p>
         {movie.genres?.length > 0 && <p className="catalog-muted">{movie.genres.join(' · ')}</p>}
         <Link className="catalog-button catalog-button--secondary" to={`/movies/${movie.id}`}>
-          Xem chi tiết
+          Xem chi tiết & lịch chiếu
         </Link>
       </div>
     </article>

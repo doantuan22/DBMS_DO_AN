@@ -29,7 +29,7 @@ test('CSKH portal renders queue filters and a protected loading state', () => {
     React.createElement(
       AuthContext.Provider,
       { value: { user } },
-      React.createElement(MemoryRouter, null, React.createElement(SupportPortal)),
+      React.createElement(MemoryRouter, { initialEntries: ['/support'] }, React.createElement(SupportPortal)),
     ),
   );
   assert.match(html, /CSKH Portal/);

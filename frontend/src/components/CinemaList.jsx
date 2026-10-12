@@ -1,27 +1,15 @@
 import { Link } from 'react-router-dom';
+import MediaFrame from '../features/customer/MediaFrame';
 
 export default function CinemaList({ cinemas }) {
   return (
     <div className="cinema-grid">
       {cinemas.map((cinema) => (
         <article className="cinema-card" key={cinema.id}>
-          {cinema.coverImageUrl ? (
-            <img
-              className="cinema-card__image"
-              src={cinema.coverImageUrl}
-              alt={`Ảnh đại diện ${cinema.name}`}
-            />
-          ) : (
-            <div
-              className="cinema-card__image cinema-card__image--placeholder"
-              aria-label="Chưa có ảnh đại diện"
-            >
-              Chưa có ảnh
-            </div>
-          )}
+          <MediaFrame src={cinema.coverImageUrl} alt={`Ảnh đại diện ${cinema.name}`} kind="cinema" />
           <span className="cinema-card__city">{cinema.city}</span>
           <h2>{cinema.name}</h2>
-          <Link to={`/cinemas/${cinema.id}`}>Xem rạp và ảnh</Link>
+          <Link className="catalog-button catalog-button--secondary" to={`/cinemas/${cinema.id}`}>Xem rạp & lịch chiếu</Link>
           <p>{cinema.address}</p>
           {cinema.phone && (
             <p>

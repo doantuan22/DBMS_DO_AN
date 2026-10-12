@@ -2,8 +2,11 @@ import { formatDateTime } from '../utils/dateTime';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getComplaint } from '../api/feedbackApi';
-import { ErrorState, LoadingState } from '../components/CatalogStates';
+import { LoadingState } from '../components/CatalogStates';
 import StatusBadge from '../components/primitives/StatusBadge';
+import { PageHeader, AsyncState } from '../components/ui';
+import AccountNavigation from '../features/customer/AccountNavigation';
+import '../features/customer/customer-account.css';
 import { useAuth } from '../context/AuthContext';
 
 export default function ComplaintDetail() {
@@ -44,19 +47,19 @@ function ComplaintContext({ complaintId }) {
     void Promise.resolve().then(load);
   }, [load]);
   if (resource.status === 'loading') return <LoadingState>Đang tải khiếu nại…</LoadingState>;
-  if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;
+  if (resource.status === 'error') return <section className="catalog-page"><PageHeader title="Chi tiết khiếu nại" breadcrumbs={[{label:'Khiếu nại',to:'/complaints'}]} /><AsyncState status="error" error={resource.error} onRetry={load} /></section>;
   const complaint = resource.data;
   return (
-    <section className="catalog-page">
+    <section className="catalog-page customer-journey"><AccountNavigation />
       <p className="catalog-eyebrow">KHIẾU NẠI #{complaint.id}</p>
-      <h1>{complaint.title}</h1>
-      <article className="catalog-card">
+      <PageHeader title={complaint.title} breadcrumbs={[{label:'Khiếu nại của tôi',to:'/complaints'},{label:'Chi tiết'}]} />
+      <article className="customer-panel">
         <p className="complaint-meta">
           <span className="catalog-chip">{complaint.type}</span>
           <StatusBadge status={complaint.status} />
           <span className="catalog-muted">Gửi lúc: {formatDateTime(complaint.createdAt)}</span>
         </p>
-        <p>{complaint.content}</p>
+        <p className="customer-content">{complaint.content}</p>
         <p>
           Đơn liên quan:{' '}
           {complaint.orderId ? (
@@ -69,17 +72,17 @@ function ComplaintContext({ complaintId }) {
       <section className="catalog-section">
         <h2>Lịch sử xử lý</h2>
         {complaint.processingHistory.length ? (
-          <div className="catalog-list">
+          <ol className="customer-timeline">
             {complaint.processingHistory.map((item) => (
-              <article className="catalog-card" key={item.id}>
+              <li key={item.id}>
                 <p className="complaint-meta">
                   <StatusBadge status={item.status} />
                   <span className="catalog-muted">{formatDateTime(item.processedAt)}</span>
                 </p>
                 <p>{item.content}</p>
-              </article>
+              </li>
             ))}
-          </div>
+          </ol>
         ) : (
           <p className="catalog-muted">Chưa có lịch sử xử lý.</p>
         )}

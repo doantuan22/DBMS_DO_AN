@@ -1,4 +1,4 @@
-import { formatTime } from '../utils/dateTime';
+import { formatDate, formatTime } from '../utils/dateTime';
 import { Link } from 'react-router-dom';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 
@@ -9,9 +9,9 @@ const money = (value) =>
     maximumFractionDigits: 0,
   }).format(value ?? 0);
 
-export function ShowtimeList({ state }) {
+export function ShowtimeList({ state, onRetry }) {
   if (state.status === 'loading') return <LoadingState>Đang tải lịch chiếu…</LoadingState>;
-  if (state.status === 'error') return <ErrorState error={state.error} />;
+  if (state.status === 'error') return <ErrorState error={state.error} onRetry={onRetry} />;
   if (state.status === 'empty')
     return <EmptyState>Không có suất chiếu phù hợp với lựa chọn này.</EmptyState>;
   return (
@@ -19,6 +19,7 @@ export function ShowtimeList({ state }) {
       {state.data.map((showtime) => (
         <article className="showtime-card" key={showtime.id}>
           <div>
+            {showtime.date && <p className="catalog-muted">{formatDate(showtime.date)}</p>}
             <strong>{formatTime(showtime.startsAt)}</strong>
             <span>{showtime.endsAt ? ` – ${formatTime(showtime.endsAt)}` : ''}</span>
           </div>
@@ -26,6 +27,7 @@ export function ShowtimeList({ state }) {
             {showtime.cinemaName} · {showtime.roomName} · {showtime.format}
           </p>
           <p className="catalog-muted">Giá vé cơ bản: {money(showtime.basePrice)}</p>
+          {Number.isFinite(showtime.availableSeats) && <p className="catalog-muted">{showtime.availableSeats} ghế trống tại thời điểm tải</p>}
           <Link className="catalog-button" to={`/booking/${showtime.id}`}>
             Chọn suất này
           </Link>
@@ -42,6 +44,8 @@ export default function ShowtimeBrowser({
   onCinemaChange,
   onDateChange,
   state,
+  cinemaReadOnly = false,
+  onRetry,
 }) {
   return (
     <section className="showtime-browser" aria-labelledby="showtimes-heading">
@@ -54,8 +58,8 @@ export default function ShowtimeBrowser({
       <div className="catalog-filters">
         <label>
           Rạp chiếu
-          <select value={cinemaId} onChange={(event) => onCinemaChange(event.target.value)}>
-            <option value="">Tất cả rạp</option>
+          <select value={cinemaId} disabled={cinemaReadOnly} onChange={(event) => onCinemaChange(event.target.value)}>
+            {!cinemaReadOnly && <option value="">Tất cả rạp</option>}
             {cinemas.map((cinema) => (
               <option key={cinema.id} value={cinema.id}>
                 {cinema.name} · {cinema.city}
@@ -68,7 +72,7 @@ export default function ShowtimeBrowser({
           <input type="date" value={date} onChange={(event) => onDateChange(event.target.value)} />
         </label>
       </div>
-      <ShowtimeList state={state} />
+      <ShowtimeList state={state} onRetry={onRetry} />
     </section>
   );
 }

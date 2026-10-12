@@ -84,7 +84,7 @@ const MANAGER_GROUPS = [
 ];
 
 const SUPPORT_GROUPS = [
-  { label: 'Khiếu nại', items: [{ key: 'queue', label: 'Hàng chờ', href: '#support-queue' }] },
+  { label: 'Khiếu nại', items: [{ key: 'queue', label: 'Hàng chờ', to: '/support/complaints' }] },
 ];
 
 const PORTAL_LABELS = {

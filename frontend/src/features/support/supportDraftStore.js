@@ -115,6 +115,11 @@ export function createSupportDraftStore(scope, storage = sessionStorageOrNull())
   }
 
   return {
+    hasDrafts() {
+      let savedKeys = []; try { savedKeys = Object.keys(storage ?? {}); } catch {}
+      const keys = new Set([...memoryStorage.keys(), ...savedKeys]);
+      return [...keys].some((key) => key.startsWith(`${prefix}:complaint:`) && Boolean(read(key)?.processing || read(key)?.statusValue));
+    },
     readWorkspace() {
       const saved = read(workspaceKey);
       return {

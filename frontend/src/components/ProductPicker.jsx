@@ -7,7 +7,7 @@ const money = (value) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-export default function ProductPicker({ products, quantities, onQuantityChange }) {
+export default function ProductPicker({ products, quantities, onQuantityChange, disabled = false }) {
   return (
     <section className="booking-section" aria-labelledby="products-heading">
       <h2 id="products-heading">Đồ ăn và thức uống</h2>
@@ -23,6 +23,7 @@ export default function ProductPicker({ products, quantities, onQuantityChange }
             min="0"
             max={MAX_PRODUCT_QUANTITY}
             step="1"
+            disabled={disabled}
             value={quantities[product.id] ?? 0}
             onChange={(event) => onQuantityChange(product.id, event.target.value)}
           />

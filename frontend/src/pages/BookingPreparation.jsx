@@ -1,8 +1,6 @@
 import { userCanAct } from '../utils/authorization';
-import { formatDateTime, formatTime } from '../utils/dateTime';
-import HoldDeadline from '../components/HoldDeadline';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   createBooking,
   getProducts,
@@ -11,8 +9,8 @@ import {
   validatePromotion,
 } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
-import ProductPicker from '../components/ProductPicker';
-import SeatMap from '../components/SeatMap';
+import BookingExperience from '../features/customer/BookingExperience';
+import useBookingDraftGuard from '../features/staff-bookings/useBookingDraftGuard';
 import { useAuth } from '../context/AuthContext';
 import {
   SEAT_LIMIT_MESSAGE,
@@ -20,13 +18,6 @@ import {
   clampQuantity,
   toggleSeatSelection,
 } from '../utils/bookingLimits';
-
-const money = (value) =>
-  new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-    maximumFractionDigits: 0,
-  }).format(value ?? 0);
 
 function toProducts(quantities) {
   return Object.entries(quantities)
@@ -142,7 +133,14 @@ function BookingContext({ showtimeId }) {
   );
   const selectedProducts = useMemo(() => toProducts(quantities), [quantities]);
 
+  const safeAnchor = useCallback((destination) => {
+    const target = new URL(destination, window.location.href);
+    return target.origin === window.location.origin && target.pathname === window.location.pathname && target.search === window.location.search && Boolean(target.hash);
+  }, []);
+  useBookingDraftGuard(bookingState.status !== 'success' && (selectedSeatIds.length > 0 || selectedProducts.length > 0 || Boolean(promotionCode)), bookingState.status === 'loading', { isSafeDestination: safeAnchor });
+
   function toggleSeat(id) {
+    if (bookingPending.current) return;
     previewVersion.current += 1;
     setPromotion(null);
     const result = toggleSeatSelection(selectedSeatIds, id);
@@ -151,6 +149,7 @@ function BookingContext({ showtimeId }) {
   }
 
   function changeQuantity(productId, value) {
+    if (bookingPending.current) return;
     previewVersion.current += 1;
     const { quantity } = clampQuantity(value);
     setPromotion(null);
@@ -228,135 +227,5 @@ function BookingContext({ showtimeId }) {
 
   if (state.status === 'loading') return <LoadingState>Đang xác nhận suất chiếu…</LoadingState>;
   if (state.status === 'error') return <ErrorState error={state.error} />;
-  const showtime = state.data;
-  return (
-    <section className="catalog-page booking-preparation">
-      <p className="catalog-eyebrow">SUẤT CHIẾU ĐÃ CHỌN</p>
-      <h1>{showtime.movieTitle}</h1>
-      <p>
-        {showtime.cinemaName} · {showtime.roomName} · {showtime.format}
-      </p>
-      <p>
-        {formatDateTime(showtime.startsAt)}
-        {showtime.endsAt ? ` – ${formatTime(showtime.endsAt)}` : ''}
-      </p>
-      <p className="catalog-muted">Mã suất chiếu: {showtime.id}</p>
-
-      {seatsState.status === 'loading' && <LoadingState>Đang tải sơ đồ ghế…</LoadingState>}
-      {seatsState.status === 'error' && <ErrorState error={seatsState.error} />}
-      {seatsState.status === 'success' && (
-        <SeatMap
-          seats={seats}
-          selectedSeatIds={selectedSeatIds}
-          onToggle={toggleSeat}
-          limitNotice={seatLimitNotice}
-        />
-      )}
-      {productsState.status === 'loading' && <LoadingState>Đang tải sản phẩm…</LoadingState>}
-      {productsState.status === 'error' && <ErrorState error={productsState.error} />}
-      {productsState.status === 'success' && (
-        <ProductPicker
-          products={products}
-          quantities={quantities}
-          onQuantityChange={changeQuantity}
-        />
-      )}
-
-      <section className="booking-section" aria-labelledby="promotion-heading">
-        <h2 id="promotion-heading">Khuyến mãi</h2>
-        <label>
-          Mã khuyến mãi
-          <input
-            value={promotionCode}
-            maxLength="50"
-            onChange={(event) => {
-              previewVersion.current += 1;
-              setPromotionCode(event.target.value);
-              setPromotion(null);
-            }}
-          />
-        </label>
-        <button
-          type="button"
-          className="catalog-button catalog-button--secondary"
-          onClick={applyPromotion}
-          disabled={promotionBusy || bookingState.status === 'loading' || !canBook}
-        >
-          {promotionBusy ? 'Đang kiểm tra…' : 'Áp dụng'}
-        </button>
-        <p className="catalog-muted">
-          Kết quả khuyến mãi là tạm tính; mã sẽ được kiểm tra lại khi đặt vé.
-        </p>
-        {promotion && (
-          <p role="status">
-            {promotion.message}
-            {promotion.isValid ? ` Giảm tạm tính: ${money(promotion.discountAmount)}.` : ''}
-          </p>
-        )}
-      </section>
-
-      <section className="booking-section" aria-labelledby="booking-summary-heading">
-        <h2 id="booking-summary-heading">Xác nhận đặt vé</h2>
-        <p>
-          Ghế đã chọn:{' '}
-          {selectedSeats.length
-            ? selectedSeats.map((seat) => `${seat.label} (${money(seat.price)})`).join(', ')
-            : 'Chưa chọn'}
-        </p>
-        <p>
-          Sản phẩm:{' '}
-          {selectedProducts.length
-            ? selectedProducts
-                .map(
-                  (item) =>
-                    `${item.quantity} × ${products.find((product) => product.id === item.productId)?.name ?? item.productId}`,
-                )
-                .join(', ')
-            : 'Không có'}
-        </p>
-        <p className="catalog-muted">
-          Hệ thống xác nhận giá cuối cùng, ưu đãi và thời gian giữ ghế khi bạn tạo đơn.
-        </p>
-        {!user && (
-          <p>
-            <Link to="/login">Đăng nhập bằng tài khoản khách hàng để đặt vé</Link>
-          </p>
-        )}
-        {user && user.role !== 'KHACH_HANG' && (
-          <p role="alert">Chỉ tài khoản khách hàng được đặt vé.</p>
-        )}
-        {bookingState.status === 'conflict' && (
-          <p className="form-error" role="alert">
-            {bookingState.message} Sơ đồ ghế đã được làm mới.
-          </p>
-        )}
-        {bookingState.status === 'error' && (
-          <p className="form-error" role="alert">
-            {bookingState.message}
-          </p>
-        )}
-        {bookingState.status === 'success' && (
-          <div className="form-success" role="status">
-            Đặt vé thành công. Mã đơn: {bookingState.booking.id}. Tổng thanh toán do DB chốt:{' '}
-            {money(bookingState.booking.total)}.{' '}
-            <HoldDeadline deadline={bookingState.booking.holdExpiresAt} />.{' '}
-            {userCanAct(user, 'KHACH_HANG', 'THANH_TOAN') && (
-              <Link to={`/orders/${bookingState.booking.id}/payment`}>Thanh toán đơn này</Link>
-            )}
-          </div>
-        )}
-        <button
-          type="button"
-          className="catalog-button catalog-button--lg"
-          onClick={submitBooking}
-          disabled={bookingState.status === 'loading' || !canBook}
-        >
-          {bookingState.status === 'loading' ? 'Đang tạo đơn…' : 'Đặt vé'}
-        </button>
-      </section>
-      <Link className="catalog-button catalog-button--secondary" to={`/movies/${showtime.movieId}`}>
-        Quay lại lịch chiếu
-      </Link>
-    </section>
-  );
+  return <BookingExperience showtime={state.data} user={user} canBook={canBook} seats={seats} seatsState={seatsState} selectedSeatIds={selectedSeatIds} selectedSeats={selectedSeats} seatLimitNotice={seatLimitNotice} toggleSeat={toggleSeat} loadSeats={loadSeats} products={products} productsState={productsState} quantities={quantities} selectedProducts={selectedProducts} changeQuantity={changeQuantity} promotionCode={promotionCode} changePromotionCode={(value) => { if (bookingPending.current) return; previewVersion.current++; setPromotionCode(value); setPromotion(null); }} promotion={promotion} promotionBusy={promotionBusy} applyPromotion={applyPromotion} bookingState={bookingState} submitBooking={submitBooking} />;
 }

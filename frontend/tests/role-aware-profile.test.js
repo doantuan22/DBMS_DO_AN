@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test, { before, after } from 'node:test';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { MemoryRouter } from 'react-router-dom';
 import { createServer } from 'vite';
 let vite, AuthContext, Profile;
 before(async () => {
@@ -32,7 +33,7 @@ for (const role of ['KHACH_HANG', 'QUAN_LY_RAP', 'CSKH', 'ADMIN'])
       React.createElement(
         AuthContext.Provider,
         { value: { user, updateProfile: async () => {} } },
-        React.createElement(Profile),
+        React.createElement(MemoryRouter, null, React.createElement(Profile)),
       ),
     );
     assert.match(html, /Họ tên/);

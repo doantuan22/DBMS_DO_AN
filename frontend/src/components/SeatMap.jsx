@@ -24,7 +24,7 @@ function groupByRow(seats) {
   return [...rows];
 }
 
-export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice }) {
+export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice, disabled = false }) {
   const rows = useMemo(() => groupByRow(seats), [seats]);
   return (
     <section className="booking-section seat-map-container" aria-labelledby="seat-map-heading">
@@ -58,7 +58,7 @@ export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice 
                   data-status={seat.status}
                   aria-label={`${seat.label} — ${seat.status}`}
                   aria-pressed={selectedSeatIds.includes(seat.id)}
-                  disabled={seat.status !== SELECTABLE_STATUS}
+                  disabled={disabled || seat.status !== SELECTABLE_STATUS}
                   onClick={() => onToggle(seat.id)}
                 >
                   {seat.label}

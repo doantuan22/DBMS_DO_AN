@@ -5,6 +5,9 @@ import { ErrorState, LoadingState } from '../components/CatalogStates';
 import ShowtimeBrowser from '../components/ShowtimeBrowser';
 import MovieReviews from '../components/MovieReviews';
 import { loadResource, showtimeFilters } from '../services/catalogResource';
+import MediaFrame from '../features/customer/MediaFrame';
+import { formatDate } from '../utils/dateTime';
+import '../features/customer/customer-discovery.css';
 
 export default function MovieDetail() {
   const { movieId } = useParams();
@@ -13,6 +16,7 @@ export default function MovieDetail() {
   const [cinemaError, setCinemaError] = useState(null);
   const [cinemaId, setCinemaId] = useState('');
   const [date, setDate] = useState('');
+  const [showtimeAttempt, setShowtimeAttempt] = useState(0);
   const [showtimesState, setShowtimesState] = useState({ status: 'loading', key: null });
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export default function MovieDetail() {
     return () => controller.abort();
   }, [movieId]);
 
-  const showtimeKey = `${movieId}\u0000${cinemaId}\u0000${date}`;
+  const showtimeKey = `${movieId}\u0000${cinemaId}\u0000${date}\u0000${showtimeAttempt}`;
   useEffect(() => {
     const controller = new AbortController();
     loadResource(() =>
@@ -47,7 +51,7 @@ export default function MovieDetail() {
       if (!controller.signal.aborted) setShowtimesState({ ...result, key: showtimeKey });
     });
     return () => controller.abort();
-  }, [movieId, cinemaId, date, showtimeKey]);
+  }, [movieId, cinemaId, date, showtimeAttempt, showtimeKey]);
 
   const movieResource = detailState.movieId === movieId ? detailState : { status: 'loading' };
   if (movieResource.status === 'loading')
@@ -58,23 +62,13 @@ export default function MovieDetail() {
   const showtimeResource =
     showtimesState.key === showtimeKey ? showtimesState : { status: 'loading' };
   return (
-    <article className="catalog-page movie-detail">
+    <article className="catalog-page movie-detail customer-discovery">
       <Link className="catalog-back" to="/movies">
         ← Danh sách phim
       </Link>
       <section className="movie-detail__intro">
         <div className="movie-detail__poster">
-          {movie.posterUrl && (
-            <img
-              src={movie.posterUrl}
-              alt={`Poster ${movie.title}`}
-              onError={(event) => {
-                event.currentTarget.hidden = true;
-                event.currentTarget.nextElementSibling.hidden = false;
-              }}
-            />
-          )}
-          <span hidden={Boolean(movie.posterUrl)}>Chưa có poster</span>
+          <MediaFrame src={movie.posterUrl} alt={`Poster ${movie.title}`} priority />
         </div>
         <div className="movie-detail__content">
           <p className="catalog-eyebrow">{movie.status}</p>
@@ -83,12 +77,12 @@ export default function MovieDetail() {
             {[
               movie.durationMinutes ? `${movie.durationMinutes} phút` : null,
               movie.ageRating,
-              movie.releaseDate,
+              movie.releaseDate ? formatDate(movie.releaseDate) : null,
             ]
               .filter(Boolean)
               .join(' · ')}
           </p>
-          {movie.description && <p className="movie-detail__description">{movie.description}</p>}
+          <a className="catalog-button" href="#showtimes-heading">Chọn lịch chiếu</a>
           <dl className="movie-facts">
             {movie.director && (
               <div>
@@ -127,6 +121,9 @@ export default function MovieDetail() {
           )}
         </div>
       </section>
+      {cinemaError && <ErrorState error={cinemaError} />}
+      {!cinemaError && <ShowtimeBrowser cinemas={cinemas} cinemaId={cinemaId} date={date} onCinemaChange={setCinemaId} onDateChange={setDate} state={showtimeResource} onRetry={() => setShowtimeAttempt((n) => n + 1)} />}
+      {movie.description && <section className="catalog-section"><h2>Nội dung phim</h2><p className="movie-detail__description">{movie.description}</p></section>}
       {genres.length > 0 && (
         <section className="catalog-section">
           <h2>Thể loại</h2>
@@ -154,17 +151,6 @@ export default function MovieDetail() {
         </section>
       )}
       <MovieReviews movieId={movie.id} />
-      {cinemaError && <ErrorState error={cinemaError} />}
-      {!cinemaError && (
-        <ShowtimeBrowser
-          cinemas={cinemas}
-          cinemaId={cinemaId}
-          date={date}
-          onCinemaChange={setCinemaId}
-          onDateChange={setDate}
-          state={showtimeResource}
-        />
-      )}
     </article>
   );
 }

@@ -1,0 +1,211 @@
+{
+  "timestamp": "2026-10-12T08:39:07.440Z",
+  "phase": "6C",
+  "source": "current UXR-6 source",
+  "status": "PASS",
+  "checks": [
+    {
+      "scenario": "Booking 390px",
+      "width": 390,
+      "scrollWidth": 375,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Booking 768px",
+      "width": 768,
+      "scrollWidth": 753,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Booking 1280px",
+      "width": 1280,
+      "scrollWidth": 1265,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Booking 1440px",
+      "width": 1440,
+      "scrollWidth": 1425,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Booking 1920px",
+      "width": 1920,
+      "scrollWidth": 1905,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Seat limit 10 with actual seat DTO; 11th rejected visibly",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Actual invalid promotion preview preserves selected seat; changing code clears stale preview",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Real competing Customer booking -> 409; stale selection cleared and actual seats reloaded; foreign order absent",
+      "status": "PASS"
+    },
+    {
+      "scenario": "UI actual create exactly one own order/ticket/product; receipt total and hold match authoritative detail",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Guest may discover real seats but cannot submit booking",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "actor": 5,
+      "method": "GET",
+      "endpoint": "/movies/1/showtimes",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/showtimes/18/seats",
+      "status": 200
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/showtimes/18/seats",
+      "status": 200
+    },
+    {
+      "path": "/api/showtimes/18",
+      "status": 200
+    },
+    {
+      "path": "/api/products",
+      "status": 200
+    },
+    {
+      "actor": 5,
+      "method": "GET",
+      "endpoint": "/showtimes/18/seats",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/promotions/validate",
+      "method": "POST"
+    },
+    {
+      "path": "/api/promotions/validate",
+      "status": 200
+    },
+    {
+      "actor": 6,
+      "method": "POST",
+      "endpoint": "/bookings",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "path": "/api/bookings",
+      "method": "POST"
+    },
+    {
+      "path": "/api/bookings",
+      "status": 409
+    },
+    {
+      "path": "/api/showtimes/18/seats",
+      "status": 200
+    },
+    {
+      "actor": 5,
+      "method": "GET",
+      "endpoint": "/orders",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "actor": 5,
+      "method": "GET",
+      "endpoint": "/products",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/bookings",
+      "method": "POST"
+    },
+    {
+      "path": "/api/bookings",
+      "status": 201
+    },
+    {
+      "path": "/api/showtimes/18/seats",
+      "status": 200
+    },
+    {
+      "actor": 5,
+      "method": "GET",
+      "endpoint": "/orders/76",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/showtimes/18",
+      "status": 200
+    },
+    {
+      "path": "/api/showtimes/18/seats",
+      "status": 200
+    },
+    {
+      "path": "/api/products",
+      "status": 200
+    },
+    {
+      "actor": 1,
+      "method": "POST",
+      "endpoint": "/admin/bookings/75/cancel",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "actor": 1,
+      "method": "POST",
+      "endpoint": "/admin/bookings/76/cancel",
+      "status": 200,
+      "expected": 200
+    }
+  ],
+  "runtimeErrors": [],
+  "consoleErrors": [],
+  "cleanup": [
+    {
+      "kind": "order",
+      "id": 76,
+      "remaining": 0,
+      "status": "PASS"
+    },
+    {
+      "kind": "order",
+      "id": 75,
+      "remaining": 0,
+      "status": "PASS"
+    }
+  ],
+  "identity": {
+    "DatabaseName": "CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2",
+    "DatabaseID": 9
+  },
+  "counts": {
+    "Users": 8,
+    "Assignments": 2,
+    "Movies": 4,
+    "Actors": 6,
+    "Genres": 7,
+    "Products": 5,
+    "Promotions": 3,
+    "Complaints": 1
+  },
+  "dialogs": []
+}

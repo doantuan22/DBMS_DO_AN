@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { getCinemas, getCinemaImages } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
 import CinemaGallery from '../components/CinemaGallery';
+import CinemaSchedule from '../features/customer/CinemaSchedule';
+import '../features/customer/customer-discovery.css';
 
 export default function CinemaDetail() {
   const { cinemaId } = useParams();
@@ -38,7 +40,7 @@ export default function CinemaDetail() {
   const currentCinema = cinema.key === key ? cinema : { status: 'loading' };
   const currentGallery = gallery.key === key ? gallery : { status: 'loading' };
   return (
-    <section className="catalog-page">
+    <section className="catalog-page customer-discovery">
       <Link className="catalog-back" to="/cinemas">
         ← Danh sách rạp
       </Link>
@@ -65,6 +67,7 @@ export default function CinemaDetail() {
           {currentGallery.status === 'success' && (
             <CinemaGallery images={currentGallery.images} cinemaName={currentCinema.data.name} />
           )}
+          <CinemaSchedule key={cinemaId} cinema={currentCinema.data} />
         </>
       )}
     </section>

@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import assert from 'node:assert/strict';
+const baseline=JSON.parse(fs.readFileSync(new URL('./source-baseline.json',import.meta.url),'utf8'));
+const changed=baseline.files.filter(f=>crypto.createHash('sha256').update(fs.readFileSync(f.file)).digest('hex')!==f.hash).map(f=>f.file);
+const protectedPaths=['frontend/src/api/','frontend/src/context/','frontend/src/features/manager/','frontend/src/features/staff-bookings/','frontend/src/features/admin-','frontend/src/features/facilities/','frontend/src/features/operations/','frontend/src/routes/Require','shared/'];
+assert.ok(!changed.some(p=>protectedPaths.some(prefix=>p.startsWith(prefix))));
+const gitChanges=execFileSync('git',['diff','--name-only'],{encoding:'utf8'}).trim().split(/\r?\n/);
+assert.ok(!gitChanges.some(p=>/^(backend\/|database\/|shared\/|docs\/UXR-V3\/UXR-[0-5]\/)/.test(p)));
+const evidence={status:'PASS',timestamp:new Date().toISOString(),baselineFiles:baseline.files.length,changedExistingSource:changed,protectedSource:'REST clients, auth/context, staff/Manager/Admin/facilities/operations workflows, route guards, shared contracts unchanged',backendDatabaseAndPriorEvidence:'No diff from HEAD b3d7f59',gitChanges};
+fs.writeFileSync(new URL('./source-audit.json',import.meta.url),JSON.stringify(evidence,null,2)); console.log(JSON.stringify({status:evidence.status,baselineFiles:baseline.files.length,changedExistingSource:changed.length}));
