@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { getCinemas, getMovieDetail, getShowtimes } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
 import ShowtimeBrowser from '../components/ShowtimeBrowser';
 import MovieReviews from '../components/MovieReviews';
 import { loadResource, showtimeFilters } from '../services/catalogResource';
 import MediaFrame from '../features/customer/MediaFrame';
+import { trailerUrl } from '../features/public/mediaPolicy';
 import { formatDate } from '../utils/dateTime';
 import '../features/customer/customer-discovery.css';
 
 export default function MovieDetail() {
   const { movieId } = useParams();
+  return <MovieDetailView key={movieId} movieId={movieId} />;
+}
+function MovieDetailView({ movieId }) {
+  const location = useLocation();
   const [detailState, setDetailState] = useState({ status: 'loading', movieId: null });
   const [cinemas, setCinemas] = useState([]);
   const [cinemaError, setCinemaError] = useState(null);
@@ -18,6 +23,10 @@ export default function MovieDetail() {
   const [date, setDate] = useState('');
   const [showtimeAttempt, setShowtimeAttempt] = useState(0);
   const [showtimesState, setShowtimesState] = useState({ status: 'loading', key: null });
+  useEffect(() => {
+    if (location.hash === '#showtimes-heading' && detailState.status === 'success')
+      document.getElementById('showtimes-heading')?.scrollIntoView();
+  }, [location.hash, detailState.status]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -82,7 +91,9 @@ export default function MovieDetail() {
               .filter(Boolean)
               .join(' · ')}
           </p>
-          <a className="catalog-button" href="#showtimes-heading">Chọn lịch chiếu</a>
+          <a className="catalog-button" href="#showtimes-heading">
+            Chọn lịch chiếu
+          </a>
           <dl className="movie-facts">
             {movie.director && (
               <div>
@@ -109,7 +120,7 @@ export default function MovieDetail() {
               </div>
             )}
           </dl>
-          {movie.trailerUrl && (
+          {trailerUrl(movie.trailerUrl) && (
             <a
               className="catalog-button catalog-button--secondary"
               href={movie.trailerUrl}
@@ -122,8 +133,23 @@ export default function MovieDetail() {
         </div>
       </section>
       {cinemaError && <ErrorState error={cinemaError} />}
-      {!cinemaError && <ShowtimeBrowser cinemas={cinemas} cinemaId={cinemaId} date={date} onCinemaChange={setCinemaId} onDateChange={setDate} state={showtimeResource} onRetry={() => setShowtimeAttempt((n) => n + 1)} />}
-      {movie.description && <section className="catalog-section"><h2>Nội dung phim</h2><p className="movie-detail__description">{movie.description}</p></section>}
+      {!cinemaError && (
+        <ShowtimeBrowser
+          cinemas={cinemas}
+          cinemaId={cinemaId}
+          date={date}
+          onCinemaChange={setCinemaId}
+          onDateChange={setDate}
+          state={showtimeResource}
+          onRetry={() => setShowtimeAttempt((n) => n + 1)}
+        />
+      )}
+      {movie.description && (
+        <section className="catalog-section">
+          <h2>Nội dung phim</h2>
+          <p className="movie-detail__description">{movie.description}</p>
+        </section>
+      )}
       {genres.length > 0 && (
         <section className="catalog-section">
           <h2>Thể loại</h2>

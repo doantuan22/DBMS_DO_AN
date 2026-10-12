@@ -1,4 +1,39 @@
+import { useEffect, useRef } from 'react';
 import './customer-account.css';
 export default function AuthFrame({ title, children }) {
-  return <div className="customer-auth"><section className="auth-card">{children}</section><aside className="customer-auth__intro"><p className="catalog-eyebrow">CINEMA STAR · HẸN NHAU TẠI RẠP</p><h2>{title}</h2><p>Khám phá phim, chọn suất chiếu và theo dõi vé của bạn trong một hành trình.</p><ul><li>Đơn đặt vé và lịch sử thanh toán</li><li>Hồ sơ cá nhân và điểm tích lũy</li><li>Gửi phản hồi, theo dõi hỗ trợ</li></ul></aside></div>;
+  const formRef = useRef(null);
+  useEffect(() => {
+    const element = formRef.current;
+    const observer = new MutationObserver(() => {
+      const alert = element.querySelector('[role="alert"]');
+      if (!alert) return;
+      const target = element.querySelector('[aria-invalid="true"]') ?? alert;
+      if (target === alert) alert.tabIndex = -1;
+      target.focus();
+    });
+    observer.observe(element, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div className="customer-auth">
+      <section ref={formRef} className="auth-card">
+        {children}
+      </section>
+      <aside className="customer-auth__intro">
+        <img
+          src="/assets/cinema/auth-seats.jpg"
+          alt="Ảnh minh họa một khán giả xem phim trong rạp"
+          width="1280"
+          height="853"
+          decoding="async"
+        />
+        <div className="cp-auth-copy">
+          <p className="catalog-eyebrow">CINEMASTAR / HẸN NHAU TẠI RẠP</p>
+          <h2>{title}</h2>
+          <p>Chọn phim, dành chỗ và lưu lại những buổi hẹn trên màn ảnh lớn.</p>
+          <small>Ảnh minh họa trải nghiệm xem phim</small>
+        </div>
+      </aside>
+    </div>
+  );
 }

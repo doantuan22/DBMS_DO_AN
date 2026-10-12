@@ -1,0 +1,269 @@
+.cinema-public .area__header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: 80px;
+  min-height: 80px;
+  padding: 0 var(--cp-gutter);
+  gap: 26px;
+  border: 0;
+  border-bottom: 1px solid rgb(255 255 255 / 6%);
+  background: var(--cp-bg-deep);
+  box-shadow: none;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.cinema-public.is-home .area__header {
+  margin-bottom: -80px;
+  background: rgb(11 11 15 / 60%);
+  border-color: transparent;
+}
+.cinema-public .area__header[data-scrolled='true'] {
+  background: var(--cp-bg-deep);
+  border-color: var(--cp-border);
+}
+.cinema-public .area__heading {
+  flex-shrink: 0;
+}
+.cinema-public .area__brand {
+  color: var(--cp-text);
+  gap: 9px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+  display: inline-flex;
+  align-items: center;
+}
+.cinema-public .area__brand-logo {
+  width: 26px;
+  height: 26px;
+  color: var(--cp-accent);
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+.cinema-public .area__brand-text > span {
+  color: var(--cp-accent);
+}
+.cinema-public .area__brand-text,
+.cinema-public .area__brand-text > span {
+  font-size: inherit;
+  font-weight: inherit;
+}
+.cinema-public .area__section-title {
+  display: none;
+}
+.cinema-public .public-shell__navigation {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 0 auto;
+}
+.cinema-public .area__nav-link {
+  color: var(--cp-text-secondary);
+  border-radius: 0;
+  padding: 14px 0;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: none;
+}
+.cinema-public .area__nav-link:hover,
+.cinema-public .area__nav-link[aria-current='page'] {
+  color: var(--cp-text);
+  background: none;
+  box-shadow: inset 0 -2px var(--cp-accent);
+}
+.cinema-public .public-shell__account {
+  gap: 10px;
+  margin: 0;
+  flex-shrink: 0;
+}
+.cinema-public .area__user-name {
+  color: var(--cp-text-secondary);
+  max-width: 120px;
+  font-size: 12px;
+}
+.cinema-public .public-shell__menu-toggle {
+  display: none;
+  background: transparent;
+  color: var(--cp-text);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-sm);
+  width: 44px;
+  height: 44px;
+  padding: 9px;
+}
+.cinema-public .cp-mobile-account {
+  display: none;
+}
+.cinema-public .cp-header-search {
+  color: var(--cp-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cinema-public .cp-header-search:hover {
+  color: var(--cp-text);
+}
+.cinema-public .area__main {
+  width: 100%;
+  max-width: calc(var(--cp-container) + 2 * var(--cp-gutter));
+  margin: 0 auto;
+  padding: 36px var(--cp-gutter) 72px;
+  flex: 1;
+  color: var(--cp-text);
+}
+.cinema-public.is-home .area__main {
+  max-width: none;
+  padding: 0;
+}
+.cinema-public .area__footer {
+  background: var(--cp-bg-deep);
+  color: var(--cp-text-secondary);
+  border-top: 1px solid var(--cp-border);
+  padding: 48px var(--cp-gutter) 24px;
+  margin-top: auto;
+}
+.cinema-public .area__footer-inner {
+  max-width: var(--cp-container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  text-align: left;
+}
+.cinema-public .area__footer-inner p {
+  font-size: 13px;
+  margin-top: 18px;
+}
+.cinema-public .area__footer-inner nav {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  row-gap: 14px;
+  font-size: 13px;
+}
+.cinema-public .area__footer-inner nav a:hover {
+  color: var(--cp-text);
+}
+.cinema-public .cp-copyright {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--cp-border);
+  padding-top: 22px;
+}
+.cinema-public .skip-link {
+  background: var(--cp-focus);
+  color: var(--cp-bg-deep);
+}
+.cinema-public .skip-link {
+  position: fixed;
+  top: 0;
+  transform: translateY(-200%);
+}
+.cinema-public .skip-link:focus-visible {
+  transform: translateY(0);
+}
+.cinema-public.public-shell .area__header nav.public-shell__navigation {
+  gap: 22px;
+}
+.cinema-public.public-shell .area__header > .public-shell__menu-toggle {
+  background: transparent;
+  color: var(--cp-text);
+  border-color: var(--cp-border);
+}
+@media (max-width: 1200px) {
+  .cinema-public .area__user-name {
+    display: none;
+  }
+  .cinema-public .public-shell__navigation {
+    gap: 14px;
+  }
+}
+@media (max-width: 960px) {
+  .cinema-public .area__header {
+    height: 64px;
+    min-height: 64px;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .cinema-public.is-home .area__header {
+    margin-bottom: -64px;
+  }
+  .cinema-public .public-shell__menu-toggle {
+    display: block;
+    order: 3;
+  }
+  .cinema-public .public-shell__navigation {
+    display: none;
+  }
+  .cinema-public .public-shell__navigation.is-open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    padding: 18px var(--cp-gutter) 26px;
+    background: var(--cp-bg-deep);
+    border-bottom: 1px solid var(--cp-border);
+    gap: 3px;
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+  }
+  .cinema-public.public-shell .area__header nav.public-shell__navigation {
+    display: none;
+  }
+  .cinema-public.public-shell .area__header nav.public-shell__navigation.is-open {
+    display: flex;
+    gap: 3px;
+  }
+  .cinema-public .public-shell__account {
+    margin-left: auto;
+  }
+  .cinema-public .public-shell__navigation .cp-mobile-account {
+    display: flex;
+    gap: 24px;
+    border-top: 1px solid var(--cp-border);
+    margin-top: 8px;
+  }
+  .cinema-public .cp-mobile-account button {
+    background: transparent;
+    border: 0;
+    color: var(--cp-text);
+    padding: 14px 0;
+    cursor: pointer;
+  }
+  .cinema-public .area__main {
+    padding-top: 28px;
+    padding-bottom: 48px;
+  }
+}
+@media (max-width: 600px) {
+  .cinema-public .area__brand {
+    font-size: 20px;
+  }
+  .cinema-public.public-shell .area__header {
+    padding-right: var(--cp-gutter);
+    flex-wrap: nowrap;
+  }
+  .cinema-public.public-shell .area__header .public-shell__account {
+    display: none;
+  }
+  .cinema-public.public-shell .area__header > .public-shell__menu-toggle {
+    position: static;
+  }
+  .cinema-public .area__footer-inner {
+    grid-template-columns: 1fr;
+  }
+  .cinema-public .area__footer-inner nav {
+    justify-self: start;
+  }
+}

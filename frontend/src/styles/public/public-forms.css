@@ -1,0 +1,292 @@
+.cinema-public :where(input, select, textarea),
+.cinema-public .ui-input,
+.cinema-public .ui-select {
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-sm);
+  min-height: 46px;
+  padding: 11px 14px;
+  box-shadow: none;
+}
+.cinema-public :where(input, textarea)::placeholder {
+  color: var(--cp-text-secondary);
+}
+.cinema-public :where(input, select, textarea):focus {
+  border-color: var(--cp-focus);
+}
+.cinema-public label,
+.cinema-public .ui-field__label {
+  color: var(--cp-text);
+  font-size: 13px;
+}
+.cinema-public .ui-field__required {
+  color: var(--cp-error);
+  display: inline;
+  margin-left: 3px;
+}
+.cinema-public .ui-field__hint {
+  font-size: 12px;
+}
+.cinema-public .ui-field__error,
+.cinema-public .form-error {
+  color: var(--cp-error);
+  background: transparent;
+}
+.cinema-public .form-success {
+  color: var(--cp-success);
+  background: transparent;
+}
+.cinema-public .ui-filter-bar,
+.cinema-public .catalog-filters {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  padding: 20px;
+}
+.cinema-public .ui-filter-bar__chips,
+.cinema-public .ui-filter-bar__summary {
+  color: var(--cp-text-secondary);
+}
+.cinema-public .ui-dialog {
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-lg);
+}
+.cinema-public .ui-dialog::backdrop {
+  background: var(--cp-overlay);
+}
+.cinema-public .ui-dialog__header,
+.cinema-public .ui-dialog__footer {
+  border-color: var(--cp-border);
+  background: transparent;
+}
+.cinema-public .ui-dialog__title {
+  color: var(--cp-text);
+}
+.cinema-public .ui-dialog__description {
+  color: var(--cp-text-secondary);
+}
+.cinema-public .ui-form-field__label {
+  display: block;
+  color: var(--cp-text);
+  font-size: 13px;
+  font-weight: 550;
+  margin-bottom: 8px;
+}
+.cinema-public .ui-form-field__required {
+  display: inline;
+  color: var(--cp-error);
+  margin-left: 3px;
+}
+.cinema-public .ui-form-field__hint {
+  font-size: 12px;
+  color: var(--cp-text-secondary);
+}
+.cinema-public .ui-form-field__error {
+  color: var(--cp-error);
+}
+.cinema-public .ui-input,
+.cinema-public .ui-select,
+.cinema-public .catalog-form :is(select, textarea),
+.cinema-public .customer-complaints-form textarea,
+.cinema-public .showtime-browser :is(input, select) {
+  border-color: #757583;
+}
+.cinema-public .customer-auth {
+  max-width: 1160px;
+  margin: 18px auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
+  align-items: stretch;
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  overflow: hidden;
+}
+.cinema-public .customer-auth .auth-card {
+  background: var(--cp-surface);
+  padding: clamp(26px, 4vw, 56px);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+}
+.cinema-public .customer-auth .ui-page-header {
+  border: 0;
+  padding: 0;
+  margin-bottom: 28px;
+}
+.cinema-public .customer-auth .ui-page-header__title {
+  font-size: 32px;
+}
+.cinema-public .customer-auth .auth-card form {
+  display: grid;
+  gap: 18px;
+}
+.cinema-public .customer-auth .auth-card :where(input, select) {
+  width: 100%;
+}
+.cinema-public .customer-auth .auth-card .ui-button {
+  margin-top: 8px;
+  width: 100%;
+}
+.cinema-public .auth-footer {
+  color: var(--cp-text-secondary);
+  border-color: var(--cp-border);
+  font-size: 13px;
+  margin-top: 28px;
+}
+.cinema-public .auth-footer a {
+  color: var(--cp-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.cinema-public .customer-auth__intro {
+  position: relative;
+  background: var(--cp-bg-deep);
+  min-height: 530px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+.cinema-public .customer-auth__intro > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  inset: 0;
+  object-position: 45% center;
+}
+.cinema-public .cp-auth-copy {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  background: linear-gradient(180deg, rgb(11 11 15 / 15%) 15%, rgb(11 11 15 / 94%) 85%);
+}
+.cinema-public .customer-auth__intro h2 {
+  color: var(--cp-text);
+  font-size: clamp(27px, 3vw, 40px);
+  max-width: 15ch;
+  margin: 14px 0;
+}
+.cinema-public .cp-auth-copy p {
+  color: var(--cp-text-secondary);
+  font-size: 14px;
+}
+.cinema-public .cp-auth-copy small {
+  color: var(--cp-text-secondary);
+  font-size: 10px;
+  margin-top: 30px;
+}
+.cinema-public .customer-password button {
+  color: var(--cp-text-secondary);
+}
+.cinema-public .customer-account-nav {
+  border-color: var(--cp-border);
+  gap: 10px;
+}
+.cinema-public .customer-account-nav a {
+  color: var(--cp-text-secondary);
+  border-radius: 0;
+  padding: 10px 0;
+  margin-right: 24px;
+  font-size: 13px;
+}
+.cinema-public .customer-account-nav a[aria-current] {
+  color: var(--cp-text);
+  background: transparent;
+  box-shadow: inset 0 -2px var(--cp-accent);
+}
+.cinema-public .customer-profile-form {
+  gap: 24px;
+}
+.cinema-public .customer-form-fields {
+  gap: 20px;
+}
+.cinema-public .customer-panel :where(h2, h3) {
+  color: var(--cp-text);
+}
+.cinema-public .cp-account-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  color: var(--cp-text-secondary);
+  font-size: 14px;
+}
+.cinema-public .cp-account-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--cp-border);
+  border: 1px solid var(--cp-border);
+}
+.cinema-public .cp-account-shortcuts a {
+  background: var(--cp-surface);
+  padding: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+.cinema-public .cp-account-shortcuts a:hover {
+  background: var(--cp-surface-2);
+}
+.cinema-public .catalog-page:has(.customer-complaints-form) .customer-journey__layout {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+}
+.cinema-public .customer-complaints-form {
+  gap: 20px;
+  max-width: 760px;
+}
+.cinema-public .customer-complaints-form textarea {
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-border);
+  padding: 12px;
+  border-radius: var(--cp-radius-sm);
+}
+.cinema-public .customer-content {
+  max-width: 75ch;
+  color: var(--cp-text);
+}
+.cinema-public .customer-timeline {
+  border-color: var(--cp-border);
+}
+.cinema-public .customer-timeline li::before {
+  background: var(--cp-text-secondary);
+}
+.cinema-public .customer-timeline p {
+  color: var(--cp-text-secondary);
+}
+.cinema-public .customer-timeline__heading {
+  color: var(--cp-text);
+}
+@media (max-width: 960px) {
+  .cinema-public .catalog-page:has(.customer-complaints-form) .customer-journey__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .cinema-public .customer-auth {
+    display: block;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .cinema-public .customer-auth__intro {
+    display: none;
+  }
+  .cinema-public .customer-auth .auth-card {
+    padding: 26px 22px;
+  }
+  .cinema-public .customer-auth .ui-page-header__title {
+    font-size: 28px;
+  }
+  .cinema-public .cp-account-shortcuts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

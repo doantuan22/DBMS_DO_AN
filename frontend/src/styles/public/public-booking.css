@@ -1,0 +1,295 @@
+.cinema-public .customer-panel,
+.cinema-public .booking-section {
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+  box-shadow: none;
+}
+.cinema-public .customer-journey__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(290px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.cinema-public .customer-journey__main {
+  display: grid;
+  gap: 24px;
+}
+.cinema-public .customer-journey__summary {
+  position: sticky;
+  top: 108px;
+  padding: 26px;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+}
+.cinema-public .customer-journey__context {
+  color: var(--cp-text-secondary);
+  margin: -12px 0 0;
+  font-size: 14px;
+  background: var(--cp-surface);
+  border-left-color: var(--cp-accent);
+}
+.cinema-public .customer-journey__steps {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--cp-border);
+  padding: 0 0 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 26px;
+}
+.cinema-public .customer-journey__steps a {
+  color: var(--cp-text-secondary);
+  font-size: 13px;
+  padding: 8px 0;
+  background: transparent;
+  border-radius: 0;
+}
+.cinema-public .customer-journey__steps a:hover {
+  color: var(--cp-text);
+}
+.cinema-public .customer-panel {
+  padding: 26px;
+}
+.cinema-public .customer-panel > h2 {
+  margin-top: 0;
+}
+.cinema-public .booking-section h2 {
+  color: var(--cp-text);
+}
+.cinema-public .customer-journey__main > .booking-section {
+  background: var(--cp-surface);
+  border-color: var(--cp-border);
+}
+.cinema-public .customer-panel p {
+  font-size: 14px;
+}
+.cinema-public .customer-lines {
+  border-color: var(--cp-border);
+}
+.cinema-public .customer-lines li {
+  border-color: var(--cp-border);
+  color: var(--cp-text-secondary);
+  font-size: 13px;
+}
+.cinema-public .customer-lines strong {
+  color: var(--cp-text);
+}
+.cinema-public .booking-section.seat-map-container {
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  box-shadow: none;
+  border-color: var(--cp-border);
+  padding: 26px;
+}
+.cinema-public .seat-map-container h2 {
+  color: var(--cp-text);
+}
+.cinema-public .cp-seat-panel .seat-map__legend {
+  display: none;
+}
+.cinema-public .seat-map__screen-bar {
+  background: var(--cp-text-secondary);
+  height: 4px;
+  box-shadow: none;
+  border-radius: 50% 50% 0 0;
+}
+.cinema-public .seat-map__screen-label,
+.cinema-public .seat-map__counter,
+.cinema-public .seat-row__label {
+  color: var(--cp-text-secondary);
+}
+.cinema-public .seat-map__rows {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 12px 4px;
+}
+.cinema-public .seat-row__seats {
+  gap: 6px;
+}
+.cinema-public .cp-seat {
+  background: var(--cp-surface-2);
+  border: 1px solid #858595;
+  color: var(--cp-text);
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  border-radius: 7px 7px 3px 3px;
+  font-size: 11px;
+  box-shadow: none;
+  cursor: pointer;
+}
+.cinema-public .cp-seat[data-type='VIP'] {
+  border-top: 3px solid var(--cp-focus);
+}
+.cinema-public .cp-seat[data-type='Đôi'],
+.cinema-public .cp-seat[data-type='Sweetbox'] {
+  border-top: 3px double var(--cp-text-secondary);
+}
+.cinema-public .cp-seat:disabled {
+  opacity: 1;
+  background: var(--cp-bg);
+  color: var(--cp-text-secondary);
+  border-color: #727280;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.cinema-public .cp-seat[data-status='Đang giữ'] {
+  border-style: dashed;
+  color: var(--cp-warning);
+}
+.cinema-public .cp-seat[aria-pressed='true'] {
+  background: var(--cp-accent);
+  border-color: var(--cp-accent);
+  color: #fff;
+}
+.cinema-public .cp-seat[aria-pressed='true']:disabled {
+  background: var(--cp-accent-hover);
+  color: white;
+  text-decoration: none;
+}
+.cinema-public .cp-seat:not(:disabled):hover {
+  border-color: var(--cp-focus);
+  transform: none;
+  background: var(--cp-surface-3);
+}
+.cinema-public .cp-seat[aria-pressed='true']:hover {
+  background: var(--cp-accent-hover);
+}
+.cinema-public .cp-seat-legend {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  color: var(--cp-text-secondary);
+  font-size: 12px;
+}
+.cinema-public .cp-seat-legend li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.cinema-public .cp-seat-legend li > span {
+  width: 15px;
+  height: 15px;
+  background: var(--cp-bg);
+  border: 1px solid #858595;
+  border-radius: 3px;
+}
+.cinema-public .cp-seat-legend li[data-status='selected'] > span {
+  background: var(--cp-accent);
+  border-color: var(--cp-accent);
+}
+.cinema-public .cp-seat-legend li[data-status='Đang giữ'] > span {
+  border: 1px dashed var(--cp-warning);
+}
+.cinema-public .booking-product {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--cp-border);
+  padding: 18px 0;
+  color: var(--cp-text);
+  gap: 14px;
+}
+.cinema-public .booking-product input {
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  border: 1px solid var(--cp-border);
+  min-height: 44px;
+  padding: 8px;
+  border-radius: var(--cp-radius-sm);
+}
+.cinema-public .booking-product > span {
+  color: var(--cp-text);
+}
+.cinema-public .hold-deadline strong {
+  color: var(--cp-warning);
+}
+.cinema-public .hold-deadline {
+  color: var(--cp-warning);
+  background: transparent;
+  border-color: var(--cp-border);
+}
+.cinema-public .cp-booking-mobile-bar {
+  display: none;
+}
+.cinema-public .customer-facts dt {
+  color: var(--cp-text-secondary);
+}
+.cinema-public .customer-facts__total {
+  border-color: var(--cp-border);
+}
+.cinema-public .customer-status-panel {
+  background: var(--cp-surface);
+}
+.cinema-public .customer-order-card {
+  padding: 26px;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius-md);
+}
+.cinema-public .customer-order-card h2 {
+  font-size: 21px;
+  color: var(--cp-text);
+}
+.cinema-public .customer-order-card__amount {
+  color: var(--cp-text);
+}
+@media (max-width: 960px) {
+  .cinema-public .customer-journey__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cinema-public .customer-journey__summary {
+    position: static;
+  }
+}
+@media (max-width: 600px) {
+  .cinema-public .customer-panel,
+  .cinema-public .booking-section.seat-map-container,
+  .cinema-public .customer-journey__summary {
+    padding: 20px 16px;
+  }
+  .cinema-public .booking-preparation:has(.cp-booking-mobile-bar) {
+    padding-bottom: 104px;
+  }
+  .cinema-public .cp-booking-mobile-bar {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 25;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 14px var(--cp-gutter) calc(14px + env(safe-area-inset-bottom));
+    background: var(--cp-bg-deep);
+    border-top: 1px solid var(--cp-border);
+  }
+  .cinema-public .cp-booking-mobile-bar > div {
+    display: grid;
+    gap: 4px;
+  }
+  .cinema-public .cp-booking-mobile-bar strong {
+    font-size: 13px;
+  }
+  .cinema-public .cp-booking-mobile-bar small {
+    font-size: 10px;
+    color: var(--cp-text-secondary);
+  }
+  .cinema-public .cp-booking-mobile-bar .ui-button {
+    flex-shrink: 0;
+  }
+  .cinema-public .customer-order-card {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .cinema-public .customer-order-card__amount {
+    text-align: left;
+  }
+}

@@ -56,7 +56,7 @@ test('home, movie list, and cinema list render loading states', () => {
   const inRouter = (page) => React.createElement(MemoryRouter, null, page);
   assert.match(render(inRouter(React.createElement(Home))), /Đang tải danh sách phim/);
   const movies = render(inRouter(React.createElement(Movies)));
-  assert.match(movies, /Danh sách phim/);
+  assert.match(movies, /Phim tại CinemaStar/);
   assert.match(movies, /Tìm phim hoặc đạo diễn/);
   assert.match(render(inRouter(React.createElement(Cinemas))), /Đang tải danh sách rạp/);
 });
@@ -205,7 +205,7 @@ test('guest can render the public movie route without authentication', () => {
       React.createElement(AuthProvider, null, React.createElement(AppRoutes)),
     ),
   );
-  assert.match(html, /Danh sách phim/);
+  assert.match(html, /Phim tại CinemaStar/);
   assert.match(html, /Đang tải danh sách phim/);
   assert.match(html, /Đăng nhập/);
 });

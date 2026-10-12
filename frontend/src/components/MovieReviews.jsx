@@ -96,6 +96,10 @@ function ReviewContext({ movieId }) {
       {canReview && (
         <form className="catalog-form" onSubmit={onSubmit}>
           <h3>Viết đánh giá</h3>
+          <p className="catalog-muted">
+            Đánh giá dành cho khách đã xem phim. Hệ thống xác nhận điều kiện và giới hạn một đánh
+            giá cho mỗi phim khi bạn gửi.
+          </p>
           <label>
             Điểm{' '}
             <select

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import AccountNavigation from '../features/customer/AccountNavigation';
 
 const SHORTCUTS = [
   { to: '/orders', label: 'Đơn đặt vé của tôi' },
@@ -8,15 +10,21 @@ const SHORTCUTS = [
 ];
 
 export default function CustomerArea() {
+  const { user } = useAuth();
   return (
     <section className="catalog-page">
-      <p className="catalog-eyebrow">TÀI KHOẢN</p>
-      <h1>Tài khoản khách hàng</h1>
-      <p className="catalog-muted">Chọn một tác vụ để tiếp tục.</p>
-      <div className="catalog-actions">
+      <AccountNavigation />
+      <p className="catalog-eyebrow">TÀI KHOẢN / CINEMASTAR</p>
+      <h1>Chào {user?.name || 'bạn'}.</h1>
+      <p className="catalog-muted">Những buổi hẹn điện ảnh của bạn, trong một nơi.</p>
+      <div className="cp-account-contact">
+        <span>{user?.email}</span>
+        {user?.loyaltyPoints != null && <span>{user.loyaltyPoints} điểm tích lũy</span>}
+      </div>
+      <div className="cp-account-shortcuts">
         {SHORTCUTS.map(({ to, label }) => (
-          <Link key={to} className="catalog-button catalog-button--secondary" to={to}>
-            {label}
+          <Link key={to} to={to}>
+            {label} <span aria-hidden="true">↗</span>
           </Link>
         ))}
       </div>

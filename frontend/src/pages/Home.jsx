@@ -1,49 +1,126 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getMovies } from '../api/catalogApi';
-import MovieGrid from '../components/MovieGrid';
+import { getMovies, getMovieDetail, getCinemas, getGenres } from '../api/catalogApi';
+import CinemaList from '../components/CinemaList';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import { loadResource } from '../services/catalogResource';
-import MediaFrame from '../features/customer/MediaFrame';
 import { movieGroups } from '../features/customer/discoveryModel';
+import FeaturedBillboard from '../features/public/FeaturedBillboard';
+import FilmRail from '../features/public/FilmRail';
+import HomeSchedule from '../features/public/HomeSchedule';
 import '../features/customer/customer-discovery.css';
 
-export default function Home() {
+const moviesLoader = (options) => getMovies({}, options);
+const cinemasLoader = (options) => getCinemas({}, options);
+function useCollection(loader) {
   const [state, setState] = useState({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
-    loadResource(() => getMovies({}, { signal: controller.signal })).then((result) => {
+    loadResource(() => loader({ signal: controller.signal })).then((result) => {
       if (!controller.signal.aborted) setState({ ...result, attempt });
     });
     return () => controller.abort();
-  }, [attempt]);
-  const resource = state.attempt === attempt ? state : { status: 'loading' };
-  const featured = resource.status === 'success' ? resource.data[0] : null;
-
+  }, [loader, attempt]);
+  return [
+    state.attempt === attempt ? state : { status: 'loading' },
+    () => setAttempt((n) => n + 1),
+  ];
+}
+export default function Home() {
+  const [movies, retryMovies] = useCollection(moviesLoader);
+  const [cinemas, retryCinemas] = useCollection(cinemasLoader);
+  const [genres, retryGenres] = useCollection(getGenres);
+  const rows = movies.status === 'success' ? movies.data : [];
+  const featured = rows.find((m) => m.status === 'Đang chiếu') ?? rows[0];
+  const featuredMovieId = featured?.id;
+  const [detail, setDetail] = useState(null);
+  const [detailAttempt, setDetailAttempt] = useState(0);
+  useEffect(() => {
+    if (!featuredMovieId) return undefined;
+    const controller = new AbortController();
+    getMovieDetail(featuredMovieId, { signal: controller.signal })
+      .then((data) => {
+        if (!controller.signal.aborted) setDetail(data.movie);
+      })
+      .catch((error) => {
+        if (!controller.signal.aborted) setDetail({ id: featuredMovieId, error });
+      });
+    return () => controller.abort();
+  }, [featuredMovieId, detailAttempt]);
+  const genreNames = new Set(rows.flatMap((m) => m.genres ?? []));
+  const visibleGenres =
+    genres.status === 'success' ? genres.data.filter((g) => genreNames.has(g.name)) : [];
   return (
-    <div className="catalog-page customer-discovery">
-      <section className="customer-hero">
-        <div className="customer-hero__copy"><p className="catalog-eyebrow">CINEMA STAR · HẸN NHAU TẠI RẠP</p><h1>Chọn phim hay, tìm suất chiếu phù hợp</h1><p>Một câu chuyện mới, một buổi xem phim trọn vẹn. Khám phá phim và chọn lịch chiếu phù hợp với bạn.</p><div className="catalog-actions"><Link className="catalog-button" to="/movies">Khám phá phim</Link><Link className="catalog-button catalog-button--secondary" to="/cinemas">Tìm rạp chiếu</Link></div></div>
-        {featured && <Link className="customer-hero__poster" to={`/movies/${featured.id}`} aria-label={`Khám phá ${featured.title}`}><MediaFrame src={featured.posterUrl} alt={`Poster ${featured.title}`} priority /><p>{featured.title}</p></Link>}
-      </section>
-      <section className="catalog-section">
+    <div className="catalog-page customer-discovery cp-home">
+      <FeaturedBillboard
+        movie={featured}
+        description={featured && detail?.id === featured.id ? detail.description : null}
+      />
+      {featured && detail?.id === featured.id && detail.error && (
+        <div className="cp-section">
+          <ErrorState error={detail.error} onRetry={() => setDetailAttempt((value) => value + 1)} />
+        </div>
+      )}
+      {movies.status === 'loading' && (
+        <div className="cp-section">
+          <LoadingState>Đang tải danh sách phim…</LoadingState>
+        </div>
+      )}
+      {movies.status === 'error' && (
+        <div className="cp-section">
+          <ErrorState error={movies.error} onRetry={retryMovies} />
+        </div>
+      )}
+      {movies.status === 'empty' && (
+        <div className="cp-section">
+          <EmptyState>Hiện chưa có phim trong danh mục.</EmptyState>
+        </div>
+      )}
+      {featured && <HomeSchedule key={featured.id} movie={featured} />}
+      {movieGroups(rows).map(([label, films]) => (
+        <FilmRail
+          key={label}
+          label={label}
+          movies={films}
+          to={`/movies${['Đang chiếu', 'Sắp chiếu'].includes(label) ? `?status=${encodeURIComponent(label)}` : ''}`}
+        />
+      ))}
+      <section className="cp-section cp-home-cinemas" aria-labelledby="home-cinemas-title">
         <div className="catalog-section-heading">
           <div>
-            <p className="catalog-eyebrow">DANH MỤC</p>
-            <h2>Phim</h2>
+            <p className="catalog-eyebrow">KHÔNG GIAN ĐIỆN ẢNH</p>
+            <h2 id="home-cinemas-title">Hẹn nhau tại CinemaStar</h2>
           </div>
-          <Link to="/movies">Xem tất cả</Link>
+          <Link to="/cinemas">Tất cả rạp ↗</Link>
         </div>
-        {resource.status === 'loading' && <LoadingState>Đang tải danh sách phim…</LoadingState>}
-        {resource.status === 'empty' && <EmptyState>Hiện chưa có phim trong danh mục.</EmptyState>}
-        {resource.status === 'error' && (
-          <ErrorState error={resource.error} onRetry={() => setAttempt((value) => value + 1)} />
-        )}
-        {resource.status === 'success' && movieGroups(resource.data).map(([label, movies]) => <section key={label} aria-label={label}><div className="catalog-section-heading"><h3>{label}</h3><Link to={`/movies${['Đang chiếu', 'Sắp chiếu'].includes(label) ? `?status=${encodeURIComponent(label)}` : ''}`}>Xem thêm</Link></div><MovieGrid movies={movies.slice(0, 8)} headingLevel={4} /></section>)}
+        {cinemas.status === 'loading' && <LoadingState>Đang tải rạp…</LoadingState>}
+        {cinemas.status === 'error' && <ErrorState error={cinemas.error} onRetry={retryCinemas} />}
+        {cinemas.status === 'empty' && <EmptyState>Chưa có rạp trong danh mục.</EmptyState>}
+        {cinemas.status === 'success' && <CinemaList cinemas={cinemas.data.slice(0, 3)} />}
       </section>
-      <section className="customer-discovery__cinemas"><div><p className="catalog-eyebrow">KHÔNG GIAN ĐIỆN ẢNH</p><h2>Tìm rạp cho buổi hẹn của bạn</h2><p>Xem địa chỉ, hình ảnh và lịch chiếu tại rạp.</p></div><Link className="catalog-button" to="/cinemas">Khám phá rạp chiếu</Link></section>
-      <section aria-labelledby="booking-steps"><h2 id="booking-steps">Từ chọn phim đến chỗ ngồi</h2><ol className="customer-discovery__steps"><li><strong>01 · Chọn phim và suất</strong><p>Tìm lịch chiếu theo rạp và ngày phù hợp.</p></li><li><strong>02 · Chọn chỗ ngồi</strong><p>Xem sơ đồ ghế và chọn sản phẩm cho buổi xem.</p></li><li><strong>03 · Xác nhận và thanh toán</strong><p>Kiểm tra đơn và hoàn tất thanh toán trong thời gian giữ chỗ.</p></li></ol></section>
+      {(visibleGenres.length > 0 || genres.status === 'error') && (
+        <section className="cp-section cp-home-genres" aria-labelledby="home-genres-title">
+          <div className="catalog-section-heading">
+            <div>
+              <p className="catalog-eyebrow">MỖI THỂ LOẠI, MỘT THẾ GIỚI</p>
+              <h2 id="home-genres-title">Bạn muốn xem gì?</h2>
+            </div>
+          </div>
+          {genres.status === 'error' ? (
+            <ErrorState error={genres.error} onRetry={retryGenres} />
+          ) : (
+            <div className="cp-genre-grid">
+              {visibleGenres.map((genre) => (
+                <Link key={genre.id} to={`/movies?genreId=${genre.id}`}>
+                  <span>{genre.name}</span>
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
     </div>
   );
 }

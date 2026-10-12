@@ -4,6 +4,7 @@ import { getCinemas, getCinemaImages } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
 import CinemaGallery from '../components/CinemaGallery';
 import CinemaSchedule from '../features/customer/CinemaSchedule';
+import MediaFrame from '../features/customer/MediaFrame';
 import '../features/customer/customer-discovery.css';
 
 export default function CinemaDetail() {
@@ -50,13 +51,24 @@ export default function CinemaDetail() {
       )}
       {currentCinema.status === 'success' && (
         <>
-          <p className="catalog-eyebrow">{currentCinema.data.city}</p>
-          <h1>{currentCinema.data.name}</h1>
-          <p>{currentCinema.data.address}</p>
-          <p>{currentCinema.data.description}</p>
-          {currentCinema.data.phone && (
-            <a href={`tel:${currentCinema.data.phone}`}>{currentCinema.data.phone}</a>
-          )}
+          <header className="cp-cinema-masthead">
+            <div>
+              <p className="catalog-eyebrow">{currentCinema.data.city}</p>
+              <h1>{currentCinema.data.name}</h1>
+              <p>{currentCinema.data.address}</p>
+              {currentCinema.data.phone && (
+                <a href={`tel:${currentCinema.data.phone}`}>{currentCinema.data.phone}</a>
+              )}
+              <p>{currentCinema.data.description}</p>
+            </div>
+            <MediaFrame
+              src={currentCinema.data.coverImageUrl}
+              alt={`Ảnh đại diện ${currentCinema.data.name}`}
+              kind="cinema"
+              priority
+            />
+          </header>
+          <CinemaSchedule key={cinemaId} cinema={currentCinema.data} />
           {currentGallery.status === 'loading' && <LoadingState>Đang tải ảnh rạp…</LoadingState>}
           {currentGallery.status === 'error' && (
             <ErrorState
@@ -67,7 +79,6 @@ export default function CinemaDetail() {
           {currentGallery.status === 'success' && (
             <CinemaGallery images={currentGallery.images} cinemaName={currentCinema.data.name} />
           )}
-          <CinemaSchedule key={cinemaId} cinema={currentCinema.data} />
         </>
       )}
     </section>
