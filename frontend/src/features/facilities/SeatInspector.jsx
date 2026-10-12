@@ -2,7 +2,7 @@ import Button from '../../components/ui/Button';
 import StatusBadge from '../../components/ui/StatusBadge';
 
 export default function SeatInspector({ seat, roomName, mode, busy, onEdit, onDelete }) {
-  return <aside className="facility-panel facility-inspector" aria-label="Chi tiết ghế">
+  return <section className="facility-panel facility-inspector" aria-label="Chi tiết ghế">
     <h2>Chi tiết ghế</h2>{seat ? <>
       <p className="facility-selected-seat">{seat.label}</p><p>{roomName}</p>
       <dl className="facility-details"><div><dt>Hàng / số</dt><dd>{seat.row} / {seat.number}</dd></div><div><dt>Loại ghế</dt><dd>{seat.type}</dd></div><div><dt>{mode === 'occupancy' ? 'Tình trạng suất' : 'Trạng thái cấu hình'}</dt><dd><StatusBadge status={seat.status} /></dd></div></dl>
@@ -11,5 +11,5 @@ export default function SeatInspector({ seat, roomName, mode, busy, onEdit, onDe
         <div className="facility-actions">{onEdit && <Button disabled={busy} onClick={() => onEdit(seat)}>Sửa ghế</Button>}{onDelete && <Button variant="danger" disabled={busy} onClick={() => onDelete(seat)}>Xóa ghế</Button>}</div>
       </>}
     </> : <p className="facility-empty">Chọn một ghế trên sơ đồ hoặc danh sách để xem thông tin.</p>}
-  </aside>;
+  </section>;
 }

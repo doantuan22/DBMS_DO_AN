@@ -12,8 +12,9 @@ export function AuthProvider({ children }) {
   const [initializing, setInitializing] = useState(() => Boolean(authTokenStorage.get()));
 
   const refreshCurrentUser = useCallback(async () => {
+    const owner = session.getVersion();
     const currentUser = await session.initialize();
-    setUser(currentUser);
+    if (owner === session.getVersion()) setUser(currentUser);
     return currentUser;
   }, [session]);
 
@@ -21,19 +22,21 @@ export function AuthProvider({ children }) {
     let active = true;
     const controller = new AbortController();
     const onUnauthorized = () => {
+      session.logout();
       setUser(null);
       setInitializing(false);
     };
     window.addEventListener('auth:unauthorized', onUnauthorized);
 
     if (authTokenStorage.get()) {
-      authApi
-        .getCurrentUser({ signal: controller.signal })
-        .then((result) => {
-          if (active) setUser(result.user);
+      const owner = session.getVersion();
+      session
+        .initialize({ signal: controller.signal })
+        .then((currentUser) => {
+          if (active && owner === session.getVersion()) setUser(currentUser);
         })
         .catch((error) => {
-          if (active && error.name !== 'AbortError') setUser(null);
+          if (active && owner === session.getVersion() && error.name !== 'AbortError') setUser(null);
         })
         .finally(() => {
           if (active) setInitializing(false);
@@ -45,14 +48,16 @@ export function AuthProvider({ children }) {
       controller.abort();
       window.removeEventListener('auth:unauthorized', onUnauthorized);
     };
-  }, []);
+  }, [session]);
 
   const register = useCallback((fields) => session.register(fields), [session]);
 
   const login = useCallback(
     async (credentials) => {
-      const currentUser = await session.login(credentials);
-      setUser(currentUser);
+      const result = session.login(credentials);
+      const owner = session.getVersion();
+      const currentUser = await result;
+      if (owner === session.getVersion()) setUser(currentUser);
       return currentUser;
     },
     [session],
@@ -65,8 +70,9 @@ export function AuthProvider({ children }) {
 
   const updateProfile = useCallback(
     async (fields) => {
+      const owner = session.getVersion();
       const currentUser = await session.updateProfile(fields);
-      setUser(currentUser);
+      if (owner === session.getVersion()) setUser(currentUser);
       return currentUser;
     },
     [session],

@@ -4,7 +4,7 @@ import { createServer } from 'vite';
 import { createAuthSession } from '../src/services/authSession.js';
 import { createApp } from '../../backend/src/app.js';
 
-let vite, request;
+let vite, request, authTokenStorage;
 before(async () => {
   vite = await createServer({
     configFile: 'vite.config.js',
@@ -12,6 +12,7 @@ before(async () => {
     appType: 'custom',
   });
   ({ request } = await vite.ssrLoadModule('/src/api/httpClient.js'));
+  ({ authTokenStorage } = await vite.ssrLoadModule('/src/api/authToken.js'));
 });
 after(async () => {
   await vite?.close();
@@ -82,4 +83,14 @@ test('existing auth session preserves state and makes no repeated requests when 
   await assert.rejects(session.register({}), (error) => error === limited);
   assert.deepEqual(calls, ['login', 'register']);
   assert.equal(state.token, 'existing-session');
+});
+
+test('controlled transport: late 401 preserves newer same-token session; current 401 still expires it', async (t) => {
+  const originalFetch=globalThis.fetch, originalStorage=globalThis.sessionStorage, values=new Map();
+  globalThis.sessionStorage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};
+  t.after(()=>{authTokenStorage.clear();globalThis.fetch=originalFetch;if(originalStorage===undefined)delete globalThis.sessionStorage;else globalThis.sessionStorage=originalStorage;});
+  let resolve;globalThis.fetch=()=>new Promise(done=>{resolve=done;});
+  authTokenStorage.set('same-test-token');const oldRequest=request('/auth/me');authTokenStorage.clear();authTokenStorage.set('same-test-token');
+  resolve(new Response(JSON.stringify({error:{code:'UNAUTHENTICATED'}}),{status:401}));await assert.rejects(oldRequest,{status:401});assert.equal(authTokenStorage.get(),'same-test-token');
+  const current=request('/auth/me');resolve(new Response('{}',{status:401}));await assert.rejects(current,{status:401});assert.equal(authTokenStorage.get(),null);
 });

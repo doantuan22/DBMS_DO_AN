@@ -280,12 +280,12 @@ export default function StaffShell({ portal, children }) {
         )}
 
         <div className="staff-shell__layout">
-          <aside
+          <div
             ref={sidebarRef}
             className={menuOpen ? 'staff-shell__sidebar is-open' : 'staff-shell__sidebar'}
             id="staff-sidebar"
             aria-label="Điều hướng nhân viên"
-            role={mobileDialogOpen ? 'dialog' : undefined}
+            role={mobileDialogOpen ? 'dialog' : 'complementary'}
             aria-modal={mobileDialogOpen ? 'true' : undefined}
             aria-labelledby={mobileDialogOpen ? 'staff-sidebar-title' : undefined}
             aria-hidden={isMobile && !menuOpen ? 'true' : undefined}
@@ -345,7 +345,7 @@ export default function StaffShell({ portal, children }) {
                 <p className="staff-shell__nav-empty">Bạn không có mục điều hướng được cấp quyền.</p>
               )}
             </nav>
-          </aside>
+          </div>
           <main id="main-content" ref={mainContentRef} tabIndex={-1} inert={mobileDialogOpen} className="staff-shell__main">
             {children ?? <Outlet />}
           </main>

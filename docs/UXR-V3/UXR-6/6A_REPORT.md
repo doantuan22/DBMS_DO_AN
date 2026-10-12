@@ -1,9 +1,0 @@
-# UXR-6A — CSKH slice
-
-12/10/2026. Core **PASS**: keep existing UXR-1A hooks/session keyed draft store/read generations/write lock; presentation now three panes at ≥1280, tablet two-column composition, mobile queue → case → back. `/support` remains valid; `/support/complaints/:id` adds authorized deep links without PII queries. Processing/status require case-title confirmation; timeline remains single and append-only. Separate drafts survive filtering, case switches, refresh and status saves. Queue 401/403 suppresses previous case PII/actions.
-
-Actual source before: b3d7f59 snapshot, 163 files. `6A-before.json`: five actual before captures. `6A-browser.json`: **10 browser/API checks PASS**, real CSKH actor **4** verified from DB role; Support/Admin/Customer boundaries checked. Five widths, three columns measured, actual status Cancel/Confirm and append exactly once, A→B→A draft ownership, linked/unlinked order, real beforeunload confirmation + fresh-document reload, mobile back, discard and 404. Two uniquely named complaint fixtures cleaned (remaining 0). No backend/SP/contracts/RBAC edits.
-
-Existing support/store/auth tests plus four new navigation/presentation/store cases pass. Changed original SupportPortal composition/routing and optional store draft observation; preserve original processing/status draft schema, authoritative reload and source request generations. No new support business operations. Final integration suite will recheck related UXR-0–5 routes.
-
-Browser transport harness initially used the wrong representative role and needed to wait for native beforeunload **event** before handling it; these failures were not marked as UI acceptance. NOT VERIFIED at this checkpoint: artificially delayed transport/revocation matrix, screen readers and physical devices. Evidence is not all-44-UC acceptance.

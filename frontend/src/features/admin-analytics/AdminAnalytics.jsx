@@ -29,7 +29,7 @@ function Workspace({ kind, store, adapter }) {
   return <AnalyticsView kind={kind} state={state} controller={controller} can={adapter.can} />;
 }
 export function MetricCards({ data, definitions }) {
-  return <dl className="admin-analytics__metrics">{definitions.map(([key, label, format, scope]) => <div key={key} data-metric={key}><dt>{label}</dt><dd>{format(data?.[key])}</dd><span>{scope}</span></div>)}</dl>;
+  return <dl className="admin-analytics__metrics">{definitions.map(([key, label, format, scope]) => <div key={key} data-metric={key}><dt>{label}</dt><dd>{format(data?.[key])}</dd><dd className="admin-analytics__metric-scope">{scope}</dd></div>)}</dl>;
 }
 export function AnalyticsView({ kind, state, controller, can = () => false }) {
   const overview = kind === 'overview', title = overview ? 'Tổng quan Admin' : 'Doanh thu', applied = state.applied;
