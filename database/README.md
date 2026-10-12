@@ -6,6 +6,10 @@ The canonical database contains **27 tables and 169 SQL modules**: 134 procedure
 
 ## Build and test
 
+**Seed v2 đã có deployment Main được chủ dự án yêu cầu ngày 12/10/2026:** [quy trình SQL/backup/rollback](deployments/seed-v2-main/README.md), [báo cáo kết quả](../docs/seed/MAIN_SEED_PROMOTION_REPORT.md). Backend dùng DB chính như cấu hình hiện hữu; accounts demo mới ở seed README. Các lệnh reset/test thường vẫn chỉ chạy trên disposable targets.
+
+Seed v2 hiện hành: [pipeline và accounts demo](10_seed/README.md), [reset guards](../docs/seed/RESET_PLAN.md), [verification evidence](../docs/seed/SEED_VERIFICATION_REPORT.md). Commands lịch sử bên dưới chỉ mô tả các đợt audit/migration cũ; seed/rebuild/test aliases hiện nay dùng exact targets và contract v2. Không chạy fixtures có identity/count của seed cũ trên dataset mới. Schema/SP/migrations được giữ nguyên.
+
 Use a disposable SQL Server database for reset, seed, fixture, integration and concurrency tests. The [test pipeline](../scripts/db/TEST_PIPELINE.md) documents guarded preflight, build, seed, fixture verification and cleanup. Seed data and reproducible fixtures are documented in [seed](10_seed/README.md) and [fixture matrix](10_seed/test_fixture/fixture-matrix.md); concurrency cases are in [concurrency tests](11_tests/concurrency/README.md).
 
 The npm commands are defined in the repository root `package.json`. Before running any command that writes to SQL Server, pass an explicitly named test database and satisfy its current target confirmation. Never use `CinemaBookingDB` as a regression target. Main-database verification is read-only except for an explicitly authorized, reviewed deployment.

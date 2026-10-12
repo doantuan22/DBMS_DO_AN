@@ -1,94 +1,51 @@
-# Quản lý seed — R5.1 đến R5.3
+﻿# Seed v2 — Real media / disposable demo
 
-Entry point duy nhất cho bộ seed hiện tại là `10_seed/seed-all.sql`. Tất cả đường dẫn
-SQLCMD `:r` được giải quyết từ thư mục **database/**, kể cả include nằm trong thư mục con.
-Node runner `scripts/db/run.mjs` giữ convention này qua `expandSql()` và một SQL session.
+Entry point duy nhất: `scripts/db/seed-demo.mjs` → `database/10_seed/seed-all.sql`. SQL ở database; backend chỉ gọi SP. Seed cũ đã bị loại khỏi active includes; fixed RBAC 001/002/003 giữ nguyên.
 
-```text
-10_seed/
-├── seed-all.sql
-├── seed_base/             # 16 file nền/catalog/demo tài khoản hiện có
-├── seed_demo_dynamic/     # 014_reference.sql: lịch theo đồng hồ SQL Server
-└── test_fixture/          # danh mục fixture và convention cho R5.4
-```
+**Deployment Main ngày 12/10/2026:** chủ dự án đã yêu cầu chuyển bộ demo sang `CinemaBookingDB`. Quy trình SQL và backup nằm ở [deployment seed v2 Main](../deployments/seed-v2-main/README.md), evidence thực ở [báo cáo chuyển Main](../../docs/seed/MAIN_SEED_PROMOTION_REPORT.md). Seed/reset/test aliases thông thường vẫn chỉ nhận DEMO/TEST.
 
-`seed_base` chứa dữ liệu cơ bản cần cho vận hành/demo, không phải bộ production data.
-Tài khoản demo, điểm tích lũy và các khoảng ngày hiện có được giữ nguyên. R5.1 không
-bổ sung base seed R5.2; audit R5.2 xác nhận dữ liệu hiện có hợp lệ. R5.3 mở rộng
-`seed_demo_dynamic` thành 8 suất quá khứ và 24 suất mở bán theo DB clock; xem
-[hướng dẫn dynamic seed](seed_demo_dynamic/README.md). `test_fixture` ghi nhận
-các fixture đã có tại `11_tests/` và `scripts/`; không tự chạy hoặc copy chúng vào seed.
-
-## Thứ tự thực thi
-
-`run-all.sql` chạy `build-objects.sql` → `10_seed/seed-all.sql` →
-`12_verify/verify_database.sql`. Lệnh seed riêng yêu cầu database objects đã được dựng.
-Các file con cần `CinemaSeedDay`, `CinemaSeedSkip` và transaction do entry point thiết lập;
-không chạy file con độc lập, không glob theo thư mục.
-
-| Thứ tự/file | Nhóm | Dữ liệu | Dependency dữ liệu |
-| --- | --- | --- | --- |
-| 001_reference.sql | seed_base | 4 VAITRO | Không |
-| 002_reference.sql | seed_base | 23 QUYEN | Không |
-| 003_reference.sql | seed_base | VAITRO_QUYEN | 001, 002 |
-| 004_reference.sql | seed_base | 8 NGUOIDUNG, 4 HOSOKHACHHANG | 001; user trước profile trong cùng file |
-| 005_reference.sql | seed_base | 3 RAPCHIEUPHIM | Không |
-| 006_reference.sql | seed_base | 2 PHANCONG_RAP | 004, 005 |
-| 007_reference.sql | seed_base | 6 PHONGCHIEU | 005 |
-| 008_reference.sql | seed_base | 240 GHE | 007 |
-| 009_reference.sql | seed_base | 7 THELOAI | Không |
-| 010_reference.sql | seed_base | 6 DIENVIEN | Không |
-| 011_reference.sql | seed_base | 4 PHIM | Không |
-| 012_reference.sql | seed_base | 7 PHIM_THELOAI, 4 PHIM_DIENVIEN | 009, 010, 011 |
-| 013_reference.sql | seed_base | 7 BANGGIA | 005 |
-| 014_reference.sql | seed_demo_dynamic | 8 suất quá khứ, 24 suất tương lai theo DB clock | 007, 008, 011; clock helpers và view IsBookable |
-| 015_reference.sql | seed_base | 5 SANPHAM | Không |
-| 016_reference.sql | seed_base | 3 KHUYENMAI, counter 0 | Không |
-| 017_cinema_images.sql | seed_base | Ảnh đại diện cho từng rạp | 005 |
-
-Thứ tự **001 → 017** vẫn giữ nguyên dù các nhóm xen kẽ trong `seed-all.sql`.
-Không gom tất cả base trước demo vì R5.1 giữ nguyên chuỗi thực thi đã có.
-`fn_UtcTuGioRap` và các object/default/trigger liên quan phải tồn tại trước seed;
-build entry point hiện tại đã bảo đảm thứ tự này. `verify_seed.sql` chạy trong
-transaction seed trước COMMIT; không sửa logic verification.
-
-## Cách chạy và khả năng chạy lại
-
-Các command và tham số cũ được giữ nguyên. Ví dụ seed riêng trên **database kiểm thử
-đã có objects** và đã xác nhận an toàn:
+## Chạy từ repo root
 
 ```powershell
-node scripts/db/run.mjs seed --database=CinemaBookingDB_R0_<ten_test_da_xac_nhan>
+npm.cmd run db:seed:preflight -- --database=CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012 --dry-run
+npm.cmd run db:seed:create -- --database=CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012 --confirm-target=<token>
+npm.cmd run db:seed:base -- --database=CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012 --confirm-target=<token>
+npm.cmd run db:seed -- --database=CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012 --confirm-target=<token>
+npm.cmd run db:seed:verify -- --database=CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012 --confirm-target=<token>
+npm.cmd run db:seed:media
+npm.cmd run db:seed:guards
 ```
 
-Thay phần `<...>` bằng tên thật; đây không phải command tạo database. SQLCMD trực tiếp:
-working directory `database/`, cung cấp `SeedDate`, chọn đúng target. SQL nguồn vẫn có
-`USE CinemaBookingDB`; đổi target phải dùng runner hiện tại để thay tên, không chỉ đổi `-d`.
-R5.1 không chạy seed/reset trên database chính và không thêm cơ chế rebuild.
-SeedDate mặc định của runner là ngày Việt Nam trên máy gọi; base vẫn dùng giá trị này.
-Dynamic lấy ngày từ đồng hồ DB, không từ SeedDate. Nếu cung cấp SeedDate quá lệch
-để phim không chứa cửa sổ lịch, dynamic báo 51004 trước insert và không sửa base.
+`create` chỉ target absent; tự build canonical schema + base + dynamic/lifecycle. `base` không tạo thêm lịch. Hai profile chạy lại không append rows hoặc sửa history; catalog khác expected thì fail. Dates do SQL Server helpers, timezone SE Asia, UTC storage. Lịch stale bị chặn, refresh bằng reset có backup/receipt guard. Xem [reset plan](../../docs/seed/RESET_PLAN.md).
 
-Khả năng chạy lại là **skip toàn bộ theo sentinel**, không phải upsert:
+Exact allowlist còn có `CinemaBookingDB_R0_REAL_MEDIA_TEST_20261012`. Tạo TEST theo cùng preflight/create, rồi `db:seed:test -- --database=... --confirm-target=...`; `db:seed:browser` chạy API/Edge trên TEST này, có test mutations. Không chạy browser/regression trên Main/demo. Không đổi backend/.env tự động.
 
-- Nếu đã có `admin@cinemadb.vn`, entry point bỏ qua 17 file dữ liệu và vẫn chạy verify.
-- Đổi SeedDate rồi chạy lại không refresh suất chiếu, ngày phim, phân công hay khuyến mãi.
-- Nếu thiếu sentinel nhưng VAITRO đã có dữ liệu, entry point từ chối với 51004.
-- Nếu dữ liệu chỉ tồn tại ở bảng khác, guard VAITRO không bảo đảm phát hiện trước INSERT;
-  PK/UQ/FK có thể làm transaction lỗi. Verify cũng chỉ kiểm một phần bộ dữ liệu.
-- File con không idempotent độc lập; chạy thủ công với session context sai có thể bỏ qua
-  hoặc insert trùng. Không dùng chúng để sửa dataset thiếu/khác nguồn.
+Ứng dụng dùng `CinemaBookingDB` theo cấu hình backend hiện hữu sau deployment Main. Chạy `npm.cmd --prefix backend run dev` và frontend như thường; không cần đổi DB sang demo. Muốn xem DEMO riêng, đặt `$env:DB_DATABASE='CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012'` trước khi khởi chạy backend. Đừng khởi chạy cổng đang được process khác dùng.
 
-Các giới hạn này đã tồn tại; R5.1 chỉ ghi nhận, giữ nguyên SQL và transaction.
+## Accounts synthetic
 
-## Tooling and history
+Mật khẩu dùng chung **chỉ cho demo**: `CinemaStarDemo!2026`, hash bcrypt cost10. Hai admin `admin1/2@example.test`, hai manager `manager1/2@example.test`, hai support `support1/2@example.test`, customer `customer1…6@example.test`. Customer6 bị khóa để kiểm thử; staff không có customer profile. Manager1 scope Hà Nội, Manager2 scope TP.HCM. Phone NULL.
 
-`scripts/db/generate-seed.mjs` is a one-time R0 extraction tool, not a routine seed
-entry point. It depends on `_legacy_snapshot/seed/07_seed_data.sql`, which is absent
-from this checkout, and its old template does not include current timezone and
-verification updates. Do not run it to overwrite canonical seed source.
+## Modules
 
-Phase-specific seed runners and checkers have been retired. The current seed entry
-point remains `seed-all.sql`; current Test DB safety rules and commands are in the
-[test pipeline](../../scripts/db/TEST_PIPELINE.md). Script names in older phase
-reports describe the tools used at the time and are not replay instructions.
+| Module | Nội dung |
+|---|---|
+| seed_base/001–003_reference.sql | Approved fixed RBAC 4 roles / 23 permissions / 40 pairs |
+| seed_base/020_users.sql | Synthetic users và customer profiles |
+| seed_base/030_cinemas.sql | 4 rạp demo / scope / 8 phòng / 320 ghế / cover |
+| seed_base/040_movies.sql | 18 phim / genres / actor relations / reviewed URLs |
+| seed_base/050_commerce.sql | 8 products / 20 pricing rules / 5 coupons |
+| seed_demo_dynamic/060_showtimes.sql | 12 past / 96 future / thêm 4 hôm nay nếu còn thời gian |
+| seed_demo_dynamic/070_transactions.sql | Include duy nhất lifecycle-v2, không duplicate fixture SQL |
+| test_fixture/lifecycle-v2.sql | Atomic lifecycle, SP flows, historical snapshots, tự assertions |
+| test_fixture/negative-v2.sql, domain-v2.sql | Test-only review/ownership/price/history probes |
+| media/*.json | Canonical reviewed sources, license/match/transport evidence |
+| verify/*.sql | Preflight, snapshots, reset/backup, schema/data assertions |
+
+`compile-real-seed.mjs` biên dịch **manifest đã review** thành module SQL deterministic, không truy cập DB. `source-seed-media.mjs` chỉ research candidates trong ignored audit, không seed hoặc promote ảnh. `verify-seed-media.mjs` GET lại reviewed URLs, không tự đánh dấu license/visual match.
+
+## Media limitations
+
+9 poster CC được nhìn/GET/license-verified, 4 cover rạp minh họa; 5/8 products có URL ảnh tương ứng (hai cỡ cùng mặt hàng dùng chung). 9 poster phim thương mại BLOCKED_LICENSE; nước lọc/2 combo fallback. Không có backdrop field trong schema. Không coi ảnh studio tải được là có quyền dùng. TMDB cần API credential phù hợp và credit trước khi bổ sung; đừng gửi secret trong chat/commit.
+
+Xem [spec](../../docs/seed/SEED_SPEC.md), [license manifest](../../docs/seed/IMAGE_SOURCE_AND_LICENSE_MANIFEST.md), [media validation](../../docs/seed/MEDIA_VALIDATION_REPORT.md), [verification](../../docs/seed/SEED_VERIFICATION_REPORT.md). Trạng thái tổng thể PARTIAL vì coverage media chưa đầy đủ; không thừa kế PASS từ bộ seed cũ.

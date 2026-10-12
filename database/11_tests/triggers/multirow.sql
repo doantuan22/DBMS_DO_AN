@@ -3,7 +3,7 @@ SET XACT_ABORT ON;
 DECLARE @error int;
 BEGIN TRANSACTION;
 BEGIN TRY
- DECLARE @User int=(SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email='khachhang2@gmail.com');
+ DECLARE @User int=(SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email='customer2@example.test');
  DECLARE @Show int=(SELECT TOP(1) SuatChieuID FROM dbo.SUATCHIEU WHERE TrangThai=N'Mở bán' ORDER BY SuatChieuID);
  DECLARE @Room int=(SELECT PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@Show);
  DECLARE @Valid int=(SELECT TOP(1) GheID FROM dbo.GHE WHERE PhongID=@Room ORDER BY GheID);

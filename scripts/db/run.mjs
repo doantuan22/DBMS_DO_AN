@@ -6,6 +6,12 @@ import { BUSINESS_TIME_ZONE } from '../../shared/dateTimeContract.mjs';
 import { preflight, authorize } from './test-target.mjs';
 
 const mode = process.argv[2] || 'verify';
+if (['seed', 'reset', 'build', 'test'].includes(mode)) {
+  const { main } = await import('./seed-demo.mjs');
+  const aliases = { seed: 'demo-dynamic', reset: 'reset', build: 'create', test: 'test-fixtures' };
+  await main([aliases[mode], ...process.argv.slice(3)]);
+  process.exit(process.exitCode || 0);
+}
 if (['preflight-test', 'build-test', 'fixture-test', 'rebuild-test'].includes(mode)) {
   const { main } = await import('./test-pipeline.mjs');
   await main(process.argv.slice(2));

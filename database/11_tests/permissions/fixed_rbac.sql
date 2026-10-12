@@ -36,17 +36,18 @@ IF @BeforeRoles<>(SELECT * FROM dbo.VAITRO ORDER BY VaiTroID FOR JSON PATH)
 PRINT 'PASS seven retired SPs return 50405 and preserve all RBAC rows';
 GO
 DECLARE @denied bit=0;
+DECLARE @CustomerA int=(SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email='customer1@example.test'),@CustomerB int=(SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email='customer2@example.test');
 BEGIN TRY
     BEGIN TRANSACTION;
-    UPDATE dbo.NGUOIDUNG SET VaiTroID=CASE WHEN NguoiDungID=5 THEN 2 ELSE VaiTroID END
-    WHERE NguoiDungID IN (5,6);
+    UPDATE dbo.NGUOIDUNG SET VaiTroID=CASE WHEN NguoiDungID=@CustomerA THEN 2 ELSE VaiTroID END
+    WHERE NguoiDungID IN (@CustomerA,@CustomerB);
     ROLLBACK TRANSACTION;
 END TRY
 BEGIN CATCH
     IF @@TRANCOUNT>0 ROLLBACK TRANSACTION;
     IF ERROR_NUMBER()=50406 SET @denied=1; ELSE THROW;
 END CATCH;
-IF @denied=0 OR EXISTS(SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID IN(5,6) AND VaiTroID<>4)
+IF @denied=0 OR EXISTS(SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID IN(@CustomerA,@CustomerB) AND VaiTroID<>4)
  THROW 51058, 'Account role update was not rejected atomically.',1;
 PRINT 'PASS existing account roles are immutable, including multi-row updates';
 GO
