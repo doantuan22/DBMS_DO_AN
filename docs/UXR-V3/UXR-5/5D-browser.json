@@ -1,0 +1,540 @@
+{
+  "timestamp": "2026-10-12T04:56:55.148Z",
+  "phase": "5D",
+  "source": "current UXR-5 source",
+  "status": "PASS",
+  "checks": [
+    {
+      "scenario": "complaints: responsive 390px",
+      "width": 390,
+      "scrollWidth": 375,
+      "status": "PASS"
+    },
+    {
+      "scenario": "complaints: responsive 768px",
+      "width": 768,
+      "scrollWidth": 768,
+      "status": "PASS"
+    },
+    {
+      "scenario": "complaints: responsive 1280px",
+      "width": 1280,
+      "scrollWidth": 1280,
+      "status": "PASS"
+    },
+    {
+      "scenario": "complaints: responsive 1440px",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "status": "PASS"
+    },
+    {
+      "scenario": "complaints: responsive 1920px",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "status": "PASS"
+    },
+    {
+      "scenario": "overview: responsive 390px",
+      "width": 390,
+      "scrollWidth": 375,
+      "status": "PASS"
+    },
+    {
+      "scenario": "overview: responsive 768px",
+      "width": 768,
+      "scrollWidth": 753,
+      "status": "PASS"
+    },
+    {
+      "scenario": "overview: responsive 1280px",
+      "width": 1280,
+      "scrollWidth": 1265,
+      "status": "PASS"
+    },
+    {
+      "scenario": "overview: responsive 1440px",
+      "width": 1440,
+      "scrollWidth": 1425,
+      "status": "PASS"
+    },
+    {
+      "scenario": "overview: responsive 1920px",
+      "width": 1920,
+      "scrollWidth": 1905,
+      "status": "PASS"
+    },
+    {
+      "scenario": "revenue: responsive 390px",
+      "width": 390,
+      "scrollWidth": 375,
+      "status": "PASS"
+    },
+    {
+      "scenario": "revenue: responsive 768px",
+      "width": 768,
+      "scrollWidth": 753,
+      "status": "PASS"
+    },
+    {
+      "scenario": "revenue: responsive 1280px",
+      "width": 1280,
+      "scrollWidth": 1265,
+      "status": "PASS"
+    },
+    {
+      "scenario": "revenue: responsive 1440px",
+      "width": 1440,
+      "scrollWidth": 1425,
+      "status": "PASS"
+    },
+    {
+      "scenario": "revenue: responsive 1920px",
+      "width": 1920,
+      "scrollWidth": 1905,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Actual Admin complaint queue filters preserve independent keyed drafts and order reference ownership",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Actual confirmed status update retains independent note draft; Cancel leaves DB unchanged",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Admin append-only processing uses actual actor, single-submit and keyboard confirmation",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Internal Admin navigation restores complaint selection/note; explicit discard Cancel/Confirm works",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Admin/CSKH route distinction, Manager processing denial and missing complaint 404",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Actual inclusive single-day/cinema query; summary and scoped table match server aggregates, chart toggles",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Empty revenue period displays authoritative zero and preserves existing cinema zero rows",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Global/current Dashboard metrics remain unfiltered; separate period revenue uses authoritative query",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/dashboard",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/dashboard",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "actor": 5,
+      "method": "GET",
+      "endpoint": "/orders",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "actor": 5,
+      "method": "POST",
+      "endpoint": "/complaints",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "actor": 5,
+      "method": "POST",
+      "endpoint": "/complaints",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/24",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/24/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/24/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/complaints/23",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/status",
+      "method": "PUT"
+    },
+    {
+      "path": "/api/admin/complaints/23/status",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/complaints/23",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/processings",
+      "method": "POST"
+    },
+    {
+      "path": "/api/admin/complaints/23/processings",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/complaints/23",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/users",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/admin/genres",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/movies",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/actors",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/genres",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/actors",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/movies",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/complaints/23/order-reference",
+      "status": 200
+    },
+    {
+      "actor": 3,
+      "method": "GET",
+      "endpoint": "/admin/complaints",
+      "status": 403,
+      "code": "ADMIN_REQUIRED",
+      "expected": 403
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/support/complaints",
+      "status": 403,
+      "code": "SUPPORT_REQUIRED",
+      "expected": 403
+    },
+    {
+      "actor": 2,
+      "method": "POST",
+      "endpoint": "/admin/complaints/23/processings",
+      "status": 403,
+      "code": "ADMIN_REQUIRED",
+      "expected": 403
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/complaints/2147483647",
+      "status": 404,
+      "code": "COMPLAINT_NOT_FOUND",
+      "expected": 404
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/reports/revenue",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/reports/revenue",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/dashboard",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/dashboard",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    },
+    {
+      "actor": 1,
+      "method": "GET",
+      "endpoint": "/admin/dashboard",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/api/admin/reports/revenue",
+      "status": 200
+    }
+  ],
+  "runtimeErrors": [],
+  "consoleErrors": [],
+  "cleanup": [
+    {
+      "kind": "complaint",
+      "id": 24,
+      "remaining": 0,
+      "status": "PASS"
+    },
+    {
+      "kind": "complaint",
+      "id": 23,
+      "remaining": 0,
+      "status": "PASS"
+    }
+  ],
+  "identity": {
+    "DatabaseName": "CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2",
+    "DatabaseID": 9
+  },
+  "counts": {
+    "Users": 8,
+    "Assignments": 2,
+    "Movies": 4,
+    "Actors": 6,
+    "Genres": 7,
+    "Products": 5,
+    "Promotions": 3,
+    "Complaints": 1
+  }
+}

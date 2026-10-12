@@ -8,6 +8,7 @@ export default function ManagerResourceForm({
   row,
   onSave,
   onCancel,
+  onRequestCancel,
   onDirtyChange,
   busy,
   scopeKey,
@@ -50,7 +51,7 @@ export default function ManagerResourceForm({
     >
       {editing && (
         <h3>
-          Sửa {labels[kind]} #{row.id}
+          Sửa {labels[kind]}
         </h3>
       )}
       {fieldsFor(kind, editing).map((field) => {
@@ -82,7 +83,7 @@ export default function ManagerResourceForm({
         }
         return (
         <label key={name}>
-          {label}
+          {label}{type === 'datetime-local' ? ' (UTC+7)' : ['surcharge', 'basePrice'].includes(name) ? ' (VND)' : ''}
           {type === 'select' ? (
             <select
               aria-label={label}
@@ -125,6 +126,7 @@ export default function ManagerResourceForm({
         </label>
         );
       })}
+      {['showtime', 'pricing'].includes(kind) && <p className="operations__help">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(Number(values[kind === 'pricing' ? 'surcharge' : 'basePrice']) || 0)} · {kind === 'pricing' ? 'Phụ thu; không thay đổi giá vé đã lưu.' : 'Giá vé cơ bản; server xác nhận lịch chiếu và giá khi lưu.'}</p>}
       <button className="catalog-button" disabled={busy}>
         {editing ? 'Lưu' : `Tạo ${labels[kind]}`}
       </button>
@@ -133,6 +135,7 @@ export default function ManagerResourceForm({
           type="button"
           disabled={busy}
           onClick={() => {
+            if (onRequestCancel) { onRequestCancel(); return; }
             onDirtyChange?.(false);
             onDraftChange?.(null);
             onCancel?.();

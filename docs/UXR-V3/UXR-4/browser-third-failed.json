@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-10-12T02:56:33.375Z",
+  "status": "FAIL",
+  "browser": "real Chrome headless CDP",
+  "checks": [
+    {
+      "scenario": "admin/showtimes responsive 390px: no document overflow, intentional table scroll",
+      "width": 390,
+      "scrollWidth": 375,
+      "status": "PASS"
+    },
+    {
+      "scenario": "admin/showtimes responsive 768px: no document overflow, intentional table scroll",
+      "width": 768,
+      "scrollWidth": 753,
+      "status": "PASS"
+    },
+    {
+      "scenario": "admin/showtimes responsive 1280px: no document overflow, intentional table scroll",
+      "width": 1280,
+      "scrollWidth": 1265,
+      "status": "PASS"
+    },
+    {
+      "scenario": "admin/showtimes responsive 1440px: no document overflow, intentional table scroll",
+      "width": 1440,
+      "scrollWidth": 1425,
+      "status": "PASS"
+    },
+    {
+      "scenario": "admin/showtimes responsive 1920px: no document overflow, intentional table scroll",
+      "width": 1920,
+      "scrollWidth": 1905,
+      "status": "PASS"
+    },
+    {
+      "scenario": "admin/showtimes: actual deep-link/reload/active menu/STT",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/movies",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/showtimes",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/rooms",
+      "status": 200
+    },
+    {
+      "path": "/api/movies",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/showtimes",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/rooms",
+      "status": 200
+    },
+    {
+      "path": "/api/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/movies",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/showtimes",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/rooms",
+      "status": 200
+    },
+    {
+      "path": "/api/movies",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/cinemas",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/showtimes",
+      "status": 200
+    },
+    {
+      "path": "/api/admin/rooms",
+      "status": 200
+    }
+  ],
+  "runtimeErrors": [],
+  "cleanup": [
+    {
+      "roomId": 28,
+      "ownerName": "UXR4_BROWSER_81d1673a-6",
+      "remaining": 0,
+      "status": "PASS"
+    }
+  ],
+  "identity": {
+    "DatabaseName": "CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2",
+    "DatabaseID": 9
+  },
+  "error": "Timeout: room filter"
+}

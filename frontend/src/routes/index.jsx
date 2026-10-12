@@ -21,6 +21,7 @@ import PaymentPage from '../pages/PaymentPage';
 import Complaints from '../pages/Complaints';
 import ComplaintDetail from '../pages/ComplaintDetail';
 import ManagerLayout from '../layouts/ManagerLayout';
+import AdminLayout from '../layouts/AdminLayout';
 import ManagerSectionRoute, { ManagerEntryRoute } from './ManagerSectionRoute';
 import { MANAGER_SCREEN_ROUTES } from './managerSectionRoutes';
 import SupportPortal from '../pages/SupportPortal';
@@ -129,6 +130,7 @@ export default function AppRoutes() {
       </Route>
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<StaffShell portal="admin" />}>
+          <Route element={<AdminLayout />}>
           <Route index element={<Navigate to="overview" replace />} />
           <Route path="bookings" element={<StaffBookings portal="admin" />} />
           {ADMIN_SCREEN_ROUTES.map(({ section, path }) => (
@@ -139,6 +141,7 @@ export default function AppRoutes() {
             />
           ))}
           <Route path="*" element={<NotFound />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

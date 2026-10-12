@@ -1,0 +1,189 @@
+{
+  "timestamp": "2026-10-12T05:16:39.464Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "label": "Actual before-source snapshot remains intact",
+      "status": "PASS",
+      "files": 145
+    },
+    {
+      "label": "Final automated/lint/build/preservation checks pass",
+      "status": "PASS",
+      "checks": [
+        {
+          "label": "frontend lint",
+          "exitCode": 0,
+          "status": "PASS"
+        },
+        {
+          "label": "frontend tests",
+          "exitCode": 0,
+          "status": "PASS",
+          "tests": 207,
+          "passed": 207,
+          "failed": 0
+        },
+        {
+          "label": "production build",
+          "exitCode": 0,
+          "status": "PASS"
+        },
+        {
+          "label": "backend tests",
+          "exitCode": 0,
+          "status": "PASS",
+          "tests": 205,
+          "passed": 205,
+          "failed": 0
+        },
+        {
+          "label": "Preserve pre-UXR5 source including UXR4; only planned Admin routing and additive readonly hint",
+          "status": "PASS"
+        },
+        {
+          "label": "UXR5 CSS reuses existing tokens",
+          "status": "PASS",
+          "unknown": []
+        }
+      ]
+    },
+    {
+      "label": "Sequential real-browser suite and fixture/history/RBAC restoration pass",
+      "status": "PASS",
+      "browserChecks": 146,
+      "beforeHash": "612b417339f3c3c15342f56c660713e6c04d793b46d63e2af8d511047c07cf3b",
+      "afterHash": "612b417339f3c3c15342f56c660713e6c04d793b46d63e2af8d511047c07cf3b"
+    },
+    {
+      "label": "Final current-source responsive capture pass with no console/runtime errors",
+      "status": "PASS"
+    },
+    {
+      "label": "Final suite has no application HTTP 5xx",
+      "status": "PASS",
+      "networkRecords": 422,
+      "http5xx": []
+    },
+    {
+      "label": "git diff --check",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "label": "No UXR5 changes to backend/DB/shared/API/auth/Uxr4 business source",
+      "status": "PASS",
+      "unexpected": []
+    },
+    {
+      "label": "Frontend feature code contains no raw business SQL",
+      "status": "PASS",
+      "unexpected": []
+    },
+    {
+      "label": "All delivery Markdown links resolve",
+      "status": "PASS",
+      "broken": []
+    },
+    {
+      "label": "Before/after at all 5 required widths exist",
+      "status": "PASS",
+      "before": 50,
+      "finalAfter": 50
+    }
+  ],
+  "finalSource": [
+    {
+      "file": "frontend/src/components/NamedResourceSelect.jsx",
+      "hash": "d646e2d8eab59bfe3c2e8b71d4c0fca8960aef27f65c83cbc560e23a847a391e"
+    },
+    {
+      "file": "frontend/src/features/admin-analytics/AdminAnalytics.jsx",
+      "hash": "e8ecc6d29602f42b0e18ba47232727496c3a2dc00b589135017ca4bf7a57ddbe"
+    },
+    {
+      "file": "frontend/src/features/admin-analytics/admin-analytics.css",
+      "hash": "b65bfe408333aef180edfb5b590a2471fea6ce8f441a656ba12ce945d5d113b0"
+    },
+    {
+      "file": "frontend/src/features/admin-analytics/analyticsAdapter.js",
+      "hash": "ff6c4394ee66e6948f741b4178ed3902e5156c3f8f5bccc600a57b1dde26b158"
+    },
+    {
+      "file": "frontend/src/features/admin-analytics/analyticsController.js",
+      "hash": "cca94da9a4efb43a418e50595184413fd2926f12edab6d19183dd9f3a694be1e"
+    },
+    {
+      "file": "frontend/src/features/admin-analytics/analyticsModel.js",
+      "hash": "e1209efab83fe20d01832544cbdfe1f6613778004f14ec1c8e5b01a25b5b2475"
+    },
+    {
+      "file": "frontend/src/features/admin-resources/AdminResourceScreen.jsx",
+      "hash": "04886b12b88927b84f28df0edfaa249019c6c1d056ff518c856deac4d644ceb8"
+    },
+    {
+      "file": "frontend/src/features/admin-resources/admin-resources.css",
+      "hash": "608c1980f64997ab2f985cd7524a921b2b543f88542bd693a3127f9beb744eb7"
+    },
+    {
+      "file": "frontend/src/features/admin-resources/resourceAdapter.js",
+      "hash": "cc43ce3852f29a15ba3bd38dc9194a161d59a79b2e99f62d6a545f147aa57072"
+    },
+    {
+      "file": "frontend/src/features/admin-resources/resourceController.js",
+      "hash": "d897cdf01eff7e35791432c1a23635efa68373ee6fe95600cbc9c52532efc37a"
+    },
+    {
+      "file": "frontend/src/features/admin-resources/resourceModel.js",
+      "hash": "c7eb99844a6d6d10b29018c8efb2e158f2cfcbabc04b4ba9ed5117a642cdeca1"
+    },
+    {
+      "file": "frontend/src/features/admin-service/AdminComplaints.jsx",
+      "hash": "69cc8a2b8df6c94a6846fd8db3b2a165f1b6a904e6773d199c96210cc8b55911"
+    },
+    {
+      "file": "frontend/src/features/admin-service/complaintAdapter.js",
+      "hash": "07c77827a249a43420493a6a7c00c728c23b1d6231f3ac43dced021dc63409a5"
+    },
+    {
+      "file": "frontend/src/features/admin-service/complaintController.js",
+      "hash": "00e5256ace5f0fd59f334f04758c488a21676e100853f0d01009a2b2abd41680"
+    },
+    {
+      "file": "frontend/src/features/admin-service/complaintModel.js",
+      "hash": "e327682da33b1d31b2f13464f7e60ff700f19ebbdf772b3138ef5aa6e64eb5e1"
+    },
+    {
+      "file": "frontend/src/features/admin-workspace/AdminWorkspaceContext.js",
+      "hash": "15824c6fc584323b24d8746986772fbdddfcd12460b51a2d4d79128949f82dfb"
+    },
+    {
+      "file": "frontend/src/features/admin-workspace/AdminWorkspaceContext.jsx",
+      "hash": "cecd9b5bc3ae4425dd8a4e02888414b27bac3561b47933ab86d783a2c02c9ff7"
+    },
+    {
+      "file": "frontend/src/features/admin-workspace/adminWorkspaceStore.js",
+      "hash": "fc0465e5d540b942c8e8c2e34628ec6ed43767ab2022022dfc76b0c0cf8d87e5"
+    },
+    {
+      "file": "frontend/src/layouts/AdminLayout.jsx",
+      "hash": "081b229da1702913546827f49f862bbfb18fffcb8be12afb481ffa0dfe8197b6"
+    },
+    {
+      "file": "frontend/src/routes/AdminSectionRoute.jsx",
+      "hash": "685b0260ff9a185bfedde0eced84ef37ef1c9aa14a56fbf156ef13f979f15342"
+    },
+    {
+      "file": "frontend/src/routes/index.jsx",
+      "hash": "5cf4f7505cb6ff71fdf55195a5e3161ef24e50fb4ff55557894a9d8e05a3888c"
+    },
+    {
+      "file": "frontend/tests/adminResources.test.js",
+      "hash": "310eaba08e93337213d57d53eb10f6563f5ae2e829db9c368b47b8b75f419efc"
+    },
+    {
+      "file": "frontend/tests/adminServiceAnalytics.test.js",
+      "hash": "dd27bdf291cea7b752cf03cd580e7f5c87fc09465bdf9c81b308043a9a21cdaf"
+    }
+  ]
+}

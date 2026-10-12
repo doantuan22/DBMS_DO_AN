@@ -13,8 +13,10 @@ export default function NamedResourceSelect({
   fallbackOption,
   disabled = false,
   readOnly = false,
+  readOnlyHint = 'Theo hợp đồng hiện tại, không thể đổi phòng khi sửa suất chiếu.',
   required = true,
   emptyMessage = 'Không có lựa chọn phù hợp.',
+  placeholder,
 }) {
   const id = useId();
   const [search, setSearch] = useState('');
@@ -75,7 +77,7 @@ export default function NamedResourceSelect({
           required={required && !readOnly}
           onChange={(event) => onChange(event.target.value)}
         >
-          <option value="">Chọn {label.toLocaleLowerCase()}</option>
+          <option value="">{placeholder ?? `Chọn ${label.toLocaleLowerCase()}`}</option>
           {visible.map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
@@ -93,7 +95,7 @@ export default function NamedResourceSelect({
               : query && !filtered.length
                 ? `Không tìm thấy ${label.toLocaleLowerCase()} khớp từ khóa.`
                 : readOnly
-                  ? 'Theo hợp đồng hiện tại, không thể đổi phòng khi sửa suất chiếu.'
+                  ? readOnlyHint
                   : 'Có thể tìm theo tên hoặc dùng phím mũi tên để chọn.'}
       </p>
       {lookupFailed && (
