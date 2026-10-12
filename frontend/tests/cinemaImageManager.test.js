@@ -44,8 +44,9 @@ test('image management requires Admin and QL_RAP together', () => {
 
 test('authorized initial render has a disabled cinema selector until its list loads', () => {
   const html = render({ role: 'ADMIN', permissions: [{ code: 'QL_RAP' }] });
-  assert.match(html, /<select[^>]*aria-label="Chọn rạp"[^>]*disabled/);
-  assert.match(html, /role="status"[^>]*>Đang tải danh sách rạp/);
+  assert.match(html, /<select[^>]*aria-label="Rạp"[^>]*disabled/);
+  assert.match(html, /role="status"/);
+  assert.match(html, /Đang tải danh sách rạp/);
 });
 
 test('no image editor, mutation or legitimate empty-image message exists without a selected cinema', () => {

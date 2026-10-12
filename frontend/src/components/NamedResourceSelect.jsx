@@ -68,6 +68,8 @@ export default function NamedResourceSelect({
         <select
           id={id}
           aria-label={label}
+          aria-invalid={lookupFailed || undefined}
+          aria-describedby={lookupFailed ? `${id}-help ${id}-error` : `${id}-help`}
           value={selectedValue}
           disabled={isDisabled || (!available.length && lookupStatus === 'success')}
           required={required && !readOnly}
@@ -95,7 +97,7 @@ export default function NamedResourceSelect({
                   : 'Có thể tìm theo tên hoặc dùng phím mũi tên để chọn.'}
       </p>
       {lookupFailed && (
-        <div className="manager-resource-select__error" role="alert">
+        <div id={`${id}-error`} className="manager-resource-select__error" role="alert">
           <span>{lookupError?.message ?? `Không tải được danh sách ${label.toLocaleLowerCase()}.`}</span>
           {onRetry && (
             <button type="button" disabled={disabled} onClick={onRetry}>

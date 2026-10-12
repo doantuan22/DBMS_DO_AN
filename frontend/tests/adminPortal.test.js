@@ -61,12 +61,15 @@ test('cinema image status is chosen from the whitelist, not typed freely', async
     '/src/constants/cinemaImageStatuses.js',
   );
   assert.deepEqual(CINEMA_IMAGE_STATUSES, ['Hoạt động', 'Tạm ẩn']);
-  const source = (await import('node:fs')).readFileSync(
-    new URL('../src/components/CinemaImageManager.jsx', import.meta.url),
-    'utf8',
-  );
-  assert.match(source, /<label>\s*Trạng thái\s*<select\b/);
-  assert.doesNotMatch(source, /<label>\s*Trạng thái\s*<input\b/);
+  const { default: Editor } = await vite.ssrLoadModule('/src/features/facilities/FacilityEditor.jsx');
+  const html = renderToStaticMarkup(React.createElement(Editor, {
+    kind: 'images', editor: { row: null, values: { url: '', description: '', displayOrder: 0, cover: false, status: 'Hoạt động' }, errors: {} },
+    contextLabel: 'Rạp A', controller: { closeEditor() {}, changeField() {}, save() {} },
+  }));
+  const statusSelect = html.match(/<select\b[^>]*>[\s\S]*?<\/select>/)?.[0];
+  assert.ok(statusSelect);
+  for (const status of CINEMA_IMAGE_STATUSES) assert.ok(statusSelect.includes(`>${status}</option>`));
+  assert.equal((statusSelect.match(/<option/g) ?? []).length, CINEMA_IMAGE_STATUSES.length);
 });
 
 test('fixed roles remain creation-only and Manager references use named selectors', async () => {

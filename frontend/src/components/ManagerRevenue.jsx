@@ -3,12 +3,13 @@ import { getRevenue } from '../api/managerApi';
 import { formatDate } from '../utils/dateTime';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 
-export default function ManagerRevenue({ cinemaId, refresh }) {
-  const [values, setValues] = useState({ fromDate: '', toDate: '' });
-  const [range, setRange] = useState({ fromDate: '', toDate: '' });
+export default function ManagerRevenue({ cinemaId, refresh, cachedState, onStateChange }) {
+  const [values, setValues] = useState(() => cachedState?.values ?? { fromDate: '', toDate: '' });
+  const [range, setRange] = useState(() => cachedState?.range ?? { fromDate: '', toDate: '' });
   const [error, setError] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [resource, setResource] = useState({ status: 'loading' });
+  useEffect(() => { onStateChange?.({ values, range }); }, [values, range, onStateChange]);
   useEffect(() => {
     let active = true;
     const search = new URLSearchParams(Object.entries(range).filter(([, value]) => value));

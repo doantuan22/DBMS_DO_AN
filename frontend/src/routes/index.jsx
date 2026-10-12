@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
 import StaffShell from '../layouts/StaffShell';
 import RequireRole from './RequireRole';
@@ -20,10 +20,13 @@ import OrderDetail from '../pages/OrderDetail';
 import PaymentPage from '../pages/PaymentPage';
 import Complaints from '../pages/Complaints';
 import ComplaintDetail from '../pages/ComplaintDetail';
-import ManagerPortal from '../pages/ManagerPortal';
+import ManagerLayout from '../layouts/ManagerLayout';
+import ManagerSectionRoute, { ManagerEntryRoute } from './ManagerSectionRoute';
+import { MANAGER_SCREEN_ROUTES } from './managerSectionRoutes';
 import SupportPortal from '../pages/SupportPortal';
-import AdminPortal from '../pages/AdminPortal';
+import AdminSectionRoute from './AdminSectionRoute';
 import StaffBookings from '../features/staff-bookings/StaffBookings';
+import { ADMIN_SCREEN_ROUTES } from './adminSectionRoutes';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
 
 const PUBLIC_LINKS = [
@@ -91,8 +94,14 @@ export default function AppRoutes() {
 
       <Route element={<RequireRole role={ROLES.MANAGER} />}>
         <Route path="/manager" element={<StaffShell portal="manager" />}>
-          <Route index element={<ManagerPortal />} />
-          <Route path="bookings" element={<StaffBookings portal="manager" />} />
+          <Route element={<ManagerLayout />}>
+            <Route index element={<ManagerEntryRoute />} />
+            <Route path="bookings" element={<StaffBookings portal="manager" />} />
+            {MANAGER_SCREEN_ROUTES.map(({ section, path }) => (
+              <Route key={section} path={path} element={<ManagerSectionRoute section={section} />} />
+            ))}
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Route>
       </Route>
 
@@ -120,8 +129,16 @@ export default function AppRoutes() {
       </Route>
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<StaffShell portal="admin" />}>
-          <Route index element={<AdminPortal />} />
+          <Route index element={<Navigate to="overview" replace />} />
           <Route path="bookings" element={<StaffBookings portal="admin" />} />
+          {ADMIN_SCREEN_ROUTES.map(({ section, path }) => (
+            <Route
+              key={section}
+              path={path}
+              element={<AdminSectionRoute section={section} />}
+            />
+          ))}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Route>
     </Routes>

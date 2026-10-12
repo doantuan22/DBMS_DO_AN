@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from './Button';
 import Dialog from './Dialog';
 
@@ -7,23 +7,32 @@ export default function ConfirmDialog({
   onOpenChange,
   title,
   description,
+  body,
+  entityLabel,
   confirmLabel = 'Xác nhận',
   cancelLabel = 'Hủy',
   variant = 'danger',
+  dangerLevel,
   busy = false,
   onConfirm,
 }) {
   const [pending, setPending] = useState(false);
   const [confirmationError, setConfirmationError] = useState(null);
+  const pendingRef = useRef(false);
+  const cancelRef = useRef(null);
   const isBusy = busy || pending;
+  const resolvedDescription = description ?? body;
+  const resolvedVariant = dangerLevel === 'dangerous' ? 'danger' : dangerLevel === 'caution' ? 'secondary' : variant;
 
   const changeOpen = (nextOpen) => {
+    if (!nextOpen && isBusy) return;
     if (!nextOpen) setConfirmationError(null);
     onOpenChange?.(nextOpen);
   };
 
   const confirm = async () => {
-    if (isBusy) return;
+    if (isBusy || pendingRef.current) return;
+    pendingRef.current = true;
     setPending(true);
     setConfirmationError(null);
     try {
@@ -31,6 +40,7 @@ export default function ConfirmDialog({
     } catch (error) {
       setConfirmationError(error?.message || 'Không thể hoàn tất thao tác.');
     } finally {
+      pendingRef.current = false;
       setPending(false);
     }
   };
@@ -40,20 +50,22 @@ export default function ConfirmDialog({
       open={open}
       onOpenChange={changeOpen}
       title={title}
-      description={description}
+      description={resolvedDescription}
       size="sm"
       busy={isBusy}
+      initialFocusRef={cancelRef}
       footer={
         <>
-          <Button variant="secondary" disabled={isBusy} onClick={() => changeOpen(false)}>
+          <Button ref={cancelRef} variant="secondary" disabled={isBusy} onClick={() => changeOpen(false)}>
             {cancelLabel}
           </Button>
-          <Button variant={variant} loading={isBusy} onClick={confirm}>
+          <Button variant={resolvedVariant} loading={isBusy} onClick={confirm}>
             {confirmLabel}
           </Button>
         </>
       }
     >
+      {entityLabel && <p className="ui-confirm-dialog__entity">{entityLabel}</p>}
       {confirmationError && (
         <p className="ui-confirm-dialog__error" role="alert">
           {confirmationError}

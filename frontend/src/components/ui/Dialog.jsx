@@ -11,6 +11,7 @@ export default function Dialog({
   footer,
   closeLabel = 'Đóng hộp thoại',
   busy = false,
+  initialFocusRef,
 }) {
   const dialogRef = useRef(null);
   const titleId = useId();
@@ -20,11 +21,12 @@ export default function Dialog({
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (open && !dialog.open) dialog.showModal();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      initialFocusRef?.current?.focus();
+    }
     if (!open && dialog.open) dialog.close();
-  }, [open]);
-
-  if (!open) return null;
+  }, [open, initialFocusRef]);
 
   return (
     <dialog
@@ -33,6 +35,7 @@ export default function Dialog({
       aria-labelledby={title ? titleId : undefined}
       aria-label={title ? undefined : 'Hộp thoại'}
       aria-describedby={description ? descriptionId : undefined}
+      aria-modal={open ? 'true' : undefined}
       onCancel={(event) => {
         event.preventDefault();
         if (!busy) onOpenChange?.(false);

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { fieldsFor, initialManagerValues, managerBody } from '../utils/managerForms';
-import NamedResourceSelect from './NamedResourceSelect';
+import ResourceSelect from './ui/ResourceSelect';
 
 const labels = { room: 'phòng', seat: 'ghế', showtime: 'suất', pricing: 'giá' };
 export default function ManagerResourceForm({
@@ -10,16 +10,22 @@ export default function ManagerResourceForm({
   onCancel,
   onDirtyChange,
   busy,
+  scopeKey,
   lookups = {},
+  draft,
+  onDraftChange,
 }) {
-  const [initialValues] = useState(() => initialManagerValues(kind, row));
-  const [values, setValues] = useState(initialValues);
+  const [initialValues] = useState(() => draft?.initialValues ?? initialManagerValues(kind, row));
+  const [values, setValues] = useState(() => draft?.values ?? initialValues);
   const [error, setError] = useState('');
+  const pending = useRef(false);
   const editing = Boolean(row);
   const updateField = (name, value) => {
     const next = { ...values, [name]: value };
     setValues(next);
-    onDirtyChange?.(JSON.stringify(next) !== JSON.stringify(initialValues));
+    const dirty = JSON.stringify(next) !== JSON.stringify(initialValues);
+    onDraftChange?.({ values: next, initialValues, dirty });
+    onDirtyChange?.(dirty);
   };
   return (
     <form
@@ -27,13 +33,18 @@ export default function ManagerResourceForm({
       aria-label={`${editing ? 'Sửa' : 'Tạo'} ${labels[kind]}`}
       onSubmit={async (event) => {
         event.preventDefault();
+        if (pending.current || busy) return;
+        pending.current = true;
         setError('');
         try {
           await onSave(managerBody(kind, values, editing));
           setValues(initialValues);
           onDirtyChange?.(false);
+          onDraftChange?.(null);
         } catch (failure) {
           setError(failure.message);
+        } finally {
+          pending.current = false;
         }
       }}
     >
@@ -53,9 +64,10 @@ export default function ManagerResourceForm({
                 ? { id: row.movieId, label: row.movieTitle ?? 'Phim hiện tại' }
                 : undefined;
           return (
-            <NamedResourceSelect
+            <ResourceSelect
               key={name}
               label={label}
+              scopeKey={scopeKey}
               value={values[name]}
               options={lookup.options ?? []}
               lookupStatus={lookup.status ?? 'loading'}
@@ -122,6 +134,7 @@ export default function ManagerResourceForm({
           disabled={busy}
           onClick={() => {
             onDirtyChange?.(false);
+            onDraftChange?.(null);
             onCancel?.();
           }}
         >

@@ -1,0 +1,20 @@
+{
+  "result": "BLOCKED",
+  "browser": "Chrome host installation; version unavailable because CDP did not start",
+  "profile": "Dedicated temporary UXR-2A profile",
+  "checks": {
+    "browserProcessStarted": "PASS",
+    "rendererPageOpened": "BLOCKED",
+    "javascriptExecutedInRenderer": "NOT RUN",
+    "keyboardInputAndButtonInteraction": "NOT RUN",
+    "screenshot": "NOT CAPTURED",
+    "cdpEndpoint": "UNAVAILABLE"
+  },
+  "observed": [
+    "Chrome log records repeated GPU process exits with exit_code=-1073741790.",
+    "Chrome log ends with GPU process isn't usable. Goodbye.",
+    "The dedicated CDP /json/version endpoint was not reachable."
+  ],
+  "sourceLog": "chrome-browser-startup.log",
+  "applicationApiOrDatabaseUsed": false
+}

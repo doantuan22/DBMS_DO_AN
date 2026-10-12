@@ -1,0 +1,70 @@
+{
+  "result": "BLOCKED",
+  "date": "2026-10-11",
+  "updatedDate": "2026-10-12",
+  "applicationApiOrDatabaseUsed": false,
+  "screenshotsCaptured": [],
+  "attempts": [
+    {
+      "browser": "Chrome/155.0.8059.40",
+      "attemptDate": "2026-10-12",
+      "config": "UXR-1D host launch configuration; headless=new; dedicated task profile; dedicated CDP port; no GPU-disabling flags",
+      "log": "chrome-host-155.stderr.log",
+      "observations": [
+        "Log reached DevTools listening.",
+        "GPU process repeatedly exited with code -1073741790.",
+        "Log ended with GPU process isn't usable. Goodbye.",
+        "Renderer preflight did not produce a result record or screenshot."
+      ],
+      "preflight": "BLOCKED",
+      "javascriptInteraction": "NOT VERIFIED",
+      "screenshot": "NOT CAPTURED",
+      "componentAcceptance": "NOT RUN"
+    },
+    {
+      "browser": "Edge/155.0.4283.45",
+      "config": "Headless; dedicated task profile; dedicated CDP port; no GPU-disabling flags",
+      "log": "edge-host-155.stderr.log",
+      "observations": [
+        "Log reached DevTools listening.",
+        "GPU process repeatedly exited with code -1073741790.",
+        "Log ended with GPU process isn't usable. Goodbye.",
+        "Renderer preflight did not produce a result record or screenshot."
+      ],
+      "preflight": "BLOCKED",
+      "javascriptInteraction": "NOT VERIFIED",
+      "screenshot": "NOT CAPTURED",
+      "componentAcceptance": "NOT RUN"
+    },
+    {
+      "browser": "Chrome/155.0.8059.40",
+      "config": "Exact UXR-1D Node child_process.spawn launch flow, dedicated task profile and CDP port; no GPU-disabling flags",
+      "log": "chrome-node-spawn-preflight.stderr.log",
+      "observations": [
+        "CDP /json/version responded briefly.",
+        "The reused UXR-1D host-preflight script then reported DevTools endpoint unavailable.",
+        "The Chrome stderr again recorded GPU process exit -1073741790 and GPU process fatal.",
+        "No renderer interaction or screenshot was produced."
+      ],
+      "preflight": "BLOCKED",
+      "javascriptInteraction": "NOT VERIFIED",
+      "screenshot": "NOT CAPTURED",
+      "componentAcceptance": "NOT RUN",
+      "evidence": "browser-preflight-node-spawn.json"
+    }
+  ],
+  "diagnostics": {
+    "exitStatus": "-1073741790 = 0xC0000022 = STATUS_ACCESS_DENIED",
+    "browserExecutableAcl": "Users have read/execute on Chrome and Edge executables",
+    "taskProfileAcl": "Task profile is writable/modifiable by the current user",
+    "defenderAndDeviceGuardQueries": "ACCESS DENIED from current security context",
+    "defenderBlockEvents": "No matching Defender block events returned for the attempted time window",
+    "independentRunnerAvailable": false,
+    "rootCause": "GPU sandbox/device access restriction is suspected from the process failure, but the specific Windows Security policy or resource is unconfirmed"
+  },
+  "notes": [
+    "Earlier Chrome attempt and its original preflight JSON are retained as separate evidence.",
+    "No further GPU or CDP configuration variants were tried after Chrome and Edge showed the same fatal renderer startup error.",
+    "Root cause beyond the observed GPU initialization/cache errors is unconfirmed."
+  ]
+}

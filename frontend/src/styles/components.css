@@ -291,6 +291,64 @@
   font-weight: 600;
 }
 
+.manager-resource-select {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.manager-resource-select > label {
+  display: flex;
+  flex: 1 1 14rem;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: min(14rem, 100%);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.manager-resource-select input,
+.manager-resource-select select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.manager-resource-select input:focus-visible,
+.manager-resource-select select:focus-visible,
+.manager-resource-select button:focus-visible {
+  outline: 3px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.manager-resource-select__help,
+.manager-resource-select__error {
+  flex: 1 1 100%;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.manager-resource-select__error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-danger-text);
+}
+
 .ui-page-header {
   margin-bottom: var(--space-6);
 }
@@ -347,6 +405,55 @@
   gap: var(--space-2);
 }
 
+.ui-filter-bar__feedback {
+  display: grid;
+  width: 100%;
+  gap: var(--space-2);
+}
+
+.ui-filter-bar__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-filter-bar__chip {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  max-width: 100%;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-subtle);
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+  font-size: var(--font-size-xs);
+}
+
+.ui-filter-bar__chip span {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.ui-filter-bar__pending,
+.ui-filter-bar__error {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.ui-filter-bar__pending {
+  color: var(--color-text-muted);
+}
+
+.ui-filter-bar__error {
+  width: 100%;
+  color: var(--color-danger-text);
+}
+
 .ui-data-table-scroll {
   max-width: 100%;
   overflow: auto;
@@ -388,6 +495,13 @@
   font-weight: 700;
 }
 
+.ui-data-table__row-number {
+  min-width: 3.75rem !important;
+  color: var(--color-text-muted);
+  text-align: center !important;
+  white-space: nowrap;
+}
+
 .ui-data-table tr:last-child td {
   border-bottom: 0;
 }
@@ -417,11 +531,57 @@
   color: var(--color-danger-text);
 }
 
+.ui-async-state--forbidden,
+.ui-async-state--notFound,
+.ui-async-state--conflict {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ui-async-state--forbidden {
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+}
+
+.ui-async-state--notFound {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+}
+
+.ui-async-state--conflict {
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+}
+
+.ui-resource-table__pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.ui-confirm-dialog__entity {
+  margin: 0 0 var(--space-3);
+  overflow-wrap: anywhere;
+}
+
 .ui-async-state--error p {
   margin: 0;
 }
 
 @media (max-width: 640px) {
+  .manager-resource-select > label {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
   .ui-page-header__row {
     flex-direction: column;
   }
@@ -442,6 +602,16 @@
 
   .ui-filter-bar__actions > .ui-button {
     flex: 1 1 auto;
+  }
+
+  .ui-resource-table__pagination {
+    justify-content: space-between;
+  }
+
+  .ui-resource-table__pagination > span {
+    flex: 1 1 100%;
+    order: -1;
+    text-align: center;
   }
 
   .ui-dialog {

@@ -1,6 +1,14 @@
 import Breadcrumbs from './Breadcrumbs';
 
-export default function PageHeader({ title, description, breadcrumbs = [], actions }) {
+export default function PageHeader({
+  title,
+  description,
+  breadcrumbs = [],
+  primaryAction,
+  actions,
+}) {
+  const headerAction = primaryAction ?? actions;
+
   return (
     <header className="ui-page-header">
       {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
@@ -9,7 +17,7 @@ export default function PageHeader({ title, description, breadcrumbs = [], actio
           <h1 className="ui-page-header__title">{title}</h1>
           {description && <p className="ui-page-header__description">{description}</p>}
         </div>
-        {actions && <div className="ui-page-header__actions">{actions}</div>}
+        {headerAction && <div className="ui-page-header__actions">{headerAction}</div>}
       </div>
     </header>
   );

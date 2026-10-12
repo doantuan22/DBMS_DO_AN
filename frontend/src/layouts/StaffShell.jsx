@@ -5,73 +5,82 @@ import { useAuth } from '../context/AuthContext';
 import { ROLES } from '../constants/roles';
 import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization';
 import { StaffShellContext } from './StaffShellContext';
+import { ADMIN_SECTION_ROUTES } from '../routes/adminSectionRoutes';
+import { MANAGER_SECTION_ROUTES, resolveManagerSection } from '../routes/managerSectionRoutes';
+
+const adminNavItem = (key) => ({
+  key,
+  ...ADMIN_SECTION_ROUTES[key],
+  to: ADMIN_SECTION_ROUTES[key].path,
+});
 
 const ADMIN_GROUPS = [
   {
     label: 'Tổng quan',
-    items: [{ key: 'dashboard', label: 'Tổng quan' }],
+    items: [adminNavItem('dashboard')],
   },
   {
     label: 'Tài khoản & phân công',
     items: [
-      { key: 'users', label: 'Tài khoản' },
-      { key: 'assignments', label: 'Phân công' },
+      adminNavItem('users'),
+      adminNavItem('assignments'),
     ],
   },
   {
     label: 'Rạp & cơ sở vật chất',
     items: [
-      { key: 'cinemas', label: 'Rạp' },
-      { key: 'cinemaImages', label: 'Ảnh rạp' },
-      { key: 'rooms', label: 'Phòng' },
-      { key: 'seats', label: 'Ghế' },
+      adminNavItem('cinemas'),
+      adminNavItem('cinemaImages'),
+      adminNavItem('rooms'),
+      adminNavItem('seats'),
     ],
   },
   {
     label: 'Nội dung',
     items: [
-      { key: 'movies', label: 'Phim' },
-      { key: 'genres', label: 'Thể loại' },
-      { key: 'actors', label: 'Diễn viên' },
+      adminNavItem('movies'),
+      adminNavItem('genres'),
+      adminNavItem('actors'),
     ],
   },
   {
     label: 'Kinh doanh & vận hành',
     items: [
-      { key: 'products', label: 'Sản phẩm' },
-      { key: 'promotions', label: 'Khuyến mãi' },
-      { key: 'pricing', label: 'Bảng giá' },
-      { key: 'showtimes', label: 'Suất chiếu' },
-      { key: 'bookings', label: 'Quản lý đặt vé', to: '/admin/bookings' },
+      adminNavItem('products'),
+      adminNavItem('promotions'),
+      adminNavItem('pricing'),
+      adminNavItem('showtimes'),
+      adminNavItem('bookings'),
     ],
   },
   {
     label: 'Chăm sóc & báo cáo',
     items: [
-      { key: 'complaints', label: 'Khiếu nại' },
-      { key: 'revenue', label: 'Doanh thu' },
+      adminNavItem('complaints'),
+      adminNavItem('revenue'),
     ],
   },
 ];
 
+const managerNavItem = (key, label) => ({ key, ...MANAGER_SECTION_ROUTES[key], label: label ?? MANAGER_SECTION_ROUTES[key].label, to: MANAGER_SECTION_ROUTES[key].path });
 const MANAGER_GROUPS = [
-  { label: 'Tổng quan', items: [{ key: 'overview', label: 'Dashboard', permission: 'XEM_BAO_CAO_RAP' }] },
+  { label: 'Tổng quan', items: [managerNavItem('overview', 'Dashboard')] },
   {
     label: 'Cơ sở vật chất',
     items: [
-      { key: 'rooms', label: 'Phòng', permission: 'QL_PHONG' },
-      { key: 'seats', label: 'Ghế', permission: 'QL_GHE' },
+      managerNavItem('rooms', 'Phòng'),
+      managerNavItem('seats'),
     ],
   },
   {
     label: 'Lịch chiếu & giá',
     items: [
-      { key: 'showtimes', label: 'Suất chiếu', permission: 'QL_SUAT_CHIEU' },
-      { key: 'pricing', label: 'Bảng giá', permission: 'QL_BANG_GIA' },
-      { key: 'bookings', label: 'Quản lý đặt vé', permission: 'DAT_VE', to: '/manager/bookings' },
+      managerNavItem('showtimes'),
+      managerNavItem('pricing'),
+      managerNavItem('bookings'),
     ],
   },
-  { label: 'Báo cáo', items: [{ key: 'revenue', label: 'Doanh thu', permission: 'XEM_BAO_CAO_RAP' }] },
+  { label: 'Báo cáo', items: [managerNavItem('revenue')] },
 ];
 
 const SUPPORT_GROUPS = [
@@ -130,35 +139,17 @@ export default function StaffShell({ portal, children }) {
   const groups = groupsForUser(portal, user);
   const [isMobile, setIsMobile] = useState(mobileViewportMatches);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeAdminSection, setActiveAdminSection] = useState(
-    () => groups[0]?.items[0]?.key ?? 'dashboard',
-  );
   const menuToggleRef = useRef(null);
   const sidebarRef = useRef(null);
   const mainContentRef = useRef(null);
   const restoreToggleFocusRef = useRef(false);
   const initialFocusTimerRef = useRef(null);
   const mobileDialogOpen = isMobile && menuOpen;
-  const adminNavigationHandler = useRef(null);
-  const registerAdminNavigation = useCallback((handler) => {
-    adminNavigationHandler.current = handler;
-    return () => {
-      if (adminNavigationHandler.current === handler) adminNavigationHandler.current = null;
-    };
-  }, []);
-  const navigateAdminSection = useCallback((key) => {
-    setActiveAdminSection(key);
-    adminNavigationHandler.current?.(key);
-  }, []);
   const shellContext = useMemo(
     () => ({
       portal,
-      activeAdminSection,
-      setActiveAdminSection,
-      registerAdminNavigation,
-      navigateAdminSection,
     }),
-    [portal, activeAdminSection, registerAdminNavigation, navigateAdminSection],
+    [portal],
   );
   const closeMenu = useCallback(({ restoreFocus = true } = {}) => {
     restoreToggleFocusRef.current = restoreFocus && mobileViewportMatches();
@@ -317,33 +308,26 @@ export default function StaffShell({ portal, children }) {
                     {group.items.map((item) => {
                       const active =
                         portal === 'admin'
-                          ? item.to ? location.pathname === item.to : location.pathname === '/admin' && activeAdminSection === item.key
+                          ? location.pathname === item.to
                           : portal === 'manager'
-                            ? item.to ? location.pathname === item.to : location.pathname === '/manager' && (location.hash === `#manager-${item.key}` ||
-                              (!location.hash && item.key === groups[0]?.items[0]?.key))
+                            ? resolveManagerSection(location.pathname) === item.key
                             : item.key === 'queue';
                       const className = navItemClass(active);
                       return (
                         <li key={item.key}>
-                          {item.to || (portal === 'admin' && location.pathname !== '/admin') ? (
-                            <Link className={className} to={item.to ?? '/admin'} aria-current={active ? 'page' : undefined}
-                              onClick={() => { if (!item.to) navigateAdminSection(item.key); closeMenu(); }}>{item.label}</Link>
-                          ) : portal === 'admin' ? (
-                            <button
-                              type="button"
+                          {item.to ? (
+                            <Link
                               className={className}
+                              to={item.to}
                               aria-current={active ? 'page' : undefined}
-                              onClick={() => {
-                                navigateAdminSection(item.key);
-                                closeMenu();
-                              }}
+                              onClick={closeMenu}
                             >
                               {item.label}
-                            </button>
+                            </Link>
                           ) : (
                             <a
                               className={className}
-                              href={portal === 'manager' ? `/manager#manager-${item.key}` : item.href}
+                              href={item.href}
                               aria-current={active ? 'location' : undefined}
                               onClick={closeMenu}
                             >

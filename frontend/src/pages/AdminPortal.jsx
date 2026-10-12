@@ -3,7 +3,7 @@ import { userCanAct, ADMIN_SECTION_PERMISSIONS } from '../utils/authorization';
 import { formatApiValue } from '../utils/dateTime';
 import { adminForms as forms, formFields, inputValue, toBody } from '../utils/adminForms';
 import { DAY_TYPES, RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { adminApi } from '../api/adminApi';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import CinemaImageManager from '../components/CinemaImageManager';
@@ -13,6 +13,20 @@ import AdminRevenue from '../components/AdminRevenue';
 import { ManagerAssignmentSelect, ManagerAssignmentsContext } from '../components/ManagerAssignmentFields';
 import { assignmentTransferMessage } from '../utils/managerAssignments';
 import { useStaffShell } from '../layouts/StaffShellContext';
+import PageHeader from '../components/ui/PageHeader';
+
+const adminDraftCache = new Map();
+const adminDraftKey = (userId, section, context = '') => `${userId ?? 'anonymous'}:${section}${context ? `:${context}` : ''}`;
+const DEFAULT_PROCESSING_FORM = { content: '', nextStatus: 'Đang xử lý' };
+const DEFAULT_REPORT_INPUT = { fromDate: '', toDate: '' };
+const hasCachedAdminDraft = (draft) =>
+  Boolean(
+    draft.selected ||
+      Object.keys(draft.values).length > 0 ||
+      JSON.stringify(draft.processingForm) !== JSON.stringify(draft.initialProcessingForm) ||
+      Object.values(draft.reportInput ?? {}).some(Boolean) ||
+      Object.keys(draft.reportRange ?? {}).length > 0,
+  );
 
 const sections = [
   ['dashboard', 'Tổng quan'],
@@ -45,7 +59,7 @@ const loaders = {
   },
   cinemas: (api) => api.cinemas(),
   rooms: (api) => api.rooms(),
-  seats: (api) => api.seats(),
+  seats: (api, _range, seatContext) => api.seats(seatContext ? { roomId: seatContext.roomId } : undefined),
   movies: (api) => api.movies(),
   genres: (api) => api.genres(),
   actors: (api) => api.actors(),
@@ -82,23 +96,25 @@ function ComplaintReferenceState({ resource, onRetry }) {
   );
 }
 
-export default function AdminPortal() {
+export default function AdminPortal({ routeSection, seatContext }) {
   const { user } = useAuth();
   const scope = `${user?.userId}:${user?.permissions
     ?.map((item) => item.code)
     .sort()
     .join(',')}`;
-  return <AdminWorkspace key={scope} />;
+  return <AdminWorkspace key={`${scope}:${seatContext?.cinemaId ?? ''}:${seatContext?.roomId ?? ''}`} routeSection={routeSection} seatContext={seatContext} />;
 }
 
-function AdminWorkspace() {
+function AdminWorkspace({ routeSection, seatContext }) {
+  const seatDraftScope = seatContext ? `${seatContext.cinemaId}:${seatContext.roomId}` : '';
+  const defaultValues = useMemo(() => seatContext ? { roomId: seatContext.roomId } : {}, [seatContext]);
   const { user } = useAuth();
   const shell = useStaffShell();
   const allowedSections = sections.filter(([key]) =>
     userCanAct(user, 'ADMIN', ADMIN_SECTION_PERMISSIONS[key]),
   );
   const [standaloneSection, setStandaloneSection] = useState('dashboard');
-  const selectedSection = shell?.portal === 'admin' ? shell.activeAdminSection : standaloneSection;
+  const selectedSection = routeSection ?? standaloneSection;
   const active = String(
     allowedSections.some(([key]) => key === selectedSection)
       ? selectedSection
@@ -106,23 +122,93 @@ function AdminWorkspace() {
   );
   const canProcess = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'XULY_KHIEUNAI');
   const canReference = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'TRA_CUU_DON');
+  const [restoredDraft] = useState(() => adminDraftCache.get(adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : '')));
   const [state, setState] = useState({ status: 'loading' });
-  const [selected, setSelected] = useState(null);
-  const [values, setValues] = useState({});
+  const [selected, setSelected] = useState(() => restoredDraft?.selected ?? null);
+  const [values, setValues] = useState(() => restoredDraft?.values ?? defaultValues);
+  const [initialValues, setInitialValues] = useState(() => restoredDraft?.initialValues ?? defaultValues);
+  const [complaint, setComplaint] = useState(() => restoredDraft?.complaint ?? null);
+  const [orderReference, setOrderReference] = useState(() => restoredDraft?.orderReference ?? null);
+  const [processingForm, setProcessingForm] = useState(
+    () => restoredDraft?.processingForm ?? DEFAULT_PROCESSING_FORM,
+  );
+  const [initialProcessingForm, setInitialProcessingForm] = useState(
+    () => restoredDraft?.initialProcessingForm ?? DEFAULT_PROCESSING_FORM,
+  );
+  const [reportInput, setReportInput] = useState(
+    () => restoredDraft?.reportInput ?? DEFAULT_REPORT_INPUT,
+  );
+  const [reportAppliedInput, setReportAppliedInput] = useState(
+    () => restoredDraft?.reportAppliedInput ?? DEFAULT_REPORT_INPUT,
+  );
+  const [reportRange, setReportRange] = useState(() => restoredDraft?.reportRange ?? {});
   const loadRequest = useRef(0);
-  const editorResource = useRef(active);
+  const activeSection = useRef(active);
+  const draftValues = useRef({
+    selected,
+    values,
+    initialValues,
+    complaint,
+    orderReference,
+    processingForm,
+    initialProcessingForm,
+    reportInput,
+    reportAppliedInput,
+    reportRange,
+  });
   const [notice, setNotice] = useState(null);
   const editorGeneration = useRef(0);
   const editorWritePending = useRef(false);
   const [editorBusy, setEditorBusy] = useState(false);
-  const [complaint, setComplaint] = useState(null);
-  const [orderReference, setOrderReference] = useState(null);
   const complaintRequest = useRef(0);
-  const complaintSelection = useRef(null);
+  const complaintSelection = useRef(restoredDraft?.selected?.id ?? null);
   const currentModule = useRef(active);
   const mounted = useRef(true);
   const complaintWritePending = useRef(false);
   const [complaintBusy, setComplaintBusy] = useState(false);
+  useLayoutEffect(() => {
+    draftValues.current = {
+      selected,
+      values,
+      initialValues,
+      complaint,
+      orderReference,
+      processingForm,
+      initialProcessingForm,
+      reportInput,
+      reportAppliedInput,
+      reportRange,
+    };
+  }, [selected, values, initialValues, complaint, orderReference, processingForm, initialProcessingForm, reportInput, reportAppliedInput, reportRange]);
+  useLayoutEffect(() => {
+    const previous = activeSection.current;
+    if (previous !== active) {
+      loadRequest.current++;
+      complaintRequest.current++;
+      editorGeneration.current++;
+      complaintSelection.current = null;
+      const previousDraft = draftValues.current;
+      const previousKey = adminDraftKey(user?.userId, previous, previous === 'seats' ? seatDraftScope : '');
+      if (hasCachedAdminDraft(previousDraft)) {
+        adminDraftCache.set(previousKey, previousDraft);
+      } else {
+        adminDraftCache.delete(previousKey);
+      }
+      const nextDraft = adminDraftCache.get(adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''));
+      setSelected(nextDraft?.selected ?? null);
+      setValues(nextDraft?.values ?? defaultValues);
+      setInitialValues(nextDraft?.initialValues ?? defaultValues);
+      setComplaint(nextDraft?.complaint ?? null);
+      setOrderReference(nextDraft?.orderReference ?? null);
+      setProcessingForm(nextDraft?.processingForm ?? DEFAULT_PROCESSING_FORM);
+      setInitialProcessingForm(nextDraft?.initialProcessingForm ?? DEFAULT_PROCESSING_FORM);
+      setReportInput(nextDraft?.reportInput ?? DEFAULT_REPORT_INPUT);
+      setReportAppliedInput(nextDraft?.reportAppliedInput ?? DEFAULT_REPORT_INPUT);
+      setReportRange(nextDraft?.reportRange ?? {});
+      complaintSelection.current = nextDraft?.selected?.id ?? null;
+      activeSection.current = active;
+    }
+  }, [active, user?.userId, seatDraftScope, defaultValues]);
   useLayoutEffect(() => {
     currentModule.current = active;
   }, [active]);
@@ -134,17 +220,29 @@ function AdminWorkspace() {
       requests.forEach((request) => {
         request.current++;
       });
+      const snapshot = draftValues.current;
+      const key = adminDraftKey(user?.userId, activeSection.current, activeSection.current === 'seats' ? seatDraftScope : '');
+      if (hasCachedAdminDraft(snapshot)) {
+        adminDraftCache.set(key, snapshot);
+      } else {
+        adminDraftCache.delete(key);
+      }
     };
-  }, []);
-  const [processingForm, setProcessingForm] = useState({ content: '', nextStatus: 'Đang xử lý' });
-  const [reportInput, setReportInput] = useState({ fromDate: '', toDate: '' });
-  const [reportRange, setReportRange] = useState({});
+  }, [user?.userId, seatDraftScope]);
+  const hasUnsavedChanges =
+    JSON.stringify(values) !== JSON.stringify(initialValues) ||
+    JSON.stringify(processingForm) !== JSON.stringify(initialProcessingForm) ||
+    JSON.stringify(reportInput) !== JSON.stringify(reportAppliedInput);
+  useEffect(() => {
+    if (!hasUnsavedChanges) return undefined;
+    const warnBeforeLeaving = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', warnBeforeLeaving);
+    return () => window.removeEventListener('beforeunload', warnBeforeLeaving);
+  }, [hasUnsavedChanges]);
   const load = useCallback(async () => {
-    if (editorResource.current !== active) {
-      editorResource.current = active;
-      setSelected(null);
-      setValues({});
-    }
     if (!active) {
       setState({ status: 'idle' });
       return;
@@ -152,7 +250,9 @@ function AdminWorkspace() {
     const requestId = ++loadRequest.current;
     setState({ status: 'loading' });
     try {
-      const data = await loaders[active](adminApi, reportRange);
+      const data = await loaders[active](adminApi, reportRange, seatContext);
+      if (active === 'seats' && seatContext && data.seats.some((row) => String(row.PhongID) !== seatContext.roomId || String(row.RapID) !== seatContext.cinemaId))
+        throw new Error('Dữ liệu ghế không khớp phòng đang chọn.');
       if (active === 'users' && userCanAct(user, 'ADMIN', 'QL_NGUOIDUNG')) {
         try {
           data.roleChoices = (await adminApi.roles()).roles;
@@ -165,7 +265,7 @@ function AdminWorkspace() {
     } catch (error) {
       if (requestId === loadRequest.current) setState({ status: 'error', error });
     }
-  }, [active, reportRange, user]);
+  }, [active, reportRange, user, seatContext]);
   useEffect(() => {
     void Promise.resolve().then(load);
   }, [load]);
@@ -200,36 +300,22 @@ function AdminWorkspace() {
       rowValues.castJson = row.DanhSachDienVienJson || '[]';
     }
     setValues(rowValues);
+    setInitialValues(rowValues);
   };
-  const shellPortal = shell?.portal;
-  const setShellActiveAdminSection = shell?.setActiveAdminSection;
-  const registerAdminNavigation = shell?.registerAdminNavigation;
   const clearForm = useCallback(() => {
     editorGeneration.current++;
     setSelected(null);
-    setValues({});
-  }, []);
+    setValues(defaultValues);
+    setInitialValues(defaultValues);
+    adminDraftCache.delete(adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''));
+  }, [active, user?.userId, seatDraftScope, defaultValues]);
   const switchSection = useCallback((key) => {
     if (key !== active) loadRequest.current += 1;
     complaintRequest.current++;
-    complaintSelection.current = null;
     setState({ status: 'loading' });
     setStandaloneSection(key);
-    if (shellPortal === 'admin') setShellActiveAdminSection(key);
-    clearForm();
     setNotice(null);
-    setComplaint(null);
-    setOrderReference(null);
-    setProcessingForm({ content: '', nextStatus: 'Đang xử lý' });
-  }, [active, clearForm, setShellActiveAdminSection, shellPortal]);
-  const switchSectionRef = useRef(switchSection);
-  useLayoutEffect(() => {
-    switchSectionRef.current = switchSection;
-  }, [switchSection]);
-  useEffect(() => {
-    if (shellPortal !== 'admin' || !registerAdminNavigation) return undefined;
-    return registerAdminNavigation((key) => switchSectionRef.current(key));
-  }, [shellPortal, registerAdminNavigation]);
+  }, [active]);
   const submit = async (event) => {
     event.preventDefault();
     if (editorWritePending.current || !definition) return;
@@ -381,13 +467,16 @@ function AdminWorkspace() {
     setComplaint({ status: 'loading' });
     setOrderReference(null);
     setNotice(null);
-    setProcessingForm({ content: '', nextStatus: 'Đang xử lý' });
+    setProcessingForm(DEFAULT_PROCESSING_FORM);
+    setInitialProcessingForm(DEFAULT_PROCESSING_FORM);
     try {
       const detail = await adminApi.complaint(row.id);
       if (!mounted.current || request !== complaintRequest.current) return;
       setComplaint({ status: 'success', data: detail.complaint });
       const status = detail.complaint.status === 'Mới' ? 'Đang xử lý' : detail.complaint.status;
-      setProcessingForm((current) => ({ ...current, nextStatus: status || current.nextStatus }));
+      const nextForm = { ...DEFAULT_PROCESSING_FORM, nextStatus: status || DEFAULT_PROCESSING_FORM.nextStatus };
+      setProcessingForm(nextForm);
+      setInitialProcessingForm(nextForm);
       await loadComplaintReference(row.id, request);
     } catch (error) {
       if (mounted.current && request === complaintRequest.current)
@@ -463,11 +552,22 @@ function AdminWorkspace() {
   };
 
   if (!active) return <EmptyState>Bạn chưa được cấp quyền quản trị chức năng nào.</EmptyState>;
+  const sectionLabel = sections.find(([key]) => key === active)?.[1];
   if (active === 'cinemaImages')
     return (
       <section className="catalog-section" aria-label="Quản lý ảnh rạp">
-        <h1>Quản trị hệ thống</h1>
-        {!shell && (
+        {routeSection ? (
+          <PageHeader
+            title={sectionLabel}
+            breadcrumbs={[
+              { label: 'Quản trị' },
+              { label: sectionLabel },
+            ]}
+          />
+        ) : (
+          <h1>Quản trị hệ thống</h1>
+        )}
+        {!shell && !routeSection && (
           <nav className="catalog-actions" aria-label="Phân hệ quản trị">
             {allowedSections.map(([key, label]) => (
               <button
@@ -482,36 +582,50 @@ function AdminWorkspace() {
             ))}
           </nav>
         )}
-        <h2>Ảnh rạp</h2>
+        {!routeSection && <h2>Ảnh rạp</h2>}
         <CinemaImageManager />
       </section>
     );
 
   return (
     <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
-      <h1>Quản trị hệ thống</h1>
-      {!shell && (
-        <nav className="catalog-actions" aria-label="Phân hệ quản trị">
-          {allowedSections.map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              aria-pressed={active === key}
-              className="catalog-button"
-              onClick={() => switchSection(key)}
-            >
-              {label}
-            </button>
-          ))}
-        </nav>
+      {routeSection ? (
+        <PageHeader
+          title={sectionLabel}
+          description={active === 'seats' && seatContext ? `${seatContext.cinemaName} · ${seatContext.roomName}` : undefined}
+          breadcrumbs={active === 'dashboard' ? [{ label: sectionLabel }] : [
+            { label: 'Quản trị' },
+            { label: sectionLabel },
+          ]}
+        />
+      ) : (
+        <>
+          <h1>Quản trị hệ thống</h1>
+          {!shell && (
+            <nav className="catalog-actions" aria-label="Phân hệ quản trị">
+              {allowedSections.map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={active === key}
+                  className="catalog-button"
+                  onClick={() => switchSection(key)}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+          )}
+          <h2>{sectionLabel}</h2>
+        </>
       )}
-      <h2>{sections.find(([key]) => key === active)?.[1]}</h2>
       {active === 'revenue' && (
         <form
           className="catalog-actions"
           onSubmit={(event) => {
             event.preventDefault();
             setReportRange(reportInput);
+            setReportAppliedInput(reportInput);
           }}
         >
           <label>
@@ -662,8 +776,10 @@ function AdminWorkspace() {
           )}
           {editableFields.map(([name, label, kind]) => (
             <label key={name}>
-              {label}
-              {active === 'users' && name === 'roleId' ? (
+              {active === 'seats' && name === 'roomId' && seatContext ? 'Phòng' : label}
+              {active === 'seats' && name === 'roomId' && seatContext ? (
+                <input aria-label="Phòng" readOnly value={seatContext.roomName} />
+              ) : active === 'users' && name === 'roleId' ? (
                 <select
                   aria-label={label}
                   required

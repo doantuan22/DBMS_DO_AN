@@ -156,7 +156,6 @@ function BookingWorkspace({ portal }) {
   const validSelection = draft.seatIds.length > 0 && draft.seatIds.every((id) => seats.some((seat) => seat.id === id && seat.status === 'Trống'));
   const preview = seats.filter((seat) => draft.seatIds.includes(seat.id)).reduce((sum, seat) => sum + Number(seat.price), 0);
   const columns = [
-    { key: 'DonDatVeID', label: 'Mã đơn' },
     { key: 'customer', label: 'Khách hàng', render: (row) => <><strong>{row.HoTenKhachHang}</strong><br />{row.Email}</> },
     { key: 'TenPhim', label: 'Phim' },
     { key: 'show', label: 'Suất / Rạp / Phòng', render: (row) => <>{formatDateTime(row.ThoiGianBatDau)}<br />{row.TenRap} · {row.TenPhong}</> },
@@ -164,7 +163,7 @@ function BookingWorkspace({ portal }) {
     { key: 'SoLuongVe', label: 'Số vé' },
     { key: 'TongTienThanhToan', label: 'Tổng snapshot', render: (row) => money(row.TongTienThanhToan) },
     { key: 'TrangThaiDon', label: 'Trạng thái', render: (row) => <StatusBadge status={row.TrangThaiDon} /> },
-    { key: 'action', label: 'Thao tác', render: (row) => <Button variant="secondary" size="sm" disabled={busy} onClick={() => showOrder(row.DonDatVeID)} aria-label={`Xem đơn ${row.DonDatVeID}`}>Xem chi tiết</Button> },
+    { key: 'action', label: 'Thao tác', render: (row) => <Button variant="secondary" size="sm" disabled={busy} onClick={() => showOrder(row.DonDatVeID)} aria-label={`Xem đơn của ${row.HoTenKhachHang} · ${row.TenPhim}`}>Xem chi tiết</Button> },
   ];
   const cinemas = metadata.status === 'success' ? metadata.data.cinemas : [];
   const confirmDescription = confirm?.description;
@@ -184,12 +183,14 @@ function BookingWorkspace({ portal }) {
         <FormField label="Trạng thái đơn"><Select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })} disabled={busy}><option value="">Tất cả trạng thái</option>{statuses.map((status) => <option key={status}>{status}</option>)}</Select></FormField>
         <FormField label="Rạp lọc đơn"><Select value={filters.cinemaId} onChange={(e) => setFilters({ ...filters, cinemaId: e.target.value })} disabled={busy}><option value="">Tất cả rạp được phép</option>{cinemas.map((cinema) => <option key={cinema.RapID} value={cinema.RapID}>{cinema.TenRap}</option>)}</Select></FormField>
       </FilterBar>
-      <DataTable columns={columns} rows={list.data?.orders ?? []} getRowKey={(row) => row.DonDatVeID} caption="Danh sách đơn đặt vé" status={list.status} error={list.error} onRetry={refresh} />
-      {list.status === 'success' && <nav className="staff-bookings__actions" aria-label="Phân trang đơn đặt vé">
-        <Button variant="secondary" disabled={busy || applied.page <= 1} onClick={() => guarded(() => setApplied({ ...applied, page: applied.page - 1 }))}>Trang trước</Button>
-        <span>Trang {list.data.page} · {list.data.total} đơn</span>
-        <Button variant="secondary" disabled={busy || applied.page * applied.pageSize >= list.data.total} onClick={() => guarded(() => setApplied({ ...applied, page: applied.page + 1 }))}>Trang sau</Button>
-      </nav>}
+      <DataTable columns={columns} rows={list.data?.orders ?? []} getRowKey={(row) => row.DonDatVeID} caption="Danh sách đơn đặt vé" status={list.status} error={list.error} onRetry={refresh}
+        pagination={list.status === 'success' ? {
+          page: list.data.page,
+          pageSize: list.data.pageSize ?? applied.pageSize,
+          total: list.data.total,
+          disabled: busy,
+          onPageChange: (page) => guarded(() => setApplied({ ...applied, page })),
+        } : undefined} />
       <AsyncState status={detail.status === 'success' ? 'idle' : detail.status} error={detail.error} onRetry={refresh} loadingMessage="Đang tải chi tiết đơn…" />
       {order && <section className="staff-bookings__detail" aria-label={`Chi tiết đơn ${order.id}`}>
         <h2>Đơn #{order.id} · <StatusBadge status={order.status} /></h2>

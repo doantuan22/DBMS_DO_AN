@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browser GUI renderer preflight</title>
+<style>body{font:16px system-ui,sans-serif;margin:3rem;color:#0f172a}input,button{font:inherit;padding:.6rem;margin:.5rem 0}button{cursor:pointer}</style>
+<h1>Browser GUI renderer preflight</h1>
+<label for="probe">Input probe</label><br>
+<input id="probe" value=""><br>
+<button id="run" type="button">Run JavaScript interaction</button>
+<p id="result" role="status" aria-live="polite">Waiting for interaction.</p>
+<script>
+  document.querySelector('#run').addEventListener('click', () => {
+    document.querySelector('#result').textContent = `PASS — ${document.querySelector('#probe').value || 'empty input'} — ${new Date().toISOString()}`;
+  });
+</script>
+</html>

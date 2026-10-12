@@ -1,0 +1,291 @@
+{
+  "timestamp": "2026-10-11T19:29:53.885Z",
+  "level": "real loopback HTTP -> existing middleware/services -> isolated SQL Server SP",
+  "cases": [
+    {
+      "scenario": "Fixture cleanup delete",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/seats/251",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Fixture cleanup delete",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/rooms/14",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Fixture cleanup delete",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/cinemas/8",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/manager/cinemas",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "GET",
+      "path": "/manager/cinemas",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/manager/cinemas/1/rooms",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "GET",
+      "path": "/manager/cinemas/1/rooms",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/manager/rooms/1/seats",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "GET",
+      "path": "/manager/rooms/1/seats",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Forged cinema scope denied",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "GET",
+      "path": "/manager/cinemas/2/rooms",
+      "status": 403,
+      "code": "MANAGER_CINEMA_FORBIDDEN",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Forged room scope denied",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "GET",
+      "path": "/manager/rooms/4/seats",
+      "status": 403,
+      "code": "MANAGER_CINEMA_FORBIDDEN",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Forged seat mutation denied",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "PUT",
+      "path": "/manager/seats/121",
+      "status": 403,
+      "code": "MANAGER_CINEMA_FORBIDDEN",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Manager cannot enter Admin API",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "GET",
+      "path": "/admin/cinemas",
+      "status": 403,
+      "code": "ADMIN_REQUIRED",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Admin cannot impersonate Manager role",
+      "actorRole": "ADMIN",
+      "method": "GET",
+      "path": "/manager/cinemas",
+      "status": 403,
+      "code": "MANAGER_REQUIRED",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Manager history type change rejected",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "PUT",
+      "path": "/manager/seats/1",
+      "status": 409,
+      "code": "SEAT_HAS_TICKET_HISTORY",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Manager history deletion rejected",
+      "actorRole": "QUAN_LY_RAP",
+      "method": "DELETE",
+      "path": "/manager/seats/1",
+      "status": 409,
+      "code": "SEAT_HAS_TICKETS",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Admin history type change rejected",
+      "actorRole": "ADMIN",
+      "method": "PUT",
+      "path": "/admin/seats/1",
+      "status": 409,
+      "code": "SEAT_HAS_TICKET_HISTORY",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Admin history deletion rejected",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/seats/1",
+      "status": 409,
+      "code": "SEAT_HAS_TICKET_HISTORY",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Missing seat distinguishes 404",
+      "actorRole": "ADMIN",
+      "method": "PUT",
+      "path": "/admin/seats/2147483647",
+      "status": 404,
+      "code": "SEAT_NOT_FOUND",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Related cinema data blocks deletion",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/cinemas/1",
+      "status": 409,
+      "code": "CINEMA_HAS_DEPENDENCIES",
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/cinemas",
+      "actorRole": "ADMIN",
+      "method": "POST",
+      "path": "/admin/cinemas",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/cinemas/9",
+      "actorRole": "ADMIN",
+      "method": "PUT",
+      "path": "/admin/cinemas/9",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/rooms",
+      "actorRole": "ADMIN",
+      "method": "POST",
+      "path": "/admin/rooms",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/rooms/15",
+      "actorRole": "ADMIN",
+      "method": "PUT",
+      "path": "/admin/rooms/15",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/seats",
+      "actorRole": "ADMIN",
+      "method": "POST",
+      "path": "/admin/seats",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/seats/252",
+      "actorRole": "ADMIN",
+      "method": "PUT",
+      "path": "/admin/seats/252",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/rooms?cinemaId=9",
+      "actorRole": "ADMIN",
+      "method": "GET",
+      "path": "/admin/rooms?cinemaId=9",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/seats?roomId=15",
+      "actorRole": "ADMIN",
+      "method": "GET",
+      "path": "/admin/seats?roomId=15",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "/admin/cinemas/9/images",
+      "actorRole": "ADMIN",
+      "method": "POST",
+      "path": "/admin/cinemas/9/images",
+      "status": 201,
+      "verdict": "FAIL"
+    },
+    {
+      "scenario": "Fixture cleanup delete",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/seats/252",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Fixture cleanup delete",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/rooms/15",
+      "status": 200,
+      "verdict": "PASS"
+    },
+    {
+      "scenario": "Fixture cleanup delete",
+      "actorRole": "ADMIN",
+      "method": "DELETE",
+      "path": "/admin/cinemas/9",
+      "status": 409,
+      "code": "CINEMA_HAS_DEPENDENCIES",
+      "verdict": "FAIL"
+    }
+  ],
+  "cleanup": [
+    {
+      "path": "/admin/seats/251",
+      "remaining": 0,
+      "verdict": "PASS"
+    },
+    {
+      "path": "/admin/rooms/14",
+      "remaining": 0,
+      "verdict": "PASS"
+    },
+    {
+      "path": "/admin/cinemas/8",
+      "remaining": 0,
+      "verdict": "PASS"
+    },
+    {
+      "path": "/admin/seats/252",
+      "remaining": 0,
+      "verdict": "PASS"
+    },
+    {
+      "path": "/admin/rooms/15",
+      "remaining": 0,
+      "verdict": "PASS"
+    }
+  ],
+  "status": "FAIL",
+  "database": {
+    "DatabaseName": "CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2",
+    "DatabaseID": 9
+  },
+  "error": "/admin/cinemas/9/images: unexpected status\n\n201 !== 200\n",
+  "cleanupError": "Fixture cleanup delete: CINEMA_HAS_DEPENDENCIES\n\n409 !== 200\n",
+  "remainingOwnedFixtures": [
+    {
+      "actor": 1,
+      "path": "/admin/cinemas/9",
+      "id": 9
+    }
+  ]
+}
