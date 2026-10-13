@@ -13,6 +13,7 @@ import { ManagerAssignmentsContext } from '../../components/ManagerAssignmentFie
 import { PageHeader, FilterBar, ResourceTable, ResourceSelect, FormField, Input, Select, Button, Dialog, ConfirmDialog, AsyncState, StatusBadge } from '../../components/ui';
 import Forbidden from '../../pages/Forbidden';
 import './admin-resources.css';
+import ProductFilters from './ProductFilters';
 
 export default function AdminResourceScreen({ kind }) {
   const { user } = useAuth(), store = useAdminWorkspace();
@@ -89,14 +90,14 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
   return <section className="admin-resource">
     <PageHeader title={definition.title} description={definition.description} breadcrumbs={[{ label: 'Admin', to: '/admin/overview' }, { label: definition.title }]} actions={<Button disabled={busy || state.resource.status !== 'success'} onClick={() => controller.openEditor()}>{kind === 'users' ? 'Tạo tài khoản nội bộ' : kind === 'assignments' ? 'Thêm phân công' : `Thêm ${definition.title.toLowerCase()}`}</Button>} />
     {state.notice && <p role={state.notice.error ? 'alert' : 'status'} className={state.notice.error ? 'admin-resource__error' : 'admin-resource__success'}>{state.notice.error?.status === 409 && 'Xung đột: '}{state.notice.error?.message ?? state.notice.text}</p>}
-    <FilterBar label={`Bộ lọc ${definition.title.toLowerCase()}`} schema={schema} draft={state.filters} applied={state.applied} pending={busy} onApply={controller.applyFilters} onReset={controller.resetFilters}>
+    {kind === 'products' ? <ProductFilters state={state} controller={controller} /> : <FilterBar label={`Bộ lọc ${definition.title.toLowerCase()}`} schema={schema} draft={state.filters} applied={state.applied} pending={busy} onApply={controller.applyFilters} onReset={controller.resetFilters}>
       <FormField label={kind === 'users' ? 'Tìm tên / email / số điện thoại' : kind === 'assignments' ? 'Tìm Manager / email / rạp' : kind === 'movies' ? 'Tìm tên phim / đạo diễn' : `Tìm ${definition.title.toLowerCase()}`}><Input value={state.filters.search} maxLength={100} disabled={busy} onChange={(e) => controller.setFilters({ search: e.target.value })} /></FormField>
       {Object.entries(filterOptions).filter(([key]) => Object.hasOwn(definition.filters, key)).map(([key, options]) => <div key={key}>{namedFilter(key, `${filterLabels[key]} lọc`, options)}</div>)}
       {Object.hasOwn(definition.filters, 'effectiveOn') && <FormField label="Trong kỳ phân công ngày"><Input type="date" value={state.filters.effectiveOn} disabled={busy} onChange={(e) => controller.setFilters({ effectiveOn: e.target.value })} /></FormField>}
       {['minDuration', 'maxDuration', 'minPrice', 'maxPrice'].filter((key) => Object.hasOwn(definition.filters, key)).map((key) => <FormField key={key} label={filterLabels[key]}><Input type="number" min={key.includes('Price') ? 0 : 1} step={key.includes('Price') ? '0.01' : 1} value={state.filters[key]} disabled={busy} onChange={(e) => controller.setFilters({ [key]: e.target.value })} /></FormField>)}
       {['fromDate', 'toDate'].filter((key) => Object.hasOwn(definition.filters, key)).map((key) => <FormField key={key} label={filterLabels[key]} hint="Lọc khuyến mãi có khoảng hiệu lực giao với kỳ ngày Việt Nam đã chọn."><Input type="date" value={state.filters[key]} disabled={busy} onChange={(e) => controller.setFilters({ [key]: e.target.value })} /></FormField>)}
       {RESOURCE_STATUSES[kind] && namedFilter('status', 'Trạng thái lọc', RESOURCE_STATUSES[kind].map((status) => ({ id: status, label: status })))}
-    </FilterBar>
+    </FilterBar>}
     {state.resource.status === 'success' && <p role="status">Có {view.total} kết quả · Tra cứu toàn bộ danh sách được phép.</p>}
     <ResourceTable caption={`Danh sách ${definition.title.toLowerCase()}`} rowKey={definition.id} columns={columns} rows={view.rows} status={state.resource.status} error={state.resource.error} onRetry={() => void controller.reload()} pagination={{ page: view.page, pageSize: state.pageSize, total: view.total, disabled: busy, onPageChange: controller.setPage }} />
     <AsyncState status={state.selectionError ? 'error' : 'idle'} error={state.selectionError} />

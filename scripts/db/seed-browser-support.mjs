@@ -10,6 +10,7 @@ export async function open({
   production = false,
   database: selectedDatabase = database,
   cacheDir,
+  buildDir = root + '/.audit-output/public-redesign-dist',
 } = {}) {
   if (
     ![
@@ -29,7 +30,7 @@ export async function open({
   const vite = production
     ? await preview({
         root: root + '/frontend',
-        build: { outDir: root + '/.audit-output/public-redesign-dist' },
+        build: { outDir: buildDir },
         preview: { host: '127.0.0.1', port: 0, proxy: { '/api': apiBase } },
       })
     : await createServer({
@@ -47,6 +48,7 @@ export async function open({
       '--headless=new',
       '--no-sandbox',
       '--disable-gpu',
+      '--disable-extensions',
       '--remote-debugging-port=0',
       `--user-data-dir=${profile}`,
       '--no-first-run',
@@ -65,7 +67,10 @@ export async function open({
   await poll(() => fs.existsSync(profile + '/DevToolsActivePort'), 'Edge');
   const port = fs.readFileSync(profile + '/DevToolsActivePort', 'utf8').split('\n')[0];
   const pages = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
-  const ws = new WebSocket(pages.find((p) => p.type === 'page').webSocketDebuggerUrl);
+  const page = pages.find((target) => target.type === 'page' && target.url === 'about:blank')
+    ?? pages.find((target) => target.type === 'page' && !target.url.startsWith('chrome-extension://'));
+  if (!page) throw new Error('Isolated browser page missing');
+  const ws = new WebSocket(page.webSocketDebuggerUrl);
   await new Promise((resolve) => ws.addEventListener('open', resolve, { once: true }));
   let next = 0;
   const pending = new Map(),
@@ -163,6 +168,7 @@ export async function open({
     });
   const screenshot = async (file) => {
     fs.mkdirSync(path.dirname(file), { recursive: true });
+    await cdp('Page.bringToFront');
     const r = await cdp('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
     fs.writeFileSync(file, Buffer.from(r.data, 'base64'));
   };

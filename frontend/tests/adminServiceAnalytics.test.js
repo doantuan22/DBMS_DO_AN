@@ -4,7 +4,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { createServer } from 'vite';
-let vite, createComplaints, createAnalytics, createStore, complaintAdapter, ComplaintView, AnalyticsView, analyticsModel;
+let vite, createComplaints, createAnalytics, createStore, complaintAdapter, ComplaintView, AnalyticsView, analyticsModel, RevenueTrend, RevenueMix;
 before(async () => {
   vite = await createServer({ configFile: 'vite.config.js', server: { middlewareMode: true, hmr: false }, appType: 'custom' });
   ({ createComplaintController: createComplaints } = await vite.ssrLoadModule('/src/features/admin-service/complaintController.js'));
@@ -14,9 +14,32 @@ before(async () => {
   ({ ComplaintView } = await vite.ssrLoadModule('/src/features/admin-service/AdminComplaints.jsx'));
   ({ AnalyticsView } = await vite.ssrLoadModule('/src/features/admin-analytics/AdminAnalytics.jsx'));
   analyticsModel = await vite.ssrLoadModule('/src/features/admin-analytics/analyticsModel.js');
+  ({ RevenueTrend, RevenueMix } = await vite.ssrLoadModule('/src/features/admin-analytics/RevenueCharts.jsx'));
 });
 after(async () => { await vite?.close(); });
 const deferred = () => { let resolve, reject; const promise = new Promise((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; };
+test('revenue chart orders real dates, retains zero and excludes missing amounts', () => {
+  const rows = [{ Ngay: '2026-10-03', DoanhThuThucTe: 230000 }, { Ngay: '2026-10-01', DoanhThuThucTe: 0 }, { Ngay: '2026-10-02', DoanhThuThucTe: null }];
+  const html = renderToStaticMarkup(React.createElement(RevenueTrend, { rows }));
+  assert.equal((html.match(/<circle/g) ?? []).length, 2);
+  assert.ok(html.indexOf('<title>01/10/2026') < html.indexOf('<title>03/10/2026'));
+  assert.doesNotMatch(html, /02\/10\/2026|NaN|Infinity/);
+  assert.equal(rows[0].Ngay, '2026-10-03', 'Chart does not reorder API data');
+});
+test('revenue chart empty and single-date reports do not create invented activity', () => {
+  assert.doesNotMatch(renderToStaticMarkup(React.createElement(RevenueTrend)), /<svg/);
+  const html = renderToStaticMarkup(React.createElement(RevenueTrend, { rows: [{ Ngay: '2026-10-01', DoanhThuThucTe: 0 }] }));
+  assert.equal((html.match(/<circle/g) ?? []).length, 1);
+  assert.doesNotMatch(html, /NaN|Infinity/);
+});
+test('revenue mix never treats unknown ticket revenue as zero or claims a cash total', () => {
+  const missing = renderToStaticMarkup(React.createElement(RevenueMix, { summary: { TongDoanhThuVe: null, TongDoanhThuDoAn: 100000 } }));
+  assert.match(missing, /Chưa có dữ liệu/);
+  assert.doesNotMatch(missing, /stroke-dasharray/);
+  const known = renderToStaticMarkup(React.createElement(RevenueMix, { summary: { TongDoanhThuVe: 300000, TongDoanhThuDoAn: 100000, TongTienGiam: 50000 } }));
+  assert.match(known, /75%/);
+  assert.match(known, /trước giảm giá/);
+});
 const cases = [{ id: 1, title: 'Hồ sơ A', senderName: 'Khách A', type: 'Dịch vụ', status: 'Mới', priority: 'Cao', createdAt: '2026-10-01T12:00:00.000Z', content: 'Nội dung A', processings: [] }, { id: 2, title: 'Hồ sơ B', senderName: 'Khách B', type: 'Vé', status: 'Đang xử lý', priority: 'Trung bình', createdAt: '2026-10-02T12:00:00.000Z', content: 'Nội dung B', processings: [] }];
 const adapter = (overrides = {}) => ({ allowed: true, writable: true, referenceAllowed: false, list: async () => cases, detail: async (id) => cases.find((c) => c.id === id), process: async () => ({}), status: async () => ({}), ...overrides });
 test('Admin complaint role/permissions differ from CSKH and gate processing/reference independently', () => {

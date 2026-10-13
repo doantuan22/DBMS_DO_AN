@@ -14,6 +14,7 @@ import { ManagerAssignmentSelect, ManagerAssignmentsContext } from '../component
 import { assignmentTransferMessage } from '../utils/managerAssignments';
 import { useStaffShell } from '../layouts/StaffShellContext';
 import PageHeader from '../components/ui/PageHeader';
+import Select from '../components/ui/Select';
 
 const adminDraftCache = new Map();
 const adminDraftKey = (userId, section, context = '') => `${userId ?? 'anonymous'}:${section}${context ? `:${context}` : ''}`;
@@ -780,7 +781,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
               {active === 'seats' && name === 'roomId' && seatContext ? (
                 <input aria-label="Phòng" readOnly value={seatContext.roomName} />
               ) : active === 'users' && name === 'roleId' ? (
-                <select
+                <Select
                   aria-label={label}
                   required
                   value={values[name] ?? ''}
@@ -794,7 +795,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
                       {role.name}
                     </option>
                   ))}
-                </select>
+                </Select>
               ) : active === 'assignments' && ['userId', 'cinemaId'].includes(name) ? (
                 <ManagerAssignmentSelect
                   field={name}
@@ -807,7 +808,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
                   onChange={(value) => setValues((current) => ({ ...current, [name]: value }))}
                 />
               ) : name === 'status' && RESOURCE_STATUSES[active] ? (
-                <select
+                <Select
                   aria-label={label}
                   required
                   value={values[name] ?? ''}
@@ -823,9 +824,9 @@ function AdminWorkspace({ routeSection, seatContext }) {
                     .map((status) => (
                       <option key={status}>{status}</option>
                     ))}
-                </select>
+                </Select>
               ) : active === 'pricing' && name === 'dayType' ? (
-                <select
+                <Select
                   aria-label={label}
                   required
                   value={values[name] ?? ''}
@@ -837,7 +838,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
                   {DAY_TYPES.map((day) => (
                     <option key={day}>{day}</option>
                   ))}
-                </select>
+                </Select>
               ) : (
                 <input
                   aria-label={label}
