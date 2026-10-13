@@ -90,10 +90,10 @@ BEGIN
             SELECT
                 ISNULL(SUM(d.TongTienVe + d.TongTienDoAn - d.TienGiamGia), 0)
             FROM
-                dbo.THANHTOAN t
-                INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = t.DonDatVeID
+                dbo.THANHTOAN tt
+                INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = tt.DonDatVeID
             WHERE
-                t.TrangThai = N'Thành công'
+                tt.TrangThai = N'Thành công'
         ) AS TongDoanhThuToanThoiGian,
         (
             SELECT

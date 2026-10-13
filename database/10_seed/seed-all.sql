@@ -114,6 +114,8 @@ GO
 
 :r ./10_seed/seed_demo_dynamic/070_transactions.sql
 
+:r ./10_seed/seed_extended/080_realistic_volume.sql
+
 EXEC sys.sp_set_session_context @key = N'SeedV2Profile',
     @value = NULL;
 

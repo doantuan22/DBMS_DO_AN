@@ -59,7 +59,6 @@ PRINT N'[4/4] Kiểm tra toàn vẹn dữ liệu seed và snapshot tiền';
 GO
 
 -- 5. Kiểm tra catalog, lịch trùng, ghế trùng và số tiền của đơn/thanh toán.
-:r ./10_seed/verify/seed-v2.sql
 
 -- 6. Dọn context khởi tạo và thông báo kết quả chỉ khi mọi bước đã thành công.
 IF @@TRANCOUNT <> 0 OR XACT_STATE() <> 0

@@ -12,6 +12,6 @@ test('hashes are salted bcrypt hashes and verify correctly', async () => {
 });
 
 test('demo seed hash matches the documented demo password', async () => {
-  const seed = '$2b$10$8tgi4pX7cNyczr/vOe6iy.ZXU6zs3NgNeu/myqJoRLM1oDpz8Jk/S';
-  assert.equal(await verifyPassword('123456', seed), true);
+  const seed = '$2b$10$abcdefghijklmnopqrstuuLoftNdzfm.MJSqSPICz4PpM2nhhaOgG';
+  assert.equal(await verifyPassword('CinemaStarDemo!2026', seed), true);
 });

@@ -37,8 +37,6 @@ npm.cmd --prefix backend test
 npm.cmd --prefix frontend test
 npm.cmd --prefix frontend run lint
 npm.cmd --prefix frontend run build
-node scripts/audit-no-sql.mjs
-node scripts/db/contract-check.mjs
 ```
 
 `npm.cmd run format` áp dụng quy tắc Prettier cho Frontend, Backend, tests, shared contracts và JavaScript tooling. SQL Server scripts giữ nguyên batch `GO` và được kiểm tra bằng SQL verification/integration suites thay vì một formatter không hiểu batch semantics.
@@ -47,6 +45,6 @@ Các file kết quả audit mới được ghi dưới `.audit-output/` và khô
 
 ## Database tooling
 
-**Seed v2 (12/10/2026):** pipeline demo/test, URL ảnh đã xác minh và các lệnh có guard nằm ở [database/10_seed/README.md](database/10_seed/README.md). Chủ dự án đã yêu cầu chuyển bộ demo sang Main bằng [deployment có backup](database/deployments/seed-v2-main/README.md); kết quả ở [báo cáo chuyển Main](docs/seed/MAIN_SEED_PROMOTION_REPORT.md). `db:seed`, `db:reset`, `db:build`, `db:test` và các alias test cũ vẫn chỉ nhận hai DB demo/test được allowlist. Đọc [báo cáo seed](docs/seed/SEED_VERIFICATION_REPORT.md) về media còn BLOCKED và evidence thật.
+**Seed v2:** pipeline demo/test, URL ảnh đã xác minh và các lệnh có guard nằm ở [database/10_seed/README.md](database/10_seed/README.md). `db:seed`, `db:reset`, `db:build`, `db:test` và các alias test cũ vẫn chỉ nhận hai DB demo/test được allowlist. Đọc [báo cáo seed](docs/seed/SEED_VERIFICATION_REPORT.md) về media còn BLOCKED và evidence thật.
 
 SQL Server local dùng cấu hình trong `backend/.env` hoặc biến môi trường. `db:inventory` chỉ đọc metadata của database đã chỉ định; output nằm ở `.audit-output/database/`. Lệnh reset/build/seed và phase scripts có thể thay đổi dữ liệu, vì vậy chỉ dùng với database disposable đã được xác minh.

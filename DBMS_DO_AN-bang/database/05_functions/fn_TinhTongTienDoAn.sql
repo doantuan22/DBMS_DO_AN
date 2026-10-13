@@ -1,0 +1,19 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+GO
+CREATE OR ALTER FUNCTION dbo.fn_TinhTongTienDoAn
+(
+    @DonDatVeID INT
+)
+RETURNS DECIMAL(18,2)
+AS
+BEGIN
+    DECLARE @TongTienDoAn DECIMAL(18,2) = 0;
+
+    SELECT @TongTienDoAn = ISNULL(SUM(SoLuong * DonGia), 0)
+    FROM dbo.CHITIETDOAN
+    WHERE DonDatVeID = @DonDatVeID;
+
+    RETURN @TongTienDoAn;
+END;
+GO

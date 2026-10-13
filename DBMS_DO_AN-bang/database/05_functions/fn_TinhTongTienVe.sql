@@ -1,0 +1,20 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+GO
+CREATE OR ALTER FUNCTION dbo.fn_TinhTongTienVe
+(
+    @DonDatVeID INT
+)
+RETURNS DECIMAL(18,2)
+AS
+BEGIN
+    DECLARE @TongTienVe DECIMAL(18,2) = 0;
+
+    SELECT @TongTienVe = ISNULL(SUM(GiaVe), 0)
+    FROM dbo.CHITIETVE
+    WHERE DonDatVeID = @DonDatVeID
+      AND TrangThai <> N'Đã hủy';
+
+    RETURN @TongTienVe;
+END;
+GO

@@ -1,0 +1,13 @@
+:on error exit
+USE CinemaBookingDB;
+GO
+:r ./11_tests/procedures/smoke.sql
+:r ./11_tests/timezone/contract.sql
+:r ./11_tests/pricing/contract.sql
+:r ./11_tests/payment/compensation.sql
+:r ./11_tests/payment/compensation_schema.sql
+:r ./11_tests/triggers/multirow.sql
+:r ./11_tests/integrity/constraints.sql
+:r ./11_tests/permissions/execute_only.sql
+:r ./11_tests/permissions/fixed_rbac.sql
+:r ./11_tests/staff_booking/regression.sql

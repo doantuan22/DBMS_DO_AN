@@ -116,21 +116,21 @@ BEGIN
         cda.ChiTietDoAnID;
     -- STRICT 3NF: Tái dựng SoTien từ d.TongTienVe + d.TongTienDoAn - d.TienGiamGia
     SELECT
-        t.ThanhToanID,
-        t.PhuongThuc,
+        tt.ThanhToanID,
+        tt.PhuongThuc,
         (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia) AS SoTien,
-        t.NgayTao,
-        t.NgayThanhToan,
-        t.MaGiaoDich,
-        t.TrangThai,
-        t.GhiChu
+        tt.NgayTao,
+        tt.NgayThanhToan,
+        tt.MaGiaoDich,
+        tt.TrangThai,
+        tt.GhiChu
     FROM
-        dbo.THANHTOAN t
-        INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = t.DonDatVeID
+        dbo.THANHTOAN tt
+        INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = tt.DonDatVeID
     WHERE
-        t.DonDatVeID = @DonDatVeID
+        tt.DonDatVeID = @DonDatVeID
     ORDER BY
-        t.ThanhToanID;
+        tt.ThanhToanID;
 END;
 
 GO

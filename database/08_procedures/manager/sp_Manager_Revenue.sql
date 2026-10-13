@@ -101,7 +101,7 @@ BEGIN
     GROUP BY
         NgayThu
     ORDER BY
-        Ngay DESC;
+        NgayThu DESC;
 END;
 
 GO

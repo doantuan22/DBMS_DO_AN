@@ -165,7 +165,7 @@ BEGIN
             b.NgayBoiThuong
         FROM
             dbo.vw_ChiTietDonDatVe v
-            INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = v.DonDatVeID
+            JOIN dbo.DONDATVE d ON d.DonDatVeID = v.DonDatVeID
             LEFT JOIN dbo.BOITHUONG_HUYSUAT b ON b.DonDatVeID = d.DonDatVeID
         WHERE
             v.DonDatVeID = @DonDatVeID;
@@ -175,7 +175,7 @@ BEGIN
             g.GheID,
             g.HangGhe,
             g.SoGhe,
-            (g.HangGhe + CAST(g.SoGhe AS VARCHAR(10))) AS TenGhe,
+            g.HangGhe + CAST(g.SoGhe AS VARCHAR(10)) AS TenGhe,
             g.LoaiGhe,
             cv.GiaVe,
             cv.TrangThai AS TrangThaiVe
@@ -199,21 +199,21 @@ BEGIN
             cda.DonDatVeID = @DonDatVeID;
         -- STRICT 3NF: Tái dựng SoTien từ d.TongTienVe + d.TongTienDoAn - d.TienGiamGia
         SELECT
-            t.ThanhToanID,
-            t.PhuongThuc,
+            tt.ThanhToanID,
+            tt.PhuongThuc,
             (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia) AS SoTien,
-            t.NgayTao,
-            t.NgayThanhToan,
-            t.MaGiaoDich,
-            t.TrangThai,
-            t.GhiChu
+            tt.NgayTao,
+            tt.NgayThanhToan,
+            tt.MaGiaoDich,
+            tt.TrangThai,
+            tt.GhiChu
         FROM
-            dbo.THANHTOAN t
-            INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = t.DonDatVeID
+            dbo.THANHTOAN tt
+            INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = tt.DonDatVeID
         WHERE
-            t.DonDatVeID = @DonDatVeID
+            tt.DonDatVeID = @DonDatVeID
         ORDER BY
-            t.ThanhToanID;
+            tt.ThanhToanID;
         IF @Own = 1
             -- Chốt các thay đổi của transaction.
             COMMIT TRANSACTION;

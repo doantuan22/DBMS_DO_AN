@@ -23,11 +23,11 @@ Installer chỉ tạo `CinemaBookingDB` khi chưa tồn tại. Nếu database đ
 
 Seed đầy đủ gồm catalog, lịch chiếu theo ngày hiện tại và các trạng thái giao dịch demo. Tài khoản `admin1@example.test`, mật khẩu demo `CinemaStarDemo!2026`; xem thêm [seed README](10_seed/README.md).
 
-**Seed v2 đã có deployment Main được chủ dự án yêu cầu ngày 12/10/2026:** [quy trình SQL/backup/rollback](deployments/seed-v2-main/README.md), [báo cáo kết quả](../docs/seed/MAIN_SEED_PROMOTION_REPORT.md). Backend dùng DB chính như cấu hình hiện hữu; accounts demo mới ở seed README. Các lệnh reset/test thường vẫn chỉ chạy trên disposable targets.
+Main được dựng từ canonical schema và seed hiện hành. Backend dùng DB chính như cấu hình hiện hữu; accounts demo ở seed README. Các lệnh reset/test thường vẫn chỉ chạy trên disposable targets.
 
 Seed v2 hiện hành: [pipeline và accounts demo](10_seed/README.md), [reset guards](../docs/seed/RESET_PLAN.md), [verification evidence](../docs/seed/SEED_VERIFICATION_REPORT.md). Commands lịch sử bên dưới chỉ mô tả các đợt audit/migration cũ; seed/rebuild/test aliases hiện nay dùng exact targets và contract v2. Không chạy fixtures có identity/count của seed cũ trên dataset mới. Schema/SP/migrations được giữ nguyên.
 
-Use a disposable SQL Server database for reset, seed, fixture, integration and concurrency tests. The [test pipeline](../scripts/db/TEST_PIPELINE.md) documents guarded preflight, build, seed, fixture verification and cleanup. Seed data and reproducible fixtures are documented in [seed](10_seed/README.md) and [fixture matrix](10_seed/test_fixture/fixture-matrix.md); concurrency cases are in [concurrency tests](11_tests/concurrency/README.md).
+Use a disposable SQL Server database for reset, integration and concurrency tests. Canonical seed SQL is under `10_seed/`; concurrency cases are in [concurrency tests](11_tests/concurrency/README.md).
 
 The npm commands are defined in the repository root `package.json`. Before running any command that writes to SQL Server, pass an explicitly named test database and satisfy its current target confirmation. Never use `CinemaBookingDB` as a regression target. Main-database verification is read-only except for an explicitly authorized, reviewed deployment.
 
@@ -44,9 +44,6 @@ The reviewed source migration is [r9_fixed_rbac.sql](13_migrations/r9_fixed_rbac
 On an explicitly selected, seeded disposable database, run:
 
 ```powershell
-node scripts/db/fixed-rbac-smoke.mjs --database=CinemaBookingDB_R0_FIXED_RBAC_20261011
-node scripts/db/run.mjs test --database=CinemaBookingDB_R0_FIXED_RBAC_20261011
-node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_FIXED_RBAC_20261011
 ```
 
 The smoke runner starts the real Backend against the selected test database, exercises HTTP/SQL authorization and assignment transfer, and applies the migration only to the validated test target. Evidence is written to ignored `.audit-output/`.
@@ -65,9 +62,8 @@ The smoke runner starts the real Backend against the selected test database, exe
 - `11_tests/` — database and concurrency checks.
 - `12_verify/` — canonical object and definition verification.
 - `13_migrations/` — reviewed migrations; inspect the migration and its target guards before use.
-- `deployments/seed-v2-main/` — reviewed Main seed promotion SQL and manual recovery, used by `scripts/db/promote-seed-main.mjs`. See its [deployment and recovery guide](deployments/seed-v2-main/README.md).
 
-Folder cleanup (13 October 2026) removed two empty legacy-layout placeholders, two unreferenced R55 verification entries and five obsolete R7.2 deployment files. The R7.2 runner pinned a previous server/GUID, expected 159 modules and 192 tests, and required evidence no longer present in this checkout. Its two procedure sources remain in the canonical build. The current seed contract is `10_seed/verify/seed-v2.sql`; the retired R54 fixture counts are not used. Canonical build/seed/test/verify SQL, all 27 tables, all 169 modules, migrations, standalone regression/concurrency tests and seed-v2 deployment/recovery tools were retained. Historical names alone do not make a file safe to delete.
+Folder cleanup removed obsolete legacy-layout placeholders, historical deployment artifacts and non-canonical seed tooling. Their procedure sources remain in the canonical build. Canonical build SQL, all 27 tables, all 169 modules, migrations and standalone regression/concurrency tests are retained.
 
 See [the final system audit](../docs/FINAL_SYSTEM_AUDIT.md) for current acceptance and verification status.
 
@@ -82,10 +78,6 @@ Approved edit rules: same show; unexpired hold; pending order; no payment attemp
 On a built/seeded isolated target, run sequentially:
 
 ```powershell
-node scripts/db/run.mjs test --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
-node scripts/db/staff-booking-smoke.mjs --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
-node scripts/db/staff-booking-browser.mjs --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
-node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_STAFF_BOOKING_20261011_V2
 ```
 
 The SQL regression rolls fixtures back. HTTP smoke intentionally retains a paid order and canceled histories on the test target; its result provides the paid/foreign IDs consumed by the browser runner. Browser testing uses installed Edge and native CDP with a temporary profile under ignored `.audit-output/`, a real Backend, and a Vite proxy explicitly pointed to that Backend/Test DB. No browser/UI dependency is installed. Run canonical SQL tests before browser tests, because legacy smoke chooses the first seat without checking availability; a failed browser fixture can temporarily hold that seat. A failed first build target remains isolated and is not a valid test target. See the current [audit](../docs/FINAL_SYSTEM_AUDIT.md) for actual results and deployment limits.
