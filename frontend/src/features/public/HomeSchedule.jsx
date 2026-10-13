@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Temporal } from '@js-temporal/polyfill';
 import { Link } from 'react-router-dom';
 import { getShowtimes } from '../../api/catalogApi';
-import { formatDate, formatTime, businessDate } from '../../utils/dateTime';
+import { businessDate } from '../../utils/dateTime';
 import { EmptyState, ErrorState, LoadingState } from '../../components/CatalogStates';
-import { customerMoney } from '../customer/customerFormatting';
+import DateRail from './DateRail';
+import ShowtimeTimeChip from './ShowtimeTimeChip';
+import { showsByCinema } from './filmPresentation';
 export default function HomeSchedule({ movie }) {
   const [state, setState] = useState({ status: 'loading' });
   const [date, setDate] = useState('');
@@ -54,37 +55,17 @@ export default function HomeSchedule({ movie }) {
       )}
       {resource.status === 'success' && (
         <>
-          <div className="cp-date-strip" aria-label="Ngày có suất chiếu">
-            {dates.map((day) => (
-              <button
-                key={day}
-                type="button"
-                aria-pressed={day === selected}
-                onClick={() => setDate(day)}
-              >
-                <span>
-                  {day === businessDate()
-                    ? 'Hôm nay'
-                    : Temporal.PlainDate.from(day).toLocaleString('vi-VN', { weekday: 'short' })}
-                </span>
-                <strong>{formatDate(day)}</strong>
-              </button>
-            ))}
-          </div>
-          <div className="cp-quick-shows">
-            {rows.map((show) => (
-              <Link key={show.id} to={`/booking/${show.id}`} className="cp-quick-show">
-                <strong>{formatTime(show.startsAt)}</strong>
-                <span>
-                  {show.cinemaName} · {show.roomName}
-                </span>
-                <small>
-                  {show.format} · Giá cơ bản {customerMoney(show.basePrice)}
-                </small>
-                <span className="cp-quick-show__action">
-                  Chọn suất <span aria-hidden="true">↗</span>
-                </span>
-              </Link>
+          <DateRail dates={dates} selected={selected} onSelect={setDate} />
+          <div className="cp-show-groups">
+            {showsByCinema(rows).map((group) => (
+              <div key={group.key} className="cp-show-group">
+                <h3>{group.name}</h3>
+                <div className="cp-time-chips">
+                  {group.shows.map((show) => (
+                    <ShowtimeTimeChip key={show.id} showtime={show} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </>

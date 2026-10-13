@@ -19,8 +19,8 @@ export default function MediaFrame({
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
           fetchPriority={priority ? 'high' : 'auto'}
-          width={kind === 'poster' ? 400 : 720}
-          height={kind === 'poster' ? 600 : 405}
+          width={kind === 'product' ? 160 : kind === 'poster' ? 400 : 720}
+          height={kind === 'product' ? 160 : kind === 'poster' ? 600 : 405}
           onError={() => setFailedSrc(media)}
         />
       ) : (

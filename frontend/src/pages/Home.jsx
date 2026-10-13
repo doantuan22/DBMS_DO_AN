@@ -56,6 +56,7 @@ export default function Home() {
       <FeaturedBillboard
         movie={featured}
         description={featured && detail?.id === featured.id ? detail.description : null}
+        loading={!featured && movies.status === 'loading'}
       />
       {featured && detail?.id === featured.id && detail.error && (
         <div className="cp-section">
@@ -97,7 +98,9 @@ export default function Home() {
         {cinemas.status === 'loading' && <LoadingState>Đang tải rạp…</LoadingState>}
         {cinemas.status === 'error' && <ErrorState error={cinemas.error} onRetry={retryCinemas} />}
         {cinemas.status === 'empty' && <EmptyState>Chưa có rạp trong danh mục.</EmptyState>}
-        {cinemas.status === 'success' && <CinemaList cinemas={cinemas.data.slice(0, 3)} />}
+        {cinemas.status === 'success' && (
+          <CinemaList cinemas={cinemas.data.slice(0, 3)} headingLevel={3} />
+        )}
       </section>
       {(visibleGenres.length > 0 || genres.status === 'error') && (
         <section className="cp-section cp-home-genres" aria-labelledby="home-genres-title">

@@ -16,7 +16,7 @@ export default function AuthFrame({ title, children }) {
   }, []);
   return (
     <div className="customer-auth">
-      <section ref={formRef} className="auth-card">
+      <section ref={formRef} className="auth-card customer-auth__form">
         {children}
       </section>
       <aside className="customer-auth__intro">
@@ -26,6 +26,7 @@ export default function AuthFrame({ title, children }) {
           width="1280"
           height="853"
           decoding="async"
+          loading="lazy"
         />
         <div className="cp-auth-copy">
           <p className="catalog-eyebrow">CINEMASTAR / HẸN NHAU TẠI RẠP</p>

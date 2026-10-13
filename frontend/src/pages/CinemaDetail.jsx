@@ -51,24 +51,34 @@ export default function CinemaDetail() {
       )}
       {currentCinema.status === 'success' && (
         <>
-          <header className="cp-cinema-masthead">
-            <div>
+          <header className="cp-cinema-feature">
+            <div className="cp-cinema-feature__cover">
+              <MediaFrame
+                src={currentCinema.data.coverImageUrl}
+                alt={`Ảnh đại diện ${currentCinema.data.name}`}
+                kind="cinema"
+                priority
+              />
+            </div>
+            <div className="cp-cinema-feature__info">
               <p className="catalog-eyebrow">{currentCinema.data.city}</p>
               <h1>{currentCinema.data.name}</h1>
               <p>{currentCinema.data.address}</p>
               {currentCinema.data.phone && (
                 <a href={`tel:${currentCinema.data.phone}`}>{currentCinema.data.phone}</a>
               )}
-              <p>{currentCinema.data.description}</p>
+              {currentCinema.data.description?.toLocaleLowerCase('vi-VN').includes('minh họa') && (
+                <span className="cp-cinema-feature__label">Ảnh minh họa · rạp demo</span>
+              )}
             </div>
-            <MediaFrame
-              src={currentCinema.data.coverImageUrl}
-              alt={`Ảnh đại diện ${currentCinema.data.name}`}
-              kind="cinema"
-              priority
-            />
           </header>
           <CinemaSchedule key={cinemaId} cinema={currentCinema.data} />
+          {currentCinema.data.description && (
+            <details className="cp-cinema-description">
+              <summary>Thông tin rạp</summary>
+              <p>{currentCinema.data.description}</p>
+            </details>
+          )}
           {currentGallery.status === 'loading' && <LoadingState>Đang tải ảnh rạp…</LoadingState>}
           {currentGallery.status === 'error' && (
             <ErrorState
@@ -77,7 +87,28 @@ export default function CinemaDetail() {
             />
           )}
           {currentGallery.status === 'success' && (
-            <CinemaGallery images={currentGallery.images} cinemaName={currentCinema.data.name} />
+            <>
+              {currentGallery.images.some(
+                (image) => image.url !== currentCinema.data.coverImageUrl,
+              ) && (
+                <CinemaGallery
+                  images={currentGallery.images.filter(
+                    (image) => image.url !== currentCinema.data.coverImageUrl,
+                  )}
+                  cinemaName={currentCinema.data.name}
+                />
+              )}
+              {currentGallery.images.length > 0 && (
+                <details className="cp-cinema-description">
+                  <summary>Thông tin nguồn ảnh</summary>
+                  {currentGallery.images.map((image) => (
+                    <p key={image.id}>
+                      {image.description || `Ảnh của ${currentCinema.data.name}`}
+                    </p>
+                  ))}
+                </details>
+              )}
+            </>
           )}
         </>
       )}

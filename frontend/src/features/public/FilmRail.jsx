@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MovieCard from '../../components/MovieCard';
+import { recordMediaUrl } from './mediaPolicy';
 export default function FilmRail({ label, movies, to }) {
+  const artwork = movies.filter((movie) => recordMediaUrl(movie.posterUrl));
+  const missing = movies.filter((movie) => !recordMediaUrl(movie.posterUrl));
   const ref = useRef(null);
   const [scroll, setScroll] = useState({ previous: false, next: false });
   useEffect(() => {
     const element = ref.current;
+    if (!element) return undefined;
     const update = () =>
       setScroll({
         previous: element.scrollLeft > 2,
@@ -35,7 +39,7 @@ export default function FilmRail({ label, movies, to }) {
           <Link to={to}>
             Xem tất cả <span aria-hidden="true">↗</span>
           </Link>
-          {(scroll.previous || scroll.next) && (
+          {artwork.length > 0 && (scroll.previous || scroll.next) && (
             <>
               <button
                 type="button"
@@ -57,11 +61,24 @@ export default function FilmRail({ label, movies, to }) {
           )}
         </div>
       </div>
-      <div ref={ref} className="cp-film-rail" style={{ '--cp-available-films': movies.length }}>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
+      {artwork.length > 0 && (
+        <div ref={ref} className="cp-film-rail" style={{ '--cp-available-films': artwork.length }}>
+          {artwork.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} headingLevel={3} />
+          ))}
+        </div>
+      )}
+      {missing.length > 0 && (
+        <div
+          className="cp-film-announcements"
+          role="group"
+          aria-label={`${label} · phim chưa có poster`}
+        >
+          {missing.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} headingLevel={3} compact />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

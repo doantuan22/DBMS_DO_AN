@@ -7,6 +7,7 @@ import { formatDateTime, formatTime } from '../../utils/dateTime';
 import { userCanAct } from '../../utils/authorization';
 import './customer-journey.css';
 import { customerMoney } from './customerFormatting';
+import MediaFrame from './MediaFrame';
 
 export default function BookingExperience({
   showtime,
@@ -151,13 +152,24 @@ export default function BookingExperience({
               aria-labelledby="booking-summary-heading"
             >
               <h2 id="booking-summary-heading">Kiểm tra & đặt vé</h2>
-              <p>
-                <strong>{showtime.movieTitle}</strong>
-              </p>
-              <p>
-                {showtime.cinemaName} · {showtime.roomName}
-              </p>
-              <p>{formatDateTime(showtime.startsAt)}</p>
+              <div className="cp-booking-film">
+                {showtime.posterUrl && (
+                  <MediaFrame
+                    src={showtime.posterUrl}
+                    title={showtime.movieTitle}
+                    alt={`Poster ${showtime.movieTitle}`}
+                  />
+                )}
+                <div>
+                  <p>
+                    <strong>{showtime.movieTitle}</strong>
+                  </p>
+                  <p>
+                    {showtime.cinemaName} · {showtime.roomName}
+                  </p>
+                  <p>{formatDateTime(showtime.startsAt)}</p>
+                </div>
+              </div>
               <h3>Ghế đã chọn · {selectedSeats.length}</h3>
               {selectedSeats.length ? (
                 <ul className="customer-lines">

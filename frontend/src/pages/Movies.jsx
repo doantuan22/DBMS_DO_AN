@@ -56,13 +56,14 @@ function MovieResults() {
   const moviesResource = moviesState.key === requestKey ? moviesState : { status: 'loading' };
 
   return (
-    <section className="catalog-page customer-discovery">
+    <section className="catalog-page customer-discovery cp-catalog">
       <PageHeader
         title="Phim tại CinemaStar"
         description="Một câu chuyện mới đang chờ bạn trên màn ảnh lớn."
         breadcrumbs={[{ label: 'Trang chủ', to: '/' }, { label: 'Phim' }]}
       />
       <FilterBar
+        className="cp-catalog-toolbar"
         schema={[
           { key: 'search', label: 'Tìm kiếm' },
           {

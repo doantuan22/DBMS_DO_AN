@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { open, database, wait } from './seed-browser-support.mjs';
 import { root, write } from './lib.mjs';
-const b = await open();
+const b = await open({ cacheDir: path.join(root, '.audit-output/vcr/existing-e2e-cache') });
 const checks = [],
   imageResponses = [],
   failures = [];
@@ -12,7 +12,17 @@ const check = (name, condition, detail) => {
   assert.ok(condition, name + ': ' + JSON.stringify(detail));
   checks.push({ name, status: 'PASS', detail });
 };
-const evidence = path.join(root, '.audit-output/seed-v2/browser');
+const selectedEvidence = process.argv.find((arg) => arg.startsWith('--evidence='))?.slice(11);
+const evidence = selectedEvidence
+  ? path.resolve(root, selectedEvidence)
+  : path.join(root, '.audit-output/seed-v2/browser');
+if (
+  selectedEvidence &&
+  !evidence.startsWith(path.join(root, 'docs/uiux/evidence/visual-composition') + path.sep)
+) {
+  await b.close();
+  throw new Error('Visual E2E evidence must stay under docs/uiux/evidence/visual-composition');
+}
 const off = b.onEvent((m) => {
   if (m.method === 'Network.responseReceived' && m.params.type === 'Image')
     imageResponses.push({

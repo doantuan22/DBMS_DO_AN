@@ -6,7 +6,11 @@ import { preflight } from '../../scripts/db/test-target.mjs';
 import { createServer, preview } from '../../frontend/node_modules/vite/dist/node/index.js';
 export const database = 'CinemaBookingDB_R0_REAL_MEDIA_TEST_20261012';
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-export async function open({ production = false, database: selectedDatabase = database } = {}) {
+export async function open({
+  production = false,
+  database: selectedDatabase = database,
+  cacheDir,
+} = {}) {
   if (
     ![
       'CinemaBookingDB_R0_REAL_MEDIA_TEST_20261012',
@@ -30,6 +34,7 @@ export async function open({ production = false, database: selectedDatabase = da
       })
     : await createServer({
         root: root + '/frontend',
+        ...(cacheDir ? { cacheDir } : {}),
         server: { host: '127.0.0.1', port: 0, proxy: { '/api': apiBase } },
       });
   if (!production) await vite.listen();

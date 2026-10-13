@@ -7,6 +7,7 @@ import MovieReviews from '../components/MovieReviews';
 import { loadResource, showtimeFilters } from '../services/catalogResource';
 import MediaFrame from '../features/customer/MediaFrame';
 import { trailerUrl } from '../features/public/mediaPolicy';
+import { filmMetadata, synopsisExcerpt } from '../features/public/filmPresentation';
 import { formatDate } from '../utils/dateTime';
 import '../features/customer/customer-discovery.css';
 
@@ -68,6 +69,13 @@ function MovieDetailView({ movieId }) {
   if (movieResource.status === 'error') return <ErrorState error={movieResource.error} />;
 
   const { movie, genres, actors } = movieResource.data;
+  const facts = [
+    ['Đạo diễn', movie.director],
+    ['Ngôn ngữ', movie.language],
+    ['Phụ đề', movie.subtitle],
+    ['Độ tuổi', movie.ageRating],
+    ['Khởi chiếu theo danh mục', movie.releaseDate ? formatDate(movie.releaseDate) : null],
+  ].filter(([, value]) => value);
   const showtimeResource =
     showtimesState.key === showtimeKey ? showtimesState : { status: 'loading' };
   return (
@@ -77,59 +85,37 @@ function MovieDetailView({ movieId }) {
       </Link>
       <section className="movie-detail__intro">
         <div className="movie-detail__poster">
-          <MediaFrame src={movie.posterUrl} alt={`Poster ${movie.title}`} priority />
+          <MediaFrame
+            src={movie.posterUrl}
+            title={movie.title}
+            alt={`Poster ${movie.title}`}
+            priority
+          />
         </div>
         <div className="movie-detail__content">
           <p className="catalog-eyebrow">{movie.status}</p>
           <h1>{movie.title}</h1>
           <p className="catalog-muted">
-            {[
-              movie.durationMinutes ? `${movie.durationMinutes} phút` : null,
-              movie.ageRating,
-              movie.releaseDate ? formatDate(movie.releaseDate) : null,
-            ]
-              .filter(Boolean)
-              .join(' · ')}
+            {filmMetadata({ ...movie, genres: genres.map((g) => g.name) }).join(' · ')}
           </p>
-          <a className="catalog-button" href="#showtimes-heading">
-            Chọn lịch chiếu
-          </a>
-          <dl className="movie-facts">
-            {movie.director && (
-              <div>
-                <dt>Đạo diễn</dt>
-                <dd>{movie.director}</dd>
-              </div>
-            )}
-            {movie.language && (
-              <div>
-                <dt>Ngôn ngữ</dt>
-                <dd>{movie.language}</dd>
-              </div>
-            )}
-            {movie.subtitle && (
-              <div>
-                <dt>Phụ đề</dt>
-                <dd>{movie.subtitle}</dd>
-              </div>
-            )}
-            {movie.ageRating && (
-              <div>
-                <dt>Độ tuổi</dt>
-                <dd>{movie.ageRating}</dd>
-              </div>
-            )}
-          </dl>
-          {trailerUrl(movie.trailerUrl) && (
-            <a
-              className="catalog-button catalog-button--secondary"
-              href={movie.trailerUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Xem trailer
-            </a>
+          {movie.description && (
+            <p className="cp-film-intro-synopsis">{synopsisExcerpt(movie.description)}</p>
           )}
+          <div className="catalog-actions">
+            <a className="catalog-button" href="#showtimes-heading">
+              Chọn lịch chiếu
+            </a>
+            {trailerUrl(movie.trailerUrl) && (
+              <a
+                className="catalog-button catalog-button--secondary"
+                href={movie.trailerUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                ▷ Xem trailer
+              </a>
+            )}
+          </div>
         </div>
       </section>
       {cinemaError && <ErrorState error={cinemaError} />}
@@ -138,15 +124,31 @@ function MovieDetailView({ movieId }) {
           cinemas={cinemas}
           cinemaId={cinemaId}
           date={date}
-          onCinemaChange={setCinemaId}
+          onCinemaChange={(id) => {
+            setCinemaId(id);
+            setDate('');
+          }}
           onDateChange={setDate}
           state={showtimeResource}
           onRetry={() => setShowtimeAttempt((n) => n + 1)}
         />
       )}
+      {facts.length > 0 && (
+        <section className="catalog-section">
+          <h2>Thông tin phim</h2>
+          <dl className="movie-facts">
+            {facts.map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
       {movie.description && (
         <section className="catalog-section">
-          <h2>Nội dung phim</h2>
+          <h2>Nội dung phim & nguồn ảnh</h2>
           <p className="movie-detail__description">{movie.description}</p>
         </section>
       )}
