@@ -15,7 +15,7 @@ WITH
             ddv.TongTienVe,
             ddv.TongTienDoAn,
             ddv.TienGiamGia,
-            SUM(tt.SoTien) AS TienDaThu,
+            SUM(ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TienDaThu,
             (
                 SELECT
                     COUNT(*)

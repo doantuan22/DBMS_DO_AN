@@ -845,7 +845,6 @@ BEGIN TRY
         dbo.THANHTOAN(
             DonDatVeID,
             PhuongThuc,
-            SoTien,
             NgayTao,
             NgayThanhToan,
             MaGiaoDich,
@@ -855,7 +854,6 @@ BEGIN TRY
     SELECT
         DonDatVeID,
         N'VNPAY',
-        TongTienVe + TongTienDoAn - TienGiamGia,
         @HistoricalAttempt,
         @HistoricalPaid,
         CONCAT('V2-HISTORY-', @History),

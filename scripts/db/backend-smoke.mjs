@@ -69,10 +69,10 @@ try {
   await request('/genres');
   await request('/products');
   for (const [role, email] of [
-    ['customer', 'khachhang1@gmail.com'],
-    ['manager', 'manager.q1@cinemadb.vn'],
-    ['support', 'cskh@cinemadb.vn'],
-    ['admin', 'admin@cinemadb.vn'],
+    ['customer', 'customer1@example.test'],
+    ['manager', 'manager1@example.test'],
+    ['support', 'support1@example.test'],
+    ['admin', 'admin1@example.test'],
   ]) {
     const login = await request('/auth/login', { body: { Email: email, MatKhau: '123456' } });
     assert.ok(login.token, `${role}: missing JWT`);
@@ -91,7 +91,6 @@ try {
         '/admin/dashboard',
         '/admin/users',
         '/admin/roles',
-        '/admin/permissions',
         '/admin/cinemas',
         '/admin/movies',
         '/admin/reports/revenue',

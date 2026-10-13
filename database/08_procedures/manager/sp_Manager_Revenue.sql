@@ -61,7 +61,7 @@ BEGIN
                 ddv.TongTienVe,
                 ddv.TongTienDoAn,
                 ddv.TienGiamGia,
-                SUM(tt.SoTien) AS TienDaThu,
+                SUM(ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TienDaThu,
                 dbo.fn_NgayKinhDoanh(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao))) AS NgayThu,
                 (
                     SELECT

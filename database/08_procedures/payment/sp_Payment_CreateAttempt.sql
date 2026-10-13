@@ -134,20 +134,22 @@ BEGIN
                 '-',
                 LEFT(REPLACE(CONVERT(VARCHAR(36), NEWID()), '-', ''), 6)
             );
+        -- STRICT 3NF: Loại bỏ cột SoTien khỏi lệnh INSERT dbo.THANHTOAN
         INSERT
-            dbo.THANHTOAN(DonDatVeID, PhuongThuc, SoTien, NgayTao, MaGiaoDich, TrangThai)
+            dbo.THANHTOAN(DonDatVeID, PhuongThuc, NgayTao, MaGiaoDich, TrangThai)
         VALUES
-            (@DonDatVeID, @PhuongThuc, @Amount, @Now, @MaGiaoDich, N'Đang xử lý');
+            (@DonDatVeID, @PhuongThuc, @Now, @MaGiaoDich, N'Đang xử lý');
         SET
             @ThanhToanID = SCOPE_IDENTITY();
         IF @OwnTran = 1
             -- Chốt các thay đổi của transaction.
             COMMIT TRANSACTION;
+        -- STRICT 3NF: Tái dựng SoTien từ DONDATVE d để bảo toàn 100% API contract
         SELECT
             tt.ThanhToanID,
             tt.DonDatVeID,
             tt.PhuongThuc,
-            tt.SoTien,
+            (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia) AS SoTien,
             tt.NgayTao,
             tt.MaGiaoDich,
             tt.TrangThai,

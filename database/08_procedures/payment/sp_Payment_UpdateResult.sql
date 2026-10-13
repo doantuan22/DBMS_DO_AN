@@ -93,9 +93,10 @@ BEGIN
             (UPDLOCK, HOLDLOCK)
         WHERE
             SuatChieuID = @SuatID;
+        -- STRICT 3NF: Tái dựng @Amount từ d.TongTienVe + d.TongTienDoAn - d.TienGiamGia thay vì t.SoTien
         SELECT
             @DonID = t.DonDatVeID,
-            @Amount = t.SoTien,
+            @Amount = (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia),
             @CurrentPayment = t.TrangThai,
             @OrderStatus = d.TrangThai,
             @Hold = d.HanGiuCho

@@ -1,6 +1,6 @@
 -- Tạo chỉ mục phục vụ tra cứu và kiểm soát dữ liệu trùng.
 CREATE NONCLUSTERED
-INDEX [IX_THANHTOAN_DonDatVe] ON dbo.[THANHTOAN]([DonDatVeID] ASC, [TrangThai] ASC) INCLUDE([SoTien], [NgayThanhToan], [NgayTao]);
+INDEX [IX_THANHTOAN_DonDatVe] ON dbo.[THANHTOAN]([DonDatVeID] ASC, [TrangThai] ASC) INCLUDE([NgayThanhToan], [NgayTao]);
 
 GO
 

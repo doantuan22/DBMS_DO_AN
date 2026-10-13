@@ -5,8 +5,8 @@ import { dbRoot, read, write, sqlcmd, expandSql } from './lib.mjs';
 import { inventory } from './inventory.mjs';
 import { generateVerification } from './generate-verification.mjs';
 const database = process.argv.find((a) => a.startsWith('--database='))?.slice(11);
-if (!database || !/^CinemaBookingDB_R0_[A-Za-z0-9_]+$/.test(database))
-  throw new Error('Specify a NEW --database=CinemaBookingDB_R0_<name> disposable target.');
+if (!database || database === 'CinemaBookingDB' || !/^CinemaBookingDB_(?:R0_)?[A-Za-z0-9_]+$/.test(database))
+  throw new Error('Specify a NEW disposable target (e.g. CinemaBookingDB_Fresh3NF). Never target CinemaBookingDB.');
 const integrated = process.argv.includes('--integrated');
 const steps = [...read(path.join(dbRoot, 'build-objects.sql')).matchAll(/^:r\s+\.\/(.+)$/gm)].map(
   (m) => m[1],

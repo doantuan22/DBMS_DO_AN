@@ -577,13 +577,7 @@ ADD CONSTRAINT [CK_THANHTOAN_PhuongThuc] CHECK (
 
 GO
 
--- Giới hạn giá trị hợp lệ của cột.
-ALTER TABLE dbo.[THANHTOAN]
-WITH
-    CHECK
-ADD CONSTRAINT [CK_THANHTOAN_SoTien] CHECK ([SoTien] >= (0));
 
-GO
 
 -- Giới hạn giá trị hợp lệ của cột.
 ALTER TABLE dbo.[THANHTOAN]

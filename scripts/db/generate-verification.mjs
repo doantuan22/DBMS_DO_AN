@@ -13,7 +13,7 @@ export function generateVerification(metadata) {
     const projection = fields
       .map(([n, t]) =>
         name === 'columns' && n === 'column_id'
-          ? `CASE WHEN [tableName]=N'BOITHUONG_HUYSUAT' THEN 0 ELSE [column_id] END AS [column_id]`
+          ? `CASE WHEN [tableName] IN (N'BOITHUONG_HUYSUAT', N'THANHTOAN') THEN 0 ELSE [column_id] END AS [column_id]`
           : t.startsWith('nvarchar')
             ? `${q(n)} COLLATE DATABASE_DEFAULT AS ${q(n)}`
             : q(n),

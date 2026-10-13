@@ -73,7 +73,7 @@ BEGIN
         ddv.TongTienVe,
         ddv.TongTienDoAn,
         ddv.TienGiamGia,
-        SUM(tt.SoTien),
+        SUM(ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia),
         (
             SELECT
                 COUNT(*)

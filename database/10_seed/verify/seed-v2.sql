@@ -50,16 +50,8 @@ IF EXISTS (
         )
 )
     THROW 51102, 'Order snapshot mismatch.', 1;
-IF EXISTS (
-    SELECT
-        1
-    FROM
-        dbo.THANHTOAN t
-        JOIN dbo.DONDATVE d ON d.DonDatVeID = t.DonDatVeID
-    WHERE
-        t.SoTien <> d.TongTienVe + d.TongTienDoAn - d.TienGiamGia
-)
-    THROW 51102, 'Payment amount mismatch.', 1;
+IF COL_LENGTH(N'dbo.THANHTOAN', N'SoTien') IS NOT NULL
+    THROW 51102, 'Strict 3NF violation: Physical column THANHTOAN.SoTien must not exist.', 1;
 IF EXISTS (
     SELECT
         d.SuatChieuID,

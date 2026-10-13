@@ -85,13 +85,15 @@ BEGIN
             WHERE
                 TrangThai IN (N'Đã thanh toán', N'Hoàn thành')
         ) AS TongDonThanhCong,
+        -- STRICT 3NF: Tái dựng DoanhThu từ DONDATVE d thay vì t.SoTien
         (
             SELECT
-                ISNULL(SUM(SoTien), 0)
+                ISNULL(SUM(d.TongTienVe + d.TongTienDoAn - d.TienGiamGia), 0)
             FROM
-                dbo.THANHTOAN
+                dbo.THANHTOAN t
+                INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = t.DonDatVeID
             WHERE
-                TrangThai = N'Thành công'
+                t.TrangThai = N'Thành công'
         ) AS TongDoanhThuToanThoiGian,
         (
             SELECT

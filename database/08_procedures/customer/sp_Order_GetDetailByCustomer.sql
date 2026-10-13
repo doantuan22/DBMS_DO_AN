@@ -112,21 +112,23 @@ BEGIN
         INNER JOIN dbo.SANPHAM sp ON sp.SanPhamID = cda.SanPhamID
     WHERE
         cda.DonDatVeID = @DonDatVeID;
+    -- STRICT 3NF: Tái dựng SoTien từ d.TongTienVe + d.TongTienDoAn - d.TienGiamGia
     SELECT
-        ThanhToanID,
-        PhuongThuc,
-        SoTien,
-        NgayTao,
-        NgayThanhToan,
-        MaGiaoDich,
-        TrangThai,
-        GhiChu
+        t.ThanhToanID,
+        t.PhuongThuc,
+        (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia) AS SoTien,
+        t.NgayTao,
+        t.NgayThanhToan,
+        t.MaGiaoDich,
+        t.TrangThai,
+        t.GhiChu
     FROM
-        dbo.THANHTOAN
+        dbo.THANHTOAN t
+        INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = t.DonDatVeID
     WHERE
-        DonDatVeID = @DonDatVeID
+        t.DonDatVeID = @DonDatVeID
     ORDER BY
-        ThanhToanID;
+        t.ThanhToanID;
 END;
 
 GO
