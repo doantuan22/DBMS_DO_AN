@@ -7,6 +7,8 @@ import { bookingErrorMessage } from '../utils/bookingLimits';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import ManagerResourceForm from '../components/ManagerResourceForm';
 import ResourceSelect from '../components/ui/ResourceSelect';
+import FormField from '../components/ui/FormField';
+import Select from '../components/ui/Select';
 import ManagerRevenue from '../components/ManagerRevenue';
 import { RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
 import { getMovies } from '../api/catalogApi';
@@ -41,14 +43,14 @@ export default function ManagerPortal({ routeSection }) {
       {state.status === 'success' && (!state.cinemas.length
         ? <EmptyState>Bạn không có phân công rạp còn hiệu lực.</EmptyState>
         : !currentAssignment ? <LoadingState>Đang cập nhật phân công rạp…</LoadingState> : <>
-          <label>Rạp hiện tại
-            <select aria-label="Rạp hiện tại" value={state.cinemaId} disabled={state.pending}
+          <div className="manager-context"><FormField label="Rạp hiện tại">
+            <Select aria-label="Rạp hiện tại" value={state.cinemaId} disabled={state.pending}
               onChange={(event) => changeCinema(event.target.value)}>
               {state.cinemas.filter((cinema) => !user?.cinemaAssignments || user.cinemaAssignments.some(
                 (assignment) => String(assignment.cinemaId) === String(cinema.id),
               )).map((cinema) => <option key={cinema.id} value={cinema.id}>{cinema.name} · {cinema.city}</option>)}
-            </select>
-          </label>
+            </Select>
+          </FormField></div>
           <ManagerWorkspace key={`${scopeKey}:${routeSection}`} cinemaId={state.cinemaId} user={user}
             section={routeSection} store={store} />
         </>)}
@@ -406,7 +408,7 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
               {form('pricing', (body) => api.createPricing(cinemaId, body), api.updatePricing)}
               <label>
                 Lọc trạng thái bảng giá
-                <select
+                <Select
                   aria-label="Lọc trạng thái bảng giá"
                   value={pricingStatus}
                   onChange={(event) => setPricingStatus(event.target.value)}
@@ -415,7 +417,7 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
                   {RESOURCE_STATUSES.pricing.map((status) => (
                     <option key={status}>{status}</option>
                   ))}
-                </select>
+                </Select>
               </label>
               {data.sections.pricing?.status === 'success' &&
                 (list('pricing').filter((row) => !pricingStatus || row.status === pricingStatus)

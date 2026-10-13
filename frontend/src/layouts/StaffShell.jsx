@@ -7,6 +7,7 @@ import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization';
 import { StaffShellContext } from './StaffShellContext';
 import { ADMIN_SECTION_ROUTES } from '../routes/adminSectionRoutes';
 import { MANAGER_SECTION_ROUTES, resolveManagerSection } from '../routes/managerSectionRoutes';
+import AdminShell from './AdminShell';
 
 const adminNavItem = (key) => ({
   key,
@@ -134,6 +135,11 @@ function drawerTransitionDelay(element) {
 }
 
 export default function StaffShell({ portal, children }) {
+  if (portal === 'admin' || portal === 'manager') return <AdminShell portal={portal}>{children}</AdminShell>;
+  return <LegacyStaffShell portal={portal}>{children}</LegacyStaffShell>;
+}
+
+function LegacyStaffShell({ portal, children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
   const groups = groupsForUser(portal, user);

@@ -9,6 +9,7 @@ export default function FilterBar({
   label = 'Bộ lọc',
   className = '',
   schema = [],
+  showChips,
   draft,
   applied,
   pending = false,
@@ -17,6 +18,7 @@ export default function FilterBar({
   resetLabel = 'Xóa lọc',
 }) {
   const activeSchema = Array.isArray(schema) ? schema : [];
+  const renderChips = showChips ?? activeSchema.some((field) => field.label === 'Status');
   const hasValue = (value) =>
     value !== undefined && value !== null && value !== '' && (!Array.isArray(value) || value.length > 0);
   const normalize = (value) => (hasValue(value) ? value : null);
@@ -59,9 +61,9 @@ export default function FilterBar({
           ))}
         </div>
       )}
-      {activeSchema.length > 0 && (
+      {activeSchema.length > 0 && (renderChips || hasUnappliedChanges) && (
         <div className="ui-filter-bar__feedback">
-          {appliedFilters.length > 0 && (
+          {renderChips && appliedFilters.length > 0 && (
             <ul className="ui-filter-bar__chips" aria-label="Bộ lọc đang áp dụng">
               {appliedFilters.map((field) => {
                 const value = applied[field.key];

@@ -1,4 +1,5 @@
 import { formatApiValue } from '../utils/dateTime';
+import Select from './ui/Select';
 
 export function ManagerAssignmentSelect({ field, label, value, managers, cinemas, disabled, editing, onChange }) {
   const manager = field === 'userId';
@@ -6,11 +7,11 @@ export function ManagerAssignmentSelect({ field, label, value, managers, cinemas
     ? managers.map((row) => ({ id: row.NguoiDungID, name: `${row.HoTen} · ${row.Email}` }))
     : cinemas.map((row) => ({ id: row.RapID, name: `${row.TenRap}${row.ThanhPho ? ` · ${row.ThanhPho}` : ''}` }));
   return (
-    <select aria-label={label} required value={value} disabled={disabled || (manager && editing)}
+    <Select aria-label={label} required value={value} disabled={disabled || (manager && editing)}
       onChange={(event) => onChange(event.target.value)}>
       <option value="">{manager ? 'Chọn quản lý' : 'Chọn rạp'}</option>
       {options.map((row) => <option key={row.id} value={row.id}>{row.name}</option>)}
-    </select>
+    </Select>
   );
 }
 

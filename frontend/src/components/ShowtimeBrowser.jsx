@@ -4,6 +4,7 @@ import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 import DateRail from '../features/public/DateRail';
 import ShowtimeTimeChip from '../features/public/ShowtimeTimeChip';
 import { showsByCinema } from '../features/public/filmPresentation';
+import Select from './ui/Select';
 
 const showDay = (show) => show.date ?? businessDate(show.startsAt);
 const showDates = (rows) => [...new Set(rows.map(showDay))].sort();
@@ -74,14 +75,14 @@ export default function ShowtimeBrowser({
         {!cinemaReadOnly && (
           <label>
             Rạp chiếu
-            <select value={cinemaId} onChange={(e) => onCinemaChange(e.target.value)}>
+            <Select value={cinemaId} onChange={(e) => onCinemaChange(e.target.value)}>
               <option value="">Tất cả rạp</option>
               {cinemas.map((cinema) => (
                 <option key={cinema.id} value={cinema.id}>
                   {cinema.name} · {cinema.city}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
         )}
         <label>

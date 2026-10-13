@@ -4,7 +4,7 @@ import CinemaList from '../components/CinemaList';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import { loadResource } from '../services/catalogResource';
 import { useSearchParams } from 'react-router-dom';
-import { PageHeader, FilterBar, FormField, Input, Select, AsyncState } from '../components/ui';
+import { PageHeader, FilterBar, FormField, Input, Select, AsyncState, Button } from '../components/ui';
 import { cinemaView } from '../features/customer/discoveryModel';
 import '../features/customer/customer-discovery.css';
 
@@ -43,6 +43,7 @@ export default function Cinemas() {
         ]}
         draft={filters}
         applied={applied}
+        applyLabel="Tìm rạp"
         onApply={() => {
           setAppliedSearch(filters.search);
           setParams(filters.city ? { city: filters.city } : {});
@@ -55,12 +56,18 @@ export default function Cinemas() {
         }}
       >
         <FormField label="Tên rạp / địa chỉ">
-          <Input
-            type="search"
-            value={filters.search}
-            maxLength={100}
-            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-          />
+          <div className="facility-filters__search-row">
+            <Input
+              type="search"
+              placeholder="Nhập tên rạp hoặc địa chỉ..."
+              value={filters.search}
+              maxLength={100}
+              onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+            />
+            <Button type="submit" size="sm">
+              Tìm
+            </Button>
+          </div>
         </FormField>
         <FormField label="Thành phố">
           <Select

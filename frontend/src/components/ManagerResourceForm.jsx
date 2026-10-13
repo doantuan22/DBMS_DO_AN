@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { fieldsFor, initialManagerValues, managerBody } from '../utils/managerForms';
 import ResourceSelect from './ui/ResourceSelect';
+import Select from './ui/Select';
 
 const labels = { room: 'phòng', seat: 'ghế', showtime: 'suất', pricing: 'giá' };
 export default function ManagerResourceForm({
@@ -85,7 +86,7 @@ export default function ManagerResourceForm({
         <label key={name}>
           {label}{type === 'datetime-local' ? ' (UTC+7)' : ['surcharge', 'basePrice'].includes(name) ? ' (VND)' : ''}
           {type === 'select' ? (
-            <select
+            <Select
               aria-label={label}
               value={values[name]}
               disabled={busy}
@@ -96,7 +97,7 @@ export default function ManagerResourceForm({
               {options.map((option) => (
                 <option key={option}>{option}</option>
               ))}
-            </select>
+            </Select>
           ) : (
             <input
               aria-label={label}

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { createReview, getReviews } from '../api/feedbackApi';
 import { useAuth } from '../context/AuthContext';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
+import Select from './ui/Select';
 
 function errorMessage(error) {
   if (error?.code === 'REVIEW_NOT_ELIGIBLE') return 'Bạn chỉ có thể đánh giá sau khi đã xem phim.';
@@ -102,7 +103,7 @@ function ReviewContext({ movieId }) {
           </p>
           <label>
             Điểm{' '}
-            <select
+            <Select
               value={rating}
               onChange={(event) => setRating(event.target.value)}
               disabled={submit.status === 'loading'}
@@ -112,7 +113,7 @@ function ReviewContext({ movieId }) {
                   {value}/5
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
           <label>
             Nội dung (không bắt buộc)

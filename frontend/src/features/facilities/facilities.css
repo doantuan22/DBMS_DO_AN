@@ -5,9 +5,9 @@
 .facility-panel-heading h2, .facility-panel-heading p { margin: 0; }
 .facility-panel-heading p { color: var(--color-text-muted); }
 .facility-help, .facility-empty { color: var(--color-text-muted); font-size: var(--font-size-sm); line-height: 1.6; }
-.facility-context { padding: var(--space-4); background: var(--color-primary-subtle); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
-.facility-context label { display: grid; gap: var(--space-2); font-weight: 600; }
-.facility-context select, .facility-workspace .manager-resource-select select, .facility-workspace .manager-resource-select input { box-sizing: border-box; width: 100%; min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); font: inherit; }
+.facility-context { max-width: 32rem; padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.facility-context label { display: grid; gap: var(--space-2); font-weight: 500; font-size: 0.8125rem; color: var(--color-text); }
+.facility-context select, .facility-workspace .manager-resource-select select, .facility-workspace .manager-resource-select input { box-sizing: border-box; width: 100%; min-height: 2.75rem; padding: 0.5rem 2.25rem 0.5rem 0.875rem; border: 1px solid var(--color-border); border-radius: 0.625rem; background-color: var(--color-surface); color: var(--color-text); font: inherit; font-size: 0.875rem; }
 .facility-workspace .manager-resource-select label { display: grid; gap: var(--space-2); font-weight: 600; }
 .facility-context-selectors { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--space-6); }
 .facility-workspace .ui-filter-bar__fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: var(--space-4); }

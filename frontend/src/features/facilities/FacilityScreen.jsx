@@ -50,9 +50,9 @@ function ManagerFacilities({ kind, context, user }) {
   const assignment = !user.cinemaAssignments || user.cinemaAssignments.some((item) => String(item.cinemaId) === state.cinemaId);
   const adapter = facilityAdapter(kind, user, state);
   return <section className="facility-manager">
-    <div className="facility-context"><label>Rạp hiện tại<select aria-label="Rạp hiện tại" value={state.cinemaId} disabled={state.pending || state.status !== 'success'} onChange={(event) => changeCinema(event.target.value)}>
+    <div className="facility-context"><FormField label="Rạp hiện tại"><Select aria-label="Rạp hiện tại" value={state.cinemaId} disabled={state.pending || state.status !== 'success'} onChange={(event) => changeCinema(event.target.value)}>
       {state.cinemas.filter((cinema) => !user.cinemaAssignments || user.cinemaAssignments.some((item) => String(item.cinemaId) === String(cinema.id))).map((cinema) => <option key={cinema.id} value={cinema.id}>{cinema.name} · {cinema.city}</option>)}
-    </select></label></div>
+    </Select></FormField></div>
     {state.status !== 'success' ? <><PageHeader title={kind === 'rooms' ? 'Phòng chiếu' : 'Ghế'} breadcrumbs={[{ label: 'Manager' }, { label: kind === 'rooms' ? 'Phòng chiếu' : 'Ghế' }]} /><AsyncState status={state.status} error={state.error} /></> : !state.cinemas.length ? <AsyncState status="empty" emptyMessage="Bạn không có phân công rạp còn hiệu lực." /> : !assignment || changedCinema ? <AsyncState status="loading" /> : requested && requested !== state.cinemaId ? <><Forbidden /><Button variant="secondary" onClick={() => setParams({ cinemaId: state.cinemaId }, { replace: true })}>Dùng rạp hiện tại</Button></> :
       <FacilityWorkspace key={`${state.cinemaId}:${state.epoch}:${kind}`} adapter={adapter} managerStore={store} />}
   </section>;
@@ -89,10 +89,16 @@ function NamedContext({ state, controller, adapter }) {
 
 export function FacilityFilters({ state, controller, kind, rows }) {
   const keys = kind === 'seats' ? ['row', 'type', 'status'] : kind === 'rooms' ? ['type', 'status'] : kind === 'cinemas' ? ['city', 'status'] : ['status'];
-  const labels = { search: kind === 'seats' ? 'Tên ghế' : kind === 'images' ? 'Chú thích' : 'Tên', row: 'Hàng ghế', type: 'Loại', status: 'Trạng thái', city: 'Thành phố' };
+  const labels = { search: kind === 'seats' ? 'Tên ghế' : kind === 'images' ? 'Chú thích' : kind === 'cinemas' ? 'Tìm rạp' : 'Tên', row: 'Hàng ghế', type: 'Loại', status: 'Trạng thái', city: 'Thành phố' };
   return <FilterBar label={`Bộ lọc ${facilityLabels[kind]}`} schema={['search', ...keys].map((key) => ({ key, label: labels[key] }))} draft={state.filters} applied={state.applied}
+    applyLabel={kind === 'cinemas' ? 'Tìm rạp' : 'Tìm'}
     pending={state.pending} onApply={() => controller.applyFilters()} onReset={() => controller.resetFilters()}>
-    <FormField label={labels.search}><Input type="search" disabled={state.pending} placeholder={kind === 'seats' ? 'Ví dụ: A1' : 'Nhập từ khóa'} value={state.filters.search} maxLength={150} onChange={(event) => controller.setFilters({ search: event.target.value })} /></FormField>
+    <FormField label={labels.search}>
+      <div className="facility-filters__search-row">
+        <Input type="search" disabled={state.pending} placeholder={kind === 'seats' ? 'Ví dụ: A1' : kind === 'cinemas' ? 'Nhập tên rạp, địa chỉ...' : 'Nhập từ khóa'} value={state.filters.search} maxLength={150} onChange={(event) => controller.setFilters({ search: event.target.value })} />
+        <Button type="submit" disabled={state.pending} size="sm">Tìm</Button>
+      </div>
+    </FormField>
     {keys.map((key) => <FormField key={key} label={labels[key]}><Select disabled={state.pending} value={state.filters[key]} onChange={(event) => controller.setFilters({ [key]: event.target.value })}>
       <option value="">Tất cả</option>{[...new Set([...rows.map((row) => row[key]), state.filters[key]].filter(Boolean))].map((value) => <option key={value}>{value}</option>)}
     </Select></FormField>)}
