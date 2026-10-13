@@ -1,10 +1,20 @@
+-- Tra cứu dữ liệu danh mục công khai: sp_Genre_List.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_Genre_List
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT TheLoaiID, TenTheLoai FROM dbo.THELOAI ORDER BY TenTheLoai;
+    SELECT
+        TheLoaiID,
+        TenTheLoai
+    FROM
+        dbo.THELOAI
+    ORDER BY
+        TenTheLoai;
 END;
+
 GO

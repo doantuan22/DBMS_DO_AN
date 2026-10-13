@@ -1,8 +1,16 @@
+-- Thiết lập database và điều kiện chạy script.
 USE master;
+
 GO
+
 IF DB_ID(N'CinemaBookingDB') IS NOT NULL
 BEGIN
- ALTER DATABASE [CinemaBookingDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
- DROP DATABASE [CinemaBookingDB];
+    ALTER DATABASE [CinemaBookingDB]
+    SET
+        SINGLE_USER
+    WITH
+        ROLLBACK IMMEDIATE;
+    DROP DATABASE [CinemaBookingDB];
 END;
+
 GO

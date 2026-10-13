@@ -1,6 +1,9 @@
+-- Xóa hoặc ngừng sử dụng dữ liệu quản trị hệ thống: usp_Admin_Seat_Delete.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.usp_Admin_Seat_Delete
     @ActorID INT,
     @GheID INT
@@ -8,27 +11,71 @@ AS
 BEGIN
     SET NOCOUNT ON;
     -- R3B: current account, actor eligibility, then every required permission.
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG
+        WHERE
+            NguoiDungID = @ActorID
+            AND TrangThai = N'Hoạt động'
+    )
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
-                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG nd
+            INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+        WHERE
+            nd.NguoiDungID = @ActorID
+            AND vt.MaVaiTro IN ('ADMIN')
+    )
         THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    -- Kiểm tra quyền chức năng trước khi thao tác.
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_GHE') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
-
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
     BEGIN TRY
+        -- Mở transaction để các bước ghi được xử lý cùng nhau.
         BEGIN TRANSACTION;
-        IF NOT EXISTS (SELECT 1 FROM dbo.GHE WITH (UPDLOCK, HOLDLOCK) WHERE GheID = @GheID)
+        IF NOT EXISTS (
+            SELECT
+                1
+            FROM
+                dbo.GHE
+            WITH
+                (UPDLOCK, HOLDLOCK)
+            WHERE
+                GheID = @GheID
+        )
             THROW 50206, N'Ghế không tồn tại.', 1;
-        IF EXISTS (SELECT 1 FROM dbo.CHITIETVE WHERE GheID = @GheID)
+        IF EXISTS (
+            SELECT
+                1
+            FROM
+                dbo.CHITIETVE
+            WHERE
+                GheID = @GheID
+        )
             THROW 50207, N'Ghế có lịch sử vé; hãy vô hiệu hóa thay vì xóa.', 1;
-        DELETE dbo.GHE WHERE GheID = @GheID;
+        -- Xóa các bản ghi thỏa điều kiện đã xác định.
+        DELETE dbo.GHE
+        WHERE
+            GheID = @GheID;
+        -- Chốt các thay đổi của transaction.
         COMMIT TRANSACTION;
-        SELECT N'Đã xóa ghế.' AS [Message];
+        SELECT
+            N'Đã xóa ghế.' AS [Message];
     END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
     BEGIN CATCH
-        IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
-        ;THROW;
+        IF XACT_STATE() <> 0
+            -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+            ROLLBACK TRANSACTION;
+        ;
+        THROW;
     END CATCH
 END;
+
 GO

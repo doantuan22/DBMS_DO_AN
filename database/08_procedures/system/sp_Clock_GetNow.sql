@@ -1,11 +1,24 @@
+-- Tra cứu dữ liệu nghiệp vụ hệ thống: sp_Clock_GetNow.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_Clock_GetNow
     @PhimID INT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT dbo.fn_BayGio() AS BayGio,(SELECT ThoiLuong FROM dbo.PHIM WHERE PhimID=@PhimID) AS ThoiLuong;
+    SELECT
+        dbo.fn_BayGio() AS BayGio,
+        (
+            SELECT
+                ThoiLuong
+            FROM
+                dbo.PHIM
+            WHERE
+                PhimID = @PhimID
+        ) AS ThoiLuong;
 END;
+
 GO

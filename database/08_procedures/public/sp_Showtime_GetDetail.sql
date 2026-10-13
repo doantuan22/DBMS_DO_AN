@@ -1,14 +1,14 @@
+-- Tra cứu dữ liệu danh mục công khai: sp_Showtime_GetDetail.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_Showtime_GetDetail
-(
-    @SuatChieuID INT
-)
+    (@SuatChieuID INT)
 AS
 BEGIN
     SET NOCOUNT ON;
-
     SELECT
         SuatChieuID,
         PhimID,
@@ -34,7 +34,11 @@ BEGIN
         TongSoGhe,
         SoGheDaDat,
         (TongSoGhe - SoGheDaDat) AS SoGheConLai
-    FROM dbo.vw_LichChieuChiTiet
-    WHERE SuatChieuID = @SuatChieuID AND IsBookable = 1;
+    FROM
+        dbo.vw_LichChieuChiTiet
+    WHERE
+        SuatChieuID = @SuatChieuID
+        AND IsBookable = 1;
 END;
+
 GO

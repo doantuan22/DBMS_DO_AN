@@ -1,4 +1,12 @@
-CREATE NONCLUSTERED INDEX [IX_THANHTOAN_DonDatVe] ON dbo.[THANHTOAN] ([DonDatVeID] ASC, [TrangThai] ASC) INCLUDE ([SoTien], [NgayThanhToan], [NgayTao]);
+-- Tạo chỉ mục phục vụ tra cứu và kiểm soát dữ liệu trùng.
+CREATE NONCLUSTERED
+INDEX [IX_THANHTOAN_DonDatVe] ON dbo.[THANHTOAN]([DonDatVeID] ASC, [TrangThai] ASC) INCLUDE([SoTien], [NgayThanhToan], [NgayTao]);
+
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [UQ_THANHTOAN_MaGiaoDich] ON dbo.[THANHTOAN] ([MaGiaoDich] ASC) WHERE ([MaGiaoDich] IS NOT NULL);
+
+CREATE UNIQUE NONCLUSTERED
+INDEX [UQ_THANHTOAN_MaGiaoDich] ON dbo.[THANHTOAN]([MaGiaoDich] ASC)
+WHERE
+    ([MaGiaoDich] IS NOT NULL);
+
 GO

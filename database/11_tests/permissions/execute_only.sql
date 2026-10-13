@@ -1,26 +1,50 @@
+-- Kiểm thử nghiệp vụ trên database độc lập.
 -- Test the retained production role with an ephemeral database user; no server login/password.
 SET NOCOUNT ON;
-CREATE USER R0_PermissionProbe WITHOUT LOGIN;
-ALTER ROLE db_executor ADD MEMBER R0_PermissionProbe;
+CREATE
+USER R0_PermissionProbe WITHOUT
+LOGIN;
+ALTER
+ROLE db_executor
+ADD MEMBER R0_PermissionProbe;
+
 GO
-DECLARE @denied bit=0;
+
+DECLARE @denied bit = 0;
+-- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
 BEGIN TRY
- EXECUTE AS USER='R0_PermissionProbe';
- EXEC dbo.sp_System_HealthCheck;
- BEGIN TRY
-  SELECT COUNT(*) AS ForbiddenDirectRead FROM dbo.NGUOIDUNG;
- END TRY
- BEGIN CATCH
-  IF ERROR_NUMBER()=229 SET @denied=1; ELSE THROW;
- END CATCH;
- REVERT;
- DROP USER R0_PermissionProbe;
- IF @denied=0 THROW 51012, 'EXECUTE-only role allowed direct SELECT.', 1;
- PRINT 'PASS production role executes SP and denies direct table SELECT';
+    EXECUTE AS
+    USER = 'R0_PermissionProbe';
+    EXEC dbo.sp_System_HealthCheck;
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
+    BEGIN TRY
+        SELECT
+            COUNT(*) AS ForbiddenDirectRead
+        FROM
+            dbo.NGUOIDUNG;
+    END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
+    BEGIN CATCH
+        IF ERROR_NUMBER() = 229
+            SET
+                @denied = 1;
+        ELSE
+            THROW;
+    END CATCH;
+    REVERT;
+    DROP
+    USER R0_PermissionProbe;
+    IF @denied = 0
+        THROW 51012, 'EXECUTE-only role allowed direct SELECT.', 1;
+    PRINT 'PASS production role executes SP and denies direct table SELECT';
 END TRY
+-- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
 BEGIN CATCH
- IF USER_NAME()='R0_PermissionProbe' REVERT;
- IF USER_ID('R0_PermissionProbe') IS NOT NULL DROP USER R0_PermissionProbe;
- THROW;
+    IF USER_NAME() = 'R0_PermissionProbe'
+    REVERT;
+    IF USER_ID('R0_PermissionProbe') IS NOT NULL DROP
+    USER R0_PermissionProbe;
+    THROW;
 END CATCH;
+
 GO

@@ -1,8 +1,10 @@
+-- Tổng hợp dữ liệu cho truy vấn đọc.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
-CREATE OR ALTER VIEW dbo.vw_DanhSachKhieuNai
-AS
+
+CREATE OR ALTER VIEW dbo.vw_DanhSachKhieuNai AS
 SELECT
     kn.KhieuNaiID,
     kn.NguoiDungID AS NguoiGuiID,
@@ -16,20 +18,47 @@ SELECT
     kn.MucDoUuTien,
     kn.NgayTao,
     kn.TrangThai AS TrangThaiKhieuNai,
-    (SELECT COUNT(*) FROM dbo.XULY_KHIEUNAI xl WHERE xl.KhieuNaiID = kn.KhieuNaiID) AS SoLanXuLy,
-    (SELECT TOP 1 xl.NgayXuLy
-     FROM dbo.XULY_KHIEUNAI xl
-     WHERE xl.KhieuNaiID = kn.KhieuNaiID
-     ORDER BY xl.XuLyID DESC) AS NgayXuLyCuoi,
-    (SELECT TOP 1 nd_xl.HoTen
-     FROM dbo.XULY_KHIEUNAI xl
-     INNER JOIN dbo.NGUOIDUNG nd_xl ON xl.NguoiXuLyID = nd_xl.NguoiDungID
-     WHERE xl.KhieuNaiID = kn.KhieuNaiID
-     ORDER BY xl.XuLyID DESC) AS NguoiXuLyCuoi,
-    (SELECT TOP 1 xl.NoiDungXuLy
-     FROM dbo.XULY_KHIEUNAI xl
-     WHERE xl.KhieuNaiID = kn.KhieuNaiID
-     ORDER BY xl.XuLyID DESC) AS NoiDungXuLyCuoi
-FROM dbo.KHIEUNAI kn
-INNER JOIN dbo.NGUOIDUNG nd ON kn.NguoiDungID = nd.NguoiDungID;
+    (
+        SELECT
+            COUNT(*)
+        FROM
+            dbo.XULY_KHIEUNAI xl
+        WHERE
+            xl.KhieuNaiID = kn.KhieuNaiID
+    ) AS SoLanXuLy,
+    (
+        SELECT
+            TOP 1 xl.NgayXuLy
+        FROM
+            dbo.XULY_KHIEUNAI xl
+        WHERE
+            xl.KhieuNaiID = kn.KhieuNaiID
+        ORDER BY
+            xl.XuLyID DESC
+    ) AS NgayXuLyCuoi,
+    (
+        SELECT
+            TOP 1 nd_xl.HoTen
+        FROM
+            dbo.XULY_KHIEUNAI xl
+            INNER JOIN dbo.NGUOIDUNG nd_xl ON xl.NguoiXuLyID = nd_xl.NguoiDungID
+        WHERE
+            xl.KhieuNaiID = kn.KhieuNaiID
+        ORDER BY
+            xl.XuLyID DESC
+    ) AS NguoiXuLyCuoi,
+    (
+        SELECT
+            TOP 1 xl.NoiDungXuLy
+        FROM
+            dbo.XULY_KHIEUNAI xl
+        WHERE
+            xl.KhieuNaiID = kn.KhieuNaiID
+        ORDER BY
+            xl.XuLyID DESC
+    ) AS NoiDungXuLyCuoi
+FROM
+    dbo.KHIEUNAI kn
+    INNER JOIN dbo.NGUOIDUNG nd ON kn.NguoiDungID = nd.NguoiDungID;
+
 GO

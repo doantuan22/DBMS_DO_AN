@@ -84,7 +84,7 @@ test('R4.4 verified 10/10/99 contract matches existing FE/BE constants and canon
       new URL('../../database/03_constraints/003_check_constraints.sql', import.meta.url),
       'utf8',
     ),
-    /CK_KHUYENMAI_PhanTram99[^\n]+99/,
+    /CK_KHUYENMAI_PhanTram99[^;]+99/,
   );
 });
 

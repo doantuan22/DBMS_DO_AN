@@ -1,8 +1,24 @@
-CREATE NONCLUSTERED INDEX [IX_DONDATVE_HanGiuCho] ON dbo.[DONDATVE] ([HanGiuCho] ASC) INCLUDE ([SuatChieuID]) WHERE ([TrangThai]=N'Chờ thanh toán');
+-- Tạo chỉ mục phục vụ tra cứu và kiểm soát dữ liệu trùng.
+CREATE NONCLUSTERED
+INDEX [IX_DONDATVE_HanGiuCho] ON dbo.[DONDATVE]([HanGiuCho] ASC) INCLUDE([SuatChieuID])
+WHERE
+    ([TrangThai] = N'Chờ thanh toán');
+
 GO
-CREATE NONCLUSTERED INDEX [IX_DONDATVE_KhuyenMai] ON dbo.[DONDATVE] ([KhuyenMaiID] ASC) WHERE ([KhuyenMaiID] IS NOT NULL);
+
+CREATE NONCLUSTERED
+INDEX [IX_DONDATVE_KhuyenMai] ON dbo.[DONDATVE]([KhuyenMaiID] ASC)
+WHERE
+    ([KhuyenMaiID] IS NOT NULL);
+
 GO
-CREATE NONCLUSTERED INDEX [IX_DONDATVE_NguoiDung] ON dbo.[DONDATVE] ([NguoiDungID] ASC, [NgayDat] DESC);
+
+CREATE NONCLUSTERED
+INDEX [IX_DONDATVE_NguoiDung] ON dbo.[DONDATVE]([NguoiDungID] ASC, [NgayDat] DESC);
+
 GO
-CREATE NONCLUSTERED INDEX [IX_DONDATVE_SuatChieu] ON dbo.[DONDATVE] ([SuatChieuID] ASC, [TrangThai] ASC);
+
+CREATE NONCLUSTERED
+INDEX [IX_DONDATVE_SuatChieu] ON dbo.[DONDATVE]([SuatChieuID] ASC, [TrangThai] ASC);
+
 GO

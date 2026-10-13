@@ -1,4 +1,15 @@
-CREATE NONCLUSTERED INDEX [IX_PHANCONG_RAP_NguoiDung] ON dbo.[PHANCONG_RAP] ([NguoiDungID] ASC, [TrangThai] ASC, [NgayBatDau] ASC, [NgayKetThuc] ASC);
+-- Tạo chỉ mục phục vụ tra cứu và kiểm soát dữ liệu trùng.
+CREATE NONCLUSTERED
+INDEX [IX_PHANCONG_RAP_NguoiDung] ON dbo.[PHANCONG_RAP](
+    [NguoiDungID] ASC,
+    [TrangThai] ASC,
+    [NgayBatDau] ASC,
+    [NgayKetThuc] ASC
+);
+
 GO
-CREATE NONCLUSTERED INDEX [IX_PHANCONG_RAP_Rap] ON dbo.[PHANCONG_RAP] ([RapID] ASC, [TrangThai] ASC);
+
+CREATE NONCLUSTERED
+INDEX [IX_PHANCONG_RAP_Rap] ON dbo.[PHANCONG_RAP]([RapID] ASC, [TrangThai] ASC);
+
 GO

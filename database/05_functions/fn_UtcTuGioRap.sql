@@ -1,10 +1,15 @@
+-- Đổi giờ rạp sang thời điểm UTC.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
-CREATE OR ALTER FUNCTION dbo.fn_UtcTuGioRap(@LocalDateTime DATETIME2(7))
-RETURNS DATETIME2(7)
-AS
+
+CREATE OR ALTER FUNCTION dbo.fn_UtcTuGioRap(@LocalDateTime DATETIME2(7)) RETURNS DATETIME2(7) AS
 BEGIN
-    RETURN CONVERT(DATETIME2(7), @LocalDateTime AT TIME ZONE 'SE Asia Standard Time' AT TIME ZONE 'UTC');
+    RETURN CONVERT(
+        DATETIME2(7),
+        @LocalDateTime AT TIME ZONE 'SE Asia Standard Time' AT TIME ZONE 'UTC'
+    );
 END;
+
 GO

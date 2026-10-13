@@ -1,14 +1,14 @@
+-- Tra cứu dữ liệu tài khoản và xác thực: sp_User_GetCurrent.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_User_GetCurrent
-(
-    @NguoiDungID INT
-)
+    (@NguoiDungID INT)
 AS
 BEGIN
     SET NOCOUNT ON;
-
     SELECT
         nd.NguoiDungID,
         nd.HoTen,
@@ -21,9 +21,12 @@ BEGIN
         hk.NgaySinh,
         hk.GioiTinh,
         hk.DiemTichLuy
-    FROM dbo.NGUOIDUNG nd
-    INNER JOIN dbo.VAITRO vt ON nd.VaiTroID = vt.VaiTroID
-    LEFT JOIN dbo.HOSOKHACHHANG hk ON nd.NguoiDungID = hk.NguoiDungID
-    WHERE nd.NguoiDungID = @NguoiDungID;
+    FROM
+        dbo.NGUOIDUNG nd
+        INNER JOIN dbo.VAITRO vt ON nd.VaiTroID = vt.VaiTroID
+        LEFT JOIN dbo.HOSOKHACHHANG hk ON nd.NguoiDungID = hk.NguoiDungID
+    WHERE
+        nd.NguoiDungID = @NguoiDungID;
 END;
+
 GO

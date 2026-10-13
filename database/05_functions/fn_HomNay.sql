@@ -1,10 +1,12 @@
+-- Lấy ngày hiện tại theo giờ rạp.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
-CREATE OR ALTER FUNCTION dbo.fn_HomNay()
-RETURNS DATE
-AS
+
+CREATE OR ALTER FUNCTION dbo.fn_HomNay() RETURNS DATE AS
 BEGIN
     RETURN dbo.fn_NgayKinhDoanh(dbo.fn_BayGio());
 END;
+
 GO

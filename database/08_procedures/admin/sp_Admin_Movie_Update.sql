@@ -1,8 +1,11 @@
+-- Cập nhật dữ liệu quản trị hệ thống: sp_Admin_Movie_Update.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_Admin_Movie_Update
-(
+    (
     @ActorID INT,
     @PhimID INT,
     @TenPhim NVARCHAR(255),
@@ -18,24 +21,43 @@ CREATE OR ALTER PROCEDURE dbo.sp_Admin_Movie_Update
     @TrailerURL NVARCHAR(500) = NULL,
     @TrangThai NVARCHAR(50),
     @TheLoaiIdList VARCHAR(MAX) = NULL
-)
+    )
 AS
 BEGIN
     SET NOCOUNT ON;
     -- R3B: current account, actor eligibility, then every required permission.
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG
+        WHERE
+            NguoiDungID = @ActorID
+            AND TrangThai = N'Hoạt động'
+    )
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
-                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG nd
+            INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+        WHERE
+            nd.NguoiDungID = @ActorID
+            AND vt.MaVaiTro IN ('ADMIN')
+    )
         THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    -- Kiểm tra quyền chức năng trước khi thao tác.
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_DANHMUC_PHIM') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
-
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
     BEGIN TRY
+        -- Mở transaction để các bước ghi được xử lý cùng nhau.
         BEGIN TRANSACTION;
-
+        -- Cập nhật dữ liệu theo điều kiện nghiệp vụ.
         UPDATE dbo.PHIM
-        SET TenPhim = @TenPhim,
+        SET
+            TenPhim = @TenPhim,
             ThoiLuong = @ThoiLuong,
             NgayKhoiChieu = @NgayKhoiChieu,
             NgayKetThuc = @NgayKetThuc,
@@ -47,28 +69,38 @@ BEGIN
             PosterURL = @PosterURL,
             TrailerURL = @TrailerURL,
             TrangThai = @TrangThai
-        WHERE PhimID = @PhimID;
-
-        IF @@ROWCOUNT = 0 THROW 50102, N'Phim không tồn tại.', 1;
-
+        WHERE
+            PhimID = @PhimID;
+        IF @@ROWCOUNT = 0
+            THROW 50102, N'Phim không tồn tại.', 1;
         IF @TheLoaiIdList IS NOT NULL
         BEGIN
-            DELETE FROM dbo.PHIM_THELOAI WHERE PhimID = @PhimID;
-
-            INSERT INTO dbo.PHIM_THELOAI (PhimID, TheLoaiID)
-            SELECT DISTINCT @PhimID, CAST(value AS INT)
-            FROM STRING_SPLIT(@TheLoaiIdList, ',')
-            WHERE LTRIM(RTRIM(value)) <> '';
+            -- Xóa các bản ghi thỏa điều kiện đã xác định.
+            DELETE FROM dbo.PHIM_THELOAI
+            WHERE
+                PhimID = @PhimID;
+            INSERT INTO
+                dbo.PHIM_THELOAI(PhimID, TheLoaiID)
+            SELECT DISTINCT
+                @PhimID,
+                CAST(value AS INT)
+            FROM
+                STRING_SPLIT(@TheLoaiIdList, ',')
+            WHERE
+                LTRIM(RTRIM(value)) <> '';
         END
-
+        -- Chốt các thay đổi của transaction.
         COMMIT TRANSACTION;
-
         EXEC dbo.sp_Movie_GetDetail @PhimID = @PhimID;
-
     END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
-        ;THROW;
+        IF @@TRANCOUNT > 0
+            -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+            ROLLBACK TRANSACTION;
+        ;
+        THROW;
     END CATCH
 END;
+
 GO

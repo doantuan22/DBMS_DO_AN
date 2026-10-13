@@ -260,15 +260,25 @@ test('BUG-003: write() reads the first result set, so image procedures must emit
     const start = sql.indexOf(`CREATE OR ALTER PROCEDURE dbo.${name}`);
     assert.notEqual(start, -1, `${name} missing from baseline`);
     const body = sql.slice(start, sql.indexOf('\nGO', start));
-    // Result-set-producing statements: SELECT that does not assign to a variable.
-    const resultSets = body
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => /^SELECT\s/i.test(line) && !/^SELECT\s+@/i.test(line));
+    // Inspect full SELECT statements so SQL layout does not affect this contract.
+    const structure = body
+      .replace(/--[^\r\n]*/g, (comment) => ' '.repeat(comment.length))
+      .replace(/N?'(?:''|[^'])*'/g, (literal) => ' '.repeat(literal.length));
+    const selects = [];
+    let depth = 0;
+    for (const token of structure.matchAll(/\bSELECT\b|[()]/gi)) {
+      if (token[0] === '(') depth++;
+      else if (token[0] === ')') depth--;
+      else if (depth === 0) {
+        const statement = body.slice(token.index, structure.indexOf(';', token.index) + 1);
+        selects.push(statement.replace(/\s+/g, ' ').trim());
+      }
+    }
+    const resultSets = selects.filter((statement) => !/^SELECT\s+@/i.test(statement));
     assert.equal(resultSets.length, 1, `${name} must emit exactly one result set`);
     assert.match(resultSets[0], /^SELECT HinhAnhRapID, RapID, URL, MoTa, LaAnhDaiDien/);
     assert.match(
-      body,
+      selects.join('\n'),
       /SELECT @LockedImageID = HinhAnhRapID FROM dbo\.HINHANH_RAPCHIEUPHIM WITH \(UPDLOCK, HOLDLOCK\)/,
     );
   }

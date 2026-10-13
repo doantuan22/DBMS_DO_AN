@@ -1,10 +1,12 @@
+-- Lấy số ghế tối đa trong một đơn.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
-CREATE OR ALTER FUNCTION dbo.fn_GioiHanGheMoiDon()
-RETURNS INT
-AS
+
+CREATE OR ALTER FUNCTION dbo.fn_GioiHanGheMoiDon() RETURNS INT AS
 BEGIN
     RETURN 10;
 END;
+
 GO

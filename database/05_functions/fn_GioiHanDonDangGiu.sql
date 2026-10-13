@@ -1,10 +1,12 @@
+-- Lấy số đơn giữ chỗ tối đa của khách.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
-CREATE OR ALTER FUNCTION dbo.fn_GioiHanDonDangGiu()
-RETURNS INT
-AS
+
+CREATE OR ALTER FUNCTION dbo.fn_GioiHanDonDangGiu() RETURNS INT AS
 BEGIN
     RETURN 3;
 END;
+
 GO

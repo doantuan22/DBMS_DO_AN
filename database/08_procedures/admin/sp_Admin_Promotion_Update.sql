@@ -1,39 +1,67 @@
+-- Cập nhật dữ liệu quản trị hệ thống: sp_Admin_Promotion_Update.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_Admin_Promotion_Update
-(
+    (
     @ActorID INT,
     @KhuyenMaiID INT,
     @MoTa NVARCHAR(255) = NULL,
     @LoaiGiamGia NVARCHAR(20),
-    @GiaTriGiam DECIMAL(18,2),
-    @DonHangToiThieu DECIMAL(18,2) = 0,
-    @GiamToiDa DECIMAL(18,2) = NULL,
+    @GiaTriGiam DECIMAL(18, 2),
+    @DonHangToiThieu DECIMAL(18, 2) = 0,
+    @GiamToiDa DECIMAL(18, 2) = NULL,
     @NgayBatDau DATETIME2,
     @NgayKetThuc DATETIME2,
     @SoLuong INT,
     @TrangThai NVARCHAR(50)
-)
+    )
 AS
 BEGIN
     SET NOCOUNT ON;
     -- R3B: current account, actor eligibility, then every required permission.
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG
+        WHERE
+            NguoiDungID = @ActorID
+            AND TrangThai = N'Hoạt động'
+    )
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
-                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG nd
+            INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+        WHERE
+            nd.NguoiDungID = @ActorID
+            AND vt.MaVaiTro IN ('ADMIN')
+    )
         THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    -- Kiểm tra quyền chức năng trước khi thao tác.
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_KHUYENMAI') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
-
-    IF NOT EXISTS (SELECT 1 FROM dbo.KHUYENMAI WHERE KhuyenMaiID = @KhuyenMaiID)
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.KHUYENMAI
+        WHERE
+            KhuyenMaiID = @KhuyenMaiID
+    )
     BEGIN
-        ;THROW 50107, N'Khuyến mãi không tồn tại.', 1;
+        ;
+        THROW 50107, N'Khuyến mãi không tồn tại.', 1;
     END
-
+    -- Cập nhật dữ liệu theo điều kiện nghiệp vụ.
     UPDATE dbo.KHUYENMAI
-    SET MoTa = @MoTa,
+    SET
+        MoTa = @MoTa,
         LoaiGiamGia = @LoaiGiamGia,
         GiaTriGiam = @GiaTriGiam,
         DonHangToiThieu = @DonHangToiThieu,
@@ -42,10 +70,25 @@ BEGIN
         NgayKetThuc = @NgayKetThuc,
         SoLuong = @SoLuong,
         TrangThai = @TrangThai
-    WHERE KhuyenMaiID = @KhuyenMaiID;
-
-    SELECT KhuyenMaiID, MaCode, MoTa, LoaiGiamGia, GiaTriGiam, DonHangToiThieu, GiamToiDa,
-           NgayBatDau, NgayKetThuc, SoLuong, SoLuongDaDung, TrangThai
-    FROM dbo.KHUYENMAI WHERE KhuyenMaiID = @KhuyenMaiID;
+    WHERE
+        KhuyenMaiID = @KhuyenMaiID;
+    SELECT
+        KhuyenMaiID,
+        MaCode,
+        MoTa,
+        LoaiGiamGia,
+        GiaTriGiam,
+        DonHangToiThieu,
+        GiamToiDa,
+        NgayBatDau,
+        NgayKetThuc,
+        SoLuong,
+        SoLuongDaDung,
+        TrangThai
+    FROM
+        dbo.KHUYENMAI
+    WHERE
+        KhuyenMaiID = @KhuyenMaiID;
 END;
+
 GO

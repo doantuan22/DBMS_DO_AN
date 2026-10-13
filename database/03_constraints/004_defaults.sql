@@ -1,56 +1,167 @@
-ALTER TABLE dbo.[BANGGIA] ADD CONSTRAINT [DF_BANGGIA_PhuThu] DEFAULT ((0)) FOR [PhuThu];
+-- Khai báo ràng buộc toàn vẹn dữ liệu.
+ALTER TABLE dbo.[BANGGIA]
+ADD CONSTRAINT [DF_BANGGIA_PhuThu] DEFAULT((0)) FOR [PhuThu];
+
 GO
-ALTER TABLE dbo.[BANGGIA] ADD CONSTRAINT [DF_BANGGIA_TrangThai] DEFAULT (N'Áp dụng') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[BANGGIA]
+ADD CONSTRAINT [DF_BANGGIA_TrangThai] DEFAULT(N'Áp dụng') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[CHITIETVE] ADD CONSTRAINT [DF_CHITIETVE_TrangThai] DEFAULT (N'Đã đặt') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[CHITIETVE]
+ADD CONSTRAINT [DF_CHITIETVE_TrangThai] DEFAULT(N'Đã đặt') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[DONDATVE] ADD CONSTRAINT [DF_DONDATVE_TongTienVe] DEFAULT ((0)) FOR [TongTienVe];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[DONDATVE]
+ADD CONSTRAINT [DF_DONDATVE_TongTienVe] DEFAULT((0)) FOR [TongTienVe];
+
 GO
-ALTER TABLE dbo.[DONDATVE] ADD CONSTRAINT [DF_DONDATVE_TongTienDoAn] DEFAULT ((0)) FOR [TongTienDoAn];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[DONDATVE]
+ADD CONSTRAINT [DF_DONDATVE_TongTienDoAn] DEFAULT((0)) FOR [TongTienDoAn];
+
 GO
-ALTER TABLE dbo.[DONDATVE] ADD CONSTRAINT [DF_DONDATVE_TienGiamGia] DEFAULT ((0)) FOR [TienGiamGia];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[DONDATVE]
+ADD CONSTRAINT [DF_DONDATVE_TienGiamGia] DEFAULT((0)) FOR [TienGiamGia];
+
 GO
-ALTER TABLE dbo.[DONDATVE] ADD CONSTRAINT [DF_DONDATVE_TrangThai] DEFAULT (N'Chờ thanh toán') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[DONDATVE]
+ADD CONSTRAINT [DF_DONDATVE_TrangThai] DEFAULT(N'Chờ thanh toán') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[GHE] ADD CONSTRAINT [DF_GHE_LoaiGhe] DEFAULT (N'Thường') FOR [LoaiGhe];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[GHE]
+ADD CONSTRAINT [DF_GHE_LoaiGhe] DEFAULT(N'Thường') FOR [LoaiGhe];
+
 GO
-ALTER TABLE dbo.[GHE] ADD CONSTRAINT [DF_GHE_TrangThai] DEFAULT (N'Hoạt động') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[GHE]
+ADD CONSTRAINT [DF_GHE_TrangThai] DEFAULT(N'Hoạt động') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[HINHANH_RAPCHIEUPHIM] ADD CONSTRAINT [DF_HINHANH_RAPCHIEUPHIM_LaAnhDaiDien] DEFAULT ((0)) FOR [LaAnhDaiDien];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[HINHANH_RAPCHIEUPHIM]
+ADD CONSTRAINT [DF_HINHANH_RAPCHIEUPHIM_LaAnhDaiDien] DEFAULT((0)) FOR [LaAnhDaiDien];
+
 GO
-ALTER TABLE dbo.[HINHANH_RAPCHIEUPHIM] ADD CONSTRAINT [DF_HINHANH_RAPCHIEUPHIM_ThuTuHienThi] DEFAULT ((0)) FOR [ThuTuHienThi];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[HINHANH_RAPCHIEUPHIM]
+ADD CONSTRAINT [DF_HINHANH_RAPCHIEUPHIM_ThuTuHienThi] DEFAULT((0)) FOR [ThuTuHienThi];
+
 GO
-ALTER TABLE dbo.[HINHANH_RAPCHIEUPHIM] ADD CONSTRAINT [DF_HINHANH_RAPCHIEUPHIM_TrangThai] DEFAULT (N'Hoạt động') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[HINHANH_RAPCHIEUPHIM]
+ADD CONSTRAINT [DF_HINHANH_RAPCHIEUPHIM_TrangThai] DEFAULT(N'Hoạt động') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[HOSOKHACHHANG] ADD CONSTRAINT [DF_HOSOKHACHHANG_DiemTichLuy] DEFAULT ((0)) FOR [DiemTichLuy];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[HOSOKHACHHANG]
+ADD CONSTRAINT [DF_HOSOKHACHHANG_DiemTichLuy] DEFAULT((0)) FOR [DiemTichLuy];
+
 GO
-ALTER TABLE dbo.[KHIEUNAI] ADD CONSTRAINT [DF_KHIEUNAI_MucDoUuTien] DEFAULT (N'Trung bình') FOR [MucDoUuTien];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[KHIEUNAI]
+ADD CONSTRAINT [DF_KHIEUNAI_MucDoUuTien] DEFAULT(N'Trung bình') FOR [MucDoUuTien];
+
 GO
-ALTER TABLE dbo.[KHIEUNAI] ADD CONSTRAINT [DF_KHIEUNAI_TrangThai] DEFAULT (N'Mới') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[KHIEUNAI]
+ADD CONSTRAINT [DF_KHIEUNAI_TrangThai] DEFAULT(N'Mới') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[KHUYENMAI] ADD CONSTRAINT [DF_KHUYENMAI_DonHangToiThieu] DEFAULT ((0)) FOR [DonHangToiThieu];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[KHUYENMAI]
+ADD CONSTRAINT [DF_KHUYENMAI_DonHangToiThieu] DEFAULT((0)) FOR [DonHangToiThieu];
+
 GO
-ALTER TABLE dbo.[KHUYENMAI] ADD CONSTRAINT [DF_KHUYENMAI_SoLuongDaDung] DEFAULT ((0)) FOR [SoLuongDaDung];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[KHUYENMAI]
+ADD CONSTRAINT [DF_KHUYENMAI_SoLuongDaDung] DEFAULT((0)) FOR [SoLuongDaDung];
+
 GO
-ALTER TABLE dbo.[KHUYENMAI] ADD CONSTRAINT [DF_KHUYENMAI_TrangThai] DEFAULT (N'Hoạt động') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[KHUYENMAI]
+ADD CONSTRAINT [DF_KHUYENMAI_TrangThai] DEFAULT(N'Hoạt động') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[NGUOIDUNG] ADD CONSTRAINT [DF_NGUOIDUNG_TrangThai] DEFAULT (N'Hoạt động') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[NGUOIDUNG]
+ADD CONSTRAINT [DF_NGUOIDUNG_TrangThai] DEFAULT(N'Hoạt động') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[PHANCONG_RAP] ADD CONSTRAINT [DF_PHANCONG_RAP_TrangThai] DEFAULT (N'Hiệu lực') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[PHANCONG_RAP]
+ADD CONSTRAINT [DF_PHANCONG_RAP_TrangThai] DEFAULT(N'Hiệu lực') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[PHIM] ADD CONSTRAINT [DF_PHIM_TrangThai] DEFAULT (N'Sắp chiếu') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[PHIM]
+ADD CONSTRAINT [DF_PHIM_TrangThai] DEFAULT(N'Sắp chiếu') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[PHONGCHIEU] ADD CONSTRAINT [DF_PHONGCHIEU_LoaiPhong] DEFAULT (N'2D') FOR [LoaiPhong];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[PHONGCHIEU]
+ADD CONSTRAINT [DF_PHONGCHIEU_LoaiPhong] DEFAULT(N'2D') FOR [LoaiPhong];
+
 GO
-ALTER TABLE dbo.[PHONGCHIEU] ADD CONSTRAINT [DF_PHONGCHIEU_TrangThai] DEFAULT (N'Hoạt động') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[PHONGCHIEU]
+ADD CONSTRAINT [DF_PHONGCHIEU_TrangThai] DEFAULT(N'Hoạt động') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[RAPCHIEUPHIM] ADD CONSTRAINT [DF_RAPCHIEUPHIM_TrangThai] DEFAULT (N'Hoạt động') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[RAPCHIEUPHIM]
+ADD CONSTRAINT [DF_RAPCHIEUPHIM_TrangThai] DEFAULT(N'Hoạt động') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[SANPHAM] ADD CONSTRAINT [DF_SANPHAM_TrangThai] DEFAULT (N'Đang bán') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[SANPHAM]
+ADD CONSTRAINT [DF_SANPHAM_TrangThai] DEFAULT(N'Đang bán') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[SUATCHIEU] ADD CONSTRAINT [DF_SUATCHIEU_DinhDang] DEFAULT (N'2D') FOR [DinhDang];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[SUATCHIEU]
+ADD CONSTRAINT [DF_SUATCHIEU_DinhDang] DEFAULT(N'2D') FOR [DinhDang];
+
 GO
-ALTER TABLE dbo.[SUATCHIEU] ADD CONSTRAINT [DF_SUATCHIEU_TrangThai] DEFAULT (N'Mở bán') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[SUATCHIEU]
+ADD CONSTRAINT [DF_SUATCHIEU_TrangThai] DEFAULT(N'Mở bán') FOR [TrangThai];
+
 GO
-ALTER TABLE dbo.[THANHTOAN] ADD CONSTRAINT [DF_THANHTOAN_TrangThai] DEFAULT (N'Đang xử lý') FOR [TrangThai];
+
+-- Gán giá trị mặc định khi tạo bản ghi.
+ALTER TABLE dbo.[THANHTOAN]
+ADD CONSTRAINT [DF_THANHTOAN_TrangThai] DEFAULT(N'Đang xử lý') FOR [TrangThai];
+
 GO

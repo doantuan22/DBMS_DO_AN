@@ -6,6 +6,23 @@ The canonical database contains **27 tables and 169 SQL modules**: 134 procedure
 
 ## Build and test
 
+### Khởi tạo đầy đủ bằng một file điều phối
+
+`run-all.sql` gọi các file SQL thành phần theo thứ tự: build schema và 169 module → nạp seed `demo-dynamic` → kiểm tra schema/quyền → kiểm tra toàn vẹn seed. Không gộp SQL nghiệp vụ vào file này, không chạy migration lịch sử hay test phá dữ liệu khi cài đặt.
+
+Chạy từ thư mục `database/`, dùng kết nối có quyền tạo database:
+
+```powershell
+cd D:\DBMS_DO_AN\database
+sqlcmd -S localhost -E -C -b -i run-all.sql
+```
+
+Các lệnh `:r` cần SQLCMD. Với SSMS, bật SQLCMD Mode và bảo đảm đường dẫn include được phân giải từ thư mục `database/`; lệnh `sqlcmd` trên có thư mục làm việc rõ ràng. `-E` dùng Windows Authentication; chọn phương thức đăng nhập phù hợp với SQL Server của bạn.
+
+Installer chỉ tạo `CinemaBookingDB` khi chưa tồn tại. Nếu database đã có, script dừng trước bước build/seed và không xóa hoặc ghi đè. Seed trên Main mới yêu cầu GUID/ngày tạo của chính lượt cài đặt và database còn trống. Công cụ seed/reset/test thông thường vẫn chỉ chấp nhận hai target demo/test. Nếu cài đặt lỗi, không tự xóa database tạo dở; xem thông báo lỗi để xử lý.
+
+Seed đầy đủ gồm catalog, lịch chiếu theo ngày hiện tại và các trạng thái giao dịch demo. Tài khoản `admin1@example.test`, mật khẩu demo `CinemaStarDemo!2026`; xem thêm [seed README](10_seed/README.md).
+
 **Seed v2 đã có deployment Main được chủ dự án yêu cầu ngày 12/10/2026:** [quy trình SQL/backup/rollback](deployments/seed-v2-main/README.md), [báo cáo kết quả](../docs/seed/MAIN_SEED_PROMOTION_REPORT.md). Backend dùng DB chính như cấu hình hiện hữu; accounts demo mới ở seed README. Các lệnh reset/test thường vẫn chỉ chạy trên disposable targets.
 
 Seed v2 hiện hành: [pipeline và accounts demo](10_seed/README.md), [reset guards](../docs/seed/RESET_PLAN.md), [verification evidence](../docs/seed/SEED_VERIFICATION_REPORT.md). Commands lịch sử bên dưới chỉ mô tả các đợt audit/migration cũ; seed/rebuild/test aliases hiện nay dùng exact targets và contract v2. Không chạy fixtures có identity/count của seed cũ trên dataset mới. Schema/SP/migrations được giữ nguyên.
@@ -34,13 +51,23 @@ node scripts/db/run.mjs verify --database=CinemaBookingDB_R0_FIXED_RBAC_20261011
 
 The smoke runner starts the real Backend against the selected test database, exercises HTTP/SQL authorization and assignment transfer, and applies the migration only to the validated test target. Evidence is written to ignored `.audit-output/`.
 
-- `01_schema/` — canonical table definitions.
-- `02_functions/`, `03_views/`, `04_procedures/` — executable database modules.
-- `05_seed/` through `10_seed/` — baseline, demo and test fixture data.
+- `00_database/` — database creation, options and the reset entry's drop script.
+- `01_schema/` — schema setup; current application objects use `dbo`.
+- `02_tables/` — 27 canonical table definitions.
+- `03_constraints/` — primary/unique keys, foreign keys, checks and defaults.
+- `04_indexes/` — additional indexes, including filtered unique indexes.
+- `05_functions/` — 21 business, authorization and time functions.
+- `06_views/` — 6 read models.
+- `07_triggers/` — 8 integrity and fixed-role triggers.
+- `08_procedures/` — 134 procedures, including compatibility aliases and explicit RBAC refusal procedures.
+- `09_security/` — the application's EXECUTE-only database role.
+- `10_seed/` — current seed-v2 catalog, dynamic demo, test fixtures and verification/backup SQL.
 - `11_tests/` — database and concurrency checks.
 - `12_verify/` — canonical object and definition verification.
 - `13_migrations/` — reviewed migrations; inspect the migration and its target guards before use.
-- `deployments/` — scoped deployment tooling and plans. The completed R7.2 main-database change is documented in [MAIN_DATABASE_SYNC_REPORT.md](../docs/MAIN_DATABASE_SYNC_REPORT.md); its [deployment plan](deployments/r7-2-main/PLAN.md) and [tool guide](deployments/r7-2-main/README.md) contain target protections and rollback behavior.
+- `deployments/seed-v2-main/` — reviewed Main seed promotion SQL and manual recovery, used by `scripts/db/promote-seed-main.mjs`. See its [deployment and recovery guide](deployments/seed-v2-main/README.md).
+
+Folder cleanup (13 October 2026) removed two empty legacy-layout placeholders, two unreferenced R55 verification entries and five obsolete R7.2 deployment files. The R7.2 runner pinned a previous server/GUID, expected 159 modules and 192 tests, and required evidence no longer present in this checkout. Its two procedure sources remain in the canonical build. The current seed contract is `10_seed/verify/seed-v2.sql`; the retired R54 fixture counts are not used. Canonical build/seed/test/verify SQL, all 27 tables, all 169 modules, migrations, standalone regression/concurrency tests and seed-v2 deployment/recovery tools were retained. Historical names alone do not make a file safe to delete.
 
 See [the final system audit](../docs/FINAL_SYSTEM_AUDIT.md) for current acceptance and verification status.
 

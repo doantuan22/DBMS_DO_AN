@@ -1,62 +1,78 @@
+-- Hủy theo quy tắc dữ liệu nghiệp vụ khách hàng: sp_Order_Cancel.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_Order_Cancel
-(
-    @NguoiDungID INT,
-    @DonDatVeID INT
-)
+    (@NguoiDungID INT, @DonDatVeID INT)
 AS
 BEGIN
     SET NOCOUNT ON;
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
     BEGIN TRY
+        -- Mở transaction để các bước ghi được xử lý cùng nhau.
         BEGIN TRANSACTION;
-
         DECLARE @TrangThai NVARCHAR(50);
         DECLARE @KhuyenMaiID INT;
-
         SELECT
             @TrangThai = TrangThai,
             @KhuyenMaiID = KhuyenMaiID
-        FROM dbo.DONDATVE WITH (UPDLOCK, HOLDLOCK)
-        WHERE DonDatVeID = @DonDatVeID AND NguoiDungID = @NguoiDungID;
-
+        FROM
+            dbo.DONDATVE
+        WITH
+            (UPDLOCK, HOLDLOCK)
+        WHERE
+            DonDatVeID = @DonDatVeID
+            AND NguoiDungID = @NguoiDungID;
         IF @TrangThai IS NULL
         BEGIN
-            ;THROW 50034, N'Đơn đặt vé không tồn tại hoặc bạn không có quyền thao tác.', 1;
+            ;
+            THROW 50034, N'Đơn đặt vé không tồn tại hoặc bạn không có quyền thao tác.', 1;
         END
-
         IF @TrangThai <> N'Chờ thanh toán'
         BEGIN
-            ;THROW 50035, N'Chỉ có thể hủy đơn khi đang ở trạng thái Chờ thanh toán.', 1;
+            ;
+            THROW 50035, N'Chỉ có thể hủy đơn khi đang ở trạng thái Chờ thanh toán.', 1;
         END
-
         -- Cập nhật đơn thành Đã hủy
         UPDATE dbo.DONDATVE
-        SET TrangThai = N'Đã hủy'
-        WHERE DonDatVeID = @DonDatVeID;
-
+        SET
+            TrangThai = N'Đã hủy'
+        WHERE
+            DonDatVeID = @DonDatVeID;
         -- Cập nhật vé thành Đã hủy để giải phóng ghế
         UPDATE dbo.CHITIETVE
-        SET TrangThai = N'Đã hủy'
-        WHERE DonDatVeID = @DonDatVeID;
-
+        SET
+            TrangThai = N'Đã hủy'
+        WHERE
+            DonDatVeID = @DonDatVeID;
         -- Hoàn lại lượt dùng mã khuyến mãi nếu có
         IF @KhuyenMaiID IS NOT NULL
         BEGIN
+            -- Cập nhật dữ liệu theo điều kiện nghiệp vụ.
             UPDATE dbo.KHUYENMAI
-            SET SoLuongDaDung = CASE WHEN SoLuongDaDung > 0 THEN SoLuongDaDung - 1 ELSE 0 END
-            WHERE KhuyenMaiID = @KhuyenMaiID;
+            SET
+                SoLuongDaDung = CASE
+                    WHEN SoLuongDaDung > 0 THEN SoLuongDaDung - 1
+                    ELSE 0
+                END
+            WHERE
+                KhuyenMaiID = @KhuyenMaiID;
         END
-
+        -- Chốt các thay đổi của transaction.
         COMMIT TRANSACTION;
-
-        SELECT N'Hủy đơn đặt vé thành công.' AS [Message];
-
+        SELECT
+            N'Hủy đơn đặt vé thành công.' AS [Message];
     END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
     BEGIN CATCH
-        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
-        ;THROW;
+        IF @@TRANCOUNT > 0
+            -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+            ROLLBACK TRANSACTION;
+        ;
+        THROW;
     END CATCH
 END;
+
 GO

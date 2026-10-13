@@ -1,6 +1,9 @@
+-- Tạo mới dữ liệu quản trị hệ thống: usp_Admin_CinemaImage_Create.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 -- BUG-003: the key-range lock used to be a bare SELECT, which sent an extra
 -- result set to the client ahead of the final image DTO. The backend reads the
 -- first result set, so create returned null and set-cover returned a lock row.
@@ -8,7 +11,6 @@ GO
 -- locks, every image row of the cinema); the DTO is the only result set.
 -- Transaction, lock and one-cover-per-cinema logic are otherwise unchanged.
 CREATE OR ALTER PROCEDURE dbo.usp_Admin_CinemaImage_Create
-
     @ActorID INT,
     @RapID INT,
     @URL NVARCHAR(500),
@@ -20,39 +22,110 @@ AS
 BEGIN
     SET NOCOUNT ON;
     -- R3B: current account, actor eligibility, then every required permission.
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @ActorID AND TrangThai = N'Hoạt động')
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG
+        WHERE
+            NguoiDungID = @ActorID
+            AND TrangThai = N'Hoạt động'
+    )
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
-                   WHERE nd.NguoiDungID = @ActorID AND vt.MaVaiTro IN ('ADMIN'))
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG nd
+            INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+        WHERE
+            nd.NguoiDungID = @ActorID
+            AND vt.MaVaiTro IN ('ADMIN')
+    )
         THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    -- Kiểm tra quyền chức năng trước khi thao tác.
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_RAP') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
-
-    IF LEN(LTRIM(RTRIM(ISNULL(@URL, N'')))) = 0 THROW 50220, N'URL ảnh không được để trống.', 1;
-    IF @ThuTuHienThi < 0 THROW 50221, N'Thứ tự hiển thị phải lớn hơn hoặc bằng 0.', 1;
-    DECLARE @OwnTransaction BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
+    IF LEN(LTRIM(RTRIM(ISNULL(@URL, N'')))) = 0
+        THROW 50220, N'URL ảnh không được để trống.', 1;
+    IF @ThuTuHienThi < 0
+        THROW 50221, N'Thứ tự hiển thị phải lớn hơn hoặc bằng 0.', 1;
+    DECLARE @OwnTransaction BIT = CASE
+        WHEN @@TRANCOUNT = 0 THEN 1
+        ELSE 0
+    END;
     DECLARE @LockedImageID INT;
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
     BEGIN TRY
-        IF @OwnTransaction = 1 BEGIN TRANSACTION; ELSE SAVE TRANSACTION CinemaImageCreate;
-        IF NOT EXISTS (SELECT 1 FROM dbo.RAPCHIEUPHIM WITH (UPDLOCK, HOLDLOCK) WHERE RapID = @RapID)
+        IF @OwnTransaction = 1
+            -- Mở transaction để các bước ghi được xử lý cùng nhau.
+            BEGIN TRANSACTION;
+        ELSE
+            -- Đặt savepoint khi dùng transaction của bên gọi.
+            SAVE TRANSACTION CinemaImageCreate;
+        IF NOT EXISTS (
+            SELECT
+                1
+            FROM
+                dbo.RAPCHIEUPHIM
+            WITH
+                (UPDLOCK, HOLDLOCK)
+            WHERE
+                RapID = @RapID
+        )
             THROW 50200, N'Rạp không tồn tại.', 1;
-        SELECT @LockedImageID = HinhAnhRapID FROM dbo.HINHANH_RAPCHIEUPHIM WITH (UPDLOCK, HOLDLOCK) WHERE RapID = @RapID;
+        SELECT
+            @LockedImageID = HinhAnhRapID
+        FROM
+            dbo.HINHANH_RAPCHIEUPHIM
+        WITH
+            (UPDLOCK, HOLDLOCK)
+        WHERE
+            RapID = @RapID;
         IF @LaAnhDaiDien = 1
-            UPDATE dbo.HINHANH_RAPCHIEUPHIM SET LaAnhDaiDien = 0 WHERE RapID = @RapID AND LaAnhDaiDien = 1;
-        INSERT dbo.HINHANH_RAPCHIEUPHIM (RapID, URL, MoTa, LaAnhDaiDien, ThuTuHienThi, TrangThai)
-        VALUES (@RapID, @URL, @MoTa, @LaAnhDaiDien, @ThuTuHienThi, @TrangThai);
+            -- Cập nhật dữ liệu theo điều kiện nghiệp vụ.
+            UPDATE dbo.HINHANH_RAPCHIEUPHIM
+            SET
+                LaAnhDaiDien = 0
+            WHERE
+                RapID = @RapID
+                AND LaAnhDaiDien = 1;
+        INSERT
+            dbo.HINHANH_RAPCHIEUPHIM(RapID, URL, MoTa, LaAnhDaiDien, ThuTuHienThi, TrangThai)
+        VALUES
+            (@RapID, @URL, @MoTa, @LaAnhDaiDien, @ThuTuHienThi, @TrangThai);
         DECLARE @HinhAnhRapID INT = SCOPE_IDENTITY();
-        IF @OwnTransaction = 1 COMMIT TRANSACTION;
-        SELECT HinhAnhRapID, RapID, URL, MoTa, LaAnhDaiDien, ThuTuHienThi, TrangThai, NgayTao
-        FROM dbo.HINHANH_RAPCHIEUPHIM WHERE HinhAnhRapID = @HinhAnhRapID;
+        IF @OwnTransaction = 1
+            -- Chốt các thay đổi của transaction.
+            COMMIT TRANSACTION;
+        SELECT
+            HinhAnhRapID,
+            RapID,
+            URL,
+            MoTa,
+            LaAnhDaiDien,
+            ThuTuHienThi,
+            TrangThai,
+            NgayTao
+        FROM
+            dbo.HINHANH_RAPCHIEUPHIM
+        WHERE
+            HinhAnhRapID = @HinhAnhRapID;
     END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
     BEGIN CATCH
         IF XACT_STATE() <> 0
         BEGIN
-            IF @OwnTransaction = 1 OR XACT_STATE() = -1 ROLLBACK TRANSACTION;
-            ELSE ROLLBACK TRANSACTION CinemaImageCreate;
+            IF @OwnTransaction = 1
+                OR XACT_STATE() = - 1
+                -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+                ROLLBACK TRANSACTION;
+            ELSE
+                -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+                ROLLBACK TRANSACTION CinemaImageCreate;
         END;
         THROW;
     END CATCH
 END;
+
 GO

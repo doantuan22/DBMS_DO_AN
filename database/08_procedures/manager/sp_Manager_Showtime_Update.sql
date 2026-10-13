@@ -1,63 +1,207 @@
+-- Cập nhật dữ liệu quản lý rạp: sp_Manager_Showtime_Update.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 -- Baseline: migrations/014_showtime_lifecycle.sql:143 (dbo.sp_Manager_Showtime_Update)
 CREATE OR ALTER PROCEDURE dbo.sp_Manager_Showtime_Update
-    @NguoiDungID INT, @SuatChieuID INT, @PhimID INT, @ThoiGianBatDau DATETIME2,
-    @ThoiGianKetThuc DATETIME2, @DinhDang NVARCHAR(50), @GiaVeCoBan DECIMAL(18,2), @TrangThai NVARCHAR(50)
+    @NguoiDungID INT,
+    @SuatChieuID INT,
+    @PhimID INT,
+    @ThoiGianBatDau DATETIME2,
+    @ThoiGianKetThuc DATETIME2,
+    @DinhDang NVARCHAR(50),
+    @GiaVeCoBan DECIMAL(18, 2),
+    @TrangThai NVARCHAR(50)
 AS
 BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
     -- R3B: current account, actor eligibility, then every required permission.
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG
+        WHERE
+            NguoiDungID = @NguoiDungID
+            AND TrangThai = N'Hoạt động'
+    )
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
-    IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
-                   WHERE nd.NguoiDungID = @NguoiDungID AND vt.MaVaiTro IN ('QUAN_LY_RAP'))
+    IF NOT EXISTS (
+        SELECT
+            1
+        FROM
+            dbo.NGUOIDUNG nd
+            INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+        WHERE
+            nd.NguoiDungID = @NguoiDungID
+            AND vt.MaVaiTro IN ('QUAN_LY_RAP')
+    )
         THROW 50301, N'Vai trò không được phép thực hiện thao tác này.', 1;
+    -- Kiểm tra quyền chức năng trước khi thao tác.
     IF dbo.fn_KiemTraQuyenNguoiDung(@NguoiDungID, 'QL_SUAT_CHIEU') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
-
-    DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
+    DECLARE @OwnTran BIT = CASE
+        WHEN @@TRANCOUNT = 0 THEN 1
+        ELSE 0
+    END;
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
     BEGIN TRY
-        IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ManagerShowtimeUpdate;
-        DECLARE @RapID INT, @OldPhim INT, @OldStart DATETIME2, @OldEnd DATETIME2, @OldRoom INT, @OldFormat NVARCHAR(50), @OldStatus NVARCHAR(50), @OldPrice DECIMAL(18,2);
+        IF @OwnTran = 1
+            -- Mở transaction để các bước ghi được xử lý cùng nhau.
+            BEGIN TRANSACTION
+        ELSE
+            -- Đặt savepoint khi dùng transaction của bên gọi.
+            SAVE TRANSACTION ManagerShowtimeUpdate;
+        DECLARE @RapID INT,
+            @OldPhim INT,
+            @OldStart DATETIME2,
+            @OldEnd DATETIME2,
+            @OldRoom INT,
+            @OldFormat NVARCHAR(50),
+            @OldStatus NVARCHAR(50),
+            @OldPrice DECIMAL(18, 2);
         -- Discovery only (RCSI read); no child update lock before the room mutex.
-        SELECT @OldRoom=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;
-        SELECT @RapID=RapID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@OldRoom;
-        IF @RapID IS NULL THROW 50058, N'Suất chiếu không tồn tại.', 1;
-        SELECT @OldPhim=PhimID,@OldStart=ThoiGianBatDau,@OldEnd=ThoiGianKetThuc,@OldFormat=DinhDang,@OldStatus=TrangThai,@OldPrice=GiaVeCoBan
-        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE SuatChieuID=@SuatChieuID AND PhongID=@OldRoom;
-        IF @OldPhim IS NULL THROW 50058,N'Suất chiếu không tồn tại.',1;
-        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0 THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
-        IF @TrangThai = N'Đã hủy' THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;
+        SELECT
+            @OldRoom = PhongID
+        FROM
+            dbo.SUATCHIEU
+        WHERE
+            SuatChieuID = @SuatChieuID;
+        SELECT
+            @RapID = RapID
+        FROM
+            dbo.PHONGCHIEU
+        WITH
+            (UPDLOCK, HOLDLOCK)
+        WHERE
+            PhongID = @OldRoom;
+        IF @RapID IS NULL
+            THROW 50058, N'Suất chiếu không tồn tại.', 1;
+        SELECT
+            @OldPhim = PhimID,
+            @OldStart = ThoiGianBatDau,
+            @OldEnd = ThoiGianKetThuc,
+            @OldFormat = DinhDang,
+            @OldStatus = TrangThai,
+            @OldPrice = GiaVeCoBan
+        FROM
+            dbo.SUATCHIEU
+        WITH
+            (UPDLOCK, HOLDLOCK)
+        WHERE
+            SuatChieuID = @SuatChieuID
+            AND PhongID = @OldRoom;
+        IF @OldPhim IS NULL
+            THROW 50058, N'Suất chiếu không tồn tại.', 1;
+        -- Kiểm tra phạm vi rạp còn được phân công.
+        IF dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0
+            THROW 50050, N'Lỗi phạm vi [BR08]: Bạn không có quyền thao tác trên rạp này.', 1;
+        IF @TrangThai = N'Đã hủy'
+            THROW 50123, N'Dùng route hủy suất chiếu riêng.', 1;
         -- R3.2: any persisted order is historical usage, including cancelled/expired.
         -- Booking holds this same room -> show lock before creating orders. The
         -- history read happens after waiting; no child lock order is introduced.
         -- EXCEPT compares actual values with NULL-safe semantics. Room has no edit parameter.
-        IF EXISTS (SELECT 1 FROM dbo.DONDATVE WHERE SuatChieuID = @SuatChieuID)
-           AND EXISTS (SELECT @PhimID,@ThoiGianBatDau,@ThoiGianKetThuc,@DinhDang,@GiaVeCoBan
-                       EXCEPT SELECT @OldPhim,@OldStart,@OldEnd,@OldFormat,@OldPrice)
+        IF EXISTS (
+            SELECT
+                1
+            FROM
+                dbo.DONDATVE
+            WHERE
+                SuatChieuID = @SuatChieuID
+        )
+            AND EXISTS (
+            SELECT
+                @PhimID,
+                @ThoiGianBatDau,
+                @ThoiGianKetThuc,
+                @DinhDang,
+                @GiaVeCoBan
+            EXCEPT
+            SELECT
+                @OldPhim,
+                @OldStart,
+                @OldEnd,
+                @OldFormat,
+                @OldPrice
+        )
             THROW 50120, N'Suất chiếu có lịch sử đơn; không thể đổi phim, phòng, giờ, định dạng hoặc giá vé cơ bản.', 1;
-        IF @ThoiGianKetThuc <= @ThoiGianBatDau THROW 50057, N'Thời gian suất chiếu không hợp lệ.', 1;
-        EXEC dbo.sp_Showtime_ValidateTimes @PhimID=@PhimID,@ThoiGianBatDau=@ThoiGianBatDau,
-            @ThoiGianKetThuc=@ThoiGianKetThuc,@PhongID=@OldRoom,@SuatChieuID=@SuatChieuID,@TrangThai=@TrangThai;
-        UPDATE dbo.SUATCHIEU SET PhimID=@PhimID, ThoiGianBatDau=@ThoiGianBatDau, ThoiGianKetThuc=@ThoiGianKetThuc,
-            DinhDang=@DinhDang, GiaVeCoBan=@GiaVeCoBan, TrangThai=@TrangThai WHERE SuatChieuID=@SuatChieuID;
-        IF @OwnTran=1 COMMIT TRANSACTION;
+        IF @ThoiGianKetThuc <= @ThoiGianBatDau
+            THROW 50057, N'Thời gian suất chiếu không hợp lệ.', 1;
+        EXEC dbo.sp_Showtime_ValidateTimes @PhimID = @PhimID,
+            @ThoiGianBatDau = @ThoiGianBatDau,
+            @ThoiGianKetThuc = @ThoiGianKetThuc,
+            @PhongID = @OldRoom,
+            @SuatChieuID = @SuatChieuID,
+            @TrangThai = @TrangThai;
+        -- Cập nhật dữ liệu theo điều kiện nghiệp vụ.
+        UPDATE dbo.SUATCHIEU
+        SET
+            PhimID = @PhimID,
+            ThoiGianBatDau = @ThoiGianBatDau,
+            ThoiGianKetThuc = @ThoiGianKetThuc,
+            DinhDang = @DinhDang,
+            GiaVeCoBan = @GiaVeCoBan,
+            TrangThai = @TrangThai
+        WHERE
+            SuatChieuID = @SuatChieuID;
+        IF @OwnTran = 1
+            -- Chốt các thay đổi của transaction.
+            COMMIT TRANSACTION;
         -- Writer returns the persisted row even after closing sales. Public reads
         -- continue to apply the R2.1 IsBookable filter in sp_Showtime_GetDetail.
-        SELECT SuatChieuID,PhimID,TenPhim,PosterURL,ThoiLuong,DoTuoi,RapID,TenRap,
-            DiaChiRap,ThanhPho,PhongID,TenPhong,LoaiPhong,ThoiGianBatDau,ThoiGianKetThuc,
-            NgayChieu,GioBatDau,GioKetThuc,DinhDang,GiaVeCoBan,TrangThaiSuatChieu,
-            TongSoGhe,SoGheDaDat,(TongSoGhe-SoGheDaDat) AS SoGheConLai
-        FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID=@SuatChieuID;
+        SELECT
+            SuatChieuID,
+            PhimID,
+            TenPhim,
+            PosterURL,
+            ThoiLuong,
+            DoTuoi,
+            RapID,
+            TenRap,
+            DiaChiRap,
+            ThanhPho,
+            PhongID,
+            TenPhong,
+            LoaiPhong,
+            ThoiGianBatDau,
+            ThoiGianKetThuc,
+            NgayChieu,
+            GioBatDau,
+            GioKetThuc,
+            DinhDang,
+            GiaVeCoBan,
+            TrangThaiSuatChieu,
+            TongSoGhe,
+            SoGheDaDat,
+            (TongSoGhe - SoGheDaDat) AS SoGheConLai
+        FROM
+            dbo.vw_LichChieuChiTiet
+        WHERE
+            SuatChieuID = @SuatChieuID;
     END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
     BEGIN CATCH
-        IF XACT_STATE()=-1 ROLLBACK TRANSACTION;
-        ELSE IF XACT_STATE()=1 BEGIN IF @OwnTran=1 ROLLBACK TRANSACTION ELSE ROLLBACK TRANSACTION ManagerShowtimeUpdate; END
+        IF XACT_STATE() = - 1
+            -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+            ROLLBACK TRANSACTION;
+        ELSE
+            IF XACT_STATE() = 1
+            BEGIN
+                IF @OwnTran = 1
+                    -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+                    ROLLBACK TRANSACTION
+            ELSE
+                -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+                ROLLBACK TRANSACTION ManagerShowtimeUpdate;
+        END
         SET XACT_ABORT OFF;
-        ;THROW;
+        ;
+        THROW;
     END CATCH
 END;
+
 GO

@@ -1,6 +1,9 @@
+-- Xử lý dữ liệu nghiệp vụ hệ thống: sp_System_HealthCheck.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 CREATE OR ALTER PROCEDURE dbo.sp_System_HealthCheck
 AS
 BEGIN
@@ -11,4 +14,5 @@ BEGIN
         DB_NAME() AS [DatabaseName],
         @@VERSION AS [SQLVersion];
 END;
+
 GO

@@ -1,17 +1,15 @@
+-- Tra cứu dữ liệu danh mục công khai: sp_Showtime_ListByMovie.
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
 -- Baseline: procedures/customer/customer_procedures.sql:164 (dbo.sp_Showtime_ListByMovie)
 CREATE OR ALTER PROCEDURE dbo.sp_Showtime_ListByMovie
-(
-    @PhimID INT,
-    @RapID INT = NULL,
-    @NgayChieu DATE = NULL
-)
+    (@PhimID INT, @RapID INT = NULL, @NgayChieu DATE = NULL)
 AS
 BEGIN
     SET NOCOUNT ON;
-
     SELECT
         SuatChieuID,
         PhimID,
@@ -37,11 +35,21 @@ BEGIN
         TongSoGhe,
         SoGheDaDat,
         (TongSoGhe - SoGheDaDat) AS SoGheConLai
-    FROM dbo.vw_LichChieuChiTiet
-    WHERE PhimID = @PhimID
-      AND (@RapID IS NULL OR RapID = @RapID)
-      AND (@NgayChieu IS NULL OR NgayChieu = @NgayChieu)
-      AND IsBookable = 1
-    ORDER BY ThoiGianBatDau ASC;
+    FROM
+        dbo.vw_LichChieuChiTiet
+    WHERE
+        PhimID = @PhimID
+        AND (
+            @RapID IS NULL
+            OR RapID = @RapID
+        )
+        AND (
+            @NgayChieu IS NULL
+            OR NgayChieu = @NgayChieu
+        )
+        AND IsBookable = 1
+    ORDER BY
+        ThoiGianBatDau ASC;
 END;
+
 GO

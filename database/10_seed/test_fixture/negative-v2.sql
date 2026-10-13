@@ -1,3 +1,4 @@
+-- Chuẩn bị hoặc kiểm tra dữ liệu seed theo target đã xác nhận.
 -- V2 manual negative probes; require the positive fixture intentionally committed.
 -- Each probe owns a separate rollback transaction: review trigger errors can doom it.
 SET NOCOUNT ON;
@@ -5,60 +6,179 @@ SET XACT_ABORT ON;
 IF DB_NAME() <> N'CinemaBookingDB_R0_REAL_MEDIA_TEST_20261012'
     THROW 51054, 'V2 requires a separate disposable test database.', 1;
 IF SESSION_CONTEXT(N'V2DisposableTarget') IS NULL
-   OR CONVERT(nvarchar(128), SESSION_CONTEXT(N'V2DisposableTarget')) <> DB_NAME()
+    OR CONVERT(nvarchar(128), SESSION_CONTEXT(N'V2DisposableTarget')) <> DB_NAME()
     THROW 51054, 'Confirm the exact disposable database in V2DisposableTarget before running.', 1;
-IF @@TRANCOUNT <> 0 THROW 51054, 'Negative probes must own their rollback transactions.', 1;
-
-DECLARE @Customer1 int, @Customer4 int, @Movie int, @ForeignOrder int;
-SELECT @Customer1 = NguoiDungID FROM dbo.NGUOIDUNG WHERE Email = 'customer1@example.test';
-SELECT @Customer4 = NguoiDungID FROM dbo.NGUOIDUNG WHERE Email = 'customer4@example.test';
-SELECT @Movie = PhimID FROM dbo.DANHGIAPHIM
-WHERE NguoiDungID = @Customer1 AND NoiDung = N'V2 eligible historical review';
-SELECT @ForeignOrder = d.DonDatVeID FROM dbo.DONDATVE d JOIN dbo.THANHTOAN t ON t.DonDatVeID = d.DonDatVeID
-WHERE d.NguoiDungID = @Customer1 AND t.GhiChu = N'V2 paid after retry' AND t.TrangThai = N'Thành công';
-IF @Customer1 IS NULL OR @Customer4 IS NULL OR @Movie IS NULL OR @ForeignOrder IS NULL
+IF @@TRANCOUNT <> 0
+    THROW 51054, 'Negative probes must own their rollback transactions.', 1;
+DECLARE @Customer1 int,
+    @Customer4 int,
+    @Movie int,
+    @ForeignOrder int;
+SELECT
+    @Customer1 = NguoiDungID
+FROM
+    dbo.NGUOIDUNG
+WHERE
+    Email = 'customer1@example.test';
+SELECT
+    @Customer4 = NguoiDungID
+FROM
+    dbo.NGUOIDUNG
+WHERE
+    Email = 'customer4@example.test';
+SELECT
+    @Movie = PhimID
+FROM
+    dbo.DANHGIAPHIM
+WHERE
+    NguoiDungID = @Customer1
+    AND NoiDung = N'V2 eligible historical review';
+SELECT
+    @ForeignOrder = d.DonDatVeID
+FROM
+    dbo.DONDATVE d
+    JOIN dbo.THANHTOAN t ON t.DonDatVeID = d.DonDatVeID
+WHERE
+    d.NguoiDungID = @Customer1
+    AND t.GhiChu = N'V2 paid after retry'
+    AND t.TrangThai = N'Thành công';
+IF @Customer1 IS NULL
+    OR @Customer4 IS NULL
+    OR @Movie IS NULL
+    OR @ForeignOrder IS NULL
     THROW 51054, 'Negative probes require the committed V2 positive fixture.', 1;
-IF EXISTS (SELECT 1 FROM dbo.DONDATVE d JOIN dbo.SUATCHIEU s ON s.SuatChieuID = d.SuatChieuID
-    WHERE d.NguoiDungID = @Customer4 AND s.PhimID = @Movie
-      AND d.TrangThai IN (N'Đã thanh toán', N'Hoàn thành') AND s.ThoiGianBatDau <= dbo.fn_BayGio())
+IF EXISTS (
+    SELECT
+        1
+    FROM
+        dbo.DONDATVE d
+        JOIN dbo.SUATCHIEU s ON s.SuatChieuID = d.SuatChieuID
+    WHERE
+        d.NguoiDungID = @Customer4
+        AND s.PhimID = @Movie
+        AND d.TrangThai IN (N'Đã thanh toán', N'Hoàn thành')
+        AND s.ThoiGianBatDau <= dbo.fn_BayGio()
+)
     THROW 51054, 'Customer 4 must have no eligible review history for the fixture movie.', 1;
-
-DECLARE @Cases TABLE (CaseNumber int PRIMARY KEY, FixtureID varchar(40), ExpectedError int);
-INSERT @Cases VALUES (1, 'V2-REVIEW-INELIGIBLE', 50004), (2, 'V2-REVIEW-DUPLICATE', 50040), (3, 'V2-C-FOREIGN-ORDER', 50041);
-DECLARE @CaseNumber int = 1, @ActualError int, @ExpectedError int, @FixtureID varchar(40);
-DECLARE @ReviewsBefore nvarchar(max), @ComplaintsBefore nvarchar(max);
+DECLARE @Cases
+TABLE (CaseNumber int PRIMARY KEY, FixtureID varchar(40), ExpectedError int);
+INSERT
+    @Cases
+VALUES
+    (1, 'V2-REVIEW-INELIGIBLE', 50004),
+    (2, 'V2-REVIEW-DUPLICATE', 50040),
+    (3, 'V2-C-FOREIGN-ORDER', 50041);
+DECLARE @CaseNumber int = 1,
+    @ActualError int,
+    @ExpectedError int,
+    @FixtureID varchar(40);
+DECLARE @ReviewsBefore nvarchar(max),
+    @ComplaintsBefore nvarchar(max);
 WHILE @CaseNumber <= 3
 BEGIN
-    SELECT @ExpectedError = ExpectedError, @FixtureID = FixtureID FROM @Cases WHERE CaseNumber = @CaseNumber;
-    SET @ActualError = NULL;
-    SET @ReviewsBefore = (SELECT * FROM dbo.DANHGIAPHIM ORDER BY DanhGiaID FOR JSON PATH, INCLUDE_NULL_VALUES);
-    SET @ComplaintsBefore = (SELECT * FROM dbo.KHIEUNAI ORDER BY KhieuNaiID FOR JSON PATH, INCLUDE_NULL_VALUES);
+    SELECT
+        @ExpectedError = ExpectedError,
+        @FixtureID = FixtureID
+    FROM
+        @Cases
+    WHERE
+        CaseNumber = @CaseNumber;
+    SET
+        @ActualError = NULL;
+    SET
+        @ReviewsBefore = (
+            SELECT
+                *
+            FROM
+                dbo.DANHGIAPHIM
+            ORDER BY
+                DanhGiaID
+            FOR JSON
+                PATH,
+                INCLUDE_NULL_VALUES
+        );
+    SET
+        @ComplaintsBefore = (
+            SELECT
+                *
+            FROM
+                dbo.KHIEUNAI
+            ORDER BY
+                KhieuNaiID
+            FOR JSON
+                PATH,
+                INCLUDE_NULL_VALUES
+        );
+    -- Thực hiện nghiệp vụ và bắt lỗi khi có sự cố.
     BEGIN TRY
+        -- Mở transaction để các bước ghi được xử lý cùng nhau.
         BEGIN TRANSACTION;
         IF @CaseNumber = 1
-            EXEC dbo.sp_Review_Create @NguoiDungID = @Customer4, @PhimID = @Movie, @SoSao = 4, @NoiDung = N'V2 rejected input: no paid history';
-        ELSE IF @CaseNumber = 2
-            EXEC dbo.sp_Review_Create @NguoiDungID = @Customer1, @PhimID = @Movie, @SoSao = 4, @NoiDung = N'V2 rejected input: duplicate review';
+            EXEC dbo.sp_Review_Create @NguoiDungID = @Customer4,
+                @PhimID = @Movie,
+                @SoSao = 4,
+                @NoiDung = N'V2 rejected input: no paid history';
         ELSE
-            EXEC dbo.sp_Complaint_Create @NguoiDungID = @Customer4, @DonDatVeID = @ForeignOrder,
-                @LoaiKhieuNai = N'Hỗ trợ', @TieuDe = N'V2 rejected foreign order', @NoiDung = N'V2 rejected input: ownership';
+            IF @CaseNumber = 2
+                EXEC dbo.sp_Review_Create @NguoiDungID = @Customer1,
+                    @PhimID = @Movie,
+                    @SoSao = 4,
+                    @NoiDung = N'V2 rejected input: duplicate review';
+        ELSE
+            EXEC dbo.sp_Complaint_Create @NguoiDungID = @Customer4,
+                @DonDatVeID = @ForeignOrder,
+                @LoaiKhieuNai = N'Hỗ trợ',
+                @TieuDe = N'V2 rejected foreign order',
+                @NoiDung = N'V2 rejected input: ownership';
         -- Unexpected acceptance is rolled back, then fails the assertion below.
         ROLLBACK TRANSACTION;
     END TRY
+    -- Hoàn tác khi cần và chuyển lỗi cho bên gọi.
     BEGIN CATCH
-        SET @ActualError = ERROR_NUMBER();
-        IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
+        SET
+            @ActualError = ERROR_NUMBER();
+        IF XACT_STATE() <> 0
+            -- Hoàn tác transaction hoặc savepoint khi có lỗi.
+            ROLLBACK TRANSACTION;
     END CATCH;
     -- ASSERT V2-NEGATIVE: expected business error and zero persisted negative data.
-    IF @ActualError IS NULL OR @ActualError <> @ExpectedError
+    IF @ActualError IS NULL
+        OR @ActualError <> @ExpectedError
         THROW 51054, 'Negative probe did not reject with the expected contract error.', 1;
     -- Keep transaction state separate from the JSON reads: those can have an internal read transaction.
-    IF @@TRANCOUNT <> 0 OR XACT_STATE() <> 0
+    IF @@TRANCOUNT <> 0
+        OR XACT_STATE() <> 0
         THROW 51054, 'Negative probe leaked a transaction.', 1;
-    IF @ReviewsBefore <> (SELECT * FROM dbo.DANHGIAPHIM ORDER BY DanhGiaID FOR JSON PATH, INCLUDE_NULL_VALUES)
-       OR @ComplaintsBefore <> (SELECT * FROM dbo.KHIEUNAI ORDER BY KhieuNaiID FOR JSON PATH, INCLUDE_NULL_VALUES)
+    IF @ReviewsBefore <> (
+        SELECT
+            *
+        FROM
+            dbo.DANHGIAPHIM
+        ORDER BY
+            DanhGiaID
+        FOR JSON
+            PATH,
+            INCLUDE_NULL_VALUES
+    )
+        OR @ComplaintsBefore <> (
+        SELECT
+            *
+        FROM
+            dbo.KHIEUNAI
+        ORDER BY
+            KhieuNaiID
+        FOR JSON
+            PATH,
+            INCLUDE_NULL_VALUES
+    )
         THROW 51054, 'Negative probe changed persisted review/complaint history or leaked a transaction.', 1;
-    SELECT @FixtureID AS FixtureID, @ExpectedError AS ExpectedError, @ActualError AS ActualError, N'PASS; rolled back' AS ProbeResult;
-    SET @CaseNumber = @CaseNumber + 1;
+    SELECT
+        @FixtureID AS FixtureID,
+        @ExpectedError AS ExpectedError,
+        @ActualError AS ActualError,
+        N'PASS; rolled back' AS ProbeResult;
+    SET
+        @CaseNumber = @CaseNumber + 1;
 END;
+
 GO
