@@ -66,12 +66,12 @@
 :r ./05_functions/fn_TinhTongTienVe.sql
 :r ./05_functions/fn_ThoiGianGiaHanThanhToanPhut.sql
 :r ./05_functions/fn_ThoiGianGiuChoPhut.sql
-:r ./05_functions/fn_DanhSachGheSuatChieu.sql
 :r ./03_constraints/005_function_defaults.sql
 :r ./06_views/vw_ChiTietDonDatVe.sql
 :r ./06_views/vw_DanhSachKhieuNai.sql
 :r ./06_views/vw_DoanhThuTheoRap.sql
 :r ./06_views/vw_LichChieuChiTiet.sql
+:r ./05_functions/fn_DanhSachGheSuatChieu.sql
 :r ./06_views/vw_LichSuDatVe.sql
 :r ./06_views/vw_ThongKePhim.sql
 :r ./07_triggers/TRG_BangGia_KiemTraChongLan.sql
@@ -205,6 +205,16 @@
 :r ./08_procedures/admin/usp_Admin_Showtime_Create.sql
 :r ./08_procedures/admin/usp_Admin_Showtime_List.sql
 :r ./08_procedures/admin/usp_Admin_Showtime_Update.sql
+:r ./07_triggers/TRG_NguoiDung_VaiTroBatBien.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_Authorize.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_LockShow.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_Customers.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_Options.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_List.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_Detail.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_Create.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_UpdateSeats.sql
+:r ./08_procedures/staff_booking/sp_StaffBooking_Cancel.sql
 :r ./09_security/001_execute_role.sql
 
 :r ./08_procedures/admin/sp_Admin_Genre_List.sql

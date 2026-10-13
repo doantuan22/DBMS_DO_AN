@@ -13,7 +13,9 @@ export default class ErrorBoundary extends Component {
         <main className="system-state" role="alert">
           <h1>Đã có lỗi khi hiển thị trang</h1>
           <p>Hãy tải lại trang để tiếp tục.</p>
-          <button type="button" onClick={() => window.location.reload()}>Tải lại</button>
+          <button type="button" onClick={() => window.location.reload()}>
+            Tải lại
+          </button>
         </main>
       );
     }

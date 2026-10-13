@@ -5,6 +5,12 @@ import { authenticate } from '../middleware/authenticate.js';
 import { requireCustomer } from '../middleware/requireCustomer.js';
 
 const router = Router();
-router.post('/validate', authenticate, requireCustomer, requirePermission('DAT_VE'), validatePromotion);
+router.post(
+  '/validate',
+  authenticate,
+  requireCustomer,
+  requirePermission('DAT_VE'),
+  validatePromotion,
+);
 
 export default router;

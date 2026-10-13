@@ -2,6 +2,13 @@
 // Callers pass a key from PROCEDURES; a procedure name is never accepted from a request.
 // Add an entry here only after the procedure exists under database/08_procedures/.
 export const PROCEDURES = Object.freeze({
+  STAFF_BOOKING_LIST: 'dbo.sp_StaffBooking_List',
+  STAFF_BOOKING_CUSTOMERS: 'dbo.sp_StaffBooking_Customers',
+  STAFF_BOOKING_OPTIONS: 'dbo.sp_StaffBooking_Options',
+  STAFF_BOOKING_DETAIL: 'dbo.sp_StaffBooking_Detail',
+  STAFF_BOOKING_CREATE: 'dbo.sp_StaffBooking_Create',
+  STAFF_BOOKING_UPDATE_SEATS: 'dbo.sp_StaffBooking_UpdateSeats',
+  STAFF_BOOKING_CANCEL: 'dbo.sp_StaffBooking_Cancel',
   SYSTEM_HEALTH_CHECK: 'dbo.sp_System_HealthCheck',
   EXPIRE_PENDING_ORDERS: 'dbo.sp_Order_ExpirePending',
 
@@ -33,14 +40,6 @@ export const PROCEDURES = Object.freeze({
   ADMIN_USER_UPDATE_STATUS: 'dbo.sp_Admin_User_UpdateStatus',
   ADMIN_USER_CREATE: 'dbo.sp_Admin_User_Create',
   ADMIN_ROLE_LIST: 'dbo.sp_Admin_Role_List',
-  ADMIN_ROLE_CREATE: 'dbo.sp_Admin_Role_Create',
-  ADMIN_ROLE_UPDATE: 'dbo.sp_Admin_Role_Update',
-  ADMIN_ROLE_DELETE: 'dbo.sp_Admin_Role_Delete',
-  ADMIN_PERMISSION_LIST: 'dbo.sp_Admin_Permission_List',
-  ADMIN_PERMISSION_CREATE: 'dbo.sp_Admin_Permission_Create',
-  ADMIN_PERMISSION_UPDATE: 'dbo.sp_Admin_Permission_Update',
-  ADMIN_PERMISSION_DELETE: 'dbo.sp_Admin_Permission_Delete',
-  ADMIN_ROLE_PERMISSION_SET: 'dbo.sp_Admin_RolePermission_Set',
   ADMIN_ASSIGNMENT_LIST: 'dbo.sp_Admin_Assignment_List',
   ADMIN_ASSIGNMENT_CREATE: 'dbo.sp_Admin_Assignment_Create',
   ADMIN_CINEMA_LIST: 'dbo.usp_Admin_Cinema_List',
@@ -76,7 +75,6 @@ export const PROCEDURES = Object.freeze({
   ADMIN_REPORT_REVENUE: 'dbo.sp_Admin_Report_Revenue',
   ADMIN_DASHBOARD: 'dbo.sp_Admin_Dashboard',
   ADMIN_ASSIGNMENT_UPDATE: 'dbo.usp_Admin_Assignment_Update',
-  ADMIN_ROLE_PERMISSION_LIST: 'dbo.usp_Admin_RolePermission_List',
   ADMIN_ROOM_LIST: 'dbo.usp_Admin_Room_List',
   ADMIN_ROOM_CREATE: 'dbo.usp_Admin_Room_Create',
   ADMIN_ROOM_UPDATE: 'dbo.usp_Admin_Room_Update',
@@ -138,5 +136,4 @@ export const PROCEDURES = Object.freeze({
   ASSIGN_CINEMA_MANAGER: 'dbo.sp_PhanCongQuanLyRap',
 });
 
-export const isKnownProcedure = (key) =>
-  Object.prototype.hasOwnProperty.call(PROCEDURES, key);
+export const isKnownProcedure = (key) => Object.prototype.hasOwnProperty.call(PROCEDURES, key);

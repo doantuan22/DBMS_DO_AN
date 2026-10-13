@@ -9,7 +9,13 @@ const router = Router();
 router.get('/', catalogController.listMovies);
 router.get('/:movieId/showtimes', catalogController.listShowtimes);
 router.get('/:movieId/reviews', feedbackController.listReviews);
-router.post('/:movieId/reviews', authenticate, requireCustomer, requirePermission('DANH_GIA'), feedbackController.createReview);
+router.post(
+  '/:movieId/reviews',
+  authenticate,
+  requireCustomer,
+  requirePermission('DANH_GIA'),
+  feedbackController.createReview,
+);
 router.get('/:movieId', catalogController.getMovieDetail);
 
 export default router;

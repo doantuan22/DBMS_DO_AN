@@ -31,7 +31,7 @@ BEGIN
     DECLARE @TuMoTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
 
     BEGIN TRY
-        -- Sử dụng mức cô lập cao nhất để ngăn race condition (đặt trùng cùng 1 ghế)
+        -- Preserve own transaction/savepoint and existing seat-conflict coordination.
         IF @TuMoTran = 1
             BEGIN TRANSACTION;
         ELSE
@@ -39,7 +39,7 @@ BEGIN
 
         -- 1. Kiểm tra tài khoản khách hàng hợp lệ. Khóa dòng khách (UPDLOCK, HOLDLOCK, gán vào biến, không phát
         -- result set) TRƯỚC khóa suất chiếu: các đơn song song của cùng một khách bị xếp hàng, nên giới hạn số đơn
-        -- đang giữ chỗ bên dưới không thể bị vượt bằng race. Thứ tự khóa luôn là khách -> suất chiếu -> ghế.
+        -- đang giữ chỗ bên dưới không thể bị vượt bằng race. R2.1 thêm parent trước suất/ghế.
         DECLARE @KhoaKhach INT;
         SELECT @KhoaKhach = NguoiDungID
         FROM dbo.NGUOIDUNG WITH (UPDLOCK, HOLDLOCK)
@@ -58,27 +58,34 @@ BEGIN
             ;THROW 50028, N'Bạn đang giữ chỗ tối đa số đơn cho phép. Hãy thanh toán hoặc chờ đơn cũ hết hạn.', 1;
         END
 
-        -- 2. Kiểm tra suất chiếu hợp lệ (còn mở bán và chưa bắt đầu)
-        DECLARE @PhongID INT;
-        DECLARE @TrangThaiSuatChieu NVARCHAR(50);
-        DECLARE @ThoiGianBatDau DATETIME2;
-
-        SELECT
-            @PhongID = PhongID,
-            @TrangThaiSuatChieu = TrangThai,
-            @ThoiGianBatDau = ThoiGianBatDau
-        FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK)
-        WHERE SuatChieuID = @SuatChieuID;
-
+        -- R2.1 discovery is an RCSI read, without retained child locks. Never invert R1 room -> show.
+        DECLARE @PhongID INT, @PhimID INT, @RapID INT, @LockedID INT;
+        SELECT @PhongID = s.PhongID, @PhimID = s.PhimID, @RapID = p.RapID
+        FROM dbo.SUATCHIEU s JOIN dbo.PHONGCHIEU p ON p.PhongID = s.PhongID
+        WHERE s.SuatChieuID = @SuatChieuID;
         IF @PhongID IS NULL
-        BEGIN
-            ;THROW 50021, N'Suất chiếu không tồn tại.', 1;
-        END
+            THROW 50021, N'Suất chiếu không tồn tại.', 1;
 
-        IF @TrangThaiSuatChieu <> N'Mở bán' OR @ThoiGianBatDau <= dbo.fn_BayGio()
-        BEGIN
-            ;THROW 50022, N'Suất chiếu đã kết thúc, đã đóng bán hoặc bị hủy.', 1;
-        END
+        -- Shared parent locks retain current movie dates/status and cinema status until commit.
+        -- Existing parent UPDATE statements need X locks and therefore coordinate without rewrites.
+        SELECT @LockedID = PhimID FROM dbo.PHIM WITH (HOLDLOCK) WHERE PhimID = @PhimID;
+        SET @LockedID = NULL;
+        SELECT @LockedID = RapID FROM dbo.RAPCHIEUPHIM WITH (HOLDLOCK) WHERE RapID = @RapID;
+        SET @LockedID = NULL;
+        SELECT @LockedID = PhongID FROM dbo.PHONGCHIEU WITH (UPDLOCK, HOLDLOCK)
+        WHERE PhongID = @PhongID AND RapID = @RapID;
+        IF @LockedID IS NULL
+            THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.', 1;
+        SET @LockedID = NULL;
+        SELECT @LockedID = SuatChieuID FROM dbo.SUATCHIEU WITH (UPDLOCK, HOLDLOCK)
+        WHERE SuatChieuID = @SuatChieuID AND PhongID = @PhongID AND PhimID = @PhimID;
+        -- A concurrent edit may change the discovered movie. Reject and reload instead of locking
+        -- a different movie after the child, which would violate the parent-first protocol.
+        IF @LockedID IS NULL OR NOT EXISTS (
+            SELECT 1 FROM dbo.vw_LichChieuChiTiet
+            WHERE SuatChieuID = @SuatChieuID AND IsBookable = 1
+        )
+            THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.', 1;
 
         -- 2b. Giải phóng các đơn đã quá hạn giữ ghế của suất chiếu này (đã khóa suất chiếu ở trên)
         EXEC dbo.sp_Order_ExpirePending @SuatChieuID = @SuatChieuID, @TraVeKetQua = 0;
@@ -208,6 +215,11 @@ BEGIN
         DECLARE @TongTienDoAn DECIMAL(18,2) = 0;
         SELECT @TongTienDoAn = ISNULL(SUM(SoLuong * DonGia), 0) FROM @BangChiTietDoAn;
 
+        -- Re-check DB time immediately before the first booking write (promotion usage/order).
+        -- Resource/seat locks above remain held; a parent cannot change between check and commit.
+        IF NOT EXISTS (SELECT 1 FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID = @SuatChieuID AND IsBookable = 1)
+            THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.', 1;
+
         -- 8. TÍNH KHUYẾN MÃI (NẾU CÓ)
         DECLARE @KhuyenMaiID INT = NULL;
         DECLARE @TienGiamGia DECIMAL(18,2) = 0;
@@ -215,6 +227,18 @@ BEGIN
 
         IF @MaKhuyenMai IS NOT NULL AND LTRIM(RTRIM(@MaKhuyenMai)) <> ''
         BEGIN
+            DECLARE @LockedPromotionUsage INT;
+            -- R2.2: promotion follows booking resources/products in the lock hierarchy.
+            -- Lock BEFORE validation; the current state and final quota stay protected
+            -- until the owning transaction commits/rolls back (also for caller transactions).
+            -- Read a non-covered column as well as the ID: the unique code index
+            -- alone does not protect status/quota updates on the clustered row.
+            SELECT @KhuyenMaiID = KhuyenMaiID, @LockedPromotionUsage = SoLuongDaDung
+            FROM dbo.KHUYENMAI WITH (UPDLOCK, HOLDLOCK, INDEX(UQ_KHUYENMAI_MaCode))
+            WHERE MaCode = @MaKhuyenMai;
+            IF @KhuyenMaiID IS NULL OR @LockedPromotionUsage < 0
+                THROW 50029, N'Khuyến mãi yêu cầu không còn khả dụng. Vui lòng kiểm tra lại đơn.', 1;
+
             DECLARE @LoaiGiamGia NVARCHAR(20);
             DECLARE @GiaTriGiam DECIMAL(18,2);
             DECLARE @IsValid BIT;
@@ -231,23 +255,25 @@ BEGIN
                 @IsValid = @IsValid OUTPUT,
                 @Message = @Msg OUTPUT;
 
-            IF @IsValid = 1 AND @KhuyenMaiID IS NOT NULL
-            BEGIN
-                -- Chặn cứng lần nữa: giảm tối đa 99% tổng tạm tính, tổng đơn luôn > 0
-                DECLARE @TranGiam DECIMAL(18,2) = ROUND(@TongTruocGiam * dbo.fn_GioiHanGiamGiaPhanTram() / 100.0, 2, 1);
-                IF @TienGiamGia > @TranGiam SET @TienGiamGia = @TranGiam;
+            IF ISNULL(@IsValid, 0) <> 1 OR @KhuyenMaiID IS NULL
+                THROW 50029, N'Khuyến mãi yêu cầu không còn khả dụng. Vui lòng kiểm tra lại đơn.', 1;
 
-                -- Khóa và tăng số lượng đã dùng của khuyến mãi
-                UPDATE dbo.KHUYENMAI WITH (UPDLOCK, HOLDLOCK)
-                SET SoLuongDaDung = SoLuongDaDung + 1
-                WHERE KhuyenMaiID = @KhuyenMaiID;
-            END
-            ELSE
-            BEGIN
-                SET @KhuyenMaiID = NULL;
-                SET @TienGiamGia = 0;
-            END
+            -- Chặn cứng lần nữa: giảm tối đa 99% tổng tạm tính, tổng đơn luôn > 0
+            DECLARE @TranGiam DECIMAL(18,2) = ROUND(@TongTruocGiam * dbo.fn_GioiHanGiamGiaPhanTram() / 100.0, 2, 1);
+            IF @TienGiamGia > @TranGiam SET @TienGiamGia = @TranGiam;
+
+            -- Validation and consumption use the same protected row/transaction.
+            UPDATE dbo.KHUYENMAI
+            SET SoLuongDaDung = SoLuongDaDung + 1
+            WHERE KhuyenMaiID = @KhuyenMaiID AND SoLuongDaDung < SoLuong;
+            IF @@ROWCOUNT <> 1
+                THROW 50029, N'Khuyến mãi yêu cầu không còn khả dụng. Vui lòng kiểm tra lại đơn.', 1;
         END
+
+        -- Promotion acquisition can wait. Keep R2.1's final DB-time check current
+        -- before order writes; rejection also rolls back any promotion consumption.
+        IF NOT EXISTS (SELECT 1 FROM dbo.vw_LichChieuChiTiet WHERE SuatChieuID = @SuatChieuID AND IsBookable = 1)
+            THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.', 1;
 
         -- 9. TẠO BẢN GHI DONDATVE
         INSERT INTO dbo.DONDATVE

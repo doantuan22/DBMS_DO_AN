@@ -10,8 +10,16 @@ function run(middleware, req) {
 test('authentication requires a bearer token and attaches DB-reloaded identity', async () => {
   let loadedId;
   const authenticate = createAuthenticate({
-    verify: (token) => token === 'valid' ? { userId: 23 } : (() => { throw Object.assign(new Error(), { status: 401, code: 'UNAUTHENTICATED' }); })(),
-    loadUser: async (id) => { loadedId = id; return { userId: id, role: 'ADMIN', permissions: [] }; },
+    verify: (token) =>
+      token === 'valid'
+        ? { userId: 23 }
+        : (() => {
+            throw Object.assign(new Error(), { status: 401, code: 'UNAUTHENTICATED' });
+          })(),
+    loadUser: async (id) => {
+      loadedId = id;
+      return { userId: id, role: 'ADMIN', permissions: [] };
+    },
   });
   const missing = await run(authenticate, { get: () => undefined });
   assert.equal(missing.status, 401);

@@ -6,12 +6,10 @@ let poolPromise = null;
 // Single shared connection pool for the whole process.
 export function getPool() {
   if (!poolPromise) {
-    poolPromise = new sql.ConnectionPool({ ...databaseConfig })
-      .connect()
-      .catch((err) => {
-        poolPromise = null;
-        throw err;
-      });
+    poolPromise = new sql.ConnectionPool({ ...databaseConfig }).connect().catch((err) => {
+      poolPromise = null;
+      throw err;
+    });
   }
   return poolPromise;
 }

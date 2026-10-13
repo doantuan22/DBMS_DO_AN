@@ -14,7 +14,7 @@ export const RESOURCE_STATUSES = Object.freeze({
   showtimes: ['Mở bán', 'Đóng bán', 'Đã hủy', 'Hoàn thành'],
   cinemaImages: ['Hoạt động', 'Tạm ẩn'],
 });
-export const DAY_TYPES = ['Ngày thường', 'Cuối tuần', 'Ngày lễ', 'Tất cả'];
+export const DAY_TYPES = Object.freeze(['Ngày thường', 'Cuối tuần', 'Tất cả']);
 export const PRODUCT_TYPES = ['Bắp rang', 'Nước ngọt', 'Combo', 'Snack', 'Khác'];
 export const DISCOUNT_TYPES = ['Phần trăm', 'Số tiền', 'PERCENT', 'FIXED'];
 export const AGE_RATINGS = ['P', 'K', 'T13', 'T16', 'T18', 'C'];

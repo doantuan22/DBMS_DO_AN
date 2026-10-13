@@ -24,13 +24,20 @@ function groupByRow(seats) {
   return [...rows];
 }
 
-export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice }) {
+export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice, disabled = false }) {
   const rows = useMemo(() => groupByRow(seats), [seats]);
   return (
     <section className="booking-section seat-map-container" aria-labelledby="seat-map-heading">
       <h2 id="seat-map-heading">Chọn ghế</h2>
-      <p className="seat-map__counter">Đã chọn {selectedSeatIds.length}/{MAX_SEATS_PER_ORDER} ghế{selectedSeatIds.length >= MAX_SEATS_PER_ORDER ? ' — đã đạt tối đa' : ''}.</p>
-      {limitNotice && <p className="form-error seat-map__notice" role="alert">{limitNotice}</p>}
+      <p className="seat-map__counter">
+        Đã chọn {selectedSeatIds.length}/{MAX_SEATS_PER_ORDER} ghế
+        {selectedSeatIds.length >= MAX_SEATS_PER_ORDER ? ' — đã đạt tối đa' : ''}.
+      </p>
+      {limitNotice && (
+        <p className="form-error seat-map__notice" role="alert">
+          {limitNotice}
+        </p>
+      )}
       <div className="seat-map__screen" aria-hidden="true">
         <div className="seat-map__screen-bar" />
         <span className="seat-map__screen-label">Màn hình</span>
@@ -38,7 +45,9 @@ export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice 
       <div className="seat-map__rows" aria-label="Sơ đồ ghế">
         {rows.map(([row, rowSeats]) => (
           <div key={row} className="seat-row">
-            <span className="seat-row__label" aria-hidden="true">{row}</span>
+            <span className="seat-row__label" aria-hidden="true">
+              {row}
+            </span>
             <div className="seat-row__seats">
               {rowSeats.map((seat) => (
                 <button
@@ -49,21 +58,24 @@ export default function SeatMap({ seats, selectedSeatIds, onToggle, limitNotice 
                   data-status={seat.status}
                   aria-label={`${seat.label} — ${seat.status}`}
                   aria-pressed={selectedSeatIds.includes(seat.id)}
-                  disabled={seat.status !== SELECTABLE_STATUS}
+                  disabled={disabled || seat.status !== SELECTABLE_STATUS}
                   onClick={() => onToggle(seat.id)}
                 >
                   {seat.label}
                 </button>
               ))}
             </div>
-            <span className="seat-row__label" aria-hidden="true">{row}</span>
+            <span className="seat-row__label" aria-hidden="true">
+              {row}
+            </span>
           </div>
         ))}
       </div>
       <ul className="seat-map__legend" aria-label="Chú thích sơ đồ ghế">
         {LEGEND.map(([kind, label]) => (
           <li key={kind} className="seat-map__legend-item">
-            <span className={`seat-map__legend-box seat-map__legend-box--${kind}`} />{label}
+            <span className={`seat-map__legend-box seat-map__legend-box--${kind}`} />
+            {label}
           </li>
         ))}
       </ul>

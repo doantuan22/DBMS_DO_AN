@@ -14,7 +14,8 @@ export const getMovies = async (filters = {}, options = {}) => {
   return result.movies;
 };
 
-export const getMovieDetail = (movieId, options = {}) => request(`/movies/${encodeURIComponent(movieId)}`, options);
+export const getMovieDetail = (movieId, options = {}) =>
+  request(`/movies/${encodeURIComponent(movieId)}`, options);
 
 export const getGenres = async (options = {}) => {
   const result = await request('/genres', options);
@@ -32,7 +33,10 @@ export const getCinemaImages = async (cinemaId, options = {}) => {
 };
 
 export const getShowtimes = async (movieId, filters = {}, options = {}) => {
-  const result = await request(`/movies/${encodeURIComponent(movieId)}/showtimes${queryString(filters)}`, options);
+  const result = await request(
+    `/movies/${encodeURIComponent(movieId)}/showtimes${queryString(filters)}`,
+    options,
+  );
   return result.showtimes;
 };
 
@@ -49,6 +53,8 @@ export const getProducts = async (options = {}) => {
   return result.products;
 };
 
-export const validatePromotion = (body, options = {}) => request('/promotions/validate', { method: 'POST', body, ...options });
+export const validatePromotion = (body, options = {}) =>
+  request('/promotions/validate', { method: 'POST', body, ...options });
 
-export const createBooking = (body, options = {}) => request('/bookings', { method: 'POST', body, ...options });
+export const createBooking = (body, options = {}) =>
+  request('/bookings', { method: 'POST', body, ...options });

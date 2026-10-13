@@ -19,9 +19,9 @@ RETURN
             (g.HangGhe + CAST(g.SoGhe AS VARCHAR(10))) AS TenGhe,
             g.LoaiGhe,
             g.TrangThai AS TrangThaiGheVatLy
-        FROM dbo.SUATCHIEU sc
+        FROM dbo.vw_LichChieuChiTiet sc
         INNER JOIN dbo.GHE g ON sc.PhongID = g.PhongID
-        WHERE sc.SuatChieuID = @SuatChieuID
+        WHERE sc.SuatChieuID = @SuatChieuID AND sc.IsBookable = 1
     ),
     GheChiemCho AS (
         -- Mức 2 = đã bán (đơn đã thanh toán), mức 1 = đang giữ chỗ chờ thanh toán

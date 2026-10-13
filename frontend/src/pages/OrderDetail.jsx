@@ -2,18 +2,37 @@ import { useAuth } from '../context/AuthContext';
 import { userCanAct } from '../utils/authorization';
 import HoldDeadline from '../components/HoldDeadline';
 import { formatDateTime } from '../utils/dateTime';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getOrder } from '../api/ordersApi';
-import { ErrorState, LoadingState } from '../components/CatalogStates';
-import StatusBadge from '../components/primitives/StatusBadge';
-
-const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(value ?? 0);
+import { LoadingState } from '../components/CatalogStates';
+import { PageHeader, StatusBadge, AsyncState } from '../components/ui';
+import AccountNavigation from '../features/customer/AccountNavigation';
+import { OrderAmounts, OrderItems, PaymentHistory } from '../features/customer/OrderReceipt';
+import '../features/customer/customer-account.css';
 
 export default function OrderDetail() {
   const { user } = useAuth();
   const { orderId } = useParams();
+  const scope = `${orderId}:${user?.userId}:${user?.permissions
+    ?.map((item) => item.code)
+    .sort()
+    .join(',')}`;
+  return <OrderContext key={scope} orderId={orderId} user={user} />;
+}
+
+function OrderContext({ orderId, user }) {
   const [resource, setResource] = useState({ status: 'loading' });
+  const request = useRef(0);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    const generation = request;
+    return () => {
+      mounted.current = false;
+      generation.current++;
+    };
+  }, []);
   const [elapsedDeadline, setElapsedDeadline] = useState(null);
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -21,32 +40,30 @@ export default function OrderDetail() {
     return () => clearInterval(timer);
   }, []);
   const load = useCallback(async () => {
+    const generation = ++request.current;
     setResource({ status: 'loading' });
-    try { setResource({ status: 'success', data: (await getOrder(orderId)).order }); } catch (error) { setResource({ status: 'error', error }); }
+    try {
+      const result = await getOrder(orderId);
+      if (mounted.current && generation === request.current)
+        setResource({ status: 'success', data: result.order });
+    } catch (error) {
+      if (mounted.current && generation === request.current)
+        setResource({ status: 'error', error });
+    }
   }, [orderId]);
-  useEffect(() => { void Promise.resolve().then(load); }, [load]);
+  useEffect(() => {
+    void Promise.resolve().then(load);
+  }, [load]);
   const onElapsed = useCallback(() => {
     if (elapsedDeadline === resource.data?.holdExpiresAt) return;
     setElapsedDeadline(resource.data?.holdExpiresAt);
     void load();
   }, [load, resource.data, elapsedDeadline]);
   if (resource.status === 'loading') return <LoadingState>Đang tải chi tiết đơn…</LoadingState>;
-  if (resource.status === 'error') return <ErrorState error={resource.error} onRetry={load} />;
+  if (resource.status === 'error') return <section className="catalog-page"><PageHeader title="Chi tiết đơn" breadcrumbs={[{label:'Đơn của tôi',to:'/orders'}]} /><AsyncState status="error" error={resource.error} onRetry={load} /></section>;
   const order = resource.data;
-  return <section className="catalog-page"><p className="catalog-eyebrow">ĐƠN #{order.id}</p><h1>{order.movieTitle}</h1>
-    <p>{order.cinemaName} · {order.roomName} · {formatDateTime(order.startsAt)}</p><p>Trạng thái đơn: <StatusBadge status={order.status} /></p>
-    {order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}
-    {order.compensation && <p>Điểm bồi thường đã cộng: {order.compensation.points}.</p>}
-    {order.status === 'Chờ thanh toán' && <HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} />}
-    <p>Ghế: {order.seatLabels || order.tickets.map((ticket) => ticket.label).join(', ')}</p>
-    <p>Vé: {money(order.ticketTotal)} · Đồ ăn: {money(order.productTotal)} · Giảm giá: {money(order.discountTotal)} · <strong>Tổng: {money(order.total)}</strong></p>
-    <h2>Vé</h2><ul>{order.tickets.map((ticket) => <li key={ticket.id}>{ticket.label} · {ticket.type} · {money(ticket.price)} · {ticket.status}</li>)}</ul>
-    <h2>Đồ ăn</h2>{order.products.length ? <ul>{order.products.map((product) => <li key={product.id}>{product.quantity} × {product.name} · {money(product.total)}</li>)}</ul> : <p>Không có đồ ăn.</p>}
-    <h2>Lịch sử thanh toán</h2>{order.payments.length ? <ul>{order.payments.map((payment) => <li key={payment.id}>#{payment.id} · {payment.method} · {money(payment.amount)} · {payment.status} · {payment.transactionCode}</li>)}</ul> : <p>Chưa có giao dịch thanh toán.</p>}
-    <div className="catalog-actions">
-      {userCanAct(user, 'KHACH_HANG', 'THANH_TOAN') && order.status === 'Chờ thanh toán' && elapsedDeadline !== order.holdExpiresAt && Date.parse(order.holdExpiresAt) > now && <Link className="catalog-button" to={`/orders/${order.id}/payment`}>Thanh toán đơn này</Link>}
-      {userCanAct(user, 'KHACH_HANG', 'GUI_KHIEU_NAI') && <Link className="catalog-button catalog-button--secondary" to={`/complaints?orderId=${order.id}`}>Gửi khiếu nại về đơn này</Link>}
-      <Link className="catalog-button catalog-button--secondary" to="/orders">Quay lại đơn của tôi</Link>
-    </div>
+  return <section className="catalog-page customer-journey"><AccountNavigation /><PageHeader title={`Đơn #${order.id}`} description={order.movieTitle} breadcrumbs={[{label:'Đơn của tôi',to:'/orders'},{label:`Đơn #${order.id}`}]} />
+    <section className="customer-panel customer-status-panel"><h2>Trạng thái đơn · <StatusBadge status={order.status} /></h2><p>{order.cinemaName} · {order.roomName} · {order.format}</p><p>{formatDateTime(order.startsAt)}</p><p>Đặt lúc: {formatDateTime(order.bookedAt)}</p>{order.status==='Chờ thanh toán' && <><HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} /><p>Hoàn tất thanh toán trong thời gian giữ ghế.</p></>}{order.status==='Đã thanh toán' && <p>Đơn đã thanh toán. Thông tin vé và giao dịch được lưu bên dưới.</p>}{order.status==='Hết hạn' && <p role="status">Đơn đã hết thời gian giữ ghế. Chọn suất chiếu để đặt lại.</p>}{order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}{order.compensation && <p>Điểm bồi thường đã cộng: {order.compensation.points}.</p>}</section>
+    <div className="customer-journey__layout"><div className="customer-journey__main"><OrderItems order={order} /><PaymentHistory payments={order.payments} /></div><section className="customer-journey__summary" aria-label="Tóm tắt đơn"><OrderAmounts order={order} /><div className="catalog-actions">{userCanAct(user,'KHACH_HANG','THANH_TOAN') && order.status==='Chờ thanh toán' && elapsedDeadline!==order.holdExpiresAt && Date.parse(order.holdExpiresAt)>now && <Link className="catalog-button" to={`/orders/${order.id}/payment`}>Thanh toán đơn này</Link>}{userCanAct(user,'KHACH_HANG','GUI_KHIEU_NAI') && <Link className="catalog-button catalog-button--secondary" to={`/complaints?orderId=${order.id}`}>Gửi khiếu nại về đơn này</Link>}{['Hết hạn','Đã hủy'].includes(order.status) && <Link className="catalog-button" to={`/movies/${order.movieId}`}>Chọn lịch chiếu khác</Link>}</div></section></div><Link className="catalog-back" to="/orders">← Quay lại đơn của tôi</Link>
   </section>;
 }

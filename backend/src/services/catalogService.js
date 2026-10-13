@@ -2,7 +2,8 @@ import { executeProcedure, DbTypes } from '../db/procedureClient.js';
 import { HttpError } from '../utils/httpError.js';
 import { serializeDateOnly as dateOnly } from '../utils/dateTime.js';
 
-const rowsAt = (result, index = 0) => result.recordsets?.[index] ?? (index === 0 ? result.recordset ?? [] : []);
+const rowsAt = (result, index = 0) =>
+  result.recordsets?.[index] ?? (index === 0 ? (result.recordset ?? []) : []);
 
 function movieDto(row) {
   return {
@@ -40,7 +41,16 @@ function cinemaDto(row) {
 }
 
 function cinemaImageDto(row) {
-  return { id: row.HinhAnhRapID, cinemaId: row.RapID, url: row.URL, description: row.MoTa, cover: row.LaAnhDaiDien, displayOrder: row.ThuTuHienThi, status: row.TrangThai, createdAt: row.NgayTao };
+  return {
+    id: row.HinhAnhRapID,
+    cinemaId: row.RapID,
+    url: row.URL,
+    description: row.MoTa,
+    cover: row.LaAnhDaiDien,
+    displayOrder: row.ThuTuHienThi,
+    status: row.TrangThai,
+    createdAt: row.NgayTao,
+  };
 }
 
 function showtimeDto(row) {
@@ -123,7 +133,9 @@ export function createCatalogService({ execute = executeProcedure } = {}) {
   }
 
   async function listCinemaImages(cinemaId) {
-    const result = await execute('CINEMA_GET_IMAGES', { RapID: { type: DbTypes.Int, value: cinemaId } });
+    const result = await execute('CINEMA_GET_IMAGES', {
+      RapID: { type: DbTypes.Int, value: cinemaId },
+    });
     return (result.recordset ?? []).map(cinemaImageDto);
   }
 
@@ -145,7 +157,15 @@ export function createCatalogService({ execute = executeProcedure } = {}) {
     return showtimeDto(row);
   }
 
-  return { listGenres, listMovies, getMovieDetail, listCinemas, listCinemaImages, listShowtimes, getShowtimeDetail };
+  return {
+    listGenres,
+    listMovies,
+    getMovieDetail,
+    listCinemas,
+    listCinemaImages,
+    listShowtimes,
+    getShowtimeDetail,
+  };
 }
 
 export const catalogService = createCatalogService();

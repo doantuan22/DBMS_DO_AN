@@ -8,7 +8,8 @@ function positiveInteger(value, field) {
     throw new HttpError(400, 'INVALID_REQUEST', `${field} must be a positive integer.`);
   }
   const parsed = Number(value);
-  if (!Number.isSafeInteger(parsed) || parsed > 2147483647) throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
+  if (!Number.isSafeInteger(parsed) || parsed > 2147483647)
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} is invalid.`);
   return parsed;
 }
 
@@ -19,16 +20,22 @@ function queryObject(query) {
 function rejectUnknownQuery(query, allowed) {
   const unsupported = Object.keys(query).filter((key) => !allowed.has(key));
   if (unsupported.length) {
-    throw new HttpError(400, 'UNKNOWN_QUERY_PARAMETER', 'Request contains unsupported query parameters.');
+    throw new HttpError(
+      400,
+      'UNKNOWN_QUERY_PARAMETER',
+      'Request contains unsupported query parameters.',
+    );
   }
 }
 
 function optionalText(value, field, maxLength) {
   if (value === undefined || value === '') return null;
-  if (typeof value !== 'string') throw new HttpError(400, 'INVALID_REQUEST', `${field} must be text.`);
+  if (typeof value !== 'string')
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be text.`);
   const normalized = value.trim();
   if (!normalized) return null;
-  if (normalized.length > maxLength) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
+  if (normalized.length > maxLength)
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
   return normalized;
 }
 

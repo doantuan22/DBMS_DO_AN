@@ -17,6 +17,9 @@ CREATE OR ALTER PROCEDURE dbo.sp_Promotion_Validate
 AS
 BEGIN
     SET NOCOUNT ON;
+    -- PREVIEW ONLY for HTTP callers: no writes, quota reservation or retained locks.
+    -- Booking calls this after taking its own promotion UPDLOCK/HOLDLOCK, so the
+    -- same validation/formula becomes authoritative inside the booking transaction.
     -- R3B: current account, actor eligibility, then every required permission.
     IF NOT EXISTS (SELECT 1 FROM dbo.NGUOIDUNG WHERE NguoiDungID = @NguoiDungID AND TrangThai = N'Hoạt động')
         THROW 50300, N'Tài khoản không tồn tại hoặc đã bị khóa.', 1;
@@ -30,6 +33,9 @@ BEGIN
     SET @IsValid = 0;
     SET @TienGiam = 0;
     SET @KhuyenMaiID = NULL;
+    SET @LoaiGiamGia = NULL;
+    SET @GiaTriGiam = NULL;
+    SET @Message = NULL;
 
     DECLARE @DonHangToiThieu DECIMAL(18,2);
     DECLARE @GiamToiDa DECIMAL(18,2);
@@ -65,9 +71,22 @@ BEGIN
         RETURN;
     END
 
-    IF dbo.fn_BayGio() < @NgayBatDau OR dbo.fn_BayGio() > @NgayKetThuc
+    -- Capture DB time AFTER the read (and any lock wait), at the stored precision.
+    DECLARE @Now DATETIME2(7) = dbo.fn_BayGio();
+    IF @Now < @NgayBatDau OR @Now > @NgayKetThuc
     BEGIN
         SET @Message = N'Mã khuyến mãi chưa tới ngày áp dụng hoặc đã hết hạn.';
+        RETURN;
+    END
+
+    -- Re-check existing CHECK semantics too; no new type, scope or formula.
+    IF @LoaiGiamGia NOT IN (N'Phần trăm', N'PERCENT', N'Số tiền', N'FIXED')
+       OR @GiaTriGiam <= 0
+       OR (@LoaiGiamGia IN (N'Phần trăm', N'PERCENT') AND @GiaTriGiam > 99)
+       OR @DonHangToiThieu < 0 OR @GiamToiDa < 0
+       OR @SoLuong < 0 OR @SoLuongDaDung < 0 OR @NgayKetThuc < @NgayBatDau
+    BEGIN
+        SET @Message = N'Điều kiện khuyến mãi không hợp lệ.';
         RETURN;
     END
 

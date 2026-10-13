@@ -1,0 +1,76 @@
+.admin-rooms { display: grid; gap: var(--space-6); min-width: 0; }
+.admin-rooms__eyebrow { margin: 0 0 var(--space-2); color: var(--color-primary-dark); font-size: var(--font-size-xs); font-weight: 700; letter-spacing: .08em; }
+.admin-rooms .ui-page-header { margin-bottom: 0; }
+.admin-rooms__panel { min-width: 0; padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-xl); background: var(--color-surface); box-shadow: var(--shadow-sm); }
+.admin-rooms__panel h2 { margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-heading); }
+.admin-rooms__panel > h2 { margin-bottom: var(--space-4); }
+.admin-rooms .ui-filter-bar { border: 0; padding: 0; box-shadow: none; background: none; }
+.admin-rooms .ui-filter-bar__fields { display: grid; grid-template-columns: minmax(200px, 1.3fr) minmax(200px, 1.5fr) repeat(2, minmax(140px, 1fr)); align-items: start; gap: var(--space-4); }
+.admin-rooms .manager-resource-select { display: grid; gap: var(--space-2); }
+.admin-rooms .manager-resource-select label { display: grid; gap: var(--space-2); font-size: var(--font-size-sm); font-weight: 600; }
+.admin-rooms .manager-resource-select input, .admin-rooms .manager-resource-select select { box-sizing: border-box; width: 100%; min-height: 44px; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); background: var(--color-surface); color: var(--color-text); font: inherit; font-weight: 400; }
+.admin-rooms__muted, .admin-rooms .manager-resource-select__help { color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: 400; }
+.admin-rooms__list-heading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); }
+.admin-rooms__list-heading p { margin: var(--space-2) 0 0; }
+.admin-rooms__list-tools { display: flex; gap: var(--space-3); align-items: flex-end; }
+.admin-rooms__list-tools .ui-form-field { width: 8rem; }
+.admin-rooms__table th, .admin-rooms__table td { vertical-align: middle; }
+.admin-rooms__table th { background: var(--color-page); }
+.admin-rooms__table td:nth-child(2) { min-width: 11rem; }
+.admin-rooms__table td:last-child { min-width: 13rem; }
+.admin-rooms__room { display: flex; align-items: center; gap: var(--space-3); }
+.admin-rooms__room-icon { display: inline-flex; padding: var(--space-2); flex-shrink: 0; border-radius: var(--radius-md); background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.admin-rooms__room strong { overflow-wrap: anywhere; }
+.admin-rooms__format { display: inline-flex; font-weight: 600; }
+.admin-rooms__seat-count { white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
+.admin-rooms__row-actions { display: grid; gap: var(--space-2); justify-items: start; }
+.admin-rooms__seats-link { text-decoration: none; min-height: 40px; }
+.admin-rooms__seats-link svg { width: 18px; height: 18px; }
+.admin-rooms__edit-actions { display: flex; gap: var(--space-2); }
+.admin-rooms__danger-actions summary { list-style: none; cursor: pointer; min-height: 40px; }
+.admin-rooms__danger-actions summary::-webkit-details-marker { display: none; }
+.admin-rooms__danger-actions[open] { display: grid; gap: var(--space-2); justify-items: start; }
+.admin-rooms__delete { color: var(--color-danger-text); }
+.admin-rooms__delete:hover { background: var(--color-danger-subtle); }
+.admin-rooms__choose { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-12) var(--space-4); text-align: center; background: var(--color-page); border: 1px dashed var(--color-border); border-radius: var(--radius-lg); }
+.admin-rooms__choose-icon { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; color: var(--color-primary-dark); background: var(--color-primary-subtle); border-radius: var(--radius-xl); }
+.admin-rooms__choose h3, .admin-rooms__choose p { margin: 0; }
+.admin-rooms__choose p { max-width: 32rem; color: var(--color-text-muted); }
+.admin-rooms__notice { margin: 0; padding: var(--space-4); background: var(--color-success-subtle); border: 1px solid var(--color-success-border); border-radius: var(--radius-md); color: var(--color-success-text); }
+.ui-dialog--room-drawer { box-sizing: border-box; inset: 0 0 0 auto; margin: 0; width: min(100%, 30rem); max-width: 30rem; height: 100dvh; max-height: 100dvh; border-radius: var(--radius-xl) 0 0 var(--radius-xl); }
+.ui-dialog--room-drawer[open] { display: flex; flex-direction: column; }
+.ui-dialog--room-drawer .ui-dialog__body { flex: 1; min-height: 0; max-height: none; overflow-y: auto; }
+.ui-dialog--room-drawer .ui-dialog__footer { margin-top: auto; }
+.admin-room-editor { display: grid; gap: var(--space-6); }
+.admin-room-editor__info { margin: 0; padding: var(--space-4); background: var(--color-primary-subtle); border-radius: var(--radius-md); color: var(--color-primary-dark); font-size: var(--font-size-sm); }
+.admin-room-editor__validation { color: var(--color-danger-text); }
+@media (max-width: 1280px) { .admin-rooms .ui-filter-bar__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 800px) {
+  .admin-rooms__panel { padding: var(--space-4); }
+  .admin-rooms__list-heading { align-items: flex-start; flex-wrap: wrap; }
+  .admin-rooms__list-tools { width: 100%; justify-content: space-between; }
+  .admin-rooms .ui-data-table-scroll { border: 0; border-radius: 0; overflow: visible; }
+  .admin-rooms__table, .admin-rooms__table tbody { display: block; }
+  .admin-rooms__table caption { display: block; padding: 0 0 var(--space-3); }
+  .admin-rooms__table thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .admin-rooms__table tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-lg); margin-bottom: var(--space-3); }
+  .admin-rooms__table td { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0 !important; padding: 0; border: 0; text-align: left !important; overflow-wrap: anywhere; }
+  .admin-rooms__table td::before { color: var(--color-text-muted); font-size: var(--font-size-xs); font-weight: 600; }
+  .admin-rooms__table td:nth-child(1)::before { content: 'STT'; }
+  .admin-rooms__table td:nth-child(2)::before { content: 'Tên phòng'; }
+  .admin-rooms__table td:nth-child(3)::before { content: 'Rạp'; }
+  .admin-rooms__table td:nth-child(4)::before { content: 'Loại phòng'; }
+  .admin-rooms__table td:nth-child(5)::before { content: 'Số ghế'; }
+  .admin-rooms__table td:nth-child(6)::before { content: 'Trạng thái'; }
+  .admin-rooms__table td:nth-child(7)::before { content: 'Thao tác'; }
+  .admin-rooms__table td:nth-child(2), .admin-rooms__table td:last-child { grid-column: 1 / -1; }
+  .admin-rooms__row-actions { display: flex; flex-wrap: wrap; align-items: center; }
+  .admin-rooms__edit-actions { flex-wrap: wrap; }
+  .admin-rooms__seats-link { flex: 1 0 auto; }
+}
+@media (max-width: 520px) {
+  .admin-rooms .ui-filter-bar__fields { grid-template-columns: minmax(0, 1fr); }
+  .admin-rooms .ui-page-header__actions, .admin-rooms .ui-page-header__actions > button { width: 100%; }
+  .admin-rooms__choose { padding: var(--space-8) var(--space-4); }
+  .ui-dialog--room-drawer { border-radius: 0; }
+}

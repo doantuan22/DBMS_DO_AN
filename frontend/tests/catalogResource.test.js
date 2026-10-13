@@ -3,10 +3,18 @@ import test from 'node:test';
 import { loadResource, localDateString, showtimeFilters } from '../src/services/catalogResource.js';
 
 test('catalog resources represent success, empty results, and errors', async () => {
-  assert.deepEqual(await loadResource(async () => [{ id: 1 }]), { status: 'success', data: [{ id: 1 }] });
+  assert.deepEqual(await loadResource(async () => [{ id: 1 }]), {
+    status: 'success',
+    data: [{ id: 1 }],
+  });
   assert.deepEqual(await loadResource(async () => []), { status: 'empty', data: [] });
   const error = new Error('offline');
-  assert.deepEqual(await loadResource(async () => { throw error; }), { status: 'error', error });
+  assert.deepEqual(
+    await loadResource(async () => {
+      throw error;
+    }),
+    { status: 'error', error },
+  );
 });
 
 test('showtime filters omit unselected values and use a stable local calendar date', () => {

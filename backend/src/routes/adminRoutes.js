@@ -5,23 +5,25 @@ import { requireAdmin } from '../middleware/requireAdmin.js';
 import { requirePermission } from '../middleware/requirePermission.js';
 import * as validators from '../validators/supportValidator.js';
 import { supportService } from '../services/supportService.js';
+import { HttpError } from '../utils/httpError.js';
+import { createStaffBookingRouter } from './staffBookingRoutes.js';
 
 const router = Router();
 router.use(authenticate, requireAdmin);
+router.use('/bookings', requirePermission('DAT_VE'), createStaffBookingRouter('ADMIN'));
+// Retired RBAC URLs remain explicit refusal points for old clients.
+router.all(
+  ['/roles', '/roles/:roleId', '/roles/:roleId/permissions', '/permissions', '/permissions/:permissionId'],
+  (req, res, next) => {
+    if (req.method === 'GET' || req.method === 'HEAD') return next();
+    next(new HttpError(403, 'RBAC_FIXED', 'Roles and permissions are fixed and cannot be changed.'));
+  },
+);
 router.get('/dashboard', requirePermission('XEM_BAO_CAO_TOANHE'), admin.dashboard);
 router.get('/users', requirePermission('QL_NGUOIDUNG'), admin.users);
 router.post('/users', requirePermission('QL_NGUOIDUNG'), admin.createUser);
 router.put('/users/:userId/status', requirePermission('QL_NGUOIDUNG'), admin.updateUserStatus);
-router.get('/roles', requirePermission('QL_VAITRO'), admin.roles);
-router.get('/roles/:roleId/permissions', requirePermission('QL_QUYEN'), admin.rolePermissions);
-router.post('/roles', requirePermission('QL_VAITRO'), admin.createRole);
-router.put('/roles/:roleId', requirePermission('QL_VAITRO'), admin.updateRole);
-router.delete('/roles/:roleId', requirePermission('QL_VAITRO'), admin.deleteRole);
-router.get('/permissions', requirePermission('QL_QUYEN'), admin.permissions);
-router.post('/permissions', requirePermission('QL_QUYEN'), admin.createPermission);
-router.put('/permissions/:permissionId', requirePermission('QL_QUYEN'), admin.updatePermission);
-router.delete('/permissions/:permissionId', requirePermission('QL_QUYEN'), admin.deletePermission);
-router.put('/roles/:roleId/permissions', requirePermission('QL_QUYEN'), admin.setRolePermissions);
+router.get('/roles', requirePermission('QL_NGUOIDUNG'), admin.roles);
 router.get('/assignments', requirePermission('PHANCONG_RAP'), admin.assignments);
 router.post('/assignments', requirePermission('PHANCONG_RAP'), admin.createAssignment);
 router.put('/assignments/:assignmentId', requirePermission('PHANCONG_RAP'), admin.updateAssignment);
@@ -31,9 +33,21 @@ router.put('/cinemas/:cinemaId', requirePermission('QL_RAP'), admin.updateCinema
 router.delete('/cinemas/:cinemaId', requirePermission('QL_RAP'), admin.deleteCinema);
 router.get('/cinemas/:cinemaId/images', requirePermission('QL_RAP'), admin.cinemaImages);
 router.post('/cinemas/:cinemaId/images', requirePermission('QL_RAP'), admin.createCinemaImage);
-router.put('/cinemas/:cinemaId/images/:imageId', requirePermission('QL_RAP'), admin.updateCinemaImage);
-router.delete('/cinemas/:cinemaId/images/:imageId', requirePermission('QL_RAP'), admin.deleteCinemaImage);
-router.patch('/cinemas/:cinemaId/images/:imageId/cover', requirePermission('QL_RAP'), admin.setCinemaImageCover);
+router.put(
+  '/cinemas/:cinemaId/images/:imageId',
+  requirePermission('QL_RAP'),
+  admin.updateCinemaImage,
+);
+router.delete(
+  '/cinemas/:cinemaId/images/:imageId',
+  requirePermission('QL_RAP'),
+  admin.deleteCinemaImage,
+);
+router.patch(
+  '/cinemas/:cinemaId/images/:imageId/cover',
+  requirePermission('QL_RAP'),
+  admin.setCinemaImageCover,
+);
 router.get('/rooms', requirePermission('QL_PHONG'), admin.rooms);
 router.post('/rooms', requirePermission('QL_PHONG'), admin.createRoom);
 router.put('/rooms/:roomId', requirePermission('QL_PHONG'), admin.updateRoom);
@@ -48,7 +62,11 @@ router.put('/pricing/:pricingId', requirePermission('QL_BANG_GIA'), admin.update
 router.get('/showtimes', requirePermission('QL_SUAT_CHIEU'), admin.showtimes);
 router.post('/showtimes', requirePermission('QL_SUAT_CHIEU'), admin.createShowtime);
 router.put('/showtimes/:showtimeId', requirePermission('QL_SUAT_CHIEU'), admin.updateShowtime);
-router.post('/showtimes/:showtimeId/cancel', requirePermission('QL_SUAT_CHIEU'), admin.cancelShowtime);
+router.post(
+  '/showtimes/:showtimeId/cancel',
+  requirePermission('QL_SUAT_CHIEU'),
+  admin.cancelShowtime,
+);
 router.get('/movies', requirePermission('QL_DANHMUC_PHIM'), admin.movies);
 router.post('/movies', requirePermission('QL_DANHMUC_PHIM'), admin.createMovie);
 router.put('/movies/:movieId', requirePermission('QL_DANHMUC_PHIM'), admin.updateMovie);
@@ -75,12 +93,52 @@ router.get('/reports/revenue', requirePermission('XEM_BAO_CAO_TOANHE'), admin.re
 // Admin uses the same append-only complaint history procedures and role checks as CSKH.
 const complaintId = (req) => validators.complaintId(req.params.complaintId);
 const wrapSupport = (action) => async (req, res, next) => {
-  try { res.json(await action(req)); } catch (error) { next(error); }
+  try {
+    res.json(await action(req));
+  } catch (error) {
+    next(error);
+  }
 };
-router.get('/complaints', requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => ({ complaints: await supportService.list(req.user.userId, validators.listFilters(req.query)) })));
-router.get('/complaints/:complaintId', requirePermission('QL_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.detail(req.user.userId, complaintId(req)) })));
-router.get('/complaints/:complaintId/order-reference', requirePermission('QL_KHIEUNAI', 'TRA_CUU_DON'), wrapSupport(async (req) => supportService.orderReference(req.user.userId, complaintId(req))));
-router.post('/complaints/:complaintId/processings', requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'), wrapSupport(async (req) => ({ processing: await supportService.addProcessing(req.user.userId, complaintId(req), validators.processing(req.body)) })));
-router.put('/complaints/:complaintId/status', requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'), wrapSupport(async (req) => ({ complaint: await supportService.updateStatus(req.user.userId, complaintId(req), validators.statusUpdate(req.body)) })));
+router.get(
+  '/complaints',
+  requirePermission('QL_KHIEUNAI'),
+  wrapSupport(async (req) => ({
+    complaints: await supportService.list(req.user.userId, validators.listFilters(req.query)),
+  })),
+);
+router.get(
+  '/complaints/:complaintId',
+  requirePermission('QL_KHIEUNAI'),
+  wrapSupport(async (req) => ({
+    complaint: await supportService.detail(req.user.userId, complaintId(req)),
+  })),
+);
+router.get(
+  '/complaints/:complaintId/order-reference',
+  requirePermission('QL_KHIEUNAI', 'TRA_CUU_DON'),
+  wrapSupport(async (req) => supportService.orderReference(req.user.userId, complaintId(req))),
+);
+router.post(
+  '/complaints/:complaintId/processings',
+  requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'),
+  wrapSupport(async (req) => ({
+    processing: await supportService.addProcessing(
+      req.user.userId,
+      complaintId(req),
+      validators.processing(req.body),
+    ),
+  })),
+);
+router.put(
+  '/complaints/:complaintId/status',
+  requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'),
+  wrapSupport(async (req) => ({
+    complaint: await supportService.updateStatus(
+      req.user.userId,
+      complaintId(req),
+      validators.statusUpdate(req.body),
+    ),
+  })),
+);
 
 export default router;

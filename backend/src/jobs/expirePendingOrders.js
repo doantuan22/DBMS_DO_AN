@@ -5,7 +5,11 @@ const DEFAULT_INTERVAL_MS = 60_000;
 
 // Periodically releases orders whose seat hold has expired.
 // Seat availability never depends on this job (the database ignores expired holds); it only cleans data.
-export function startExpirePendingOrdersJob({ intervalMs = DEFAULT_INTERVAL_MS, execute = executeProcedure, log = logger } = {}) {
+export function startExpirePendingOrdersJob({
+  intervalMs = DEFAULT_INTERVAL_MS,
+  execute = executeProcedure,
+  log = logger,
+} = {}) {
   let running = false;
 
   const tick = async () => {

@@ -4,7 +4,7 @@ DECLARE @error int;
 BEGIN TRANSACTION;
 BEGIN TRY
  INSERT dbo.NGUOIDUNG(VaiTroID,HoTen,Email,MatKhau,SoDienThoai)
- SELECT VaiTroID,HoTen,Email,MatKhau,NULL FROM dbo.NGUOIDUNG WHERE Email='admin@cinemadb.vn';
+ SELECT VaiTroID,HoTen,Email,MatKhau,NULL FROM dbo.NGUOIDUNG WHERE Email='admin1@example.test';
 END TRY
 BEGIN CATCH
  SET @error=ERROR_NUMBER();

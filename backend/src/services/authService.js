@@ -5,7 +5,8 @@ import { HttpError } from '../utils/httpError.js';
 import { serializeDateOnly } from '../utils/dateTime.js';
 
 const ACTIVE = 'Hoạt động';
-const invalidCredentials = () => new HttpError(401, 'INVALID_CREDENTIALS', 'Email or password is incorrect.');
+const invalidCredentials = () =>
+  new HttpError(401, 'INVALID_CREDENTIALS', 'Email or password is incorrect.');
 
 function sqlErrorNumber(error) {
   return error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
@@ -13,12 +14,21 @@ function sqlErrorNumber(error) {
 
 function mapProcedureError(error) {
   switch (sqlErrorNumber(error)) {
-    case 50400: throw new HttpError(400, 'INVALID_BIRTH_DATE', 'Birth date must not be in the future.');
-    case 50010: throw new HttpError(409, 'EMAIL_IN_USE', 'Email is already registered.');
+    case 50400:
+      throw new HttpError(400, 'INVALID_BIRTH_DATE', 'Birth date must not be in the future.');
+    case 50010:
+      throw new HttpError(409, 'EMAIL_IN_USE', 'Email is already registered.');
     case 50011:
-    case 50015: throw new HttpError(409, 'PHONE_IN_USE', 'Phone number is already registered.');
-    case 50012: throw new HttpError(503, 'AUTH_CONFIGURATION_ERROR', 'Customer registration is not configured.');
-    default: throw error;
+    case 50015:
+      throw new HttpError(409, 'PHONE_IN_USE', 'Phone number is already registered.');
+    case 50012:
+      throw new HttpError(
+        503,
+        'AUTH_CONFIGURATION_ERROR',
+        'Customer registration is not configured.',
+      );
+    default:
+      throw error;
   }
 }
 
@@ -63,16 +73,21 @@ export function createAuthService({
   async function registerCustomer(input) {
     const passwordHash = await hash(input.MatKhau);
     try {
-      const result = await executeWithOutputs('AUTH_REGISTER_CUSTOMER', {
-        HoTen: { type: DbTypes.NVarChar(100), value: input.HoTen },
-        Email: { type: DbTypes.VarChar(150), value: input.Email },
-        MatKhauHash: { type: DbTypes.VarChar(255), value: passwordHash },
-        SoDienThoai: { type: DbTypes.VarChar(20), value: input.SoDienThoai },
-        NgaySinh: { type: DbTypes.Date, value: input.NgaySinh },
-        GioiTinh: { type: DbTypes.NVarChar(10), value: input.GioiTinh },
-      }, { NewUserId: DbTypes.Int });
+      const result = await executeWithOutputs(
+        'AUTH_REGISTER_CUSTOMER',
+        {
+          HoTen: { type: DbTypes.NVarChar(100), value: input.HoTen },
+          Email: { type: DbTypes.VarChar(150), value: input.Email },
+          MatKhauHash: { type: DbTypes.VarChar(255), value: passwordHash },
+          SoDienThoai: { type: DbTypes.VarChar(20), value: input.SoDienThoai },
+          NgaySinh: { type: DbTypes.Date, value: input.NgaySinh },
+          GioiTinh: { type: DbTypes.NVarChar(10), value: input.GioiTinh },
+        },
+        { NewUserId: DbTypes.Int },
+      );
       const row = result.recordset?.[0];
-      if (!row) throw new HttpError(500, 'AUTH_RESPONSE_INVALID', 'Registration could not be completed.');
+      if (!row)
+        throw new HttpError(500, 'AUTH_RESPONSE_INVALID', 'Registration could not be completed.');
       return toUserDto(row);
     } catch (error) {
       if (error instanceof HttpError) throw error;
@@ -89,7 +104,8 @@ export function createAuthService({
     if (!(await verify(input.MatKhau, row.MatKhauHash))) throw invalidCredentials();
 
     const permissions = permissionsFrom(result.recordsets?.[1] ?? []);
-    const cinemaAssignments = row.MaVaiTro === 'QUAN_LY_RAP' ? assignmentsFrom(result.recordsets?.[2] ?? []) : [];
+    const cinemaAssignments =
+      row.MaVaiTro === 'QUAN_LY_RAP' ? assignmentsFrom(result.recordsets?.[2] ?? []) : [];
     const token = createToken(row.NguoiDungID);
     return { ...token, user: toUserDto(row, permissions, cinemaAssignments) };
   }
@@ -97,14 +113,24 @@ export function createAuthService({
   async function getCurrentUser(userId) {
     const [profileResult, permissionsResult] = await Promise.all([
       execute('USER_GET_CURRENT', { NguoiDungID: { type: DbTypes.Int, value: userId } }),
-      execute('RBAC_GET_PERMISSIONS_BY_USER', { NguoiDungID: { type: DbTypes.Int, value: userId } }),
+      execute('RBAC_GET_PERMISSIONS_BY_USER', {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
+      }),
     ]);
     const row = profileResult.recordset?.[0];
-    if (!row || row.TrangThai !== ACTIVE) throw new HttpError(401, 'UNAUTHENTICATED', 'Authentication required.');
+    if (!row || row.TrangThai !== ACTIVE)
+      throw new HttpError(401, 'UNAUTHENTICATED', 'Authentication required.');
     const permissions = permissionsFrom(permissionsResult.recordset ?? []);
-    const cinemaAssignments = row.MaVaiTro === 'QUAN_LY_RAP'
-      ? assignmentsFrom((await execute('MANAGER_LIST_ASSIGNED_CINEMAS', { NguoiDungID: { type: DbTypes.Int, value: userId } })).recordset ?? [])
-      : [];
+    const cinemaAssignments =
+      row.MaVaiTro === 'QUAN_LY_RAP'
+        ? assignmentsFrom(
+            (
+              await execute('MANAGER_LIST_ASSIGNED_CINEMAS', {
+                NguoiDungID: { type: DbTypes.Int, value: userId },
+              })
+            ).recordset ?? [],
+          )
+        : [];
     return toUserDto(row, permissions, cinemaAssignments);
   }
 

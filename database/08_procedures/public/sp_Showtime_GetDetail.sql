@@ -35,6 +35,6 @@ BEGIN
         SoGheDaDat,
         (TongSoGhe - SoGheDaDat) AS SoGheConLai
     FROM dbo.vw_LichChieuChiTiet
-    WHERE SuatChieuID = @SuatChieuID;
+    WHERE SuatChieuID = @SuatChieuID AND IsBookable = 1;
 END;
 GO

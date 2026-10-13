@@ -5,6 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
 
 export async function request(path, { method = 'GET', body, headers, signal } = {}) {
   const token = authTokenStorage.get();
+  const version = authTokenStorage.getVersion();
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers: {
@@ -18,8 +19,10 @@ export async function request(path, { method = 'GET', body, headers, signal } = 
   });
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
-    if (response.status === 401) expireAuthToken();
-    if (response.status === 403 && typeof window !== 'undefined') window.dispatchEvent(new Event('auth:forbidden'));
+    const ownsSession = version === authTokenStorage.getVersion() && token === authTokenStorage.get();
+    if (response.status === 401 && ownsSession) expireAuthToken();
+    if (response.status === 403 && ownsSession && typeof window !== 'undefined')
+      window.dispatchEvent(new Event('auth:forbidden'));
     const error = new Error(payload?.error?.message ?? `HTTP ${response.status}`);
     error.status = response.status;
     error.code = payload?.error?.code;

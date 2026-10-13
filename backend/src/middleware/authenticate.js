@@ -2,7 +2,10 @@ import { authService } from '../services/authService.js';
 import { verifyToken } from '../utils/jwt.js';
 import { HttpError } from '../utils/httpError.js';
 
-export function createAuthenticate({ verify = verifyToken, loadUser = authService.getCurrentUser } = {}) {
+export function createAuthenticate({
+  verify = verifyToken,
+  loadUser = authService.getCurrentUser,
+} = {}) {
   return async function authenticate(req, res, next) {
     const match = /^Bearer\s+([^\s]+)$/i.exec(req.get('authorization') ?? '');
     if (!match) return next(new HttpError(401, 'UNAUTHENTICATED', 'Authentication required.'));

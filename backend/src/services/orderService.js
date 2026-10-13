@@ -2,89 +2,186 @@ import { DbTypes, executeProcedure, executeProcedureWithOutputs } from '../db/pr
 import { HttpError } from '../utils/httpError.js';
 import { isNumericRangeError } from '../utils/sqlErrors.js';
 
-const rowOf = (result, index) => (result.recordsets?.[index] ?? (index === 0 ? result.recordset : []) ?? []);
-const number = (value) => value === null || value === undefined ? null : Number(value);
+const rowOf = (result, index) =>
+  result.recordsets?.[index] ?? (index === 0 ? result.recordset : []) ?? [];
+const number = (value) => (value === null || value === undefined ? null : Number(value));
 
 function orderSummaryDto(row) {
   return {
-    id: row.DonDatVeID, showtimeId: row.SuatChieuID, movieId: row.PhimID,
-    movieTitle: row.TenPhim, posterUrl: row.PosterURL, cinemaId: row.RapID,
-    cinemaName: row.TenRap, roomName: row.TenPhong, startsAt: row.ThoiGianBatDau,
-    endsAt: row.ThoiGianKetThuc, format: row.DinhDang, bookedAt: row.NgayDat,
+    id: row.DonDatVeID,
+    showtimeId: row.SuatChieuID,
+    movieId: row.PhimID,
+    movieTitle: row.TenPhim,
+    posterUrl: row.PosterURL,
+    cinemaId: row.RapID,
+    cinemaName: row.TenRap,
+    roomName: row.TenPhong,
+    startsAt: row.ThoiGianBatDau,
+    endsAt: row.ThoiGianKetThuc,
+    format: row.DinhDang,
+    bookedAt: row.NgayDat,
     holdExpiresAt: row.HanGiuCho ?? null,
-    ticketTotal: number(row.TongTienVe), productTotal: number(row.TongTienDoAn),
-    discountTotal: number(row.TienGiamGia), total: number(row.TongTienThanhToan),
-    status: row.TrangThaiDon, promotionCode: row.MaKhuyenMai, ticketCount: row.SoLuongVe,
-    cancellationReason: row.LyDoHuy ?? null, cancellationNotice: row.ThongBaoHuy ?? null,
+    ticketTotal: number(row.TongTienVe),
+    productTotal: number(row.TongTienDoAn),
+    discountTotal: number(row.TienGiamGia),
+    total: number(row.TongTienThanhToan),
+    status: row.TrangThaiDon,
+    promotionCode: row.MaKhuyenMai,
+    ticketCount: row.SoLuongVe,
+    cancellationReason: row.LyDoHuy ?? null,
+    cancellationNotice: row.ThongBaoHuy ?? null,
     latestPaymentStatus: row.TrangThaiThanhToanMoiNhat,
   };
 }
 
 function ticketDto(row) {
-  return { id: row.VeID, code: row.MaVe, seatId: row.GheID, row: row.HangGhe, number: row.SoGhe, label: row.TenGhe, type: row.LoaiGhe, price: number(row.GiaVe), status: row.TrangThaiVe };
+  return {
+    id: row.VeID,
+    code: row.MaVe,
+    seatId: row.GheID,
+    row: row.HangGhe,
+    number: row.SoGhe,
+    label: row.TenGhe,
+    type: row.LoaiGhe,
+    price: number(row.GiaVe),
+    status: row.TrangThaiVe,
+  };
 }
 
 function productDto(row) {
-  return { id: row.ChiTietDoAnID, productId: row.SanPhamID, name: row.TenSanPham, type: row.LoaiSanPham, quantity: row.SoLuong, unitPrice: number(row.DonGia), total: number(row.ThanhTien) };
+  return {
+    id: row.ChiTietDoAnID,
+    productId: row.SanPhamID,
+    name: row.TenSanPham,
+    type: row.LoaiSanPham,
+    quantity: row.SoLuong,
+    unitPrice: number(row.DonGia),
+    total: number(row.ThanhTien),
+  };
 }
 
 function paymentDto(row) {
-  return { id: row.ThanhToanID, method: row.PhuongThuc, amount: number(row.SoTien), createdAt: row.NgayTao, paidAt: row.NgayThanhToan, transactionCode: row.MaGiaoDich, status: row.TrangThai, note: row.GhiChu };
+  return {
+    id: row.ThanhToanID,
+    method: row.PhuongThuc,
+    amount: number(row.SoTien),
+    createdAt: row.NgayTao,
+    paidAt: row.NgayThanhToan,
+    transactionCode: row.MaGiaoDich,
+    status: row.TrangThai,
+    note: row.GhiChu,
+  };
 }
 
 export function detailDto(result) {
   const row = rowOf(result, 0)[0];
-  if (!row) throw new HttpError(500, 'ORDER_RESPONSE_INVALID', 'Order procedure did not return the order.');
+  if (!row)
+    throw new HttpError(500, 'ORDER_RESPONSE_INVALID', 'Order procedure did not return the order.');
   return {
-    ...orderSummaryDto(row), user: { id: row.NguoiDungID, name: row.HoTenKhachHang, email: row.Email, phone: row.SoDienThoai },
-    roomId: row.PhongID, roomType: row.LoaiPhong, cinemaAddress: row.DiaChiRap,
-    ageRating: row.DoTuoi, durationMinutes: row.ThoiLuong, promotionDescription: row.MoTaKhuyenMai,
-    seatLabels: row.DanhSachGhe, ticketCodes: row.DanhSachMaVe,
-    tickets: rowOf(result, 1).map(ticketDto), products: rowOf(result, 2).map(productDto), payments: rowOf(result, 3).map(paymentDto),
-    compensation: row.DiemBoiThuong == null ? null : { points: number(row.DiemBoiThuong), creditedAt: row.NgayBoiThuong },
+    ...orderSummaryDto(row),
+    user: {
+      id: row.NguoiDungID,
+      name: row.HoTenKhachHang,
+      email: row.Email,
+      phone: row.SoDienThoai,
+    },
+    roomId: row.PhongID,
+    roomType: row.LoaiPhong,
+    cinemaAddress: row.DiaChiRap,
+    ageRating: row.DoTuoi,
+    durationMinutes: row.ThoiLuong,
+    promotionDescription: row.MoTaKhuyenMai,
+    seatLabels: row.DanhSachGhe,
+    ticketCodes: row.DanhSachMaVe,
+    tickets: rowOf(result, 1).map(ticketDto),
+    products: rowOf(result, 2).map(productDto),
+    payments: rowOf(result, 3).map(paymentDto),
+    compensation:
+      row.DiemBoiThuong == null
+        ? null
+        : { points: number(row.DiemBoiThuong), creditedAt: row.NgayBoiThuong },
   };
 }
 
 function paymentAttemptDto(result) {
   const row = rowOf(result, 0)[0];
-  if (!row || row.ThanhToanID === undefined) throw new HttpError(500, 'PAYMENT_RESPONSE_INVALID', 'Payment procedure did not return the attempt.');
-  return { id: row.ThanhToanID, orderId: row.DonDatVeID, method: row.PhuongThuc, amount: number(row.SoTien), createdAt: row.NgayTao, transactionCode: row.MaGiaoDich, status: row.TrangThai, holdExpiresAt: row.HanGiuCho };
+  if (!row || row.ThanhToanID === undefined)
+    throw new HttpError(
+      500,
+      'PAYMENT_RESPONSE_INVALID',
+      'Payment procedure did not return the attempt.',
+    );
+  return {
+    id: row.ThanhToanID,
+    orderId: row.DonDatVeID,
+    method: row.PhuongThuc,
+    amount: number(row.SoTien),
+    createdAt: row.NgayTao,
+    transactionCode: row.MaGiaoDich,
+    status: row.TrangThai,
+    holdExpiresAt: row.HanGiuCho,
+  };
 }
 
-function sqlErrorNumber(error) { return error.number ?? error.originalError?.info?.number ?? error.originalError?.number; }
+function sqlErrorNumber(error) {
+  return error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
+}
 
 function mapOrderError(error) {
   if (error instanceof HttpError) throw error;
-  if (isNumericRangeError(error)) throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
+  if (isNumericRangeError(error))
+    throw new HttpError(400, 'INVALID_REQUEST', 'A numeric value is out of range.');
   switch (sqlErrorNumber(error)) {
     case 50030:
-    case 50033: throw new HttpError(404, 'ORDER_NOT_FOUND', 'Order was not found.');
-    case 50032: throw new HttpError(404, 'PAYMENT_NOT_FOUND', 'Payment attempt was not found.');
+    case 50033:
+      throw new HttpError(404, 'ORDER_NOT_FOUND', 'Order was not found.');
+    case 50032:
+      throw new HttpError(404, 'PAYMENT_NOT_FOUND', 'Payment attempt was not found.');
     case 50031:
-    case 50113: throw new HttpError(409, 'ORDER_NOT_PAYABLE', 'This order can no longer be paid.');
-    case 50111: throw new HttpError(409, 'ORDER_HOLD_EXPIRED', 'The payment hold has expired.');
-    case 50114: throw new HttpError(400, 'INVALID_PAYMENT_RESULT', 'Payment result is invalid.');
-    case 50115: throw new HttpError(409, 'PAYMENT_FINALIZED', 'Payment attempt already has a final result.');
-    case 50121: throw new HttpError(409, 'SHOWTIME_NOT_PAYABLE', 'This showtime is no longer available for payment.');
-    default: throw error;
+    case 50113:
+      throw new HttpError(409, 'ORDER_NOT_PAYABLE', 'This order can no longer be paid.');
+    case 50111:
+      throw new HttpError(409, 'ORDER_HOLD_EXPIRED', 'The payment hold has expired.');
+    case 50114:
+      throw new HttpError(400, 'INVALID_PAYMENT_RESULT', 'Payment result is invalid.');
+    case 50115:
+      throw new HttpError(409, 'PAYMENT_FINALIZED', 'Payment attempt already has a final result.');
+    case 50121:
+      throw new HttpError(
+        409,
+        'SHOWTIME_NOT_PAYABLE',
+        'This showtime is no longer available for payment.',
+      );
+    default:
+      throw error;
   }
 }
 
-export function createOrderService({ execute = executeProcedure, executeWithOutputs = executeProcedureWithOutputs } = {}) {
+export function createOrderService({
+  execute = executeProcedure,
+  executeWithOutputs = executeProcedureWithOutputs,
+} = {}) {
   async function getOrderDetail(userId, id) {
     try {
       const result = await execute('ORDER_GET_DETAIL_BY_CUSTOMER', {
-        NguoiDungID: { type: DbTypes.Int, value: userId }, DonDatVeID: { type: DbTypes.Int, value: id },
+        NguoiDungID: { type: DbTypes.Int, value: userId },
+        DonDatVeID: { type: DbTypes.Int, value: id },
       });
       return detailDto(result);
-    } catch (error) { mapOrderError(error); }
+    } catch (error) {
+      mapOrderError(error);
+    }
   }
 
   async function listOrders(userId) {
     try {
-      const result = await execute('ORDER_LIST_BY_CUSTOMER', { NguoiDungID: { type: DbTypes.Int, value: userId } });
+      const result = await execute('ORDER_LIST_BY_CUSTOMER', {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
+      });
       return rowOf(result, 0).map(orderSummaryDto);
-    } catch (error) { mapOrderError(error); }
+    } catch (error) {
+      mapOrderError(error);
+    }
   }
 
   async function createPaymentAttempt(userId, id, input) {
@@ -92,12 +189,19 @@ export function createOrderService({ execute = executeProcedure, executeWithOutp
       // The payment SP has no user parameter. Its preceding detail call performs
       // the database-owned ownership check; the SP then locks and revalidates state.
       await getOrderDetail(userId, id);
-      const result = await executeWithOutputs('PAYMENT_CREATE_ATTEMPT', {
-        NguoiDungID: { type: DbTypes.Int, value: userId },
-        DonDatVeID: { type: DbTypes.Int, value: id }, PhuongThuc: { type: DbTypes.NVarChar(50), value: input.paymentMethod },
-      }, { ThanhToanID: DbTypes.Int, MaGiaoDich: DbTypes.VarChar(100) });
+      const result = await executeWithOutputs(
+        'PAYMENT_CREATE_ATTEMPT',
+        {
+          NguoiDungID: { type: DbTypes.Int, value: userId },
+          DonDatVeID: { type: DbTypes.Int, value: id },
+          PhuongThuc: { type: DbTypes.NVarChar(50), value: input.paymentMethod },
+        },
+        { ThanhToanID: DbTypes.Int, MaGiaoDich: DbTypes.VarChar(100) },
+      );
       return paymentAttemptDto(result);
-    } catch (error) { mapOrderError(error); }
+    } catch (error) {
+      mapOrderError(error);
+    }
   }
 
   async function updatePaymentResult(userId, id, attemptId, input) {
@@ -113,7 +217,9 @@ export function createOrderService({ execute = executeProcedure, executeWithOutp
       });
       const order = await getOrderDetail(userId, id);
       return { order, payment: order.payments.find((payment) => payment.id === attemptId) };
-    } catch (error) { mapOrderError(error); }
+    } catch (error) {
+      mapOrderError(error);
+    }
   }
 
   return { listOrders, getOrderDetail, createPaymentAttempt, updatePaymentResult };

@@ -17,10 +17,18 @@ BEGIN
     IF dbo.fn_KiemTraQuyenNguoiDung(@ActorID, 'QL_GHE') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
+    SET XACT_ABORT ON;
     DECLARE @OwnTran BIT=CASE WHEN @@TRANCOUNT=0 THEN 1 ELSE 0 END;
     BEGIN TRY
         IF @OwnTran=1 BEGIN TRANSACTION ELSE SAVE TRANSACTION AdminSeatUpdate;
-        IF NOT EXISTS (SELECT 1 FROM dbo.GHE WITH (UPDLOCK,HOLDLOCK) WHERE GheID=@GheID) THROW 50206, N'Ghế không tồn tại.', 1;
+        DECLARE @OldType NVARCHAR(50);
+        SELECT @OldType=LoaiGhe FROM dbo.GHE WITH (UPDLOCK,HOLDLOCK) WHERE GheID=@GheID;
+        IF @OldType IS NULL THROW 50206, N'Ghế không tồn tại.', 1;
+        -- Shared canonical seat lock serializes booking; historical type and
+        -- operational future-ticket restrictions are separate conditions.
+        IF EXISTS (SELECT @LoaiGhe EXCEPT SELECT @OldType)
+           AND EXISTS (SELECT 1 FROM dbo.CHITIETVE WHERE GheID=@GheID)
+            THROW 50207, N'Ghế có lịch sử vé; không thể thay đổi loại ghế.', 1;
         IF dbo.fn_GheCoVeHieuLucSuatTuongLai(@GheID)=1 THROW 50207, N'Ghế có vé hiệu lực ở suất chiếu tương lai.', 1;
         UPDATE dbo.GHE SET LoaiGhe=@LoaiGhe, TrangThai=@TrangThai WHERE GheID=@GheID;
         IF @OwnTran=1 COMMIT TRANSACTION;

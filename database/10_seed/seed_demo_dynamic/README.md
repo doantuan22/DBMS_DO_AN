@@ -1,0 +1,3 @@
+﻿# Demo dynamic v2
+
+[060_showtimes.sql](060_showtimes.sql) dùng fn_BayGio/fn_NgayKinhDoanh/fn_UtcTuGioRap: 96 future trong 12 ngày, optional 4 hôm nay lúc 23h nếu còn ít nhất 15 phút; 12 past. Runtime thật + buffer 30 phút, release window DEMO_SCENARIO. Giữ triggers. [070_transactions.sql](070_transactions.sql) include lifecycle canonical; 6 orders/4 payments/1 review/5 complaints sau chạy mới. Hủy một future show qua SP để có compensation history nên số bookable là 95 hoặc 99. Hold 5 phút thật, tự hết hạn bình thường. Rerun không nhân đôi; stale schedule phải reset có guard. Xem [pipeline](../README.md).

@@ -11,12 +11,15 @@ BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
     DECLARE @OwnTran BIT = CASE WHEN @@TRANCOUNT = 0 THEN 1 ELSE 0 END;
-    DECLARE @Status NVARCHAR(50), @StartsAt DATETIME2, @RapID INT, @Now DATETIME2;
+    DECLARE @Status NVARCHAR(50), @StartsAt DATETIME2, @RapID INT, @PhongID INT, @Now DATETIME2;
     DECLARE @Dummy INT, @Cancelled INT = 0;
     DECLARE @Orders TABLE (DonDatVeID INT PRIMARY KEY, NguoiDungID INT, KhuyenMaiID INT NULL, TrangThai NVARCHAR(50));
     DECLARE @Credits TABLE (DonDatVeID INT, DiemBoiThuong INT);
     BEGIN TRY
         IF @OwnTran = 1 BEGIN TRANSACTION ELSE SAVE TRANSACTION ShowtimeCancelCascade;
+
+        -- Discovery only; canonical writers never move a showtime to another room.
+        SELECT @PhongID=PhongID FROM dbo.SUATCHIEU WHERE SuatChieuID=@SuatChieuID;
 
         -- Customer-first locking matches sp_Booking_Create and payment procedures.
         -- The serializable scan also prevents a new customer row appearing mid-cancel.
@@ -31,10 +34,12 @@ BEGIN
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
 
-        SELECT @Status = sc.TrangThai, @StartsAt = sc.ThoiGianBatDau, @RapID = pc.RapID
-        FROM dbo.SUATCHIEU sc WITH (UPDLOCK, HOLDLOCK)
-        INNER JOIN dbo.PHONGCHIEU pc ON pc.PhongID = sc.PhongID
-        WHERE sc.SuatChieuID = @SuatChieuID;
+        -- Keep existing customer coordination; schedule resources always lock parent first.
+        SELECT @RapID=RapID FROM dbo.PHONGCHIEU WITH (UPDLOCK,HOLDLOCK) WHERE PhongID=@PhongID;
+        IF @RapID IS NULL THROW 50116,N'Suất chiếu không tồn tại.',1;
+        SELECT @Status=TrangThai,@StartsAt=ThoiGianBatDau
+        FROM dbo.SUATCHIEU WITH (UPDLOCK,HOLDLOCK)
+        WHERE SuatChieuID=@SuatChieuID AND PhongID=@PhongID;
         IF @Status IS NULL THROW 50116, N'Suất chiếu không tồn tại.', 1;
         IF EXISTS (SELECT 1 FROM dbo.NGUOIDUNG nd JOIN dbo.VAITRO vt ON vt.VaiTroID=nd.VaiTroID WHERE nd.NguoiDungID=@NguoiDungID AND vt.MaVaiTro='QUAN_LY_RAP')
            AND dbo.fn_KiemTraQuanLyRapScope(@NguoiDungID, @RapID) = 0
@@ -137,6 +142,7 @@ BEGIN
             IF @OwnTran = 1 ROLLBACK TRANSACTION;
             ELSE ROLLBACK TRANSACTION ShowtimeCancelCascade;
         END
+        SET XACT_ABORT OFF;
         ;THROW;
     END CATCH
 END;

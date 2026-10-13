@@ -3,7 +3,14 @@ import { HttpError } from '../utils/httpError.js';
 import { validatePassword } from '../utils/password.js';
 import { birthDate } from '../utils/inputContract.js';
 
-const allowedRegistrationFields = new Set(['HoTen', 'Email', 'MatKhau', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
+const allowedRegistrationFields = new Set([
+  'HoTen',
+  'Email',
+  'MatKhau',
+  'SoDienThoai',
+  'NgaySinh',
+  'GioiTinh',
+]);
 const allowedProfileFields = new Set(['HoTen', 'SoDienThoai', 'NgaySinh', 'GioiTinh']);
 
 function objectBody(body) {
@@ -16,17 +23,25 @@ function objectBody(body) {
 function rejectUnknownFields(body, allowed) {
   const unexpected = Object.keys(body).filter((key) => !allowed.has(key));
   if (unexpected.length) {
-    const containsAccessFields = unexpected.some((key) => /role|vaiTro|permission|quyen|status|trangThai|userId|nguoiDungId/i.test(key));
-    throw new HttpError(400, containsAccessFields ? 'ACCESS_FIELDS_NOT_ALLOWED' : 'UNKNOWN_FIELDS', 'Request contains unsupported fields.');
+    const containsAccessFields = unexpected.some((key) =>
+      /role|vaiTro|permission|quyen|status|trangThai|userId|nguoiDungId/i.test(key),
+    );
+    throw new HttpError(
+      400,
+      containsAccessFields ? 'ACCESS_FIELDS_NOT_ALLOWED' : 'UNKNOWN_FIELDS',
+      'Request contains unsupported fields.',
+    );
   }
 }
 
 function optionalText(value, field, maxLength) {
   if (value === undefined || value === null || value === '') return null;
-  if (typeof value !== 'string') throw new HttpError(400, 'INVALID_REQUEST', `${field} must be text.`);
+  if (typeof value !== 'string')
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} must be text.`);
   const normalized = value.trim();
   if (!normalized) return null;
-  if (normalized.length > maxLength) throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
+  if (normalized.length > maxLength)
+    throw new HttpError(400, 'INVALID_REQUEST', `${field} is too long.`);
   return normalized;
 }
 
@@ -42,7 +57,8 @@ function dateOrNull(value, field) {
 function validateName(value) {
   if (typeof value !== 'string') throw new HttpError(400, 'INVALID_REQUEST', 'HoTen is required.');
   const name = value.trim();
-  if (!name || name.length > 100) throw new HttpError(400, 'INVALID_REQUEST', 'HoTen must be between 1 and 100 characters.');
+  if (!name || name.length > 100)
+    throw new HttpError(400, 'INVALID_REQUEST', 'HoTen must be between 1 and 100 characters.');
   return name;
 }
 
