@@ -120,7 +120,10 @@ export function escalationProcess(value) {
 
 export function adminAssign(value) {
   assertOnlyFields(value, ['staffId', 'reason'], 'UNKNOWN_REQUEST_FIELD');
-  const staffId = value.staffId ? positiveId(value.staffId) : null;
+  if (!value?.staffId) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'staffId is required.');
+  }
+  const staffId = positiveId(value.staffId);
   const reason = value.reason ? optionalText(value.reason, 'reason', 255) : null;
   return { staffId, reason };
 }

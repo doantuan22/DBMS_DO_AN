@@ -62,6 +62,10 @@ function rethrowMappedError(error) {
       throw new HttpError(403, 'STAFF_NOT_ELIGIBLE', 'Tài khoản không đủ điều kiện hoặc không thuộc vai trò CSKH.');
     case 50603:
       throw new HttpError(400, 'INVALID_STAFF_ACCOUNT', 'Tài khoản nhân viên được chỉ định không hợp lệ hoặc không hoạt động.');
+    case 50604:
+      throw new HttpError(400, 'STAFF_ID_REQUIRED', 'Phải chỉ định nhân viên CSKH phụ trách hợp lệ.');
+    case 50605:
+      throw new HttpError(409, 'COMPLAINT_ALREADY_ASSIGNED', 'Nhân viên phụ trách khiếu nại đã được phân công và không được thay đổi trong toàn bộ vòng đời khiếu nại.');
     case 50700:
       throw new HttpError(404, 'ESCALATION_NOT_FOUND', 'Yêu cầu chuyển cấp không tồn tại.');
     case 50701:
@@ -124,19 +128,7 @@ function mapMessage(row) {
   };
 }
 
-function mapAssignmentHistory(row) {
-  return {
-    id: row.LichSuID,
-    complaintId: row.KhieuNaiID,
-    previousStaffId: row.NhanVienCuID,
-    previousStaffName: row.TenNhanVienCu,
-    newStaffId: row.NhanVienMoiID,
-    newStaffName: row.TenNhanVienMoi,
-    actionByName: row.NguoiThucHien,
-    actionAt: row.ThoiGian,
-    reason: row.LyDo,
-  };
-}
+
 
 function mapEscalation(row) {
   return {
@@ -252,7 +244,7 @@ export function createSupportService({ execute = executeProcedure } = {}) {
       const result = await callProcedure('COMPLAINT_ASSIGN_ADMIN', {
         AdminID: int(userId),
         KhieuNaiID: int(complaintId),
-        NhanVienMoiID: int(input.staffId ?? null),
+        NhanVienMoiID: int(input.staffId),
         LyDo: text(255, input.reason ?? null),
       });
       const row = getRows(result)[0];
@@ -261,14 +253,6 @@ export function createSupportService({ execute = executeProcedure } = {}) {
         assignedStaffId: row.NhanVienPhuTrachID,
         message: row.Message,
       };
-    },
-
-    async assignmentHistory(userId, complaintId) {
-      const result = await callProcedure('COMPLAINT_ASSIGNMENT_HISTORY', {
-        NguoiDungID: int(userId),
-        KhieuNaiID: int(complaintId),
-      });
-      return getRows(result).map(mapAssignmentHistory);
     },
 
     async listMessages(userId, complaintId, isInternal = true) {

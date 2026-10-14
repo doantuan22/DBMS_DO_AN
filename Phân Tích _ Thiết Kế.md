@@ -555,11 +555,11 @@ Các quy tắc sau là quyết định nghiệp vụ cuối cùng; chúng nằm 
 | Phim - danh mục | PHIM, THELOAI, PHIM_THELOAI, DIENVIEN, PHIM_DIENVIEN | Thông tin phim và các quan hệ n-n. |
 | Lịch chiếu - giá | SUATCHIEU, BANGGIA | Lập lịch chiếu, định dạng, giá cơ bản và phụ thu. |
 | Đặt vé - bán hàng | KHUYENMAI, DONDATVE, CHITIETVE, SANPHAM, CHITIETDOAN, THANHTOAN | Đơn, vé, đồ ăn, khuyến mãi và giao dịch thanh toán. |
-| Tương tác sau bán & CSKH | DANHGIAPHIM, KHIEUNAI, XULY_KHIEUNAI, TINNHAN_KHIEUNAI, YEUCAU_CHUYENCAP, LICHSU_PHANCONG_KHIEUNAI | Đánh giá phim, hồ sơ khiếu nại, chat 2 chiều, phân công và chuyển cấp Admin. |
+| Tương tác sau bán & CSKH | DANHGIAPHIM, KHIEUNAI, XULY_KHIEUNAI, TINNHAN_KHIEUNAI, YEUCAU_CHUYENCAP | Đánh giá phim, hồ sơ khiếu nại, chat 2 chiều, phân công một lần và chuyển cấp Admin. |
 
 **3.3. Mô hình ERD**
 
-Mô hình ERD của hệ thống quản lý đặt vé xem phim trực tuyến được xây dựng nhằm biểu diễn đầy đủ các thực thể dữ liệu, thuộc tính và mối quan hệ phát sinh từ các nghiệp vụ của hệ thống. Theo thiết kế hiện tại cơ sở dữ liệu gồm 26 bảng được chia thành các nhóm chính: tài khoản – phân quyền, rạp – phòng – ghế – hình ảnh, phim – thể loại – diễn viên, suất chiếu – bảng giá, đặt vé – sản phẩm – thanh toán, đánh giá phim và khiếu nại – chăm sóc khách hàng.
+Mô hình ERD của hệ thống quản lý đặt vé xem phim trực tuyến được xây dựng nhằm biểu diễn đầy đủ các thực thể dữ liệu, thuộc tính và mối quan hệ phát sinh từ các nghiệp vụ của hệ thống. Theo thiết kế chuẩn hóa hoàn chỉnh cơ sở dữ liệu gồm 29 bảng được chia thành các nhóm chính: tài khoản – phân quyền, rạp – phòng – ghế – hình ảnh, phim – thể loại – diễn viên, suất chiếu – bảng giá, đặt vé – sản phẩm – thanh toán, bồi thường hủy suất, đánh giá phim và khiếu nại – chăm sóc khách hàng (với nguyên tắc phân công một lần duy nhất, loại bỏ hoàn toàn cơ chế chuyển giao/lịch sử phân công).
 
 Trong mô hình, bảng NGUOIDUNG giữ vai trò trung tâm đối với các nghiệp vụ liên quan đến tài khoản. Mỗi người dùng thuộc một VAITRO, trong khi quyền của từng vai trò được xác định thông qua bảng trung gian VAITRO_QUYEN liên kết với QUYEN. Đối với khách hàng, các thông tin mở rộng được lưu tại HOSOKHACHHANG. Riêng người dùng có vai trò quản lý rạp có thể được gán cho một hoặc nhiều rạp thông qua bảng PHANCONG_RAP, từ đó giới hạn phạm vi dữ liệu mà quản lý được phép thao tác.
 
@@ -638,10 +638,9 @@ _Hình 3.1: Mô hình ERD hệ thống quản lý đặt vé xem phim trực tuy
 | DONDATVE 1 - n THANHTOAN | Một đơn có thể có nhiều lần thử thanh toán hoặc bồi thường. |
 | NGUOIDUNG 1 - n KHIEUNAI; DONDATVE 0..1 - n KHIEUNAI | Người gửi là bắt buộc; đơn tham chiếu là tùy chọn. |
 | KHIEUNAI 1 - n XULY_KHIEUNAI | Mỗi khiếu nại có lịch sử xử lý theo thời gian. |
-| NGUOIDUNG 0..1 - n KHIEUNAI (NhanVienPhuTrachID) | Mỗi khiếu nại có tối đa một nhân viên CSKH phụ trách tại một thời điểm, NULL khi chưa tiếp nhận. |
+| NGUOIDUNG 0..1 - n KHIEUNAI (NhanVienPhuTrachID) | Mỗi khiếu nại có tối đa một nhân viên CSKH phụ trách duy nhất. Ban đầu là NULL; sau khi Admin phân công hoặc CSKH tiếp nhận lần đầu, giá trị này trở nên bất biến (immutable) trong toàn bộ vòng đời khiếu nại. Không cho phép chuyển giao, phân công lại hay thu hồi (được bảo vệ ở tầng CSDL bởi trigger TRG_KhieuNai_NhanVienPhuTrachBatBien). |
 | KHIEUNAI 1 - n TINNHAN_KHIEUNAI; NGUOIDUNG 1 - n TINNHAN_KHIEUNAI | Lưu hội thoại 2 chiều giữa khách và nhân viên, hỗ trợ ghi chú nội bộ bảo mật. |
-| KHIEUNAI 1 - n YEUCAU_CHUYENCAP; NGUOIDUNG 1 - n YEUCAU_CHUYENCAP | Quản lý yêu cầu CSKH chuyển cấp lên Admin khi vấn đề vượt thẩm quyền. |
-| KHIEUNAI 1 - n LICHSU_PHANCONG_KHIEUNAI; NGUOIDUNG 1 - n LICHSU_PHANCONG_KHIEUNAI | Lưu vết toàn bộ lịch sử tiếp nhận, điều phối, chuyển giao hoặc thu hồi nhân viên (append-only). |
+| KHIEUNAI 1 - n YEUCAU_CHUYENCAP; NGUOIDUNG 1 - n YEUCAU_CHUYENCAP | Quản lý yêu cầu CSKH chuyển cấp lên Admin khi vấn đề vượt thẩm quyền. Xử lý chuyển cấp không làm thay đổi nhân viên CSKH phụ trách ban đầu. |
 
 **3.5. Lược đồ quan hệ**
 
@@ -675,7 +674,7 @@ _Hình 3.1: Mô hình ERD hệ thống quản lý đặt vé xem phim trực tuy
 | XULY_KHIEUNAI | XuLyID (PK), KhieuNaiID (FK), NguoiXuLyID (FK), NoiDungXuLy, NgayXuLy, TrangThaiSauXuLy |
 | TINNHAN_KHIEUNAI | TinNhanID (PK), KhieuNaiID (FK), NguoiGuiID (FK), NoiDung, LoaiTinNhan, ThoiGianGui |
 | YEUCAU_CHUYENCAP | YeuCauID (PK), KhieuNaiID (FK), NguoiYeuCauID (FK), LyDo, MucDoUuTien, AdminPhuTrachID (FK, NULL), TrangThai, ThoiGianGui, ThoiGianTiepNhan, KetQuaXuLy, ThoiGianHoanTat |
-| LICHSU_PHANCONG_KHIEUNAI | LichSuID (PK), KhieuNaiID (FK), NhanVienCuID (FK, NULL), NhanVienMoiID (FK, NULL), NguoiThucHienID (FK), ThoiGian, LyDo |
+| BOITHUONG_HUYSUAT | BoiThuongID (PK), DonDatVeID (FK, UNIQUE), DiemBoiThuong, NgayBoiThuong, GhiChu |
 
 **3.6. Phân tích chuẩn hóa**
 
@@ -713,16 +712,18 @@ Một số cột tổng/giá được giữ có chủ đích và không bị xem
    - *Kiểm tra 2NF:* Khóa chính là đơn tính $\implies$ Đạt 2NF.
    - *Kiểm tra 3NF:* Với mọi phụ thuộc hàm không tầm thường $X \to Y$, $X = \text{YeuCauID}$ là siêu khóa. Bảng **không lưu dư thừa** tên nhân viên yêu cầu, email Admin, hay tiêu đề khiếu nại. Các thuộc tính này được liên kết qua FK: $\text{KhieuNaiID} \to \text{KHIEUNAI}$, $\text{NguoiYeuCauID} \to \text{NGUOIDUNG}$, $\text{AdminPhuTrachID} \to \text{NGUOIDUNG}$. Không có phụ thuộc bắc cầu $A \to B \to C$ giữa các thuộc tính không khóa $\implies$ **Đạt chuẩn 3NF**.
 
-3. **Bảng LICHSU_PHANCONG_KHIEUNAI:**
-   - *Tập thuộc tính:* $R_3 = \{\text{LichSuID, KhieuNaiID, NhanVienCuID, NhanVienMoiID, NguoiThucHienID, ThoiGian, LyDo}\}$
-   - *Khóa ứng viên:* $\{\text{LichSuID}\}$ (Khóa chính đơn).
-   - *Tập phụ thuộc hàm F:*
-     - $\text{LichSuID} \to \{\text{KhieuNaiID, NhanVienCuID, NhanVienMoiID, NguoiThucHienID, ThoiGian, LyDo}\}$
-   - *Kiểm tra 1NF, 2NF, 3NF:* Bảng ghi nhận sự kiện append-only, khóa chính đơn $\text{LichSuID}$. Mọi thuộc tính không khóa phụ thuộc trực tiếp vào $\text{LichSuID}$, không lưu trữ tên nhân viên hay vai trò mà tham chiếu trực tiếp $\text{NGUOIDUNG}(\text{NguoiDungID})$. Không có phụ thuộc bắc cầu $\implies$ **Đạt chuẩn 3NF**.
-
-4. **Mở rộng bảng KHIEUNAI:**
-   - Bổ sung thuộc tính `NhanVienPhuTrachID INT NULL` là Foreign Key liên kết tới `NGUOIDUNG(NguoiDungID)`.
-   - Thuộc tính `NhanVienPhuTrachID` phụ thuộc trực tiếp vào khóa chính `KhieuNaiID`, phản ánh nhân viên đang phụ trách tại thời điểm hiện hành. Toàn bộ lịch sử thay đổi người phụ trách được lưu tách biệt trong `LICHSU_PHANCONG_KHIEUNAI`, đảm bảo tính toàn vẹn và không vi phạm chuẩn 3NF.
+3. **Thuộc tính NhanVienPhuTrachID trong bảng KHIEUNAI và nguyên tắc phân công một lần bất biến:**
+   - *Tập thuộc tính liên quan:* $R_{\text{KN}} = \{\text{KhieuNaiID, NguoiDungID, DonDatVeID, LoaiKhieuNai, TieuDe, NoiDung, MucDoUuTien, NgayTao, TrangThai, NhanVienPhuTrachID}\}$
+   - *Khóa ứng viên:* $\{\text{KhieuNaiID}\}$ (Khóa chính đơn).
+   - *Phụ thuộc hàm:* $\text{KhieuNaiID} \to \text{NhanVienPhuTrachID}$
+   - *Chuẩn 3NF:* $\text{NhanVienPhuTrachID}$ là Foreign Key trỏ tới $\text{NGUOIDUNG}(\text{NguoiDungID})$, phụ thuộc trực tiếp vào khóa chính $\text{KhieuNaiID}$, không tồn tại phụ thuộc bắc cầu qua thuộc tính không khóa nào $\implies$ **Đạt chuẩn 3NF**.
+   - *Quy tắc nghiệp vụ và bảo vệ toàn vẹn tại Database:*
+     - Mỗi khiếu nại chỉ có tối đa một nhân viên CSKH phụ trách duy nhất trong suốt vòng đời.
+     - Ban đầu trường mang giá trị `NULL`.
+     - Khi Admin phân công lần đầu hoặc nhân viên CSKH tiếp nhận, `NhanVienPhuTrachID` được xác lập.
+     - Ngay sau khi được gán, giá trị này **bất biến tuyệt đối (immutable)**: không cho phép cập nhật sang nhân viên khác, không cho phép gán lại `NULL`.
+     - Tính bất biến được cưỡng chế ở tầng Database bằng trigger `TRG_KhieuNai_NhanVienPhuTrachBatBien` (chặn đứng mọi lệnh `UPDATE` trái phép với mã lỗi 50605) và các Stored Procedure `sp_Complaint_Assign_Self`, `sp_Complaint_Assign_Admin`.
+     - Bảng `LICHSU_PHANCONG_KHIEUNAI` và mọi nghiệp vụ chuyển giao/phân công lại đã bị loại bỏ hoàn toàn khỏi hệ thống theo quyết định nghiệp vụ chính thức.
 
 **3.7. Thiết kế logic theo từng nhóm dữ liệu**
 
@@ -750,7 +751,7 @@ DONDATVE là aggregate giao dịch chính, liên kết một khách hàng với 
 
 DANHGIAPHIM liên kết trực tiếp NGUOIDUNG - PHIM và có UNIQUE(PhimID, NguoiDungID). KHIEUNAI liên kết bắt buộc với người gửi và tùy chọn với đơn đặt vé, mở rộng với `NhanVienPhuTrachID`. XULY_KHIEUNAI tách lịch sử xử lý khỏi trạng thái hiện tại, giúp biết ai đã xử lý, xử lý khi nào và sau mỗi lần trạng thái chuyển thành gì. Hệ thống bổ sung ba phân hệ CSKH cốt lõi:
 - **Hội thoại hai chiều & Ghi chú nội bộ:** `TINNHAN_KHIEUNAI` lưu trữ dòng trao đổi công khai và ghi chú nội bộ (`LoaiTinNhan` = 'Nội bộ'). Quyền xem được bảo vệ nghiêm ngặt ở cả API và Stored Procedure: Khách hàng tuyệt đối không thể đọc tin nhắn nội bộ.
-- **Tiếp nhận & Phân công nhân viên:** Khiếu nại mới nằm trong hàng đợi chưa phân công (`NhanVienPhuTrachID IS NULL`). Nhân viên CSKH dùng thủ tục `sp_Complaint_Assign_Self` để tiếp nhận bằng transaction kiểm soát concurrency (UPDLOCK, HOLDLOCK). Admin có quyền điều chuyển hoặc thu hồi phân công qua `sp_Complaint_Assign_Admin`. Mọi biến động được lưu vết tự động vào `LICHSU_PHANCONG_KHIEUNAI`.
+- **Tiếp nhận & Phân công nhân viên một lần duy nhất:** Khiếu nại mới nằm trong hàng đợi chưa phân công (`NhanVienPhuTrachID IS NULL`). Nhân viên CSKH dùng thủ tục `sp_Complaint_Assign_Self` để tiếp nhận bằng transaction kiểm soát concurrency (UPDLOCK, HOLDLOCK). Admin có quyền phân công nhân viên lần đầu qua `sp_Complaint_Assign_Admin`. Ngay khi được gán, `NhanVienPhuTrachID` trở thành bất biến (immutable), không cho phép chuyển giao, phân công lại hay thu hồi dưới bất kỳ hình thức nào (bảo vệ bởi trigger `TRG_KhieuNai_NhanVienPhuTrachBatBien`). Hệ thống loại bỏ hoàn toàn bảng lịch sử phân công.
 - **Chuyển cấp lên Admin:** Khi vấn đề vượt thẩm quyền (lỗi tài chính, yêu cầu đối soát, bồi thường quy mô lớn), CSKH gửi yêu cầu qua `sp_Escalation_Create` vào `YEUCAU_CHUYENCAP`. Admin theo dõi hàng đợi chuyển cấp, tiếp nhận (`sp_Escalation_Claim`), đưa ra chỉ đạo/kết luận (`sp_Escalation_Process`), và CSKH tiếp nhận kết luận để phản hồi khách hàng.
 - **Tra cứu hỗ trợ chỉ đọc:** CSKH được cấp quyền `TRA_CUU_DON` để kiểm tra đơn đặt vé tham chiếu, lịch sử thanh toán, điểm tích lũy và điểm bồi thường của khách hàng thông qua `sp_Support_Customer_GetPoints`, phục vụ giải thích minh bạch cho khách hàng mà không được quyền sửa đổi số dư tài chính.
 
@@ -864,6 +865,7 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | TRG_ChiTietVe_KiemTraTrungGhe | CHITIETVE | AFTER INSERT | Không bán hai vé còn hiệu lực cho cùng SuatChieuID + GheID. |
 | TRG_DanhGia_KiemTraDaXemPhim | DANHGIAPHIM | AFTER INSERT | Chỉ cho đánh giá nếu có đơn đặt vé hợp lệ (đã thanh toán/hoàn thành) cho một suất chiếu của phim đó và suất chiếu đã bắt đầu (ThoiGianBatDau <= thời điểm hiện tại). |
 | TRG_XuLyKhieuNai_KiemTraVaiTro | XULY_KHIEUNAI | AFTER INSERT, UPDATE | Chỉ CSKH/Admin được ghi lịch sử xử lý. |
+| TRG_KhieuNai_NhanVienPhuTrachBatBien | KHIEUNAI | AFTER UPDATE | Cưỡng chế quy tắc phân công một lần: chặn cập nhật đổi người phụ trách hoặc gán lại NULL khi khiếu nại đã có nhân viên. |
 
 **4.3. View**
 
@@ -939,7 +941,7 @@ Hệ thống duy trì cố định 4 vai trò (`KHACH_HANG`, `QUAN_LY_RAP`, `CSK
 | 26 | KHIEUNAI_NOIBO_XEM | Xem ghi chú nội bộ khiếu nại | | | ✓ | ✓ |
 | 27 | KHIEUNAI_NOIBO_GHI | Ghi chép xử lý nội bộ CSKH | | | ✓ | ✓ |
 | 28 | KHIEUNAI_TIEPNHAN | CSKH tự nhận xử lý khiếu nại | | | ✓ | ✓ |
-| 29 | KHIEUNAI_PHANCONG | Admin phân công/chuyển giao nhân viên | | | | ✓ |
+| 29 | KHIEUNAI_PHANCONG | Admin phân công nhân viên lần đầu | | | | ✓ |
 | 30 | CHUYENCAP_TAO | Tạo yêu cầu chuyển cấp lên Admin | | | ✓ | ✓ |
 | 31 | CHUYENCAP_XEM | Xem danh sách yêu cầu chuyển cấp | | | ✓ | ✓ |
 | 32 | CHUYENCAP_TIEPNHAN | Admin tiếp nhận yêu cầu chuyển cấp | | | | ✓ |

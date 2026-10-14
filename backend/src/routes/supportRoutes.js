@@ -18,16 +18,11 @@ router.get(
   controller.orderReference,
 );
 
-// Claim & Assignment History
+// Claim unassigned complaint
 router.post(
   '/complaints/:complaintId/claim',
   requirePermission('KHIEUNAI_TIEPNHAN'),
   controller.claimComplaint,
-);
-router.get(
-  '/complaints/:complaintId/assignment-history',
-  requirePermission('QL_KHIEUNAI'),
-  controller.assignmentHistory,
 );
 
 // Processing & Status

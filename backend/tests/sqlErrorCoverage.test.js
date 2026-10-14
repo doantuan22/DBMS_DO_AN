@@ -30,6 +30,7 @@ const CODE_FLOWS = {
   50004: ['feedback'],
   50005: ['support'],
   50215: ['manager', 'admin'],
+  50605: ['support'],
 };
 const FOLDER_FLOWS = [
   ['08_procedures/staff_booking/', ['staffBooking']],

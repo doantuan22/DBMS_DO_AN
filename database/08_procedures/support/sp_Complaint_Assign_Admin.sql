@@ -1,4 +1,4 @@
--- Quản trị viên phân công hoặc chuyển giao nhân viên phụ trách: sp_Complaint_Assign_Admin
+-- Quản trị viên phân công nhân viên phụ trách lần đầu (một lần duy nhất): sp_Complaint_Assign_Admin
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
 
@@ -8,7 +8,7 @@ CREATE OR ALTER PROCEDURE dbo.sp_Complaint_Assign_Admin
     (
     @AdminID INT,
     @KhieuNaiID INT,
-    @NhanVienMoiID INT = NULL,
+    @NhanVienMoiID INT,
     @LyDo NVARCHAR(500) = NULL
     )
 AS
@@ -34,18 +34,19 @@ BEGIN
     IF dbo.fn_KiemTraQuyenNguoiDung(@AdminID, 'KHIEUNAI_PHANCONG') = 0
         THROW 50302, N'Không có quyền thực hiện thao tác này.', 1;
 
-    -- Nếu phân công cho nhân viên mới, kiểm tra nhân viên đó có hợp lệ không
-    IF @NhanVienMoiID IS NOT NULL
-    BEGIN
-        IF NOT EXISTS (
-            SELECT 1 FROM dbo.NGUOIDUNG nd
-            INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
-            WHERE nd.NguoiDungID = @NhanVienMoiID
-              AND nd.TrangThai = N'Hoạt động'
-              AND vt.MaVaiTro = 'CSKH'
-        )
-            THROW 50603, N'Nhân viên được phân công không hợp lệ hoặc đã bị khóa.', 1;
-    END;
+    -- Bắt buộc phải truyền ID nhân viên hợp lệ, không cho phép thu hồi (NULL)
+    IF @NhanVienMoiID IS NULL
+        THROW 50604, N'Phải chỉ định nhân viên CSKH phụ trách hợp lệ.', 1;
+
+    -- Kiểm tra nhân viên được phân công có tồn tại và đang hoạt động với vai trò CSKH
+    IF NOT EXISTS (
+        SELECT 1 FROM dbo.NGUOIDUNG nd
+        INNER JOIN dbo.VAITRO vt ON vt.VaiTroID = nd.VaiTroID
+        WHERE nd.NguoiDungID = @NhanVienMoiID
+          AND nd.TrangThai = N'Hoạt động'
+          AND vt.MaVaiTro = 'CSKH'
+    )
+        THROW 50603, N'Nhân viên được phân công không hợp lệ hoặc đã bị khóa.', 1;
 
     BEGIN TRY
         BEGIN TRANSACTION;
@@ -60,38 +61,21 @@ BEGIN
         IF @CurrentTrangThai IS NULL
             THROW 50061, N'Khiếu nại không tồn tại.', 1;
 
-        DECLARE @TrangThaiMoi NVARCHAR(50) = @CurrentTrangThai;
-        IF @NhanVienMoiID IS NOT NULL AND @CurrentTrangThai = N'Mới'
-            SET @TrangThaiMoi = N'Đang xử lý';
+        -- Quy tắc nghiệp vụ: Mỗi khiếu nại chỉ được phân công 1 lần duy nhất, không cho phép phân công lại hoặc chuyển giao
+        IF @NhanVienCuID IS NOT NULL
+            THROW 50601, N'Khiếu nại này đã có nhân viên phụ trách và không thể phân công lại.', 1;
 
-        -- Cập nhật người phụ trách
+        DECLARE @TrangThaiMoi NVARCHAR(50) = CASE
+            WHEN @CurrentTrangThai = N'Mới' THEN N'Đang xử lý'
+            ELSE @CurrentTrangThai
+        END;
+
+        -- Cập nhật người phụ trách lần đầu
         UPDATE dbo.KHIEUNAI
         SET
             NhanVienPhuTrachID = @NhanVienMoiID,
             TrangThai = @TrangThaiMoi
         WHERE KhieuNaiID = @KhieuNaiID;
-
-        -- Ghi lịch sử phân công
-        INSERT INTO dbo.LICHSU_PHANCONG_KHIEUNAI (
-            KhieuNaiID,
-            NhanVienCuID,
-            NhanVienMoiID,
-            NguoiThucHienID,
-            ThoiGian,
-            LyDo
-        )
-        VALUES (
-            @KhieuNaiID,
-            @NhanVienCuID,
-            @NhanVienMoiID,
-            @AdminID,
-            dbo.fn_BayGio(),
-            ISNULL(@LyDo, CASE
-                WHEN @NhanVienMoiID IS NULL THEN N'Admin thu hồi phân công nhân viên'
-                WHEN @NhanVienCuID IS NULL THEN N'Admin phân công nhân viên phụ trách'
-                ELSE N'Admin chuyển giao nhân viên phụ trách'
-            END)
-        );
 
         -- Ghi nhật ký xử lý
         INSERT INTO dbo.XULY_KHIEUNAI (
@@ -104,10 +88,7 @@ BEGIN
         VALUES (
             @KhieuNaiID,
             @AdminID,
-            CASE
-                WHEN @NhanVienMoiID IS NULL THEN N'Admin thu hồi phân công nhân viên.'
-                ELSE N'Admin phân công/chuyển giao nhân viên phụ trách khiếu nại.'
-            END,
+            ISNULL(@LyDo, N'Admin phân công nhân viên phụ trách khiếu nại.'),
             dbo.fn_BayGio(),
             @TrangThaiMoi
         );

@@ -57,9 +57,3 @@ ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
 ADD CONSTRAINT [DF_YEUCAU_CHUYENCAP_ThoiGianGui_ClockVN] DEFAULT([dbo].[fn_BayGio]()) FOR [ThoiGianGui];
 
 GO
-
--- Gán giá trị mặc định thời gian cho lịch sử phân công.
-ALTER TABLE dbo.[LICHSU_PHANCONG_KHIEUNAI]
-ADD CONSTRAINT [DF_LICHSU_PHANCONG_ThoiGian_ClockVN] DEFAULT([dbo].[fn_BayGio]()) FOR [ThoiGian];
-
-GO

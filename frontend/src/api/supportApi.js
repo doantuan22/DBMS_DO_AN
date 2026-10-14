@@ -13,8 +13,6 @@ export const getSupportComplaint = (complaintId) =>
   request(`/support/complaints/${id(complaintId)}`);
 export const claimSupportComplaint = (complaintId) =>
   request(`/support/complaints/${id(complaintId)}/claim`, { method: 'POST' });
-export const getComplaintAssignmentHistory = (complaintId) =>
-  request(`/support/complaints/${id(complaintId)}/assignment-history`);
 export const getComplaintOrderReference = (complaintId) =>
   request(`/support/complaints/${id(complaintId)}/order-reference`);
 export const addComplaintProcessing = (complaintId, body) =>

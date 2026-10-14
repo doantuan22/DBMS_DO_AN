@@ -154,7 +154,7 @@ router.put(
   })),
 );
 
-// Admin staff assignment
+// Admin staff assignment (first-time only)
 router.put(
   '/complaints/:complaintId/assign',
   requirePermission('KHIEUNAI_PHANCONG'),
@@ -164,14 +164,6 @@ router.put(
       complaintId(req),
       validators.adminAssign(req.body),
     ),
-  })),
-);
-
-router.get(
-  '/complaints/:complaintId/assignment-history',
-  requirePermission('QL_KHIEUNAI'),
-  wrapSupport(async (req) => ({
-    history: await supportService.assignmentHistory(req.user.userId, complaintId(req)),
   })),
 );
 

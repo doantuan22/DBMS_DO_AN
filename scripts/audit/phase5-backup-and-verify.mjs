@@ -9,9 +9,6 @@ const BACKUP_DIR = 'D:\\DBMS_DO_AN_BACKUPS';
 const TARGET_DBS = [
   'CinemaBookingDB',
   'CinemaBookingDB_Test',
-  'CinemaBookingDB_Fresh3NF',
-  'CinemaBookingDB_RestoreDrill',
-  'CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012',
 ];
 
 const masterConfig = {

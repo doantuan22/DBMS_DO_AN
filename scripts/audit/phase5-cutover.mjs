@@ -9,9 +9,6 @@ const BACKUP_DIR = 'D:\\DBMS_DO_AN_BACKUPS';
 const SCOPED_OLD_DBS = [
   'CinemaBookingDB',
   'CinemaBookingDB_Test',
-  'CinemaBookingDB_Fresh3NF',
-  'CinemaBookingDB_RestoreDrill',
-  'CinemaBookingDB_R0_REAL_MEDIA_DEMO_20261012',
 ];
 
 const masterConfig = {
@@ -247,7 +244,7 @@ async function main() {
       (SELECT COUNT(*) FROM sys.triggers WHERE parent_class = 1) AS triggers_
   `);
   console.log('  -> CinemaBookingDB inventory:', mainInv[0]);
-  if (mainInv[0].tables_ !== 30 || mainInv[0].procedures_ !== 148 || mainInv[0].views_ !== 6 || mainInv[0].functions_ !== 21 || mainInv[0].triggers_ !== 8) {
+  if (mainInv[0].tables_ !== 29 || mainInv[0].procedures_ !== 147 || mainInv[0].views_ !== 6 || mainInv[0].functions_ !== 21 || mainInv[0].triggers_ !== 9) {
     throw new Error('CinemaBookingDB object inventory mismatch!');
   }
 

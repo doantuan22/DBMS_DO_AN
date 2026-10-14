@@ -12,7 +12,6 @@ import {
 } from '../../components/ui';
 import ComplaintOrderReference from '../../components/ComplaintOrderReference';
 import CustomerPointsViewer from '../../components/CustomerPointsViewer';
-import CustomerAssignmentHistoryViewer from '../../components/CustomerAssignmentHistoryViewer';
 import SupportChatBox from './SupportChatBox';
 import SupportEscalationManager from './SupportEscalationManager';
 import { formatDateTime } from '../../utils/dateTime';
@@ -275,15 +274,7 @@ export default function SupportWorkspaceView({
                 canChat={canProcess}
               />
 
-              {/* Assignment history */}
-              <details style={{ marginTop: '0.5rem' }}>
-                <summary style={{ cursor: 'pointer', fontWeight: 600 }}>
-                  Lịch sử phân công nhân viên
-                </summary>
-                <div style={{ marginTop: '0.5rem' }}>
-                  <CustomerAssignmentHistoryViewer complaintId={complaint.id} />
-                </div>
-              </details>
+
 
               {/* Processing timeline */}
               <div>

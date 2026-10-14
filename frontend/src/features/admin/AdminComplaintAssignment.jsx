@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react';
 import { adminApi } from '../../api/adminApi';
-import { formatDateTime } from '../../utils/dateTime';
 import { Button, FormField, Select } from '../../components/ui';
 
 export default function AdminComplaintAssignment({ complaintId, currentStaffId, onAssigned }) {
   const [staffList, setStaffList] = useState([]);
-  const [selectedStaffId, setSelectedStaffId] = useState(currentStaffId ? String(currentStaffId) : '');
+  const [selectedStaffId, setSelectedStaffId] = useState('');
   const [reason, setReason] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [history, setHistory] = useState([]);
   const [notice, setNotice] = useState(null);
 
   useEffect(() => {
     let active = true;
     adminApi
-      .users({ role: 'CSKH' })
+      .users({ status: 'Hoạt động' })
       .then((res) => {
         if (!active) return;
         const users = res.users || [];
@@ -31,35 +29,18 @@ export default function AdminComplaintAssignment({ complaintId, currentStaffId, 
     };
   }, []);
 
-  const loadHistory = async () => {
-    if (!complaintId) return;
-    try {
-      const res = await adminApi.complaintAssignmentHistory(complaintId);
-      setHistory(res.history || []);
-    } catch {
-      // ignore
-    }
-  };
-
-  useEffect(() => {
-    setSelectedStaffId(currentStaffId ? String(currentStaffId) : '');
-    void loadHistory();
-  }, [complaintId, currentStaffId]);
-
   const handleAssign = async (e) => {
     e.preventDefault();
-    if (!complaintId || submitting) return;
+    if (!complaintId || submitting || !selectedStaffId) return;
     setSubmitting(true);
     setNotice(null);
     try {
-      const staffIdVal = selectedStaffId ? Number(selectedStaffId) : null;
       await adminApi.assignComplaint(complaintId, {
-        staffId: staffIdVal,
+        staffId: Number(selectedStaffId),
         reason: reason.trim() || undefined,
       });
-      setNotice({ ok: true, text: 'Đã cập nhật phân công nhân viên CSKH thành công.' });
+      setNotice({ ok: true, text: 'Đã phân công nhân viên CSKH thành công.' });
       setReason('');
-      await loadHistory();
       if (onAssigned) onAssigned();
     } catch (err) {
       setNotice({ ok: false, text: err.message || 'Không thể phân công nhân viên.' });
@@ -67,6 +48,10 @@ export default function AdminComplaintAssignment({ complaintId, currentStaffId, 
       setSubmitting(false);
     }
   };
+
+  const assignedStaff = currentStaffId
+    ? staffList.find((s) => (s.NguoiDungID ?? s.id) === currentStaffId)
+    : null;
 
   return (
     <div
@@ -78,62 +63,68 @@ export default function AdminComplaintAssignment({ complaintId, currentStaffId, 
         background: '#f8fafc',
       }}
     >
-      <h4 style={{ margin: '0 0 0.5rem' }}>Phân công / Chuyển giao nhân viên CSKH</h4>
+      <h4 style={{ margin: '0 0 0.5rem' }}>Nhân viên CSKH phụ trách</h4>
+
       {notice && (
         <p className={notice.ok ? 'form-success' : 'form-error'} role={notice.ok ? 'status' : 'alert'}>
           {notice.text}
         </p>
       )}
-      <form onSubmit={handleAssign} style={{ display: 'grid', gap: '0.75rem' }}>
-        <FormField label="Chọn nhân viên CSKH phụ trách">
-          <Select
-            value={selectedStaffId}
-            disabled={loading || submitting}
-            onChange={(e) => setSelectedStaffId(e.target.value)}
-          >
-            <option value="">-- Chưa phân công (Để trống) --</option>
-            {staffList.map((staff) => (
-              <option key={staff.NguoiDungID ?? staff.id} value={staff.NguoiDungID ?? staff.id}>
-                {staff.HoTen ?? staff.name} ({staff.Email ?? staff.email})
-              </option>
-            ))}
-          </Select>
-        </FormField>
-        <FormField label="Lý do phân công / chuyển giao (tùy chọn)">
-          <input
-            type="text"
-            className="ui-input"
-            placeholder="Lý do điều phối hoặc chuyển nhân viên…"
-            value={reason}
-            disabled={submitting}
-            onChange={(e) => setReason(e.target.value)}
-          />
-        </FormField>
-        <div>
-          <Button type="submit" loading={submitting} disabled={submitting}>
-            Lưu phân công
-          </Button>
-        </div>
-      </form>
 
-      {history.length > 0 && (
-        <details style={{ marginTop: '0.75rem', fontSize: '0.85rem' }}>
-          <summary style={{ cursor: 'pointer', fontWeight: 600 }}>
-            Lịch sử phân công của khiếu nại này ({history.length})
-          </summary>
-          <ul style={{ margin: '0.5rem 0 0', paddingLeft: '1.25rem' }}>
-            {history.map((h, idx) => (
-              <li key={h.id ?? idx} style={{ marginBottom: '0.25rem' }}>
-                <strong>
-                  {h.previousStaffName ? `${h.previousStaffName} → ` : ''}
-                  {h.newStaffName || 'Thu hồi'}
-                </strong>{' '}
-                · {h.actorName} ({formatDateTime(h.changedAt)})
-                {h.reason ? ` — "${h.reason}"` : ''}
-              </li>
-            ))}
-          </ul>
-        </details>
+      {currentStaffId ? (
+        <div style={{ display: 'grid', gap: '0.5rem' }}>
+          <div
+            style={{
+              padding: '0.75rem',
+              background: '#e0f2fe',
+              border: '1px solid #bae6fd',
+              borderRadius: 'var(--radius-sm)',
+              color: '#0369a1',
+            }}
+          >
+            <strong>Đã phân công cho nhân viên:</strong>{' '}
+            {assignedStaff ? `${assignedStaff.HoTen ?? assignedStaff.name} (${assignedStaff.Email ?? assignedStaff.email})` : `Nhân viên #${currentStaffId}`}
+          </div>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+            Quy tắc nghiệp vụ: Mỗi khiếu nại chỉ được phân công một lần duy nhất. Nhân viên được giao chịu trách nhiệm xử lý từ đầu đến cuối và không thể thay đổi hoặc thu hồi.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={handleAssign} style={{ display: 'grid', gap: '0.75rem' }}>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+            Khiếu nại chưa có người tiếp nhận. Quản trị viên có thể phân công nhân viên CSKH phụ trách lần đầu.
+          </p>
+          <FormField label="Chọn nhân viên CSKH phụ trách">
+            <Select
+              value={selectedStaffId}
+              disabled={loading || submitting}
+              onChange={(e) => setSelectedStaffId(e.target.value)}
+              required
+            >
+              <option value="">-- Chọn nhân viên CSKH phụ trách --</option>
+              {staffList.map((staff) => (
+                <option key={staff.NguoiDungID ?? staff.id} value={staff.NguoiDungID ?? staff.id}>
+                  {staff.HoTen ?? staff.name} ({staff.Email ?? staff.email})
+                </option>
+              ))}
+            </Select>
+          </FormField>
+          <FormField label="Lý do phân công (tùy chọn)">
+            <input
+              type="text"
+              className="ui-input"
+              placeholder="Ghi chú phân công…"
+              value={reason}
+              disabled={submitting}
+              onChange={(e) => setReason(e.target.value)}
+            />
+          </FormField>
+          <div>
+            <Button type="submit" loading={submitting} disabled={submitting || !selectedStaffId}>
+              Xác nhận phân công
+            </Button>
+          </div>
+        </form>
       )}
     </div>
   );

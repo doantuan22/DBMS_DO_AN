@@ -56,13 +56,6 @@ export const claimComplaint = handle(async (req) => ({
   ),
 }));
 
-export const assignmentHistory = handle(async (req) => ({
-  history: await supportService.assignmentHistory(
-    req.user.userId,
-    validators.complaintId(req.params.complaintId),
-  ),
-}));
-
 export const listMessages = handle(async (req) => ({
   messages: await supportService.listMessages(
     req.user.userId,

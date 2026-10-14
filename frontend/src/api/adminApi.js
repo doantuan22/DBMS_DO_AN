@@ -27,7 +27,6 @@ export const adminApi = {
     request(`/admin/complaints/${id}/status`, { method: 'PUT', body }),
   assignComplaint: (id, body) =>
     request(`/admin/complaints/${id}/assign`, { method: 'PUT', body }),
-  complaintAssignmentHistory: (id) => get(`complaints/${id}/assignment-history`),
   complaintMessages: (id) => get(`complaints/${id}/messages`),
   escalations: (params) => get('escalations', params),
   escalation: (id) => get(`escalations/${id}`),

@@ -118,32 +118,47 @@ await t('CSKH-ASN-02', 'CSKH-1 claims unassigned complaint; concurrency check: C
   expectStatus(dupClaim, 409, 'COMPLAINT_ALREADY_ASSIGNED');
 });
 
-await t('CSKH-ASN-03', 'Assignment history is recorded in LICHSU_PHANCONG_KHIEUNAI (append-only)', async () => {
-  const history = await asRole('support', 'GET', `/support/complaints/${ctx.complaintId}/assignment-history`);
-  expectStatus(history, 200);
-  assert.ok(history.body.history.length >= 1);
-  const latest = history.body.history[0];
-  assert.equal(latest.newStaffId, ctx.staff1.NguoiDungID);
+await t('CSKH-ASN-03', 'Single-assignment rule: Admin attempting to reassign or revoke assigned complaint is rejected', async () => {
+  // Admin reassign to staff 2 -> 409 COMPLAINT_ALREADY_ASSIGNED
+  const reassignRes = await asRole('admin', 'PUT', `/admin/complaints/${ctx.complaintId}/assign`, {
+    staffId: ctx.staff2.NguoiDungID,
+    reason: 'Cố gắng chuyển giao ca trực',
+  });
+  expectStatus(reassignRes, 409, 'COMPLAINT_ALREADY_ASSIGNED');
+
+  // Admin revoke (empty/null staffId) -> 400
+  const revokeRes = await asRole('admin', 'PUT', `/admin/complaints/${ctx.complaintId}/assign`, {
+    staffId: null,
+  });
+  expectStatus(revokeRes, 400);
+
+  // DB verify staff assignment is unchanged
+  const dbRow = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: ctx.complaintId });
+  assert.equal(dbRow.NhanVienPhuTrachID, ctx.staff1.NguoiDungID);
 });
 
-await t('CSKH-ASN-04', 'Admin reassigns complaint to CSKH-2; history logged; previous staff loses active assignment', async () => {
-  const assignRes = await asRole('admin', 'PUT', `/admin/complaints/${ctx.complaintId}/assign`, {
-    staffId: ctx.staff2.NguoiDungID,
-    reason: 'Chuyển giao cho ca chiều',
-  });
-  expectStatus(assignRes, 200);
-  assert.equal(assignRes.body.assignment.assignedStaffId, ctx.staff2.NguoiDungID);
+await t('CSKH-ASN-04', 'Database-level invariant: direct SQL modification of NhanVienPhuTrachID is blocked by trigger; no LICHSU_PHANCONG_KHIEUNAI table', async () => {
+  // Direct SQL update attempt to change staff
+  let blockedChange = false;
+  try {
+    await pool.request().query(`UPDATE dbo.KHIEUNAI SET NhanVienPhuTrachID = ${ctx.staff2.NguoiDungID} WHERE KhieuNaiID = ${ctx.complaintId}`);
+  } catch (err) {
+    if (err.number === 50605) blockedChange = true;
+  }
+  assert.ok(blockedChange, 'Direct SQL update changing NhanVienPhuTrachID must fail with error 50605');
 
-  const dbRow = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: ctx.complaintId });
-  assert.equal(dbRow.NhanVienPhuTrachID, ctx.staff2.NguoiDungID);
+  // Direct SQL update attempt to nullify staff
+  let blockedNull = false;
+  try {
+    await pool.request().query(`UPDATE dbo.KHIEUNAI SET NhanVienPhuTrachID = NULL WHERE KhieuNaiID = ${ctx.complaintId}`);
+  } catch (err) {
+    if (err.number === 50605) blockedNull = true;
+  }
+  assert.ok(blockedNull, 'Direct SQL update nullifying NhanVienPhuTrachID must fail with error 50605');
 
-  const history = await asRole('admin', 'GET', `/admin/complaints/${ctx.complaintId}/assignment-history`);
-  expectStatus(history, 200);
-  assert.ok(history.body.history.length >= 2);
-  const latest = history.body.history.at(-1);
-  assert.equal(latest.previousStaffId, ctx.staff1.NguoiDungID);
-  assert.equal(latest.newStaffId, ctx.staff2.NguoiDungID);
-  assert.equal(latest.reason, 'Chuyển giao cho ca chiều');
+  // Verify LICHSU_PHANCONG_KHIEUNAI does NOT exist
+  const countTable = await scalar(pool, "SELECT COUNT(*) FROM sys.tables WHERE name = 'LICHSU_PHANCONG_KHIEUNAI'");
+  assert.equal(countTable, 0, 'LICHSU_PHANCONG_KHIEUNAI table must not exist');
 });
 
 // ============================================================================
@@ -164,19 +179,19 @@ await t('CSKH-CHT-01', 'Customer sends message; chronological order and sender r
   assert.ok(msgs.body.messages.some((m) => m.id === ctx.msg1Id));
 });
 
-await t('CSKH-CHT-02', 'Reassigned CSKH-1 cannot send messages (403); current assigned CSKH-2 replies successfully (201)', async () => {
-  // Staff 1 (not assigned) tries to reply -> 403
-  const staff1Msg = await asRole('support', 'POST', `/support/complaints/${ctx.complaintId}/messages`, {
-    content: 'Staff 1 cố gắng gửi tin',
-  }, 'support1@example.test');
-  expectStatus(staff1Msg, 403, 'NOT_ASSIGNED_STAFF');
-
-  // Staff 2 (currently assigned) replies -> 201
+await t('CSKH-CHT-02', 'Unassigned CSKH-2 cannot send messages (403); assigned CSKH-1 replies successfully (201)', async () => {
+  // Staff 2 (not assigned) tries to reply -> 403
   const staff2Msg = await asRole('support', 'POST', `/support/complaints/${ctx.complaintId}/messages`, {
-    content: 'Dạ chào bạn, mình đã tiếp nhận và đang kiểm tra giúp bạn ạ.',
+    content: 'Staff 2 cố gắng gửi tin',
   }, 'support2@example.test');
-  expectStatus(staff2Msg, 201);
-  ctx.msg2Id = staff2Msg.body.message.id;
+  expectStatus(staff2Msg, 403, 'NOT_ASSIGNED_STAFF');
+
+  // Staff 1 (currently assigned) replies -> 201
+  const staff1Msg = await asRole('support', 'POST', `/support/complaints/${ctx.complaintId}/messages`, {
+    content: 'Dạ chào bạn, mình đã tiếp nhận và đang kiểm tra giúp bạn ạ.',
+  }, 'support1@example.test');
+  expectStatus(staff1Msg, 201);
+  ctx.msg2Id = staff1Msg.body.message.id;
 
   // Customer reads reply
   const customerMsgs = await asRole('customer', 'GET', `/complaints/${ctx.complaintId}/messages`);
@@ -187,12 +202,12 @@ await t('CSKH-CHT-02', 'Reassigned CSKH-1 cannot send messages (403); current as
 await t('CSKH-CHT-03', 'CSKH adds internal note; visible to CSKH/Admin but strictly hidden from Customer (leak protection)', async () => {
   const noteRes = await asRole('support', 'POST', `/support/complaints/${ctx.complaintId}/internal-notes`, {
     content: 'Ghi chú nội bộ: Tài khoản có biến động điểm do suất chiếu 12 bị hủy trước đó.',
-  }, 'support2@example.test');
+  }, 'support1@example.test');
   expectStatus(noteRes, 201);
   ctx.noteId = noteRes.body.note.id;
 
   // CSKH view contains internal note
-  const staffView = await asRole('support', 'GET', `/support/complaints/${ctx.complaintId}/messages`, null, 'support2@example.test');
+  const staffView = await asRole('support', 'GET', `/support/complaints/${ctx.complaintId}/messages`, null, 'support1@example.test');
   expectStatus(staffView, 200);
   assert.ok(staffView.body.messages.some((m) => m.id === ctx.noteId && m.isInternal === true));
 
@@ -221,7 +236,7 @@ await t('CSKH-ESC-01', 'CSKH creates escalation request to Admin; duplicate open
   const escRes = await asRole('support', 'POST', `/support/complaints/${ctx.complaintId}/escalations`, {
     reason: 'Vượt thẩm quyền xử lý bồi thường tài chính',
     priority: 'Cao',
-  }, 'support2@example.test');
+  }, 'support1@example.test');
   expectStatus(escRes, 201);
   ctx.escalationId = escRes.body.escalation.id;
   assert.ok(ctx.escalationId > 0);
@@ -231,7 +246,7 @@ await t('CSKH-ESC-01', 'CSKH creates escalation request to Admin; duplicate open
   const dupEsc = await asRole('support', 'POST', `/support/complaints/${ctx.complaintId}/escalations`, {
     reason: 'Trùng lặp yêu cầu chuyển cấp',
     priority: 'Cao',
-  }, 'support2@example.test');
+  }, 'support1@example.test');
   expectStatus(dupEsc, 409, 'ESCALATION_ALREADY_OPEN');
 });
 
@@ -283,12 +298,16 @@ await t('CSKH-ESC-04', 'Admin processing: missing conclusion rejected (400), non
   assert.equal(processRes.body.escalation.result, 'Đã xác nhận sự cố kỹ thuật. Duyệt bồi thường 150 điểm cho khách hàng.');
 
   // CSKH views conclusion
-  const cskhList = await asRole('support', 'GET', '/support/escalations', null, 'support2@example.test');
+  const cskhList = await asRole('support', 'GET', '/support/escalations', null, 'support1@example.test');
   expectStatus(cskhList, 200);
   const found = cskhList.body.escalations.find((e) => e.id === ctx.escalationId);
   assert.ok(found);
   assert.equal(found.status, 'Đã giải quyết');
   assert.match(found.result, /150 điểm/);
+
+  // Invariant check: Admin processing did NOT change the complaint's assigned staff
+  const staffCheck = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: ctx.complaintId });
+  assert.equal(staffCheck.NhanVienPhuTrachID, ctx.staff1.NguoiDungID, 'Assigned staff must remain unchanged after Admin resolution');
 });
 
 // ============================================================================
@@ -296,7 +315,7 @@ await t('CSKH-ESC-04', 'Admin processing: missing conclusion rejected (400), non
 // ============================================================================
 
 await t('CSKH-SEC-01', 'CSKH can look up customer points history; customer/manager denied (403)', async () => {
-  const pointsRes = await asRole('support', 'GET', `/support/customers/${ctx.customer1.NguoiDungID}/points`, null, 'support2@example.test');
+  const pointsRes = await asRole('support', 'GET', `/support/customers/${ctx.customer1.NguoiDungID}/points`, null, 'support1@example.test');
   expectStatus(pointsRes, 200);
   assert.equal(pointsRes.body.customer.id, ctx.customer1.NguoiDungID);
   assert.ok(typeof pointsRes.body.customer.currentPoints === 'number');

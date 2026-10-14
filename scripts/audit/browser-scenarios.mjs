@@ -330,12 +330,8 @@ export const scenarios = [
       const assigned = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
       assert.equal(assigned.NhanVienPhuTrachID, supportUser.NguoiDungID);
 
-      const assignHist = await one(
-        pool,
-        'SELECT NhanVienMoiID, NguoiThucHienID FROM dbo.LICHSU_PHANCONG_KHIEUNAI WHERE KhieuNaiID = @id',
-        { id: customer.complaintId },
-      );
-      assert.equal(assignHist.NhanVienMoiID, supportUser.NguoiDungID);
+      const noHistoryTable = await scalar(pool, "SELECT COUNT(*) FROM sys.tables WHERE name = 'LICHSU_PHANCONG_KHIEUNAI'");
+      assert.equal(noHistoryTable, 0);
 
       // 2. See customer's message and reply publicly
       await expectText(page, 'Tôi cần kiểm tra giao dịch đơn hàng này ạ.');
@@ -543,10 +539,10 @@ export const scenarios = [
     },
   },
 
-  // ======================================================================= ADMIN: staff assignment & history
+  // ======================================================================= ADMIN: single staff assignment & immutability
   {
     id: 'E2E-ADM-ASSIGNMENT',
-    title: 'Admin reassigns complaint staff and checks assignment history in SQL',
+    title: 'Admin assigns complaint staff once on unassigned complaint and verifies immutability on assigned complaint',
     async run({ page, origin, pool, assert }) {
       if (!customer.complaintId) {
         const lastComplaint = await one(
@@ -560,27 +556,44 @@ export const scenarios = [
       }
       assert.ok(customer.complaintId, 'complaint scenario must run first');
       await uiLogin(page, origin, ACCOUNTS.admin);
+
+      // 1. Complaint that is already assigned must display static immutable badge, not assignment form
       await page.goto(`${origin}/admin/service/complaints?selectedId=${customer.complaintId}`);
-      await expectText(page, 'Phân công / Chuyển giao nhân viên CSKH');
+      await expectText(page, 'Nhân viên CSKH phụ trách');
+      await expectText(page, 'Đã phân công cho nhân viên:');
+      await expectText(page, 'Quy tắc nghiệp vụ: Mỗi khiếu nại chỉ được phân công một lần duy nhất.');
 
-      // Reassign to unassigned (revoke)
-      await page.getByLabel('Chọn nhân viên CSKH phụ trách').selectOption('');
-      await page.getByPlaceholder('Lý do điều phối hoặc chuyển nhân viên…').fill('Admin điều chuyển hồ sơ phục vụ lưu trữ.');
-      await page.getByRole('button', { name: 'Lưu phân công' }).click();
-      await expectText(page, 'Đã cập nhật phân công nhân viên CSKH thành công');
-
-      const revoked = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
-      assert.equal(revoked.NhanVienPhuTrachID, null);
-
-      const latestHist = await one(
+      // 2. Test first-time assignment on an unassigned complaint
+      const unassignedRow = await one(
         pool,
-        'SELECT TOP 1 NhanVienCuID, NhanVienMoiID, LyDo FROM dbo.LICHSU_PHANCONG_KHIEUNAI WHERE KhieuNaiID = @id ORDER BY LichSuID DESC',
-        { id: customer.complaintId },
+        `INSERT INTO dbo.KHIEUNAI (NguoiDungID, LoaiKhieuNai, TieuDe, NoiDung, MucDoUuTien, NgayTao, TrangThai, NhanVienPhuTrachID)
+         OUTPUT INSERTED.KhieuNaiID
+         VALUES (
+           (SELECT TOP 1 NguoiDungID FROM dbo.NGUOIDUNG WHERE VaiTroID = (SELECT VaiTroID FROM dbo.VAITRO WHERE MaVaiTro = 'KHACH_HANG')),
+           N'Dịch vụ',
+           N'E2E Khiếu nại chờ phân công',
+           N'Nội dung khiếu nại chờ Admin phân công lần đầu.',
+           N'Trung bình',
+           dbo.fn_BayGio(),
+           N'Mới',
+           NULL
+         )`
       );
-      assert.equal(latestHist.NhanVienMoiID, null);
-      assert.equal(latestHist.LyDo, 'Admin điều chuyển hồ sơ phục vụ lưu trữ.');
 
-      return { complaintId: customer.complaintId };
+      await page.goto(`${origin}/admin/service/complaints?selectedId=${unassignedRow.KhieuNaiID}`);
+      await expectText(page, 'Khiếu nại chưa có người tiếp nhận. Quản trị viên có thể phân công nhân viên CSKH phụ trách lần đầu.');
+
+      const supportStaff = await one(pool, 'SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email = @e', { e: ACCOUNTS.support });
+      await page.getByLabel('Chọn nhân viên CSKH phụ trách').selectOption(String(supportStaff.NguoiDungID));
+      await page.getByPlaceholder('Ghi chú phân công…').fill('Admin phân công ca sáng phụ trách.');
+      await page.getByRole('button', { name: 'Xác nhận phân công' }).click();
+      await expectText(page, 'Đã phân công nhân viên CSKH thành công.');
+
+      // Verify in SQL Server
+      const dbAssigned = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: unassignedRow.KhieuNaiID });
+      assert.equal(dbAssigned.NhanVienPhuTrachID, supportStaff.NguoiDungID);
+
+      return { complaintId: unassignedRow.KhieuNaiID };
     },
   },
 ];

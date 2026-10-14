@@ -134,11 +134,11 @@ async function run() {
   `);
   const actualInv = inv[0];
   console.log('  Actual inventory:', actualInv);
-  if (actualInv.tables_ !== 30) throw new Error(`Expected 30 tables, found ${actualInv.tables_}`);
-  if (actualInv.procedures_ !== 148) throw new Error(`Expected 148 procedures, found ${actualInv.procedures_}`);
+  if (actualInv.tables_ !== 29) throw new Error(`Expected 29 tables, found ${actualInv.tables_}`);
+  if (actualInv.procedures_ !== 147) throw new Error(`Expected 147 procedures, found ${actualInv.procedures_}`);
   if (actualInv.views_ !== 6) throw new Error(`Expected 6 views, found ${actualInv.views_}`);
   if (actualInv.functions_ !== 21) throw new Error(`Expected 21 functions, found ${actualInv.functions_}`);
-  if (actualInv.triggers_ !== 8) throw new Error(`Expected 8 triggers, found ${actualInv.triggers_}`);
+  if (actualInv.triggers_ !== 9) throw new Error(`Expected 9 triggers, found ${actualInv.triggers_}`);
 
   console.log('[5/6] Verifying database integrity & constraints...');
   const { recordset: fkCheck } = await dryPool.request().query(`
@@ -164,11 +164,16 @@ async function run() {
   if (rbacPerms[0].cnt !== 33) throw new Error(`Expected 33 permissions, found ${rbacPerms[0].cnt}`);
   if (rbacMaps[0].cnt !== 59) throw new Error(`Expected 59 role-permission mappings, found ${rbacMaps[0].cnt}`);
 
-  // Check new tables specifically
+  // Check CSKH extended tables specifically (only TINNHAN_KHIEUNAI and YEUCAU_CHUYENCAP, NOT LICHSU_PHANCONG_KHIEUNAI)
   const { recordset: newTables } = await dryPool.request().query(`
-    SELECT name FROM sys.tables WHERE name IN ('TINNHAN_KHIEUNAI', 'YEUCAU_CHUYENCAP', 'LICHSU_PHANCONG_KHIEUNAI')
+    SELECT name FROM sys.tables WHERE name IN ('TINNHAN_KHIEUNAI', 'YEUCAU_CHUYENCAP')
   `);
-  if (newTables.length !== 3) throw new Error(`Missing one or more new CSKH tables: found ${newTables.length}`);
+  if (newTables.length !== 2) throw new Error(`Missing one or more new CSKH tables: found ${newTables.length}`);
+
+  const { recordset: deadTable } = await dryPool.request().query(`
+    SELECT COUNT(*) AS cnt FROM sys.tables WHERE name = 'LICHSU_PHANCONG_KHIEUNAI'
+  `);
+  if (deadTable[0].cnt !== 0) throw new Error('LICHSU_PHANCONG_KHIEUNAI must not exist in clean database');
 
   // Check NhanVienPhuTrachID on KHIEUNAI
   const { recordset: colCheck } = await dryPool.request().query(`

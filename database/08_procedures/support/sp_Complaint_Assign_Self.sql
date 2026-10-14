@@ -1,4 +1,4 @@
--- Nhân viên CSKH tự tiếp nhận khiếu nại: sp_Complaint_Assign_Self
+-- Nhân viên CSKH tự tiếp nhận khiếu nại (một lần duy nhất): sp_Complaint_Assign_Self
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
 
@@ -47,7 +47,7 @@ BEGIN
             THROW 50061, N'Khiếu nại không tồn tại.', 1;
 
         IF @CurrentPhuTrach IS NOT NULL
-            THROW 50601, N'Khiếu nại này đã có nhân viên khác tiếp nhận.', 1;
+            THROW 50601, N'Khiếu nại này đã có nhân viên phụ trách và không thể tiếp nhận lại.', 1;
 
         IF @CurrentTrangThai IN (N'Đã đóng', N'Từ chối', N'Đã giải quyết')
             THROW 50602, N'Không thể tiếp nhận khiếu nại đã hoàn tất.', 1;
@@ -57,30 +57,12 @@ BEGIN
             ELSE @CurrentTrangThai
         END;
 
-        -- Cập nhật người phụ trách và trạng thái
+        -- Cập nhật người phụ trách và trạng thái (chỉ 1 lần duy nhất)
         UPDATE dbo.KHIEUNAI
         SET
             NhanVienPhuTrachID = @NguoiDungID,
             TrangThai = @TrangThaiMoi
         WHERE KhieuNaiID = @KhieuNaiID;
-
-        -- Ghi lịch sử phân công
-        INSERT INTO dbo.LICHSU_PHANCONG_KHIEUNAI (
-            KhieuNaiID,
-            NhanVienCuID,
-            NhanVienMoiID,
-            NguoiThucHienID,
-            ThoiGian,
-            LyDo
-        )
-        VALUES (
-            @KhieuNaiID,
-            NULL,
-            @NguoiDungID,
-            @NguoiDungID,
-            dbo.fn_BayGio(),
-            N'Nhân viên CSKH tự tiếp nhận xử lý'
-        );
 
         -- Ghi nhật ký xử lý
         INSERT INTO dbo.XULY_KHIEUNAI (

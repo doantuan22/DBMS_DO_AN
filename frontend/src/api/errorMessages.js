@@ -143,6 +143,7 @@ export const ERROR_MESSAGES = Object.freeze({
   SHOWTIME_TIME_INVALID:
     'Thời gian suất chiếu không phù hợp thời lượng phim hoặc quy định bắt đầu.',
   SHOWTIME_UNAVAILABLE: 'Suất chiếu không còn đủ điều kiện đặt vé.',
+  STAFF_ID_REQUIRED: 'Phải chỉ định nhân viên CSKH phụ trách hợp lệ.',
   SUPPORT_FORBIDDEN: 'Bạn cần quyền chăm sóc khách hàng để thực hiện thao tác này.',
   SUPPORT_REQUIRED: 'Chức năng này chỉ dành cho chăm sóc khách hàng.',
   TRANSACTION_REQUIRED: 'Không thể thực hiện thao tác ngoài giao dịch cơ sở dữ liệu.',

@@ -103,7 +103,6 @@ export const PROCEDURES = Object.freeze({
   COMPLAINT_UNASSIGNED_LIST: 'dbo.sp_Complaint_Unassigned_List',
   COMPLAINT_ASSIGN_SELF: 'dbo.sp_Complaint_Assign_Self',
   COMPLAINT_ASSIGN_ADMIN: 'dbo.sp_Complaint_Assign_Admin',
-  COMPLAINT_ASSIGNMENT_HISTORY: 'dbo.sp_Complaint_Assignment_History',
   ESCALATION_CREATE: 'dbo.sp_Escalation_Create',
   ESCALATION_LIST_ADMIN: 'dbo.sp_Escalation_List_Admin',
   ESCALATION_LIST_CSKH: 'dbo.sp_Escalation_List_CSKH',
