@@ -35,6 +35,7 @@ const groups = [
     'Chăm sóc & báo cáo',
     [
       ['complaints', 'chat'],
+      ['escalations', 'box-line'],
       ['revenue', 'pie-chart'],
     ],
   ],

@@ -5,6 +5,7 @@ import {
   movieId,
   reviewInput,
 } from '../validators/feedbackValidator.js';
+import { chatMessage } from '../validators/supportValidator.js';
 
 export async function listReviews(req, res, next) {
   try {
@@ -54,6 +55,32 @@ export async function getComplaint(req, res, next) {
         complaintId(req.params.complaintId),
       ),
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function listMessages(req, res, next) {
+  try {
+    const messages = await feedbackService.listMessages(
+      req.user.userId,
+      complaintId(req.params.complaintId),
+    );
+    res.json({ messages });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function sendMessage(req, res, next) {
+  try {
+    const validated = chatMessage(req.body);
+    const message = await feedbackService.sendMessage(
+      req.user.userId,
+      complaintId(req.params.complaintId),
+      validated.content,
+    );
+    res.status(201).json({ message });
   } catch (error) {
     next(error);
   }

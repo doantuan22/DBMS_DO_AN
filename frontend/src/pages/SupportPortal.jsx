@@ -390,6 +390,24 @@ function SupportWorkspace({ scope }) {
     }
   };
 
+  const [claiming, setClaiming] = useState(false);
+
+  const handleClaimComplaint = async (complaintId) => {
+    if (!complaintId || claiming || busy) return;
+    setClaiming(true);
+    setNotice(null);
+    try {
+      await api.claimSupportComplaint(complaintId);
+      await reloadAppliedQueue();
+      await selectComplaint(complaintId);
+      setNotice({ ok: true, text: 'Đã tiếp nhận khiếu nại thành công.' });
+    } catch (error) {
+      setNotice({ ok: false, text: error.message || 'Không thể tiếp nhận khiếu nại.' });
+    } finally {
+      if (mounted.current) setClaiming(false);
+    }
+  };
+
   return (
     <>
       <SupportWorkspaceView
@@ -420,6 +438,9 @@ function SupportWorkspace({ scope }) {
         requestWrite={requestWrite}
         setDiscardDialogOpen={setDiscardDialogOpen}
         discardProcessingDraft={discardProcessingDraft}
+        currentUser={user}
+        onClaimComplaint={handleClaimComplaint}
+        claiming={claiming}
       />
       <ConfirmDialog
         key={`write:${actionConfirmation?.id ?? 'none'}:${actionConfirmation?.action ?? 'none'}`}

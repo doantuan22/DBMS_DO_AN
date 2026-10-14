@@ -10,7 +10,8 @@ CREATE OR ALTER PROCEDURE dbo.sp_Support_Complaint_List
     @TrangThai NVARCHAR(50) = NULL,
     @LoaiKhieuNai NVARCHAR(100) = NULL,
     @SearchTerm NVARCHAR(100) = NULL,
-    @MucDoUuTien NVARCHAR(50) = NULL
+    @MucDoUuTien NVARCHAR(50) = NULL,
+    @PhuTrach NVARCHAR(50) = NULL
     )
 AS
 BEGIN
@@ -56,6 +57,9 @@ BEGIN
         MucDoUuTien,
         NgayTao,
         TrangThaiKhieuNai,
+        NhanVienPhuTrachID,
+        TenNhanVienPhuTrach,
+        EmailNhanVienPhuTrach,
         SoLanXuLy,
         NgayXuLyCuoi,
         NguoiXuLyCuoi,
@@ -74,6 +78,12 @@ BEGIN
         AND (
             @MucDoUuTien IS NULL
             OR MucDoUuTien = @MucDoUuTien
+        )
+        AND (
+            @PhuTrach IS NULL
+            OR @PhuTrach = N'ALL'
+            OR (@PhuTrach = N'ME' AND NhanVienPhuTrachID = @NguoiDungID)
+            OR (@PhuTrach = N'UNASSIGNED' AND NhanVienPhuTrachID IS NULL)
         )
         AND (
             @SearchTerm IS NULL

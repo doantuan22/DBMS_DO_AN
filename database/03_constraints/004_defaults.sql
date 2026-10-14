@@ -171,3 +171,20 @@ ALTER TABLE dbo.[THANHTOAN]
 ADD CONSTRAINT [DF_THANHTOAN_TrangThai] DEFAULT(N'Đang xử lý') FOR [TrangThai];
 
 GO
+
+-- Gán giá trị mặc định cho tin nhắn khiếu nại.
+ALTER TABLE dbo.[TINNHAN_KHIEUNAI]
+ADD CONSTRAINT [DF_TINNHAN_KHIEUNAI_LoaiTinNhan] DEFAULT(N'Công khai') FOR [LoaiTinNhan];
+
+GO
+
+-- Gán giá trị mặc định cho yêu cầu chuyển cấp.
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+ADD CONSTRAINT [DF_YEUCAU_CHUYENCAP_MucDoUuTien] DEFAULT(N'Trung bình') FOR [MucDoUuTien];
+
+GO
+
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+ADD CONSTRAINT [DF_YEUCAU_CHUYENCAP_TrangThai] DEFAULT(N'Chờ tiếp nhận') FOR [TrangThai];
+
+GO

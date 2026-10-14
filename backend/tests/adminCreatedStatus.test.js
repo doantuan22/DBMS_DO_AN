@@ -183,7 +183,12 @@ test('update and delete handlers keep 200 OK', async () => {
 });
 
 // Guard: a new Admin POST route that creates a row must be added to CREATE_ENDPOINTS above.
-const ACTION_POSTS = new Set(['/showtimes/:showtimeId/cancel']);
+const ACTION_POSTS = new Set([
+  '/showtimes/:showtimeId/cancel',
+  '/complaints/:complaintId/assign',
+  '/escalations/:escalationId/claim',
+  '/escalations/:escalationId/process',
+]);
 const PROCESSING_PATH = '/complaints/:complaintId/processings';
 test('every admin collection POST route is covered by the 201 contract', () => {
   const covered = new Set(CREATE_ENDPOINTS.map((entry) => admin[entry.handler]));

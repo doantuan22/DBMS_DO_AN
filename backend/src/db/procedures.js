@@ -95,6 +95,23 @@ export const PROCEDURES = Object.freeze({
   SUPPORT_COMPLAINT_GET_ORDER_REFERENCE: 'dbo.sp_Support_Complaint_GetOrderReference',
   SUPPORT_COMPLAINT_ADD_PROCESSING: 'dbo.sp_Support_Complaint_AddProcessing',
   SUPPORT_COMPLAINT_UPDATE_STATUS: 'dbo.sp_Support_Complaint_UpdateStatus',
+
+  // CSKH Rebuild: Chat, Assignment, Escalation, Points Lookup
+  COMPLAINT_CHAT_LIST: 'dbo.sp_Complaint_Chat_List',
+  COMPLAINT_CHAT_SEND: 'dbo.sp_Complaint_Chat_Send',
+  COMPLAINT_CHAT_ADD_INTERNAL_NOTE: 'dbo.sp_Complaint_Chat_AddInternalNote',
+  COMPLAINT_UNASSIGNED_LIST: 'dbo.sp_Complaint_Unassigned_List',
+  COMPLAINT_ASSIGN_SELF: 'dbo.sp_Complaint_Assign_Self',
+  COMPLAINT_ASSIGN_ADMIN: 'dbo.sp_Complaint_Assign_Admin',
+  COMPLAINT_ASSIGNMENT_HISTORY: 'dbo.sp_Complaint_Assignment_History',
+  ESCALATION_CREATE: 'dbo.sp_Escalation_Create',
+  ESCALATION_LIST_ADMIN: 'dbo.sp_Escalation_List_Admin',
+  ESCALATION_LIST_CSKH: 'dbo.sp_Escalation_List_CSKH',
+  ESCALATION_GET_DETAIL: 'dbo.sp_Escalation_GetDetail',
+  ESCALATION_CLAIM: 'dbo.sp_Escalation_Claim',
+  ESCALATION_PROCESS: 'dbo.sp_Escalation_Process',
+  SUPPORT_CUSTOMER_GET_POINTS: 'dbo.sp_Support_Customer_GetPoints',
+
   USER_GET_PASSWORD_HASH: 'dbo.sp_User_GetPasswordHash',
   USER_CHANGE_PASSWORD: 'dbo.sp_User_ChangePassword',
 

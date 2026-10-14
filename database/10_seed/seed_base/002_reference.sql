@@ -139,6 +139,67 @@ BEGIN
             'XEM_BAO_CAO_TOANHE',
             N'Báo cáo doanh thu toàn hệ thống',
             N'Xem doanh thu toàn chuỗi rạp'
+        ),
+        -- Nghiệp vụ CSKH nâng cao (Chat, Phân công, Chuyển cấp)
+        (
+            24,
+            'KHIEUNAI_CHAT_XEM',
+            N'Xem hội thoại khiếu nại',
+            N'Xem danh sách tin nhắn trao đổi trong khiếu nại'
+        ),
+        (
+            25,
+            'KHIEUNAI_CHAT_GUI',
+            N'Gửi tin nhắn công khai',
+            N'Gửi phản hồi trao đổi công khai với khách hàng'
+        ),
+        (
+            26,
+            'KHIEUNAI_NOIBO_XEM',
+            N'Xem ghi chú nội bộ',
+            N'Xem các ghi chú và tin nhắn nội bộ trong khiếu nại'
+        ),
+        (
+            27,
+            'KHIEUNAI_NOIBO_GHI',
+            N'Thêm ghi chú nội bộ',
+            N'Ghi chú nội bộ dành riêng cho nhân viên và quản trị viên'
+        ),
+        (
+            28,
+            'KHIEUNAI_TIEPNHAN',
+            N'CSKH nhận khiếu nại',
+            N'Nhận phụ trách xử lý khiếu nại từ hàng đợi chưa phân công'
+        ),
+        (
+            29,
+            'KHIEUNAI_PHANCONG',
+            N'Admin phân công nhân viên',
+            N'Phân công hoặc thay đổi nhân viên CSKH phụ trách khiếu nại'
+        ),
+        (
+            30,
+            'CHUYENCAP_TAO',
+            N'Tạo yêu cầu chuyển cấp',
+            N'CSKH tạo yêu cầu chuyển cấp khiếu nại lên Admin'
+        ),
+        (
+            31,
+            'CHUYENCAP_XEM',
+            N'Xem yêu cầu chuyển cấp',
+            N'Xem danh sách và chi tiết các yêu cầu chuyển cấp'
+        ),
+        (
+            32,
+            'CHUYENCAP_TIEPNHAN',
+            N'Admin tiếp nhận chuyển cấp',
+            N'Admin tiếp nhận xử lý yêu cầu chuyển cấp từ CSKH'
+        ),
+        (
+            33,
+            'CHUYENCAP_XULY',
+            N'Admin xử lý chuyển cấp',
+            N'Admin ghi nhận kết quả và hoàn tất yêu cầu chuyển cấp'
         );
     SET
         IDENTITY_INSERT dbo.QUYEN OFF;

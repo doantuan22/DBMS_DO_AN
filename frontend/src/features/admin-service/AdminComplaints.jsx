@@ -24,6 +24,7 @@ import {
   AsyncState,
   StatusBadge,
 } from '../../components/ui';
+import AdminComplaintAssignment from '../admin/AdminComplaintAssignment';
 import { formatDateTime } from '../../utils/dateTime';
 import Forbidden from '../../pages/Forbidden';
 import { COMPLAINT_STATUSES, PRIORITIES, PROCESSING_STATUSES } from './complaintModel';
@@ -240,6 +241,11 @@ export function ComplaintView({ adapter, state, controller }) {
             complaintId={complaint.id}
             allowed={adapter.referenceAllowed}
             loadReference={adminApi.complaintOrderReference}
+          />
+          <AdminComplaintAssignment
+            complaintId={complaint.id}
+            currentStaffId={complaint.assignedStaffId}
+            onAssigned={() => void controller.reload()}
           />
           <div>
             <h3>Lịch sử xử lý</h3>

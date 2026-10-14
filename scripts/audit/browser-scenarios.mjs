@@ -241,12 +241,20 @@ export const scenarios = [
     },
   },
 
-  // ======================================================================= CUSTOMER: complaint (KH-14)
+  // ======================================================================= CUSTOMER: complaint (KH-14) + Chat
   {
     id: 'E2E-CUST-COMPLAINT',
-    title: "KH-14 complaint form creates a Mới complaint linked to the customer's own order",
+    title: "KH-14 complaint form creates a Mới complaint linked to order, and customer sends first chat message",
     async run({ page, origin, pool, RUN, assert }) {
       const account = await ensureCustomer({ page, origin, pool, RUN });
+      if (!customer.paidOrderId) {
+        const lastOrder = await one(
+          pool,
+          `SELECT TOP 1 DonDatVeID FROM dbo.DONDATVE WHERE NguoiDungID = @id AND TrangThai = N'Đã thanh toán' ORDER BY DonDatVeID DESC`,
+          { id: account.id },
+        );
+        if (lastOrder) customer.paidOrderId = lastOrder.DonDatVeID;
+      }
       assert.ok(customer.paidOrderId, 'E2E-CUST-BOOK must run first (it creates the order to reference)');
       await uiLogin(page, origin, account.email, account.password);
       await page.goto(`${origin}/complaints`);
@@ -269,15 +277,42 @@ export const scenarios = [
       customer.complaintId = row.KhieuNaiID;
       customer.complaintTitle = title;
       await expectText(page, title);
+
+      // Customer navigates to complaint detail and sends first message
+      await page.goto(`${origin}/complaints/${row.KhieuNaiID}`);
+      await expectText(page, 'Đang chờ CSKH tiếp nhận');
+      await page.getByLabel('Nội dung tin nhắn gửi CSKH').fill('Tôi cần kiểm tra giao dịch đơn hàng này ạ.');
+      await page.getByRole('button', { name: 'Gửi', exact: true }).click();
+      await expectText(page, 'Tôi cần kiểm tra giao dịch đơn hàng này ạ.');
+
+      const chatMsg = await one(
+        pool,
+        'SELECT NoiDung, LoaiTinNhan, NguoiGuiID FROM dbo.TINNHAN_KHIEUNAI WHERE KhieuNaiID = @id',
+        { id: row.KhieuNaiID },
+      );
+      assert.equal(chatMsg.NoiDung, 'Tôi cần kiểm tra giao dịch đơn hàng này ạ.');
+      assert.equal(chatMsg.LoaiTinNhan, 'Công khai');
+      assert.equal(chatMsg.NguoiGuiID, account.id);
+
       return { complaintId: row.KhieuNaiID };
     },
   },
 
-  // ======================================================================= CSKH: process complaint (CSKH-02..06)
+  // ======================================================================= CSKH: claim, chat, internal note, points inspection, escalate
   {
     id: 'E2E-CSKH-PROCESS',
-    title: 'CSKH-02..06 queue → open case → add processing → change status; append-only log verified in SQL',
+    title: 'CSKH claim complaint → 2-way chat → internal note → points lookup → escalate to Admin',
     async run({ page, origin, pool, assert }) {
+      if (!customer.complaintId) {
+        const lastComplaint = await one(
+          pool,
+          `SELECT TOP 1 KhieuNaiID, TieuDe FROM dbo.KHIEUNAI ORDER BY KhieuNaiID DESC`,
+        );
+        if (lastComplaint) {
+          customer.complaintId = lastComplaint.KhieuNaiID;
+          customer.complaintTitle = lastComplaint.TieuDe;
+        }
+      }
       assert.ok(customer.complaintId, 'E2E-CUST-COMPLAINT must run first');
       await uiLogin(page, origin, ACCOUNTS.support);
       assert.ok(new URL(page.url()).pathname.startsWith('/support'), `landed on ${page.url()}`);
@@ -288,50 +323,264 @@ export const scenarios = [
       await expectText(page, 'HỒ SƠ ĐANG XEM');
       await expectText(page, 'Đơn tham chiếu');
 
-      const logBefore = await scalar(pool, 'SELECT COUNT(*) FROM dbo.XULY_KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
-      await page.getByLabel('Nội dung xử lý').fill('Đã kiểm tra giao dịch, đang đối soát với cổng thanh toán.');
-      await page.getByLabel('Trạng thái sau xử lý').selectOption('Đang xử lý');
-      await page.getByRole('button', { name: 'Ghi diễn biến' }).click();
-      await confirmIfAsked(page);
-      await expectText(page, 'Đã kiểm tra giao dịch');
-      const state = await one(pool, 'SELECT TrangThai FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
-      assert.equal(state.TrangThai, 'Đang xử lý');
-      assert.equal(
-        await scalar(pool, 'SELECT COUNT(*) FROM dbo.XULY_KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId }),
-        logBefore + 1,
-      );
+      // 1. Claim complaint
+      await page.getByRole('button', { name: 'Tiếp nhận khiếu nại' }).click();
+      await expectText(page, 'Đã tiếp nhận khiếu nại thành công');
+      const supportUser = await one(pool, 'SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email = @e', { e: ACCOUNTS.support });
+      const assigned = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
+      assert.equal(assigned.NhanVienPhuTrachID, supportUser.NguoiDungID);
 
-      await page.getByLabel('Trạng thái mới').selectOption('Đã giải quyết');
-      await page.getByRole('button', { name: 'Cập nhật trạng thái' }).click();
-      await confirmIfAsked(page);
-      await expectPoll(
-        async () => (await one(pool, 'SELECT TrangThai FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId })).TrangThai === 'Đã giải quyết',
-        { message: 'complaint status did not become Đã giải quyết' },
-      );
-      const log = await rows(
+      const assignHist = await one(
         pool,
-        `SELECT x.NoiDungXuLy, x.TrangThaiSauXuLy, n.Email FROM dbo.XULY_KHIEUNAI x
-           JOIN dbo.NGUOIDUNG n ON n.NguoiDungID = x.NguoiXuLyID WHERE x.KhieuNaiID = @id ORDER BY x.XuLyID`,
+        'SELECT NhanVienMoiID, NguoiThucHienID FROM dbo.LICHSU_PHANCONG_KHIEUNAI WHERE KhieuNaiID = @id',
         { id: customer.complaintId },
       );
-      assert.ok(log.every((entry) => entry.Email === ACCOUNTS.support));
-      assert.ok(log.some((entry) => entry.NoiDungXuLy.startsWith('Đã kiểm tra giao dịch')));
-      assert.equal(log.at(-1).TrangThaiSauXuLy, 'Đã giải quyết');
-      return { entries: log.length };
+      assert.equal(assignHist.NhanVienMoiID, supportUser.NguoiDungID);
+
+      // 2. See customer's message and reply publicly
+      await expectText(page, 'Tôi cần kiểm tra giao dịch đơn hàng này ạ.');
+      await page.getByLabel('Nội dung tin nhắn hoặc ghi chú').fill('Chào bạn, CSKH đã tiếp nhận và đang đối soát.');
+      await page.getByRole('button', { name: 'Gửi', exact: true }).click();
+      await expectPoll(
+        async () => {
+          const m = await one(
+            pool,
+            "SELECT LoaiTinNhan FROM dbo.TINNHAN_KHIEUNAI WHERE KhieuNaiID = @id AND NoiDung LIKE N'%CSKH đã tiếp nhận%'",
+            { id: customer.complaintId },
+          );
+          return m && m.LoaiTinNhan === 'Công khai';
+        },
+        { message: 'CSKH public reply was not written to database' },
+      );
+
+      // 3. Send internal note
+      await page.getByLabel('🔒 Ghi chú nội bộ (chỉ nhân viên/Admin thấy)').check();
+      await page.getByLabel('Nội dung tin nhắn hoặc ghi chú').fill('Ghi chú nội bộ: Giao dịch có dấu hiệu chờ cổng thanh toán xác nhận.');
+      await page.getByRole('button', { name: 'Lưu ghi chú' }).click();
+      await expectPoll(
+        async () => {
+          const m = await one(
+            pool,
+            "SELECT LoaiTinNhan FROM dbo.TINNHAN_KHIEUNAI WHERE KhieuNaiID = @id AND NoiDung LIKE N'%Giao dịch có dấu hiệu%'",
+            { id: customer.complaintId },
+          );
+          return m && m.LoaiTinNhan === 'Nội bộ';
+        },
+        { message: 'Internal note was not written to database' },
+      );
+
+      // 4. Points & Compensation reference inspection
+      await expectText(page, 'Điểm hiện tại:');
+      await expectText(page, 'Điểm bồi thường:');
+
+      // 5. Escalate to Admin
+      await page.getByRole('button', { name: '🚀 Chuyển cấp lên Admin' }).click();
+      await page.getByLabel('Lý do chuyển cấp').fill('Vấn đề đối soát tài chính vượt thẩm quyền CSKH, nhờ Admin kiểm tra.');
+      await page.getByRole('button', { name: 'Xác nhận gửi' }).click();
+      await expectPoll(
+        async () => {
+          const e = await one(
+            pool,
+            'SELECT YeuCauID, TrangThai, MucDoUuTien, NguoiYeuCauID FROM dbo.YEUCAU_CHUYENCAP WHERE KhieuNaiID = @id',
+            { id: customer.complaintId },
+          );
+          if (e && e.TrangThai === 'Chờ tiếp nhận') {
+            customer.escalationId = e.YeuCauID;
+            return true;
+          }
+          return false;
+        },
+        { message: 'Escalation was not created in database' },
+      );
+
+      return { complaintId: customer.complaintId, escalationId: customer.escalationId };
     },
   },
 
-  // ======================================================================= CUSTOMER sees the outcome
+  // ======================================================================= ADMIN: claim & resolve escalation
+  {
+    id: 'E2E-ADM-ESCALATION',
+    title: 'Admin view pending escalation queue → claim → provide resolution → mark resolved',
+    async run({ page, origin, pool, assert }) {
+      if (!customer.escalationId) {
+        const lastEsc = await one(
+          pool,
+          `SELECT TOP 1 YeuCauID FROM dbo.YEUCAU_CHUYENCAP WHERE TrangThai = N'Chờ tiếp nhận' ORDER BY YeuCauID DESC`,
+        );
+        if (lastEsc) customer.escalationId = lastEsc.YeuCauID;
+      }
+      assert.ok(customer.escalationId, 'E2E-CSKH-PROCESS must run first');
+      await uiLogin(page, origin, ACCOUNTS.admin);
+      await page.goto(`${origin}/admin/service/escalations`);
+      await expectText(page, 'Yêu cầu hỗ trợ từ CSKH');
+      await expectText(page, `Yêu cầu #${customer.escalationId}`);
+
+      // Open escalation detail
+      await page.getByRole('button', { name: new RegExp(`Yêu cầu #${customer.escalationId}`) }).click();
+      await expectText(page, 'Vấn đề đối soát tài chính vượt thẩm quyền');
+
+      // Claim escalation
+      await page.getByRole('button', { name: 'Tiếp nhận yêu cầu này' }).click();
+      const adminUser = await one(pool, 'SELECT NguoiDungID FROM dbo.NGUOIDUNG WHERE Email = @e', { e: ACCOUNTS.admin });
+      await expectPoll(
+        async () => {
+          const claimedEsc = await one(pool, 'SELECT TrangThai, AdminPhuTrachID FROM dbo.YEUCAU_CHUYENCAP WHERE YeuCauID = @id', {
+            id: customer.escalationId,
+          });
+          return claimedEsc && claimedEsc.TrangThai === 'Đang xử lý' && claimedEsc.AdminPhuTrachID === adminUser.NguoiDungID;
+        },
+        { message: 'Escalation was not claimed in database' },
+      );
+
+      // Process escalation with resolution
+      const resText = 'Admin đã đối soát hoàn tất với đối tác thanh toán, giao dịch hợp lệ.';
+      await page.getByLabel('Kết luận xử lý / Chỉ đạo cho CSKH').fill(resText);
+      await page.getByRole('button', { name: '✓ Đã giải quyết' }).click();
+      let finishedEsc = null;
+      await expectPoll(
+        async () => {
+          finishedEsc = await one(
+            pool,
+            'SELECT TrangThai, KetQuaXuLy, ThoiGianHoanTat FROM dbo.YEUCAU_CHUYENCAP WHERE YeuCauID = @id',
+            { id: customer.escalationId },
+          );
+          return (
+            finishedEsc &&
+            finishedEsc.TrangThai === 'Đã giải quyết' &&
+            finishedEsc.KetQuaXuLy === resText &&
+            finishedEsc.ThoiGianHoanTat
+          );
+        },
+        { message: 'Escalation was not completed in database' },
+      );
+
+      return { escalationId: customer.escalationId, status: finishedEsc?.TrangThai };
+    },
+  },
+
+  // ======================================================================= CSKH: view resolution & finalize complaint
+  {
+    id: 'E2E-CSKH-FINALIZE',
+    title: 'CSKH views Admin resolution → informs customer → marks complaint resolved',
+    async run({ page, origin, pool, assert }) {
+      if (!customer.complaintId) {
+        const lastComplaint = await one(
+          pool,
+          `SELECT TOP 1 KhieuNaiID, TieuDe FROM dbo.KHIEUNAI ORDER BY KhieuNaiID DESC`,
+        );
+        if (lastComplaint) {
+          customer.complaintId = lastComplaint.KhieuNaiID;
+          customer.complaintTitle = lastComplaint.TieuDe;
+        }
+      }
+      assert.ok(customer.complaintId, 'E2E-CSKH-PROCESS must run first');
+      await uiLogin(page, origin, ACCOUNTS.support);
+      await page.goto(`${origin}/support/complaints`);
+      await page.getByLabel('Tìm khiếu nại').fill(customer.complaintTitle);
+      await page.getByRole('button', { name: 'Áp dụng bộ lọc' }).click();
+      await page.getByRole('button', { name: new RegExp(customer.complaintTitle) }).click();
+      await expectText(page, 'HỒ SƠ ĐANG XEM');
+
+      // CSKH sees Admin feedback in history
+      await expectText(page, 'Lịch sử phản hồi từ Admin');
+
+      // CSKH sends final public message
+      await page.getByLabel('Nội dung tin nhắn hoặc ghi chú').fill('Admin đã đối soát thành công, khiếu nại của bạn đã được giải quyết.');
+      await page.getByRole('button', { name: 'Gửi', exact: true }).click();
+      await expectPoll(
+        async () => {
+          const m = await one(
+            pool,
+            "SELECT LoaiTinNhan FROM dbo.TINNHAN_KHIEUNAI WHERE KhieuNaiID = @id AND NoiDung LIKE N'%Admin đã đối soát thành công%'",
+            { id: customer.complaintId },
+          );
+          return m && m.LoaiTinNhan === 'Công khai';
+        },
+        { message: 'Final message was not recorded in database' },
+      );
+
+      // CSKH records processing and marks resolved
+      await page.getByLabel('Nội dung xử lý').fill('Đã hoàn tất xử lý khiếu nại sau chỉ đạo từ Admin.');
+      await page.getByLabel('Trạng thái sau xử lý').selectOption('Đã giải quyết');
+      await page.getByRole('button', { name: 'Ghi diễn biến' }).click();
+      await confirmIfAsked(page);
+      await expectText(page, 'Đã thêm diễn biến xử lý');
+
+      const state = await one(pool, 'SELECT TrangThai FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
+      assert.equal(state.TrangThai, 'Đã giải quyết');
+
+      return { complaintId: customer.complaintId };
+    },
+  },
+
+  // ======================================================================= CUSTOMER sees the outcome & privacy check
   {
     id: 'E2E-CUST-COMPLAINT-RESULT',
-    title: 'KH-14 customer sees the CSKH resolution on the complaint detail page',
-    async run({ page, origin, assert }) {
+    title: 'KH-14 customer sees resolution & public replies, but internal notes are hidden',
+    async run({ page, origin, pool, assert }) {
+      if (!customer.complaintId) {
+        const lastComplaint = await one(
+          pool,
+          `SELECT TOP 1 KhieuNaiID, TieuDe FROM dbo.KHIEUNAI WHERE TrangThai = N'Đã giải quyết' ORDER BY KhieuNaiID DESC`,
+        );
+        if (lastComplaint) {
+          customer.complaintId = lastComplaint.KhieuNaiID;
+          customer.complaintTitle = lastComplaint.TieuDe;
+        }
+      }
       assert.ok(customer.complaintId, 'complaint scenario must run first');
       await uiLogin(page, origin, customer.email, customer.password);
       await page.goto(`${origin}/complaints/${customer.complaintId}`);
       await expectText(page, 'Đã giải quyết');
-      await expectText(page, 'Đã kiểm tra giao dịch');
+      await expectText(page, 'Chào bạn, CSKH đã tiếp nhận và đang đối soát.');
+      await expectText(page, 'Admin đã đối soát thành công, khiếu nại của bạn đã được giải quyết.');
+
+      // Customer must NOT see internal note
+      const bodyText = await page.textContent('body');
+      assert.ok(!bodyText.includes('Ghi chú nội bộ: Giao dịch có dấu hiệu'));
+
       return {};
+    },
+  },
+
+  // ======================================================================= ADMIN: staff assignment & history
+  {
+    id: 'E2E-ADM-ASSIGNMENT',
+    title: 'Admin reassigns complaint staff and checks assignment history in SQL',
+    async run({ page, origin, pool, assert }) {
+      if (!customer.complaintId) {
+        const lastComplaint = await one(
+          pool,
+          `SELECT TOP 1 KhieuNaiID, TieuDe FROM dbo.KHIEUNAI ORDER BY KhieuNaiID DESC`,
+        );
+        if (lastComplaint) {
+          customer.complaintId = lastComplaint.KhieuNaiID;
+          customer.complaintTitle = lastComplaint.TieuDe;
+        }
+      }
+      assert.ok(customer.complaintId, 'complaint scenario must run first');
+      await uiLogin(page, origin, ACCOUNTS.admin);
+      await page.goto(`${origin}/admin/service/complaints?selectedId=${customer.complaintId}`);
+      await expectText(page, 'Phân công / Chuyển giao nhân viên CSKH');
+
+      // Reassign to unassigned (revoke)
+      await page.getByLabel('Chọn nhân viên CSKH phụ trách').selectOption('');
+      await page.getByPlaceholder('Lý do điều phối hoặc chuyển nhân viên…').fill('Admin điều chuyển hồ sơ phục vụ lưu trữ.');
+      await page.getByRole('button', { name: 'Lưu phân công' }).click();
+      await expectText(page, 'Đã cập nhật phân công nhân viên CSKH thành công');
+
+      const revoked = await one(pool, 'SELECT NhanVienPhuTrachID FROM dbo.KHIEUNAI WHERE KhieuNaiID = @id', { id: customer.complaintId });
+      assert.equal(revoked.NhanVienPhuTrachID, null);
+
+      const latestHist = await one(
+        pool,
+        'SELECT TOP 1 NhanVienCuID, NhanVienMoiID, LyDo FROM dbo.LICHSU_PHANCONG_KHIEUNAI WHERE KhieuNaiID = @id ORDER BY LichSuID DESC',
+        { id: customer.complaintId },
+      );
+      assert.equal(latestHist.NhanVienMoiID, null);
+      assert.equal(latestHist.LyDo, 'Admin điều chuyển hồ sơ phục vụ lưu trữ.');
+
+      return { complaintId: customer.complaintId };
     },
   },
 ];

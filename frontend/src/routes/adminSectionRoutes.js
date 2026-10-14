@@ -15,6 +15,7 @@ export const ADMIN_SECTION_ROUTES = Object.freeze({
   showtimes: { path: '/admin/operations/showtimes', label: 'Suất chiếu' },
   bookings: { path: '/admin/bookings', label: 'Quản lý đặt vé' },
   complaints: { path: '/admin/service/complaints', label: 'Khiếu nại' },
+  escalations: { path: '/admin/service/escalations', label: 'Yêu cầu CSKH' },
   revenue: { path: '/admin/reports/revenue', label: 'Doanh thu' },
 });
 

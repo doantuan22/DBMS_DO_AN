@@ -72,3 +72,74 @@ export function statusUpdate(value) {
   }
   return { status };
 }
+
+export function chatMessage(value) {
+  assertOnlyFields(value, ['content'], 'UNKNOWN_REQUEST_FIELD');
+  const content = requiredText(value.content, 'content');
+  if (content.length > 2000) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'content must be at most 2000 characters.');
+  }
+  return { content };
+}
+
+export function internalNote(value) {
+  assertOnlyFields(value, ['content'], 'UNKNOWN_REQUEST_FIELD');
+  const content = requiredText(value.content, 'content');
+  if (content.length > 2000) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'content must be at most 2000 characters.');
+  }
+  return { content };
+}
+
+export function escalationCreate(value) {
+  assertOnlyFields(value, ['reason', 'priority'], 'UNKNOWN_REQUEST_FIELD');
+  const reason = requiredText(value.reason, 'reason');
+  if (reason.length > 500) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'reason must be at most 500 characters.');
+  }
+  const priority = value.priority ? requiredText(value.priority, 'priority') : 'Trung bình';
+  if (!COMPLAINT_PRIORITIES.has(priority)) {
+    throw new HttpError(400, 'INVALID_PRIORITY', 'priority is not supported.');
+  }
+  return { reason, priority };
+}
+
+const ESCALATION_FINAL_STATUSES = new Set(['Đã giải quyết', 'Từ chối']);
+export function escalationProcess(value) {
+  assertOnlyFields(value, ['conclusion', 'resolution', 'status'], 'UNKNOWN_REQUEST_FIELD');
+  const conclusion = requiredText(value.conclusion || value.resolution, 'conclusion');
+  if (conclusion.length > 1000) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'conclusion must be at most 1000 characters.');
+  }
+  const status = requiredText(value.status, 'status');
+  if (!ESCALATION_FINAL_STATUSES.has(status)) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'status must be Đã giải quyết or Từ chối.');
+  }
+  return { conclusion, status };
+}
+
+export function adminAssign(value) {
+  assertOnlyFields(value, ['staffId', 'reason'], 'UNKNOWN_REQUEST_FIELD');
+  const staffId = value.staffId ? positiveId(value.staffId) : null;
+  const reason = value.reason ? optionalText(value.reason, 'reason', 255) : null;
+  return { staffId, reason };
+}
+
+const ESCALATION_STATUSES = new Set(['Chờ tiếp nhận', 'Đang xử lý', 'Đã giải quyết', 'Từ chối']);
+export function escalationFilters(query = {}) {
+  assertOnlyFields(query, ['status', 'priority', 'page', 'limit', 'complaintId'], 'UNKNOWN_QUERY_PARAMETER');
+  const status = optionalText(query.status, 'status', 50);
+  if (status && !ESCALATION_STATUSES.has(status)) {
+    throw new HttpError(400, 'INVALID_REQUEST', 'status is not supported.');
+  }
+  const priority = optionalText(query.priority, 'priority', 50);
+  if (priority && !COMPLAINT_PRIORITIES.has(priority)) {
+    throw new HttpError(400, 'INVALID_PRIORITY', 'priority is not supported.');
+  }
+  const complaintId = query.complaintId ? positiveId(query.complaintId) : null;
+  return { status, priority, complaintId };
+}
+
+export const escalationId = positiveId;
+export const customerUserId = positiveId;
+

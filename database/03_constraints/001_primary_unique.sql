@@ -154,6 +154,24 @@ ADD CONSTRAINT [PK_XULY_KHIEUNAI] PRIMARY KEY CLUSTERED ([XuLyID] ASC);
 
 GO
 
+-- Định danh duy nhất từng bản ghi tin nhắn khiếu nại.
+ALTER TABLE dbo.[TINNHAN_KHIEUNAI]
+ADD CONSTRAINT [PK_TINNHAN_KHIEUNAI] PRIMARY KEY CLUSTERED ([TinNhanID] ASC);
+
+GO
+
+-- Định danh duy nhất từng bản ghi yêu cầu chuyển cấp.
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+ADD CONSTRAINT [PK_YEUCAU_CHUYENCAP] PRIMARY KEY CLUSTERED ([YeuCauID] ASC);
+
+GO
+
+-- Định danh duy nhất từng bản ghi lịch sử phân công khiếu nại.
+ALTER TABLE dbo.[LICHSU_PHANCONG_KHIEUNAI]
+ADD CONSTRAINT [PK_LICHSU_PHANCONG_KHIEUNAI] PRIMARY KEY CLUSTERED ([LichSuID] ASC);
+
+GO
+
 -- Ngăn dữ liệu trùng theo khóa duy nhất của đồ ăn trong đơn.
 ALTER TABLE dbo.[CHITIETDOAN]
 ADD CONSTRAINT [UQ_CHITIETDOAN_Don_SanPham] UNIQUE NONCLUSTERED ([DonDatVeID] ASC, [SanPhamID] ASC);

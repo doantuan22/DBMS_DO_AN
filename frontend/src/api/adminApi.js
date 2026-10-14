@@ -25,6 +25,16 @@ export const adminApi = {
     request(`/admin/complaints/${id}/processings`, { method: 'POST', body }),
   updateComplaintStatus: (id, body) =>
     request(`/admin/complaints/${id}/status`, { method: 'PUT', body }),
+  assignComplaint: (id, body) =>
+    request(`/admin/complaints/${id}/assign`, { method: 'PUT', body }),
+  complaintAssignmentHistory: (id) => get(`complaints/${id}/assignment-history`),
+  complaintMessages: (id) => get(`complaints/${id}/messages`),
+  escalations: (params) => get('escalations', params),
+  escalation: (id) => get(`escalations/${id}`),
+  claimEscalation: (id) =>
+    request(`/admin/escalations/${id}/claim`, { method: 'POST' }),
+  processEscalation: (id, body) =>
+    request(`/admin/escalations/${id}/process`, { method: 'PUT', body }),
   revenue: (params) => get('reports/revenue', params),
   rooms: (params) => get('rooms', params),
   seats: (params) => get('seats', params),

@@ -49,7 +49,7 @@ const renderWithRoute = (path, user, element) =>
 test('every Admin destination has a unique canonical path and resolves back to its section', () => {
   const entries = Object.entries(routes);
   const paths = entries.map(([, route]) => route.path);
-  assert.equal(entries.length, 17);
+  assert.equal(entries.length, 18);
   assert.equal(new Set(paths).size, paths.length);
   for (const [section, route] of entries) assert.equal(resolveAdminSection(route.path), section);
   assert.equal(resolveAdminSection('/admin'), null);
@@ -66,7 +66,7 @@ test('every Admin destination has a unique canonical path and resolves back to i
       ],
     },
   ];
-  assert.equal(screenRoutes.length, 16);
+  assert.equal(screenRoutes.length, 17);
   for (const { path, section } of screenRoutes) {
     assert.equal(matchRoutes(routeTree, `/admin/${path}`)?.at(-1)?.route.section, section);
   }

@@ -9,3 +9,10 @@ export const createComplaint = (complaint) =>
   request('/complaints', { method: 'POST', body: complaint });
 export const getComplaint = (complaintId) =>
   request(`/complaints/${encodeURIComponent(complaintId)}`);
+export const getComplaintMessages = (complaintId) =>
+  request(`/complaints/${encodeURIComponent(complaintId)}/messages`);
+export const sendComplaintMessage = (complaintId, content) =>
+  request(`/complaints/${encodeURIComponent(complaintId)}/messages`, {
+    method: 'POST',
+    body: { content },
+  });

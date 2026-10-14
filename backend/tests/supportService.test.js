@@ -43,6 +43,9 @@ test('support service passes the authenticated support identity and maps the que
     lastProcessedAt: undefined,
     lastProcessorName: undefined,
     lastProcessingContent: undefined,
+    assignedStaffId: null,
+    assignedStaffName: null,
+    assignedStaffEmail: null,
   });
 });
 

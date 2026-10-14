@@ -59,6 +59,7 @@ run('revenue reconciliation (F-11, read-only)', process.execPath, ['scripts/audi
 });
 run('points payment, compensation and revenue', process.execPath, ['scripts/audit/points-revenue.mjs'], { parse: runnerCounts });
 run('lifecycle: concurrency, hold expiry, compensated cancel', process.execPath, ['scripts/audit/lifecycle.mjs'], { parse: runnerCounts });
+run('CSKH lifecycle: chat, assignment, escalation', process.execPath, ['scripts/audit/cskh-lifecycle.mjs'], { parse: runnerCounts });
 if (!args.has('--skip-browser')) {
   run('browser E2E (Edge, interactive)', process.execPath, ['scripts/audit/browser-e2e.mjs'], { parse: runnerCounts });
 }

@@ -18,6 +18,8 @@ import { assignmentTransferMessage } from '../utils/managerAssignments';
 import { useStaffShell } from '../layouts/StaffShellContext';
 import PageHeader from '../components/ui/PageHeader';
 import Select from '../components/ui/Select';
+import AdminEscalationModule from '../features/admin/AdminEscalationModule';
+import AdminComplaintAssignment from '../features/admin/AdminComplaintAssignment';
 
 const adminDraftCache = new Map();
 const adminDraftKey = (userId, section, context = '') =>
@@ -49,6 +51,7 @@ const sections = [
   ['pricing', 'Bảng giá'],
   ['showtimes', 'Suất chiếu'],
   ['complaints', 'Khiếu nại'],
+  ['escalations', 'Yêu cầu CSKH'],
   ['revenue', 'Doanh thu'],
 ];
 const loaders = {
@@ -78,13 +81,14 @@ const loaders = {
   pricing: (api) => api.pricing(),
   showtimes: (api) => api.showtimes(),
   complaints: (api) => api.complaints(),
+  escalations: (api) => api.escalations(),
   cinemaImages: async () => ({ images: [] }),
   revenue: (api, range) => api.revenue(range),
 };
 
 // API fields, database row identifiers, and read-only status are explicit per resource.
 
-const idColumns = { users: 'NguoiDungID', dashboard: '', revenue: '', complaints: 'KhieuNaiID' };
+const idColumns = { users: 'NguoiDungID', dashboard: '', revenue: '', complaints: 'KhieuNaiID', escalations: 'id' };
 const dataRows = (value, key) => {
   if (Array.isArray(value)) return value;
   if (!value || typeof value !== 'object') return [];
@@ -647,6 +651,38 @@ function AdminWorkspace({ routeSection, seatContext }) {
       </section>
     );
 
+  if (active === 'escalations')
+    return (
+      <section className="catalog-section" aria-label="Yêu cầu hỗ trợ từ CSKH">
+        {routeSection ? (
+          <PageHeader
+            title="Yêu cầu CSKH"
+            breadcrumbs={[{ label: 'Quản trị' }, { label: 'Yêu cầu CSKH' }]}
+          />
+        ) : (
+          <>
+            <h1>Quản trị hệ thống</h1>
+            {!shell && (
+              <nav className="catalog-actions" aria-label="Phân hệ quản trị">
+                {allowedSections.map(([key, label]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    aria-pressed={active === key}
+                    className="catalog-button"
+                    onClick={() => switchSection(key)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </nav>
+            )}
+          </>
+        )}
+        <AdminEscalationModule currentUser={user} />
+      </section>
+    );
+
   return (
     <section className="catalog-section" aria-label="Cổng quản trị hệ thống">
       {routeSection ? (
@@ -765,6 +801,11 @@ function AdminWorkspace({ routeSection, seatContext }) {
             {complaint.data.senderName} · {complaint.data.type} · {complaint.data.status}
           </p>
           <p>{complaint.data.content}</p>
+          <AdminComplaintAssignment
+            complaintId={complaint.data.id}
+            currentStaffId={complaint.data.assignedStaffId}
+            onAssigned={() => selected && void openComplaint(selected)}
+          />
           <h4>Đơn hàng liên quan</h4>
           <ComplaintReferenceState
             resource={orderReference}

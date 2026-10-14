@@ -154,4 +154,79 @@ router.put(
   })),
 );
 
+// Admin staff assignment
+router.put(
+  '/complaints/:complaintId/assign',
+  requirePermission('KHIEUNAI_PHANCONG'),
+  wrapSupport(async (req) => ({
+    assignment: await supportService.adminAssign(
+      req.user.userId,
+      complaintId(req),
+      validators.adminAssign(req.body),
+    ),
+  })),
+);
+
+router.get(
+  '/complaints/:complaintId/assignment-history',
+  requirePermission('QL_KHIEUNAI'),
+  wrapSupport(async (req) => ({
+    history: await supportService.assignmentHistory(req.user.userId, complaintId(req)),
+  })),
+);
+
+router.get(
+  '/complaints/:complaintId/messages',
+  requirePermission('KHIEUNAI_CHAT_XEM', 'KHIEUNAI_NOIBO_XEM'),
+  wrapSupport(async (req) => ({
+    messages: await supportService.listMessages(req.user.userId, complaintId(req), true),
+  })),
+);
+
+// Admin Escalations
+router.get(
+  '/escalations',
+  requirePermission('CHUYENCAP_XEM'),
+  wrapSupport(async (req) => ({
+    escalations: await supportService.listEscalationsAdmin(
+      req.user.userId,
+      validators.escalationFilters(req.query),
+    ),
+  })),
+);
+
+router.get(
+  '/escalations/:escalationId',
+  requirePermission('CHUYENCAP_XEM'),
+  wrapSupport(async (req) =>
+    supportService.getEscalationDetail(
+      req.user.userId,
+      validators.escalationId(req.params.escalationId),
+    ),
+  ),
+);
+
+router.post(
+  '/escalations/:escalationId/claim',
+  requirePermission('CHUYENCAP_TIEPNHAN'),
+  wrapSupport(async (req) => ({
+    escalation: await supportService.claimEscalation(
+      req.user.userId,
+      validators.escalationId(req.params.escalationId),
+    ),
+  })),
+);
+
+router.put(
+  '/escalations/:escalationId/process',
+  requirePermission('CHUYENCAP_XULY'),
+  wrapSupport(async (req) => ({
+    escalation: await supportService.processEscalation(
+      req.user.userId,
+      validators.escalationId(req.params.escalationId),
+      validators.escalationProcess(req.body),
+    ),
+  })),
+);
+
 export default router;

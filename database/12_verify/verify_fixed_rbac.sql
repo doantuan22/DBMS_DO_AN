@@ -208,6 +208,66 @@ VALUES
         'XEM_BAO_CAO_TOANHE',
         N'Báo cáo doanh thu toàn hệ thống',
         N'Xem doanh thu toàn chuỗi rạp'
+    ),
+    (
+        24,
+        'KHIEUNAI_CHAT_XEM',
+        N'Xem hội thoại khiếu nại',
+        N'Xem danh sách tin nhắn trao đổi trong khiếu nại'
+    ),
+    (
+        25,
+        'KHIEUNAI_CHAT_GUI',
+        N'Gửi tin nhắn công khai',
+        N'Gửi phản hồi trao đổi công khai với khách hàng'
+    ),
+    (
+        26,
+        'KHIEUNAI_NOIBO_XEM',
+        N'Xem ghi chú nội bộ',
+        N'Xem các ghi chú và tin nhắn nội bộ trong khiếu nại'
+    ),
+    (
+        27,
+        'KHIEUNAI_NOIBO_GHI',
+        N'Thêm ghi chú nội bộ',
+        N'Ghi chú nội bộ dành riêng cho nhân viên và quản trị viên'
+    ),
+    (
+        28,
+        'KHIEUNAI_TIEPNHAN',
+        N'CSKH nhận khiếu nại',
+        N'Nhận phụ trách xử lý khiếu nại từ hàng đợi chưa phân công'
+    ),
+    (
+        29,
+        'KHIEUNAI_PHANCONG',
+        N'Admin phân công nhân viên',
+        N'Phân công hoặc thay đổi nhân viên CSKH phụ trách khiếu nại'
+    ),
+    (
+        30,
+        'CHUYENCAP_TAO',
+        N'Tạo yêu cầu chuyển cấp',
+        N'CSKH tạo yêu cầu chuyển cấp khiếu nại lên Admin'
+    ),
+    (
+        31,
+        'CHUYENCAP_XEM',
+        N'Xem yêu cầu chuyển cấp',
+        N'Xem danh sách và chi tiết các yêu cầu chuyển cấp'
+    ),
+    (
+        32,
+        'CHUYENCAP_TIEPNHAN',
+        N'Admin tiếp nhận chuyển cấp',
+        N'Admin tiếp nhận xử lý yêu cầu chuyển cấp từ CSKH'
+    ),
+    (
+        33,
+        'CHUYENCAP_XULY',
+        N'Admin xử lý chuyển cấp',
+        N'Admin ghi nhận kết quả và hoàn tất yêu cầu chuyển cấp'
     );
 -- Báo lỗi khi dữ liệu thực tế khác tập kỳ vọng.
 IF EXISTS (
@@ -255,6 +315,8 @@ VALUES
     (4, 3),
     (4, 4),
     (4, 5),
+    (4, 24),
+    (4, 25),
     (2, 1),
     (2, 2),
     (2, 3),
@@ -266,7 +328,14 @@ VALUES
     (3, 1),
     (3, 11),
     (3, 12),
-    (3, 13);
+    (3, 13),
+    (3, 24),
+    (3, 25),
+    (3, 26),
+    (3, 27),
+    (3, 28),
+    (3, 30),
+    (3, 31);
 INSERT INTO
     @ExpectedMatrix
 SELECT
@@ -302,6 +371,6 @@ IF EXISTS (
         @ExpectedMatrix
 )
     THROW 51057, 'Fixed role-permission matrix differs from approved seed.', 1;
-PRINT 'PASS fixed RBAC seed: 4 roles, 23 permissions, 40 mappings';
+PRINT 'PASS fixed RBAC seed: 4 roles, 33 permissions, 59 mappings';
 
 GO

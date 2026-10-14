@@ -36,6 +36,7 @@ export const ADMIN_SECTION_PERMISSIONS = Object.freeze({
   pricing: 'QL_BANG_GIA',
   showtimes: 'QL_SUAT_CHIEU',
   complaints: 'QL_KHIEUNAI',
+  escalations: 'CHUYENCAP_XEM',
 });
 
 // Only authorized sections are requested; each failure remains local to its section.

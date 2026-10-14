@@ -18,6 +18,9 @@ SELECT
     kn.MucDoUuTien,
     kn.NgayTao,
     kn.TrangThai AS TrangThaiKhieuNai,
+    kn.NhanVienPhuTrachID,
+    nv_pt.HoTen AS TenNhanVienPhuTrach,
+    nv_pt.Email AS EmailNhanVienPhuTrach,
     (
         SELECT
             COUNT(*)
@@ -59,6 +62,7 @@ SELECT
     ) AS NoiDungXuLyCuoi
 FROM
     dbo.KHIEUNAI kn
-    INNER JOIN dbo.NGUOIDUNG nd ON kn.NguoiDungID = nd.NguoiDungID;
+    INNER JOIN dbo.NGUOIDUNG nd ON kn.NguoiDungID = nd.NguoiDungID
+    LEFT JOIN dbo.NGUOIDUNG nv_pt ON kn.NhanVienPhuTrachID = nv_pt.NguoiDungID;
 
 GO

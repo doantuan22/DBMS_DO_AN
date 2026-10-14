@@ -58,10 +58,14 @@ BEGIN
         kn.NoiDung,
         kn.MucDoUuTien,
         kn.NgayTao,
-        kn.TrangThai AS TrangThaiKhieuNai
+        kn.TrangThai AS TrangThaiKhieuNai,
+        kn.NhanVienPhuTrachID,
+        nv.HoTen AS TenNhanVienPhuTrach,
+        nv.Email AS EmailNhanVienPhuTrach
     FROM
         dbo.KHIEUNAI kn
         INNER JOIN dbo.NGUOIDUNG nd ON kn.NguoiDungID = nd.NguoiDungID
+        LEFT JOIN dbo.NGUOIDUNG nv ON kn.NhanVienPhuTrachID = nv.NguoiDungID
     WHERE
         kn.KhieuNaiID = @KhieuNaiID;
     SELECT

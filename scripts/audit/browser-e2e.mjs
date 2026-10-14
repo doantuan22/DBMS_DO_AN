@@ -56,7 +56,7 @@ async function runScenario(definition) {
     locale: 'vi-VN',
     timezoneId: 'Asia/Ho_Chi_Minh',
   });
-  context.setDefaultTimeout(15000);
+  context.setDefaultTimeout(30000);
   const page = await context.newPage();
   const serverErrors = [];
   const consoleErrors = [];

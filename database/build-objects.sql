@@ -62,6 +62,12 @@
 
 :r ./02_tables/xuly_khieunai.sql
 
+:r ./02_tables/tinnhan_khieunai.sql
+
+:r ./02_tables/yeucau_chuyencap.sql
+
+:r ./02_tables/lichsu_phancong_khieunai.sql
+
 -- Khai báo khóa, ràng buộc và giá trị mặc định.
 :r ./03_constraints/001_primary_unique.sql
 
@@ -100,6 +106,12 @@
 :r ./04_indexes/thanhtoan.sql
 
 :r ./04_indexes/xuly_khieunai.sql
+
+:r ./04_indexes/tinnhan_khieunai.sql
+
+:r ./04_indexes/yeucau_chuyencap.sql
+
+:r ./04_indexes/lichsu_phancong_khieunai.sql
 
 -- Tạo các hàm nghiệp vụ và xử lý thời gian.
 :r ./05_functions/fn_BayGio.sql
@@ -359,6 +371,34 @@
 :r ./08_procedures/support/sp_Support_Complaint_List.sql
 
 :r ./08_procedures/support/sp_Support_Complaint_UpdateStatus.sql
+
+:r ./08_procedures/support/sp_Complaint_Chat_List.sql
+
+:r ./08_procedures/support/sp_Complaint_Chat_Send.sql
+
+:r ./08_procedures/support/sp_Complaint_Chat_AddInternalNote.sql
+
+:r ./08_procedures/support/sp_Complaint_Unassigned_List.sql
+
+:r ./08_procedures/support/sp_Complaint_Assign_Self.sql
+
+:r ./08_procedures/support/sp_Complaint_Assign_Admin.sql
+
+:r ./08_procedures/support/sp_Complaint_Assignment_History.sql
+
+:r ./08_procedures/support/sp_Escalation_Create.sql
+
+:r ./08_procedures/support/sp_Escalation_List_Admin.sql
+
+:r ./08_procedures/support/sp_Escalation_List_CSKH.sql
+
+:r ./08_procedures/support/sp_Escalation_GetDetail.sql
+
+:r ./08_procedures/support/sp_Escalation_Claim.sql
+
+:r ./08_procedures/support/sp_Escalation_Process.sql
+
+:r ./08_procedures/support/sp_Support_Customer_GetPoints.sql
 
 :r ./08_procedures/system/sp_System_HealthCheck.sql
 

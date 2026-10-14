@@ -271,7 +271,7 @@ export function apiClient(base) {
   };
 }
 
-export const DEMO_PASSWORD = process.env.AUDIT_DEMO_PASSWORD ?? '123456';
+export const DEMO_PASSWORD = process.env.AUDIT_DEMO_PASSWORD ?? 'CinemaStarDemo!2026';
 export const ACCOUNTS = {
   customer: 'customer1@example.test',
   customer2: 'customer2@example.test',

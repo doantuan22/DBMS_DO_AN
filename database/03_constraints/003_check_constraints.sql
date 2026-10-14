@@ -622,3 +622,85 @@ ADD CONSTRAINT [CK_XULY_KHIEUNAI_TrangThaiSauXuLy] CHECK (
 );
 
 GO
+
+-- Giới hạn giá trị hợp lệ của tin nhắn khiếu nại.
+ALTER TABLE dbo.[TINNHAN_KHIEUNAI]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_TINNHAN_KHIEUNAI_LoaiTinNhan] CHECK (
+    [LoaiTinNhan] = N'Công khai'
+    OR [LoaiTinNhan] = N'Nội bộ'
+);
+
+GO
+
+ALTER TABLE dbo.[TINNHAN_KHIEUNAI]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_TINNHAN_KHIEUNAI_NoiDung] CHECK (
+    LEN(LTRIM(RTRIM([NoiDung]))) > 0
+);
+
+GO
+
+-- Giới hạn giá trị hợp lệ của yêu cầu chuyển cấp.
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_YEUCAU_CHUYENCAP_MucDoUuTien] CHECK (
+    [MucDoUuTien] = N'Khẩn cấp'
+    OR [MucDoUuTien] = N'Cao'
+    OR [MucDoUuTien] = N'Trung bình'
+    OR [MucDoUuTien] = N'Thấp'
+);
+
+GO
+
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_YEUCAU_CHUYENCAP_TrangThai] CHECK (
+    [TrangThai] = N'Chờ tiếp nhận'
+    OR [TrangThai] = N'Đang xử lý'
+    OR [TrangThai] = N'Đã giải quyết'
+    OR [TrangThai] = N'Từ chối'
+);
+
+GO
+
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_YEUCAU_CHUYENCAP_LyDo] CHECK (
+    LEN(LTRIM(RTRIM([LyDo]))) > 0
+);
+
+GO
+
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_YEUCAU_CHUYENCAP_ThoiGianTiepNhan] CHECK (
+    [ThoiGianTiepNhan] IS NULL OR [ThoiGianTiepNhan] >= [ThoiGianGui]
+);
+
+GO
+
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_YEUCAU_CHUYENCAP_ThoiGianHoanTat] CHECK (
+    [ThoiGianHoanTat] IS NULL OR ([ThoiGianTiepNhan] IS NOT NULL AND [ThoiGianHoanTat] >= [ThoiGianTiepNhan])
+);
+
+GO
+
+ALTER TABLE dbo.[YEUCAU_CHUYENCAP]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_YEUCAU_CHUYENCAP_KetQua] CHECK (
+    ([TrangThai] NOT IN (N'Đã giải quyết', N'Từ chối'))
+    OR ([KetQuaXuLy] IS NOT NULL AND LEN(LTRIM(RTRIM([KetQuaXuLy]))) > 0 AND [ThoiGianHoanTat] IS NOT NULL)
+);
+
+GO

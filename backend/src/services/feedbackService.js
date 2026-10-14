@@ -37,6 +37,23 @@ function complaintDto(row) {
     priority: row.MucDoUuTien,
     createdAt: row.NgayTao,
     status: row.TrangThai,
+    assignedStaffId: row.NhanVienPhuTrachID ?? null,
+    assignedStaffName: row.TenNhanVienPhuTrach ?? null,
+    assignedStaffEmail: row.EmailNhanVienPhuTrach ?? null,
+  };
+}
+
+function messageDto(row) {
+  return {
+    id: row.TinNhanID,
+    complaintId: row.KhieuNaiID,
+    senderId: row.NguoiGuiID,
+    senderName: row.TenNguoiGui,
+    senderRole: row.VaiTroNguoiGui,
+    content: row.NoiDung,
+    type: row.LoaiTinNhan,
+    createdAt: row.ThoiGianGui,
+    isInternal: row.LoaiTinNhan === 'Nội bộ',
   };
 }
 
@@ -64,6 +81,17 @@ function mapFeedbackError(error) {
       throw new HttpError(404, 'ORDER_REFERENCE_INVALID', 'Referenced order was not found.');
     case 50042:
       throw new HttpError(404, 'COMPLAINT_NOT_FOUND', 'Complaint was not found.');
+    case 50300:
+      throw new HttpError(401, 'ACCOUNT_LOCKED', 'Tài khoản không tồn tại hoặc đã bị khóa.');
+    case 50301:
+    case 50302:
+    case 50304:
+      throw new HttpError(403, 'FORBIDDEN', 'Bạn không có quyền thực hiện thao tác này.');
+    case 50305:
+      throw new HttpError(400, 'COMPLAINT_CLOSED', 'Khiếu nại đã kết thúc, không thể gửi thêm tin nhắn.');
+    case 50400:
+    case 50401:
+      throw new HttpError(400, 'INVALID_REQUEST', error.message || 'Yêu cầu không hợp lệ.');
     // A foreign-key violation on Review_Create can only be the requested movie
     // for an authenticated caller; other domain rules remain owned by SQL.
     case 547:
@@ -153,7 +181,36 @@ export function createFeedbackService({ execute = executeProcedure } = {}) {
     }
   }
 
-  return { listReviews, createReview, listComplaints, createComplaint, getComplaint };
+  async function listMessages(userId, complaintId) {
+    try {
+      const result = await execute('COMPLAINT_CHAT_LIST', {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
+        KhieuNaiID: { type: DbTypes.Int, value: complaintId },
+        LaNoiBo: { type: DbTypes.Bit, value: 0 },
+      });
+      return rowsAt(result).map(messageDto);
+    } catch (error) {
+      mapFeedbackError(error);
+    }
+  }
+
+  async function sendMessage(userId, complaintId, content) {
+    try {
+      const result = await execute('COMPLAINT_CHAT_SEND', {
+        NguoiDungID: { type: DbTypes.Int, value: userId },
+        KhieuNaiID: { type: DbTypes.Int, value: complaintId },
+        NoiDung: { type: DbTypes.NVarChar(DbTypes.MAX), value: content },
+        LoaiTinNhan: { type: DbTypes.NVarChar(50), value: 'Công khai' },
+      });
+      const row = rowsAt(result)[0];
+      if (!row) throw new HttpError(500, 'MESSAGE_SEND_FAILED', 'Gửi tin nhắn thất bại.');
+      return messageDto(row);
+    } catch (error) {
+      mapFeedbackError(error);
+    }
+  }
+
+  return { listReviews, createReview, listComplaints, createComplaint, getComplaint, listMessages, sendMessage };
 }
 
 export const feedbackService = createFeedbackService();

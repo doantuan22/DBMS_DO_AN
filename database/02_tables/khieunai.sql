@@ -8,7 +8,8 @@ CREATE TABLE dbo.[KHIEUNAI](
     [NoiDung] nvarchar(MAX) COLLATE Vietnamese_CI_AS NOT NULL,
     [MucDoUuTien] nvarchar(50) COLLATE Vietnamese_CI_AS NOT NULL,
     [NgayTao] datetime2(7) NOT NULL,
-    [TrangThai] nvarchar(50) COLLATE Vietnamese_CI_AS NOT NULL
+    [TrangThai] nvarchar(50) COLLATE Vietnamese_CI_AS NOT NULL,
+    [NhanVienPhuTrachID] int NULL
 );
 
 GO

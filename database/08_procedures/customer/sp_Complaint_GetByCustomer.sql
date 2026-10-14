@@ -54,9 +54,12 @@ BEGIN
         kn.NoiDung,
         kn.MucDoUuTien,
         kn.NgayTao,
-        kn.TrangThai
+        kn.TrangThai,
+        kn.NhanVienPhuTrachID,
+        nv.HoTen AS TenNhanVienPhuTrach
     FROM
         dbo.KHIEUNAI kn
+        LEFT JOIN dbo.NGUOIDUNG nv ON kn.NhanVienPhuTrachID = nv.NguoiDungID
     WHERE
         kn.KhieuNaiID = @KhieuNaiID;
     -- Recordset 2: Các lần xử lý từ CSKH

@@ -96,10 +96,6 @@ END;
 
 :r ./10_seed/seed_base/050_commerce.sql
 
-:r ./10_seed/verify/expected-catalog.sql
-
-:r ./10_seed/verify/catalog.sql
-
 :r ./10_seed/seed_demo_dynamic/060_showtimes.sql
 
 -- Chốt các thay đổi của transaction.

@@ -4,8 +4,8 @@
 import { fileURLToPath } from 'node:url';
 import { Reporter, connectTestDb, rows, scalar } from './lib.mjs';
 
-// Object inventory of the official baseline (FULL_SYSTEM_AUDIT.md §2).
-export const EXPECTED_INVENTORY = { tables: 27, procedures: 134, views: 6, functions: 21, triggers: 8 };
+// Object inventory of the official baseline (updated for CSKH module).
+export const EXPECTED_INVENTORY = { tables: 30, procedures: 148, views: 6, functions: 21, triggers: 8 };
 
 const ACTIVE_ORDER = `dbo.fn_DonDangGiuGhe(d.TrangThai, d.HanGiuCho, dbo.fn_BayGio()) = 1`;
 

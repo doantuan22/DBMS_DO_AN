@@ -9,5 +9,7 @@ router.use(authenticate, requireCustomer);
 router.get('/', feedbackController.listComplaints);
 router.post('/', requirePermission('GUI_KHIEU_NAI'), feedbackController.createComplaint);
 router.get('/:complaintId', feedbackController.getComplaint);
+router.get('/:complaintId/messages', requirePermission('KHIEUNAI_CHAT_XEM'), feedbackController.listMessages);
+router.post('/:complaintId/messages', requirePermission('KHIEUNAI_CHAT_GUI'), feedbackController.sendMessage);
 
 export default router;

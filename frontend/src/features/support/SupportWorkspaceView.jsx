@@ -11,11 +11,18 @@ import {
   ConfirmDialog,
 } from '../../components/ui';
 import ComplaintOrderReference from '../../components/ComplaintOrderReference';
+import CustomerPointsViewer from '../../components/CustomerPointsViewer';
+import CustomerAssignmentHistoryViewer from '../../components/CustomerAssignmentHistoryViewer';
+import SupportChatBox from './SupportChatBox';
+import SupportEscalationManager from './SupportEscalationManager';
 import { formatDateTime } from '../../utils/dateTime';
 import { PROCESSING_STATUSES } from './supportDraftStore';
 import { supportCasePath } from './supportNavigation';
 import './support-workspace.css';
+import './support-chat.css';
+
 const priorities = ['Thấp', 'Trung bình', 'Cao', 'Khẩn cấp'];
+
 export default function SupportWorkspaceView({
   queue,
   detail,
@@ -42,6 +49,9 @@ export default function SupportWorkspaceView({
   requestWrite,
   setDiscardDialogOpen,
   discardProcessingDraft,
+  currentUser,
+  onClaimComplaint,
+  claiming,
 }) {
   const complaint = detail.complaint;
   const options = (values) => values.map((value) => <option key={value}>{value}</option>);
@@ -161,7 +171,18 @@ export default function SupportWorkspaceView({
                         <span>
                           {item.priority} · {formatDateTime(item.createdAt)}
                         </span>
-                        <StatusBadge status={item.status} />
+                        <div style={{ display: 'flex', gap: '0.375rem', alignItems: 'center' }}>
+                          <StatusBadge status={item.status} />
+                          {item.assignedStaffName ? (
+                            <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                              👤 {item.assignedStaffName}
+                            </span>
+                          ) : (
+                            <span style={{ fontSize: '0.75rem', color: '#b45309', fontWeight: 600 }}>
+                              ⚠️ Chưa nhận
+                            </span>
+                          )}
+                        </div>
                       </Button>
                     </li>
                   ))}
@@ -198,7 +219,31 @@ export default function SupportWorkspaceView({
             <>
               <p className="catalog-eyebrow">HỒ SƠ ĐANG XEM</p>
               <h2>{complaint.title}</h2>
-              <StatusBadge status={complaint.status} />
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <StatusBadge status={complaint.status} />
+                {complaint.assignedStaffName ? (
+                  <span className="support-chat__staff-badge">
+                    Phụ trách: {complaint.assignedStaffName}
+                  </span>
+                ) : (
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <span className="support-chat__staff-badge support-chat__staff-badge--unassigned">
+                      Chưa có nhân viên tiếp nhận
+                    </span>
+                    {canProcess && (
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        disabled={busy || claiming}
+                        loading={claiming}
+                        onClick={() => onClaimComplaint(complaint.id)}
+                      >
+                        Tiếp nhận khiếu nại
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
               <dl className="support-workspace__facts">
                 <div>
                   <dt>Người gửi</dt>
@@ -221,6 +266,26 @@ export default function SupportWorkspaceView({
                 <h3>Nội dung khiếu nại</h3>
                 <p className="support-workspace__content">{complaint.content}</p>
               </div>
+
+              {/* Support 2-way chat & internal notes */}
+              <SupportChatBox
+                complaintId={complaint.id}
+                assignedStaffId={complaint.assignedStaffId}
+                currentUserId={currentUser?.userId}
+                canChat={canProcess}
+              />
+
+              {/* Assignment history */}
+              <details style={{ marginTop: '0.5rem' }}>
+                <summary style={{ cursor: 'pointer', fontWeight: 600 }}>
+                  Lịch sử phân công nhân viên
+                </summary>
+                <div style={{ marginTop: '0.5rem' }}>
+                  <CustomerAssignmentHistoryViewer complaintId={complaint.id} />
+                </div>
+              </details>
+
+              {/* Processing timeline */}
               <div>
                 <h3>Timeline xử lý</h3>
                 {complaint.processings.length ? (
@@ -250,6 +315,18 @@ export default function SupportWorkspaceView({
             <p>Thông tin đơn và công cụ xử lý xuất hiện sau khi hồ sơ được xác nhận.</p>
           ) : (
             <>
+              {/* Escalation to Admin */}
+              <details className="support-workspace__reference" open>
+                <summary>Yêu cầu chuyển cấp Admin</summary>
+                <SupportEscalationManager complaintId={complaint.id} onEscalated={reloadQueue} />
+              </details>
+
+              {/* Customer Points & Compensation Inspection */}
+              <details className="support-workspace__reference" open>
+                <summary>Điểm thưởng & Bồi thường khách hàng</summary>
+                <CustomerPointsViewer customerId={complaint.senderId} />
+              </details>
+
               <details className="support-workspace__reference" open>
                 <summary>Đơn tham chiếu</summary>
                 <ComplaintOrderReference

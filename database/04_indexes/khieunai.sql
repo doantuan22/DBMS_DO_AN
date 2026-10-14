@@ -15,3 +15,8 @@ CREATE NONCLUSTERED
 INDEX [IX_KHIEUNAI_TrangThai] ON dbo.[KHIEUNAI]([TrangThai] ASC, [MucDoUuTien] ASC, [NgayTao] DESC);
 
 GO
+
+CREATE NONCLUSTERED
+INDEX [IX_KHIEUNAI_NhanVienPhuTrach] ON dbo.[KHIEUNAI]([NhanVienPhuTrachID] ASC, [TrangThai] ASC);
+
+GO
