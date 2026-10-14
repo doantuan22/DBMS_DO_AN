@@ -19,6 +19,7 @@ export default function ManagerSectionRoute({ section }) {
   if (!route || section === 'bookings') return <NotFound />;
   if (!userCanAct(user, 'QUAN_LY_RAP', route.permission)) return <Forbidden />;
   if (section === 'rooms' || section === 'seats') return <FacilityScreen kind={section} manager />;
-  if (section === 'showtimes' || section === 'pricing') return <OperationsScreen kind={section} manager />;
+  if (section === 'showtimes' || section === 'pricing')
+    return <OperationsScreen kind={section} manager />;
   return <ManagerPortal routeSection={section} />;
 }

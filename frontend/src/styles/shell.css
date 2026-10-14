@@ -194,6 +194,28 @@
   background: var(--color-border);
 }
 
+.staff-shell--admin .staff-shell__nav-divider {
+  display: none;
+}
+
+.staff-shell--admin .staff-shell__nav-group + .staff-shell__nav-group {
+  margin-top: var(--space-3);
+}
+
+/* Hide redundant page header copy across admin tabs */
+.staff-shell--admin .ui-page-header__copy {
+  display: none;
+}
+
+.staff-shell--admin .ui-page-header:not(:has(.ui-page-header__actions)):not(:has(.ui-breadcrumbs)) {
+  display: none;
+  margin-bottom: 0;
+}
+
+.staff-shell--admin .ui-page-header__row:has(.ui-page-header__actions) {
+  justify-content: flex-end;
+}
+
 .staff-shell__drawer-heading,
 .staff-shell__nav-empty {
   display: none;

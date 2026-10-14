@@ -44,10 +44,36 @@ function bookingDto(row) {
     ticketTotal: row.TongTienVe,
     productTotal: row.TongTienDoAn,
     discountTotal: row.TienGiamGia,
+    pointsUsed: row.DiemSuDung ?? 0,
+    pointsDiscount: Number(row.DiemSuDung ?? 0) * 1000,
+    // TienGiamGia already contains every discount, including points.
     total: row.TongThanhToan,
     status: row.TrangThai,
     holdExpiresAt: row.HanGiuCho,
     ticketCount: row.SoLuongVe,
+  };
+}
+
+function previewDto(result) {
+  const recordsets = result.recordsets ?? [result.recordset ?? []];
+  const row = recordsets.flat().find((item) => item?.SoDuDiem !== undefined);
+  if (!row)
+    throw new HttpError(
+      500,
+      'BOOKING_RESPONSE_INVALID',
+      'Booking procedure did not return a preview.',
+    );
+  return {
+    showtimeId: row.SuatChieuID,
+    ticketTotal: Number(row.TongTienVe),
+    productTotal: Number(row.TongTienDoAn),
+    discountTotal: Number(row.TienGiamGia),
+    pointsUsed: row.DiemSuDung,
+    pointsDiscount: Number(row.DiemSuDung ?? 0) * 1000,
+    total: Number(row.TongThanhToan),
+    pointsBalance: row.SoDuDiem,
+    maxPoints: row.DiemToiDa,
+    pointsBalanceAfter: row.SoDuDiemSauKhiDat,
   };
 }
 
@@ -98,6 +124,20 @@ function mapBookingError(error) {
         409,
         'ACTIVE_ORDER_LIMIT_REACHED',
         'You already hold the maximum number of unpaid orders. Pay for one or wait for it to expire.',
+      );
+    case 50410:
+      throw new HttpError(400, 'INVALID_POINTS', 'The number of points to use is not valid.');
+    case 50411:
+      throw new HttpError(
+        409,
+        'POINTS_INSUFFICIENT',
+        'The points to use exceed the available balance.',
+      );
+    case 50412:
+      throw new HttpError(
+        409,
+        'POINTS_EXCEED_TICKET_VALUE',
+        'The points to use exceed the ticket value still to be paid.',
       );
     case 50029:
       throw new HttpError(
@@ -212,6 +252,8 @@ export function createBookingService({
             type: DbTypes.NVarChar(DbTypes.MAX),
             value: productJson(input.products),
           },
+          DiemSuDung: { type: DbTypes.Int, value: input.points ?? 0 },
+          ChiXemTruoc: { type: DbTypes.Bit, value: false },
         },
         { NewDonDatVeID: DbTypes.Int },
       );
@@ -221,7 +263,32 @@ export function createBookingService({
     }
   }
 
-  return { listSeats, listProducts, validatePromotion, createBooking };
+  // Read-only price preview: the same stored-procedure path as createBooking, rolled back by the database.
+  async function previewBooking(userId, input) {
+    try {
+      const result = await executeWithOutputs(
+        'BOOKING_CREATE',
+        {
+          NguoiDungID: { type: DbTypes.Int, value: userId },
+          SuatChieuID: { type: DbTypes.Int, value: input.showtimeId },
+          MaKhuyenMai: { type: DbTypes.VarChar(50), value: input.promotionCode },
+          DanhSachGheId: { type: DbTypes.VarChar(DbTypes.MAX), value: input.seatIds.toString() },
+          DanhSachDoAnJson: {
+            type: DbTypes.NVarChar(DbTypes.MAX),
+            value: productJson(input.products),
+          },
+          DiemSuDung: { type: DbTypes.Int, value: input.points ?? 0 },
+          ChiXemTruoc: { type: DbTypes.Bit, value: true },
+        },
+        { NewDonDatVeID: DbTypes.Int },
+      );
+      return previewDto(result);
+    } catch (error) {
+      mapBookingError(error);
+    }
+  }
+
+  return { listSeats, listProducts, validatePromotion, createBooking, previewBooking };
 }
 
 export const bookingService = createBookingService();

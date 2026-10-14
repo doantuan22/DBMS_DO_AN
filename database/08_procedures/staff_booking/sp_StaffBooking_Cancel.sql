@@ -30,6 +30,7 @@ BEGIN
             @Rap int,
             @Status nvarchar(50),
             @Promotion int,
+            @Points int,
             @Locked int;
         SELECT
             @Customer = d.NguoiDungID,
@@ -65,7 +66,8 @@ BEGIN
             SuatChieuID = @Show;
         SELECT
             @Status = TrangThai,
-            @Promotion = KhuyenMaiID
+            @Promotion = KhuyenMaiID,
+            @Points = DiemSuDung
         FROM
             dbo.DONDATVE
         WITH
@@ -114,6 +116,13 @@ BEGIN
         WHERE
             DonDatVeID = @DonDatVeID
             AND TrangThai <> N'Đã hủy';
+        -- Điểm đã giữ cho đơn chưa thanh toán được trả lại cho khách (không phải hoàn tiền).
+        IF ISNULL(@Points, 0) > 0
+            UPDATE dbo.HOSOKHACHHANG
+            SET
+                DiemTichLuy = DiemTichLuy + @Points
+            WHERE
+                NguoiDungID = @Customer;
         IF @Promotion IS NOT NULL
             -- Cập nhật dữ liệu theo điều kiện nghiệp vụ.
             UPDATE dbo.KHUYENMAI

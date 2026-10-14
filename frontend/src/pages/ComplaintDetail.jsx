@@ -47,12 +47,25 @@ function ComplaintContext({ complaintId }) {
     void Promise.resolve().then(load);
   }, [load]);
   if (resource.status === 'loading') return <LoadingState>Đang tải khiếu nại…</LoadingState>;
-  if (resource.status === 'error') return <section className="catalog-page"><PageHeader title="Chi tiết khiếu nại" breadcrumbs={[{label:'Khiếu nại',to:'/complaints'}]} /><AsyncState status="error" error={resource.error} onRetry={load} /></section>;
+  if (resource.status === 'error')
+    return (
+      <section className="catalog-page">
+        <PageHeader
+          title="Chi tiết khiếu nại"
+          breadcrumbs={[{ label: 'Khiếu nại', to: '/complaints' }]}
+        />
+        <AsyncState status="error" error={resource.error} onRetry={load} />
+      </section>
+    );
   const complaint = resource.data;
   return (
-    <section className="catalog-page customer-journey"><AccountNavigation />
+    <section className="catalog-page customer-journey">
+      <AccountNavigation />
       <p className="catalog-eyebrow">KHIẾU NẠI #{complaint.id}</p>
-      <PageHeader title={complaint.title} breadcrumbs={[{label:'Khiếu nại của tôi',to:'/complaints'},{label:'Chi tiết'}]} />
+      <PageHeader
+        title={complaint.title}
+        breadcrumbs={[{ label: 'Khiếu nại của tôi', to: '/complaints' }, { label: 'Chi tiết' }]}
+      />
       <article className="customer-panel">
         <p className="complaint-meta">
           <span className="catalog-chip">{complaint.type}</span>

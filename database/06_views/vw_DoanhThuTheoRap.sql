@@ -15,7 +15,10 @@ WITH
             ddv.TongTienVe,
             ddv.TongTienDoAn,
             ddv.TienGiamGia,
-            SUM(ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TienDaThu,
+            CASE
+                WHEN ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia < 0 THEN 0
+                ELSE ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia
+            END AS TienDaThu,
             (
                 SELECT
                     COUNT(*)

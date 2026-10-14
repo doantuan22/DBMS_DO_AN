@@ -7,6 +7,7 @@ import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization';
 import { StaffShellContext } from './StaffShellContext';
 import { ADMIN_SECTION_ROUTES } from '../routes/adminSectionRoutes';
 import { MANAGER_SECTION_ROUTES, resolveManagerSection } from '../routes/managerSectionRoutes';
+import AdminShell from './AdminShell';
 
 const adminNavItem = (key) => ({
   key,
@@ -21,10 +22,7 @@ const ADMIN_GROUPS = [
   },
   {
     label: 'Tài khoản & phân công',
-    items: [
-      adminNavItem('users'),
-      adminNavItem('assignments'),
-    ],
+    items: [adminNavItem('users'), adminNavItem('assignments')],
   },
   {
     label: 'Rạp & cơ sở vật chất',
@@ -37,11 +35,7 @@ const ADMIN_GROUPS = [
   },
   {
     label: 'Nội dung',
-    items: [
-      adminNavItem('movies'),
-      adminNavItem('genres'),
-      adminNavItem('actors'),
-    ],
+    items: [adminNavItem('movies'), adminNavItem('genres'), adminNavItem('actors')],
   },
   {
     label: 'Kinh doanh & vận hành',
@@ -55,30 +49,25 @@ const ADMIN_GROUPS = [
   },
   {
     label: 'Chăm sóc & báo cáo',
-    items: [
-      adminNavItem('complaints'),
-      adminNavItem('revenue'),
-    ],
+    items: [adminNavItem('complaints'), adminNavItem('revenue')],
   },
 ];
 
-const managerNavItem = (key, label) => ({ key, ...MANAGER_SECTION_ROUTES[key], label: label ?? MANAGER_SECTION_ROUTES[key].label, to: MANAGER_SECTION_ROUTES[key].path });
+const managerNavItem = (key, label) => ({
+  key,
+  ...MANAGER_SECTION_ROUTES[key],
+  label: label ?? MANAGER_SECTION_ROUTES[key].label,
+  to: MANAGER_SECTION_ROUTES[key].path,
+});
 const MANAGER_GROUPS = [
   { label: 'Tổng quan', items: [managerNavItem('overview', 'Dashboard')] },
   {
     label: 'Cơ sở vật chất',
-    items: [
-      managerNavItem('rooms', 'Phòng'),
-      managerNavItem('seats'),
-    ],
+    items: [managerNavItem('rooms', 'Phòng'), managerNavItem('seats')],
   },
   {
     label: 'Lịch chiếu & giá',
-    items: [
-      managerNavItem('showtimes'),
-      managerNavItem('pricing'),
-      managerNavItem('bookings'),
-    ],
+    items: [managerNavItem('showtimes'), managerNavItem('pricing'), managerNavItem('bookings')],
   },
   { label: 'Báo cáo', items: [managerNavItem('revenue')] },
 ];
@@ -124,16 +113,28 @@ const mobileViewportMatches = () =>
 
 function drawerTransitionDelay(element) {
   const style = window.getComputedStyle(element);
-  const times = (value) => value.split(',').map((time) => {
-    const amount = Number.parseFloat(time);
-    return time.trim().endsWith('ms') ? amount : amount * 1000;
-  });
+  const times = (value) =>
+    value.split(',').map((time) => {
+      const amount = Number.parseFloat(time);
+      return time.trim().endsWith('ms') ? amount : amount * 1000;
+    });
   const durations = times(style.transitionDuration);
   const delays = times(style.transitionDelay);
-  return Math.max(0, ...durations.map((duration, index) => duration + (delays[index % delays.length] ?? 0))) + 20;
+  return (
+    Math.max(
+      0,
+      ...durations.map((duration, index) => duration + (delays[index % delays.length] ?? 0)),
+    ) + 20
+  );
 }
 
 export default function StaffShell({ portal, children }) {
+  if (portal === 'admin' || portal === 'manager')
+    return <AdminShell portal={portal}>{children}</AdminShell>;
+  return <LegacyStaffShell portal={portal}>{children}</LegacyStaffShell>;
+}
+
+function LegacyStaffShell({ portal, children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
   const groups = groupsForUser(portal, user);
@@ -158,8 +159,9 @@ export default function StaffShell({ portal, children }) {
   }, []);
   const openMenu = useCallback(() => {
     flushSync(() => setMenuOpen(true));
-    const initialTarget = sidebarRef.current?.querySelector('nav a, nav button')
-      ?? sidebarRef.current?.querySelector('.staff-shell__drawer-close');
+    const initialTarget =
+      sidebarRef.current?.querySelector('nav a, nav button') ??
+      sidebarRef.current?.querySelector('.staff-shell__drawer-close');
     const sidebar = sidebarRef.current;
     clearTimeout(initialFocusTimerRef.current);
     if (sidebar && initialTarget) {
@@ -257,12 +259,20 @@ export default function StaffShell({ portal, children }) {
             <span className="area__brand-logo" aria-hidden="true">
               ★
             </span>
-            <span>Cinema<span className="staff-shell__brand-accent">Star</span></span>
+            <span>
+              Cinema<span className="staff-shell__brand-accent">Star</span>
+            </span>
           </Link>
-          <span className="staff-shell__portal-title" inert={mobileDialogOpen}>{PORTAL_LABELS[portal]}</span>
+          <span className="staff-shell__portal-title" inert={mobileDialogOpen}>
+            {PORTAL_LABELS[portal]}
+          </span>
           <div className="staff-shell__account" inert={mobileDialogOpen}>
             <span className="staff-shell__user-name">{user?.name || user?.email}</span>
-            <button className="ui-button ui-button--secondary ui-button--sm" type="button" onClick={logout}>
+            <button
+              className="ui-button ui-button--secondary ui-button--sm"
+              type="button"
+              onClick={logout}
+            >
               Đăng xuất
             </button>
           </div>
@@ -342,11 +352,19 @@ export default function StaffShell({ portal, children }) {
                 </section>
               ))}
               {groups.length === 0 && (
-                <p className="staff-shell__nav-empty">Bạn không có mục điều hướng được cấp quyền.</p>
+                <p className="staff-shell__nav-empty">
+                  Bạn không có mục điều hướng được cấp quyền.
+                </p>
               )}
             </nav>
           </div>
-          <main id="main-content" ref={mainContentRef} tabIndex={-1} inert={mobileDialogOpen} className="staff-shell__main">
+          <main
+            id="main-content"
+            ref={mainContentRef}
+            tabIndex={-1}
+            inert={mobileDialogOpen}
+            className="staff-shell__main"
+          >
             {children ?? <Outlet />}
           </main>
         </div>

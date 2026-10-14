@@ -227,9 +227,97 @@ test('R4.4 booking maps authoritative SQL values and sends only IDs, quantity an
     'MaKhuyenMai',
     'DanhSachGheId',
     'DanhSachDoAnJson',
+    // the customer's points choice and the preview switch; never an amount or a price
+    'DiemSuDung',
+    'ChiXemTruoc',
   ]);
+  assert.equal(bound.params.ChiXemTruoc.value, false);
   assert.deepEqual(
     [booking.ticketTotal, booking.productTotal, booking.discountTotal, booking.total],
     [0.3, 0.1, 0.12, 0.28],
   );
+});
+
+test('points booking: the choice is bound as an integer, amounts come only from the database', async () => {
+  const calls = [];
+  const service = createBookingService({
+    executeWithOutputs: async (key, params) => {
+      calls.push({ key, params });
+      return {
+        recordsets: [
+          [
+            {
+              DonDatVeID: 12,
+              TongTienVe: 100000,
+              TongTienDoAn: 20000,
+              TienGiamGia: 70000,
+              DiemSuDung: 70,
+              TongThanhToan: 50000,
+              SoLuongVe: 1,
+            },
+          ],
+        ],
+      };
+    },
+  });
+  const booking = await service.createBooking(8, validateBooking({ ...input, points: 70 }));
+  assert.equal(calls[0].params.DiemSuDung.value, 70);
+  assert.deepEqual([booking.pointsUsed, booking.pointsDiscount, booking.total], [70, 70000, 50000]);
+});
+
+test('points preview uses the booking procedure in preview mode and maps the DB preview row', async () => {
+  const calls = [];
+  const service = createBookingService({
+    executeWithOutputs: async (key, params) => {
+      calls.push({ key, params });
+      return {
+        recordsets: [
+          [
+            {
+              SuatChieuID: 3,
+              TongTienVe: 90000,
+              TongTienDoAn: 0,
+              TienGiamGia: 40000,
+              DiemSuDung: 40,
+              TongThanhToan: 50000,
+              SoDuDiem: 100,
+              DiemToiDa: 90,
+              SoDuDiemSauKhiDat: 60,
+            },
+          ],
+        ],
+      };
+    },
+  });
+  const preview = await service.previewBooking(8, validateBooking({ ...input, points: 40 }));
+  assert.equal(calls[0].key, 'BOOKING_CREATE');
+  assert.equal(calls[0].params.ChiXemTruoc.value, true);
+  assert.deepEqual(
+    [
+      preview.pointsUsed,
+      preview.pointsDiscount,
+      preview.total,
+      preview.maxPoints,
+      preview.pointsBalance,
+    ],
+    [40, 40000, 50000, 90, 100],
+  );
+});
+
+test('points SQL errors map to stable business errors', async () => {
+  for (const [number, status, code] of [
+    [50410, 400, 'INVALID_POINTS'],
+    [50411, 409, 'POINTS_INSUFFICIENT'],
+    [50412, 409, 'POINTS_EXCEED_TICKET_VALUE'],
+  ]) {
+    const service = createBookingService({
+      executeWithOutputs: async () => {
+        throw { number };
+      },
+    });
+    await assert.rejects(
+      service.createBooking(8, validateBooking({ ...input, points: 5 })),
+      (error) => error.status === status && error.code === code,
+    );
+  }
 });

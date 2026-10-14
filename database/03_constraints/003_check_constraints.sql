@@ -136,6 +136,23 @@ ADD CONSTRAINT [CK_DONDATVE_TienGiamGia] CHECK ([TienGiamGia] >= (0));
 
 GO
 
+-- Thanh toán bằng điểm: số điểm snapshot không âm; giá trị tiền luôn suy ra bằng điểm × 1.000.
+ALTER TABLE dbo.[DONDATVE]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_DONDATVE_DiemSuDung] CHECK ([DiemSuDung] >= (0));
+
+GO
+
+ALTER TABLE dbo.[DONDATVE]
+WITH
+    CHECK
+ADD CONSTRAINT [CK_DONDATVE_TongGiam] CHECK (
+    [TienGiamGia] <= [TongTienVe] + [TongTienDoAn]
+);
+
+GO
+
 -- Giới hạn giá trị hợp lệ của cột.
 ALTER TABLE dbo.[DONDATVE]
 WITH
@@ -573,6 +590,7 @@ ADD CONSTRAINT [CK_THANHTOAN_PhuongThuc] CHECK (
     OR [PhuongThuc] = N'ZALOPAY'
     OR [PhuongThuc] = N'MOMO'
     OR [PhuongThuc] = N'VNPAY'
+    OR [PhuongThuc] = N'DIEM'
 );
 
 GO

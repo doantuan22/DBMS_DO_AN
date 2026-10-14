@@ -28,6 +28,12 @@ ADD CONSTRAINT [DF_DONDATVE_TongTienDoAn] DEFAULT((0)) FOR [TongTienDoAn];
 
 GO
 
+-- Điểm dùng để thanh toán (1 điểm = 1.000 VNĐ, cùng tỷ lệ với điểm bồi thường).
+ALTER TABLE dbo.[DONDATVE]
+ADD CONSTRAINT [DF_DONDATVE_DiemSuDung] DEFAULT((0)) FOR [DiemSuDung];
+
+GO
+
 -- Gán giá trị mặc định khi tạo bản ghi.
 ALTER TABLE dbo.[DONDATVE]
 ADD CONSTRAINT [DF_DONDATVE_TienGiamGia] DEFAULT((0)) FOR [TienGiamGia];

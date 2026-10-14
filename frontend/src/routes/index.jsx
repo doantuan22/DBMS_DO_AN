@@ -99,7 +99,11 @@ export default function AppRoutes() {
             <Route index element={<ManagerEntryRoute />} />
             <Route path="bookings" element={<StaffBookings portal="manager" />} />
             {MANAGER_SCREEN_ROUTES.map(({ section, path }) => (
-              <Route key={section} path={path} element={<ManagerSectionRoute section={section} />} />
+              <Route
+                key={section}
+                path={path}
+                element={<ManagerSectionRoute section={section} />}
+              />
             ))}
             <Route path="*" element={<NotFound />} />
           </Route>
@@ -131,16 +135,12 @@ export default function AppRoutes() {
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<StaffShell portal="admin" />}>
           <Route element={<AdminLayout />}>
-          <Route index element={<Navigate to="overview" replace />} />
-          <Route path="bookings" element={<StaffBookings portal="admin" />} />
-          {ADMIN_SCREEN_ROUTES.map(({ section, path }) => (
-            <Route
-              key={section}
-              path={path}
-              element={<AdminSectionRoute section={section} />}
-            />
-          ))}
-          <Route path="*" element={<NotFound />} />
+            <Route index element={<Navigate to="overview" replace />} />
+            <Route path="bookings" element={<StaffBookings portal="admin" />} />
+            {ADMIN_SCREEN_ROUTES.map(({ section, path }) => (
+              <Route key={section} path={path} element={<AdminSectionRoute section={section} />} />
+            ))}
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
       </Route>

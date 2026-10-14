@@ -21,7 +21,11 @@ function write(level, message, details) {
     ...(details ? { details } : {}),
   };
   const output = JSON.stringify(entry, (key, value) => {
-    if (/^(password|pwd|secret|token|accessToken|refreshToken|apiKey|clientSecret|authorization|connectionString|jwtSecret|dbPassword)$/i.test(key.replace(/[_-]/g, '')))
+    if (
+      /^(password|pwd|secret|token|accessToken|refreshToken|apiKey|clientSecret|authorization|connectionString|jwtSecret|dbPassword)$/i.test(
+        key.replace(/[_-]/g, ''),
+      )
+    )
       return '[redacted]';
     if (value instanceof Error)
       return {

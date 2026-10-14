@@ -39,7 +39,9 @@ test('R7 edit hydration roundtrips UTC and DATE_ONLY, excluding immutable IDs/ro
     Object.entries(row).filter(([key]) => !['id', 'roomId'].includes(key)),
   );
   assert.deepEqual(body, expected);
-  assert.ok(forms.fieldsFor('showtime', true).some((field) => field.name === 'roomId' && field.readOnly));
+  assert.ok(
+    forms.fieldsFor('showtime', true).some((field) => field.name === 'roomId' && field.readOnly),
+  );
   assert.deepEqual(
     forms.managerBody(
       'seat',
@@ -81,7 +83,10 @@ test('Manager showtime resource selectors serialize the selected named option ID
   assert.equal(typeof body.roomId, 'number');
   assert.equal(forms.fieldsFor('showtime').find((field) => field.name === 'movieId').label, 'Phim');
   assert.equal(forms.fieldsFor('showtime').find((field) => field.name === 'roomId').label, 'Phòng');
-  assert.throws(() => forms.managerBody('showtime', { ...values, roomId: '' }, false), /chọn phòng/i);
+  assert.throws(
+    () => forms.managerBody('showtime', { ...values, roomId: '' }, false),
+    /chọn phòng/i,
+  );
 });
 
 test('Manager resource selector renders accessible loading, empty, error, and named option states', () => {
@@ -100,7 +105,10 @@ test('Manager resource selector renders accessible loading, empty, error, and na
     render({ lookupStatus: 'error', lookupError: new Error('Lookup failed'), onRetry: () => {} }),
     /role="alert"[\s\S]*Lookup failed[\s\S]*Tải lại/,
   );
-  const populated = render({ lookupStatus: 'success', options: [{ id: 123, label: 'Tên phim thật' }] });
+  const populated = render({
+    lookupStatus: 'success',
+    options: [{ id: 123, label: 'Tên phim thật' }],
+  });
   assert.match(populated, /Tên phim thật/);
   assert.doesNotMatch(populated, />\s*123\s*</);
   assert.match(populated, /<select[^>]*aria-label="Phim"/);

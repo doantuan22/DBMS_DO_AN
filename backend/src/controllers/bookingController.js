@@ -34,6 +34,16 @@ export async function validatePromotion(req, res, next) {
   }
 }
 
+export async function previewBooking(req, res, next) {
+  try {
+    res.json({
+      preview: await bookingService.previewBooking(req.user.userId, validateBooking(req.body)),
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function createBooking(req, res, next) {
   try {
     const booking = await bookingService.createBooking(req.user.userId, validateBooking(req.body));

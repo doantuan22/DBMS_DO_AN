@@ -1,6 +1,10 @@
 import { useId, useState } from 'react';
+import Select from './ui/Select';
 
-const normalize = (value) => String(value ?? '').trim().toLocaleLowerCase();
+const normalize = (value) =>
+  String(value ?? '')
+    .trim()
+    .toLocaleLowerCase();
 
 export default function NamedResourceSelect({
   label,
@@ -55,19 +59,38 @@ export default function NamedResourceSelect({
     <div className="manager-resource-select">
       <label htmlFor={`${id}-search`}>
         Tìm {label.toLocaleLowerCase()}
-        <input
-          id={`${id}-search`}
-          type="search"
-          value={search}
-          disabled={disabled || readOnly || lookupLoading || lookupFailed}
-          autoComplete="off"
-          onChange={(event) => setSearch(event.target.value)}
-          aria-describedby={`${id}-help`}
-        />
+        <span className="manager-resource-select__search-input-wrap">
+          <input
+            id={`${id}-search`}
+            type="search"
+            value={search}
+            disabled={disabled || readOnly || lookupLoading || lookupFailed}
+            autoComplete="off"
+            placeholder={`Nhập tên ${label.toLocaleLowerCase()}...`}
+            onChange={(event) => setSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                if (filtered.length > 0) onChange(filtered[0].id);
+              }
+            }}
+            aria-describedby={`${id}-help`}
+          />
+          <button
+            type="button"
+            className="ui-button ui-button--secondary ui-button--sm manager-resource-select__search-btn"
+            disabled={disabled || readOnly || lookupLoading || lookupFailed || !search.trim()}
+            onClick={() => {
+              if (filtered.length > 0) onChange(filtered[0].id);
+            }}
+          >
+            Tìm
+          </button>
+        </span>
       </label>
       <label htmlFor={id}>
         {label}
-        <select
+        <Select
           id={id}
           aria-label={label}
           aria-invalid={lookupFailed || undefined}
@@ -83,7 +106,7 @@ export default function NamedResourceSelect({
               {option.label}
             </option>
           ))}
-        </select>
+        </Select>
       </label>
       <p id={`${id}-help`} className="manager-resource-select__help" aria-live="polite">
         {lookupLoading
@@ -100,7 +123,9 @@ export default function NamedResourceSelect({
       </p>
       {lookupFailed && (
         <div id={`${id}-error`} className="manager-resource-select__error" role="alert">
-          <span>{lookupError?.message ?? `Không tải được danh sách ${label.toLocaleLowerCase()}.`}</span>
+          <span>
+            {lookupError?.message ?? `Không tải được danh sách ${label.toLocaleLowerCase()}.`}
+          </span>
           {onRetry && (
             <button type="button" disabled={disabled} onClick={onRetry}>
               Tải lại

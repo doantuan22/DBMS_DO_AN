@@ -118,7 +118,7 @@ BEGIN
     SELECT
         tt.ThanhToanID,
         tt.PhuongThuc,
-        (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia) AS SoTien,
+        CASE WHEN d.TongTienVe + d.TongTienDoAn - d.TienGiamGia < 0 THEN 0 ELSE d.TongTienVe + d.TongTienDoAn - d.TienGiamGia END AS SoTien,
         tt.NgayTao,
         tt.NgayThanhToan,
         tt.MaGiaoDich,

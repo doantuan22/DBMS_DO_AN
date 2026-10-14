@@ -32,10 +32,21 @@ export default function BookingExperience({
   applyPromotion,
   bookingState,
   submitBooking,
+  pointsInput = '',
+  changePointsInput = () => {},
+  pointsInvalid = false,
+  pricePreview = { status: 'idle' },
 }) {
   const busy = bookingState.status === 'loading',
     success = bookingState.status === 'success',
     booking = bookingState.booking;
+  const preview = pricePreview.status === 'success' ? pricePreview.data : null;
+  const pointsError =
+    pricePreview.status === 'error' &&
+    /^POINTS|^INVALID_POINTS/.test(pricePreview.error?.code ?? '')
+      ? pricePreview.error
+      : null;
+  const balance = preview?.pointsBalance ?? user?.loyaltyPoints ?? 0;
   return (
     <section className="catalog-page customer-journey booking-preparation">
       <PageHeader
@@ -57,8 +68,17 @@ export default function BookingExperience({
           <p>
             Đơn #{booking.id} · <StatusBadge status={booking.status} />
           </p>
+          {booking.pointsUsed > 0 && (
+            <p>
+              Đã dùng <strong>{booking.pointsUsed} điểm</strong> (giảm{' '}
+              {customerMoney(booking.pointsDiscount)}).
+            </p>
+          )}
           <p>
-            Tổng thanh toán đã xác nhận: <strong>{customerMoney(booking.total)}</strong>
+            {booking.total > 0
+              ? 'Số tiền còn phải thanh toán: '
+              : 'Đơn đã được trả đủ bằng điểm, số tiền còn phải trả: '}
+            <strong>{customerMoney(booking.total)}</strong>
           </p>
           <HoldDeadline deadline={booking.holdExpiresAt} />
           <p>Tiếp tục thanh toán trong thời gian giữ ghế để hoàn tất đơn.</p>
@@ -146,6 +166,53 @@ export default function BookingExperience({
                   </p>
                 )}
               </section>
+              {user && canBook && (
+                <section className="customer-panel" aria-labelledby="points-heading">
+                  <h2 id="points-heading">Dùng điểm</h2>
+                  <p className="catalog-muted">
+                    Số dư hiện có: <strong>{balance} điểm</strong>. 1 điểm = 1.000 ₫ và chỉ dùng để
+                    giảm tiền vé. Điểm không đổi được thành tiền mặt.
+                  </p>
+                  <FormField
+                    label="Số điểm muốn dùng"
+                    hint="Hệ thống kiểm tra số dư và giá trị tiền vé khi tính tiền."
+                  >
+                    <Input
+                      inputMode="numeric"
+                      value={pointsInput}
+                      disabled={busy}
+                      onChange={(e) => changePointsInput(e.target.value)}
+                    />
+                  </FormField>
+                  <Button
+                    variant="secondary"
+                    disabled={busy || !preview || preview.maxPoints <= 0}
+                    onClick={() => changePointsInput(String(preview?.maxPoints ?? 0))}
+                  >
+                    Dùng tối đa
+                  </Button>
+                  {!selectedSeatIds.length && (
+                    <p role="status">Chọn ghế để xem số điểm có thể dùng.</p>
+                  )}
+                  {pointsInvalid && (
+                    <p className="form-error" role="alert">
+                      Số điểm phải là số nguyên không âm.
+                    </p>
+                  )}
+                  {pointsError && (
+                    <p className="form-error" role="alert">
+                      {pointsError.message}
+                    </p>
+                  )}
+                  {preview && (
+                    <p role="status" className="form-success">
+                      Tối đa dùng được {preview.maxPoints} điểm cho đơn này. Dùng{' '}
+                      {preview.pointsUsed} điểm: giảm {customerMoney(preview.pointsDiscount)}. Còn
+                      phải thanh toán: <strong>{customerMoney(preview.total)}</strong>.
+                    </p>
+                  )}
+                </section>
+              )}
             </div>
             <aside
               className="customer-panel customer-journey__summary"
@@ -211,6 +278,24 @@ export default function BookingExperience({
                   <strong>{customerMoney(promotion.provisionalSubtotal)}</strong>
                 </p>
               )}
+              {preview && (
+                <>
+                  {preview.discountTotal > 0 && (
+                    <p>
+                      Giảm khuyến mãi: <strong>{customerMoney(preview.discountTotal)}</strong>
+                    </p>
+                  )}
+                  {preview.pointsUsed > 0 && (
+                    <p>
+                      Giảm bằng điểm ({preview.pointsUsed} điểm):{' '}
+                      <strong>{customerMoney(preview.pointsDiscount)}</strong>
+                    </p>
+                  )}
+                  <p>
+                    Còn phải thanh toán: <strong>{customerMoney(preview.total)}</strong>
+                  </p>
+                </>
+              )}
               <p className="catalog-muted">
                 Giá ghế và sản phẩm hiển thị tại thời điểm tải. Hệ thống xác nhận tổng tiền, ưu đãi
                 và thời gian giữ ghế khi tạo đơn.
@@ -242,7 +327,9 @@ export default function BookingExperience({
                   !canBook ||
                   !selectedSeatIds.length ||
                   seatsState.status !== 'success' ||
-                  promotionBusy
+                  promotionBusy ||
+                  pointsInvalid ||
+                  Boolean(pointsError)
                 }
                 onClick={submitBooking}
               >
@@ -277,7 +364,9 @@ export default function BookingExperience({
                   !canBook ||
                   !selectedSeatIds.length ||
                   seatsState.status !== 'success' ||
-                  promotionBusy
+                  promotionBusy ||
+                  pointsInvalid ||
+                  Boolean(pointsError)
                 }
                 onClick={submitBooking}
               >

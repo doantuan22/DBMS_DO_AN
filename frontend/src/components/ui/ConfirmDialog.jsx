@@ -22,7 +22,8 @@ export default function ConfirmDialog({
   const cancelRef = useRef(null);
   const isBusy = busy || pending;
   const resolvedDescription = description ?? body;
-  const resolvedVariant = dangerLevel === 'dangerous' ? 'danger' : dangerLevel === 'caution' ? 'secondary' : variant;
+  const resolvedVariant =
+    dangerLevel === 'dangerous' ? 'danger' : dangerLevel === 'caution' ? 'secondary' : variant;
 
   const changeOpen = (nextOpen) => {
     if (!nextOpen && isBusy) return;
@@ -56,7 +57,12 @@ export default function ConfirmDialog({
       initialFocusRef={cancelRef}
       footer={
         <>
-          <Button ref={cancelRef} variant="secondary" disabled={isBusy} onClick={() => changeOpen(false)}>
+          <Button
+            ref={cancelRef}
+            variant="secondary"
+            disabled={isBusy}
+            onClick={() => changeOpen(false)}
+          >
             {cancelLabel}
           </Button>
           <Button variant={resolvedVariant} loading={isBusy} onClick={confirm}>

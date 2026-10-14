@@ -41,9 +41,12 @@ export default function ResourceTable({
   const pageSize = Number(pagination?.pageSize);
   const total = Number(pagination?.total);
   const canPaginate =
-    Number.isSafeInteger(page) && page > 0 &&
-    Number.isSafeInteger(pageSize) && pageSize > 0 &&
-    Number.isSafeInteger(total) && total >= 0 &&
+    Number.isSafeInteger(page) &&
+    page > 0 &&
+    Number.isSafeInteger(pageSize) &&
+    pageSize > 0 &&
+    Number.isSafeInteger(total) &&
+    total >= 0 &&
     typeof pagination?.onPageChange === 'function';
   const pageCount = canPaginate ? Math.max(1, Math.ceil(total / pageSize)) : 0;
   const resolveRowKey = (row, index) => {
@@ -59,7 +62,9 @@ export default function ResourceTable({
           <caption>{caption}</caption>
           <thead>
             <tr>
-              <th scope="col" className="ui-data-table__row-number">{rowNumberLabel}</th>
+              <th scope="col" className="ui-data-table__row-number">
+                {rowNumberLabel}
+              </th>
               {tableColumns.map((column) => (
                 <th
                   key={column.key}
@@ -75,7 +80,9 @@ export default function ResourceTable({
           <tbody>
             {tableRows.map((row, rowIndex) => (
               <tr key={resolveRowKey(row, rowIndex)}>
-                <td className="ui-data-table__row-number">{(canPaginate ? (page - 1) * pageSize : 0) + rowIndex + 1}</td>
+                <td className="ui-data-table__row-number">
+                  {(canPaginate ? (page - 1) * pageSize : 0) + rowIndex + 1}
+                </td>
                 {tableColumns.map((column) => (
                   <td
                     key={column.key}
@@ -84,7 +91,7 @@ export default function ResourceTable({
                   >
                     {typeof column.render === 'function'
                       ? column.render(row, rowIndex)
-                      : row?.[column.key] ?? '—'}
+                      : (row?.[column.key] ?? '—')}
                   </td>
                 ))}
               </tr>
@@ -94,11 +101,23 @@ export default function ResourceTable({
       </div>
       {canPaginate && (
         <nav className="ui-resource-table__pagination" aria-label={`Phân trang ${caption}`}>
-          <Button variant="secondary" size="sm" disabled={pagination.disabled || page <= 1} onClick={() => pagination.onPageChange(page - 1)}>
+          <Button
+            variant="secondary"
+            size="sm"
+            disabled={pagination.disabled || page <= 1}
+            onClick={() => pagination.onPageChange(page - 1)}
+          >
             Trang trước
           </Button>
-          <span aria-live="polite">Trang {page} / {pageCount} · {total} kết quả</span>
-          <Button variant="secondary" size="sm" disabled={pagination.disabled || page >= pageCount} onClick={() => pagination.onPageChange(page + 1)}>
+          <span aria-live="polite">
+            Trang {page} / {pageCount} · {total} kết quả
+          </span>
+          <Button
+            variant="secondary"
+            size="sm"
+            disabled={pagination.disabled || page >= pageCount}
+            onClick={() => pagination.onPageChange(page + 1)}
+          >
             Trang sau
           </Button>
         </nav>

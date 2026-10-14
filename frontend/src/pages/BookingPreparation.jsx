@@ -6,6 +6,7 @@ import {
   getProducts,
   getSeats,
   getShowtimeDetail,
+  previewBooking,
   validatePromotion,
 } from '../api/catalogApi';
 import { ErrorState, LoadingState } from '../components/CatalogStates';
@@ -57,6 +58,9 @@ function BookingContext({ showtimeId }) {
   const [promotionBusy, setPromotionBusy] = useState(false);
   const previewVersion = useRef(0);
   const [bookingState, setBookingState] = useState({ status: 'idle' });
+  // Points are the customer's choice; every amount shown comes from the server preview.
+  const [pointsInput, setPointsInput] = useState('');
+  const [previewState, setPreviewState] = useState({ key: null });
   const [seatLimitNotice, setSeatLimitNotice] = useState(null);
   const mounted = useRef(true);
   const seatRequest = useRef(0);
@@ -132,12 +136,65 @@ function BookingContext({ showtimeId }) {
     [seats, selectedSeatIds],
   );
   const selectedProducts = useMemo(() => toProducts(quantities), [quantities]);
+  const points = /^\d+$/.test(pointsInput) ? Number(pointsInput) : 0;
+  const pointsInvalid = pointsInput !== '' && !/^\d+$/.test(pointsInput);
+  const appliedPromotionCode = promotion?.isValid ? promotionCode.trim() : '';
+  const previewKey = JSON.stringify([
+    showtimeId,
+    selectedSeatIds,
+    selectedProducts,
+    appliedPromotionCode,
+    points,
+    canBook,
+  ]);
+  useEffect(() => {
+    if (!canBook || selectedSeatIds.length === 0 || pointsInvalid) return undefined;
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      setPreviewState({ key: previewKey, status: 'loading' });
+      previewBooking(
+        {
+          showtimeId: Number(showtimeId),
+          seatIds: selectedSeatIds,
+          products: selectedProducts,
+          promotionCode: appliedPromotionCode || undefined,
+          points,
+        },
+        { signal: controller.signal },
+      )
+        .then((result) => {
+          if (!controller.signal.aborted)
+            setPreviewState({ key: previewKey, status: 'success', data: result.preview });
+        })
+        .catch((error) => {
+          if (!controller.signal.aborted && error.name !== 'AbortError')
+            setPreviewState({ key: previewKey, status: 'error', error });
+        });
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+    // previewKey captures every input of the request
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [previewKey]);
+  const pricePreview = previewState.key === previewKey ? previewState : { status: 'idle' };
 
   const safeAnchor = useCallback((destination) => {
     const target = new URL(destination, window.location.href);
-    return target.origin === window.location.origin && target.pathname === window.location.pathname && target.search === window.location.search && Boolean(target.hash);
+    return (
+      target.origin === window.location.origin &&
+      target.pathname === window.location.pathname &&
+      target.search === window.location.search &&
+      Boolean(target.hash)
+    );
   }, []);
-  useBookingDraftGuard(bookingState.status !== 'success' && (selectedSeatIds.length > 0 || selectedProducts.length > 0 || Boolean(promotionCode)), bookingState.status === 'loading', { isSafeDestination: safeAnchor });
+  useBookingDraftGuard(
+    bookingState.status !== 'success' &&
+      (selectedSeatIds.length > 0 || selectedProducts.length > 0 || Boolean(promotionCode)),
+    bookingState.status === 'loading',
+    { isSafeDestination: safeAnchor },
+  );
 
   function toggleSeat(id) {
     if (bookingPending.current) return;
@@ -199,10 +256,12 @@ function BookingContext({ showtimeId }) {
         seatIds: selectedSeatIds,
         products: selectedProducts,
         promotionCode: promotionCode.trim() || undefined,
+        points: points || undefined,
       });
       if (!mounted.current) return;
       setBookingState({ status: 'success', booking: result.booking });
       setSelectedSeatIds([]);
+      setPointsInput('');
       await loadSeats();
     } catch (error) {
       if (!mounted.current) return;
@@ -227,5 +286,42 @@ function BookingContext({ showtimeId }) {
 
   if (state.status === 'loading') return <LoadingState>Đang xác nhận suất chiếu…</LoadingState>;
   if (state.status === 'error') return <ErrorState error={state.error} />;
-  return <BookingExperience showtime={state.data} user={user} canBook={canBook} seats={seats} seatsState={seatsState} selectedSeatIds={selectedSeatIds} selectedSeats={selectedSeats} seatLimitNotice={seatLimitNotice} toggleSeat={toggleSeat} loadSeats={loadSeats} products={products} productsState={productsState} quantities={quantities} selectedProducts={selectedProducts} changeQuantity={changeQuantity} promotionCode={promotionCode} changePromotionCode={(value) => { if (bookingPending.current) return; previewVersion.current++; setPromotionCode(value); setPromotion(null); }} promotion={promotion} promotionBusy={promotionBusy} applyPromotion={applyPromotion} bookingState={bookingState} submitBooking={submitBooking} />;
+  return (
+    <BookingExperience
+      showtime={state.data}
+      user={user}
+      canBook={canBook}
+      seats={seats}
+      seatsState={seatsState}
+      selectedSeatIds={selectedSeatIds}
+      selectedSeats={selectedSeats}
+      seatLimitNotice={seatLimitNotice}
+      toggleSeat={toggleSeat}
+      loadSeats={loadSeats}
+      products={products}
+      productsState={productsState}
+      quantities={quantities}
+      selectedProducts={selectedProducts}
+      changeQuantity={changeQuantity}
+      promotionCode={promotionCode}
+      changePromotionCode={(value) => {
+        if (bookingPending.current) return;
+        previewVersion.current++;
+        setPromotionCode(value);
+        setPromotion(null);
+      }}
+      promotion={promotion}
+      promotionBusy={promotionBusy}
+      applyPromotion={applyPromotion}
+      bookingState={bookingState}
+      submitBooking={submitBooking}
+      pointsInput={pointsInput}
+      changePointsInput={(value) => {
+        if (bookingPending.current) return;
+        setPointsInput(value.replace(/[^\d]/g, '').slice(0, 9));
+      }}
+      pointsInvalid={pointsInvalid}
+      pricePreview={pricePreview}
+    />
+  );
 }

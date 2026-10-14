@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { fieldsFor, initialManagerValues, managerBody } from '../utils/managerForms';
 import ResourceSelect from './ui/ResourceSelect';
+import Select from './ui/Select';
 
 const labels = { room: 'phòng', seat: 'ghế', showtime: 'suất', pricing: 'giá' };
 export default function ManagerResourceForm({
@@ -49,11 +50,7 @@ export default function ManagerResourceForm({
         }
       }}
     >
-      {editing && (
-        <h3>
-          Sửa {labels[kind]}
-        </h3>
-      )}
+      {editing && <h3>Sửa {labels[kind]}</h3>}
       {fieldsFor(kind, editing).map((field) => {
         const { name, label, type, options } = field;
         if (type === 'resource') {
@@ -82,51 +79,68 @@ export default function ManagerResourceForm({
           );
         }
         return (
-        <label key={name}>
-          {label}{type === 'datetime-local' ? ' (UTC+7)' : ['surcharge', 'basePrice'].includes(name) ? ' (VND)' : ''}
-          {type === 'select' ? (
-            <select
-              aria-label={label}
-              value={values[name]}
-              disabled={busy}
-              onChange={(event) =>
-                updateField(name, event.target.value)
-              }
-            >
-              {options.map((option) => (
-                <option key={option}>{option}</option>
-              ))}
-            </select>
-          ) : (
-            <input
-              aria-label={label}
-              placeholder={label}
-              type={type}
-              value={values[name]}
-              disabled={busy}
-              maxLength={name === 'name' ? 100 : name === 'row' ? 10 : undefined}
-              min={
-                type === 'number' ? (['surcharge', 'basePrice'].includes(name) ? 0 : 1) : undefined
-              }
-              step={
-                type === 'number'
-                  ? ['surcharge', 'basePrice'].includes(name)
-                    ? '0.01'
-                    : '1'
-                  : type === 'datetime-local'
-                    ? '0.001'
+          <label key={name}>
+            {label}
+            {type === 'datetime-local'
+              ? ' (UTC+7)'
+              : ['surcharge', 'basePrice'].includes(name)
+                ? ' (VND)'
+                : ''}
+            {type === 'select' ? (
+              <Select
+                aria-label={label}
+                value={values[name]}
+                disabled={busy}
+                onChange={(event) => updateField(name, event.target.value)}
+              >
+                {options.map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </Select>
+            ) : (
+              <input
+                aria-label={label}
+                placeholder={label}
+                type={type}
+                value={values[name]}
+                disabled={busy}
+                maxLength={name === 'name' ? 100 : name === 'row' ? 10 : undefined}
+                min={
+                  type === 'number'
+                    ? ['surcharge', 'basePrice'].includes(name)
+                      ? 0
+                      : 1
                     : undefined
-              }
-              required={name !== 'endsOn'}
-              onChange={(event) =>
-                updateField(name, event.target.value)
-              }
-            />
-          )}
-        </label>
+                }
+                step={
+                  type === 'number'
+                    ? ['surcharge', 'basePrice'].includes(name)
+                      ? '0.01'
+                      : '1'
+                    : type === 'datetime-local'
+                      ? '0.001'
+                      : undefined
+                }
+                required={name !== 'endsOn'}
+                onChange={(event) => updateField(name, event.target.value)}
+              />
+            )}
+          </label>
         );
       })}
-      {['showtime', 'pricing'].includes(kind) && <p className="operations__help">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(Number(values[kind === 'pricing' ? 'surcharge' : 'basePrice']) || 0)} · {kind === 'pricing' ? 'Phụ thu; không thay đổi giá vé đã lưu.' : 'Giá vé cơ bản; server xác nhận lịch chiếu và giá khi lưu.'}</p>}
+      {['showtime', 'pricing'].includes(kind) && (
+        <p className="operations__help">
+          {new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            maximumFractionDigits: 0,
+          }).format(Number(values[kind === 'pricing' ? 'surcharge' : 'basePrice']) || 0)}{' '}
+          ·{' '}
+          {kind === 'pricing'
+            ? 'Phụ thu; không thay đổi giá vé đã lưu.'
+            : 'Giá vé cơ bản; server xác nhận lịch chiếu và giá khi lưu.'}
+        </p>
+      )}
       <button className="catalog-button" disabled={busy}>
         {editing ? 'Lưu' : `Tạo ${labels[kind]}`}
       </button>
@@ -135,7 +149,10 @@ export default function ManagerResourceForm({
           type="button"
           disabled={busy}
           onClick={() => {
-            if (onRequestCancel) { onRequestCancel(); return; }
+            if (onRequestCancel) {
+              onRequestCancel();
+              return;
+            }
             onDirtyChange?.(false);
             onDraftChange?.(null);
             onCancel?.();

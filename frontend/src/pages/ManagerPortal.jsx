@@ -7,6 +7,8 @@ import { bookingErrorMessage } from '../utils/bookingLimits';
 import { EmptyState, ErrorState, LoadingState } from '../components/CatalogStates';
 import ManagerResourceForm from '../components/ManagerResourceForm';
 import ResourceSelect from '../components/ui/ResourceSelect';
+import FormField from '../components/ui/FormField';
+import Select from '../components/ui/Select';
 import ManagerRevenue from '../components/ManagerRevenue';
 import { RESOURCE_STATUSES } from '../../../shared/resourceContract.mjs';
 import { getMovies } from '../api/catalogApi';
@@ -15,7 +17,10 @@ import PageHeader from '../components/ui/PageHeader';
 import { useManagerCinema } from '../features/manager/ManagerCinemaContext';
 import { ManagerCinemaProvider } from '../layouts/ManagerLayout';
 import { MANAGER_SECTION_ROUTES } from '../routes/managerSectionRoutes';
-import { createManagerRequestOwner, loadManagerScreen } from '../features/manager/managerScreenRequests';
+import {
+  createManagerRequestOwner,
+  loadManagerScreen,
+} from '../features/manager/managerScreenRequests';
 
 export default function ManagerPortal({ routeSection }) {
   const context = useManagerCinema();
@@ -23,35 +28,75 @@ export default function ManagerPortal({ routeSection }) {
   const { user } = useAuth();
   // Keep standalone audit fixtures compatible, using the same state owner.
   if (!context) {
-    const standalone = <ManagerCinemaProvider user={user}><ManagerPortal routeSection={routeSection} /></ManagerCinemaProvider>;
+    const standalone = (
+      <ManagerCinemaProvider user={user}>
+        <ManagerPortal routeSection={routeSection} />
+      </ManagerCinemaProvider>
+    );
     return inRouter ? standalone : <MemoryRouter>{standalone}</MemoryRouter>;
   }
   const { state, store, changeCinema } = context;
   const route = MANAGER_SECTION_ROUTES[routeSection] ?? { label: 'Manager Portal' };
-  const currentAssignment = !user?.cinemaAssignments || user.cinemaAssignments.some(
-    (assignment) => String(assignment.cinemaId) === state.cinemaId,
-  );
-  const scopeKey = `${state.cinemaId}:${state.epoch}:${user?.userId}:${user?.permissions?.map((permission) => permission.code).sort().join(',')}`;
+  const currentAssignment =
+    !user?.cinemaAssignments ||
+    user.cinemaAssignments.some((assignment) => String(assignment.cinemaId) === state.cinemaId);
+  const scopeKey = `${state.cinemaId}:${state.epoch}:${user?.userId}:${user?.permissions
+    ?.map((permission) => permission.code)
+    .sort()
+    .join(',')}`;
   return (
     <section className="catalog-page">
       <p className="catalog-eyebrow">QUẢN LÝ RẠP</p>
-      <PageHeader title={route.label} breadcrumbs={routeSection ? [{ label: 'Manager', to: '/manager/overview' }, { label: route.label }] : []} />
+      <PageHeader
+        title={route.label}
+        breadcrumbs={
+          routeSection
+            ? [{ label: 'Manager', to: '/manager/overview' }, { label: route.label }]
+            : []
+        }
+      />
       {state.status === 'loading' && <LoadingState>Đang tải rạp được phân công…</LoadingState>}
       {state.status === 'error' && <ErrorState error={state.error} />}
-      {state.status === 'success' && (!state.cinemas.length
-        ? <EmptyState>Bạn không có phân công rạp còn hiệu lực.</EmptyState>
-        : !currentAssignment ? <LoadingState>Đang cập nhật phân công rạp…</LoadingState> : <>
-          <label>Rạp hiện tại
-            <select aria-label="Rạp hiện tại" value={state.cinemaId} disabled={state.pending}
-              onChange={(event) => changeCinema(event.target.value)}>
-              {state.cinemas.filter((cinema) => !user?.cinemaAssignments || user.cinemaAssignments.some(
-                (assignment) => String(assignment.cinemaId) === String(cinema.id),
-              )).map((cinema) => <option key={cinema.id} value={cinema.id}>{cinema.name} · {cinema.city}</option>)}
-            </select>
-          </label>
-          <ManagerWorkspace key={`${scopeKey}:${routeSection}`} cinemaId={state.cinemaId} user={user}
-            section={routeSection} store={store} />
-        </>)}
+      {state.status === 'success' &&
+        (!state.cinemas.length ? (
+          <EmptyState>Bạn không có phân công rạp còn hiệu lực.</EmptyState>
+        ) : !currentAssignment ? (
+          <LoadingState>Đang cập nhật phân công rạp…</LoadingState>
+        ) : (
+          <>
+            <div className="manager-context">
+              <FormField label="Rạp hiện tại">
+                <Select
+                  aria-label="Rạp hiện tại"
+                  value={state.cinemaId}
+                  disabled={state.pending}
+                  onChange={(event) => changeCinema(event.target.value)}
+                >
+                  {state.cinemas
+                    .filter(
+                      (cinema) =>
+                        !user?.cinemaAssignments ||
+                        user.cinemaAssignments.some(
+                          (assignment) => String(assignment.cinemaId) === String(cinema.id),
+                        ),
+                    )
+                    .map((cinema) => (
+                      <option key={cinema.id} value={cinema.id}>
+                        {cinema.name} · {cinema.city}
+                      </option>
+                    ))}
+                </Select>
+              </FormField>
+            </div>
+            <ManagerWorkspace
+              key={`${scopeKey}:${routeSection}`}
+              cinemaId={state.cinemaId}
+              user={user}
+              section={routeSection}
+              store={store}
+            />
+          </>
+        ))}
     </section>
   );
 }
@@ -76,8 +121,13 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
   const [requestOwner] = useState(() => createManagerRequestOwner(store));
   const ownsScreen = requestOwner.isCurrent;
   useEffect(() => {
-    if (ownsScreen()) store.setScreen(section, { editing, roomId,
-      seats: seats.status === 'loading' ? { status: 'idle', rows: [] } : seats, pricingStatus });
+    if (ownsScreen())
+      store.setScreen(section, {
+        editing,
+        roomId,
+        seats: seats.status === 'loading' ? { status: 'idle', rows: [] } : seats,
+        pricingStatus,
+      });
   }, [store, section, editing, roomId, seats, pricingStatus, ownsScreen]);
   const writePending = useRef(false);
   useEffect(() => {
@@ -105,18 +155,19 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
       if (accepts() && current === movieGeneration.current)
         setMoviesLookup({ status: 'success', rows });
     } catch (error) {
-      if (
-        accepts() &&
-        current === movieGeneration.current &&
-        error.name !== 'AbortError'
-      )
+      if (accepts() && current === movieGeneration.current && error.name !== 'AbortError')
         setMoviesLookup({ status: 'error', rows: [], error });
     }
   }, [requestOwner]);
   useEffect(() => {
     let active = true;
-    void Promise.resolve().then(() => { if (active) void load(); });
-    return () => { active = false; generation.current += 1; };
+    void Promise.resolve().then(() => {
+      if (active) void load();
+    });
+    return () => {
+      active = false;
+      generation.current += 1;
+    };
   }, [load]);
   useEffect(() => {
     let active = true;
@@ -147,7 +198,11 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
   const loadSeats = async (id) => {
     if (!can('QL_GHE')) return;
     if (!roomOptions.some((room) => String(room.id) === String(id))) {
-      setSeats({ status: 'error', rows: [], error: new Error('Vui lòng chọn phòng thuộc rạp hiện tại.') });
+      setSeats({
+        status: 'error',
+        rows: [],
+        error: new Error('Vui lòng chọn phòng thuộc rạp hiện tại.'),
+      });
       return;
     }
     const current = ++seatGeneration.current;
@@ -177,7 +232,12 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
       if (ownsMutationContext() && draftKey) {
         store.setDraft(draftKey, null);
         const previous = store.getScreen(section);
-        if (previous) store.setScreen(section, { ...previous, editing: null, seats: { status: 'idle', rows: [] } });
+        if (previous)
+          store.setScreen(section, {
+            ...previous,
+            editing: null,
+            seats: { status: 'idle', rows: [] },
+          });
       }
       if (!ownsScreen()) return;
       setEditing(null);
@@ -187,8 +247,7 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
       setRefresh((value) => value + 1);
       if (reloadSeats && seats.roomId) await loadSeats(seats.roomId);
     } catch (error) {
-      if (ownsScreen())
-        setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message });
+      if (ownsScreen()) setNotice({ ok: false, text: bookingErrorMessage(error) ?? error.message });
       throw error;
     } finally {
       writePending.current = false;
@@ -212,7 +271,9 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
         busy={busy}
         lookups={{ movies, rooms: roomsLookup }}
         draft={store.getDraft(draftKey)}
-        onDraftChange={(draft) => { if (ownsScreen()) store.setDraft(draftKey, draft); }}
+        onDraftChange={(draft) => {
+          if (ownsScreen()) store.setDraft(draftKey, draft);
+        }}
         onCancel={() => setEditing(null)}
         onSave={(body) =>
           run(
@@ -236,17 +297,19 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
             .map(([name, section]) => (
               <ErrorState key={name} error={section.error} onRetry={load} />
             ))}
-          {(!section || section === 'overview') && can('XEM_BAO_CAO_RAP') && data.sections.dashboard?.status === 'success' && (
-            <section className="catalog-section" id="manager-overview">
-              <h2>Dashboard</h2>
-              <p>
-                Phòng hoạt động: {data.sections.dashboard.data.dashboard?.activeRooms ?? 0} · Ghế:{' '}
-                {data.sections.dashboard.data.dashboard?.activeSeats ?? 0} · Suất hôm nay:{' '}
-                {data.sections.dashboard.data.dashboard?.showtimesToday ?? 0} · Đơn đã thanh toán
-                hôm nay: {data.sections.dashboard.data.dashboard?.paidOrdersToday ?? 0}
-              </p>
-            </section>
-          )}
+          {(!section || section === 'overview') &&
+            can('XEM_BAO_CAO_RAP') &&
+            data.sections.dashboard?.status === 'success' && (
+              <section className="catalog-section" id="manager-overview">
+                <h2>Dashboard</h2>
+                <p>
+                  Phòng hoạt động: {data.sections.dashboard.data.dashboard?.activeRooms ?? 0} · Ghế:{' '}
+                  {data.sections.dashboard.data.dashboard?.activeSeats ?? 0} · Suất hôm nay:{' '}
+                  {data.sections.dashboard.data.dashboard?.showtimesToday ?? 0} · Đơn đã thanh toán
+                  hôm nay: {data.sections.dashboard.data.dashboard?.paidOrdersToday ?? 0}
+                </p>
+              </section>
+            )}
           {(!section || section === 'rooms') && can('QL_PHONG') && (
             <section className="catalog-section" aria-label="Phòng chiếu" id="manager-rooms">
               <h2>Phòng chiếu</h2>
@@ -257,13 +320,25 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
                     {list('rooms').map((room) => (
                       <li key={room.id}>
                         {room.name} · {room.type} · {room.status} · {room.seatCount} ghế
-                        {can('QL_GHE') && (
-                          section ? <Link to="/manager/seats" onClick={() => {
-                            if (store.getScreen('seats')?.roomId !== String(room.id))
-                              store.setScreen('seats', { roomId: String(room.id), seats: { status: 'idle', rows: [] } });
-                          }}>Ghế</Link>
-                            : <button type="button" onClick={() => void loadSeats(room.id)}>Ghế</button>
-                        )}
+                        {can('QL_GHE') &&
+                          (section ? (
+                            <Link
+                              to="/manager/seats"
+                              onClick={() => {
+                                if (store.getScreen('seats')?.roomId !== String(room.id))
+                                  store.setScreen('seats', {
+                                    roomId: String(room.id),
+                                    seats: { status: 'idle', rows: [] },
+                                  });
+                              }}
+                            >
+                              Ghế
+                            </Link>
+                          ) : (
+                            <button type="button" onClick={() => void loadSeats(room.id)}>
+                              Ghế
+                            </button>
+                          ))}
                         <button
                           type="button"
                           disabled={busy}
@@ -294,7 +369,8 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
           {(!section || section === 'seats') && can('QL_GHE') && (
             <section className="catalog-section" aria-label="Ghế" id="manager-seats">
               <h2>
-                Ghế{seats.roomId
+                Ghế
+                {seats.roomId
                   ? ` · ${roomOptions.find((room) => String(room.id) === seats.roomId)?.name ?? ''}`
                   : ''}
               </h2>
@@ -327,38 +403,39 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
               {seats.status === 'error' && (
                 <ErrorState error={seats.error} onRetry={() => void loadSeats(roomId)} />
               )}
-              {seats.status === 'success' && roomOptions.some((room) => String(room.id) === seats.roomId) && (
-                <>
-                  {form('seat', (body) => api.createSeat(seats.roomId, body), api.updateSeat)}
-                  {seats.rows?.length ? (
-                    <ul>
-                      {seats.rows.map((seat) => (
-                        <li key={seat.id}>
-                          {seat.label} · {seat.type} · {seat.status}
-                          <button
-                            type="button"
-                            disabled={busy}
-                            onClick={() => setEditing({ kind: 'seat', row: seat })}
-                          >
-                            Sửa ghế
-                          </button>
-                          <button
-                            type="button"
-                            disabled={busy}
-                            onClick={() =>
-                              action(() => api.deleteSeat(seat.id), 'Đã xóa ghế.', true)
-                            }
-                          >
-                            Xóa
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <EmptyState>Chưa có ghế trong phòng.</EmptyState>
-                  )}
-                </>
-              )}
+              {seats.status === 'success' &&
+                roomOptions.some((room) => String(room.id) === seats.roomId) && (
+                  <>
+                    {form('seat', (body) => api.createSeat(seats.roomId, body), api.updateSeat)}
+                    {seats.rows?.length ? (
+                      <ul>
+                        {seats.rows.map((seat) => (
+                          <li key={seat.id}>
+                            {seat.label} · {seat.type} · {seat.status}
+                            <button
+                              type="button"
+                              disabled={busy}
+                              onClick={() => setEditing({ kind: 'seat', row: seat })}
+                            >
+                              Sửa ghế
+                            </button>
+                            <button
+                              type="button"
+                              disabled={busy}
+                              onClick={() =>
+                                action(() => api.deleteSeat(seat.id), 'Đã xóa ghế.', true)
+                              }
+                            >
+                              Xóa
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <EmptyState>Chưa có ghế trong phòng.</EmptyState>
+                    )}
+                  </>
+                )}
             </section>
           )}
           {(!section || section === 'showtimes') && can('QL_SUAT_CHIEU') && (
@@ -406,7 +483,7 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
               {form('pricing', (body) => api.createPricing(cinemaId, body), api.updatePricing)}
               <label>
                 Lọc trạng thái bảng giá
-                <select
+                <Select
                   aria-label="Lọc trạng thái bảng giá"
                   value={pricingStatus}
                   onChange={(event) => setPricingStatus(event.target.value)}
@@ -415,7 +492,7 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
                   {RESOURCE_STATUSES.pricing.map((status) => (
                     <option key={status}>{status}</option>
                   ))}
-                </select>
+                </Select>
               </label>
               {data.sections.pricing?.status === 'success' &&
                 (list('pricing').filter((row) => !pricingStatus || row.status === pricingStatus)
@@ -447,9 +524,14 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
       )}
       {(!section || section === 'revenue') && can('XEM_BAO_CAO_RAP') && (
         <div id="manager-revenue">
-          <ManagerRevenue cinemaId={cinemaId} refresh={refresh}
+          <ManagerRevenue
+            cinemaId={cinemaId}
+            refresh={refresh}
             cachedState={store.getScreen('revenueFilters')}
-            onStateChange={(state) => { if (ownsScreen()) store.setScreen('revenueFilters', state); }} />
+            onStateChange={(state) => {
+              if (ownsScreen()) store.setScreen('revenueFilters', state);
+            }}
+          />
         </div>
       )}
     </>

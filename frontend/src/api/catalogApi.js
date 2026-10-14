@@ -56,5 +56,9 @@ export const getProducts = async (options = {}) => {
 export const validatePromotion = (body, options = {}) =>
   request('/promotions/validate', { method: 'POST', body, ...options });
 
+// Server-side price preview (same stored procedure path, rolled back): points, discount, amount due.
+export const previewBooking = (body, options = {}) =>
+  request('/bookings/preview', { method: 'POST', body, ...options });
+
 export const createBooking = (body, options = {}) =>
   request('/bookings', { method: 'POST', body, ...options });

@@ -36,7 +36,8 @@ export function AuthProvider({ children }) {
           if (active && owner === session.getVersion()) setUser(currentUser);
         })
         .catch((error) => {
-          if (active && owner === session.getVersion() && error.name !== 'AbortError') setUser(null);
+          if (active && owner === session.getVersion() && error.name !== 'AbortError')
+            setUser(null);
         })
         .finally(() => {
           if (active) setInitializing(false);

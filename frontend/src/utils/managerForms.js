@@ -96,10 +96,19 @@ export function initialManagerValues(kind, row) {
   }[kind];
 }
 export function managerBody(kind, values, editing = false) {
-  if (kind === 'showtime' && businessLocalToInstant(values.endsAt) <= businessLocalToInstant(values.startsAt))
+  if (
+    kind === 'showtime' &&
+    businessLocalToInstant(values.endsAt) <= businessLocalToInstant(values.startsAt)
+  )
     throw new Error('Giờ kết thúc phải sau giờ bắt đầu.');
   for (const name of ['surcharge', 'basePrice']) {
-    if (name in values && (values[name] === '' || !Number.isFinite(Number(values[name])) || Number(values[name]) < 0 || Number(values[name]) >= 1e16))
+    if (
+      name in values &&
+      (values[name] === '' ||
+        !Number.isFinite(Number(values[name])) ||
+        Number(values[name]) < 0 ||
+        Number(values[name]) >= 1e16)
+    )
       throw new Error('Nhập số tiền hợp lệ, không âm.');
   }
   if (kind === 'pricing' && !DAY_TYPES.includes(values.dayType))

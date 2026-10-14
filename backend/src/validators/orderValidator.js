@@ -8,6 +8,8 @@ const PAYMENT_METHODS = new Set([
   'THE_NOI_DIA',
   'THE_QUOC_TE',
   'TIEN_MAT',
+  // Chỉ hợp lệ cho đơn đã được trả đủ bằng điểm (tiền phải trả = 0); do SQL Server kiểm tra.
+  'DIEM',
 ]);
 const PAYMENT_RESULTS = new Set(['Thành công', 'Thất bại']);
 

@@ -96,7 +96,7 @@ BEGIN
         -- STRICT 3NF: Tái dựng @Amount từ d.TongTienVe + d.TongTienDoAn - d.TienGiamGia thay vì t.SoTien
         SELECT
             @DonID = t.DonDatVeID,
-            @Amount = (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia),
+            @Amount = CASE WHEN d.TongTienVe + d.TongTienDoAn - d.TienGiamGia < 0 THEN 0 ELSE d.TongTienVe + d.TongTienDoAn - d.TienGiamGia END,
             @CurrentPayment = t.TrangThai,
             @OrderStatus = d.TrangThai,
             @Hold = d.HanGiuCho

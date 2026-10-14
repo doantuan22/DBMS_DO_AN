@@ -88,13 +88,16 @@ function PaymentContext({ orderId, user }) {
     return () => clearInterval(timer);
   }, [elapsedDeadline, resource.data?.status, load]);
 
+  // Orders already covered by points have nothing left to pay in cash: the only valid method is DIEM.
+  const pointsOnly = resource.status === 'success' && Number(resource.data.total) === 0;
+  const chosenMethod = pointsOnly ? 'DIEM' : method;
   async function confirmPayment() {
     if (pending.current || !canConfirm) return;
     pending.current = true;
     setBusy(true);
     setMessage(null);
     try {
-      const { payment } = await createPaymentAttempt(orderId, method);
+      const { payment } = await createPaymentAttempt(orderId, chosenMethod);
       const result = await submitPaymentResult(orderId, payment.id, 'Thành công');
       if (!mounted.current) return;
       request.current++;
@@ -107,12 +110,21 @@ function PaymentContext({ orderId, user }) {
       if (resource.data?.showtimeId) void getSeats(resource.data.showtimeId).catch(() => {});
     } finally {
       pending.current = false;
-      if (mounted.current) { setBusy(false); setConfirmation(false); }
+      if (mounted.current) {
+        setBusy(false);
+        setConfirmation(false);
+      }
     }
   }
   if (resource.status === 'loading')
     return <LoadingState>Đang tải thông tin thanh toán…</LoadingState>;
-  if (resource.status === 'error') return <section className="catalog-page"><PageHeader title="Thanh toán" breadcrumbs={[{label:'Đơn của tôi',to:'/orders'}]} /><AsyncState status="error" error={resource.error} onRetry={load} /></section>;
+  if (resource.status === 'error')
+    return (
+      <section className="catalog-page">
+        <PageHeader title="Thanh toán" breadcrumbs={[{ label: 'Đơn của tôi', to: '/orders' }]} />
+        <AsyncState status="error" error={resource.error} onRetry={load} />
+      </section>
+    );
   const order = resource.data;
   const payable = order.status === 'Chờ thanh toán';
   const canConfirm =
@@ -121,9 +133,130 @@ function PaymentContext({ orderId, user }) {
     Boolean(order.holdExpiresAt) &&
     elapsedDeadline !== order.holdExpiresAt &&
     Date.parse(order.holdExpiresAt) > now;
-  return <section className="catalog-page customer-journey"><AccountNavigation /><PageHeader title={`Thanh toán đơn #${order.id}`} description={order.movieTitle} breadcrumbs={[{label:'Đơn của tôi',to:'/orders'},{label:`Đơn #${order.id}`,to:`/orders/${order.id}`},{label:'Thanh toán'}]} />
-    <section className="customer-panel customer-status-panel"><h2>Trạng thái đơn · <StatusBadge status={order.status} /></h2><p>{order.cinemaName} · {order.roomName}</p>{payable && <HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} />}{order.status==='Đã thanh toán' && <p role="status">Đơn đã thanh toán thành công. Bạn có thể xem thông tin vé trong chi tiết đơn.</p>}{order.status==='Hết hạn' && <p role="alert">Đơn đã hết thời gian giữ ghế. Ghế đã được giải phóng; vui lòng đặt vé lại.</p>}{order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}{order.compensation && <p>Điểm bồi thường đã cộng: {order.compensation.points}.</p>}</section>
-    <div className="customer-journey__layout"><div className="customer-journey__main"><section className="customer-panel"><h2>Thanh toán mô phỏng</h2><p className="catalog-muted">Đây là luồng thanh toán mô phỏng hiện có. Xác nhận sẽ ghi nhận kết quả thành công cho phương thức đã chọn.</p><p>Tổng thanh toán: <strong>{money(order.total)}</strong></p>{payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}{payable && <div className="payment-actions"><FormField label="Phương thức"><Select value={method} disabled={busy || confirmation || !canConfirm} onChange={e=>setMethod(e.target.value)}>{METHODS.map(item=><option key={item} value={item}>{({THE_NOI_DIA:'Thẻ nội địa',THE_QUOC_TE:'Thẻ quốc tế',TIEN_MAT:'Tiền mặt'})[item] ?? item}</option>)}</Select></FormField><Button onClick={()=>setConfirmation(true)} loading={busy} disabled={!canConfirm}>{busy?'Đang xác nhận…':'Xác nhận thanh toán'}</Button></div>}{payable && canPay && !canConfirm && <p role="status">Đang xác minh thời gian giữ ghế…</p>}{message && <p role="status" className={message.includes('Đã')?'form-success':'form-error'}>{message}</p>}{['Hết hạn','Đã hủy'].includes(order.status) && <Link className="catalog-button" to={`/movies/${order.movieId}`}>Chọn lịch chiếu để đặt lại</Link>}</section><PaymentHistory payments={order.payments} title="Lịch sử giao dịch" /><OrderItems order={order} /></div><section className="customer-journey__summary" aria-label="Giá trị thanh toán"><OrderAmounts order={order} /><p><Link className="catalog-button catalog-button--secondary" to={`/orders/${order.id}`}>Xem chi tiết đơn</Link></p></section></div>
-    <ConfirmDialog open={confirmation} onOpenChange={setConfirmation} title="Xác nhận thanh toán mô phỏng" description={`Đơn #${order.id} · ${order.movieTitle}. Phương thức ${method}. Tổng ${money(order.total)}. Kết quả cuối cùng sẽ được hệ thống xác nhận.`} busy={busy} variant="primary" onConfirm={async()=>{ if (!canConfirm) { setConfirmation(false); return; } await confirmPayment(); }} />
-  </section>;
+  return (
+    <section className="catalog-page customer-journey">
+      <AccountNavigation />
+      <PageHeader
+        title={`Thanh toán đơn #${order.id}`}
+        description={order.movieTitle}
+        breadcrumbs={[
+          { label: 'Đơn của tôi', to: '/orders' },
+          { label: `Đơn #${order.id}`, to: `/orders/${order.id}` },
+          { label: 'Thanh toán' },
+        ]}
+      />
+      <section className="customer-panel customer-status-panel">
+        <h2>
+          Trạng thái đơn · <StatusBadge status={order.status} />
+        </h2>
+        <p>
+          {order.cinemaName} · {order.roomName}
+        </p>
+        {payable && <HoldDeadline deadline={order.holdExpiresAt} onElapsed={onElapsed} />}
+        {order.status === 'Đã thanh toán' && (
+          <p role="status">
+            Đơn đã thanh toán thành công. Bạn có thể xem thông tin vé trong chi tiết đơn.
+          </p>
+        )}
+        {order.status === 'Hết hạn' && (
+          <p role="alert">
+            Đơn đã hết thời gian giữ ghế. Ghế đã được giải phóng; vui lòng đặt vé lại.
+          </p>
+        )}
+        {order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}
+        {order.compensation && <p>Điểm bồi thường đã cộng: {order.compensation.points}.</p>}
+      </section>
+      <div className="customer-journey__layout">
+        <div className="customer-journey__main">
+          <section className="customer-panel">
+            <h2>Thanh toán mô phỏng</h2>
+            <p className="catalog-muted">
+              Đây là luồng thanh toán mô phỏng hiện có. Xác nhận sẽ ghi nhận kết quả thành công cho
+              phương thức đã chọn.
+            </p>
+            {order.pointsUsed > 0 && (
+              <p>
+                Đã dùng {order.pointsUsed} điểm, giảm {money(order.pointsDiscount)}.
+              </p>
+            )}
+            <p>
+              Số tiền cần thanh toán: <strong>{money(order.total)}</strong>
+            </p>
+            {payable && pointsOnly && (
+              <p role="status">Đơn đã được trả đủ bằng điểm. Hãy xác nhận để hoàn tất đơn.</p>
+            )}
+            {payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}
+            {payable && (
+              <div className="payment-actions">
+                {!pointsOnly && (
+                  <FormField label="Phương thức">
+                    <Select
+                      value={method}
+                      disabled={busy || confirmation || !canConfirm}
+                      onChange={(e) => setMethod(e.target.value)}
+                    >
+                      {METHODS.map((item) => (
+                        <option key={item} value={item}>
+                          {{
+                            THE_NOI_DIA: 'Thẻ nội địa',
+                            THE_QUOC_TE: 'Thẻ quốc tế',
+                            TIEN_MAT: 'Tiền mặt',
+                          }[item] ?? item}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormField>
+                )}
+                <Button onClick={() => setConfirmation(true)} loading={busy} disabled={!canConfirm}>
+                  {busy
+                    ? 'Đang xác nhận…'
+                    : pointsOnly
+                      ? 'Xác nhận thanh toán bằng điểm'
+                      : 'Xác nhận thanh toán'}
+                </Button>
+              </div>
+            )}
+            {payable && canPay && !canConfirm && (
+              <p role="status">Đang xác minh thời gian giữ ghế…</p>
+            )}
+            {message && (
+              <p role="status" className={message.includes('Đã') ? 'form-success' : 'form-error'}>
+                {message}
+              </p>
+            )}
+            {['Hết hạn', 'Đã hủy'].includes(order.status) && (
+              <Link className="catalog-button" to={`/movies/${order.movieId}`}>
+                Chọn lịch chiếu để đặt lại
+              </Link>
+            )}
+          </section>
+          <PaymentHistory payments={order.payments} title="Lịch sử giao dịch" />
+          <OrderItems order={order} />
+        </div>
+        <section className="customer-journey__summary" aria-label="Giá trị thanh toán">
+          <OrderAmounts order={order} />
+          <p>
+            <Link className="catalog-button catalog-button--secondary" to={`/orders/${order.id}`}>
+              Xem chi tiết đơn
+            </Link>
+          </p>
+        </section>
+      </div>
+      <ConfirmDialog
+        open={confirmation}
+        onOpenChange={setConfirmation}
+        title="Xác nhận thanh toán mô phỏng"
+        description={`Đơn #${order.id} · ${order.movieTitle}. ${pointsOnly ? 'Thanh toán bằng điểm' : `Phương thức ${method}`}. Số tiền ${money(order.total)}. Kết quả cuối cùng sẽ được hệ thống xác nhận.`}
+        busy={busy}
+        variant="primary"
+        onConfirm={async () => {
+          if (!canConfirm) {
+            setConfirmation(false);
+            return;
+          }
+          await confirmPayment();
+        }}
+      />
+    </section>
+  );
 }

@@ -6,7 +6,11 @@ import ConfirmDialog from '../components/ui/ConfirmDialog';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NotFound from './NotFound';
 import SupportWorkspaceView from '../features/support/SupportWorkspaceView';
-import { supportCasePath, supportDestination, supportRoute } from '../features/support/supportNavigation';
+import {
+  supportCasePath,
+  supportDestination,
+  supportRoute,
+} from '../features/support/supportNavigation';
 import useBookingDraftGuard from '../features/staff-bookings/useBookingDraftGuard';
 import {
   createSupportDraftStore,
@@ -14,7 +18,6 @@ import {
   EMPTY_SUPPORT_FILTERS,
   PROCESSING_STATUSES,
 } from '../features/support/supportDraftStore';
-
 
 function filtersEqual(left, right) {
   return Object.keys(EMPTY_SUPPORT_FILTERS).every((key) => left[key] === right[key]);
@@ -33,19 +36,45 @@ export default function SupportPortal() {
     ?.map((item) => item.code)
     .sort()
     .join(',')}`;
-  return supportRoute(location.pathname).kind === 'notFound' ? <NotFound /> : <SupportWorkspace key={scope} scope={scope} />;
+  return supportRoute(location.pathname).kind === 'notFound' ? (
+    <NotFound />
+  ) : (
+    <SupportWorkspace key={scope} scope={scope} />
+  );
 }
 
 function SupportWorkspace({ scope }) {
   const { user } = useAuth();
-  const location = useLocation(), navigate = useNavigate(), route = supportRoute(location.pathname);
+  const location = useLocation(),
+    navigate = useNavigate(),
+    route = supportRoute(location.pathname);
   const canProcess = userCanAct(user, 'CSKH', 'QL_KHIEUNAI', 'XULY_KHIEUNAI');
   const canReference = userCanAct(user, 'CSKH', 'QL_KHIEUNAI', 'TRA_CUU_DON');
   const draftStore = useMemo(() => createSupportDraftStore(scope), [scope]);
   const [initialWorkspace] = useState(() => {
-    const saved = draftStore.readWorkspace(), params = new URLSearchParams(location.search);
-    const appliedFilters = { ...saved.appliedFilters, ...Object.fromEntries(['status', 'priority'].filter((key) => params.has(key)).map((key) => [key, params.get(key)])) };
-    return { ...saved, appliedFilters, draftFilters: { ...saved.draftFilters, ...Object.fromEntries(['status', 'priority'].filter((key) => params.has(key)).map((key) => [key, params.get(key)])) }, selectedId: route.kind === 'case' ? route.id : saved.selectedId };
+    const saved = draftStore.readWorkspace(),
+      params = new URLSearchParams(location.search);
+    const appliedFilters = {
+      ...saved.appliedFilters,
+      ...Object.fromEntries(
+        ['status', 'priority']
+          .filter((key) => params.has(key))
+          .map((key) => [key, params.get(key)]),
+      ),
+    };
+    return {
+      ...saved,
+      appliedFilters,
+      draftFilters: {
+        ...saved.draftFilters,
+        ...Object.fromEntries(
+          ['status', 'priority']
+            .filter((key) => params.has(key))
+            .map((key) => [key, params.get(key)]),
+        ),
+      },
+      selectedId: route.kind === 'case' ? route.id : saved.selectedId,
+    };
   });
   const previousRoute = useRef(`${location.pathname}${location.search}`);
   const workspace = useRef(initialWorkspace);
@@ -75,8 +104,18 @@ function SupportWorkspace({ scope }) {
   const [notice, setNotice] = useState(null);
   const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
   const [actionConfirmation, setActionConfirmation] = useState(null);
-  const readGuard = useCallback(() => ({ dirty: hasUnsavedRef.current || draftStore.hasDrafts(), pending: writePending.current }), [draftStore]);
-  useBookingDraftGuard(false, busy, { readState: readGuard, isSafeDestination: supportDestination, message: 'Có bản nháp CSKH chưa lưu. Rời khu vực hỗ trợ?' });
+  const readGuard = useCallback(
+    () => ({
+      dirty: hasUnsavedRef.current || draftStore.hasDrafts(),
+      pending: writePending.current,
+    }),
+    [draftStore],
+  );
+  useBookingDraftGuard(false, busy, {
+    readState: readGuard,
+    isSafeDestination: supportDestination,
+    message: 'Có bản nháp CSKH chưa lưu. Rời khu vực hỗ trợ?',
+  });
 
   const persistWorkspace = useCallback(
     (changes) => {
@@ -96,15 +135,15 @@ function SupportWorkspace({ scope }) {
     } catch (error) {
       if (current === queueGeneration.current && mounted.current) {
         setQueue((existing) => ({ status: 'error', error, rows: existing.rows }));
-        if (error.status === 401 || error.status === 403) { detailGeneration.current++; setDetail({ status: 'error', error }); }
+        if (error.status === 401 || error.status === 403) {
+          detailGeneration.current++;
+          setDetail({ status: 'error', error });
+        }
       }
     }
   }, []);
 
-  const reloadAppliedQueue = useCallback(
-    () => loadQueue(appliedFiltersRef.current),
-    [loadQueue],
-  );
+  const reloadAppliedQueue = useCallback(() => loadQueue(appliedFiltersRef.current), [loadQueue]);
 
   const selectComplaint = useCallback(
     async (complaintId) => {
@@ -124,7 +163,8 @@ function SupportWorkspace({ scope }) {
         )
           return;
         const complaint = result.complaint;
-        if (complaint?.id !== complaintId) throw new Error('Hồ sơ trả về không khớp khiếu nại đã chọn.');
+        if (complaint?.id !== complaintId)
+          throw new Error('Hồ sơ trả về không khớp khiếu nại đã chọn.');
         const defaultStatus = initialActionStatus(complaint.status);
         const savedDraft = draftStore.readComplaintDraft(complaintId);
         const nextProcessing = savedDraft.processing ?? {
@@ -176,13 +216,24 @@ function SupportWorkspace({ scope }) {
     if (previousRoute.current === nextLocation) return;
     previousRoute.current = nextLocation;
     if (writePending.current) return;
-    const nextRoute = supportRoute(location.pathname), params = new URLSearchParams(location.search);
-    const next = { ...appliedFiltersRef.current, status: params.get('status') ?? '', priority: params.get('priority') ?? '' };
+    const nextRoute = supportRoute(location.pathname),
+      params = new URLSearchParams(location.search);
+    const next = {
+      ...appliedFiltersRef.current,
+      status: params.get('status') ?? '',
+      priority: params.get('priority') ?? '',
+    };
     if (!filtersEqual(next, appliedFiltersRef.current)) {
-      appliedFiltersRef.current = next; setAppliedFilters(next); setDraftFilters(next); persistWorkspace({ appliedFilters: next, draftFilters: next }); void loadQueue(next);
+      appliedFiltersRef.current = next;
+      setAppliedFilters(next);
+      setDraftFilters(next);
+      persistWorkspace({ appliedFilters: next, draftFilters: next });
+      void loadQueue(next);
     }
     if (nextRoute.kind === 'case' && nextRoute.id !== selection.current) {
-      setDiscardDialogOpen(false); setActionConfirmation(null); void selectComplaint(nextRoute.id);
+      setDiscardDialogOpen(false);
+      setActionConfirmation(null);
+      void selectComplaint(nextRoute.id);
     }
   }, [location.pathname, location.search, persistWorkspace, selectComplaint, loadQueue]);
 
@@ -259,8 +310,18 @@ function SupportWorkspace({ scope }) {
   const requestWrite = (event, action) => {
     event.preventDefault();
     if (!canProcess || writePending.current || detail.status !== 'success') return;
-    if (action === 'processing' && !processing.content.trim()) { setNotice({ ok: false, text: 'Vui lòng nhập nội dung xử lý.' }); return; }
-    setActionConfirmation({ action, id: selection.current, title: detail.complaint.title, generation: detailGeneration.current, processing: { ...processing }, status: statusValue });
+    if (action === 'processing' && !processing.content.trim()) {
+      setNotice({ ok: false, text: 'Vui lòng nhập nội dung xử lý.' });
+      return;
+    }
+    setActionConfirmation({
+      action,
+      id: selection.current,
+      title: detail.complaint.title,
+      generation: detailGeneration.current,
+      processing: { ...processing },
+      status: statusValue,
+    });
   };
   const writeComplaint = async (event, action, confirmed) => {
     event.preventDefault();
@@ -268,7 +329,9 @@ function SupportWorkspace({ scope }) {
       !canProcess ||
       writePending.current ||
       detail.status !== 'success' ||
-      detail.complaint.id !== selection.current || confirmed?.id !== selection.current || confirmed.generation !== detailGeneration.current
+      detail.complaint.id !== selection.current ||
+      confirmed?.id !== selection.current ||
+      confirmed.generation !== detailGeneration.current
     )
       return;
     const complaintId = selection.current;
@@ -290,8 +353,7 @@ function SupportWorkspace({ scope }) {
         draftStore.clearStatusDraft(complaintId);
         setStatusBaseValue(statusToSave);
         hasUnsavedRef.current =
-          Boolean(processingToSave.content) ||
-          processingToSave.nextStatus !== processingBaseStatus;
+          Boolean(processingToSave.content) || processingToSave.nextStatus !== processingBaseStatus;
       }
       if (!mounted.current) return;
       await currentQueueLoader.current?.();
@@ -321,12 +383,62 @@ function SupportWorkspace({ scope }) {
       }
     } finally {
       writePending.current = false;
-      if (mounted.current) { setBusy(false); setActionConfirmation(null); }
+      if (mounted.current) {
+        setBusy(false);
+        setActionConfirmation(null);
+      }
     }
   };
 
-  return <>
-    <SupportWorkspaceView queue={queue} detail={detail} selectedId={selectedId} draftFilters={draftFilters} appliedFilters={appliedFilters} processing={processing} statusValue={statusValue} busy={busy} canProcess={canProcess} canReference={canReference} routeCase={route.kind === 'case'} notice={notice} processingModified={processingModified} discardDialogOpen={discardDialogOpen} changeFilter={changeFilter} applyFilters={applyFilters} resetFilters={resetFilters} reloadQueue={() => void reloadAppliedQueue()} openCase={(id) => { if (!writePending.current) navigate(supportCasePath(id, appliedFiltersRef.current)); }} retryDetail={() => void selectComplaint(selectedId)} updateProcessing={updateProcessing} updateStatusValue={updateStatusValue} requestWrite={requestWrite} setDiscardDialogOpen={setDiscardDialogOpen} discardProcessingDraft={discardProcessingDraft} />
-    <ConfirmDialog key={`write:${actionConfirmation?.id ?? 'none'}:${actionConfirmation?.action ?? 'none'}`} open={Boolean(actionConfirmation)} busy={busy} title={actionConfirmation?.action === 'processing' ? 'Ghi diễn biến vào hồ sơ?' : 'Cập nhật trạng thái hồ sơ?'} description={`${actionConfirmation?.title ?? ''} · ${actionConfirmation?.action === 'processing' ? actionConfirmation.processing.nextStatus : actionConfirmation?.status ?? ''}. ${actionConfirmation?.action === 'processing' ? 'Thêm một diễn biến vào lịch sử xử lý.' : 'Giữ nội dung xử lý chưa lưu.'}`} confirmLabel="Xác nhận" onOpenChange={(open) => { if (!open && !writePending.current) setActionConfirmation(null); }} onConfirm={() => writeComplaint({ preventDefault() {} }, actionConfirmation.action, actionConfirmation)} />
-  </>;
+  return (
+    <>
+      <SupportWorkspaceView
+        queue={queue}
+        detail={detail}
+        selectedId={selectedId}
+        draftFilters={draftFilters}
+        appliedFilters={appliedFilters}
+        processing={processing}
+        statusValue={statusValue}
+        busy={busy}
+        canProcess={canProcess}
+        canReference={canReference}
+        routeCase={route.kind === 'case'}
+        notice={notice}
+        processingModified={processingModified}
+        discardDialogOpen={discardDialogOpen}
+        changeFilter={changeFilter}
+        applyFilters={applyFilters}
+        resetFilters={resetFilters}
+        reloadQueue={() => void reloadAppliedQueue()}
+        openCase={(id) => {
+          if (!writePending.current) navigate(supportCasePath(id, appliedFiltersRef.current));
+        }}
+        retryDetail={() => void selectComplaint(selectedId)}
+        updateProcessing={updateProcessing}
+        updateStatusValue={updateStatusValue}
+        requestWrite={requestWrite}
+        setDiscardDialogOpen={setDiscardDialogOpen}
+        discardProcessingDraft={discardProcessingDraft}
+      />
+      <ConfirmDialog
+        key={`write:${actionConfirmation?.id ?? 'none'}:${actionConfirmation?.action ?? 'none'}`}
+        open={Boolean(actionConfirmation)}
+        busy={busy}
+        title={
+          actionConfirmation?.action === 'processing'
+            ? 'Ghi diễn biến vào hồ sơ?'
+            : 'Cập nhật trạng thái hồ sơ?'
+        }
+        description={`${actionConfirmation?.title ?? ''} · ${actionConfirmation?.action === 'processing' ? actionConfirmation.processing.nextStatus : (actionConfirmation?.status ?? '')}. ${actionConfirmation?.action === 'processing' ? 'Thêm một diễn biến vào lịch sử xử lý.' : 'Giữ nội dung xử lý chưa lưu.'}`}
+        confirmLabel="Xác nhận"
+        onOpenChange={(open) => {
+          if (!open && !writePending.current) setActionConfirmation(null);
+        }}
+        onConfirm={() =>
+          writeComplaint({ preventDefault() {} }, actionConfirmation.action, actionConfirmation)
+        }
+      />
+    </>
+  );
 }

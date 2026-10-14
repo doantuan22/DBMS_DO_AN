@@ -101,13 +101,29 @@ function promotionCode(value) {
   return code;
 }
 
+// Points the customer chooses to spend (a choice, not a price). The database validates it against the
+// balance and the ticket value and computes every amount.
+export function pointsToUse(value) {
+  if (value === undefined || value === null) return 0;
+  if (!Number.isSafeInteger(value) || value < 0 || value > 2147483647)
+    throw new HttpError(400, 'INVALID_POINTS', 'points must be a non-negative integer.');
+  return value;
+}
+
 export function validateBooking(value) {
-  const body = requestObject(value, ['showtimeId', 'seatIds', 'products', 'promotionCode']);
+  const body = requestObject(value, [
+    'showtimeId',
+    'seatIds',
+    'products',
+    'promotionCode',
+    'points',
+  ]);
   return {
     showtimeId: positiveInteger(body.showtimeId, 'showtimeId'),
     seatIds: seatIds(body.seatIds),
     products: products(body.products),
     promotionCode: promotionCode(body.promotionCode),
+    points: pointsToUse(body.points),
   };
 }
 

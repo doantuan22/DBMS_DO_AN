@@ -40,7 +40,10 @@ test('all new account entry points enforce UTF-8 byte boundaries and preserve pa
 });
 test('account creation validates names and existing accounts reject role/grant fields', () => {
   for (const name of ['', ' ', 'a'.repeat(101)])
-    assert.throws(() => userCreate({ name, email: 'r4@example.test', password: 'password8', roleId: 2 }), invalid);
+    assert.throws(
+      () => userCreate({ name, email: 'r4@example.test', password: 'password8', roleId: 2 }),
+      invalid,
+    );
   assert.throws(() => userStatus({ status: 'Hoạt động', roleId: 1 }), invalid);
   assert.throws(() => userStatus({ status: 'Hoạt động', permissionIds: [] }), invalid);
 });

@@ -90,8 +90,6 @@ function managerError(error) {
         'PRICING_OVERLAP',
         'An active pricing rule with the same conditions already covers part of this period.',
       );
-    case 50117:
-      throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
     case 50118:
       throw new HttpError(
         409,
@@ -409,7 +407,10 @@ export function createManagerService({ execute = executeProcedure } = {}) {
         ticketRevenue: number(r.DoanhThuVe),
         productRevenue: number(r.DoanhThuDoAn),
         discount: number(r.TienGiamGia),
+        // Tiền thực thu = tiền thật đã trả (sau khuyến mãi và sau phần trả bằng điểm).
         totalRevenue: number(r.DoanhThuThucTe),
+        pointsPaidValue: number(r.GiaTriThanhToanBangDiem),
+        cancelledOrderCash: number(r.TienThuocDonHuy),
       }));
     },
   };

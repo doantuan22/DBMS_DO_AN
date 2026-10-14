@@ -22,7 +22,11 @@ const STATUS_VARIANTS = {
 export default function StatusBadge({ status, className = '' }) {
   if (!status) return null;
   return (
-    <span className={['badge', `badge--${STATUS_VARIANTS[status] ?? 'muted'}`, className].filter(Boolean).join(' ')}>
+    <span
+      className={['badge', `badge--${STATUS_VARIANTS[status] ?? 'muted'}`, className]
+        .filter(Boolean)
+        .join(' ')}
+    >
       {status}
     </span>
   );

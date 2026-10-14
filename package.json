@@ -9,10 +9,20 @@
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build",
-    "test:backend": "npm --prefix backend test"
+    "test:backend": "npm --prefix backend test",
+    "test:frontend": "npm --prefix frontend test",
+    "audit:db": "node scripts/audit/db-integrity.mjs",
+    "audit:api": "node scripts/audit/api-integration.mjs",
+    "audit:e2e": "node scripts/audit/browser-e2e.mjs",
+    "audit:all": "node scripts/audit/run-all.mjs",
+    "audit:lifecycle": "node scripts/audit/lifecycle.mjs",
+    "audit:testdb": "node scripts/audit/test-db.mjs",
+    "audit:points": "node scripts/audit/points-revenue.mjs",
+    "audit:migrate": "node scripts/audit/apply-migration.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
+    "axe-core": "^4.10.2",
     "prettier": "^3.9.9"
   }
 }

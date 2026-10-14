@@ -93,7 +93,7 @@ BEGIN
         SELECT
             @OrderStatus = TrangThai,
             @Hold = HanGiuCho,
-            @Amount = TongTienVe + TongTienDoAn - TienGiamGia
+            @Amount = CASE WHEN TongTienVe + TongTienDoAn - TienGiamGia < 0 THEN 0 ELSE TongTienVe + TongTienDoAn - TienGiamGia END
         FROM
             dbo.DONDATVE
         WITH
@@ -125,6 +125,13 @@ BEGIN
             OR @ShowStatus <> N'Mở bán'
             OR @Starts <= @Now
             THROW 50121, N'Suất chiếu không còn hợp lệ để thanh toán.', 1;
+        -- Chỉ đơn đã được trả đủ bằng điểm (tiền phải trả = 0) mới dùng phương thức DIEM; đơn còn tiền phải trả thì không.
+        IF @PhuongThuc = N'DIEM'
+            AND @Amount > 0
+            THROW 50430, N'Thanh toán bằng điểm chỉ áp dụng cho đơn không còn tiền phải trả.', 1;
+        IF @PhuongThuc <> N'DIEM'
+            AND @Amount <= 0
+            THROW 50431, N'Đơn đã được trả đủ bằng điểm; hãy xác nhận thanh toán bằng điểm.', 1;
         SET
             @MaGiaoDich = CONCAT(
                 'TXN-',
@@ -149,7 +156,7 @@ BEGIN
             tt.ThanhToanID,
             tt.DonDatVeID,
             tt.PhuongThuc,
-            (d.TongTienVe + d.TongTienDoAn - d.TienGiamGia) AS SoTien,
+            CASE WHEN d.TongTienVe + d.TongTienDoAn - d.TienGiamGia < 0 THEN 0 ELSE d.TongTienVe + d.TongTienDoAn - d.TienGiamGia END AS SoTien,
             tt.NgayTao,
             tt.MaGiaoDich,
             tt.TrangThai,

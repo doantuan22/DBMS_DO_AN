@@ -16,15 +16,16 @@ export default function AsyncState({
   if (status === 'success') return children ?? null;
 
   const errorStatus = Number(error?.status);
-  const resolvedStatus = status === 'error'
-    ? errorStatus === 401 || errorStatus === 403
-      ? 'forbidden'
-      : errorStatus === 404
-        ? 'notFound'
-        : errorStatus === 409
-          ? 'conflict'
-          : 'error'
-    : status;
+  const resolvedStatus =
+    status === 'error'
+      ? errorStatus === 401 || errorStatus === 403
+        ? 'forbidden'
+        : errorStatus === 404
+          ? 'notFound'
+          : errorStatus === 409
+            ? 'conflict'
+            : 'error'
+      : status;
 
   if (resolvedStatus === 'loading') {
     return (
@@ -50,7 +51,10 @@ export default function AsyncState({
       conflict: conflictMessage,
     };
     const message =
-      errorMessage ?? stateMessages[resolvedStatus] ?? error?.message ?? 'Không thể tải dữ liệu lúc này.';
+      errorMessage ??
+      stateMessages[resolvedStatus] ??
+      error?.message ??
+      'Không thể tải dữ liệu lúc này.';
 
     return (
       <section

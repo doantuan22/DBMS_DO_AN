@@ -15,9 +15,11 @@ BEGIN
         BEGIN TRANSACTION;
         DECLARE @TrangThai NVARCHAR(50);
         DECLARE @KhuyenMaiID INT;
+        DECLARE @DiemSuDung INT;
         SELECT
             @TrangThai = TrangThai,
-            @KhuyenMaiID = KhuyenMaiID
+            @KhuyenMaiID = KhuyenMaiID,
+            @DiemSuDung = DiemSuDung
         FROM
             dbo.DONDATVE
         WITH
@@ -47,6 +49,13 @@ BEGIN
             TrangThai = N'Đã hủy'
         WHERE
             DonDatVeID = @DonDatVeID;
+        -- Trả lại điểm đã giữ cho đơn chưa thanh toán (không phải hoàn tiền).
+        IF ISNULL(@DiemSuDung, 0) > 0
+            UPDATE dbo.HOSOKHACHHANG
+            SET
+                DiemTichLuy = DiemTichLuy + @DiemSuDung
+            WHERE
+                NguoiDungID = @NguoiDungID;
         -- Hoàn lại lượt dùng mã khuyến mãi nếu có
         IF @KhuyenMaiID IS NOT NULL
         BEGIN

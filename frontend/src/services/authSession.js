@@ -2,9 +2,15 @@ export function createAuthSession({ api, storage }) {
   let version = 0;
   const getVersion = () => version;
   const assertOwner = (owner) => {
-    if (owner !== version) throw Object.assign(new Error('Authentication request belongs to an earlier session.'), { name: 'AbortError' });
+    if (owner !== version)
+      throw Object.assign(new Error('Authentication request belongs to an earlier session.'), {
+        name: 'AbortError',
+      });
   };
-  const logout = () => { version++; storage.clear(); };
+  const logout = () => {
+    version++;
+    storage.clear();
+  };
   async function initialize(options) {
     const owner = version;
     if (!storage.get()) return null;

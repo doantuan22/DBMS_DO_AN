@@ -1,36 +1,193 @@
-.customer-discovery { gap: var(--space-8); }
-.customer-hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); gap: var(--space-8); align-items: center; border: 1px solid var(--color-primary-border); border-radius: var(--radius-2xl); padding: var(--space-12); background: linear-gradient(120deg, var(--color-primary-subtle), var(--color-surface)); overflow: hidden; }
-.customer-hero__copy { min-width: 0; }
-.customer-hero h1 { font-size: clamp(2rem, 3.4vw, 3.4rem); max-width: 20ch; line-height: 1.15; margin: var(--space-3) 0 var(--space-6); }
-.customer-hero__poster { max-width: 17rem; width: 100%; justify-self: center; }
-.customer-hero__poster .customer-media { box-shadow: var(--shadow-lg); border: 1px solid var(--color-border); }
-.customer-hero__poster p { margin-bottom: 0; font-weight: 600; }
-.customer-media { position: relative; min-width: 0; overflow: hidden; background: var(--color-surface-alt); border-radius: var(--radius-lg); }
-.customer-media--poster { aspect-ratio: 2 / 3; }
-.customer-media--cinema { aspect-ratio: 16 / 9; }
-.customer-media img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
-.customer-media__fallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); color: var(--color-text-muted); padding: var(--space-4); text-align: center; }
-.customer-media__fallback > span:first-child { font-size: 3rem; color: var(--color-primary-dark); }
-.customer-discovery .movie-card { border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); }
-.customer-discovery .movie-card__poster { aspect-ratio: 2 / 3; }
-.customer-discovery .movie-card__poster .customer-media { height: 100%; border-radius: 0; }
-.customer-discovery .movie-card__body h2 { font-size: var(--font-size-lg); line-height: var(--line-height-body); }
-.customer-discovery .movie-card__body { gap: var(--space-2); }
-.customer-discovery .movie-card__body .catalog-button { margin-top: auto; }
-.customer-discovery .movie-card__body .catalog-muted { font-size: var(--font-size-sm); }
-.customer-discovery__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; margin: 0; gap: var(--space-4); }
-.customer-discovery__steps li { padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
-.customer-discovery__steps strong { display: block; font-size: var(--font-size-lg); color: var(--color-primary-dark); }
-.customer-discovery__cinemas { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-6); padding: var(--space-8); background: var(--color-primary-subtle); border-radius: var(--radius-xl); }
-.customer-discovery .cinema-card { border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); }
-.customer-discovery .cinema-card .customer-media { margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) 0; border-radius: 0; }
-.customer-discovery__intro { display: grid; gap: var(--space-3); }
-.customer-discovery__intro h1, .customer-discovery__intro p { margin: 0; }
-.customer-discovery__facts { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.customer-discovery__facts span { border: 1px solid var(--color-border); border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); font-size: var(--font-size-sm); }
-.customer-discovery .movie-detail__poster .customer-media { width: 100%; }
-.customer-discovery .showtime-card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
-.customer-discovery .showtime-card .catalog-button { margin-top: auto; }
-.customer-discovery__synopsis { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-8); }
-.customer-discovery__synopsis p { white-space: pre-wrap; overflow-wrap: anywhere; }
-@media (max-width: 768px) { .customer-hero { padding: var(--space-6); grid-template-columns: minmax(0, 1fr); gap: var(--space-6); } .customer-hero h1 { font-size: 2rem; } .customer-hero__poster { max-width: 10rem; } .customer-discovery__steps, .customer-discovery__synopsis { grid-template-columns: minmax(0, 1fr); } .customer-discovery__cinemas { padding: var(--space-6); } }
+.customer-discovery {
+  gap: var(--space-8);
+}
+.customer-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+  gap: var(--space-8);
+  align-items: center;
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-12);
+  background: linear-gradient(120deg, var(--color-primary-subtle), var(--color-surface));
+  overflow: hidden;
+}
+.customer-hero__copy {
+  min-width: 0;
+}
+.customer-hero h1 {
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  max-width: 20ch;
+  line-height: 1.15;
+  margin: var(--space-3) 0 var(--space-6);
+}
+.customer-hero__poster {
+  max-width: 17rem;
+  width: 100%;
+  justify-self: center;
+}
+.customer-hero__poster .customer-media {
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+}
+.customer-hero__poster p {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+.customer-media {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-lg);
+}
+.customer-media--poster {
+  aspect-ratio: 2 / 3;
+}
+.customer-media--cinema {
+  aspect-ratio: 16 / 9;
+}
+.customer-media img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+.customer-media__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  padding: var(--space-4);
+  text-align: center;
+}
+.customer-media__fallback > span:first-child {
+  font-size: 3rem;
+  color: var(--color-primary-dark);
+}
+.customer-discovery .movie-card {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+.customer-discovery .movie-card__poster {
+  aspect-ratio: 2 / 3;
+}
+.customer-discovery .movie-card__poster .customer-media {
+  height: 100%;
+  border-radius: 0;
+}
+.customer-discovery .movie-card__body h2 {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-body);
+}
+.customer-discovery .movie-card__body {
+  gap: var(--space-2);
+}
+.customer-discovery .movie-card__body .catalog-button {
+  margin-top: auto;
+}
+.customer-discovery .movie-card__body .catalog-muted {
+  font-size: var(--font-size-sm);
+}
+.customer-discovery__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: var(--space-4);
+}
+.customer-discovery__steps li {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+.customer-discovery__steps strong {
+  display: block;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary-dark);
+}
+.customer-discovery__cinemas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  background: var(--color-primary-subtle);
+  border-radius: var(--radius-xl);
+}
+.customer-discovery .cinema-card {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+.customer-discovery .cinema-card .customer-media {
+  margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) 0;
+  border-radius: 0;
+}
+.customer-discovery__intro {
+  display: grid;
+  gap: var(--space-3);
+}
+.customer-discovery__intro h1,
+.customer-discovery__intro p {
+  margin: 0;
+}
+.customer-discovery__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.customer-discovery__facts span {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+.customer-discovery .movie-detail__poster .customer-media {
+  width: 100%;
+}
+.customer-discovery .showtime-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.customer-discovery .showtime-card .catalog-button {
+  margin-top: auto;
+}
+.customer-discovery__synopsis {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--space-8);
+}
+.customer-discovery__synopsis p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 768px) {
+  .customer-hero {
+    padding: var(--space-6);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+  .customer-hero h1 {
+    font-size: 2rem;
+  }
+  .customer-hero__poster {
+    max-width: 10rem;
+  }
+  .customer-discovery__steps,
+  .customer-discovery__synopsis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .customer-discovery__cinemas {
+    padding: var(--space-6);
+  }
+}

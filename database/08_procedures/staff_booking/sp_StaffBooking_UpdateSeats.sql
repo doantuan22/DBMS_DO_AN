@@ -65,6 +65,15 @@ BEGIN
             OR @Status <> N'Chờ thanh toán'
             OR @Promotion IS NOT NULL
             OR EXISTS (
+                SELECT
+                    1
+                FROM
+                    dbo.DONDATVE
+                WHERE
+                    DonDatVeID = @DonDatVeID
+                    AND DiemSuDung > 0
+            )
+            OR EXISTS (
             SELECT
                 1
             FROM

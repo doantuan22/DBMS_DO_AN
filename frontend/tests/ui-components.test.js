@@ -41,7 +41,10 @@ test('PageHeader accepts the blueprint primaryAction API and keeps the legacy ac
   assert.match(primary, /<h1[^>]*>Movies<\/h1>/);
   assert.match(primary, /disabled=""[^>]*>Create/);
 
-  const legacy = render(PageHeader, { title: 'Orders', actions: React.createElement('a', { href: '/orders/new' }, 'New') });
+  const legacy = render(PageHeader, {
+    title: 'Orders',
+    actions: React.createElement('a', { href: '/orders/new' }, 'New'),
+  });
   assert.match(legacy, /href="\/orders\/new"/);
 });
 
@@ -69,7 +72,10 @@ test('ResourceTable renders STT instead of implicit row IDs and server-backed pa
   const html = render(ResourceTable, {
     caption: 'Resources',
     columns: [{ key: 'name', label: 'Name' }],
-    rows: [{ id: 7001, name: 'Alpha' }, { id: 7002, name: 'Beta' }],
+    rows: [
+      { id: 7001, name: 'Alpha' },
+      { id: 7002, name: 'Beta' },
+    ],
     pagination: { page: 2, pageSize: 2, total: 5, onPageChange() {} },
   });
   assert.match(html, /<th scope="col"[^>]*>STT<\/th>/);
@@ -96,14 +102,29 @@ test('ResourceTable maps loading, empty, forbidden, not-found and conflict respo
     ['conflict', /Dữ liệu đã thay đổi/],
   ];
   for (const [status, expected] of statuses) {
-    assert.match(render(ResourceTable, { columns: [{ key: 'name', label: 'Name' }], rows: [], status }), expected);
+    assert.match(
+      render(ResourceTable, { columns: [{ key: 'name', label: 'Name' }], rows: [], status }),
+      expected,
+    );
   }
-  assert.match(render(ResourceTable, {
-    columns: [{ key: 'name', label: 'Name' }], rows: [], status: 'error', error: { status: 403 },
-  }), /Bạn không có quyền/);
-  assert.match(render(ResourceTable, {
-    columns: [{ key: 'name', label: 'Name' }], rows: [], status: 'error', error: { status: 409 },
-  }), /Dữ liệu đã thay đổi/);
+  assert.match(
+    render(ResourceTable, {
+      columns: [{ key: 'name', label: 'Name' }],
+      rows: [],
+      status: 'error',
+      error: { status: 403 },
+    }),
+    /Bạn không có quyền/,
+  );
+  assert.match(
+    render(ResourceTable, {
+      columns: [{ key: 'name', label: 'Name' }],
+      rows: [],
+      status: 'error',
+      error: { status: 409 },
+    }),
+    /Dữ liệu đã thay đổi/,
+  );
 });
 
 test('ResourceSelect exposes named options and links lookup error state to the control', () => {
@@ -120,7 +141,12 @@ test('ResourceSelect exposes named options and links lookup error state to the c
   assert.doesNotMatch(ready, /Downtown/);
 
   const failed = render(ResourceSelect, {
-    label: 'Room', value: '', options: [], lookupStatus: 'error', lookupError: { message: 'Lookup failed' }, onRetry() {},
+    label: 'Room',
+    value: '',
+    options: [],
+    lookupStatus: 'error',
+    lookupError: { message: 'Lookup failed' },
+    onRetry() {},
   });
   assert.match(failed, /aria-invalid="true"/);
   assert.match(failed, /aria-describedby="[^"]+ [^"]+-error"/);
@@ -153,7 +179,13 @@ test('AsyncState presents separate forbidden, not-found and conflict states', ()
   assert.match(render(AsyncState, { status: 'forbidden' }), /ui-async-state--forbidden/);
   assert.match(render(AsyncState, { status: 'notFound' }), /ui-async-state--notFound/);
   assert.match(render(AsyncState, { status: 'conflict' }), /ui-async-state--conflict/);
-  assert.match(render(AsyncState, { status: 'error', error: { status: 404 } }), /Không tìm thấy nội dung/);
-  assert.match(render(AsyncState, { status: 'error', error: { status: 409 } }), /Dữ liệu đã thay đổi/);
+  assert.match(
+    render(AsyncState, { status: 'error', error: { status: 404 } }),
+    /Không tìm thấy nội dung/,
+  );
+  assert.match(
+    render(AsyncState, { status: 'error', error: { status: 409 } }),
+    /Dữ liệu đã thay đổi/,
+  );
   assert.match(render(AsyncState, { status: 'success', children: 'Loaded' }), /Loaded/);
 });

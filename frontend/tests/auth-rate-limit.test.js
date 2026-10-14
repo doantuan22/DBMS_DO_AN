@@ -42,7 +42,8 @@ test('existing HTTP client preserves real429 error/status and never retries auto
     await assert.rejects(request('/auth/' + endpoint, { method: 'POST', body: {} }), {
       status: 429,
       code: 'RATE_LIMIT_EXCEEDED',
-      message: 'Too many authentication requests. Please try again later.',
+      // F-09: the client localizes the stable error code; status and code stay untouched.
+      message: 'Quá nhiều yêu cầu đăng nhập/đăng ký. Vui lòng thử lại sau.',
     });
     assert.equal(calls, count + 1);
   }
@@ -86,11 +87,34 @@ test('existing auth session preserves state and makes no repeated requests when 
 });
 
 test('controlled transport: late 401 preserves newer same-token session; current 401 still expires it', async (t) => {
-  const originalFetch=globalThis.fetch, originalStorage=globalThis.sessionStorage, values=new Map();
-  globalThis.sessionStorage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};
-  t.after(()=>{authTokenStorage.clear();globalThis.fetch=originalFetch;if(originalStorage===undefined)delete globalThis.sessionStorage;else globalThis.sessionStorage=originalStorage;});
-  let resolve;globalThis.fetch=()=>new Promise(done=>{resolve=done;});
-  authTokenStorage.set('same-test-token');const oldRequest=request('/auth/me');authTokenStorage.clear();authTokenStorage.set('same-test-token');
-  resolve(new Response(JSON.stringify({error:{code:'UNAUTHENTICATED'}}),{status:401}));await assert.rejects(oldRequest,{status:401});assert.equal(authTokenStorage.get(),'same-test-token');
-  const current=request('/auth/me');resolve(new Response('{}',{status:401}));await assert.rejects(current,{status:401});assert.equal(authTokenStorage.get(),null);
+  const originalFetch = globalThis.fetch,
+    originalStorage = globalThis.sessionStorage,
+    values = new Map();
+  globalThis.sessionStorage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+    removeItem: (key) => values.delete(key),
+  };
+  t.after(() => {
+    authTokenStorage.clear();
+    globalThis.fetch = originalFetch;
+    if (originalStorage === undefined) delete globalThis.sessionStorage;
+    else globalThis.sessionStorage = originalStorage;
+  });
+  let resolve;
+  globalThis.fetch = () =>
+    new Promise((done) => {
+      resolve = done;
+    });
+  authTokenStorage.set('same-test-token');
+  const oldRequest = request('/auth/me');
+  authTokenStorage.clear();
+  authTokenStorage.set('same-test-token');
+  resolve(new Response(JSON.stringify({ error: { code: 'UNAUTHENTICATED' } }), { status: 401 }));
+  await assert.rejects(oldRequest, { status: 401 });
+  assert.equal(authTokenStorage.get(), 'same-test-token');
+  const current = request('/auth/me');
+  resolve(new Response('{}', { status: 401 }));
+  await assert.rejects(current, { status: 401 });
+  assert.equal(authTokenStorage.get(), null);
 });

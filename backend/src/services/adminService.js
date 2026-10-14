@@ -53,9 +53,17 @@ export function mapAdminProcedureError(error) {
   const number = error.number ?? error.originalError?.info?.number ?? error.originalError?.number;
   switch (number) {
     case 50405:
-      throw new HttpError(403, 'RBAC_FIXED', 'Roles and permissions are fixed and cannot be changed.');
+      throw new HttpError(
+        403,
+        'RBAC_FIXED',
+        'Roles and permissions are fixed and cannot be changed.',
+      );
     case 50406:
-      throw new HttpError(403, 'USER_ROLE_IMMUTABLE', 'An existing account role cannot be changed.');
+      throw new HttpError(
+        403,
+        'USER_ROLE_IMMUTABLE',
+        'An existing account role cannot be changed.',
+      );
     case 50404:
       throw new HttpError(
         403,
@@ -230,8 +238,6 @@ export function mapAdminProcedureError(error) {
     case 50058:
     case 50116:
       throw new HttpError(404, 'SHOWTIME_NOT_FOUND', 'Showtime was not found.');
-    case 50117:
-      throw new HttpError(409, 'SHOWTIME_ALREADY_CANCELLED', 'Showtime is already cancelled.');
     case 50001:
       throw new HttpError(409, 'SHOWTIME_OVERLAP', 'The room already has an overlapping showtime.');
     case 50215:
@@ -529,41 +535,51 @@ export function createAdminService({
     },
     async createShowtime(actorId, input) {
       try {
-        return await executeFor(actorId, 'ADMIN_SHOWTIME_CREATE', {
-          PhimID: int(input.movieId),
-          PhongID: int(input.roomId),
-          ThoiGianBatDau: {
-            type: DbTypes.DateTime2,
-            value: parseApiInstant(input.startsAt, 'startsAt'),
-          },
-          ThoiGianKetThuc: {
-            type: DbTypes.DateTime2,
-            value: parseApiInstant(input.endsAt, 'endsAt'),
-          },
-          DinhDang: text(50, input.format),
-          GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice },
-        });
+        // The DTO is the stored procedure's result row, never the driver envelope (F-07).
+        return (
+          rows(
+            await executeFor(actorId, 'ADMIN_SHOWTIME_CREATE', {
+              PhimID: int(input.movieId),
+              PhongID: int(input.roomId),
+              ThoiGianBatDau: {
+                type: DbTypes.DateTime2,
+                value: parseApiInstant(input.startsAt, 'startsAt'),
+              },
+              ThoiGianKetThuc: {
+                type: DbTypes.DateTime2,
+                value: parseApiInstant(input.endsAt, 'endsAt'),
+              },
+              DinhDang: text(50, input.format),
+              GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice },
+            }),
+          )[0] ?? null
+        );
       } catch (error) {
         mapAdminProcedureError(error);
       }
     },
     async updateShowtime(actorId, id, input) {
       try {
-        return await executeFor(actorId, 'ADMIN_SHOWTIME_UPDATE', {
-          SuatChieuID: int(id),
-          PhimID: int(input.movieId),
-          ThoiGianBatDau: {
-            type: DbTypes.DateTime2,
-            value: parseApiInstant(input.startsAt, 'startsAt'),
-          },
-          ThoiGianKetThuc: {
-            type: DbTypes.DateTime2,
-            value: parseApiInstant(input.endsAt, 'endsAt'),
-          },
-          DinhDang: text(50, input.format),
-          GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice },
-          TrangThai: text(50, input.status),
-        });
+        // The DTO is the stored procedure's result row, never the driver envelope (F-07).
+        return (
+          rows(
+            await executeFor(actorId, 'ADMIN_SHOWTIME_UPDATE', {
+              SuatChieuID: int(id),
+              PhimID: int(input.movieId),
+              ThoiGianBatDau: {
+                type: DbTypes.DateTime2,
+                value: parseApiInstant(input.startsAt, 'startsAt'),
+              },
+              ThoiGianKetThuc: {
+                type: DbTypes.DateTime2,
+                value: parseApiInstant(input.endsAt, 'endsAt'),
+              },
+              DinhDang: text(50, input.format),
+              GiaVeCoBan: { type: DbTypes.Decimal(18, 2), value: input.basePrice },
+              TrangThai: text(50, input.status),
+            }),
+          )[0] ?? null
+        );
       } catch (error) {
         mapAdminProcedureError(error);
       }
@@ -636,22 +652,30 @@ export function createAdminService({
     },
     async updateMovie(actorId, id, input) {
       try {
-        return await executeFor(actorId, 'ADMIN_MOVIE_UPDATE', {
-          PhimID: int(id),
-          TenPhim: text(255, input.title),
-          ThoiLuong: int(input.durationMinutes),
-          NgayKhoiChieu: date(input.releaseDate),
-          NgayKetThuc: date(input.endDate),
-          NgonNgu: text(100, input.language),
-          PhuDe: text(100, input.subtitle),
-          DoTuoi: text(20, input.ageRating),
-          DaoDien: text(150, input.director),
-          MoTa: text(DbTypes.MAX, input.description),
-          PosterURL: text(500, input.posterUrl),
-          TrailerURL: text(500, input.trailerUrl),
-          TrangThai: text(50, input.status),
-          TheLoaiIdList: { type: DbTypes.VarChar(DbTypes.MAX), value: input.genreIds.join(',') },
-        });
+        // The DTO is the stored procedure's result row, never the driver envelope (F-07).
+        return (
+          rows(
+            await executeFor(actorId, 'ADMIN_MOVIE_UPDATE', {
+              PhimID: int(id),
+              TenPhim: text(255, input.title),
+              ThoiLuong: int(input.durationMinutes),
+              NgayKhoiChieu: date(input.releaseDate),
+              NgayKetThuc: date(input.endDate),
+              NgonNgu: text(100, input.language),
+              PhuDe: text(100, input.subtitle),
+              DoTuoi: text(20, input.ageRating),
+              DaoDien: text(150, input.director),
+              MoTa: text(DbTypes.MAX, input.description),
+              PosterURL: text(500, input.posterUrl),
+              TrailerURL: text(500, input.trailerUrl),
+              TrangThai: text(50, input.status),
+              TheLoaiIdList: {
+                type: DbTypes.VarChar(DbTypes.MAX),
+                value: input.genreIds.join(','),
+              },
+            }),
+          )[0] ?? null
+        );
       } catch (error) {
         mapAdminProcedureError(error);
       }

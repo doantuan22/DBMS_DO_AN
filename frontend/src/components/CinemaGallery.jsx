@@ -9,7 +9,12 @@ export default function CinemaGallery({ images, cinemaName }) {
         <div className="cinema-gallery">
           {rows.map((image, index) => (
             <figure key={image.id} className={image.cover ? 'cinema-gallery__cover' : undefined}>
-              <MediaFrame src={image.url} alt={image.description || `Ảnh ${index + 1} của ${cinemaName}`} kind="cinema" priority={!index} />
+              <MediaFrame
+                src={image.url}
+                alt={image.description || `Ảnh ${index + 1} của ${cinemaName}`}
+                kind="cinema"
+                priority={!index}
+              />
               {image.description && <figcaption>{image.description}</figcaption>}
             </figure>
           ))}

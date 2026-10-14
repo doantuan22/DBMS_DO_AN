@@ -12,8 +12,10 @@ export const MANAGER_SCREEN_ROUTES = Object.entries(MANAGER_SECTION_ROUTES)
   .filter(([section]) => section !== 'bookings')
   .map(([section, route]) => ({ section, path: route.path.slice('/manager/'.length) }));
 
-export const resolveManagerSection = (pathname) => Object.entries(MANAGER_SECTION_ROUTES)
-  .find(([, route]) => route.path === pathname.replace(/\/$/, ''))?.[0] ?? null;
+export const resolveManagerSection = (pathname) =>
+  Object.entries(MANAGER_SECTION_ROUTES).find(
+    ([, route]) => route.path === pathname.replace(/\/$/, ''),
+  )?.[0] ?? null;
 
 export const managerEntryPath = (hash) => {
   const section = hash?.replace(/^#manager-/, '');

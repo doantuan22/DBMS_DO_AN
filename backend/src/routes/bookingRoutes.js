@@ -6,6 +6,13 @@ import { requireCustomer } from '../middleware/requireCustomer.js';
 
 const router = Router();
 router.post(
+  '/preview',
+  authenticate,
+  requireCustomer,
+  requirePermission('DAT_VE'),
+  bookingController.previewBooking,
+);
+router.post(
   '/',
   authenticate,
   requireCustomer,

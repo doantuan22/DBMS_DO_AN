@@ -188,6 +188,8 @@ BEGIN
             @TongTienVe DECIMAL(18, 2),
             @TongTienDoAn DECIMAL(18, 2),
             @TienGiamGia DECIMAL(18, 2),
+            @DiemSuDung INT,
+            @TienGiamKhuyenMai DECIMAL(18, 2),
             @TongTruocGiam DECIMAL(19, 2),
             @GiamChoVe DECIMAL(38, 6),
             @TienVeThucTra DECIMAL(38, 6),
@@ -197,7 +199,8 @@ BEGIN
             d.DonDatVeID,
             d.TongTienVe,
             d.TongTienDoAn,
-            d.TienGiamGia
+            d.TienGiamGia,
+            d.DiemSuDung
         FROM
             dbo.DONDATVE d
             INNER JOIN @Orders o ON o.DonDatVeID = d.DonDatVeID
@@ -229,13 +232,21 @@ BEGIN
             @DonID,
             @TongTienVe,
             @TongTienDoAn,
-            @TienGiamGia;
+            @TienGiamGia,
+            @DiemSuDung;
         WHILE @@FETCH_STATUS = 0
         BEGIN
             SET
                 @TongTruocGiam = @TongTienVe + @TongTienDoAn;
+            -- TienGiamGia is now the total discount. Compensation keeps the
+            -- pre-existing rule: only the promotion portion affects ticket compensation.
             SET
-                @GiamChoVe = ISNULL(@TienGiamGia * @TongTienVe / NULLIF(@TongTruocGiam, 0), 0);
+                @TienGiamKhuyenMai = CASE
+                    WHEN @TienGiamGia - ISNULL(@DiemSuDung, 0) * 1000 < 0 THEN 0
+                    ELSE @TienGiamGia - ISNULL(@DiemSuDung, 0) * 1000
+                END;
+            SET
+                @GiamChoVe = ISNULL(@TienGiamKhuyenMai * @TongTienVe / NULLIF(@TongTruocGiam, 0), 0);
             SET
                 @TienVeThucTra = CASE
                     WHEN @TongTruocGiam = 0
@@ -247,7 +258,7 @@ BEGIN
             SELECT
                 @DiemBoiThuong = CONVERT(INT, c.DiemCong)
             FROM
-                dbo.fn_TinhBoiThuongVe(@TongTienVe, @TongTienDoAn, @TienGiamGia) c;
+                dbo.fn_TinhBoiThuongVe(@TongTienVe, @TongTienDoAn, @TienGiamKhuyenMai) c;
             INSERT
                 dbo.BOITHUONG_HUYSUAT(DonDatVeID, DiemBoiThuong, NgayBoiThuong, GhiChu) OUTPUT inserted.DonDatVeID,
                 inserted.DiemBoiThuong
@@ -270,7 +281,8 @@ BEGIN
                 @DonID,
                 @TongTienVe,
                 @TongTienDoAn,
-                @TienGiamGia;
+            @TienGiamGia,
+            @DiemSuDung;
         END;
         CLOSE CompensationOrders;
         DEALLOCATE CompensationOrders;

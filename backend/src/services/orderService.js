@@ -24,6 +24,9 @@ function orderSummaryDto(row) {
     ticketTotal: number(row.TongTienVe),
     productTotal: number(row.TongTienDoAn),
     discountTotal: number(row.TienGiamGia),
+    pointsUsed: row.DiemSuDung ?? 0,
+    pointsDiscount: Number(row.DiemSuDung ?? 0) * 1000,
+    // TienGiamGia already contains every discount, including points.
     total: number(row.TongTienThanhToan),
     status: row.TrangThaiDon,
     promotionCode: row.MaKhuyenMai,
@@ -142,6 +145,18 @@ function mapOrderError(error) {
       throw new HttpError(409, 'ORDER_NOT_PAYABLE', 'This order can no longer be paid.');
     case 50111:
       throw new HttpError(409, 'ORDER_HOLD_EXPIRED', 'The payment hold has expired.');
+    case 50430:
+      throw new HttpError(
+        409,
+        'POINTS_PAYMENT_NOT_APPLICABLE',
+        'Points payment only applies to an order with nothing left to pay.',
+      );
+    case 50431:
+      throw new HttpError(
+        409,
+        'POINTS_PAYMENT_REQUIRED',
+        'This order is fully covered by points; confirm it with points payment.',
+      );
     case 50114:
       throw new HttpError(400, 'INVALID_PAYMENT_RESULT', 'Payment result is invalid.');
     case 50115:

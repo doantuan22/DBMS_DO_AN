@@ -33,7 +33,10 @@ test('R4.4 current booking and payment pages distinguish preview and authoritati
     new URL('../src/pages/BookingPreparation.jsx', import.meta.url),
     'utf8',
   );
-  const view = fs.readFileSync(new URL('../src/features/customer/BookingExperience.jsx', import.meta.url), 'utf8');
+  const view = fs.readFileSync(
+    new URL('../src/features/customer/BookingExperience.jsx', import.meta.url),
+    'utf8',
+  );
   assert.match(view, /Mã sẽ được kiểm tra lại khi bạn tạo đơn/);
   assert.match(view, /Giảm tạm tính/);
   assert.match(view, /customerMoney\(booking\.total\)/);
@@ -44,5 +47,5 @@ test('R4.4 current booking and payment pages distinguish preview and authoritati
   );
   const payment = fs.readFileSync(new URL('../src/pages/PaymentPage.jsx', import.meta.url), 'utf8');
   assert.match(payment, /money\(order\.total\)/);
-  assert.match(payment, /createPaymentAttempt\(orderId, method\)/);
+  assert.match(payment, /createPaymentAttempt\(orderId, chosenMethod\)/);
 });

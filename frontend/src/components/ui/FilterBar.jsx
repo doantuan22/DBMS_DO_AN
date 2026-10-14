@@ -9,6 +9,7 @@ export default function FilterBar({
   label = 'Bộ lọc',
   className = '',
   schema = [],
+  showChips,
   draft,
   applied,
   pending = false,
@@ -17,12 +18,18 @@ export default function FilterBar({
   resetLabel = 'Xóa lọc',
 }) {
   const activeSchema = Array.isArray(schema) ? schema : [];
+  const renderChips = showChips ?? activeSchema.some((field) => field.label === 'Status');
   const hasValue = (value) =>
-    value !== undefined && value !== null && value !== '' && (!Array.isArray(value) || value.length > 0);
+    value !== undefined &&
+    value !== null &&
+    value !== '' &&
+    (!Array.isArray(value) || value.length > 0);
   const normalize = (value) => (hasValue(value) ? value : null);
   const appliedFilters = activeSchema.filter((field) => hasValue(applied?.[field.key]));
   const hasUnappliedChanges = activeSchema.some(
-    (field) => JSON.stringify(normalize(draft?.[field.key])) !== JSON.stringify(normalize(applied?.[field.key])),
+    (field) =>
+      JSON.stringify(normalize(draft?.[field.key])) !==
+      JSON.stringify(normalize(applied?.[field.key])),
   );
   const apply = (event) => {
     event.preventDefault();
@@ -52,23 +59,25 @@ export default function FilterBar({
               {resetLabel}
             </Button>
           )}
-          {actions ?? ((onApply || onSubmit) && (
-            <Button type="submit" disabled={pending}>
-              {applyLabel}
-            </Button>
-          ))}
+          {actions ??
+            ((onApply || onSubmit) && (
+              <Button type="submit" disabled={pending}>
+                {applyLabel}
+              </Button>
+            ))}
         </div>
       )}
-      {activeSchema.length > 0 && (
+      {activeSchema.length > 0 && (renderChips || hasUnappliedChanges) && (
         <div className="ui-filter-bar__feedback">
-          {appliedFilters.length > 0 && (
+          {renderChips && appliedFilters.length > 0 && (
             <ul className="ui-filter-bar__chips" aria-label="Bộ lọc đang áp dụng">
               {appliedFilters.map((field) => {
                 const value = applied[field.key];
                 const formatted = field.format ? field.format(value, applied) : value;
                 return (
                   <li className="ui-filter-bar__chip" key={field.key}>
-                    <span>{field.label}:</span> {Array.isArray(formatted) ? formatted.join(', ') : String(formatted)}
+                    <span>{field.label}:</span>{' '}
+                    {Array.isArray(formatted) ? formatted.join(', ') : String(formatted)}
                   </li>
                 );
               })}
@@ -81,7 +90,11 @@ export default function FilterBar({
           )}
         </div>
       )}
-      {error && <p className="ui-filter-bar__error" role="alert">{error.message ?? String(error)}</p>}
+      {error && (
+        <p className="ui-filter-bar__error" role="alert">
+          {error.message ?? String(error)}
+        </p>
+      )}
     </form>
   );
 }

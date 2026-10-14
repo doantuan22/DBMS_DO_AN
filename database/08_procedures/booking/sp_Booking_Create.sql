@@ -14,6 +14,10 @@ CREATE OR ALTER PROCEDURE dbo.sp_Booking_Create
     @DanhSachGheId VARCHAR(MAX),
     -- Chuỗi JSON danh sách đồ ăn: '[{"SanPhamID":1,"SoLuong":2},{"SanPhamID":2,"SoLuong":1}]'
     @DanhSachDoAnJson NVARCHAR(MAX) = NULL,
+    -- Số điểm khách muốn dùng để trả tiền vé (1 điểm = 1.000 VNĐ). Máy chủ tự giới hạn theo số dư và giá vé.
+    @DiemSuDung INT = 0,
+    -- 1: chỉ tính và trả về bản xem trước, rồi hoàn tác toàn bộ (không ghi dữ liệu).
+    @ChiXemTruoc BIT = 0,
     @NewDonDatVeID INT OUTPUT
     )
 AS
@@ -504,6 +508,76 @@ BEGIN
                 AND IsBookable = 1
         )
             THROW 50022, N'Suất chiếu không còn đủ điều kiện đặt vé.', 1;
+        -- 8b. THANH TOÁN BẰNG ĐIỂM. Máy chủ quyết định mọi con số; điểm chỉ giảm phần TIỀN VÉ còn phải trả
+        -- sau khuyến mãi (không giảm đồ ăn). 1 điểm = 1.000 VNĐ, tỷ lệ nghịch đảo của điểm bồi thường
+        -- (dbo.fn_TinhBoiThuongVe: 1.000 VNĐ tiền vé = 1 điểm). Không bao giờ quy đổi điểm ra tiền mặt.
+        DECLARE @VndMoiDiem DECIMAL(18, 2) = 1000;
+        DECLARE @DiemYeuCau INT = ISNULL(@DiemSuDung, 0);
+        DECLARE @SoDuDiem INT = 0;
+        DECLARE @TienVeSauKhuyenMai DECIMAL(18, 2) = @TongTienVe;
+        IF @TongTruocGiam > 0
+            SET
+                @TienVeSauKhuyenMai = @TongTienVe - CEILING(@TienGiamGia * @TongTienVe * 100.0 / @TongTruocGiam) / 100.0;
+        IF @TienVeSauKhuyenMai < 0
+            SET
+                @TienVeSauKhuyenMai = 0;
+        DECLARE @DiemToiDaTheoVe INT = CAST(FLOOR(@TienVeSauKhuyenMai / @VndMoiDiem) AS INT);
+        SELECT
+            @SoDuDiem = DiemTichLuy
+        FROM
+            dbo.HOSOKHACHHANG
+        WITH
+            (UPDLOCK, HOLDLOCK)
+        WHERE
+            NguoiDungID = @NguoiDungID;
+        SET
+            @SoDuDiem = ISNULL(@SoDuDiem, 0);
+        DECLARE @DiemToiDa INT = CASE
+            WHEN @SoDuDiem < @DiemToiDaTheoVe THEN @SoDuDiem
+            ELSE @DiemToiDaTheoVe
+        END;
+        IF @DiemYeuCau < 0
+            THROW 50410, N'Số điểm sử dụng không hợp lệ.', 1;
+        IF @DiemYeuCau > @SoDuDiem
+            THROW 50411, N'Số điểm sử dụng vượt quá số dư điểm hiện có.', 1;
+        IF @DiemYeuCau > @DiemToiDaTheoVe
+            THROW 50412, N'Số điểm sử dụng vượt quá giá trị tiền vé còn phải trả.', 1;
+        -- TienGiamGia is the sole discount snapshot: promotion plus the value of points used.
+        SET
+            @TienGiamGia = @TienGiamGia + @DiemYeuCau * @VndMoiDiem;
+        IF @ChiXemTruoc = 1
+        BEGIN
+            -- Xem trước: cùng đường tính với đặt vé thật, sau đó hoàn tác (không giữ ghế, không dùng điểm/khuyến mãi).
+            SELECT
+                @SuatChieuID AS SuatChieuID,
+                @TongTienVe AS TongTienVe,
+                @TongTienDoAn AS TongTienDoAn,
+                @TienGiamGia AS TienGiamGia,
+                @DiemYeuCau AS DiemSuDung,
+                CASE
+                    WHEN @TongTienVe + @TongTienDoAn - @TienGiamGia < 0 THEN 0
+                    ELSE @TongTienVe + @TongTienDoAn - @TienGiamGia
+                END AS TongThanhToan,
+                @SoDuDiem AS SoDuDiem,
+                @DiemToiDa AS DiemToiDa,
+                (@SoDuDiem - @DiemYeuCau) AS SoDuDiemSauKhiDat;
+            IF @TuMoTran = 1
+                ROLLBACK TRANSACTION;
+            ELSE
+                ROLLBACK TRANSACTION sp_Booking_Create;
+            RETURN;
+        END
+        IF @DiemYeuCau > 0
+        BEGIN
+            UPDATE dbo.HOSOKHACHHANG
+            SET
+                DiemTichLuy = DiemTichLuy - @DiemYeuCau
+            WHERE
+                NguoiDungID = @NguoiDungID
+                AND DiemTichLuy >= @DiemYeuCau;
+            IF @@ROWCOUNT <> 1
+                THROW 50411, N'Số điểm sử dụng vượt quá số dư điểm hiện có.', 1;
+        END
         -- 9. TẠO BẢN GHI DONDATVE
         INSERT INTO
             dbo.DONDATVE(
@@ -514,6 +588,7 @@ BEGIN
                 TongTienVe,
                 TongTienDoAn,
                 TienGiamGia,
+                DiemSuDung,
                 TrangThai,
                 HanGiuCho
             )
@@ -526,6 +601,7 @@ BEGIN
                 @TongTienVe,
                 @TongTienDoAn,
                 @TienGiamGia,
+                @DiemYeuCau,
                 N'Chờ thanh toán',
                 DATEADD(MINUTE, dbo.fn_ThoiGianGiuChoPhut(), dbo.fn_BayGio())
             );
@@ -572,7 +648,11 @@ BEGIN
             ddv.TongTienVe,
             ddv.TongTienDoAn,
             ddv.TienGiamGia,
-            (ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TongThanhToan,
+            ddv.DiemSuDung,
+            CASE
+                WHEN ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia < 0 THEN 0
+                ELSE ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia
+            END AS TongThanhToan,
             ddv.TrangThai,
             ddv.HanGiuCho,
             (

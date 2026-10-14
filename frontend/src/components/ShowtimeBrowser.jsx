@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { formatDate, businessDate } from '../utils/dateTime';
 import { EmptyState, ErrorState, LoadingState } from './CatalogStates';
 import DateRail from '../features/public/DateRail';
 import ShowtimeTimeChip from '../features/public/ShowtimeTimeChip';
 import { showsByCinema } from '../features/public/filmPresentation';
+import Select from './ui/Select';
 
 const showDay = (show) => show.date ?? businessDate(show.startsAt);
 const showDates = (rows) => [...new Set(rows.map(showDay))].sort();
@@ -52,10 +53,14 @@ export default function ShowtimeBrowser({
 }) {
   // Dates come only from the complete unfiltered-date response for this cinema.
   // Filtering remains in the parent's existing REST request and ownership guard.
-  const [index, setIndex] = useState({ cinemaId, dates: [] });
-  useEffect(() => {
-    if (state.status === 'success' && !date) setIndex({ cinemaId, dates: showDates(state.data) });
-  }, [state, date, cinemaId]);
+  const [index, setIndex] = useState({ cinemaId, dates: [], source: null });
+  // Derived during render (React's "adjust state on prop change" pattern) instead of in an effect.
+  if (
+    state.status === 'success' &&
+    !date &&
+    (index.source !== state || index.cinemaId !== cinemaId)
+  )
+    setIndex({ cinemaId, dates: showDates(state.data), source: state });
   const dates =
     !date && state.status === 'success'
       ? showDates(state.data)
@@ -74,14 +79,14 @@ export default function ShowtimeBrowser({
         {!cinemaReadOnly && (
           <label>
             Rạp chiếu
-            <select value={cinemaId} onChange={(e) => onCinemaChange(e.target.value)}>
+            <Select value={cinemaId} onChange={(e) => onCinemaChange(e.target.value)}>
               <option value="">Tất cả rạp</option>
               {cinemas.map((cinema) => (
                 <option key={cinema.id} value={cinema.id}>
                   {cinema.name} · {cinema.city}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
         )}
         <label>

@@ -61,14 +61,25 @@ test('cinema image status is chosen from the whitelist, not typed freely', async
     '/src/constants/cinemaImageStatuses.js',
   );
   assert.deepEqual(CINEMA_IMAGE_STATUSES, ['Hoạt động', 'Tạm ẩn']);
-  const { default: Editor } = await vite.ssrLoadModule('/src/features/facilities/FacilityEditor.jsx');
-  const html = renderToStaticMarkup(React.createElement(Editor, {
-    kind: 'images', editor: { row: null, values: { url: '', description: '', displayOrder: 0, cover: false, status: 'Hoạt động' }, errors: {} },
-    contextLabel: 'Rạp A', controller: { closeEditor() {}, changeField() {}, save() {} },
-  }));
+  const { default: Editor } = await vite.ssrLoadModule(
+    '/src/features/facilities/FacilityEditor.jsx',
+  );
+  const html = renderToStaticMarkup(
+    React.createElement(Editor, {
+      kind: 'images',
+      editor: {
+        row: null,
+        values: { url: '', description: '', displayOrder: 0, cover: false, status: 'Hoạt động' },
+        errors: {},
+      },
+      contextLabel: 'Rạp A',
+      controller: { closeEditor() {}, changeField() {}, save() {} },
+    }),
+  );
   const statusSelect = html.match(/<select\b[^>]*>[\s\S]*?<\/select>/)?.[0];
   assert.ok(statusSelect);
-  for (const status of CINEMA_IMAGE_STATUSES) assert.ok(statusSelect.includes(`>${status}</option>`));
+  for (const status of CINEMA_IMAGE_STATUSES)
+    assert.ok(statusSelect.includes(`>${status}</option>`));
   assert.equal((statusSelect.match(/<option/g) ?? []).length, CINEMA_IMAGE_STATUSES.length);
 });
 
@@ -78,17 +89,41 @@ test('fixed roles remain creation-only and Manager references use named selector
   assert.equal(adminForms.permissions, undefined);
   assert.ok(formFields(adminForms.users, false).some(([name]) => name === 'roleId'));
   assert.ok(formFields(adminForms.users, true).every(([name]) => name !== 'roleId'));
-  const { ManagerAssignmentSelect, ManagerAssignmentsContext } = await vite.ssrLoadModule('/src/components/ManagerAssignmentFields.jsx');
+  const { ManagerAssignmentSelect, ManagerAssignmentsContext } = await vite.ssrLoadModule(
+    '/src/components/ManagerAssignmentFields.jsx',
+  );
   const managers = [{ NguoiDungID: 2, HoTen: 'Quản lý Q1', Email: 'manager@example.test' }];
   const cinemas = [{ RapID: 1, TenRap: 'Rạp Quận 1' }];
-  const html = renderToStaticMarkup(React.createElement(ManagerAssignmentSelect, { field: 'userId', label: 'Quản lý', value: 2, managers, cinemas, editing: true, onChange() {} }));
+  const html = renderToStaticMarkup(
+    React.createElement(ManagerAssignmentSelect, {
+      field: 'userId',
+      label: 'Quản lý',
+      value: 2,
+      managers,
+      cinemas,
+      editing: true,
+      onChange() {},
+    }),
+  );
   assert.match(html, /<select[^>]*aria-label="Quản lý"[^>]*disabled/);
   assert.match(html, /Quản lý Q1 · manager@example.test/);
   assert.doesNotMatch(html, /<input/);
-  const context = renderToStaticMarkup(React.createElement(ManagerAssignmentsContext, { managerId: 2, assignments: [
-    { PhanCongID: 1, NguoiDungID: 2, TenRap: 'Rạp Quận 1', NgayBatDau: '2026-01-01', NgayKetThuc: null, TrangThai: 'Hiệu lực' },
-    { PhanCongID: 2, NguoiDungID: 3, TenRap: 'Rạp của Manager khác' },
-  ] }));
+  const context = renderToStaticMarkup(
+    React.createElement(ManagerAssignmentsContext, {
+      managerId: 2,
+      assignments: [
+        {
+          PhanCongID: 1,
+          NguoiDungID: 2,
+          TenRap: 'Rạp Quận 1',
+          NgayBatDau: '2026-01-01',
+          NgayKetThuc: null,
+          TrangThai: 'Hiệu lực',
+        },
+        { PhanCongID: 2, NguoiDungID: 3, TenRap: 'Rạp của Manager khác' },
+      ],
+    }),
+  );
   assert.match(context, /Rạp Quận 1/);
   assert.doesNotMatch(context, /Rạp của Manager khác/);
 });

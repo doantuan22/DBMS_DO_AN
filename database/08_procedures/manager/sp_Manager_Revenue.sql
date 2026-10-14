@@ -61,7 +61,9 @@ BEGIN
                 ddv.TongTienVe,
                 ddv.TongTienDoAn,
                 ddv.TienGiamGia,
-                SUM(ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TienDaThu,
+                ddv.DiemSuDung,
+                ddv.TrangThai AS TrangThaiDon,
+                CASE WHEN ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia < 0 THEN 0 ELSE ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia END AS TienDaThu,
                 dbo.fn_NgayKinhDoanh(MAX(ISNULL(tt.NgayThanhToan, tt.NgayTao))) AS NgayThu,
                 (
                     SELECT
@@ -84,7 +86,9 @@ BEGIN
                 ddv.DonDatVeID,
                 ddv.TongTienVe,
                 ddv.TongTienDoAn,
-                ddv.TienGiamGia
+                ddv.TienGiamGia,
+                ddv.DiemSuDung,
+                ddv.TrangThai
         )
     SELECT
         NgayThu AS Ngay,
@@ -93,7 +97,9 @@ BEGIN
         SUM(TongTienVe) AS DoanhThuVe,
         SUM(TongTienDoAn) AS DoanhThuDoAn,
         SUM(TienGiamGia) AS TienGiamGia,
-        SUM(TienDaThu) AS DoanhThuThucTe
+        SUM(TienDaThu) AS DoanhThuThucTe,
+        SUM(CAST(DiemSuDung AS DECIMAL(18, 2)) * 1000) AS GiaTriThanhToanBangDiem,
+        SUM(CASE WHEN TrangThaiDon = N'Đã hủy' THEN TienDaThu ELSE 0 END) AS TienThuocDonHuy
     FROM
         DonDaThu
     WHERE

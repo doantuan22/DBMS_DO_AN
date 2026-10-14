@@ -52,6 +52,7 @@ BEGIN
         v.[TongTienDoAn],
         v.[TienGiamGia],
         v.[TongTienThanhToan],
+        v.[DiemSuDung],
         v.[TrangThaiDon],
         v.[HanGiuCho],
         v.[MaKhuyenMai],

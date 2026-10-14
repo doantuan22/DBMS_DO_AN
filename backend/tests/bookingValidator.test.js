@@ -15,6 +15,7 @@ test('booking accepts only identity-free IDs, quantities, and an optional promot
       seatIds: [10, 11],
       products: [{ productId: 2, quantity: 1 }],
       promotionCode: 'SAVE10',
+      points: 0,
     },
   );
   assert.throws(() => validateBooking({ showtimeId: 9, seatIds: [10, 10] }), {
@@ -31,6 +32,21 @@ test('booking accepts only identity-free IDs, quantities, and an optional promot
       validateBooking({ showtimeId: 9, seatIds: [10], products: [{ productId: 2, quantity: 0 }] }),
     { code: 'INVALID_REQUEST' },
   );
+});
+
+test('points are a non-negative integer choice; money and price fields stay rejected', () => {
+  assert.equal(validateBooking({ showtimeId: 9, seatIds: [10], points: 25 }).points, 25);
+  assert.equal(validateBooking({ showtimeId: 9, seatIds: [10] }).points, 0);
+  for (const points of [-1, 1.5, '5', NaN, 2147483648, true]) {
+    assert.throws(() => validateBooking({ showtimeId: 9, seatIds: [10], points }), {
+      code: 'INVALID_POINTS',
+    });
+  }
+  for (const field of ['pointsDiscount', 'amount', 'total', 'pointValue', 'discount']) {
+    assert.throws(() => validateBooking({ showtimeId: 9, seatIds: [10], [field]: 1 }), {
+      code: 'UNKNOWN_REQUEST_FIELD',
+    });
+  }
 });
 
 test('promotion preview needs the same DB-identifiable booking inputs and a code', () => {

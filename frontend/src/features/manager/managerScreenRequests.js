@@ -7,9 +7,20 @@ export function loadManagerScreen(user, section, cinemaId, api) {
     pricing: { permission: 'QL_BANG_GIA', load: () => api.getPricing(cinemaId) },
     dashboard: { permission: 'XEM_BAO_CAO_RAP', load: () => api.getDashboard(cinemaId) },
   };
-  const needed = { overview: ['dashboard'], rooms: ['rooms'], seats: ['rooms'],
-    showtimes: ['rooms', 'showtimes'], pricing: ['pricing'], revenue: [] }[section] ?? Object.keys(definitions);
-  return loadAuthorizedSections(user, 'QUAN_LY_RAP', Object.fromEntries(needed.map((key) => [key, definitions[key]])));
+  const needed =
+    {
+      overview: ['dashboard'],
+      rooms: ['rooms'],
+      seats: ['rooms'],
+      showtimes: ['rooms', 'showtimes'],
+      pricing: ['pricing'],
+      revenue: [],
+    }[section] ?? Object.keys(definitions);
+  return loadAuthorizedSections(
+    user,
+    'QUAN_LY_RAP',
+    Object.fromEntries(needed.map((key) => [key, definitions[key]])),
+  );
 }
 
 export function createManagerRequestOwner(store) {
@@ -19,8 +30,13 @@ export function createManagerRequestOwner(store) {
   const isCurrent = () => active && ownsContext();
   return {
     isCurrent,
-    activate() { active = true; },
-    dispose() { active = false; generations.clear(); },
+    activate() {
+      active = true;
+    },
+    dispose() {
+      active = false;
+      generations.clear();
+    },
     begin(channel) {
       const generation = Symbol(channel);
       generations.set(channel, generation);

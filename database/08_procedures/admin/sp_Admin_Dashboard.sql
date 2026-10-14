@@ -88,13 +88,37 @@ BEGIN
         -- STRICT 3NF: Tái dựng DoanhThu từ DONDATVE d thay vì t.SoTien
         (
             SELECT
-                ISNULL(SUM(d.TongTienVe + d.TongTienDoAn - d.TienGiamGia), 0)
+                ISNULL(SUM(CASE WHEN d.TongTienVe + d.TongTienDoAn - d.TienGiamGia < 0 THEN 0 ELSE d.TongTienVe + d.TongTienDoAn - d.TienGiamGia END), 0)
             FROM
-                dbo.THANHTOAN tt
-                INNER JOIN dbo.DONDATVE d ON d.DonDatVeID = tt.DonDatVeID
+                dbo.DONDATVE d
             WHERE
-                tt.TrangThai = N'Thành công'
+                EXISTS (SELECT 1 FROM dbo.THANHTOAN tt WHERE tt.DonDatVeID = d.DonDatVeID AND tt.TrangThai = N'Thành công')
         ) AS TongDoanhThuToanThoiGian,
+        (
+            SELECT
+                COUNT(*)
+            FROM
+                dbo.DONDATVE d
+            WHERE
+                EXISTS (SELECT 1 FROM dbo.THANHTOAN tt WHERE tt.DonDatVeID = d.DonDatVeID AND tt.TrangThai = N'Thành công')
+        ) AS TongDonThanhToanThanhCong,
+        (
+            SELECT
+                ISNULL(SUM(CASE WHEN d.TongTienVe + d.TongTienDoAn - d.TienGiamGia < 0 THEN 0 ELSE d.TongTienVe + d.TongTienDoAn - d.TienGiamGia END), 0)
+            FROM
+                dbo.DONDATVE d
+            WHERE
+                d.TrangThai = N'Đã hủy'
+                AND EXISTS (SELECT 1 FROM dbo.THANHTOAN tt WHERE tt.DonDatVeID = d.DonDatVeID AND tt.TrangThai = N'Thành công')
+        ) AS TienThuocDonHuy,
+        (
+            SELECT
+                ISNULL(SUM(CAST(d.DiemSuDung AS DECIMAL(18, 2)) * 1000), 0)
+            FROM
+                dbo.DONDATVE d
+            WHERE
+                EXISTS (SELECT 1 FROM dbo.THANHTOAN tt WHERE tt.DonDatVeID = d.DonDatVeID AND tt.TrangThai = N'Thành công')
+        ) AS TongGiaTriThanhToanBangDiem,
         (
             SELECT
                 COUNT(*)

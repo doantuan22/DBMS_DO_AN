@@ -534,6 +534,18 @@ CSDL là phần lõi của hệ thống vì các nghiệp vụ đặt vé, thanh
 - Ràng buộc cục bộ dùng CHECK/UNIQUE/DEFAULT; ràng buộc nhiều bảng/nhiều dòng dùng Trigger/Stored Procedure/Transaction.
 - Các cột thường xuyên lọc/join/sắp xếp được thiết kế Index có chủ đích, tránh tạo index tràn lan.
 
+**3.1b. Quy tắc nghiệp vụ điểm, thanh toán và doanh thu (chốt 2026-10-14)**
+
+Các quy tắc sau là quyết định nghiệp vụ cuối cùng; chúng nằm trong Use Case đặt vé/thanh toán/hủy suất hiện có (KH-07, KH-09, KH-10, QLR-06, ADM-14), không bổ sung Use Case mới.
+
+1. **Hệ thống không có hoàn tiền** dưới bất kỳ hình thức nào (không refund API, giao dịch hoàn tiền hay tiến trình hoàn tiền). Các trạng thái `Đã hoàn tiền` (THANHTOAN) và `Hoàn tiền` (DONDATVE) chỉ còn trong CHECK để tương thích dữ liệu; không có thủ tục nào ghi chúng và không thuộc nghiệp vụ hoạt động.
+2. **Hủy suất chiếu có đơn đã thanh toán:** tiền vé còn lại sau khuyến mãi (cả phần đã trả bằng tiền lẫn bằng điểm) được quy đổi thành điểm bồi thường theo `dbo.fn_TinhBoiThuongVe` (1.000 VNĐ = 1 điểm) và cộng vào tài khoản một lần. Thanh toán và doanh thu đã thu **không bị trừ**; việc cộng điểm không phải giao dịch hoàn tiền.
+3. **Dùng điểm để trả tiền vé:** 1 điểm = 1.000 VNĐ (tỷ lệ nghịch đảo của điểm bồi thường). Điểm chỉ giảm phần *tiền vé còn phải trả sau khuyến mãi* (không giảm đồ ăn), tối đa theo số dư và theo giá trị đó (làm tròn xuống điểm nguyên). SQL Server tự tính mọi số tiền; khách chỉ chọn số điểm muốn thử.
+4. **Giữ điểm:** điểm được trừ ngay khi tạo đơn (khóa dòng hồ sơ khách để không tiêu hai lần). Đơn chưa thanh toán hết hạn hoặc bị nhân viên hủy trả lại đúng số điểm đã giữ, một lần; đơn đã thanh toán không trả lại điểm khi đổi suất/hủy suất mà được bồi thường theo quy tắc 2.
+5. **Đơn trả đủ bằng điểm** (tiền còn phải trả = 0) hoàn tất bằng phương thức thanh toán `DIEM`; các phương thức tiền chỉ nhận khi còn tiền phải trả. Đơn này đóng góp **0 đồng** tiền thực thu và không tích điểm.
+6. **Tích điểm** (1 điểm / 1.000 VNĐ) tính trên **tiền thật đã trả** của lần thanh toán thành công, không tính trên phần trả bằng điểm.
+7. **TienGiamGia** là tổng tiền giảm từ khuyến mãi và `DiemSuDung × 1.000 VNĐ`. **Tiền thực thu** = `MAX(0, TongTienVe + TongTienDoAn − TienGiamGia)` của các đơn có thanh toán thành công, mỗi đơn một lần; phần trả bằng điểm không phải doanh thu; đơn bị hủy suất vẫn giữ tiền đã thu. Dashboard Admin, báo cáo Admin/Manager, `vw_DoanhThuTheoRap` và các thủ tục báo cáo dùng cùng công thức và tách rõ: tổng đơn thanh toán thành công, đơn còn hiệu lực, đơn có tiền thực thu, tiền thuộc đơn bị hủy, giá trị trả bằng điểm.
+
 **3.2. Các bảng theo nhóm dữ liệu**
 
 | **Nhóm dữ liệu** | **Các bảng** | **Trách nhiệm** |
@@ -649,7 +661,7 @@ _Hình 3.1: Mô hình ERD hệ thống quản lý đặt vé xem phim trực tuy
 | SUATCHIEU | SuatChieuID (PK), PhimID (FK), PhongID (FK), ThoiGianBatDau, ThoiGianKetThuc, DinhDang, GiaVeCoBan, TrangThai |
 | BANGGIA | GiaID (PK), RapID (FK), LoaiGhe, LoaiNgay, DinhDang, PhuThu, NgayBatDau, NgayKetThuc, TrangThai |
 | KHUYENMAI | KhuyenMaiID (PK), MaCode, MoTa, LoaiGiamGia, GiaTriGiam, DonHangToiThieu, GiamToiDa, NgayBatDau, NgayKetThuc, SoLuong, SoLuongDaDung, TrangThai |
-| DONDATVE | DonDatVeID (PK), NguoiDungID (FK), SuatChieuID (FK), KhuyenMaiID (FK, NULL), NgayDat, TongTienVe, TongTienDoAn, TienGiamGia, TrangThai |
+| DONDATVE | DonDatVeID (PK), NguoiDungID (FK), SuatChieuID (FK), KhuyenMaiID (FK, NULL), NgayDat, TongTienVe, TongTienDoAn, TienGiamGia, DiemSuDung, TrangThai |
 | CHITIETVE | VeID (PK), DonDatVeID (FK), GheID (FK), GiaVe, MaVe, TrangThai |
 | SANPHAM | SanPhamID (PK), TenSanPham, LoaiSanPham, Gia, MoTa, HinhAnh, TrangThai |
 | CHITIETDOAN | ChiTietDoAnID (PK), DonDatVeID (FK), SanPhamID (FK), SoLuong, DonGia |
@@ -713,7 +725,8 @@ DANHGIAPHIM liên kết trực tiếp NGUOIDUNG - PHIM và có UNIQUE(PhimID, Ng
 | NgayDat | DATETIME2 | DEFAULT thời điểm hiện tại | Thời điểm đặt |
 | TongTienVe | DECIMAL | \>= 0 | Tổng vé snapshot |
 | TongTienDoAn | DECIMAL | \>= 0 | Tổng đồ ăn snapshot |
-| TienGiamGia | DECIMAL | \>= 0 | Mức giảm thực tế |
+| TienGiamGia | DECIMAL | \>= 0 | Tổng mức giảm thực tế từ khuyến mãi và điểm sử dụng |
+| DiemSuDung | INT | \>= 0, DEFAULT 0 | Số điểm khách dùng để trả tiền vé của đơn (snapshot) |
 | TrangThai | NVARCHAR | DEFAULT Chờ thanh toán | Trạng thái đơn |
 | HanGiuCho | DATETIME2 | NULL; bắt buộc khi Chờ thanh toán | Hạn giữ ghế của đơn chờ thanh toán (NgayDat + 5 phút, đặt một lần lúc tạo đơn, không gia hạn) |
 
@@ -845,8 +858,8 @@ CHECK/UNIQUE/DEFAULT xử lý điều kiện cục bộ; Trigger bảo vệ quy 
 | **Nghiệp vụ** | **Bảng** | **Mục tiêu** |
 | --- | --- | --- |
 | Đặt vé | DONDATVE, CHITIETVE, KHUYENMAI | Kiểm tra lại ghế/giá, tạo đơn/vé, rollback khi một bước lỗi. |
-| Thanh toán | THANHTOAN, DONDATVE | Ghi giao dịch và đổi trạng thái đơn đồng bộ. |
-| Hủy đơn chưa thanh toán / hết hạn giữ ghế | DONDATVE, CHITIETVE, KHUYENMAI | Đổi trạng thái đơn, hủy vé để nhả ghế và hoàn lại lượt dùng mã khuyến mãi như một giao dịch logic. Chưa có hoàn tiền tự nguyện: không hủy đơn đã thanh toán bằng luồng này; hủy suất chiếu có nghiệp vụ bồi thường riêng hiện hữu, không dùng thay thế. |
+| Thanh toán | THANHTOAN, DONDATVE, HOSOKHACHHANG | Ghi giao dịch và đổi trạng thái đơn đồng bộ; tích điểm theo tiền thật đã trả. Đơn đã trả đủ bằng điểm hoàn tất bằng phương thức nội bộ DIEM, không tạo tiền thực thu. |
+| Hủy đơn chưa thanh toán / hết hạn giữ ghế | DONDATVE, CHITIETVE, KHUYENMAI, HOSOKHACHHANG | Đổi trạng thái đơn, hủy vé để nhả ghế và hoàn lại lượt dùng mã khuyến mãi như một giao dịch logic. Chưa có hoàn tiền tự nguyện: không hủy đơn đã thanh toán bằng luồng này; hủy suất chiếu có nghiệp vụ bồi thường riêng hiện hữu, không dùng thay thế. |
 | Xử lý khiếu nại | KHIEUNAI, XULY_KHIEUNAI | Ghi lịch sử và cập nhật trạng thái cùng lúc. |
 | Phân công rạp | PHANCONG_RAP, NGUOIDUNG | Tạo/điều chỉnh phân công nhất quán. |
 

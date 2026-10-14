@@ -10,22 +10,27 @@ import CinemaImageManager from '../components/CinemaImageManager';
 import { bookingErrorMessage } from '../utils/bookingLimits';
 import { OrderReferenceDetails } from '../components/ComplaintOrderReference';
 import AdminRevenue from '../components/AdminRevenue';
-import { ManagerAssignmentSelect, ManagerAssignmentsContext } from '../components/ManagerAssignmentFields';
+import {
+  ManagerAssignmentSelect,
+  ManagerAssignmentsContext,
+} from '../components/ManagerAssignmentFields';
 import { assignmentTransferMessage } from '../utils/managerAssignments';
 import { useStaffShell } from '../layouts/StaffShellContext';
 import PageHeader from '../components/ui/PageHeader';
+import Select from '../components/ui/Select';
 
 const adminDraftCache = new Map();
-const adminDraftKey = (userId, section, context = '') => `${userId ?? 'anonymous'}:${section}${context ? `:${context}` : ''}`;
+const adminDraftKey = (userId, section, context = '') =>
+  `${userId ?? 'anonymous'}:${section}${context ? `:${context}` : ''}`;
 const DEFAULT_PROCESSING_FORM = { content: '', nextStatus: 'Đang xử lý' };
 const DEFAULT_REPORT_INPUT = { fromDate: '', toDate: '' };
 const hasCachedAdminDraft = (draft) =>
   Boolean(
     draft.selected ||
-      Object.keys(draft.values).length > 0 ||
-      JSON.stringify(draft.processingForm) !== JSON.stringify(draft.initialProcessingForm) ||
-      Object.values(draft.reportInput ?? {}).some(Boolean) ||
-      Object.keys(draft.reportRange ?? {}).length > 0,
+    Object.keys(draft.values).length > 0 ||
+    JSON.stringify(draft.processingForm) !== JSON.stringify(draft.initialProcessingForm) ||
+    Object.values(draft.reportInput ?? {}).some(Boolean) ||
+    Object.keys(draft.reportRange ?? {}).length > 0,
   );
 
 const sections = [
@@ -50,7 +55,11 @@ const loaders = {
   dashboard: (api) => api.dashboard(),
   users: (api) => api.users(),
   assignments: async (api) => {
-    const [data, users, cinemas] = await Promise.all([api.assignments(), api.users(), api.cinemas()]);
+    const [data, users, cinemas] = await Promise.all([
+      api.assignments(),
+      api.users(),
+      api.cinemas(),
+    ]);
     return {
       ...data,
       managerChoices: users.users.filter((row) => row.MaVaiTro === 'QUAN_LY_RAP'),
@@ -59,7 +68,8 @@ const loaders = {
   },
   cinemas: (api) => api.cinemas(),
   rooms: (api) => api.rooms(),
-  seats: (api, _range, seatContext) => api.seats(seatContext ? { roomId: seatContext.roomId } : undefined),
+  seats: (api, _range, seatContext) =>
+    api.seats(seatContext ? { roomId: seatContext.roomId } : undefined),
   movies: (api) => api.movies(),
   genres: (api) => api.genres(),
   actors: (api) => api.actors(),
@@ -102,12 +112,21 @@ export default function AdminPortal({ routeSection, seatContext }) {
     ?.map((item) => item.code)
     .sort()
     .join(',')}`;
-  return <AdminWorkspace key={`${scope}:${seatContext?.cinemaId ?? ''}:${seatContext?.roomId ?? ''}`} routeSection={routeSection} seatContext={seatContext} />;
+  return (
+    <AdminWorkspace
+      key={`${scope}:${seatContext?.cinemaId ?? ''}:${seatContext?.roomId ?? ''}`}
+      routeSection={routeSection}
+      seatContext={seatContext}
+    />
+  );
 }
 
 function AdminWorkspace({ routeSection, seatContext }) {
   const seatDraftScope = seatContext ? `${seatContext.cinemaId}:${seatContext.roomId}` : '';
-  const defaultValues = useMemo(() => seatContext ? { roomId: seatContext.roomId } : {}, [seatContext]);
+  const defaultValues = useMemo(
+    () => (seatContext ? { roomId: seatContext.roomId } : {}),
+    [seatContext],
+  );
   const { user } = useAuth();
   const shell = useStaffShell();
   const allowedSections = sections.filter(([key]) =>
@@ -122,11 +141,17 @@ function AdminWorkspace({ routeSection, seatContext }) {
   );
   const canProcess = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'XULY_KHIEUNAI');
   const canReference = userCanAct(user, 'ADMIN', 'QL_KHIEUNAI', 'TRA_CUU_DON');
-  const [restoredDraft] = useState(() => adminDraftCache.get(adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : '')));
+  const [restoredDraft] = useState(() =>
+    adminDraftCache.get(
+      adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''),
+    ),
+  );
   const [state, setState] = useState({ status: 'loading' });
   const [selected, setSelected] = useState(() => restoredDraft?.selected ?? null);
   const [values, setValues] = useState(() => restoredDraft?.values ?? defaultValues);
-  const [initialValues, setInitialValues] = useState(() => restoredDraft?.initialValues ?? defaultValues);
+  const [initialValues, setInitialValues] = useState(
+    () => restoredDraft?.initialValues ?? defaultValues,
+  );
   const [complaint, setComplaint] = useState(() => restoredDraft?.complaint ?? null);
   const [orderReference, setOrderReference] = useState(() => restoredDraft?.orderReference ?? null);
   const [processingForm, setProcessingForm] = useState(
@@ -179,7 +204,18 @@ function AdminWorkspace({ routeSection, seatContext }) {
       reportAppliedInput,
       reportRange,
     };
-  }, [selected, values, initialValues, complaint, orderReference, processingForm, initialProcessingForm, reportInput, reportAppliedInput, reportRange]);
+  }, [
+    selected,
+    values,
+    initialValues,
+    complaint,
+    orderReference,
+    processingForm,
+    initialProcessingForm,
+    reportInput,
+    reportAppliedInput,
+    reportRange,
+  ]);
   useLayoutEffect(() => {
     const previous = activeSection.current;
     if (previous !== active) {
@@ -188,13 +224,19 @@ function AdminWorkspace({ routeSection, seatContext }) {
       editorGeneration.current++;
       complaintSelection.current = null;
       const previousDraft = draftValues.current;
-      const previousKey = adminDraftKey(user?.userId, previous, previous === 'seats' ? seatDraftScope : '');
+      const previousKey = adminDraftKey(
+        user?.userId,
+        previous,
+        previous === 'seats' ? seatDraftScope : '',
+      );
       if (hasCachedAdminDraft(previousDraft)) {
         adminDraftCache.set(previousKey, previousDraft);
       } else {
         adminDraftCache.delete(previousKey);
       }
-      const nextDraft = adminDraftCache.get(adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''));
+      const nextDraft = adminDraftCache.get(
+        adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''),
+      );
       setSelected(nextDraft?.selected ?? null);
       setValues(nextDraft?.values ?? defaultValues);
       setInitialValues(nextDraft?.initialValues ?? defaultValues);
@@ -221,7 +263,11 @@ function AdminWorkspace({ routeSection, seatContext }) {
         request.current++;
       });
       const snapshot = draftValues.current;
-      const key = adminDraftKey(user?.userId, activeSection.current, activeSection.current === 'seats' ? seatDraftScope : '');
+      const key = adminDraftKey(
+        user?.userId,
+        activeSection.current,
+        activeSection.current === 'seats' ? seatDraftScope : '',
+      );
       if (hasCachedAdminDraft(snapshot)) {
         adminDraftCache.set(key, snapshot);
       } else {
@@ -251,7 +297,15 @@ function AdminWorkspace({ routeSection, seatContext }) {
     setState({ status: 'loading' });
     try {
       const data = await loaders[active](adminApi, reportRange, seatContext);
-      if (active === 'seats' && seatContext && data.seats.some((row) => String(row.PhongID) !== seatContext.roomId || String(row.RapID) !== seatContext.cinemaId))
+      if (
+        active === 'seats' &&
+        seatContext &&
+        data.seats.some(
+          (row) =>
+            String(row.PhongID) !== seatContext.roomId ||
+            String(row.RapID) !== seatContext.cinemaId,
+        )
+      )
         throw new Error('Dữ liệu ghế không khớp phòng đang chọn.');
       if (active === 'users' && userCanAct(user, 'ADMIN', 'QL_NGUOIDUNG')) {
         try {
@@ -283,8 +337,9 @@ function AdminWorkspace({ routeSection, seatContext }) {
   ];
   const managerChoices = state.resource === 'assignments' ? (state.data?.managerChoices ?? []) : [];
   const cinemaChoices = state.resource === 'assignments' ? (state.data?.cinemaChoices ?? []) : [];
-  const assignmentReady = managerChoices.some((row) => row.NguoiDungID === Number(values.userId))
-    && cinemaChoices.some((row) => row.RapID === Number(values.cinemaId));
+  const assignmentReady =
+    managerChoices.some((row) => row.NguoiDungID === Number(values.userId)) &&
+    cinemaChoices.some((row) => row.RapID === Number(values.cinemaId));
   const editableFields = definition ? formFields(definition, Boolean(selected)) : [];
   const onSelect = (row) => {
     editorGeneration.current++;
@@ -307,15 +362,20 @@ function AdminWorkspace({ routeSection, seatContext }) {
     setSelected(null);
     setValues(defaultValues);
     setInitialValues(defaultValues);
-    adminDraftCache.delete(adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''));
+    adminDraftCache.delete(
+      adminDraftKey(user?.userId, active, active === 'seats' ? seatDraftScope : ''),
+    );
   }, [active, user?.userId, seatDraftScope, defaultValues]);
-  const switchSection = useCallback((key) => {
-    if (key !== active) loadRequest.current += 1;
-    complaintRequest.current++;
-    setState({ status: 'loading' });
-    setStandaloneSection(key);
-    setNotice(null);
-  }, [active]);
+  const switchSection = useCallback(
+    (key) => {
+      if (key !== active) loadRequest.current += 1;
+      complaintRequest.current++;
+      setState({ status: 'loading' });
+      setStandaloneSection(key);
+      setNotice(null);
+    },
+    [active],
+  );
   const submit = async (event) => {
     event.preventDefault();
     if (editorWritePending.current || !definition) return;
@@ -474,7 +534,10 @@ function AdminWorkspace({ routeSection, seatContext }) {
       if (!mounted.current || request !== complaintRequest.current) return;
       setComplaint({ status: 'success', data: detail.complaint });
       const status = detail.complaint.status === 'Mới' ? 'Đang xử lý' : detail.complaint.status;
-      const nextForm = { ...DEFAULT_PROCESSING_FORM, nextStatus: status || DEFAULT_PROCESSING_FORM.nextStatus };
+      const nextForm = {
+        ...DEFAULT_PROCESSING_FORM,
+        nextStatus: status || DEFAULT_PROCESSING_FORM.nextStatus,
+      };
       setProcessingForm(nextForm);
       setInitialProcessingForm(nextForm);
       await loadComplaintReference(row.id, request);
@@ -559,10 +622,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
         {routeSection ? (
           <PageHeader
             title={sectionLabel}
-            breadcrumbs={[
-              { label: 'Quản trị' },
-              { label: sectionLabel },
-            ]}
+            breadcrumbs={[{ label: 'Quản trị' }, { label: sectionLabel }]}
           />
         ) : (
           <h1>Quản trị hệ thống</h1>
@@ -592,11 +652,16 @@ function AdminWorkspace({ routeSection, seatContext }) {
       {routeSection ? (
         <PageHeader
           title={sectionLabel}
-          description={active === 'seats' && seatContext ? `${seatContext.cinemaName} · ${seatContext.roomName}` : undefined}
-          breadcrumbs={active === 'dashboard' ? [{ label: sectionLabel }] : [
-            { label: 'Quản trị' },
-            { label: sectionLabel },
-          ]}
+          description={
+            active === 'seats' && seatContext
+              ? `${seatContext.cinemaName} · ${seatContext.roomName}`
+              : undefined
+          }
+          breadcrumbs={
+            active === 'dashboard'
+              ? [{ label: sectionLabel }]
+              : [{ label: 'Quản trị' }, { label: sectionLabel }]
+          }
         />
       ) : (
         <>
@@ -770,7 +835,9 @@ function AdminWorkspace({ routeSection, seatContext }) {
         <form className="catalog-form" onSubmit={submit}>
           <h3>{selected ? 'Cập nhật' : 'Tạo mới'}</h3>
           {selected && <p>#{selected[definition.id]}</p>}
-          {active === 'users' && selected && <p>Vai trò: {selected.TenVaiTro ?? selected.MaVaiTro} (cố định)</p>}
+          {active === 'users' && selected && (
+            <p>Vai trò: {selected.TenVaiTro ?? selected.MaVaiTro} (cố định)</p>
+          )}
           {active === 'assignments' && (
             <ManagerAssignmentsContext managerId={values.userId} assignments={rows} />
           )}
@@ -780,7 +847,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
               {active === 'seats' && name === 'roomId' && seatContext ? (
                 <input aria-label="Phòng" readOnly value={seatContext.roomName} />
               ) : active === 'users' && name === 'roleId' ? (
-                <select
+                <Select
                   aria-label={label}
                   required
                   value={values[name] ?? ''}
@@ -794,7 +861,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
                       {role.name}
                     </option>
                   ))}
-                </select>
+                </Select>
               ) : active === 'assignments' && ['userId', 'cinemaId'].includes(name) ? (
                 <ManagerAssignmentSelect
                   field={name}
@@ -807,7 +874,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
                   onChange={(value) => setValues((current) => ({ ...current, [name]: value }))}
                 />
               ) : name === 'status' && RESOURCE_STATUSES[active] ? (
-                <select
+                <Select
                   aria-label={label}
                   required
                   value={values[name] ?? ''}
@@ -823,9 +890,9 @@ function AdminWorkspace({ routeSection, seatContext }) {
                     .map((status) => (
                       <option key={status}>{status}</option>
                     ))}
-                </select>
+                </Select>
               ) : active === 'pricing' && name === 'dayType' ? (
-                <select
+                <Select
                   aria-label={label}
                   required
                   value={values[name] ?? ''}
@@ -837,7 +904,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
                   {DAY_TYPES.map((day) => (
                     <option key={day}>{day}</option>
                   ))}
-                </select>
+                </Select>
               ) : (
                 <input
                   aria-label={label}
@@ -887,7 +954,10 @@ function AdminWorkspace({ routeSection, seatContext }) {
             </label>
           ))}
           <div className="catalog-actions">
-            <button className="catalog-button" disabled={editorBusy || (active === 'assignments' && !assignmentReady)}>
+            <button
+              className="catalog-button"
+              disabled={editorBusy || (active === 'assignments' && !assignmentReady)}
+            >
               Lưu
             </button>
             {selected && (

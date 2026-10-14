@@ -11,7 +11,8 @@ CREATE TABLE dbo.[DONDATVE](
     [TrangThai] nvarchar(50) COLLATE Vietnamese_CI_AS NOT NULL,
     [HanGiuCho] datetime2(7) NULL,
     [LyDoHuy] nvarchar(255) COLLATE Vietnamese_CI_AS NULL,
-    [ThongBaoHuy] nvarchar(255) COLLATE Vietnamese_CI_AS NULL
+    [ThongBaoHuy] nvarchar(255) COLLATE Vietnamese_CI_AS NULL,
+    [DiemSuDung] int NOT NULL
 );
 
 GO

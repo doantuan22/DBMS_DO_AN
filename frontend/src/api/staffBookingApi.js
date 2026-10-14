@@ -4,7 +4,9 @@ export function createStaffBookingApi(portal) {
   if (!['admin', 'manager'].includes(portal)) throw new Error('Unsupported booking portal');
   const base = `/${portal}/bookings`;
   const query = (values) => {
-    const params = new URLSearchParams(Object.entries(values).filter(([, value]) => value != null && value !== ''));
+    const params = new URLSearchParams(
+      Object.entries(values).filter(([, value]) => value != null && value !== ''),
+    );
     return params.size ? `?${params}` : '';
   };
   return {

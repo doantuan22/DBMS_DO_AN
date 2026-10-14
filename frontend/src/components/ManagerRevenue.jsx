@@ -9,7 +9,9 @@ export default function ManagerRevenue({ cinemaId, refresh, cachedState, onState
   const [error, setError] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [resource, setResource] = useState({ status: 'loading' });
-  useEffect(() => { onStateChange?.({ values, range }); }, [values, range, onStateChange]);
+  useEffect(() => {
+    onStateChange?.({ values, range });
+  }, [values, range, onStateChange]);
   useEffect(() => {
     let active = true;
     const search = new URLSearchParams(Object.entries(range).filter(([, value]) => value));
@@ -83,6 +85,12 @@ export default function ManagerRevenue({ cinemaId, refresh, cachedState, onState
             {resource.rows.map((row) => (
               <li key={row.date}>
                 {formatDate(row.date)}: {row.totalRevenue} ({row.orderCount} đơn)
+                {row.pointsPaidValue > 0 && (
+                  <> · trả bằng điểm (không tính doanh thu): {row.pointsPaidValue}</>
+                )}
+                {row.cancelledOrderCash > 0 && (
+                  <> · trong đó thuộc đơn bị hủy suất: {row.cancelledOrderCash}</>
+                )}
               </li>
             ))}
           </ul>

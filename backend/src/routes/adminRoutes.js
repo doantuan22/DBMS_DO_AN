@@ -13,10 +13,18 @@ router.use(authenticate, requireAdmin);
 router.use('/bookings', requirePermission('DAT_VE'), createStaffBookingRouter('ADMIN'));
 // Retired RBAC URLs remain explicit refusal points for old clients.
 router.all(
-  ['/roles', '/roles/:roleId', '/roles/:roleId/permissions', '/permissions', '/permissions/:permissionId'],
+  [
+    '/roles',
+    '/roles/:roleId',
+    '/roles/:roleId/permissions',
+    '/permissions',
+    '/permissions/:permissionId',
+  ],
   (req, res, next) => {
     if (req.method === 'GET' || req.method === 'HEAD') return next();
-    next(new HttpError(403, 'RBAC_FIXED', 'Roles and permissions are fixed and cannot be changed.'));
+    next(
+      new HttpError(403, 'RBAC_FIXED', 'Roles and permissions are fixed and cannot be changed.'),
+    );
   },
 );
 router.get('/dashboard', requirePermission('XEM_BAO_CAO_TOANHE'), admin.dashboard);
@@ -92,13 +100,15 @@ router.get('/reports/revenue', requirePermission('XEM_BAO_CAO_TOANHE'), admin.re
 
 // Admin uses the same append-only complaint history procedures and role checks as CSKH.
 const complaintId = (req) => validators.complaintId(req.params.complaintId);
-const wrapSupport = (action) => async (req, res, next) => {
-  try {
-    res.json(await action(req));
-  } catch (error) {
-    next(error);
-  }
-};
+const wrapSupport =
+  (action, status = 200) =>
+  async (req, res, next) => {
+    try {
+      res.status(status).json(await action(req));
+    } catch (error) {
+      next(error);
+    }
+  };
 router.get(
   '/complaints',
   requirePermission('QL_KHIEUNAI'),
@@ -121,13 +131,16 @@ router.get(
 router.post(
   '/complaints/:complaintId/processings',
   requirePermission('QL_KHIEUNAI', 'XULY_KHIEUNAI'),
-  wrapSupport(async (req) => ({
-    processing: await supportService.addProcessing(
-      req.user.userId,
-      complaintId(req),
-      validators.processing(req.body),
-    ),
-  })),
+  wrapSupport(
+    async (req) => ({
+      processing: await supportService.addProcessing(
+        req.user.userId,
+        complaintId(req),
+        validators.processing(req.body),
+      ),
+    }),
+    201,
+  ),
 );
 router.put(
   '/complaints/:complaintId/status',

@@ -21,9 +21,15 @@ export default function AdminSectionRoute({ section }) {
 function AuthorizedAdminSection({ section }) {
   const { user } = useAuth();
   if (!userCanAct(user, 'ADMIN', ADMIN_SECTION_PERMISSIONS[section])) return <Forbidden />;
-  if (['users', 'assignments', 'movies', 'actors', 'genres', 'products', 'promotions'].includes(section)) return <AdminResourceScreen kind={section} />;
+  if (
+    ['users', 'assignments', 'movies', 'actors', 'genres', 'products', 'promotions'].includes(
+      section,
+    )
+  )
+    return <AdminResourceScreen kind={section} />;
   if (section === 'complaints') return <AdminComplaints />;
-  if (section === 'dashboard' || section === 'revenue') return <AdminAnalytics kind={section === 'dashboard' ? 'overview' : 'revenue'} />;
+  if (section === 'dashboard' || section === 'revenue')
+    return <AdminAnalytics kind={section === 'dashboard' ? 'overview' : 'revenue'} />;
   if (section === 'rooms') return <AdminRooms />;
   if (section === 'seats') return <AdminSeatContextRoute />;
   if (section === 'cinemas') return <FacilityScreen kind="cinemas" />;

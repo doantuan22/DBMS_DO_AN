@@ -346,7 +346,6 @@ const ADMIN_ERROR_TABLE = {
   50107: [404, 'PROMOTION_NOT_FOUND'],
   50108: [409, 'PROMOTION_IN_USE'],
   50116: [404, 'SHOWTIME_NOT_FOUND'],
-  50117: [409, 'SHOWTIME_ALREADY_CANCELLED'],
   50118: [409, 'SHOWTIME_HAS_HELD_ORDERS'],
   50200: [404, 'CINEMA_NOT_FOUND'],
   50201: [409, 'ROOM_NAME_CONFLICT'],
@@ -507,7 +506,7 @@ test('cinema deletion blockers are business errors, not 500s', async () => {
   }
 });
 
-test('showtime create and update map procedure errors and keep the success result untouched', async () => {
+test('showtime create and update map procedure errors and return the result row (F-07)', async () => {
   const input = {
     movieId: 1,
     roomId: 2,
@@ -517,10 +516,15 @@ test('showtime create and update map procedure errors and keep the success resul
     basePrice: 50000,
     status: 'Mở bán',
   };
-  const result = { recordsets: [[{ SuatChieuID: 5 }]] };
+  // F-07: the service returns the procedure's result row, not the mssql driver envelope.
+  const result = {
+    recordsets: [[{ SuatChieuID: 5 }]],
+    recordset: [{ SuatChieuID: 5 }],
+    rowsAffected: [1],
+  };
   const ok = createAdminService({ execute: async () => result });
-  assert.equal(await ok.createShowtime(1, input), result);
-  assert.equal(await ok.updateShowtime(1, 5, input), result);
+  assert.deepEqual(await ok.createShowtime(1, input), { SuatChieuID: 5 });
+  assert.deepEqual(await ok.updateShowtime(1, 5, input), { SuatChieuID: 5 });
   for (const [number, status, code] of [
     [50001, 409, 'SHOWTIME_OVERLAP'],
     [50056, 404, 'ROOM_NOT_FOUND'],

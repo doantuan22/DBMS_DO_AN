@@ -4,6 +4,13 @@ import { AdminWorkspaceProvider } from '../features/admin-workspace/AdminWorkspa
 
 export default function AdminLayout() {
   const { user } = useAuth();
-  const actor = `${user?.userId}:${user?.role}:${user?.permissions?.map((p) => p.code).sort().join(',')}`;
-  return <AdminWorkspaceProvider key={actor}><Outlet /></AdminWorkspaceProvider>;
+  const actor = `${user?.userId}:${user?.role}:${user?.permissions
+    ?.map((p) => p.code)
+    .sort()
+    .join(',')}`;
+  return (
+    <AdminWorkspaceProvider key={actor}>
+      <Outlet />
+    </AdminWorkspaceProvider>
+  );
 }

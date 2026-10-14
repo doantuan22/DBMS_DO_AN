@@ -50,6 +50,8 @@ BEGIN
         TongTienVe DECIMAL(18, 2),
         TongTienDoAn DECIMAL(18, 2),
         TienGiamGia DECIMAL(18, 2),
+        DiemSuDung INT,
+        TrangThaiDon NVARCHAR(50),
         TienDaThu DECIMAL(18, 2),
         SoVe INT
     );
@@ -62,6 +64,8 @@ BEGIN
             TongTienVe,
             TongTienDoAn,
             TienGiamGia,
+            DiemSuDung,
+            TrangThaiDon,
             TienDaThu,
             SoVe
         )
@@ -73,7 +77,10 @@ BEGIN
         ddv.TongTienVe,
         ddv.TongTienDoAn,
         ddv.TienGiamGia,
-        SUM(ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia),
+        ddv.DiemSuDung,
+        ddv.TrangThai,
+        -- Tiền thực thu = tiền thật đã trả sau tổng mọi khoản giảm; một dòng/đơn.
+        CASE WHEN ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia < 0 THEN 0 ELSE ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia END,
         (
             SELECT
                 COUNT(*)
@@ -100,7 +107,9 @@ BEGIN
         sc.PhimID,
         ddv.TongTienVe,
         ddv.TongTienDoAn,
-        ddv.TienGiamGia
+        ddv.TienGiamGia,
+        ddv.DiemSuDung,
+        ddv.TrangThai
     HAVING
         (
             @TuNgay IS NULL
@@ -112,7 +121,13 @@ BEGIN
         );
     -- Recordset 1: Summary (same metrics as the former second recordset).
     SELECT
+        -- Đơn có thanh toán thành công (tiền và/hoặc điểm). Các cột sau tách rõ từng loại mẫu số.
         COUNT(DonDatVeID) AS TongSoDonToanHeThong,
+        ISNULL(SUM(CASE WHEN TrangThaiDon IN (N'Đã thanh toán', N'Hoàn thành') THEN 1 ELSE 0 END), 0) AS SoDonHopLe,
+        ISNULL(SUM(CASE WHEN TienDaThu > 0 THEN 1 ELSE 0 END), 0) AS SoDonCoTienThucThu,
+        ISNULL(SUM(CASE WHEN TrangThaiDon = N'Đã hủy' THEN TienDaThu ELSE 0 END), 0) AS TienThuocDonHuy,
+        ISNULL(SUM(CAST(DiemSuDung AS DECIMAL(18, 2)) * 1000), 0) AS TongGiaTriThanhToanBangDiem,
+        ISNULL(SUM(DiemSuDung), 0) AS TongDiemSuDung,
         ISNULL(SUM(SoVe), 0) AS TongSoVeBan,
         ISNULL(SUM(TongTienVe), 0) AS TongDoanhThuVe,
         ISNULL(SUM(TongTienDoAn), 0) AS TongDoanhThuDoAn,
@@ -130,7 +145,8 @@ BEGIN
         ISNULL(SUM(d.TongTienVe), 0) AS DoanhThuVe,
         ISNULL(SUM(d.TongTienDoAn), 0) AS DoanhThuDoAn,
         ISNULL(SUM(d.TienGiamGia), 0) AS TongTienGiam,
-        ISNULL(SUM(d.TienDaThu), 0) AS DoanhThuThucTe
+        ISNULL(SUM(d.TienDaThu), 0) AS DoanhThuThucTe,
+        ISNULL(SUM(CAST(d.DiemSuDung AS DECIMAL(18, 2)) * 1000), 0) AS GiaTriThanhToanBangDiem
     FROM
         dbo.RAPCHIEUPHIM r
         LEFT JOIN #DonDaThu d ON d.RapID = r.RapID
@@ -155,7 +171,8 @@ BEGIN
         SUM(d.TongTienVe) AS DoanhThuVe,
         SUM(d.TongTienDoAn) AS DoanhThuDoAn,
         SUM(d.TienGiamGia) AS TongTienGiam,
-        SUM(d.TienDaThu) AS DoanhThuThucTe
+        SUM(d.TienDaThu) AS DoanhThuThucTe,
+        SUM(CAST(d.DiemSuDung AS DECIMAL(18, 2)) * 1000) AS GiaTriThanhToanBangDiem
     FROM
         #DonDaThu d
         INNER JOIN dbo.PHIM p ON p.PhimID = d.PhimID
@@ -172,7 +189,8 @@ BEGIN
         SUM(TongTienVe) AS DoanhThuVe,
         SUM(TongTienDoAn) AS DoanhThuDoAn,
         SUM(TienGiamGia) AS TongTienGiam,
-        SUM(TienDaThu) AS DoanhThuThucTe
+        SUM(TienDaThu) AS DoanhThuThucTe,
+        SUM(CAST(DiemSuDung AS DECIMAL(18, 2)) * 1000) AS GiaTriThanhToanBangDiem
     FROM
         #DonDaThu
     GROUP BY

@@ -59,6 +59,24 @@ BEGIN
                 INNER JOIN @Het h ON h.DonDatVeID = cv.DonDatVeID
             WHERE
                 cv.TrangThai <> N'Đã hủy';
+            -- Điểm đã giữ cho đơn chưa thanh toán được trả lại đúng số điểm đã trừ (không phải hoàn tiền).
+            UPDATE hk
+            SET
+                hk.DiemTichLuy = hk.DiemTichLuy + x.Diem
+            FROM
+                dbo.HOSOKHACHHANG hk
+                INNER JOIN (
+                    SELECT
+                        d.NguoiDungID,
+                        SUM(d.DiemSuDung) AS Diem
+                    FROM
+                        dbo.DONDATVE d
+                        INNER JOIN @Het h ON h.DonDatVeID = d.DonDatVeID
+                    WHERE
+                        d.DiemSuDung > 0
+                    GROUP BY
+                        d.NguoiDungID
+                ) x ON x.NguoiDungID = hk.NguoiDungID;
             UPDATE km
             SET
                 km.SoLuongDaDung = CASE

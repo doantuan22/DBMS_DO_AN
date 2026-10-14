@@ -6,14 +6,38 @@
 // volume-seed audit report.
 const POSTER_CACHE = new Map([
   ['https://upload.wikimedia.org/wikipedia/commons/8/8f/Sintel_poster.jpg', '/posters/sintel.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/960px-Big_buck_bunny_poster_big.jpg', '/posters/big-buck-bunny.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Tos-poster.png/960px-Tos-poster.png', '/posters/tears-of-steel.png'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/ElephantsDreamPoster.jpg/960px-ElephantsDreamPoster.jpg', '/posters/elephants-dream.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/CosmosLaundromatPoster.jpg/960px-CosmosLaundromatPoster.jpg', '/posters/cosmos-laundromat.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Spring2019PillarPosterBlender.jpg/960px-Spring2019PillarPosterBlender.jpg', '/posters/spring.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Sprite_Fright-movie_poster.jpg/960px-Sprite_Fright-movie_poster.jpg', '/posters/sprite-fright.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Charge-movie_poster.jpg/960px-Charge-movie_poster.jpg', '/posters/charge.jpg'],
-  ['https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Coffee_Run-movie_poster.png/960px-Coffee_Run-movie_poster.png', '/posters/coffee-run.png'],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/960px-Big_buck_bunny_poster_big.jpg',
+    '/posters/big-buck-bunny.jpg',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Tos-poster.png/960px-Tos-poster.png',
+    '/posters/tears-of-steel.png',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/ElephantsDreamPoster.jpg/960px-ElephantsDreamPoster.jpg',
+    '/posters/elephants-dream.jpg',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/CosmosLaundromatPoster.jpg/960px-CosmosLaundromatPoster.jpg',
+    '/posters/cosmos-laundromat.jpg',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Spring2019PillarPosterBlender.jpg/960px-Spring2019PillarPosterBlender.jpg',
+    '/posters/spring.jpg',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Sprite_Fright-movie_poster.jpg/960px-Sprite_Fright-movie_poster.jpg',
+    '/posters/sprite-fright.jpg',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Charge-movie_poster.jpg/960px-Charge-movie_poster.jpg',
+    '/posters/charge.jpg',
+  ],
+  [
+    'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Coffee_Run-movie_poster.png/960px-Coffee_Run-movie_poster.png',
+    '/posters/coffee-run.png',
+  ],
 ]);
 
 export function recordMediaUrl(value) {

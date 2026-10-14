@@ -31,7 +31,11 @@ SELECT
     ddv.TongTienVe,
     ddv.TongTienDoAn,
     ddv.TienGiamGia,
-    (ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia) AS TongTienThanhToan,
+    CASE
+        WHEN ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia < 0 THEN 0
+        ELSE ddv.TongTienVe + ddv.TongTienDoAn - ddv.TienGiamGia
+    END AS TongTienThanhToan,
+    ddv.DiemSuDung,
     CASE
         WHEN ddv.TrangThai = N'Chờ thanh toán'
         AND ddv.HanGiuCho <= dbo.fn_BayGio() THEN N'Hết hạn'
