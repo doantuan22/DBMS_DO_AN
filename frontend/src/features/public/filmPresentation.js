@@ -19,8 +19,18 @@ export function showsByCinema(showtimes) {
   const groups = new Map();
   for (const show of showtimes) {
     const key = show.cinemaId ?? show.cinemaName;
-    if (!groups.has(key)) groups.set(key, { key, name: show.cinemaName, shows: [] });
-    groups.get(key).shows.push(show);
+    if (!groups.has(key))
+      groups.set(key, {
+        key,
+        name: show.cinemaName,
+        address: show.cinemaAddress,
+        shows: [],
+      });
+    const group = groups.get(key);
+    if (!group.address && show.cinemaAddress) group.address = show.cinemaAddress;
+    group.shows.push(show);
   }
+  for (const group of groups.values())
+    group.shows.sort((left, right) => Date.parse(left.startsAt) - Date.parse(right.startsAt));
   return [...groups.values()];
 }

@@ -7,7 +7,6 @@ import { loadResource } from '../services/catalogResource';
 import { movieGroups } from '../features/customer/discoveryModel';
 import FeaturedBillboard from '../features/public/FeaturedBillboard';
 import FilmRail from '../features/public/FilmRail';
-import HomeSchedule from '../features/public/HomeSchedule';
 import '../features/customer/customer-discovery.css';
 
 const moviesLoader = (options) => getMovies({}, options);
@@ -78,7 +77,6 @@ export default function Home() {
           <EmptyState>Hiện chưa có phim trong danh mục.</EmptyState>
         </div>
       )}
-      {featured && <HomeSchedule key={featured.id} movie={featured} />}
       {movieGroups(rows).map(([label, films]) => (
         <FilmRail
           key={label}

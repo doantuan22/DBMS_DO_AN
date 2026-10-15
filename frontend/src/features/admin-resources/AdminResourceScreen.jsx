@@ -517,7 +517,7 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
       <PageHeader
         title={definition.title}
         description={definition.description}
-        breadcrumbs={[{ label: 'Admin', to: '/admin/overview' }, { label: definition.title }]}
+        breadcrumbs={[{ label: 'Admin', to: '/admin' }, { label: definition.title }]}
         actions={
           <Button
             disabled={busy || state.resource.status !== 'success'}

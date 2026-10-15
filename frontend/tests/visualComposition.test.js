@@ -4,6 +4,8 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { createServer } from 'vite';
+import { Temporal } from '@js-temporal/polyfill';
+import { businessDate, formatDate } from '../src/utils/dateTime.js';
 import { showsByCinema } from '../src/features/public/filmPresentation.js';
 
 let vite, Hero, MovieCard, MovieGrid, ShowtimeBrowser, ShowtimeList, TimeChip, DateRail;
@@ -109,27 +111,53 @@ test('time chip links the actual showtime and displays only prices/counts suppli
   assert.doesNotMatch(unknown, /Giá cơ bản|ghế trống/);
 });
 test('fixed cinema view removes redundant cinema control while preserving real booking links', () => {
+  const tomorrow = Temporal.PlainDate.from(businessDate()).add({ days: 1 }).toString();
   const html = render(ShowtimeBrowser, {
     cinemas: [{ id: 9, name: show.cinemaName }],
     cinemaId: '9',
     cinemaReadOnly: true,
     date: '',
-    state: { status: 'success', data: [show] },
+    state: {
+      status: 'success',
+      data: [{ ...show, date: tomorrow, startsAt: `${tomorrow}T11:00:00Z` }],
+    },
     onDateChange() {},
   });
   assert.doesNotMatch(html, /<select/);
-  assert.match(html, /Chọn ngày chiếu/);
+  assert.match(html, /Chọn suất chiếu/);
   assert.match(html, /href="\/booking\/73"/);
 });
-test('showtime grouping preserves every actual slot across different dates', () => {
+test('movie schedule keeps the selected day in the main list and offers later real dates', () => {
+  const today = businessDate();
+  const tomorrow = Temporal.PlainDate.from(today).add({ days: 1 }).toString();
+  const html = render(ShowtimeBrowser, {
+    cinemas: [],
+    cinemaId: '',
+    date: today,
+    onCinemaChange() {},
+    onDateChange() {},
+    state: {
+      status: 'success',
+      data: [
+        { ...show, date: today, startsAt: `${today}T11:00:00Z` },
+        { ...show, id: 74, date: tomorrow, startsAt: `${tomorrow}T12:00:00Z` },
+      ],
+    },
+  });
+  assert.ok(html.includes(`Suất chiếu ngày ${formatDate(today)}`));
+  assert.ok(html.includes(formatDate(tomorrow)));
+  assert.match(html, /1 suất chiếu/);
+  assert.match(html, /href="\/booking\/73"/);
+  assert.doesNotMatch(html, /href="\/booking\/74"/);
+});
+test('showtime list groups the supplied actual slots by cinema and keeps their booking IDs', () => {
   const html = render(ShowtimeList, {
     state: {
       status: 'success',
       data: [show, { ...show, id: 74, date: '2026-10-15', startsAt: '2026-10-15T11:00:00Z' }],
     },
   });
-  assert.match(html, /14\/10\/2026/);
-  assert.match(html, /15\/10\/2026/);
+  assert.match(html, /Rạp thử nghiệm/);
   assert.match(html, /href="\/booking\/73"/);
   assert.match(html, /href="\/booking\/74"/);
 });

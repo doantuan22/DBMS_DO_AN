@@ -1,7 +1,6 @@
 import { userCanAct } from '../utils/authorization.js';
 
 export const MANAGER_SECTION_ROUTES = Object.freeze({
-  overview: { path: '/manager/overview', label: 'Tổng quan', permission: 'XEM_BAO_CAO_RAP' },
   rooms: { path: '/manager/rooms', label: 'Phòng chiếu', permission: 'QL_PHONG' },
   seats: { path: '/manager/seats', label: 'Ghế', permission: 'QL_GHE' },
   showtimes: { path: '/manager/showtimes', label: 'Suất chiếu', permission: 'QL_SUAT_CHIEU' },

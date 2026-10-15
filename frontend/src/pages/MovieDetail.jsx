@@ -52,16 +52,16 @@ function MovieDetailView({ movieId }) {
     return () => controller.abort();
   }, [movieId]);
 
-  const showtimeKey = `${movieId}\u0000${cinemaId}\u0000${date}\u0000${showtimeAttempt}`;
+  const showtimeKey = `${movieId}\u0000${cinemaId}\u0000${showtimeAttempt}`;
   useEffect(() => {
     const controller = new AbortController();
     loadResource(() =>
-      getShowtimes(movieId, showtimeFilters(cinemaId, date), { signal: controller.signal }),
+      getShowtimes(movieId, showtimeFilters(cinemaId, ''), { signal: controller.signal }),
     ).then((result) => {
       if (!controller.signal.aborted) setShowtimesState({ ...result, key: showtimeKey });
     });
     return () => controller.abort();
-  }, [movieId, cinemaId, date, showtimeAttempt, showtimeKey]);
+  }, [movieId, cinemaId, showtimeAttempt, showtimeKey]);
 
   const movieResource = detailState.movieId === movieId ? detailState : { status: 'loading' };
   if (movieResource.status === 'loading')

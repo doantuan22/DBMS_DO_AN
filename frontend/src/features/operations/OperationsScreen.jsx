@@ -364,7 +364,7 @@ export function OperationsView({ state, controller, adapter }) {
       <PageHeader
         title={title}
         breadcrumbs={[
-          { label: adapter.manager ? 'Manager' : 'Admin', to: `/${portal}/overview` },
+          { label: adapter.manager ? 'Manager' : 'Admin', to: `/${portal}` },
           { label: title },
         ]}
         description={

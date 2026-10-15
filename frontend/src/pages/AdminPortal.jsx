@@ -36,7 +36,6 @@ const hasCachedAdminDraft = (draft) =>
   );
 
 const sections = [
-  ['dashboard', 'Tổng quan'],
   ['users', 'Tài khoản'],
   ['assignments', 'Phân công'],
   ['cinemas', 'Rạp'],
@@ -55,7 +54,6 @@ const sections = [
   ['revenue', 'Doanh thu'],
 ];
 const loaders = {
-  dashboard: (api) => api.dashboard(),
   users: (api) => api.users(),
   assignments: async (api) => {
     const [data, users, cinemas] = await Promise.all([
@@ -88,7 +86,7 @@ const loaders = {
 
 // API fields, database row identifiers, and read-only status are explicit per resource.
 
-const idColumns = { users: 'NguoiDungID', dashboard: '', revenue: '', complaints: 'KhieuNaiID', escalations: 'id' };
+const idColumns = { users: 'NguoiDungID', revenue: '', complaints: 'KhieuNaiID', escalations: 'id' };
 const dataRows = (value, key) => {
   if (Array.isArray(value)) return value;
   if (!value || typeof value !== 'object') return [];
@@ -136,7 +134,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
   const allowedSections = sections.filter(([key]) =>
     userCanAct(user, 'ADMIN', ADMIN_SECTION_PERMISSIONS[key]),
   );
-  const [standaloneSection, setStandaloneSection] = useState('dashboard');
+  const [standaloneSection, setStandaloneSection] = useState('');
   const selectedSection = routeSection ?? standaloneSection;
   const active = String(
     allowedSections.some(([key]) => key === selectedSection)
@@ -329,7 +327,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
   }, [load]);
   const rows =
     state.status === 'success' && state.resource === active
-      ? dataRows(state.data?.[active] ?? state.data?.dashboard ?? state.data, active)
+      ? dataRows(state.data?.[active] ?? state.data, active)
       : [];
   const definition = forms[active];
   const accountRoles = [
@@ -693,11 +691,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
               ? `${seatContext.cinemaName} · ${seatContext.roomName}`
               : undefined
           }
-          breadcrumbs={
-            active === 'dashboard'
-              ? [{ label: sectionLabel }]
-              : [{ label: 'Quản trị' }, { label: sectionLabel }]
-          }
+          breadcrumbs={[{ label: 'Quản trị' }, { label: sectionLabel }]}
         />
       ) : (
         <>

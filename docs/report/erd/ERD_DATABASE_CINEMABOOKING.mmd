@@ -1,0 +1,194 @@
+%% Runtime SQL Server metadata; physical FK relations only.
+%% Schema dbo, 29 entities, 37 physical foreign keys.
+erDiagram
+  direction LR
+  %% Tài khoản và phân quyền
+  %% UNIQUE VAITRO: UQ_VAITRO_MaVaiTro (MaVaiTro)
+  VAITRO {
+    int VaiTroID PK
+    varchar MaVaiTro UK
+  }
+  %% UNIQUE QUYEN: UQ_QUYEN_MaQuyen (MaQuyen)
+  QUYEN {
+    int QuyenID PK
+    varchar MaQuyen UK
+  }
+  VAITRO_QUYEN {
+    int VaiTroID PK, FK
+    int QuyenID PK, FK
+  }
+  %% UNIQUE NGUOIDUNG: UQ_NGUOIDUNG_Email (Email)
+  %% UNIQUE NGUOIDUNG: UQ_NGUOIDUNG_SoDienThoai (SoDienThoai) FILTER ([SoDienThoai] IS NOT NULL)
+  NGUOIDUNG {
+    int NguoiDungID PK
+    int VaiTroID FK
+    varchar Email UK
+    varchar SoDienThoai
+  }
+  HOSOKHACHHANG {
+    int NguoiDungID PK, FK
+  }
+  PHANCONG_RAP {
+    int PhanCongID PK
+    int NguoiDungID FK
+    int RapID FK
+  }
+  %% Rạp, phòng chiếu và ghế
+  RAPCHIEUPHIM {
+    int RapID PK
+  }
+  %% UNIQUE HINHANH_RAPCHIEUPHIM: UX_HINHANH_RAPCHIEUPHIM_Rap_Cover (RapID) FILTER ([LaAnhDaiDien]=(1))
+  HINHANH_RAPCHIEUPHIM {
+    int HinhAnhRapID PK
+    int RapID FK
+  }
+  %% UNIQUE PHONGCHIEU: UQ_PHONGCHIEU_TenPhong (RapID, TenPhong)
+  PHONGCHIEU {
+    int PhongID PK
+    int RapID FK
+    nvarchar TenPhong
+  }
+  %% UNIQUE GHE: UQ_GHE_ViTri (PhongID, HangGhe, SoGhe)
+  GHE {
+    int GheID PK
+    int PhongID FK
+    varchar HangGhe
+    int SoGhe
+  }
+  %% Phim và danh mục
+  PHIM {
+    int PhimID PK
+  }
+  %% UNIQUE THELOAI: UQ_THELOAI_TenTheLoai (TenTheLoai)
+  THELOAI {
+    int TheLoaiID PK
+    nvarchar TenTheLoai UK
+  }
+  DIENVIEN {
+    int DienVienID PK
+  }
+  PHIM_THELOAI {
+    int PhimID PK, FK
+    int TheLoaiID PK, FK
+  }
+  PHIM_DIENVIEN {
+    int PhimID PK, FK
+    int DienVienID PK, FK
+  }
+  %% Lịch chiếu và bảng giá
+  SUATCHIEU {
+    int SuatChieuID PK
+    int PhimID FK
+    int PhongID FK
+  }
+  BANGGIA {
+    int GiaID PK
+    int RapID FK
+  }
+  %% Đặt vé và thanh toán
+  DONDATVE {
+    int DonDatVeID PK
+    int NguoiDungID FK
+    int SuatChieuID FK
+    int KhuyenMaiID FK
+  }
+  %% UNIQUE CHITIETVE: UQ_CHITIETVE_MaVe (MaVe)
+  CHITIETVE {
+    int VeID PK
+    int DonDatVeID FK
+    int GheID FK
+    varchar MaVe UK
+  }
+  SANPHAM {
+    int SanPhamID PK
+  }
+  %% UNIQUE CHITIETDOAN: UQ_CHITIETDOAN_Don_SanPham (DonDatVeID, SanPhamID)
+  CHITIETDOAN {
+    int ChiTietDoAnID PK
+    int DonDatVeID FK
+    int SanPhamID FK
+  }
+  %% UNIQUE KHUYENMAI: UQ_KHUYENMAI_MaCode (MaCode)
+  KHUYENMAI {
+    int KhuyenMaiID PK
+    varchar MaCode UK
+  }
+  %% UNIQUE THANHTOAN: UQ_THANHTOAN_MaGiaoDich (MaGiaoDich) FILTER ([MaGiaoDich] IS NOT NULL)
+  THANHTOAN {
+    int ThanhToanID PK
+    int DonDatVeID FK
+    varchar MaGiaoDich
+  }
+  %% UNIQUE BOITHUONG_HUYSUAT: UQ_BOITHUONG_HUYSUAT_Don (DonDatVeID)
+  BOITHUONG_HUYSUAT {
+    int BoiThuongID PK
+    int DonDatVeID FK, UK
+  }
+  %% Đánh giá và khiếu nại
+  %% UNIQUE DANHGIAPHIM: UQ_DANHGIAPHIM_Phim_User (PhimID, NguoiDungID)
+  DANHGIAPHIM {
+    int DanhGiaID PK
+    int PhimID FK
+    int NguoiDungID FK
+  }
+  KHIEUNAI {
+    int KhieuNaiID PK
+    int NguoiDungID FK
+    int DonDatVeID FK
+    int NhanVienPhuTrachID FK
+  }
+  TINNHAN_KHIEUNAI {
+    int TinNhanID PK
+    int KhieuNaiID FK
+    int NguoiGuiID FK
+  }
+  XULY_KHIEUNAI {
+    int XuLyID PK
+    int KhieuNaiID FK
+    int NguoiXuLyID FK
+  }
+  %% UNIQUE YEUCAU_CHUYENCAP: UQ_YEUCAU_CHUYENCAP_ChoTiepNhan (KhieuNaiID) FILTER ([TrangThai]=N'Chờ tiếp nhận')
+  %% UNIQUE YEUCAU_CHUYENCAP: UQ_YEUCAU_CHUYENCAP_DangXuLy (KhieuNaiID) FILTER ([TrangThai]=N'Đang xử lý')
+  YEUCAU_CHUYENCAP {
+    int YeuCauID PK
+    int KhieuNaiID FK
+    int NguoiYeuCauID FK
+    int AdminPhuTrachID FK
+  }
+  RAPCHIEUPHIM ||--o{ BANGGIA : RapID
+  DONDATVE ||--o| BOITHUONG_HUYSUAT : DonDatVeID
+  DONDATVE ||--o{ CHITIETDOAN : DonDatVeID
+  SANPHAM ||--o{ CHITIETDOAN : SanPhamID
+  DONDATVE ||--o{ CHITIETVE : DonDatVeID
+  GHE ||--o{ CHITIETVE : GheID
+  NGUOIDUNG ||--o{ DANHGIAPHIM : NguoiDungID
+  PHIM ||--o{ DANHGIAPHIM : PhimID
+  KHUYENMAI o|--o{ DONDATVE : KhuyenMaiID
+  NGUOIDUNG ||--o{ DONDATVE : NguoiDungID
+  SUATCHIEU ||--o{ DONDATVE : SuatChieuID
+  PHONGCHIEU ||--o{ GHE : PhongID
+  RAPCHIEUPHIM ||--o{ HINHANH_RAPCHIEUPHIM : RapID
+  NGUOIDUNG ||--o| HOSOKHACHHANG : NguoiDungID
+  DONDATVE o|--o{ KHIEUNAI : DonDatVeID
+  NGUOIDUNG ||--o{ KHIEUNAI : NguoiDungID
+  NGUOIDUNG o|--o{ KHIEUNAI : NhanVienPhuTrachID
+  VAITRO ||--o{ NGUOIDUNG : VaiTroID
+  NGUOIDUNG ||--o{ PHANCONG_RAP : NguoiDungID
+  RAPCHIEUPHIM ||--o{ PHANCONG_RAP : RapID
+  DIENVIEN ||--o{ PHIM_DIENVIEN : DienVienID
+  PHIM ||--o{ PHIM_DIENVIEN : PhimID
+  PHIM ||--o{ PHIM_THELOAI : PhimID
+  THELOAI ||--o{ PHIM_THELOAI : TheLoaiID
+  RAPCHIEUPHIM ||--o{ PHONGCHIEU : RapID
+  PHIM ||--o{ SUATCHIEU : PhimID
+  PHONGCHIEU ||--o{ SUATCHIEU : PhongID
+  KHIEUNAI ||--o{ TINNHAN_KHIEUNAI : KhieuNaiID
+  NGUOIDUNG ||--o{ TINNHAN_KHIEUNAI : NguoiGuiID
+  DONDATVE ||--o{ THANHTOAN : DonDatVeID
+  QUYEN ||--o{ VAITRO_QUYEN : QuyenID
+  VAITRO ||--o{ VAITRO_QUYEN : VaiTroID
+  KHIEUNAI ||--o{ XULY_KHIEUNAI : KhieuNaiID
+  NGUOIDUNG ||--o{ XULY_KHIEUNAI : NguoiXuLyID
+  NGUOIDUNG o|--o{ YEUCAU_CHUYENCAP : AdminPhuTrachID
+  KHIEUNAI ||--o{ YEUCAU_CHUYENCAP : KhieuNaiID
+  NGUOIDUNG ||--o{ YEUCAU_CHUYENCAP : NguoiYeuCauID

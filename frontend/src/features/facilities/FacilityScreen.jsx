@@ -344,7 +344,7 @@ export function FacilityView({ state, controller, adapter }) {
         breadcrumbs={[
           {
             label: manager ? 'Manager' : 'Quản trị',
-            to: manager ? '/manager/overview' : '/admin/overview',
+            to: manager ? '/manager' : '/admin',
           },
           { label: title },
         ]}

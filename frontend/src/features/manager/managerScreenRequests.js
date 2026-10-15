@@ -5,11 +5,9 @@ export function loadManagerScreen(user, section, cinemaId, api) {
     rooms: { permission: 'QL_PHONG', load: () => api.getRooms(cinemaId) },
     showtimes: { permission: 'QL_SUAT_CHIEU', load: () => api.getManagerShowtimes(cinemaId) },
     pricing: { permission: 'QL_BANG_GIA', load: () => api.getPricing(cinemaId) },
-    dashboard: { permission: 'XEM_BAO_CAO_RAP', load: () => api.getDashboard(cinemaId) },
   };
   const needed =
     {
-      overview: ['dashboard'],
       rooms: ['rooms'],
       seats: ['rooms'],
       showtimes: ['rooms', 'showtimes'],

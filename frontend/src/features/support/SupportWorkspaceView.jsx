@@ -173,11 +173,11 @@ export default function SupportWorkspaceView({
                         <div style={{ display: 'flex', gap: '0.375rem', alignItems: 'center' }}>
                           <StatusBadge status={item.status} />
                           {item.assignedStaffName ? (
-                            <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                            <span style={{ fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
                               👤 {item.assignedStaffName}
                             </span>
                           ) : (
-                            <span style={{ fontSize: '0.75rem', color: '#b45309', fontWeight: 600 }}>
+                            <span style={{ fontSize: '0.825rem', color: '#b45309', fontWeight: 600 }}>
                               ⚠️ Chưa nhận
                             </span>
                           )}

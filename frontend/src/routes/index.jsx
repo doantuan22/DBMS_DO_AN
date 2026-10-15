@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
 import StaffShell from '../layouts/StaffShell';
+import ProfileLayout from '../layouts/ProfileLayout';
 import RequireRole from './RequireRole';
 import RequireAuth from './RequireAuth';
 import Login from '../pages/auth/Login';
@@ -55,7 +56,7 @@ export default function AppRoutes() {
       </Route>
 
       <Route element={<RequireAuth />}>
-        <Route path="/profile" element={<AreaLayout title="Hồ sơ cá nhân" />}>
+        <Route path="/profile" element={<ProfileLayout />}>
           <Route index element={<Profile />} />
         </Route>
       </Route>
@@ -98,6 +99,7 @@ export default function AppRoutes() {
         <Route path="/manager" element={<StaffShell portal="manager" />}>
           <Route element={<ManagerLayout />}>
             <Route index element={<ManagerEntryRoute />} />
+            <Route path="overview" element={<ManagerEntryRoute />} />
             <Route path="bookings" element={<StaffBookings portal="manager" />} />
             {MANAGER_SCREEN_ROUTES.map(({ section, path }) => (
               <Route
@@ -137,6 +139,7 @@ export default function AppRoutes() {
         <Route path="/admin" element={<StaffShell portal="admin" />}>
           <Route element={<AdminLayout />}>
             <Route index element={<AdminEntryRoute />} />
+            <Route path="overview" element={<AdminEntryRoute />} />
             <Route path="bookings" element={<StaffBookings portal="admin" />} />
             {ADMIN_SCREEN_ROUTES.map(({ section, path }) => (
               <Route key={section} path={path} element={<AdminSectionRoute section={section} />} />

@@ -85,13 +85,13 @@ export default function AdminComplaintAssignment({ complaintId, currentStaffId, 
             <strong>Đã phân công cho nhân viên:</strong>{' '}
             {assignedStaff ? `${assignedStaff.HoTen ?? assignedStaff.name} (${assignedStaff.Email ?? assignedStaff.email})` : `Nhân viên #${currentStaffId}`}
           </div>
-          <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+          <p style={{ margin: 0, fontSize: '0.935rem', color: '#64748b' }}>
             Quy tắc nghiệp vụ: Mỗi khiếu nại chỉ được phân công một lần duy nhất. Nhân viên được giao chịu trách nhiệm xử lý từ đầu đến cuối và không thể thay đổi hoặc thu hồi.
           </p>
         </div>
       ) : (
         <form onSubmit={handleAssign} style={{ display: 'grid', gap: '0.75rem' }}>
-          <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+          <p style={{ margin: 0, fontSize: '0.935rem', color: '#64748b' }}>
             Khiếu nại chưa có người tiếp nhận. Quản trị viên có thể phân công nhân viên CSKH phụ trách lần đầu.
           </p>
           <FormField label="Chọn nhân viên CSKH phụ trách">

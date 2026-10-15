@@ -129,7 +129,7 @@ export function AnalyticsView({ kind, state, controller }) {
         <PageHeader
           title={title}
           description="Theo dõi tiền thực thu, cơ cấu doanh thu và hiệu quả từng rạp, từng phim."
-          breadcrumbs={[{ label: 'Admin', to: '/admin/overview' }, { label: 'Doanh thu' }]}
+          breadcrumbs={[{ label: 'Admin', to: '/admin' }, { label: 'Doanh thu' }]}
         />
       )}
       {overview && (

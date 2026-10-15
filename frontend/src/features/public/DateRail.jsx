@@ -39,6 +39,7 @@ export default function DateRail({ dates, selected, onSelect, label = 'Ngày có
             key={day}
             type="button"
             aria-pressed={day === selected}
+            disabled={day < businessDate()}
             onClick={() => onSelect(day)}
           >
             <span>

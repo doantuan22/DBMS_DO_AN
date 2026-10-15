@@ -47,7 +47,7 @@ export default function CustomerPointsViewer({ customerId }) {
           background: 'var(--color-surface-hover, #f8fafc)',
           padding: '0.75rem',
           borderRadius: 'var(--radius-md, 0.375rem)',
-          fontSize: '0.875rem',
+          fontSize: '0.9625rem',
         }}
       >
         <div>
@@ -72,11 +72,11 @@ export default function CustomerPointsViewer({ customerId }) {
 
       {history && history.length > 0 ? (
         <details>
-          <summary style={{ cursor: 'pointer', fontSize: '0.875rem', fontWeight: 600 }}>
+          <summary style={{ cursor: 'pointer', fontSize: '0.9625rem', fontWeight: 600 }}>
             Lịch sử biến động điểm ({history.length})
           </summary>
           <div style={{ maxHeight: '12rem', overflowY: 'auto', marginTop: '0.5rem' }}>
-            <table style={{ width: '100%', fontSize: '0.8rem', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', fontSize: '0.88rem', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--color-border)', textAlign: 'left' }}>
                   <th style={{ padding: '0.25rem' }}>Thời gian</th>
@@ -108,7 +108,7 @@ export default function CustomerPointsViewer({ customerId }) {
           </div>
         </details>
       ) : (
-        <p className="catalog-muted" style={{ fontSize: '0.85rem' }}>
+        <p className="catalog-muted" style={{ fontSize: '0.935rem' }}>
           Chưa có lịch sử biến động điểm.
         </p>
       )}

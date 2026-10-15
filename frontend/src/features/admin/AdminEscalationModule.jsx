@@ -123,7 +123,7 @@ export default function AdminEscalationModule({ currentUser }) {
       >
         <div>
           <h2 style={{ margin: 0 }}>Yêu cầu hỗ trợ từ CSKH</h2>
-          <p style={{ margin: 0, color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
+          <p style={{ margin: 0, color: 'var(--color-text-muted)', fontSize: '0.9625rem' }}>
             Hàng đợi tiếp nhận và xử lý các vấn đề chuyển cấp vượt thẩm quyền của nhân viên CSKH.
           </p>
         </div>
@@ -135,7 +135,7 @@ export default function AdminEscalationModule({ currentUser }) {
               background: pendingCount > 0 ? '#fef3c7' : '#f1f5f9',
               color: pendingCount > 0 ? '#92400e' : '#475569',
               fontWeight: 600,
-              fontSize: '0.85rem',
+              fontSize: '0.935rem',
             }}
           >
             {pendingCount} yêu cầu chờ tiếp nhận
@@ -233,17 +233,17 @@ export default function AdminEscalationModule({ currentUser }) {
                       <strong>Yêu cầu #{item.id}</strong>
                       <StatusBadge status={item.status} />
                     </div>
-                    <div style={{ fontSize: '0.85rem' }}>
+                    <div style={{ fontSize: '0.935rem' }}>
                       <span>Khiếu nại: #{item.complaintId} · {item.complaintTitle}</span>
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                    <div style={{ fontSize: '0.88rem', color: 'var(--color-text-muted)' }}>
                       <span>Lý do: {item.reason}</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        fontSize: '0.75rem',
+                        fontSize: '0.825rem',
                         color: 'var(--color-text-muted)',
                       }}
                     >
@@ -319,8 +319,8 @@ export default function AdminEscalationModule({ currentUser }) {
                   >
                     <h4 style={{ margin: '0 0 0.5rem' }}>Hồ sơ khiếu nại gốc #{detail.complaint.id}</h4>
                     <p style={{ margin: '0.25rem 0', fontWeight: 600 }}>{detail.complaint.title}</p>
-                    <p style={{ margin: '0.25rem 0', fontSize: '0.85rem' }}>{detail.complaint.content}</p>
-                    <p style={{ margin: '0.25rem 0', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                    <p style={{ margin: '0.25rem 0', fontSize: '0.935rem' }}>{detail.complaint.content}</p>
+                    <p style={{ margin: '0.25rem 0', fontSize: '0.88rem', color: 'var(--color-text-muted)' }}>
                       Khách hàng: {detail.complaint.senderName} · Loại: {detail.complaint.type} · Trạng thái: {detail.complaint.status}
                     </p>
                   </div>
@@ -340,10 +340,10 @@ export default function AdminEscalationModule({ currentUser }) {
                             padding: '0.5rem',
                             borderRadius: 'var(--radius-sm)',
                             background: m.isInternal ? '#fffbeb' : '#f1f5f9',
-                            fontSize: '0.85rem',
+                            fontSize: '0.935rem',
                           }}
                         >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.825rem' }}>
                             <strong>{m.senderName} {m.isInternal ? '(Nội bộ)' : ''}</strong>
                             <span>{formatDateTime(m.createdAt)}</span>
                           </div>
@@ -360,7 +360,7 @@ export default function AdminEscalationModule({ currentUser }) {
 
                   {detail.escalation.status === 'Chờ tiếp nhận' && (
                     <div>
-                      <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
+                      <p style={{ fontSize: '0.9625rem', color: 'var(--color-text-muted)' }}>
                         Yêu cầu đang chờ quản trị viên tiếp nhận để bắt đầu xử lý.
                       </p>
                       <Button
@@ -376,7 +376,7 @@ export default function AdminEscalationModule({ currentUser }) {
 
                   {detail.escalation.status === 'Đang xử lý' && (
                     <div style={{ display: 'grid', gap: '0.75rem' }}>
-                      <p style={{ fontSize: '0.85rem', margin: 0 }}>
+                      <p style={{ fontSize: '0.935rem', margin: 0 }}>
                         Admin đang tiếp nhận: <strong>{detail.escalation.adminName || 'Tôi'}</strong>
                       </p>
                       <FormField label="Kết luận xử lý / Chỉ đạo cho CSKH" required>
@@ -423,7 +423,7 @@ export default function AdminEscalationModule({ currentUser }) {
                         Kết luận xử lý ({detail.escalation.status}):
                       </p>
                       <p style={{ margin: '0.25rem 0' }}>{detail.escalation.resolution}</p>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                      <span style={{ fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
                         Admin: {detail.escalation.adminName} · Hoàn tất lúc: {formatDateTime(detail.escalation.resolvedAt)}
                       </span>
                     </div>

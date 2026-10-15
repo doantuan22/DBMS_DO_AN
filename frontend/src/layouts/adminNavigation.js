@@ -3,7 +3,6 @@ import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization';
 import { ROLES } from '../constants/roles';
 
 const groups = [
-  ['Không gian làm việc', [['dashboard', 'grid']]],
   [
     'Rạp & cơ sở vật chất',
     [
@@ -49,7 +48,7 @@ const groups = [
 ];
 
 export function adminNavigation(user) {
-  return groups
+  const navigation = groups
     .map(([label, items]) => ({
       label,
       items: items
@@ -57,4 +56,12 @@ export function adminNavigation(user) {
         .map(([key, icon]) => ({ key, icon, ...ADMIN_SECTION_ROUTES[key] })),
     }))
     .filter((group) => group.items.length);
+
+  return [
+    ...navigation,
+    {
+      label: 'Tài khoản',
+      items: [{ key: 'profile', path: '/profile', label: 'Hồ sơ', icon: 'user-circle' }],
+    },
+  ];
 }

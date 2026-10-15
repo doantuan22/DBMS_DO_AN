@@ -28,8 +28,7 @@ function AuthorizedAdminSection({ section }) {
   )
     return <AdminResourceScreen kind={section} />;
   if (section === 'complaints') return <AdminComplaints />;
-  if (section === 'dashboard' || section === 'revenue')
-    return <AdminAnalytics kind={section === 'dashboard' ? 'overview' : 'revenue'} />;
+  if (section === 'revenue') return <AdminAnalytics kind="revenue" />;
   if (section === 'rooms') return <AdminRooms />;
   if (section === 'seats') return <AdminSeatContextRoute />;
   if (section === 'cinemas') return <FacilityScreen kind="cinemas" />;

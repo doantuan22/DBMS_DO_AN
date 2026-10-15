@@ -313,7 +313,7 @@ export function BookingView({ state, controller, portal, cinemaId }) {
             : 'Đơn tại rạp hiện tại trong phân công còn hiệu lực.'
         }
         breadcrumbs={[
-          { label: portal === 'admin' ? 'Admin' : 'Manager', to: `/${portal}/overview` },
+          { label: portal === 'admin' ? 'Admin' : 'Manager', to: `/${portal}` },
           { label: 'Quản lý đặt vé' },
         ]}
         actions={

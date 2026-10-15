@@ -3,7 +3,6 @@ import { userCanAct } from '../utils/authorization';
 import { ROLES } from '../constants/roles';
 
 const groups = [
-  ['Tổng quan', [['overview', 'grid', 'Dashboard']]],
   [
     'Cơ sở vật chất',
     [
@@ -23,7 +22,7 @@ const groups = [
 ];
 
 export function managerNavigation(user) {
-  return groups
+  const navigation = groups
     .map(([label, items]) => ({
       label,
       items: items
@@ -36,4 +35,12 @@ export function managerNavigation(user) {
         })),
     }))
     .filter((group) => group.items.length);
+
+  return [
+    ...navigation,
+    {
+      label: 'Tài khoản',
+      items: [{ key: 'profile', path: '/profile', label: 'Hồ sơ', icon: 'user-circle' }],
+    },
+  ];
 }

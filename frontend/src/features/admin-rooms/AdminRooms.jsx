@@ -199,7 +199,7 @@ export function RoomsView({ state, controller }) {
         <PageHeader
           title="Phòng chiếu"
           description="Quản lý phòng và sức chứa theo từng rạp."
-          breadcrumbs={[{ label: 'Quản trị', to: '/admin/overview' }, { label: 'Phòng chiếu' }]}
+          breadcrumbs={[{ label: 'Quản trị', to: '/admin' }, { label: 'Phòng chiếu' }]}
           primaryAction={
             <Button disabled={!ready} onClick={() => controller.openCreate()}>
               <span aria-hidden="true">＋</span> Thêm phòng

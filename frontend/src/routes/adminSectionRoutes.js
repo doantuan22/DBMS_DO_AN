@@ -2,7 +2,6 @@ import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization.js
 import { ROLES } from '../constants/roles.js';
 
 export const ADMIN_SECTION_ROUTES = Object.freeze({
-  dashboard: { path: '/admin/overview', label: 'Tổng quan' },
   users: { path: '/admin/access/users', label: 'Tài khoản' },
   assignments: { path: '/admin/access/assignments', label: 'Phân công' },
   cinemas: { path: '/admin/cinemas', label: 'Rạp' },

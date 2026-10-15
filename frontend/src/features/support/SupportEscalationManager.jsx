@@ -60,12 +60,12 @@ export default function SupportEscalationManager({ complaintId, onEscalated }) {
   return (
     <div className="support-escalation-manager" style={{ display: 'grid', gap: '0.75rem' }}>
       {success && (
-        <p className="form-success" role="status" style={{ fontSize: '0.85rem' }}>
+        <p className="form-success" role="status" style={{ fontSize: '0.935rem' }}>
           {success}
         </p>
       )}
       {error && (
-        <p className="form-error" role="alert" style={{ fontSize: '0.85rem' }}>
+        <p className="form-error" role="alert" style={{ fontSize: '0.935rem' }}>
           {error}
         </p>
       )}
@@ -77,7 +77,7 @@ export default function SupportEscalationManager({ complaintId, onEscalated }) {
             background: '#eff6ff',
             border: '1px solid #bfdbfe',
             borderRadius: 'var(--radius-md, 0.375rem)',
-            fontSize: '0.875rem',
+            fontSize: '0.9625rem',
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -88,11 +88,11 @@ export default function SupportEscalationManager({ complaintId, onEscalated }) {
             <span style={{ color: 'var(--color-text-muted)' }}>Lý do: </span>
             {activeEscalation.reason}
           </p>
-          <p style={{ margin: '0.25rem 0', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+          <p style={{ margin: '0.25rem 0', fontSize: '0.88rem', color: 'var(--color-text-muted)' }}>
             Ưu tiên: <strong>{activeEscalation.priority}</strong> · Gửi: {formatDateTime(activeEscalation.createdAt)}
           </p>
           {activeEscalation.adminName && (
-            <p style={{ margin: '0.25rem 0', fontSize: '0.8rem' }}>
+            <p style={{ margin: '0.25rem 0', fontSize: '0.88rem' }}>
               Admin phụ trách: <strong>{activeEscalation.adminName}</strong>
             </p>
           )}
@@ -164,7 +164,7 @@ export default function SupportEscalationManager({ complaintId, onEscalated }) {
 
       {/* Finished escalations if any */}
       {escalations.filter((e) => e.status === 'Đã giải quyết' || e.status === 'Từ chối').length > 0 && (
-        <details style={{ fontSize: '0.85rem' }}>
+        <details style={{ fontSize: '0.935rem' }}>
           <summary style={{ cursor: 'pointer', fontWeight: 600 }}>
             Lịch sử phản hồi từ Admin ({escalations.filter((e) => e.status === 'Đã giải quyết' || e.status === 'Từ chối').length})
           </summary>
@@ -183,14 +183,14 @@ export default function SupportEscalationManager({ complaintId, onEscalated }) {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <StatusBadge status={esc.status} />
-                    <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                    <span style={{ fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
                       {formatDateTime(esc.resolvedAt)}
                     </span>
                   </div>
                   <p style={{ margin: '0.25rem 0', fontWeight: 500 }}>
                     Kết luận: {esc.resolution || 'Không có ghi chú'}
                   </p>
-                  <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                  <p style={{ margin: 0, fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
                     Bởi Admin: {esc.adminName || 'Admin'}
                   </p>
                 </div>

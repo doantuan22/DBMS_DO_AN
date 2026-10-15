@@ -24,7 +24,6 @@ function Brand() {
 export default function PublicShell({ title, links = [], children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
-  const staffProfile = location.pathname === '/profile' && user && user.role !== ROLES.CUSTOMER;
   const allowedAreas = visibleAreasFor(user);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -101,8 +100,8 @@ export default function PublicShell({ title, links = [], children }) {
   );
   return (
     <div
-      className={`area public-shell${staffProfile ? '' : ' cinema-public'}${location.pathname === '/' ? ' is-home' : ''}`}
-      data-cinema-theme={staffProfile ? undefined : 'dark'}
+      className={`area public-shell cinema-public${location.pathname === '/' ? ' is-home' : ''}`}
+      data-cinema-theme="dark"
     >
       <a href="#main-content" className="skip-link">
         Chuyển đến nội dung chính
@@ -146,10 +145,7 @@ export default function PublicShell({ title, links = [], children }) {
           {destinations
             .filter((link) => !link.role || user?.role === link.role)
             .map((link) => navLink(link.to, link.label))}
-          <Link to="/movies?search=" className="cp-header-search" onClick={closeMenu}>
-            Tìm phim
-          </Link>
-          {user && navLink('/profile', 'Hồ sơ')}
+          {user?.role === ROLES.CUSTOMER && navLink('/profile', 'Hồ sơ')}
           {user?.role === ROLES.CUSTOMER &&
             !hasCustomerComplaintsLink &&
             navLink('/complaints', 'Khiếu nại')}

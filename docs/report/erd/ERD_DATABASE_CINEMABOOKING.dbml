@@ -1,0 +1,569 @@
+// Complete relational model from CinemaBookingDB dbo metadata, surveyed 2026-10-15.
+
+Table dbo.VAITRO {
+  VaiTroID int [pk, increment, not null]
+  MaVaiTro varchar(50) [not null]
+  TenVaiTro nvarchar(100) [not null]
+  MoTa nvarchar(255)
+
+  indexes {
+    (MaVaiTro) [unique, name: `UQ_VAITRO_MaVaiTro`]
+  }
+}
+
+Table dbo.QUYEN {
+  QuyenID int [pk, increment, not null]
+  MaQuyen varchar(50) [not null]
+  TenQuyen nvarchar(100) [not null]
+  MoTa nvarchar(255)
+
+  indexes {
+    (MaQuyen) [unique, name: `UQ_QUYEN_MaQuyen`]
+  }
+}
+
+Table dbo.VAITRO_QUYEN {
+  VaiTroID int [not null]
+  QuyenID int [not null]
+  NgayGan datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+
+  indexes {
+    (VaiTroID, QuyenID) [pk, name: `PK_VAITRO_QUYEN`]
+  }
+}
+
+Table dbo.NGUOIDUNG {
+  NguoiDungID int [pk, increment, not null]
+  VaiTroID int [not null]
+  HoTen nvarchar(100) [not null]
+  Email varchar(150) [not null]
+  MatKhau varchar(255) [not null]
+  SoDienThoai varchar(20)
+  NgayTao datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+  TrangThai nvarchar(50) [not null, default: `(N'Hoạt động')`]
+
+  indexes {
+    (Email) [unique, name: `UQ_NGUOIDUNG_Email`]
+    (TrangThai) [name: `IX_NGUOIDUNG_TrangThai`]
+    (VaiTroID) [name: `IX_NGUOIDUNG_VaiTroID`]
+    (SoDienThoai) [name: `UQ_NGUOIDUNG_SoDienThoai`, unique] // filtered: ([SoDienThoai] IS NOT NULL)
+  }
+
+  checks {
+    `([TrangThai]=N'Chưa kích hoạt' OR [TrangThai]=N'Bị khóa' OR [TrangThai]=N'Hoạt động')` [name: `CK_NGUOIDUNG_TrangThai`]
+  }
+}
+
+Table dbo.HOSOKHACHHANG {
+  NguoiDungID int [pk, not null]
+  NgaySinh date
+  GioiTinh nvarchar(10)
+  DiemTichLuy int [not null, default: `((0))`]
+
+  checks {
+    `([DiemTichLuy]>=(0))` [name: `CK_HOSOKHACHHANG_DiemTichLuy`]
+    `([GioiTinh] IS NULL OR ([GioiTinh]=N'Khác' OR [GioiTinh]=N'Nữ' OR [GioiTinh]=N'Nam'))` [name: `CK_HOSOKHACHHANG_GioiTinh`]
+  }
+}
+
+Table dbo.PHANCONG_RAP {
+  PhanCongID int [pk, increment, not null]
+  NguoiDungID int [not null]
+  RapID int [not null]
+  NgayBatDau date [not null]
+  NgayKetThuc date
+  TrangThai nvarchar(50) [not null, default: `(N'Hiệu lực')`]
+
+  indexes {
+    (NguoiDungID, TrangThai, NgayBatDau, NgayKetThuc) [name: `IX_PHANCONG_RAP_NguoiDung`]
+    (RapID, TrangThai) [name: `IX_PHANCONG_RAP_Rap`]
+  }
+
+  checks {
+    `([NgayKetThuc] IS NULL OR [NgayKetThuc]>=[NgayBatDau])` [name: `CK_PHANCONG_RAP_ThoiGian`]
+    `([TrangThai]=N'Đã hủy' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Hiệu lực')` [name: `CK_PHANCONG_RAP_TrangThai`]
+  }
+}
+
+Table dbo.RAPCHIEUPHIM {
+  RapID int [pk, increment, not null]
+  TenRap nvarchar(150) [not null]
+  DiaChi nvarchar(255) [not null]
+  ThanhPho nvarchar(100) [not null]
+  SoDienThoai varchar(20)
+  MoTa nvarchar(500)
+  NgayHoatDong date
+  TrangThai nvarchar(50) [not null, default: `(N'Hoạt động')`]
+
+  checks {
+    `([TrangThai]=N'Tạm đóng' OR [TrangThai]=N'Bảo trì' OR [TrangThai]=N'Hoạt động')` [name: `CK_RAPCHIEUPHIM_TrangThai`]
+  }
+}
+
+Table dbo.HINHANH_RAPCHIEUPHIM {
+  HinhAnhRapID int [pk, increment, not null]
+  RapID int [not null]
+  URL nvarchar(500) [not null]
+  MoTa nvarchar(255)
+  LaAnhDaiDien bit [not null, default: `((0))`]
+  ThuTuHienThi int [not null, default: `((0))`]
+  TrangThai nvarchar(50) [not null, default: `(N'Hoạt động')`]
+  NgayTao datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+
+  indexes {
+    (RapID, TrangThai, ThuTuHienThi, HinhAnhRapID) [name: `IX_HINHANH_RAPCHIEUPHIM_Rap_TrangThai_ThuTu`]
+    (RapID) [name: `UX_HINHANH_RAPCHIEUPHIM_Rap_Cover`, unique] // filtered: ([LaAnhDaiDien]=(1))
+  }
+
+  checks {
+    `([ThuTuHienThi]>=(0))` [name: `CK_HINHANH_RAPCHIEUPHIM_ThuTuHienThi`]
+    `([TrangThai]=N'Tạm ẩn' OR [TrangThai]=N'Hoạt động')` [name: `CK_HINHANH_RAPCHIEUPHIM_TrangThai`]
+    `(len(ltrim(rtrim([URL])))>(0))` [name: `CK_HINHANH_RAPCHIEUPHIM_URL`]
+  }
+}
+
+Table dbo.PHONGCHIEU {
+  PhongID int [pk, increment, not null]
+  RapID int [not null]
+  TenPhong nvarchar(100) [not null]
+  LoaiPhong nvarchar(50) [not null, default: `(N'2D')`]
+  TrangThai nvarchar(50) [not null, default: `(N'Hoạt động')`]
+
+  indexes {
+    (RapID, TenPhong) [unique, name: `UQ_PHONGCHIEU_TenPhong`]
+    (RapID, TrangThai) [name: `IX_PHONGCHIEU_RapID`]
+  }
+
+  checks {
+    `([LoaiPhong]=N'ScreenX' OR [LoaiPhong]=N'4DX' OR [LoaiPhong]=N'IMAX' OR [LoaiPhong]=N'3D' OR [LoaiPhong]=N'2D')` [name: `CK_PHONGCHIEU_LoaiPhong`]
+    `([TrangThai]=N'Ngưng hoạt động' OR [TrangThai]=N'Bảo trì' OR [TrangThai]=N'Hoạt động')` [name: `CK_PHONGCHIEU_TrangThai`]
+  }
+}
+
+Table dbo.GHE {
+  GheID int [pk, increment, not null]
+  PhongID int [not null]
+  HangGhe varchar(10) [not null]
+  SoGhe int [not null]
+  LoaiGhe nvarchar(50) [not null, default: `(N'Thường')`]
+  TrangThai nvarchar(50) [not null, default: `(N'Hoạt động')`]
+
+  indexes {
+    (PhongID, HangGhe, SoGhe) [unique, name: `UQ_GHE_ViTri`]
+    (PhongID, LoaiGhe, TrangThai) [name: `IX_GHE_PhongID_LoaiGhe`]
+  }
+
+  checks {
+    `([LoaiGhe]=N'Đôi' OR [LoaiGhe]=N'Sweetbox' OR [LoaiGhe]=N'VIP' OR [LoaiGhe]=N'Thường')` [name: `CK_GHE_LoaiGhe`]
+    `([SoGhe]>(0))` [name: `CK_GHE_SoGhe`]
+    `([TrangThai]=N'Bảo trì' OR [TrangThai]=N'Hỏng' OR [TrangThai]=N'Hoạt động')` [name: `CK_GHE_TrangThai`]
+  }
+}
+
+Table dbo.PHIM {
+  PhimID int [pk, increment, not null]
+  TenPhim nvarchar(255) [not null]
+  ThoiLuong int [not null]
+  NgayKhoiChieu date [not null]
+  NgayKetThuc date
+  NgonNgu nvarchar(100)
+  PhuDe nvarchar(100)
+  DoTuoi nvarchar(20)
+  DaoDien nvarchar(150)
+  MoTa nvarchar(max)
+  PosterURL nvarchar(500)
+  TrailerURL nvarchar(500)
+  TrangThai nvarchar(50) [not null, default: `(N'Sắp chiếu')`]
+
+  indexes {
+    (TrangThai, NgayKhoiChieu) [name: `IX_PHIM_TrangThai`]
+  }
+
+  checks {
+    `([DoTuoi] IS NULL OR ([DoTuoi]=N'C' OR [DoTuoi]=N'T18' OR [DoTuoi]=N'T16' OR [DoTuoi]=N'T13' OR [DoTuoi]=N'K' OR [DoTuoi]=N'P'))` [name: `CK_PHIM_DoTuoi`]
+    `([NgayKetThuc] IS NULL OR [NgayKetThuc]>=[NgayKhoiChieu])` [name: `CK_PHIM_ThoiGian`]
+    `([ThoiLuong]>(0))` [name: `CK_PHIM_ThoiLuong`]
+    `([TrangThai]=N'Ngừng chiếu' OR [TrangThai]=N'Đang chiếu' OR [TrangThai]=N'Sắp chiếu')` [name: `CK_PHIM_TrangThai`]
+  }
+}
+
+Table dbo.THELOAI {
+  TheLoaiID int [pk, increment, not null]
+  TenTheLoai nvarchar(100) [not null]
+
+  indexes {
+    (TenTheLoai) [unique, name: `UQ_THELOAI_TenTheLoai`]
+  }
+}
+
+Table dbo.DIENVIEN {
+  DienVienID int [pk, increment, not null]
+  HoTen nvarchar(150) [not null]
+  NgaySinh date
+  QuocTich nvarchar(100)
+}
+
+Table dbo.PHIM_THELOAI {
+  PhimID int [not null]
+  TheLoaiID int [not null]
+
+  indexes {
+    (PhimID, TheLoaiID) [pk, name: `PK_PHIM_THELOAI`]
+  }
+}
+
+Table dbo.PHIM_DIENVIEN {
+  PhimID int [not null]
+  DienVienID int [not null]
+  VaiDien nvarchar(150)
+
+  indexes {
+    (PhimID, DienVienID) [pk, name: `PK_PHIM_DIENVIEN`]
+  }
+}
+
+Table dbo.SUATCHIEU {
+  SuatChieuID int [pk, increment, not null]
+  PhimID int [not null]
+  PhongID int [not null]
+  ThoiGianBatDau datetime2(7) [not null]
+  ThoiGianKetThuc datetime2(7) [not null]
+  DinhDang nvarchar(50) [not null, default: `(N'2D')`]
+  GiaVeCoBan decimal(18,2) [not null]
+  TrangThai nvarchar(50) [not null, default: `(N'Mở bán')`]
+
+  indexes {
+    (PhimID, ThoiGianBatDau, TrangThai) [name: `IX_SUATCHIEU_Phim_ThoiGian`]
+    (PhongID, ThoiGianBatDau, ThoiGianKetThuc) [name: `IX_SUATCHIEU_Phong_ThoiGian`]
+  }
+
+  checks {
+    `([DinhDang]=N'ScreenX' OR [DinhDang]=N'4DX' OR [DinhDang]=N'IMAX' OR [DinhDang]=N'3D' OR [DinhDang]=N'2D')` [name: `CK_SUATCHIEU_DinhDang`]
+    `([GiaVeCoBan]>=(0))` [name: `CK_SUATCHIEU_GiaVeCoBan`]
+    `([ThoiGianKetThuc]>[ThoiGianBatDau])` [name: `CK_SUATCHIEU_ThoiGian`]
+    `([TrangThai]=N'Hoàn thành' OR [TrangThai]=N'Đã hủy' OR [TrangThai]=N'Đóng bán' OR [TrangThai]=N'Mở bán')` [name: `CK_SUATCHIEU_TrangThai`]
+  }
+}
+
+Table dbo.BANGGIA {
+  GiaID int [pk, increment, not null]
+  RapID int [not null]
+  LoaiGhe nvarchar(50) [not null]
+  LoaiNgay nvarchar(50) [not null]
+  DinhDang nvarchar(50) [not null]
+  PhuThu decimal(18,2) [not null, default: `((0))`]
+  NgayBatDau date [not null]
+  NgayKetThuc date
+  TrangThai nvarchar(50) [not null, default: `(N'Áp dụng')`]
+
+  indexes {
+    (RapID, LoaiGhe, LoaiNgay, DinhDang, TrangThai, NgayBatDau, NgayKetThuc) [name: `IX_BANGGIA_Lookup`]
+  }
+
+  checks {
+    `([DinhDang]=N'Tất cả' OR [DinhDang]=N'ScreenX' OR [DinhDang]=N'4DX' OR [DinhDang]=N'IMAX' OR [DinhDang]=N'3D' OR [DinhDang]=N'2D')` [name: `CK_BANGGIA_DinhDang`]
+    `([LoaiGhe]=N'Tất cả' OR [LoaiGhe]=N'Đôi' OR [LoaiGhe]=N'Sweetbox' OR [LoaiGhe]=N'VIP' OR [LoaiGhe]=N'Thường')` [name: `CK_BANGGIA_LoaiGhe`]
+    `([LoaiNgay]=N'Tất cả' OR [LoaiNgay]=N'Cuối tuần' OR [LoaiNgay]=N'Ngày thường')` [name: `CK_BANGGIA_LoaiNgay`]
+    `([PhuThu]>=(0))` [name: `CK_BANGGIA_PhuThu`]
+    `([NgayKetThuc] IS NULL OR [NgayKetThuc]>=[NgayBatDau])` [name: `CK_BANGGIA_ThoiGian`]
+    `([TrangThai]=N'Tạm dừng' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Áp dụng')` [name: `CK_BANGGIA_TrangThai`]
+  }
+}
+
+Table dbo.DONDATVE {
+  DonDatVeID int [pk, increment, not null]
+  NguoiDungID int [not null]
+  SuatChieuID int [not null]
+  KhuyenMaiID int
+  NgayDat datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+  TongTienVe decimal(18,2) [not null, default: `((0))`]
+  TongTienDoAn decimal(18,2) [not null, default: `((0))`]
+  TienGiamGia decimal(18,2) [not null, default: `((0))`]
+  TrangThai nvarchar(50) [not null, default: `(N'Chờ thanh toán')`]
+  HanGiuCho datetime2(7)
+  LyDoHuy nvarchar(255)
+  ThongBaoHuy nvarchar(255)
+  DiemSuDung int [not null, default: `((0))`]
+
+  indexes {
+    (HanGiuCho) [name: `IX_DONDATVE_HanGiuCho`] // filtered: ([TrangThai]=N'Chờ thanh toán')
+    (KhuyenMaiID) [name: `IX_DONDATVE_KhuyenMai`] // filtered: ([KhuyenMaiID] IS NOT NULL)
+    (NguoiDungID, NgayDat) [name: `IX_DONDATVE_NguoiDung`]
+    (SuatChieuID, TrangThai) [name: `IX_DONDATVE_SuatChieu`]
+  }
+
+  checks {
+    `([DiemSuDung]>=(0))` [name: `CK_DONDATVE_DiemSuDung`]
+    `([TrangThai]<>N'Chờ thanh toán' OR [HanGiuCho] IS NOT NULL)` [name: `CK_DONDATVE_HanGiuCho`]
+    `([TienGiamGia]>=(0))` [name: `CK_DONDATVE_TienGiamGia`]
+    `([TienGiamGia]<=([TongTienVe]+[TongTienDoAn]))` [name: `CK_DONDATVE_TongGiam`]
+    `([TongTienDoAn]>=(0))` [name: `CK_DONDATVE_TongTienDoAn`]
+    `([TongTienVe]>=(0))` [name: `CK_DONDATVE_TongTienVe`]
+    `([TrangThai]=N'Hoàn thành' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Hoàn tiền' OR [TrangThai]=N'Đã hủy' OR [TrangThai]=N'Đã thanh toán' OR [TrangThai]=N'Chờ thanh toán')` [name: `CK_DONDATVE_TrangThai`]
+  }
+}
+
+Table dbo.CHITIETVE {
+  VeID int [pk, increment, not null]
+  DonDatVeID int [not null]
+  GheID int [not null]
+  GiaVe decimal(18,2) [not null]
+  MaVe varchar(100) [not null]
+  TrangThai nvarchar(50) [not null, default: `(N'Đã đặt')`]
+
+  indexes {
+    (MaVe) [unique, name: `UQ_CHITIETVE_MaVe`]
+    (DonDatVeID) [name: `IX_CHITIETVE_DonDatVe`]
+    (GheID, TrangThai) [name: `IX_CHITIETVE_GheID`]
+  }
+
+  checks {
+    `([GiaVe]>=(0))` [name: `CK_CHITIETVE_GiaVe`]
+    `([TrangThai]=N'Đã hủy' OR [TrangThai]=N'Đã sử dụng' OR [TrangThai]=N'Đã đặt')` [name: `CK_CHITIETVE_TrangThai`]
+  }
+}
+
+Table dbo.SANPHAM {
+  SanPhamID int [pk, increment, not null]
+  TenSanPham nvarchar(150) [not null]
+  LoaiSanPham nvarchar(50) [not null]
+  Gia decimal(18,2) [not null]
+  MoTa nvarchar(255)
+  HinhAnh nvarchar(500)
+  TrangThai nvarchar(50) [not null, default: `(N'Đang bán')`]
+
+  checks {
+    `([Gia]>=(0))` [name: `CK_SANPHAM_Gia`]
+    `([LoaiSanPham]=N'Khác' OR [LoaiSanPham]=N'Snack' OR [LoaiSanPham]=N'Combo' OR [LoaiSanPham]=N'Nước ngọt' OR [LoaiSanPham]=N'Bắp rang')` [name: `CK_SANPHAM_LoaiSanPham`]
+    `([TrangThai]=N'Ngừng bán' OR [TrangThai]=N'Hết hàng' OR [TrangThai]=N'Đang bán')` [name: `CK_SANPHAM_TrangThai`]
+  }
+}
+
+Table dbo.CHITIETDOAN {
+  ChiTietDoAnID int [pk, increment, not null]
+  DonDatVeID int [not null]
+  SanPhamID int [not null]
+  SoLuong int [not null]
+  DonGia decimal(18,2) [not null]
+
+  indexes {
+    (DonDatVeID, SanPhamID) [unique, name: `UQ_CHITIETDOAN_Don_SanPham`]
+  }
+
+  checks {
+    `([DonGia]>=(0))` [name: `CK_CHITIETDOAN_DonGia`]
+    `([SoLuong]>(0))` [name: `CK_CHITIETDOAN_SoLuong`]
+  }
+}
+
+Table dbo.KHUYENMAI {
+  KhuyenMaiID int [pk, increment, not null]
+  MaCode varchar(50) [not null]
+  MoTa nvarchar(255)
+  LoaiGiamGia nvarchar(20) [not null]
+  GiaTriGiam decimal(18,2) [not null]
+  DonHangToiThieu decimal(18,2) [not null, default: `((0))`]
+  GiamToiDa decimal(18,2)
+  NgayBatDau datetime2(7) [not null]
+  NgayKetThuc datetime2(7) [not null]
+  SoLuong int [not null]
+  SoLuongDaDung int [not null, default: `((0))`]
+  TrangThai nvarchar(50) [not null, default: `(N'Hoạt động')`]
+
+  indexes {
+    (MaCode) [unique, name: `UQ_KHUYENMAI_MaCode`]
+  }
+
+  checks {
+    `([DonHangToiThieu]>=(0))` [name: `CK_KHUYENMAI_DonHangToiThieu`]
+    `([GiamToiDa] IS NULL OR [GiamToiDa]>=(0))` [name: `CK_KHUYENMAI_GiamToiDa`]
+    `([GiaTriGiam]>(0))` [name: `CK_KHUYENMAI_GiaTriGiam`]
+    `([LoaiGiamGia]=N'FIXED' OR [LoaiGiamGia]=N'PERCENT' OR [LoaiGiamGia]=N'Số tiền' OR [LoaiGiamGia]=N'Phần trăm')` [name: `CK_KHUYENMAI_LoaiGiamGia`]
+    `(NOT ([LoaiGiamGia]=N'PERCENT' OR [LoaiGiamGia]=N'Phần trăm') OR [GiaTriGiam]<=(99))` [name: `CK_KHUYENMAI_PhanTram99`]
+    `([SoLuong]>=(0) AND [SoLuongDaDung]>=(0) AND [SoLuongDaDung]<=[SoLuong])` [name: `CK_KHUYENMAI_SoLuong`]
+    `([NgayKetThuc]>=[NgayBatDau])` [name: `CK_KHUYENMAI_ThoiGian`]
+    `([TrangThai]=N'Tạm dừng' OR [TrangThai]=N'Hết hạn' OR [TrangThai]=N'Hoạt động')` [name: `CK_KHUYENMAI_TrangThai`]
+  }
+}
+
+Table dbo.THANHTOAN {
+  ThanhToanID int [pk, increment, not null]
+  DonDatVeID int [not null]
+  PhuongThuc nvarchar(50) [not null]
+  NgayTao datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+  NgayThanhToan datetime2(7)
+  MaGiaoDich varchar(100)
+  TrangThai nvarchar(50) [not null, default: `(N'Đang xử lý')`]
+  GhiChu nvarchar(255)
+
+  indexes {
+    (DonDatVeID, TrangThai) [name: `IX_THANHTOAN_DonDatVe`]
+    (MaGiaoDich) [name: `UQ_THANHTOAN_MaGiaoDich`, unique] // filtered: ([MaGiaoDich] IS NOT NULL)
+  }
+
+  checks {
+    `([PhuongThuc]=N'TIEN_MAT' OR [PhuongThuc]=N'THE_QUOC_TE' OR [PhuongThuc]=N'THE_NOI_DIA' OR [PhuongThuc]=N'ZALOPAY' OR [PhuongThuc]=N'MOMO' OR [PhuongThuc]=N'VNPAY' OR [PhuongThuc]=N'DIEM')` [name: `CK_THANHTOAN_PhuongThuc`]
+    `([TrangThai]=N'Đã hoàn tiền' OR [TrangThai]=N'Thất bại' OR [TrangThai]=N'Thành công' OR [TrangThai]=N'Đang xử lý')` [name: `CK_THANHTOAN_TrangThai`]
+  }
+}
+
+Table dbo.BOITHUONG_HUYSUAT {
+  BoiThuongID int [pk, increment, not null]
+  DonDatVeID int [not null]
+  DiemBoiThuong int [not null]
+  NgayBoiThuong datetime2(7) [not null]
+  GhiChu nvarchar(255)
+
+  indexes {
+    (DonDatVeID) [unique, name: `UQ_BOITHUONG_HUYSUAT_Don`]
+  }
+
+  checks {
+    `([DiemBoiThuong]>=(0))` [name: `CK_BOITHUONG_HUYSUAT_Diem`]
+  }
+}
+
+Table dbo.DANHGIAPHIM {
+  DanhGiaID int [pk, increment, not null]
+  PhimID int [not null]
+  NguoiDungID int [not null]
+  SoSao int [not null]
+  NoiDung nvarchar(1000)
+  NgayDanhGia datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+
+  indexes {
+    (PhimID, NguoiDungID) [unique, name: `UQ_DANHGIAPHIM_Phim_User`]
+  }
+
+  checks {
+    `([SoSao]>=(1) AND [SoSao]<=(5))` [name: `CK_DANHGIAPHIM_SoSao`]
+  }
+}
+
+Table dbo.KHIEUNAI {
+  KhieuNaiID int [pk, increment, not null]
+  NguoiDungID int [not null]
+  DonDatVeID int
+  LoaiKhieuNai nvarchar(100) [not null]
+  TieuDe nvarchar(200) [not null]
+  NoiDung nvarchar(max) [not null]
+  MucDoUuTien nvarchar(50) [not null, default: `(N'Trung bình')`]
+  NgayTao datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+  TrangThai nvarchar(50) [not null, default: `(N'Mới')`]
+  NhanVienPhuTrachID int
+
+  indexes {
+    (DonDatVeID) [name: `IX_KHIEUNAI_DonDatVe`] // filtered: ([DonDatVeID] IS NOT NULL)
+    (NguoiDungID, TrangThai) [name: `IX_KHIEUNAI_NguoiDung`]
+    (NhanVienPhuTrachID, TrangThai) [name: `IX_KHIEUNAI_NhanVienPhuTrach`]
+    (TrangThai, MucDoUuTien, NgayTao) [name: `IX_KHIEUNAI_TrangThai`]
+  }
+
+  checks {
+    `([MucDoUuTien]=N'Khẩn cấp' OR [MucDoUuTien]=N'Cao' OR [MucDoUuTien]=N'Trung bình' OR [MucDoUuTien]=N'Thấp')` [name: `CK_KHIEUNAI_MucDoUuTien`]
+    `([TrangThai]=N'Từ chối' OR [TrangThai]=N'Đã đóng' OR [TrangThai]=N'Đã giải quyết' OR [TrangThai]=N'Đang xử lý' OR [TrangThai]=N'Mới')` [name: `CK_KHIEUNAI_TrangThai`]
+  }
+}
+
+Table dbo.TINNHAN_KHIEUNAI {
+  TinNhanID int [pk, increment, not null]
+  KhieuNaiID int [not null]
+  NguoiGuiID int [not null]
+  NoiDung nvarchar(max) [not null]
+  LoaiTinNhan nvarchar(50) [not null, default: `(N'Công khai')`]
+  ThoiGianGui datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+
+  indexes {
+    (KhieuNaiID, ThoiGianGui, TinNhanID) [name: `IX_TINNHAN_KHIEUNAI_KhieuNai_ThoiGian`]
+  }
+
+  checks {
+    `([LoaiTinNhan]=N'Công khai' OR [LoaiTinNhan]=N'Nội bộ')` [name: `CK_TINNHAN_KHIEUNAI_LoaiTinNhan`]
+    `(len(ltrim(rtrim([NoiDung])))>(0))` [name: `CK_TINNHAN_KHIEUNAI_NoiDung`]
+  }
+}
+
+Table dbo.XULY_KHIEUNAI {
+  XuLyID int [pk, increment, not null]
+  KhieuNaiID int [not null]
+  NguoiXuLyID int [not null]
+  NoiDungXuLy nvarchar(max) [not null]
+  NgayXuLy datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+  TrangThaiSauXuLy nvarchar(50) [not null]
+
+  indexes {
+    (KhieuNaiID, NgayXuLy) [name: `IX_XULY_KHIEUNAI_KhieuNai`]
+  }
+
+  checks {
+    `([TrangThaiSauXuLy]=N'Từ chối' OR [TrangThaiSauXuLy]=N'Đã đóng' OR [TrangThaiSauXuLy]=N'Đã giải quyết' OR [TrangThaiSauXuLy]=N'Đang xử lý')` [name: `CK_XULY_KHIEUNAI_TrangThaiSauXuLy`]
+  }
+}
+
+Table dbo.YEUCAU_CHUYENCAP {
+  YeuCauID int [pk, increment, not null]
+  KhieuNaiID int [not null]
+  NguoiYeuCauID int [not null]
+  LyDo nvarchar(500) [not null]
+  MucDoUuTien nvarchar(50) [not null, default: `(N'Trung bình')`]
+  AdminPhuTrachID int
+  TrangThai nvarchar(50) [not null, default: `(N'Chờ tiếp nhận')`]
+  ThoiGianGui datetime2(7) [not null, default: `([dbo].[fn_BayGio]())`]
+  ThoiGianTiepNhan datetime2(7)
+  KetQuaXuLy nvarchar(max)
+  ThoiGianHoanTat datetime2(7)
+
+  indexes {
+    (KhieuNaiID, ThoiGianGui) [name: `IX_YEUCAU_CHUYENCAP_KhieuNai`]
+    (TrangThai, MucDoUuTien, ThoiGianGui) [name: `IX_YEUCAU_CHUYENCAP_TrangThai_UuTien`]
+    (KhieuNaiID) [name: `UQ_YEUCAU_CHUYENCAP_ChoTiepNhan`, unique] // filtered: ([TrangThai]=N'Chờ tiếp nhận')
+    (KhieuNaiID) [name: `UQ_YEUCAU_CHUYENCAP_DangXuLy`, unique] // filtered: ([TrangThai]=N'Đang xử lý')
+  }
+
+  checks {
+    `(NOT ([TrangThai]=N'Từ chối' OR [TrangThai]=N'Đã giải quyết') OR [KetQuaXuLy] IS NOT NULL AND len(ltrim(rtrim([KetQuaXuLy])))>(0) AND [ThoiGianHoanTat] IS NOT NULL)` [name: `CK_YEUCAU_CHUYENCAP_KetQua`]
+    `(len(ltrim(rtrim([LyDo])))>(0))` [name: `CK_YEUCAU_CHUYENCAP_LyDo`]
+    `([MucDoUuTien]=N'Khẩn cấp' OR [MucDoUuTien]=N'Cao' OR [MucDoUuTien]=N'Trung bình' OR [MucDoUuTien]=N'Thấp')` [name: `CK_YEUCAU_CHUYENCAP_MucDoUuTien`]
+    `([ThoiGianHoanTat] IS NULL OR [ThoiGianTiepNhan] IS NOT NULL AND [ThoiGianHoanTat]>=[ThoiGianTiepNhan])` [name: `CK_YEUCAU_CHUYENCAP_ThoiGianHoanTat`]
+    `([ThoiGianTiepNhan] IS NULL OR [ThoiGianTiepNhan]>=[ThoiGianGui])` [name: `CK_YEUCAU_CHUYENCAP_ThoiGianTiepNhan`]
+    `([TrangThai]=N'Chờ tiếp nhận' OR [TrangThai]=N'Đang xử lý' OR [TrangThai]=N'Đã giải quyết' OR [TrangThai]=N'Từ chối')` [name: `CK_YEUCAU_CHUYENCAP_TrangThai`]
+  }
+}
+
+Ref FK_BANGGIA_Rap: dbo.BANGGIA.RapID > dbo.RAPCHIEUPHIM.RapID
+Ref FK_BOITHUONG_HUYSUAT_Don: dbo.BOITHUONG_HUYSUAT.DonDatVeID > dbo.DONDATVE.DonDatVeID
+Ref FK_CHITIETDOAN_DonDatVe: dbo.CHITIETDOAN.DonDatVeID > dbo.DONDATVE.DonDatVeID [delete: cascade]
+Ref FK_CHITIETDOAN_SanPham: dbo.CHITIETDOAN.SanPhamID > dbo.SANPHAM.SanPhamID
+Ref FK_CHITIETVE_DonDatVe: dbo.CHITIETVE.DonDatVeID > dbo.DONDATVE.DonDatVeID [delete: cascade]
+Ref FK_CHITIETVE_Ghe: dbo.CHITIETVE.GheID > dbo.GHE.GheID
+Ref FK_DANHGIAPHIM_NguoiDung: dbo.DANHGIAPHIM.NguoiDungID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_DANHGIAPHIM_Phim: dbo.DANHGIAPHIM.PhimID > dbo.PHIM.PhimID
+Ref FK_DONDATVE_KhuyenMai: dbo.DONDATVE.KhuyenMaiID > dbo.KHUYENMAI.KhuyenMaiID
+Ref FK_DONDATVE_NguoiDung: dbo.DONDATVE.NguoiDungID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_DONDATVE_SuatChieu: dbo.DONDATVE.SuatChieuID > dbo.SUATCHIEU.SuatChieuID
+Ref FK_GHE_Phong: dbo.GHE.PhongID > dbo.PHONGCHIEU.PhongID
+Ref FK_HINHANH_RAPCHIEUPHIM_Rap: dbo.HINHANH_RAPCHIEUPHIM.RapID > dbo.RAPCHIEUPHIM.RapID
+Ref FK_HOSOKHACHHANG_NguoiDung: dbo.HOSOKHACHHANG.NguoiDungID > dbo.NGUOIDUNG.NguoiDungID [delete: cascade]
+Ref FK_KHIEUNAI_DonDatVe: dbo.KHIEUNAI.DonDatVeID > dbo.DONDATVE.DonDatVeID
+Ref FK_KHIEUNAI_NguoiDung: dbo.KHIEUNAI.NguoiDungID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_KHIEUNAI_NhanVienPhuTrach: dbo.KHIEUNAI.NhanVienPhuTrachID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_NGUOIDUNG_VaiTro: dbo.NGUOIDUNG.VaiTroID > dbo.VAITRO.VaiTroID
+Ref FK_PHANCONG_RAP_NguoiDung: dbo.PHANCONG_RAP.NguoiDungID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_PHANCONG_RAP_Rap: dbo.PHANCONG_RAP.RapID > dbo.RAPCHIEUPHIM.RapID
+Ref FK_PHIM_DIENVIEN_DienVien: dbo.PHIM_DIENVIEN.DienVienID > dbo.DIENVIEN.DienVienID [delete: cascade]
+Ref FK_PHIM_DIENVIEN_Phim: dbo.PHIM_DIENVIEN.PhimID > dbo.PHIM.PhimID [delete: cascade]
+Ref FK_PHIM_THELOAI_Phim: dbo.PHIM_THELOAI.PhimID > dbo.PHIM.PhimID [delete: cascade]
+Ref FK_PHIM_THELOAI_TheLoai: dbo.PHIM_THELOAI.TheLoaiID > dbo.THELOAI.TheLoaiID [delete: cascade]
+Ref FK_PHONGCHIEU_Rap: dbo.PHONGCHIEU.RapID > dbo.RAPCHIEUPHIM.RapID
+Ref FK_SUATCHIEU_Phim: dbo.SUATCHIEU.PhimID > dbo.PHIM.PhimID
+Ref FK_SUATCHIEU_Phong: dbo.SUATCHIEU.PhongID > dbo.PHONGCHIEU.PhongID
+Ref FK_TINNHAN_KHIEUNAI_KhieuNai: dbo.TINNHAN_KHIEUNAI.KhieuNaiID > dbo.KHIEUNAI.KhieuNaiID
+Ref FK_TINNHAN_KHIEUNAI_NguoiGui: dbo.TINNHAN_KHIEUNAI.NguoiGuiID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_THANHTOAN_DonDatVe: dbo.THANHTOAN.DonDatVeID > dbo.DONDATVE.DonDatVeID
+Ref FK_VAITRO_QUYEN_Quyen: dbo.VAITRO_QUYEN.QuyenID > dbo.QUYEN.QuyenID [delete: cascade]
+Ref FK_VAITRO_QUYEN_VaiTro: dbo.VAITRO_QUYEN.VaiTroID > dbo.VAITRO.VaiTroID [delete: cascade]
+Ref FK_XULY_KHIEUNAI_KhieuNai: dbo.XULY_KHIEUNAI.KhieuNaiID > dbo.KHIEUNAI.KhieuNaiID [delete: cascade]
+Ref FK_XULY_KHIEUNAI_NguoiXuLy: dbo.XULY_KHIEUNAI.NguoiXuLyID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_YEUCAU_CHUYENCAP_AdminPhuTrach: dbo.YEUCAU_CHUYENCAP.AdminPhuTrachID > dbo.NGUOIDUNG.NguoiDungID
+Ref FK_YEUCAU_CHUYENCAP_KhieuNai: dbo.YEUCAU_CHUYENCAP.KhieuNaiID > dbo.KHIEUNAI.KhieuNaiID
+Ref FK_YEUCAU_CHUYENCAP_NguoiYeuCau: dbo.YEUCAU_CHUYENCAP.NguoiYeuCauID > dbo.NGUOIDUNG.NguoiDungID

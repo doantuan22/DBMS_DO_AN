@@ -105,7 +105,7 @@ export function ComplaintView({ adapter, state, controller }) {
       <PageHeader
         title="Khiếu nại Admin"
         description="Tra cứu hồ sơ toàn hệ thống theo quyền Admin; ghi nhận xử lý và lịch sử theo quyền được cấp."
-        breadcrumbs={[{ label: 'Admin', to: '/admin/overview' }, { label: 'Khiếu nại' }]}
+        breadcrumbs={[{ label: 'Admin', to: '/admin' }, { label: 'Khiếu nại' }]}
       />
       {state.notice && (
         <p

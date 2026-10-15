@@ -130,8 +130,8 @@ export default function AdminShell({ portal = 'admin', children }) {
   const brand = (
     <Link
       className="admin-brand"
-      to={isManager ? '/manager/overview' : '/admin/overview'}
-      aria-label={`CinemaStar · ${isManager ? 'Quản lý' : 'Tổng quan'}`}
+      to={isManager ? '/manager' : '/admin'}
+      aria-label={`CinemaStar · ${isManager ? 'Quản lý' : 'Quản trị'}`}
     >
       <span className="admin-brand__symbol">
         <AdminIcon name={isManager ? 'grid' : 'videos'} />
@@ -232,10 +232,6 @@ export default function AdminShell({ portal = 'admin', children }) {
                   <p className="admin-account-dropdown__name">{userName}</p>
                   <p className="admin-account-dropdown__role">{defaultRoleTitle}</p>
                 </div>
-                <Link to="/profile">
-                  <AdminIcon name="user-circle" />
-                  Hồ sơ cá nhân
-                </Link>
                 <button type="button" className="admin-logout-btn" onClick={logout}>
                   <AdminIcon name="logout" />
                   Đăng xuất

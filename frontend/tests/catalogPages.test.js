@@ -5,6 +5,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { createServer } from 'vite';
+import { businessDate } from '../src/utils/dateTime.js';
 
 let vite;
 let Home;
@@ -130,7 +131,8 @@ test('movie detail and selected-showtime route render loading shells for guests'
   assert.match(booking, /Đang xác nhận suất chiếu/);
 });
 
-test('cinema/date selectors render API-backed choices and showtime selection carries its ID', () => {
+test('cinema/date rail uses API-backed choices and showtime selection carries its ID', () => {
+  const today = businessDate();
   const html = render(
     React.createElement(
       MemoryRouter,
@@ -138,7 +140,7 @@ test('cinema/date selectors render API-backed choices and showtime selection car
       React.createElement(ShowtimeBrowser, {
         cinemas: [{ id: 9, name: 'Cinema Nine', city: 'Hanoi' }],
         cinemaId: '9',
-        date: '2026-09-30',
+        date: today,
         onCinemaChange() {},
         onDateChange() {},
         state: {
@@ -146,7 +148,8 @@ test('cinema/date selectors render API-backed choices and showtime selection car
           data: [
             {
               id: 73,
-              startsAt: '2026-09-30T12:30:00.000Z',
+              startsAt: `${today}T12:30:00.000Z`,
+              date: today,
               endsAt: '2026-09-30T14:00:00.000Z',
               cinemaName: 'Cinema Nine',
               roomName: 'Room A',
@@ -159,7 +162,8 @@ test('cinema/date selectors render API-backed choices and showtime selection car
     ),
   );
   assert.match(html, /<option value="9" selected="">Cinema Nine/);
-  assert.match(html, /type="date" value="2026-09-30"/);
+  assert.match(html, /aria-label="Các ngày có suất chiếu"/);
+  assert.match(html, /aria-pressed="true"/);
   assert.match(html, /href="\/booking\/73"/);
 });
 

@@ -51,7 +51,7 @@ export default function ManagerPortal({ routeSection }) {
         title={route.label}
         breadcrumbs={
           routeSection
-            ? [{ label: 'Manager', to: '/manager/overview' }, { label: route.label }]
+            ? [{ label: 'Manager', to: '/manager' }, { label: route.label }]
             : []
         }
       />
@@ -297,19 +297,6 @@ function ManagerWorkspace({ cinemaId, user, section, store }) {
             .map(([name, section]) => (
               <ErrorState key={name} error={section.error} onRetry={load} />
             ))}
-          {(!section || section === 'overview') &&
-            can('XEM_BAO_CAO_RAP') &&
-            data.sections.dashboard?.status === 'success' && (
-              <section className="catalog-section" id="manager-overview">
-                <h2>Dashboard</h2>
-                <p>
-                  Phòng hoạt động: {data.sections.dashboard.data.dashboard?.activeRooms ?? 0} · Ghế:{' '}
-                  {data.sections.dashboard.data.dashboard?.activeSeats ?? 0} · Suất hôm nay:{' '}
-                  {data.sections.dashboard.data.dashboard?.showtimesToday ?? 0} · Đơn đã thanh toán
-                  hôm nay: {data.sections.dashboard.data.dashboard?.paidOrdersToday ?? 0}
-                </p>
-              </section>
-            )}
           {(!section || section === 'rooms') && can('QL_PHONG') && (
             <section className="catalog-section" aria-label="Phòng chiếu" id="manager-rooms">
               <h2>Phòng chiếu</h2>

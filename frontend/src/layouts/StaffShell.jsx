@@ -3,77 +3,13 @@ import { flushSync } from 'react-dom';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ROLES } from '../constants/roles';
-import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization';
+import { userCanAct } from '../utils/authorization';
 import { StaffShellContext } from './StaffShellContext';
-import { ADMIN_SECTION_ROUTES } from '../routes/adminSectionRoutes';
-import { MANAGER_SECTION_ROUTES, resolveManagerSection } from '../routes/managerSectionRoutes';
 import AdminShell from './AdminShell';
-
-const adminNavItem = (key) => ({
-  key,
-  ...ADMIN_SECTION_ROUTES[key],
-  to: ADMIN_SECTION_ROUTES[key].path,
-});
-
-const ADMIN_GROUPS = [
-  {
-    label: 'Tổng quan',
-    items: [adminNavItem('dashboard')],
-  },
-  {
-    label: 'Tài khoản & phân công',
-    items: [adminNavItem('users'), adminNavItem('assignments')],
-  },
-  {
-    label: 'Rạp & cơ sở vật chất',
-    items: [
-      adminNavItem('cinemas'),
-      adminNavItem('cinemaImages'),
-      adminNavItem('rooms'),
-      adminNavItem('seats'),
-    ],
-  },
-  {
-    label: 'Nội dung',
-    items: [adminNavItem('movies'), adminNavItem('genres'), adminNavItem('actors')],
-  },
-  {
-    label: 'Kinh doanh & vận hành',
-    items: [
-      adminNavItem('products'),
-      adminNavItem('promotions'),
-      adminNavItem('pricing'),
-      adminNavItem('showtimes'),
-      adminNavItem('bookings'),
-    ],
-  },
-  {
-    label: 'Chăm sóc & báo cáo',
-    items: [adminNavItem('complaints'), adminNavItem('revenue')],
-  },
-];
-
-const managerNavItem = (key, label) => ({
-  key,
-  ...MANAGER_SECTION_ROUTES[key],
-  label: label ?? MANAGER_SECTION_ROUTES[key].label,
-  to: MANAGER_SECTION_ROUTES[key].path,
-});
-const MANAGER_GROUPS = [
-  { label: 'Tổng quan', items: [managerNavItem('overview', 'Dashboard')] },
-  {
-    label: 'Cơ sở vật chất',
-    items: [managerNavItem('rooms', 'Phòng'), managerNavItem('seats')],
-  },
-  {
-    label: 'Lịch chiếu & giá',
-    items: [managerNavItem('showtimes'), managerNavItem('pricing'), managerNavItem('bookings')],
-  },
-  { label: 'Báo cáo', items: [managerNavItem('revenue')] },
-];
 
 const SUPPORT_GROUPS = [
   { label: 'Khiếu nại', items: [{ key: 'queue', label: 'Hàng chờ', to: '/support/complaints' }] },
+  { label: 'Tài khoản', items: [{ key: 'profile', label: 'Hồ sơ', to: '/profile' }] },
 ];
 
 const PORTAL_LABELS = {
@@ -82,26 +18,13 @@ const PORTAL_LABELS = {
   support: 'Chăm sóc khách hàng',
 };
 
-function groupsForUser(portal, user) {
-  const groups =
-    portal === 'admin'
-      ? ADMIN_GROUPS.map((group) => ({
-          ...group,
-          items: group.items.filter((item) =>
-            userCanAct(user, ROLES.ADMIN, ADMIN_SECTION_PERMISSIONS[item.key]),
-          ),
-        }))
-      : portal === 'manager'
-        ? MANAGER_GROUPS.map((group) => ({
-            ...group,
-            items: group.items.filter((item) => userCanAct(user, ROLES.MANAGER, item.permission)),
-          }))
-        : SUPPORT_GROUPS.map((group) => ({
-            ...group,
-            items: group.items.filter(() => userCanAct(user, ROLES.SUPPORT, 'QL_KHIEUNAI')),
-          }));
-
-  return groups.filter((group) => group.items.length > 0);
+function groupsForUser(user) {
+  return SUPPORT_GROUPS.map((group) => ({
+    ...group,
+    items: group.items.filter(
+      (item) => item.key === 'profile' || userCanAct(user, ROLES.SUPPORT, 'QL_KHIEUNAI'),
+    ),
+  })).filter((group) => group.items.length > 0);
 }
 
 function navItemClass(active) {
@@ -137,7 +60,7 @@ export default function StaffShell({ portal, children }) {
 function LegacyStaffShell({ portal, children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
-  const groups = groupsForUser(portal, user);
+  const groups = groupsForUser(user);
   const [isMobile, setIsMobile] = useState(mobileViewportMatches);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuToggleRef = useRef(null);
@@ -321,7 +244,10 @@ function LegacyStaffShell({ portal, children }) {
                           ? location.pathname === item.to
                           : portal === 'manager'
                             ? resolveManagerSection(location.pathname) === item.key
-                            : item.key === 'queue';
+                            : item.key === 'queue'
+                              ? location.pathname === '/support' ||
+                                location.pathname.startsWith('/support/complaints')
+                              : location.pathname === item.to;
                       const className = navItemClass(active);
                       return (
                         <li key={item.key}>

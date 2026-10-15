@@ -29,6 +29,5 @@ export const createPricing = (cinemaId, body) =>
   request(`/manager/cinemas/${id(cinemaId)}/pricing`, { method: 'POST', body });
 export const updatePricing = (pricingId, body) =>
   request(`/manager/pricing/${id(pricingId)}`, { method: 'PUT', body });
-export const getDashboard = (cinemaId) => request(`/manager/cinemas/${id(cinemaId)}/dashboard`);
 export const getRevenue = (cinemaId, query = '') =>
   request(`/manager/cinemas/${id(cinemaId)}/revenue${query}`);
