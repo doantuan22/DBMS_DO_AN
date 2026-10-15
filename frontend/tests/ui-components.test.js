@@ -68,6 +68,32 @@ test('FilterBar keeps draft and applied filter state external and renders only s
   assert.match(html, /type="submit"/);
 });
 
+test('FilterBar derives removable chips from applied schema keys and keeps lookup labels out of chips', () => {
+  const html = render(FilterBar, {
+    schema: [
+      { key: 'status', label: 'Trạng thái' },
+      {
+        key: 'roleId',
+        label: 'Vai trò',
+        format: (id) => (id === '7' ? 'Quản lý rạp' : 'Vai trò đã chọn'),
+      },
+      { key: 'search', label: 'Tìm kiếm' },
+    ],
+    draft: { status: 'Bị khóa', roleId: '', search: 'draft@example.test' },
+    applied: { status: 'Hoạt động', roleId: '7', search: '' },
+    onApply() {},
+    onReset() {},
+    onRemoveFilter() {},
+    resultCount: 12,
+    children: React.createElement('input', { name: 'filter', readOnly: true }),
+  });
+  assert.match(html, /aria-label="Xóa bộ lọc Trạng thái"/);
+  assert.match(html, /<span>Trạng thái:<\/span> Hoạt động/);
+  assert.match(html, /<span>Vai trò:<\/span> Quản lý rạp/);
+  assert.doesNotMatch(html, /roleId|draft@example\.test|>7</);
+  assert.match(html, /12 kết quả phù hợp/);
+});
+
 test('ResourceTable renders STT instead of implicit row IDs and server-backed pagination', () => {
   const html = render(ResourceTable, {
     caption: 'Resources',

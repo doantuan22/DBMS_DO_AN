@@ -20,23 +20,41 @@ export default function AdminEscalationModule({ currentUser }) {
   const [resolutionText, setResolutionText] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [notice, setNotice] = useState(null);
-  const mounted = useRef(true);
+  const mounted = useRef(false);
+  const listGeneration = useRef(0);
+  const detailGeneration = useRef(0);
+  const selectedIdRef = useRef(null);
+  const listInFlight = useRef(false);
+  const resolutionDrafts = useRef(new Map());
 
-  const loadList = useCallback(async () => {
-    try {
-      const params = {};
-      if (statusFilter) params.status = statusFilter;
-      if (priorityFilter) params.priority = priorityFilter;
-      const res = await adminApi.escalations(params);
-      if (mounted.current && res.escalations) {
-        setEscalations(res.escalations);
+  const loadList = useCallback(
+    async ({ poll = false } = {}) => {
+      if (poll && listInFlight.current) return;
+      const generation = ++listGeneration.current;
+      listInFlight.current = true;
+      setLoading(true);
+      setError(null);
+      try {
+        const params = {};
+        if (statusFilter) params.status = statusFilter;
+        if (priorityFilter) params.priority = priorityFilter;
+        const res = await adminApi.escalations(params);
+        if (!Array.isArray(res?.escalations))
+          throw new Error('Danh sách yêu cầu chuyển cấp trả về không hợp lệ.');
+        if (mounted.current && generation === listGeneration.current && res.escalations) {
+          setEscalations(res.escalations);
+        }
+      } catch (err) {
+        if (mounted.current && generation === listGeneration.current) setError(err);
+      } finally {
+        if (mounted.current && generation === listGeneration.current) {
+          listInFlight.current = false;
+          setLoading(false);
+        }
       }
-    } catch (err) {
-      if (mounted.current) setError(err);
-    } finally {
-      if (mounted.current) setLoading(false);
-    }
-  }, [statusFilter, priorityFilter]);
+    },
+    [statusFilter, priorityFilter],
+  );
 
   useEffect(() => {
     mounted.current = true;
@@ -44,42 +62,70 @@ export default function AdminEscalationModule({ currentUser }) {
     void loadList();
     // Poll every 5s for real-time awareness of incoming CSKH escalations
     const timer = setInterval(() => {
-      void loadList();
+      void loadList({ poll: true });
     }, 5000);
     return () => {
       mounted.current = false;
+      listGeneration.current++;
+      detailGeneration.current++;
       clearInterval(timer);
     };
   }, [loadList]);
 
   const loadDetail = async (id) => {
+    const generation = ++detailGeneration.current;
+    selectedIdRef.current = id;
     setSelectedId(id);
     setDetailLoading(true);
     setNotice(null);
     try {
       const res = await adminApi.escalation(id);
-      if (mounted.current) {
+      if (String(res?.escalation?.id) !== String(id))
+        throw new Error('Hồ sơ trả về không khớp yêu cầu đã chọn.');
+      if (
+        mounted.current &&
+        generation === detailGeneration.current &&
+        selectedIdRef.current === id
+      ) {
         setDetail(res);
-        setResolutionText(res.escalation?.resolution || '');
+        setResolutionText(
+          resolutionDrafts.current.has(id)
+            ? resolutionDrafts.current.get(id)
+            : res.escalation?.result || '',
+        );
       }
     } catch (err) {
-      if (mounted.current) setNotice({ ok: false, text: err.message });
+      if (
+        mounted.current &&
+        generation === detailGeneration.current &&
+        selectedIdRef.current === id
+      )
+        setNotice({ ok: false, text: err.message });
     } finally {
-      if (mounted.current) setDetailLoading(false);
+      if (
+        mounted.current &&
+        generation === detailGeneration.current &&
+        selectedIdRef.current === id
+      )
+        setDetailLoading(false);
     }
   };
 
   const handleClaim = async () => {
     if (!selectedId || submitting) return;
+    const targetId = selectedId;
     setSubmitting(true);
     setNotice(null);
     try {
-      await adminApi.claimEscalation(selectedId);
+      await adminApi.claimEscalation(targetId);
       await loadList();
-      await loadDetail(selectedId);
-      setNotice({ ok: true, text: 'Đã tiếp nhận yêu cầu chuyển cấp thành công.' });
+      if (selectedIdRef.current === targetId) {
+        await loadDetail(targetId);
+        setNotice({ ok: true, text: 'Đã tiếp nhận yêu cầu chuyển cấp thành công.' });
+      }
     } catch (err) {
-      setNotice({ ok: false, text: err.message || 'Không thể tiếp nhận yêu cầu.' });
+      if (selectedIdRef.current === targetId)
+        setNotice({ ok: false, text: err.message || 'Không thể tiếp nhận yêu cầu.' });
     } finally {
       if (mounted.current) setSubmitting(false);
     }
@@ -87,28 +133,43 @@ export default function AdminEscalationModule({ currentUser }) {
 
   const handleProcess = async (nextStatus) => {
     if (!selectedId || !resolutionText.trim() || submitting) return;
+    const targetId = selectedId;
     setSubmitting(true);
     setNotice(null);
     try {
-      await adminApi.processEscalation(selectedId, {
+      await adminApi.processEscalation(targetId, {
         conclusion: resolutionText.trim(),
         resolution: resolutionText.trim(),
         status: nextStatus,
       });
+      resolutionDrafts.current.delete(targetId);
       await loadList();
-      await loadDetail(selectedId);
-      setNotice({
-        ok: true,
-        text: `Đã cập nhật kết luận xử lý (${nextStatus}).`,
-      });
+      if (selectedIdRef.current === targetId) {
+        await loadDetail(targetId);
+        setNotice({
+          ok: true,
+          text: `Đã cập nhật kết luận xử lý (${nextStatus}).`,
+        });
+      }
     } catch (err) {
-      setNotice({ ok: false, text: err.message || 'Không thể cập nhật kết quả.' });
+      if (selectedIdRef.current === targetId)
+        setNotice({ ok: false, text: err.message || 'Không thể cập nhật kết quả.' });
     } finally {
       if (mounted.current) setSubmitting(false);
     }
   };
 
+  const closeDetail = () => {
+    detailGeneration.current++;
+    selectedIdRef.current = null;
+    setSelectedId(null);
+    setDetail(null);
+    setDetailLoading(false);
+    setNotice(null);
+  };
+
   const pendingCount = escalations.filter((e) => e.status === 'Chờ tiếp nhận').length;
+  const hasActiveFilters = Boolean(statusFilter || priorityFilter);
 
   return (
     <div className="admin-escalations" style={{ display: 'grid', gap: '1rem' }}>
@@ -147,8 +208,17 @@ export default function AdminEscalationModule({ currentUser }) {
       </div>
 
       {notice && (
-        <p className={notice.ok ? 'form-success' : 'form-error'} role={notice.ok ? 'status' : 'alert'}>
+        <p
+          className={notice.ok ? 'form-success' : 'form-error'}
+          role={notice.ok ? 'status' : 'alert'}
+        >
           {notice.text}
+        </p>
+      )}
+
+      {error && (
+        <p className="form-error" role="alert">
+          {error.message || 'Không thể tải yêu cầu chuyển cấp.'}
         </p>
       )}
 
@@ -165,7 +235,11 @@ export default function AdminEscalationModule({ currentUser }) {
         }}
       >
         <FormField label="Lọc trạng thái">
-          <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+          <Select
+            value={statusFilter}
+            disabled={submitting}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
             <option value="">Tất cả trạng thái</option>
             {statuses.map((s) => (
               <option key={s} value={s}>
@@ -175,7 +249,11 @@ export default function AdminEscalationModule({ currentUser }) {
           </Select>
         </FormField>
         <FormField label="Lọc mức ưu tiên">
-          <Select value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value)}>
+          <Select
+            value={priorityFilter}
+            disabled={submitting}
+            onChange={(e) => setPriorityFilter(e.target.value)}
+          >
             <option value="">Tất cả mức ưu tiên</option>
             {priorities.map((p) => (
               <option key={p} value={p}>
@@ -184,6 +262,47 @@ export default function AdminEscalationModule({ currentUser }) {
             ))}
           </Select>
         </FormField>
+        <Button
+          type="button"
+          variant="secondary"
+          disabled={!hasActiveFilters || submitting}
+          onClick={() => {
+            setStatusFilter('');
+            setPriorityFilter('');
+          }}
+        >
+          Xóa lọc
+        </Button>
+        {hasActiveFilters && (
+          <ul className="ui-filter-bar__chips" aria-label="Bộ lọc đang áp dụng">
+            {statusFilter && (
+              <li key="status">
+                <button
+                  className="ui-filter-bar__chip"
+                  type="button"
+                  aria-label="Xóa bộ lọc trạng thái"
+                  onClick={() => setStatusFilter('')}
+                >
+                  <span>Trạng thái:</span> {statusFilter}
+                  <span aria-hidden="true"> ×</span>
+                </button>
+              </li>
+            )}
+            {priorityFilter && (
+              <li key="priority">
+                <button
+                  className="ui-filter-bar__chip"
+                  type="button"
+                  aria-label="Xóa bộ lọc ưu tiên"
+                  onClick={() => setPriorityFilter('')}
+                >
+                  <span>Ưu tiên:</span> {priorityFilter}
+                  <span aria-hidden="true"> ×</span>
+                </button>
+              </li>
+            )}
+          </ul>
+        )}
       </div>
 
       {/* Main split view */}
@@ -211,7 +330,9 @@ export default function AdminEscalationModule({ currentUser }) {
           ) : escalations.length === 0 ? (
             <p className="catalog-muted">Không có yêu cầu chuyển cấp nào phù hợp.</p>
           ) : (
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.5rem' }}>
+            <ul
+              style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.5rem' }}
+            >
               {escalations.map((item) => (
                 <li key={item.id}>
                   <Button
@@ -224,17 +345,29 @@ export default function AdminEscalationModule({ currentUser }) {
                       padding: '0.75rem',
                       border: '1px solid var(--color-border)',
                       borderRadius: 'var(--radius-md)',
-                      background: selectedId === item.id ? 'var(--color-primary-subtle, #eff6ff)' : 'transparent',
-                      borderColor: selectedId === item.id ? 'var(--color-primary)' : 'var(--color-border)',
+                      background:
+                        selectedId === item.id
+                          ? 'var(--color-primary-subtle, #eff6ff)'
+                          : 'transparent',
+                      borderColor:
+                        selectedId === item.id ? 'var(--color-primary)' : 'var(--color-border)',
                     }}
                     onClick={() => loadDetail(item.id)}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
                       <strong>Yêu cầu #{item.id}</strong>
                       <StatusBadge status={item.status} />
                     </div>
                     <div style={{ fontSize: '0.935rem' }}>
-                      <span>Khiếu nại: #{item.complaintId} · {item.complaintTitle}</span>
+                      <span>
+                        Khiếu nại: #{item.complaintId} · {item.complaintTitle}
+                      </span>
                     </div>
                     <div style={{ fontSize: '0.88rem', color: 'var(--color-text-muted)' }}>
                       <span>Lý do: {item.reason}</span>
@@ -247,7 +380,9 @@ export default function AdminEscalationModule({ currentUser }) {
                         color: 'var(--color-text-muted)',
                       }}
                     >
-                      <span>Ưu tiên: <strong>{item.priority}</strong></span>
+                      <span>
+                        Ưu tiên: <strong>{item.priority}</strong>
+                      </span>
                       <span>Từ: {item.requesterName}</span>
                       <span>{formatDateTime(item.createdAt)}</span>
                     </div>
@@ -278,9 +413,11 @@ export default function AdminEscalationModule({ currentUser }) {
               <p className="catalog-muted">Chọn một yêu cầu để xem chi tiết.</p>
             ) : (
               <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                >
                   <h3 style={{ margin: 0 }}>Chi tiết yêu cầu #{detail.escalation.id}</h3>
-                  <Button variant="secondary" size="sm" onClick={() => setSelectedId(null)}>
+                  <Button variant="secondary" size="sm" onClick={closeDetail}>
                     Đóng
                   </Button>
                 </div>
@@ -297,9 +434,13 @@ export default function AdminEscalationModule({ currentUser }) {
                   }}
                 >
                   <StatusBadge status={detail.escalation.status} />
-                  <span>Ưu tiên: <strong>{detail.escalation.priority}</strong></span>
-                  <span>Người gửi: <strong>{detail.escalation.requesterName}</strong></span>
-                  <span>Gửi lúc: {formatDateTime(detail.escalation.createdAt)}</span>
+                  <span>
+                    Ưu tiên: <strong>{detail.escalation.priority}</strong>
+                  </span>
+                  <span>
+                    Người gửi: <strong>{detail.escalation.requesterName}</strong>
+                  </span>
+                  <span>Gửi lúc: {formatDateTime(detail.escalation.submittedAt)}</span>
                 </div>
 
                 <div>
@@ -317,11 +458,22 @@ export default function AdminEscalationModule({ currentUser }) {
                       background: '#fafafa',
                     }}
                   >
-                    <h4 style={{ margin: '0 0 0.5rem' }}>Hồ sơ khiếu nại gốc #{detail.complaint.id}</h4>
+                    <h4 style={{ margin: '0 0 0.5rem' }}>
+                      Hồ sơ khiếu nại gốc #{detail.complaint.id}
+                    </h4>
                     <p style={{ margin: '0.25rem 0', fontWeight: 600 }}>{detail.complaint.title}</p>
-                    <p style={{ margin: '0.25rem 0', fontSize: '0.935rem' }}>{detail.complaint.content}</p>
-                    <p style={{ margin: '0.25rem 0', fontSize: '0.88rem', color: 'var(--color-text-muted)' }}>
-                      Khách hàng: {detail.complaint.senderName} · Loại: {detail.complaint.type} · Trạng thái: {detail.complaint.status}
+                    <p style={{ margin: '0.25rem 0', fontSize: '0.935rem' }}>
+                      {detail.complaint.content}
+                    </p>
+                    <p
+                      style={{
+                        margin: '0.25rem 0',
+                        fontSize: '0.88rem',
+                        color: 'var(--color-text-muted)',
+                      }}
+                    >
+                      Khách hàng: {detail.complaint.senderName} · Loại: {detail.complaint.type} ·
+                      Trạng thái: {detail.complaint.status}
                     </p>
                   </div>
                 )}
@@ -343,8 +495,16 @@ export default function AdminEscalationModule({ currentUser }) {
                             fontSize: '0.935rem',
                           }}
                         >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.825rem' }}>
-                            <strong>{m.senderName} {m.isInternal ? '(Nội bộ)' : ''}</strong>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              fontSize: '0.825rem',
+                            }}
+                          >
+                            <strong>
+                              {m.senderName} {m.isInternal ? '(Nội bộ)' : ''}
+                            </strong>
                             <span>{formatDateTime(m.createdAt)}</span>
                           </div>
                           <p style={{ margin: '0.25rem 0 0' }}>{m.content}</p>
@@ -377,7 +537,8 @@ export default function AdminEscalationModule({ currentUser }) {
                   {detail.escalation.status === 'Đang xử lý' && (
                     <div style={{ display: 'grid', gap: '0.75rem' }}>
                       <p style={{ fontSize: '0.935rem', margin: 0 }}>
-                        Admin đang tiếp nhận: <strong>{detail.escalation.adminName || 'Tôi'}</strong>
+                        Admin đang tiếp nhận:{' '}
+                        <strong>{detail.escalation.adminName || 'Tôi'}</strong>
                       </p>
                       <FormField label="Kết luận xử lý / Chỉ đạo cho CSKH" required>
                         <textarea
@@ -386,7 +547,11 @@ export default function AdminEscalationModule({ currentUser }) {
                           placeholder="Nhập quyết định xử lý, phương án bồi hoàn điểm, hoặc chỉ đạo nghiệp vụ..."
                           value={resolutionText}
                           disabled={submitting}
-                          onChange={(e) => setResolutionText(e.target.value)}
+                          onChange={(e) => {
+                            setResolutionText(e.target.value);
+                            if (selectedIdRef.current != null)
+                              resolutionDrafts.current.set(selectedIdRef.current, e.target.value);
+                          }}
                         />
                       </FormField>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -410,7 +575,8 @@ export default function AdminEscalationModule({ currentUser }) {
                     </div>
                   )}
 
-                  {(detail.escalation.status === 'Đã giải quyết' || detail.escalation.status === 'Từ chối') && (
+                  {(detail.escalation.status === 'Đã giải quyết' ||
+                    detail.escalation.status === 'Từ chối') && (
                     <div
                       style={{
                         padding: '0.75rem',
@@ -422,9 +588,10 @@ export default function AdminEscalationModule({ currentUser }) {
                       <p style={{ margin: 0, fontWeight: 600 }}>
                         Kết luận xử lý ({detail.escalation.status}):
                       </p>
-                      <p style={{ margin: '0.25rem 0' }}>{detail.escalation.resolution}</p>
+                      <p style={{ margin: '0.25rem 0' }}>{detail.escalation.result}</p>
                       <span style={{ fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
-                        Admin: {detail.escalation.adminName} · Hoàn tất lúc: {formatDateTime(detail.escalation.resolvedAt)}
+                        Admin: {detail.escalation.adminName} · Hoàn tất lúc:{' '}
+                        {formatDateTime(detail.escalation.completedAt)}
                       </span>
                     </div>
                   )}

@@ -174,7 +174,7 @@ export const adminScenarios = [
 
   {
     id: 'E2E-ADM-COMMERCE',
-    title: 'ADM-11/12 product and promotion: create → edit → delete; a promotion in use cannot be deleted',
+    title: 'ADM-11/12 product filters and CRUD; promotion validation',
     async run({ page, origin, pool, RUN, assert }) {
       await uiLogin(page, origin, ACCOUNTS.admin);
       await page.goto(`${origin}/admin/commerce/products`);
@@ -194,6 +194,19 @@ export const adminScenarios = [
       await dialog.getByRole('button', { name: 'Lưu thay đổi' }).click();
       await confirmSave(page);
       await expectPoll(async () => Number(await scalar(pool, 'SELECT Gia FROM dbo.SANPHAM WHERE SanPhamID = @id', { id: row.SanPhamID })) === 64000, { message: 'price not updated' });
+
+      const priceFilter = page.locator('.product-filters__price');
+      await priceFilter.locator('summary').click();
+      await page.getByLabel('Giá từ').fill('63000');
+      await priceFilter.getByRole('button', { name: 'Xong' }).click();
+      await page.getByRole('button', { name: 'Lọc', exact: true }).click();
+      const minimumChip = page.getByRole('button', { name: 'Xóa bộ lọc Giá từ' });
+      await minimumChip.waitFor({ state: 'visible' });
+      assert.equal(await rowOf(page, product).count(), 1, 'applied minimum price keeps the matching product');
+      await minimumChip.click();
+      await minimumChip.waitFor({ state: 'detached' });
+      assert.equal(await rowOf(page, product).count(), 1, 'removing the chip clears only the applied minimum');
+
       await page.getByRole('button', { name: `Xóa ${product}` }).click();
       await confirmSave(page);
       await expectPoll(async () => (await scalar(pool, 'SELECT COUNT(*) FROM dbo.SANPHAM WHERE SanPhamID = @id', { id: row.SanPhamID })) === 0, { message: 'product not deleted' });
@@ -331,8 +344,8 @@ export const adminScenarios = [
 
       // ---- cancel showtime (admin) then the room keeps history → deactivated, cinema kept
       await page.goto(`${origin}/admin/operations/showtimes?cinemaId=${cinemaRow.RapID}`);
-      await page.getByLabel('Từ ngày').fill(date);
-      await page.getByLabel('Đến ngày').fill(date);
+      await page.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
+      await page.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
       await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await page.getByRole('button', { name: /^Hủy / }).first().click();
       await page.getByRole('dialog').getByRole('button', { name: 'Hủy suất chiếu' }).click();

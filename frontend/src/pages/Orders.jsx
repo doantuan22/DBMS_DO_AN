@@ -64,6 +64,7 @@ function OwnOrders() {
         }
       />
       <FilterBar
+        showChips={false}
         schema={[
           { key: 'search', label: 'Tìm kiếm' },
           { key: 'status', label: 'Trạng thái' },

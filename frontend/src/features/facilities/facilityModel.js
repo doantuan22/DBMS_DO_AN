@@ -91,8 +91,11 @@ export function facilityQuery(state) {
   return params.toString();
 }
 export function matchesResource(row, filters) {
+  const searchFields = row.address
+    ? [row.name, row.address, row.city]
+    : [row.label ?? row.name ?? row.description];
   return (
-    textMatch(row.label ?? row.name ?? row.description, filters.search) &&
+    searchFields.some((value) => textMatch(value, filters.search)) &&
     ['row', 'type', 'status', 'city'].every(
       (key) => !filters[key] || String(row[key]) === filters[key],
     )

@@ -693,6 +693,7 @@
 
 .ui-filter-bar__chip {
   display: inline-flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.25rem;
   max-width: 100%;
@@ -705,13 +706,31 @@
   font-size: var(--font-size-xs);
 }
 
+button.ui-filter-bar__chip {
+  cursor: pointer;
+  text-align: left;
+}
+
+button.ui-filter-bar__chip:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.ui-filter-bar__chip-remove {
+  margin-left: 0.2rem;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .ui-filter-bar__chip span {
   color: var(--color-text-muted);
   font-weight: 600;
 }
 
 .ui-filter-bar__pending,
-.ui-filter-bar__error {
+.ui-filter-bar__error,
+.ui-filter-bar__results {
   margin: 0;
   font-size: var(--font-size-sm);
 }
@@ -723,6 +742,11 @@
 .ui-filter-bar__error {
   width: 100%;
   color: var(--color-danger-text);
+}
+
+.ui-filter-bar__results {
+  width: 100%;
+  color: var(--color-text-muted);
 }
 
 .ui-data-table-scroll {

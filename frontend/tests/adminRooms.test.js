@@ -210,6 +210,24 @@ test('search/type/status filter complete scoped rows before pagination; STT and 
   assert.equal(roomsView(controller.getSnapshot()).rows.length, 20);
 });
 
+test('removing one room filter chip keeps other drafts and applied constraints separate', async () => {
+  const rows = Array.from({ length: 31 }, (_, index) =>
+    room(index + 1, 1, { TenPhong: `Phòng ${index + 1}`, LoaiPhong: index % 2 ? '3D' : '2D' }),
+  );
+  const { controller } = fixture({ rows });
+  await controller.start();
+  controller.setFilters({ type: '2D', status: 'Hoạt động' });
+  controller.applyFilters();
+  controller.setPage(2);
+  controller.setFilters({ search: 'draft' });
+  controller.removeFilter('status');
+  const state = controller.getSnapshot();
+  assert.equal(state.applied.status, '');
+  assert.equal(state.applied.type, '2D');
+  assert.equal(state.filters.search, 'draft');
+  assert.equal(state.page, 1);
+});
+
 test('query reload/back restores filters/page, invalid cinema becomes 404 without fetching it', async () => {
   const { controller } = fixture({ query: 'cinemaId=1&q=Ph%C3%B2ng&type=2D&page=99' });
   await controller.start();

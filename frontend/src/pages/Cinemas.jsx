@@ -45,6 +45,7 @@ export default function Cinemas() {
         breadcrumbs={[{ label: 'Trang chủ', to: '/' }, { label: 'Rạp chiếu' }]}
       />
       <FilterBar
+        showChips={false}
         schema={[
           { key: 'search', label: 'Tìm kiếm' },
           { key: 'city', label: 'Thành phố' },

@@ -358,6 +358,7 @@ export function BookingView({ state, controller, portal, cinemaId }) {
         draft={state.filters}
         applied={state.applied}
         pending={busy}
+        onRemoveFilter={controller.removeFilter}
         onApply={controller.applyFilters}
         onReset={controller.resetFilters}
       >

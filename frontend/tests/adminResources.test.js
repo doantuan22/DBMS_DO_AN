@@ -121,6 +121,53 @@ test('users/assignments filter complete data before paging, without putting PII 
   assert.equal(model.resourceView(second.getSnapshot(), 'assignments').total, 1);
   second.dispose();
 });
+test('removing an Admin resource chip synchronizes only its applied field and preserves other drafts', async () => {
+  const controller = createController({ adapter: adapter() });
+  await controller.start();
+  controller.setFilters({ roleId: '2', status: 'Hoạt động' });
+  controller.applyFilters();
+  controller.setFilters({ search: 'draft@example.test' });
+  controller.removeFilter('status');
+  const state = controller.getSnapshot();
+  assert.equal(state.applied.status, '');
+  assert.equal(state.applied.roleId, '2');
+  assert.equal(state.filters.search, 'draft@example.test');
+  assert.equal(state.page, 1);
+  assert.equal(model.resourceView(state, 'users').total, 1);
+  controller.dispose();
+});
+test('product price drafts share the toolbar Apply action and applied prices are visible as removable chips', async () => {
+  const productRows = [
+    {
+      SanPhamID: 81,
+      TenSanPham: 'Combo A',
+      MoTa: 'Bắp và nước',
+      Gia: 25000,
+      LoaiSanPham: 'Combo',
+      TrangThai: 'Đang bán',
+    },
+  ];
+  const controller = createController({
+    adapter: adapter('products', { list: async () => productRows }),
+  });
+  await controller.start();
+  controller.setFilters({ minPrice: '20000', maxPrice: '30000', type: 'Combo' });
+  controller.applyFilters();
+  const html = renderToStaticMarkup(
+    React.createElement(
+      MemoryRouter,
+      null,
+      React.createElement(View, { kind: 'products', state: controller.getSnapshot(), controller }),
+    ),
+  );
+  assert.match(html, /Chỉnh khoảng giá tại đây, sau đó chọn “Lọc”/);
+  assert.match(html, /Xong/);
+  assert.doesNotMatch(html, /Áp dụng khoảng giá/);
+  assert.match(html, /Xóa bộ lọc Giá từ/);
+  assert.match(html, /Xóa bộ lọc Giá đến/);
+  assert.match(html, /20\.000 đ/);
+  controller.dispose();
+});
 test('internal account form rejects Customer role and editing cannot send identity or role changes', async () => {
   const controller = createController({ adapter: adapter() });
   await controller.start();

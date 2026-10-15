@@ -303,9 +303,24 @@ export function createBookingController({
       if (!busy())
         emit({ filters: { ...state.filters, ...patch, ...(cinemaId ? { cinemaId } : {}) } });
     },
+    removeFilter(key) {
+      if (busy() || !Object.hasOwn(emptyBookingFilters(), key)) return;
+      const value = key === 'cinemaId' && cinemaId ? cinemaId : '';
+      emit({
+        filters: { ...state.filters, [key]: value },
+        applied: { ...state.applied, [key]: value, page: 1 },
+      });
+      url();
+      void loadList();
+    },
     applyFilters() {
       if (!busy()) {
-        emit({ applied: { ...state.filters, page: 1, pageSize: 20 } });
+        const next = { ...state.filters, page: 1, pageSize: 20 };
+        const sameFilters = Object.keys(state.filters).every(
+          (key) => state.applied[key] === state.filters[key],
+        );
+        if (sameFilters && state.applied.page === 1 && state.applied.pageSize === 20) return;
+        emit({ applied: next });
         url();
         void loadList();
       }

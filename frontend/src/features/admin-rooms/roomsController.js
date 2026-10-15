@@ -204,6 +204,15 @@ export function createRoomsController({ api, user, initialQuery = '', onQueryCha
     setFilters(patch) {
       publish({ filters: { ...state.filters, ...patch } });
     },
+    removeFilter(key) {
+      if (writing || !Object.hasOwn(emptyRoomFilters, key)) return;
+      publish({
+        filters: { ...state.filters, [key]: '' },
+        applied: { ...state.applied, [key]: '' },
+        page: 1,
+      });
+      updateUrl();
+    },
     applyFilters() {
       if (writing) return;
       publish({ applied: { ...state.filters, search: state.filters.search.trim() }, page: 1 });

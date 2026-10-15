@@ -271,6 +271,19 @@ function SupportWorkspace({ scope }) {
     void loadQueue(reset);
   };
 
+  const removeFilter = (key) => {
+    if (busy || !Object.hasOwn(EMPTY_SUPPORT_FILTERS, key)) return;
+    const value = EMPTY_SUPPORT_FILTERS[key];
+    const nextApplied = { ...appliedFiltersRef.current, [key]: value };
+    const nextDraft = { ...draftFilters, [key]: value };
+    appliedFiltersRef.current = nextApplied;
+    setAppliedFilters(nextApplied);
+    setDraftFilters(nextDraft);
+    persistWorkspace({ appliedFilters: nextApplied, draftFilters: nextDraft });
+    navigate(supportCasePath(route.kind === 'case' ? selection.current : null, nextApplied));
+    void loadQueue(nextApplied);
+  };
+
   const saveCurrentDraft = (nextProcessing, nextStatusValue = statusValue) => {
     const complaintId = selection.current;
     if (complaintId === null || detail.status !== 'success') return;
@@ -426,6 +439,7 @@ function SupportWorkspace({ scope }) {
         processingModified={processingModified}
         discardDialogOpen={discardDialogOpen}
         changeFilter={changeFilter}
+        removeFilter={removeFilter}
         applyFilters={applyFilters}
         resetFilters={resetFilters}
         reloadQueue={() => void reloadAppliedQueue()}

@@ -136,6 +136,27 @@ test('schedule reads inclusive bounded dates and filters the complete response b
   assert.ok(model.validateRange({ fromDate: '2026-02-30', toDate: '2026-03-01' }));
   controller.dispose();
 });
+test('movie lookup retries reject stale responses and preserve the selected showtime', async () => {
+  const first = deferred(),
+    second = deferred();
+  let movieCalls = 0;
+  const a = adapter({
+    movies: () => (++movieCalls === 1 ? first.promise : second.promise),
+  });
+  const controller = createController({ adapter: a });
+  await controller.start();
+  await tick();
+  const selected = controller.getSnapshot().resource.rows[0];
+  controller.select(selected);
+  controller.reloadMovies();
+  second.resolve([{ id: 902, title: 'Danh mục mới' }]);
+  await tick();
+  first.resolve([{ id: 901, title: 'Danh mục cũ' }]);
+  await tick();
+  assert.deepEqual(controller.getSnapshot().movies.rows, [{ id: 902, title: 'Danh mục mới' }]);
+  assert.equal(controller.getSnapshot().selection.id, selected.id);
+  controller.dispose();
+});
 test('A to B clears dependent room and ignores old response including A to B to A', async () => {
   const old = deferred(),
     a = adapter({ cinemaId: undefined, cinemasLookup: async () => cinemas });
@@ -387,6 +408,23 @@ test('pricing all-record sentinels stay separate from stored Tất cả rule val
   assert.match(html, /<option value=""[^>]*>Tất cả loại ghế<\/option>/);
   assert.match(html, /<option value="Tất cả"[^>]*>Tất cả \(quy tắc giá\)<\/option>/);
   assert.match(html, /<option value=""[^>]*>Không lọc theo loại ngày<\/option>/);
+  controller.dispose();
+});
+test('removing one operations filter chip preserves other drafts and applies the field default', async () => {
+  const a = adapter({ kind: 'pricing', list: async () => pricing });
+  const controller = createController({ adapter: a });
+  await controller.start();
+  controller.setFilters({ seatType: 'VIP', dayType: 'Tất cả' });
+  controller.applyFilters();
+  controller.setPage(2);
+  controller.setFilters({ format: '3D' });
+  controller.removeFilter('dayType');
+  const state = controller.getSnapshot();
+  assert.equal(state.applied.dayType, '');
+  assert.equal(state.applied.seatType, 'VIP');
+  assert.equal(state.filters.format, '3D');
+  assert.equal(state.applied.format, '');
+  assert.equal(state.page, 1);
   controller.dispose();
 });
 test('pricing form keeps exactly three day types, finite nonnegative surcharge and valid date order', async () => {

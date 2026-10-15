@@ -42,6 +42,21 @@
 .support-workspace__queue .ui-form-field {
   min-width: 0;
 }
+.support-workspace__advanced-filter {
+  min-width: 0;
+}
+.support-workspace__advanced-filter summary {
+  width: fit-content;
+  margin-bottom: var(--space-2);
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.support-workspace__advanced-filter summary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
 .support-workspace__queue .ui-filter-bar__actions {
   flex-wrap: wrap;
 }

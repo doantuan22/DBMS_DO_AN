@@ -140,8 +140,23 @@ export function createComplaintController({
     setFilters(patch) {
       if (!busy()) publish({ filters: { ...state.filters, ...patch } });
     },
+    removeFilter(key) {
+      if (busy() || !Object.hasOwn(EMPTY_SUPPORT_FILTERS, key)) return;
+      const value = EMPTY_SUPPORT_FILTERS[key];
+      publish({
+        filters: { ...state.filters, [key]: value },
+        applied: { ...state.applied, [key]: value },
+        page: 1,
+      });
+      url();
+      void loadQueue();
+    },
     async applyFilters() {
       if (!busy()) {
+        const unchanged = Object.keys(EMPTY_SUPPORT_FILTERS).every(
+          (key) => state.filters[key] === state.applied[key],
+        );
+        if (unchanged && state.page === 1) return;
         publish({ applied: { ...state.filters }, page: 1 });
         url();
         await loadQueue();

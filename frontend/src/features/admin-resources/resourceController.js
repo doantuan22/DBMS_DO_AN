@@ -209,6 +209,17 @@ export function createResourceController({
     setFilters(patch) {
       if (!busy()) emit({ filters: { ...state.filters, ...patch } });
     },
+    removeFilter(key) {
+      if (busy() || !Object.hasOwn(definition.filters, key)) return;
+      const value = definition.filters[key];
+      emit({
+        filters: { ...state.filters, [key]: value },
+        applied: { ...state.applied, [key]: value },
+        page: 1,
+        notice: null,
+      });
+      url();
+    },
     applyFilters() {
       if (!busy()) {
         const f = state.filters;

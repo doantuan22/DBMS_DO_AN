@@ -206,22 +206,19 @@ export function OperationsView({ state, controller, adapter }) {
   const roomRows =
     state.rooms.status === 'success'
       ? state.rooms.rows
-      : [
-          ...new Map(
-            state.resource.rows.map((row) => [row.roomId, { id: row.roomId, name: row.roomName }]),
-          ).values(),
-        ];
-  const movies =
-    state.movies.status === 'success'
-      ? state.movies.rows
-      : [
-          ...new Map(
-            state.resource.rows.map((row) => [
-              row.movieId,
-              { id: row.movieId, title: row.movieTitle },
-            ]),
-          ).values(),
-        ];
+      : showtimes && state.rooms.status === 'idle' && !adapter.canRooms
+        ? [
+            ...new Map(
+              state.resource.rows.map((row) => [
+                row.roomId,
+                { id: row.roomId, name: row.roomName },
+              ]),
+            ).values(),
+          ]
+        : [];
+  const movies = state.movies.status === 'success' ? state.movies.rows : [];
+  const roomLookupReady =
+    state.rooms.status === 'success' || (!adapter.canRooms && state.rooms.status === 'idle');
   const schema = showtimes
     ? [
         {
@@ -430,6 +427,7 @@ export function OperationsView({ state, controller, adapter }) {
         applied={state.applied}
         pending={busy}
         error={state.filterError}
+        onRemoveFilter={controller.removeFilter}
         onApply={() => controller.applyFilters()}
         onReset={() => controller.resetFilters()}
       >
@@ -438,10 +436,16 @@ export function OperationsView({ state, controller, adapter }) {
             <FormField label="Phòng lọc lịch">
               <Select
                 value={state.filters.roomId}
-                disabled={busy || !state.cinemaId}
+                disabled={busy || !state.cinemaId || !roomLookupReady}
                 onChange={(e) => controller.setFilters({ roomId: e.target.value })}
               >
-                <option value="">Tất cả phòng</option>
+                <option value="">
+                  {state.rooms.status === 'loading'
+                    ? 'Đang tải phòng…'
+                    : state.rooms.status === 'error'
+                      ? 'Không tải được danh sách phòng'
+                      : 'Tất cả phòng'}
+                </option>
                 {roomRows.map((row) => (
                   <option key={row.id} value={row.id}>
                     {row.name}
@@ -452,10 +456,16 @@ export function OperationsView({ state, controller, adapter }) {
             <FormField label="Phim lọc lịch">
               <Select
                 value={state.filters.movieId}
-                disabled={busy}
+                disabled={busy || state.movies.status !== 'success'}
                 onChange={(e) => controller.setFilters({ movieId: e.target.value })}
               >
-                <option value="">Tất cả phim</option>
+                <option value="">
+                  {state.movies.status === 'loading'
+                    ? 'Đang tải phim…'
+                    : state.movies.status === 'error'
+                      ? 'Không tải được danh sách phim'
+                      : 'Tất cả phim'}
+                </option>
                 {movies.map((row) => (
                   <option key={row.id} value={row.id}>
                     {row.title}
@@ -518,6 +528,12 @@ export function OperationsView({ state, controller, adapter }) {
           </>
         )}
       </FilterBar>
+      {showtimes && state.rooms.status === 'error' && (
+        <AsyncState status="error" error={state.rooms.error} onRetry={controller.reloadRooms} />
+      )}
+      {showtimes && state.movies.status === 'error' && (
+        <AsyncState status="error" error={state.movies.error} onRetry={controller.reloadMovies} />
+      )}
       <p className="operations__help" role="status">
         {state.resource.status === 'success'
           ? `${view.total} kết quả · ${showtimes ? 'Toàn bộ lịch trong khoảng ngày đang áp dụng' : 'Toàn bộ quy tắc giá trong phạm vi rạp đang chọn'}`
@@ -539,16 +555,6 @@ export function OperationsView({ state, controller, adapter }) {
           onPageChange: controller.setPage,
         }}
       />
-      <AsyncState
-        status={state.rooms.status === 'error' ? 'error' : 'idle'}
-        error={state.rooms.error}
-        onRetry={() => void controller.reloadRooms()}
-      />
-      <AsyncState
-        status={state.movies.status === 'error' ? 'error' : 'idle'}
-        error={state.movies.error}
-        onRetry={() => void controller.start()}
-      />
       <Dialog
         open={Boolean(selected)}
         size="inspector"
@@ -560,33 +566,33 @@ export function OperationsView({ state, controller, adapter }) {
       >
         {selected && (
           <section className="operations__panel" aria-label={`Chi tiết ${title.toLowerCase()}`}>
-          <p>
-            {selected.cinemaName ?? cinemaName} · <StatusBadge status={selected.status} />
-          </p>
-          {showtimes ? (
-            <>
-              <p>
-                {formatDateTime(selected.startsAt)} — {formatDateTime(selected.endsAt)} ·{' '}
-                {selected.format}
-              </p>
-              <p>
-                Giá vé cơ bản: <strong>{money(selected.basePrice)}</strong>. Phụ thu và giá vé cuối
-                cùng do server xác định.
-              </p>
-            </>
-          ) : (
-            <>
-              <p>
-                Phụ thu: <strong>{money(selected.surcharge)}</strong> ·{' '}
-                {formatDate(selected.startsOn)} —{' '}
-                {selected.endsOn ? formatDate(selected.endsOn) : 'Không có ngày kết thúc'}
-              </p>
-              <p>
-                Thay đổi quy tắc giá áp dụng cho giao dịch tiếp theo; không tính lại giá vé trong
-                lịch sử.
-              </p>
-            </>
-          )}
+            <p>
+              {selected.cinemaName ?? cinemaName} · <StatusBadge status={selected.status} />
+            </p>
+            {showtimes ? (
+              <>
+                <p>
+                  {formatDateTime(selected.startsAt)} — {formatDateTime(selected.endsAt)} ·{' '}
+                  {selected.format}
+                </p>
+                <p>
+                  Giá vé cơ bản: <strong>{money(selected.basePrice)}</strong>. Phụ thu và giá vé
+                  cuối cùng do server xác định.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  Phụ thu: <strong>{money(selected.surcharge)}</strong> ·{' '}
+                  {formatDate(selected.startsOn)} —{' '}
+                  {selected.endsOn ? formatDate(selected.endsOn) : 'Không có ngày kết thúc'}
+                </p>
+                <p>
+                  Thay đổi quy tắc giá áp dụng cho giao dịch tiếp theo; không tính lại giá vé trong
+                  lịch sử.
+                </p>
+              </>
+            )}
           </section>
         )}
       </Dialog>

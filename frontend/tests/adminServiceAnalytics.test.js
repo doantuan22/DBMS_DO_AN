@@ -114,6 +114,14 @@ test('complaint filters are sent to server before local paging and never leak se
   assert.equal(c.getSnapshot().selectedId, 1);
   assert.equal(c.getSnapshot().draft.processing.content, 'Unsaved');
   assert.ok(queries.every((q) => !q.includes('example') && !q.includes('Sensitive')));
+  c.setFilters({ type: 'draft type' });
+  c.removeFilter('priority');
+  assert.equal(c.getSnapshot().applied.priority, '');
+  assert.equal(c.getSnapshot().applied.search, 'email@example.test');
+  assert.equal(c.getSnapshot().filters.type, 'draft type');
+  assert.equal(c.getSnapshot().selectedId, 1);
+  assert.equal(c.getSnapshot().draft.processing.content, 'Unsaved');
+  assert.equal(calls.at(-1).priority, '');
   c.dispose();
 });
 test('keyed complaint notes survive case switches, close, Admin route recreation and discard Cancel', async () => {

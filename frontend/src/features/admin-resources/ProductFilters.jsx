@@ -14,6 +14,19 @@ export default function ProductFilters({ state, controller }) {
   const priceActive = hasValue(applied.minPrice) || hasValue(applied.maxPrice);
   const changed = Object.keys(filters).some((key) => filters[key] !== applied[key]);
   const hasFilters = Object.values(filters).some(hasValue) || Object.values(applied).some(hasValue);
+  const money = (value) =>
+    new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 2 }).format(Number(value));
+  const activeFilters = [
+    ...(applied.search.trim() ? [{ key: 'search', label: 'Tìm kiếm', value: applied.search }] : []),
+    ...(applied.type ? [{ key: 'type', label: 'Loại', value: applied.type }] : []),
+    ...(applied.status ? [{ key: 'status', label: 'Trạng thái', value: applied.status }] : []),
+    ...(hasValue(applied.minPrice)
+      ? [{ key: 'minPrice', label: 'Giá từ', value: `${money(applied.minPrice)} đ` }]
+      : []),
+    ...(hasValue(applied.maxPrice)
+      ? [{ key: 'maxPrice', label: 'Giá đến', value: `${money(applied.maxPrice)} đ` }]
+      : []),
+  ];
   useEffect(() => {
     const closeOutside = (event) => {
       if (priceRef.current?.open && !priceRef.current.contains(event.target))
@@ -33,7 +46,10 @@ export default function ProductFilters({ state, controller }) {
     const invalidKey = ['minPrice', 'maxPrice'].find(
       (key) =>
         hasValue(filters[key]) &&
-        (!Number.isFinite(Number(filters[key])) || Number(filters[key]) < 0),
+        (!Number.isFinite(Number(filters[key])) ||
+          Number(filters[key]) < 0 ||
+          Number(filters[key]) >= 1e16 ||
+          !/^\d+(?:\.\d{1,2})?$/.test(String(filters[key]))),
     );
     const reversed =
       hasValue(filters.minPrice) &&
@@ -43,7 +59,7 @@ export default function ProductFilters({ state, controller }) {
       setPriceError({
         key: invalidKey || 'maxPrice',
         message: invalidKey
-          ? 'Giá phải là số lớn hơn hoặc bằng 0.'
+          ? 'Giá phải không âm, tối đa 2 chữ số thập phân và nằm trong giới hạn cho phép.'
           : 'Giá từ không được lớn hơn giá đến.',
       });
       priceRef.current.open = true;
@@ -115,6 +131,7 @@ export default function ProductFilters({ state, controller }) {
         >
           <summary
             aria-disabled={pending || undefined}
+            aria-label={priceActive ? 'Khoảng giá, đang áp dụng' : 'Khoảng giá'}
             onClick={(event) => {
               if (pending) event.preventDefault();
             }}
@@ -131,6 +148,9 @@ export default function ProductFilters({ state, controller }) {
               <strong>Khoảng giá bán</strong>
               <span>Đơn vị: đồng</span>
             </div>
+            <p className="product-filters__price-hint">
+              Chỉnh khoảng giá tại đây, sau đó chọn “Lọc” để cập nhật danh sách.
+            </p>
             <div className="product-filters__price-fields">
               <FormField
                 label="Giá từ"
@@ -165,6 +185,7 @@ export default function ProductFilters({ state, controller }) {
             </div>
             <div className="product-filters__price-actions">
               <Button
+                type="button"
                 variant="quiet"
                 disabled={pending}
                 onClick={() => {
@@ -174,8 +195,16 @@ export default function ProductFilters({ state, controller }) {
               >
                 Bỏ giới hạn
               </Button>
-              <Button onClick={apply} disabled={pending}>
-                Áp dụng khoảng giá
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={pending}
+                onClick={() => {
+                  priceRef.current.open = false;
+                  priceRef.current.querySelector('summary').focus();
+                }}
+              >
+                Xong
               </Button>
             </div>
           </div>
@@ -198,11 +227,31 @@ export default function ProductFilters({ state, controller }) {
           </Button>
         </div>
       </div>
-      {changed && (
+      {(activeFilters.length > 0 || changed) && (
         <div className="product-filters__feedback">
-          <span className="product-filters__pending" role="status">
-            Nhấn Enter hoặc Lọc để áp dụng.
-          </span>
+          {activeFilters.length > 0 && (
+            <ul className="product-filters__chips" aria-label="Bộ lọc đang áp dụng">
+              {activeFilters.map((filter) => (
+                <li key={filter.key}>
+                  <button
+                    className="product-filters__chip"
+                    type="button"
+                    disabled={pending}
+                    aria-label={`Xóa bộ lọc ${filter.label}`}
+                    onClick={() => controller.removeFilter(filter.key)}
+                  >
+                    <span>{filter.label}:</span> {filter.value}
+                    <span aria-hidden="true"> ×</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          {changed && (
+            <span className="product-filters__pending" role="status">
+              Thay đổi chưa áp dụng. Chọn “Lọc” để cập nhật danh sách.
+            </span>
+          )}
         </div>
       )}
     </form>

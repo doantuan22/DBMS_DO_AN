@@ -41,7 +41,8 @@ export default function ManagerRevenue({ cinemaId, refresh, cachedState, onState
             return;
           }
           setError('');
-          setRange({ ...values });
+          if (values.fromDate !== range.fromDate || values.toDate !== range.toDate)
+            setRange({ ...values });
         }}
       >
         <label>
@@ -66,8 +67,9 @@ export default function ManagerRevenue({ cinemaId, refresh, cachedState, onState
         <button
           type="button"
           onClick={() => {
-            setValues({ fromDate: '', toDate: '' });
-            setRange({ fromDate: '', toDate: '' });
+            const empty = { fromDate: '', toDate: '' };
+            setValues(empty);
+            if (range.fromDate || range.toDate) setRange(empty);
             setError('');
           }}
         >

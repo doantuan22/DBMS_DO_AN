@@ -178,6 +178,36 @@ test('server search/paging use full totals and safe query never exposes PII', as
   assert.match(html, /40 kết quả/);
   controller.dispose();
 });
+test('booking filter apply suppresses duplicate requests and chip removal resets the result page', async () => {
+  const calls = [],
+    controller = createController({
+      api: api({
+        list: async (filters) => {
+          calls.push({ ...filters });
+          return { orders: [summary], total: 40, page: filters.page, pageSize: 20 };
+        },
+      }),
+    });
+  await controller.start();
+  controller.setFilters({ status: 'Chờ thanh toán' });
+  controller.applyFilters();
+  controller.applyFilters();
+  await tick();
+  assert.equal(calls.filter((filters) => filters.status === 'Chờ thanh toán').length, 1);
+  controller.setPage(2);
+  await tick();
+  controller.setFilters({ search: 'draft search' });
+  controller.removeFilter('status');
+  await tick();
+  const state = controller.getSnapshot();
+  assert.equal(state.applied.status, '');
+  assert.equal(state.filters.status, '');
+  assert.equal(state.filters.search, 'draft search');
+  assert.equal(state.applied.page, 1);
+  assert.equal(calls.at(-1).status, '');
+  assert.equal(calls.at(-1).page, 1);
+  controller.dispose();
+});
 test('list/detail reject wrong current cinema and distinguish denial/not-found from empty', async () => {
   for (const status of [403, 404]) {
     const controller = createController({

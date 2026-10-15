@@ -117,6 +117,19 @@ test('support presentation has three named panes, one timeline and business name
   assert.equal(html.match(/Diễn biến duy nhất/g)?.length, 1);
   assert.doesNotMatch(html, />21<|processorId|senderId/);
 });
+test('support queue shows removable applied filters even when the advanced type field is closed', () => {
+  const html = render(
+    props({
+      appliedFilters: { search: '', status: 'Mới', priority: 'Cao', type: 'Dịch vụ' },
+      draftFilters: { search: '', status: 'Mới', priority: 'Cao', type: 'Dịch vụ' },
+      removeFilter() {},
+    }),
+  );
+  assert.match(html, /Xóa bộ lọc Trạng thái/);
+  assert.match(html, /Xóa bộ lọc Ưu tiên/);
+  assert.match(html, /Xóa bộ lọc Loại/);
+  assert.match(html, /Bộ lọc nâng cao · đang lọc/);
+});
 test('support permission/errors/pending states never expose unauthorized PII or enabled write actions', () => {
   const read = render(props({ canProcess: false }));
   assert.doesNotMatch(read, /Ghi diễn biến xử lý/);

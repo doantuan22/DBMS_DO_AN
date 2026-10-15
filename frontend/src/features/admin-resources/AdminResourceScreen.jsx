@@ -138,22 +138,42 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
             state.resource.rows.map((r) => [r.RapID, { id: r.RapID, label: r.TenRap }]),
           ).values(),
         ];
-  const namedFilter = (key, label, options) => (
-    <FormField label={label}>
-      <Select
-        value={state.filters[key]}
-        disabled={busy}
-        onChange={(e) => controller.setFilters({ [key]: e.target.value })}
-      >
-        <option value="">Tất cả</option>
-        {options.map((r) => (
-          <option key={r.id} value={r.id}>
-            {r.label}
-          </option>
-        ))}
-      </Select>
-    </FormField>
-  );
+  const filterLookupNames = {
+    roleId: 'roles',
+    userId: 'managers',
+    cinemaId: 'cinemas',
+    genreId: 'genres',
+    movieId: 'movies',
+  };
+  const namedFilter = (key, label, options) => {
+    const lookupName = filterLookupNames[key];
+    const lookup = lookupName ? (state.lookups[lookupName] ?? { status: 'loading' }) : null;
+    const lookupPending = lookup && lookup.status !== 'success';
+    const emptyLabel =
+      lookup?.status === 'loading'
+        ? 'Đang tải danh mục…'
+        : lookup?.status === 'error'
+          ? 'Danh mục chưa tải được'
+          : options.length
+            ? 'Tất cả'
+            : 'Chưa có lựa chọn';
+    return (
+      <FormField label={label}>
+        <Select
+          value={state.filters[key]}
+          disabled={busy || lookupPending}
+          onChange={(e) => controller.setFilters({ [key]: e.target.value })}
+        >
+          <option value="">{emptyLabel}</option>
+          {options.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.label}
+            </option>
+          ))}
+        </Select>
+      </FormField>
+    );
+  };
   const statusColumn = {
     key: 'TrangThai',
     label: 'Trạng thái',
@@ -378,11 +398,11 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
     ),
   });
   const filterOptions = {
-    roleId: roles,
-    userId: managers,
-    cinemaId: cinemas,
-    genreId: state.lookups.genres?.rows ?? [],
-    movieId: state.lookups.movies?.rows ?? [],
+    roleId: state.lookups.roles?.status === 'success' ? state.lookups.roles.rows : [],
+    userId: state.lookups.managers?.status === 'success' ? state.lookups.managers.rows : [],
+    cinemaId: state.lookups.cinemas?.status === 'success' ? state.lookups.cinemas.rows : [],
+    genreId: state.lookups.genres?.status === 'success' ? state.lookups.genres.rows : [],
+    movieId: state.lookups.movies?.status === 'success' ? state.lookups.movies.rows : [],
     type: PRODUCT_TYPES.map((v) => ({ id: v, label: v })),
     discountType: DISCOUNT_TYPES.map((v) => ({ id: v, label: v })),
   };
@@ -417,6 +437,12 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
         ? { format: formatDate }
         : {}),
   }));
+  const filterLookupErrors = Object.keys(definition.filters)
+    .map((key) => {
+      const lookupName = filterLookupNames[key];
+      return lookupName ? [key, state.lookups[lookupName]] : null;
+    })
+    .filter((entry) => entry?.[1]?.status === 'error');
   const extraFilterCount = Object.keys(definition.filters).filter((key) => key !== 'search').length;
   const appliedExtraFilterCount = Object.entries(state.applied).filter(
     ([key, value]) => key !== 'search' && value !== '' && value != null,
@@ -549,6 +575,7 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
           draft={state.filters}
           applied={state.applied}
           pending={busy}
+          onRemoveFilter={controller.removeFilter}
           onApply={controller.applyFilters}
           onReset={controller.resetFilters}
         >
@@ -585,6 +612,15 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
           )}
         </FilterBar>
       )}
+      {filterLookupErrors.map(([key, lookup]) => (
+        <AsyncState
+          key={key}
+          status="error"
+          error={lookup.error}
+          errorMessage={`Không tải được danh mục ${filterLabels[key].toLowerCase()}.`}
+          onRetry={() => void controller.reloadLookups()}
+        />
+      ))}
       {state.resource.status === 'success' && (
         <p role="status">Có {view.total} kết quả · Tra cứu toàn bộ danh sách được phép.</p>
       )}
@@ -607,7 +643,11 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
       <Dialog
         open={Boolean(state.selectedId)}
         size="inspector"
-        title={state.selection ? definition.name(state.selection) : `Chi tiết ${definition.title.toLowerCase()}`}
+        title={
+          state.selection
+            ? definition.name(state.selection)
+            : `Chi tiết ${definition.title.toLowerCase()}`
+        }
         busy={busy}
         onOpenChange={(open) => {
           if (!open) controller.closeDetail();
@@ -618,24 +658,27 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
           <AsyncState status="loading" loadingMessage="Đang tải chi tiết…" />
         )}
         {state.selection && (
-          <section className="admin-resource__panel" aria-label={`Chi tiết ${definition.title.toLowerCase()}`}>
-          {state.selection.TrangThai && <StatusBadge status={state.selection.TrangThai} />}
-          <dl className="admin-resource__details">
-            {definition.details
-              .filter(([, key]) => state.selection[key] != null)
-              .map(([label, key, format]) => (
-                <div key={key}>
-                  <dt>{label}</dt>
-                  <dd>{format ? format(state.selection[key]) : state.selection[key]}</dd>
-                </div>
-              ))}
-          </dl>
-          {kind === 'users' && (
-            <p>Vai trò chỉ xác định khi tạo. Màn hình này cập nhật trạng thái tài khoản.</p>
-          )}
-          {catalog && (
-            <CatalogDetails kind={kind} row={state.selection} lookups={state.lookups} can={can} />
-          )}
+          <section
+            className="admin-resource__panel"
+            aria-label={`Chi tiết ${definition.title.toLowerCase()}`}
+          >
+            {state.selection.TrangThai && <StatusBadge status={state.selection.TrangThai} />}
+            <dl className="admin-resource__details">
+              {definition.details
+                .filter(([, key]) => state.selection[key] != null)
+                .map(([label, key, format]) => (
+                  <div key={key}>
+                    <dt>{label}</dt>
+                    <dd>{format ? format(state.selection[key]) : state.selection[key]}</dd>
+                  </div>
+                ))}
+            </dl>
+            {kind === 'users' && (
+              <p>Vai trò chỉ xác định khi tạo. Màn hình này cập nhật trạng thái tài khoản.</p>
+            )}
+            {catalog && (
+              <CatalogDetails kind={kind} row={state.selection} lookups={state.lookups} can={can} />
+            )}
           </section>
         )}
       </Dialog>

@@ -233,8 +233,8 @@ export const managerScenarios = [
 
       // edit the base price
       await page.getByLabel('Phòng lọc lịch').selectOption({ label: state.roomName });
-      await page.getByLabel('Từ ngày').fill(date);
-      await page.getByLabel('Đến ngày').fill(date);
+      await page.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
+      await page.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
       await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await page.getByRole('button', { name: /^Sửa / }).first().click();
       dialog = page.getByRole('dialog');

@@ -14,18 +14,25 @@ export default function FilterBar({
   applied,
   pending = false,
   error,
+  resultCount,
+  resultLabel = 'kết quả phù hợp',
+  onRemoveFilter,
   applyLabel = 'Áp dụng lọc',
   resetLabel = 'Xóa lọc',
 }) {
   const activeSchema = Array.isArray(schema) ? schema : [];
-  const renderChips = showChips ?? activeSchema.some((field) => field.label === 'Status');
   const hasValue = (value) =>
     value !== undefined &&
     value !== null &&
-    value !== '' &&
+    (typeof value !== 'string' || value.trim() !== '') &&
     (!Array.isArray(value) || value.length > 0);
   const normalize = (value) => (hasValue(value) ? value : null);
-  const appliedFilters = activeSchema.filter((field) => hasValue(applied?.[field.key]));
+  const renderChips = showChips ?? true;
+  const appliedFilters = activeSchema.filter((field) =>
+    typeof field.isActive === 'function'
+      ? field.isActive(applied?.[field.key], applied)
+      : hasValue(applied?.[field.key]),
+  );
   const hasUnappliedChanges = activeSchema.some(
     (field) =>
       JSON.stringify(normalize(draft?.[field.key])) !==
@@ -75,9 +82,27 @@ export default function FilterBar({
                 const value = applied[field.key];
                 const formatted = field.format ? field.format(value, applied) : value;
                 return (
-                  <li className="ui-filter-bar__chip" key={field.key}>
-                    <span>{field.label}:</span>{' '}
-                    {Array.isArray(formatted) ? formatted.join(', ') : String(formatted)}
+                  <li key={field.key}>
+                    {onRemoveFilter && field.removable !== false ? (
+                      <button
+                        className="ui-filter-bar__chip"
+                        type="button"
+                        disabled={pending}
+                        aria-label={`Xóa bộ lọc ${field.label}`}
+                        onClick={() => onRemoveFilter(field.key, field)}
+                      >
+                        <span>{field.label}:</span>{' '}
+                        {Array.isArray(formatted) ? formatted.join(', ') : String(formatted)}
+                        <span aria-hidden="true" className="ui-filter-bar__chip-remove">
+                          ×
+                        </span>
+                      </button>
+                    ) : (
+                      <span className="ui-filter-bar__chip">
+                        <span>{field.label}:</span>{' '}
+                        {Array.isArray(formatted) ? formatted.join(', ') : String(formatted)}
+                      </span>
+                    )}
                   </li>
                 );
               })}
@@ -89,6 +114,11 @@ export default function FilterBar({
             </p>
           )}
         </div>
+      )}
+      {resultCount != null && (
+        <p className="ui-filter-bar__results" role="status">
+          {resultCount} {resultLabel}
+        </p>
       )}
       {error && (
         <p className="ui-filter-bar__error" role="alert">

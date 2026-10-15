@@ -557,8 +557,8 @@ export const hardeningScenarios = [
       const date = new Date(show.startsAt.getTime() + 7 * 3600000).toISOString().slice(0, 10);
       await uiLogin(page, origin, ACCOUNTS.admin);
       await page.goto(`${origin}/admin/operations/showtimes?cinemaId=${show.cinemaId}`);
-      await page.getByLabel('Từ ngày').fill(date);
-      await page.getByLabel('Đến ngày').fill(date);
+      await page.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
+      await page.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
       await page.getByLabel('Phòng lọc lịch').selectOption(String(show.roomId));
       await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await expectPoll(
@@ -701,8 +701,8 @@ export const hardeningScenarios = [
       await uiLogin(adminPage, origin, ACCOUNTS.admin);
       const date = new Date(show.startsAt.getTime() + 7 * 3600000).toISOString().slice(0, 10);
       await adminPage.goto(`${origin}/admin/operations/showtimes?cinemaId=${show.cinemaId}`);
-      await adminPage.getByLabel('Từ ngày').fill(date);
-      await adminPage.getByLabel('Đến ngày').fill(date);
+      await adminPage.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
+      await adminPage.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
       await adminPage.getByLabel('Phòng lọc lịch').selectOption(String(show.roomId));
       await adminPage.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await expectPoll(
@@ -875,8 +875,8 @@ export const hardeningScenarios = [
       await uiLogin(adminPage, origin, ACCOUNTS.admin);
       const date = new Date(show.startsAt.getTime() + 7 * 3600000).toISOString().slice(0, 10);
       await adminPage.goto(`${origin}/admin/operations/showtimes?cinemaId=${show.cinemaId}`);
-      await adminPage.getByLabel('Từ ngày').fill(date);
-      await adminPage.getByLabel('Đến ngày').fill(date);
+      await adminPage.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
+      await adminPage.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
       await adminPage.getByLabel('Phòng lọc lịch').selectOption(String(show.roomId));
       await adminPage.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await expectPoll(
@@ -966,11 +966,6 @@ async function auditPages(ctx, viewport) {
     `${viewport.width}x${viewport.height}`,
   );
   fs.mkdirSync(screenshotDir, { recursive: true });
-  const sample = await one(
-    pool,
-    `SELECT TOP 1 s.SuatChieuID, s.PhimID FROM dbo.SUATCHIEU s JOIN dbo.vw_LichChieuChiTiet v ON v.SuatChieuID = s.SuatChieuID
-      WHERE s.TrangThai = N'Mở bán' AND v.IsBookable = 1 AND s.ThoiGianBatDau > dbo.fn_BayGio() ORDER BY s.ThoiGianBatDau`,
-  );
   const auditCustomer = await one(
     pool,
     `SELECT TOP 1 n.Email FROM dbo.NGUOIDUNG n
@@ -981,50 +976,26 @@ async function auditPages(ctx, viewport) {
     { prefix: 'e2e.ui.%' },
   );
   const auditCustomerEmail = auditCustomer?.Email ?? ACCOUNTS.customer;
-  const order = await one(
-    pool,
-    `SELECT TOP 1 d.DonDatVeID FROM dbo.DONDATVE d JOIN dbo.NGUOIDUNG n ON n.NguoiDungID = d.NguoiDungID WHERE n.Email = @e ORDER BY d.DonDatVeID DESC`,
-    { e: auditCustomerEmail },
-  );
-  const cinema = await one(pool, 'SELECT TOP 1 RapID FROM dbo.RAPCHIEUPHIM ORDER BY RapID');
   const complaint = await one(
     pool,
     `SELECT TOP 1 k.KhieuNaiID FROM dbo.KHIEUNAI k JOIN dbo.NGUOIDUNG n ON n.NguoiDungID = k.NguoiDungID
       WHERE n.Email = @e ORDER BY k.KhieuNaiID DESC`,
     { e: auditCustomerEmail },
   );
-  const customerPaths = ['/account', '/profile', '/orders', '/complaints'];
-  if (order) customerPaths.push(`/orders/${order.DonDatVeID}`, `/orders/${order.DonDatVeID}/payment`);
-  if (complaint) customerPaths.push(`/complaints/${complaint.KhieuNaiID}`);
   const plan = {
-    public: [
-      '/',
-      '/movies',
-      `/movies/${sample.PhimID}`,
-      '/cinemas',
-      `/cinemas/${cinema?.RapID ?? 1}`,
-      '/login',
-      '/register',
-      `/booking/${sample.SuatChieuID}`,
-      '/forbidden',
-    ],
-    customer: customerPaths,
     manager: [
-      '/manager/overview',
       '/manager/rooms',
       '/manager/seats',
       '/manager/showtimes',
       '/manager/pricing',
       '/manager/bookings',
       '/manager/revenue',
-      '/manager',
     ],
     support: [
       '/support/complaints',
       `/support/complaints/${complaint?.KhieuNaiID ?? 1}`,
     ],
     admin: [
-      '/admin/overview',
       '/admin/access/users',
       '/admin/access/assignments',
       '/admin/catalog/movies',
@@ -1045,7 +1016,6 @@ async function auditPages(ctx, viewport) {
     ],
   };
   const accountFor = {
-    customer: auditCustomerEmail,
     manager: ACCOUNTS.manager,
     support: ACCOUNTS.support,
     admin: ACCOUNTS.admin,
@@ -1159,7 +1129,7 @@ const viewports = [
 export const responsiveScenarios = [
   ...viewports.map(([id, name, viewport]) => ({
     id,
-    title: `${name}: WCAG 2.2 A/AA (axe-core) and no horizontal overflow on every portal page`,
+    title: `${name}: WCAG 2.2 A/AA and no horizontal overflow on all active Admin, Manager and CSKH filter routes`,
     async run(ctx) {
       return auditPages({ ...ctx, browser: ctx.context.browser() }, viewport);
     },

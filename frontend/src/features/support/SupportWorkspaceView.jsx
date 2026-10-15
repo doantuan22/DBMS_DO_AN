@@ -38,6 +38,7 @@ export default function SupportWorkspaceView({
   processingModified,
   discardDialogOpen,
   changeFilter,
+  removeFilter,
   applyFilters,
   resetFilters,
   reloadQueue,
@@ -100,6 +101,7 @@ export default function SupportWorkspaceView({
             draft={draftFilters}
             applied={appliedFilters}
             pending={busy}
+            onRemoveFilter={removeFilter}
             applyLabel="Áp dụng bộ lọc"
             resetLabel="Đặt lại"
             onApply={(_, event) => applyFilters(event)}
@@ -134,14 +136,17 @@ export default function SupportWorkspaceView({
                 {options(priorities)}
               </Select>
             </FormField>
-            <FormField label="Lọc loại khiếu nại" hint="Nhập tên loại chính xác.">
-              <Input
-                value={draftFilters.type}
-                maxLength={100}
-                disabled={busy}
-                onChange={(e) => changeFilter('type', e.target.value)}
-              />
-            </FormField>
+            <details className="support-workspace__advanced-filter">
+              <summary>Bộ lọc nâng cao{appliedFilters.type ? ' · đang lọc' : ''}</summary>
+              <FormField label="Lọc loại khiếu nại" hint="Nhập tên loại chính xác.">
+                <Input
+                  value={draftFilters.type}
+                  maxLength={100}
+                  disabled={busy}
+                  onChange={(e) => changeFilter('type', e.target.value)}
+                />
+              </FormField>
+            </details>
           </FilterBar>
           <AsyncState
             status={queue.status}
@@ -173,11 +178,15 @@ export default function SupportWorkspaceView({
                         <div style={{ display: 'flex', gap: '0.375rem', alignItems: 'center' }}>
                           <StatusBadge status={item.status} />
                           {item.assignedStaffName ? (
-                            <span style={{ fontSize: '0.825rem', color: 'var(--color-text-muted)' }}>
+                            <span
+                              style={{ fontSize: '0.825rem', color: 'var(--color-text-muted)' }}
+                            >
                               👤 {item.assignedStaffName}
                             </span>
                           ) : (
-                            <span style={{ fontSize: '0.825rem', color: '#b45309', fontWeight: 600 }}>
+                            <span
+                              style={{ fontSize: '0.825rem', color: '#b45309', fontWeight: 600 }}
+                            >
                               ⚠️ Chưa nhận
                             </span>
                           )}
@@ -218,7 +227,9 @@ export default function SupportWorkspaceView({
             <>
               <p className="catalog-eyebrow">HỒ SƠ ĐANG XEM</p>
               <h2>{complaint.title}</h2>
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <div
+                style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}
+              >
                 <StatusBadge status={complaint.status} />
                 {complaint.assignedStaffName ? (
                   <span className="support-chat__staff-badge">
@@ -273,8 +284,6 @@ export default function SupportWorkspaceView({
                 currentUserId={currentUser?.userId}
                 canChat={canProcess}
               />
-
-
 
               {/* Processing timeline */}
               <div>

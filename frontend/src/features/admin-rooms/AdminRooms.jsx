@@ -220,6 +220,7 @@ export function RoomsView({ state, controller }) {
           draft={state.filters}
           applied={state.applied}
           pending={state.pending}
+          onRemoveFilter={controller.removeFilter}
           onApply={() => controller.applyFilters()}
           onReset={() => controller.resetFilters()}
           applyLabel="Tìm phòng"

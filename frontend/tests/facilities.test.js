@@ -11,10 +11,12 @@ import {
   validateFacility,
   facilityPayload,
   adminSeat,
+  adminCinema,
   adminImage,
   freshFilters,
   facilityQuery,
   parseFacilityQuery,
+  matchesResource,
 } from '../src/features/facilities/facilityModel.js';
 import { createManagerCinemaStore } from '../src/features/manager/managerCinemaStore.js';
 import { loadOccupancy } from '../src/features/facilities/occupancyRead.js';
@@ -74,6 +76,35 @@ test('cinema optional empty fields follow REST nullable contract and occupancy m
   denied.controller.syncQuery('cinemaId=1&roomId=11&mode=occupancy');
   assert.equal(denied.controller.getSnapshot().mode, 'configuration');
   assert.equal(denied.controller.getSnapshot().notice.error.status, 403);
+});
+
+test('cinema search matches the name, address, and city promised by its placeholder', () => {
+  const row = adminCinema({
+    RapID: 7,
+    TenRap: 'Rạp Trung Tâm',
+    DiaChi: '125 Nguyễn Huệ',
+    ThanhPho: 'Hồ Chí Minh',
+    TrangThai: 'Hoạt động',
+  });
+  for (const search of ['trung tam', 'nguyen hue', 'ho chi minh'])
+    assert.equal(matchesResource(row, { search, city: '', status: '' }), true);
+  assert.equal(matchesResource(row, { search: 'Đà Nẵng', city: '', status: '' }), false);
+});
+
+test('removing a facility chip updates only that applied condition and resets pagination', async () => {
+  const item = fixture({ kind: 'rooms', query: 'cinemaId=1' });
+  await item.controller.start();
+  item.controller.setFilters({ type: '2D', status: 'Hoạt động' });
+  item.controller.applyFilters();
+  item.controller.setFilters({ search: 'draft room' });
+  item.controller.setPage(1);
+  item.controller.removeFilter('status');
+  const state = item.controller.getSnapshot();
+  assert.equal(state.applied.status, '');
+  assert.equal(state.filters.status, '');
+  assert.equal(state.filters.search, 'draft room');
+  assert.equal(state.applied.type, '2D');
+  assert.equal(state.page, 1);
 });
 
 test('occupancy validates paired showtime ownership before public read and rejects mismatched seats', async () => {
@@ -730,7 +761,11 @@ test('facility search uses one FilterBar submit action for button and Enter', ()
     React.createElement(FacilityFilters, {
       kind: 'cinemas',
       rows: [],
-      state: { filters: { search: '', city: '' }, applied: { search: '', city: '' }, pending: false },
+      state: {
+        filters: { search: '', city: '' },
+        applied: { search: '', city: '' },
+        pending: false,
+      },
       controller: { applyFilters() {}, resetFilters() {}, setFilters() {} },
     }),
   );

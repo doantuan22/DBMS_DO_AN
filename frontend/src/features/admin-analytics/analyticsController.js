@@ -112,6 +112,8 @@ export function createAnalyticsController({
         emit({ error: new Error(message) });
         return;
       }
+      if (Object.keys(state.applied).every((key) => state.filters[key] === state.applied[key]))
+        return;
       emit({ applied: { ...state.filters }, error: null });
       url();
       await loadReport();

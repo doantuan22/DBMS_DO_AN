@@ -402,6 +402,16 @@ export function createFacilityController({
     setFilters(patch) {
       emit({ filters: { ...state.filters, ...patch } });
     },
+    removeFilter(key) {
+      if (busy() || !Object.hasOwn(freshFilters(), key)) return;
+      const value = '';
+      emit({
+        filters: { ...state.filters, [key]: value },
+        applied: { ...state.applied, [key]: value },
+        page: 1,
+      });
+      url();
+    },
     applyFilters() {
       if (!busy()) {
         emit({ applied: { ...state.filters }, page: 1 });

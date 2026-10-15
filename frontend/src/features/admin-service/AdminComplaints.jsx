@@ -125,6 +125,7 @@ export function ComplaintView({ adapter, state, controller }) {
         draft={state.filters}
         applied={state.applied}
         pending={busy}
+        onRemoveFilter={controller.removeFilter}
         onApply={() => void controller.applyFilters()}
         onReset={() => void controller.resetFilters()}
       >
@@ -136,14 +137,22 @@ export function ComplaintView({ adapter, state, controller }) {
             onChange={(e) => controller.setFilters({ search: e.target.value })}
           />
         </FormField>
-        <FormField label="Loại khiếu nại" hint="Tên loại chính xác theo hồ sơ.">
-          <Input
-            value={state.filters.type}
-            maxLength={100}
-            disabled={busy}
-            onChange={(e) => controller.setFilters({ type: e.target.value })}
-          />
-        </FormField>
+        <details className="admin-resource__advanced-filters">
+          <summary>
+            <span>Bộ lọc nâng cao</span>
+            {state.applied.type ? <span>1 điều kiện đang áp dụng</span> : null}
+          </summary>
+          <div className="admin-resource__advanced-fields">
+            <FormField label="Loại khiếu nại" hint="Tên loại chính xác theo hồ sơ.">
+              <Input
+                value={state.filters.type}
+                maxLength={100}
+                disabled={busy}
+                onChange={(e) => controller.setFilters({ type: e.target.value })}
+              />
+            </FormField>
+          </div>
+        </details>
         <FormField label="Trạng thái lọc">
           <Select
             value={state.filters.status}
@@ -230,112 +239,113 @@ export function ComplaintView({ adapter, state, controller }) {
         />
         {state.detail.status === 'success' && complaint && (
           <section className="admin-resource__panel" aria-label="Hồ sơ khiếu nại">
-          <p>
-            {complaint.senderName} · {complaint.type} · {complaint.priority} ·{' '}
-            {formatDateTime(complaint.createdAt)}
-          </p>
-          <StatusBadge status={complaint.status} />
-          <p className="admin-resource__content">{complaint.content}</p>
-          <ComplaintOrderReference
-            key={complaint.id}
-            complaintId={complaint.id}
-            allowed={adapter.referenceAllowed}
-            loadReference={adminApi.complaintOrderReference}
-          />
-          <AdminComplaintAssignment
-            complaintId={complaint.id}
-            currentStaffId={complaint.assignedStaffId}
-            onAssigned={() => void controller.reload()}
-          />
-          <div>
-            <h3>Lịch sử xử lý</h3>
-            {complaint.processings?.length ? (
-              <ol className="admin-resource__history">
-                {complaint.processings.map((p) => (
-                  <li key={p.id}>
-                    <strong>{p.processorName}</strong> · {formatDateTime(p.processedAt)} ·{' '}
-                    <StatusBadge status={p.status} />
-                    <p className="admin-resource__content">{p.content}</p>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p>Chưa có lượt xử lý.</p>
-            )}
-          </div>
-          {adapter.writable && state.draft ? (
-            <>
-              <p>
-                Bản nháp gắn với từng hồ sơ và được giữ khi đổi bộ lọc hoặc chuyển hồ sơ trong vùng
-                Admin.
-              </p>
-              <form
-                className="admin-resource__form"
-                aria-label="Ghi nhận xử lý Admin"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  controller.request('processing');
-                }}
-              >
-                <FormField label="Nội dung xử lý" required>
-                  <textarea
-                    className="ui-input"
-                    rows={5}
-                    value={state.draft.processing.content}
-                    required
-                    disabled={busy}
-                    onChange={(e) => controller.changeProcessing({ content: e.target.value })}
-                  />
-                </FormField>
-                <FormField label="Trạng thái sau xử lý">
-                  <Select
-                    value={state.draft.processing.nextStatus}
-                    disabled={busy}
-                    onChange={(e) => controller.changeProcessing({ nextStatus: e.target.value })}
-                  >
-                    {options(PROCESSING_STATUSES)}
-                  </Select>
-                </FormField>
-                <Button type="submit" loading={busy}>
-                  Ghi nhận xử lý
-                </Button>
-              </form>
-              <form
-                className="admin-resource__form"
-                aria-label="Cập nhật trạng thái Admin"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  controller.request('status');
-                }}
-              >
-                <FormField label="Trạng thái hồ sơ">
-                  <Select
-                    value={state.draft.status}
-                    disabled={busy}
-                    onChange={(e) => controller.changeStatus(e.target.value)}
-                  >
-                    {options(PROCESSING_STATUSES)}
-                  </Select>
-                </FormField>
-                <div className="admin-resource__actions">
-                  <Button type="submit" loading={busy}>
-                    Cập nhật trạng thái
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    disabled={busy}
-                    onClick={() => controller.request('discard')}
-                  >
-                    Bỏ bản nháp hồ sơ
-                  </Button>
-                </div>
-              </form>
-            </>
-          ) : (
             <p>
-              Bạn có quyền tra cứu hồ sơ; cần quyền xử lý để ghi nhận nội dung hoặc đổi trạng thái.
+              {complaint.senderName} · {complaint.type} · {complaint.priority} ·{' '}
+              {formatDateTime(complaint.createdAt)}
             </p>
-          )}
+            <StatusBadge status={complaint.status} />
+            <p className="admin-resource__content">{complaint.content}</p>
+            <ComplaintOrderReference
+              key={complaint.id}
+              complaintId={complaint.id}
+              allowed={adapter.referenceAllowed}
+              loadReference={adminApi.complaintOrderReference}
+            />
+            <AdminComplaintAssignment
+              complaintId={complaint.id}
+              currentStaffId={complaint.assignedStaffId}
+              onAssigned={() => void controller.reload()}
+            />
+            <div>
+              <h3>Lịch sử xử lý</h3>
+              {complaint.processings?.length ? (
+                <ol className="admin-resource__history">
+                  {complaint.processings.map((p) => (
+                    <li key={p.id}>
+                      <strong>{p.processorName}</strong> · {formatDateTime(p.processedAt)} ·{' '}
+                      <StatusBadge status={p.status} />
+                      <p className="admin-resource__content">{p.content}</p>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>Chưa có lượt xử lý.</p>
+              )}
+            </div>
+            {adapter.writable && state.draft ? (
+              <>
+                <p>
+                  Bản nháp gắn với từng hồ sơ và được giữ khi đổi bộ lọc hoặc chuyển hồ sơ trong
+                  vùng Admin.
+                </p>
+                <form
+                  className="admin-resource__form"
+                  aria-label="Ghi nhận xử lý Admin"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    controller.request('processing');
+                  }}
+                >
+                  <FormField label="Nội dung xử lý" required>
+                    <textarea
+                      className="ui-input"
+                      rows={5}
+                      value={state.draft.processing.content}
+                      required
+                      disabled={busy}
+                      onChange={(e) => controller.changeProcessing({ content: e.target.value })}
+                    />
+                  </FormField>
+                  <FormField label="Trạng thái sau xử lý">
+                    <Select
+                      value={state.draft.processing.nextStatus}
+                      disabled={busy}
+                      onChange={(e) => controller.changeProcessing({ nextStatus: e.target.value })}
+                    >
+                      {options(PROCESSING_STATUSES)}
+                    </Select>
+                  </FormField>
+                  <Button type="submit" loading={busy}>
+                    Ghi nhận xử lý
+                  </Button>
+                </form>
+                <form
+                  className="admin-resource__form"
+                  aria-label="Cập nhật trạng thái Admin"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    controller.request('status');
+                  }}
+                >
+                  <FormField label="Trạng thái hồ sơ">
+                    <Select
+                      value={state.draft.status}
+                      disabled={busy}
+                      onChange={(e) => controller.changeStatus(e.target.value)}
+                    >
+                      {options(PROCESSING_STATUSES)}
+                    </Select>
+                  </FormField>
+                  <div className="admin-resource__actions">
+                    <Button type="submit" loading={busy}>
+                      Cập nhật trạng thái
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      disabled={busy}
+                      onClick={() => controller.request('discard')}
+                    >
+                      Bỏ bản nháp hồ sơ
+                    </Button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <p>
+                Bạn có quyền tra cứu hồ sơ; cần quyền xử lý để ghi nhận nội dung hoặc đổi trạng
+                thái.
+              </p>
+            )}
           </section>
         )}
       </Dialog>

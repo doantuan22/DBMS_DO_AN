@@ -46,6 +46,7 @@ export function createOperationsController({
   let active = true,
     listGeneration = 0,
     lookupGeneration = 0,
+    movieGeneration = 0,
     roomGeneration = 0,
     writing = false;
   const listeners = new Set(),
@@ -127,6 +128,19 @@ export function createOperationsController({
         emit({ rooms: { status: 'error', rows: [], error: operationsError(error) } });
     }
   }
+  async function loadMovies() {
+    const generation = ++movieGeneration;
+    emit({ movies: { status: 'loading', rows: [] } });
+    try {
+      const rows = await adapter.movies();
+      if (!current() || generation !== movieGeneration) return;
+      if (!Array.isArray(rows)) throw failure('Danh sách phim trả về không hợp lệ.');
+      emit({ movies: { status: 'success', rows } });
+    } catch (error) {
+      if (current() && generation === movieGeneration)
+        emit({ movies: { status: 'error', rows: [], error: operationsError(error) } });
+    }
+  }
   const run = (action) => {
     if (action.kind === 'close') {
       emit({ editor: null });
@@ -187,17 +201,7 @@ export function createOperationsController({
           });
       }
       if (adapter.kind === 'showtimes') {
-        emit({ movies: { status: 'loading', rows: [] } });
-        adapter
-          .movies()
-          .then((rows) => {
-            if (current() && generation === lookupGeneration)
-              emit({ movies: { status: 'success', rows } });
-          })
-          .catch((error) => {
-            if (current() && generation === lookupGeneration)
-              emit({ movies: { status: 'error', rows: [], error: operationsError(error) } });
-          });
+        void loadMovies();
       }
       await Promise.all([load(), loadRooms()]);
     },
@@ -205,12 +209,31 @@ export function createOperationsController({
       active = false;
       listGeneration++;
       lookupGeneration++;
+      movieGeneration++;
       roomGeneration++;
     },
     reload: load,
     reloadRooms: loadRooms,
+    reloadMovies: loadMovies,
     setFilters(patch) {
       if (!busy()) emit({ filters: { ...state.filters, ...patch }, filterError: null });
+    },
+    removeFilter(key) {
+      const defaults = defaultFilters(adapter.kind);
+      if (busy() || !Object.hasOwn(defaults, key)) return;
+      const filters = { ...state.filters, [key]: defaults[key] };
+      const applied = { ...state.applied, [key]: defaults[key] };
+      if (adapter.kind === 'showtimes' && filters.fromDate > filters.toDate) {
+        const adjustedKey = key === 'fromDate' ? 'toDate' : 'fromDate';
+        filters[adjustedKey] = filters[key];
+        applied[adjustedKey] = applied[key];
+      }
+      const rangeChanged =
+        adapter.kind === 'showtimes' &&
+        (applied.fromDate !== state.applied.fromDate || applied.toDate !== state.applied.toDate);
+      emit({ filters, applied, page: 1, filterError: null });
+      url();
+      if (rangeChanged) void load();
     },
     applyFilters() {
       if (busy()) return;

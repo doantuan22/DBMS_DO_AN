@@ -33,6 +33,7 @@ import SeatLayout from './SeatLayout';
 import SeatInspector from './SeatInspector';
 import './facilities.css';
 import { loadOccupancy } from './occupancyRead';
+import { ROOM_TYPES, SEAT_TYPES, RESOURCE_STATUSES } from '../../../../shared/resourceContract.mjs';
 
 export default function FacilityScreen({ kind, manager = false }) {
   const { user } = useAuth();
@@ -268,6 +269,14 @@ export function FacilityFilters({ state, controller, kind, rows }) {
     status: 'Trạng thái',
     city: 'Thành phố',
   };
+  const filterOptions = {
+    row: [...new Set(rows.map((row) => row.row).filter(Boolean))],
+    type: kind === 'seats' ? SEAT_TYPES : ROOM_TYPES,
+    status: RESOURCE_STATUSES[kind === 'images' ? 'cinemaImages' : kind] ?? [],
+    city: [...new Set(rows.map((row) => row.city).filter(Boolean))].sort((a, b) =>
+      a.localeCompare(b, 'vi'),
+    ),
+  };
   return (
     <FilterBar
       label={`Bộ lọc ${facilityLabels[kind]}`}
@@ -276,6 +285,7 @@ export function FacilityFilters({ state, controller, kind, rows }) {
       applied={state.applied}
       applyLabel={kind === 'cinemas' ? 'Tìm rạp' : 'Tìm'}
       pending={state.pending}
+      onRemoveFilter={(key) => controller.removeFilter(key)}
       onApply={() => controller.applyFilters()}
       onReset={() => controller.resetFilters()}
     >
@@ -305,11 +315,9 @@ export function FacilityFilters({ state, controller, kind, rows }) {
             onChange={(event) => controller.setFilters({ [key]: event.target.value })}
           >
             <option value="">Tất cả</option>
-            {[...new Set([...rows.map((row) => row[key]), state.filters[key]].filter(Boolean))].map(
-              (value) => (
-                <option key={value}>{value}</option>
-              ),
-            )}
+            {filterOptions[key]?.map((value) => (
+              <option key={value}>{value}</option>
+            ))}
           </Select>
         </FormField>
       ))}
