@@ -60,11 +60,12 @@ test('booking workspace uses named filters/shared table and route-specific activ
   ]) {
     const html = render(portal, { userId: 1, role, permissions: [{ code: 'DAT_VE' }] }, true);
     assert.match(html, /Quản lý đặt vé/);
-    assert.match(html, /Bộ lọc đơn đặt vé/);
     assert.match(html, /Đang tải dữ liệu/);
     assert.match(html, /aria-live="polite"/);
     assert.ok(html.includes(`href="/${portal}/bookings"`));
     assert.match(html, /aria-current="page"/);
+    if (portal === 'manager') assert.doesNotMatch(html, /class="ui-filter-bar"/);
+    else assert.match(html, /Bộ lọc đơn đặt vé/);
     assert.doesNotMatch(html, />Vai trò<|>Quyền<|Gán quyền/);
   }
 });

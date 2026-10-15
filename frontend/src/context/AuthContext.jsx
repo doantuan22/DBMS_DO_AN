@@ -5,17 +5,34 @@ import { createAuthSession } from '../services/authSession';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
+const issueFor = (error) => (error?.status === 401 ? { kind: 'expired' } : { kind: 'unavailable' });
 
 export function AuthProvider({ children }) {
   const [session] = useState(() => createAuthSession({ api: authApi, storage: authTokenStorage }));
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(() => Boolean(authTokenStorage.get()));
+  const [authIssue, setAuthIssue] = useState(null);
 
   const refreshCurrentUser = useCallback(async () => {
     const owner = session.getVersion();
-    const currentUser = await session.initialize();
-    if (owner === session.getVersion()) setUser(currentUser);
-    return currentUser;
+    setAuthIssue(null);
+    setInitializing(true);
+    try {
+      const currentUser = await session.initialize();
+      if (owner === session.getVersion()) setUser(currentUser);
+      return currentUser;
+    } catch (error) {
+      if (
+        owner === session.getVersion() ||
+        (error.status === 401 && !authTokenStorage.get())
+      ) {
+        setUser(null);
+        setAuthIssue(issueFor(error));
+      }
+      throw error;
+    } finally {
+      if (owner === session.getVersion() || !authTokenStorage.get()) setInitializing(false);
+    }
   }, [session]);
 
   useEffect(() => {
@@ -24,6 +41,7 @@ export function AuthProvider({ children }) {
     const onUnauthorized = () => {
       session.logout();
       setUser(null);
+      setAuthIssue({ kind: 'expired' });
       setInitializing(false);
     };
     window.addEventListener('auth:unauthorized', onUnauthorized);
@@ -33,11 +51,21 @@ export function AuthProvider({ children }) {
       session
         .initialize({ signal: controller.signal })
         .then((currentUser) => {
-          if (active && owner === session.getVersion()) setUser(currentUser);
+          if (active && owner === session.getVersion()) {
+            setUser(currentUser);
+            setAuthIssue(null);
+          }
         })
         .catch((error) => {
-          if (active && owner === session.getVersion() && error.name !== 'AbortError')
+          if (
+            active &&
+            error.name !== 'AbortError' &&
+            (owner === session.getVersion() ||
+              (error.status === 401 && !authTokenStorage.get()))
+          ) {
             setUser(null);
+            setAuthIssue(issueFor(error));
+          }
         })
         .finally(() => {
           if (active) setInitializing(false);
@@ -55,10 +83,14 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(
     async (credentials) => {
+      setAuthIssue(null);
       const result = session.login(credentials);
       const owner = session.getVersion();
       const currentUser = await result;
-      if (owner === session.getVersion()) setUser(currentUser);
+      if (owner === session.getVersion()) {
+        setUser(currentUser);
+        setAuthIssue(null);
+      }
       return currentUser;
     },
     [session],
@@ -67,6 +99,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(() => {
     session.logout();
     setUser(null);
+    setAuthIssue(null);
   }, [session]);
 
   const updateProfile = useCallback(
@@ -84,13 +117,14 @@ export function AuthProvider({ children }) {
       user,
       initializing,
       authenticated: Boolean(user),
+      authIssue,
       login,
       register,
       logout,
       refreshCurrentUser,
       updateProfile,
     }),
-    [user, initializing, login, register, logout, refreshCurrentUser, updateProfile],
+    [user, initializing, authIssue, login, register, logout, refreshCurrentUser, updateProfile],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

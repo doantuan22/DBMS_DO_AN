@@ -13,6 +13,7 @@ let routes;
 let screenRoutes;
 let resolveAdminSection;
 let permissions;
+let adminEntryPath;
 
 before(async () => {
   vite = await createServer({
@@ -27,6 +28,7 @@ before(async () => {
     ADMIN_SECTION_ROUTES: routes,
     ADMIN_SCREEN_ROUTES: screenRoutes,
     resolveAdminSection,
+    adminEntryPath,
   } = await vite.ssrLoadModule('/src/routes/adminSectionRoutes.js'));
   ({ ADMIN_SECTION_PERMISSIONS: permissions } = await vite.ssrLoadModule(
     '/src/utils/authorization.js',
@@ -91,6 +93,15 @@ test('direct Admin URL selects its own section and denies a section without perm
     React.createElement(AdminSectionRoute, { section: 'users' }),
   );
   assert.match(forbidden, /Không có quyền truy cập/);
+});
+
+test('Admin entry selects the first authorized section or reports no available section', () => {
+  assert.equal(
+    adminEntryPath({ role: 'ADMIN', permissions: [{ code: permissions.movies }] }),
+    routes.movies.path,
+  );
+  assert.equal(adminEntryPath({ role: 'ADMIN', permissions: [] }), null);
+  assert.equal(adminEntryPath({ role: 'CSKH', permissions: [{ code: permissions.dashboard }] }), null);
 });
 
 test('Admin sidebar links use route ownership and mark the deep link active', () => {

@@ -8,6 +8,8 @@ import { createServer } from 'vite';
 let vite;
 let AppRoutes;
 let AuthProvider;
+let AuthContext;
+let PublicShell;
 let SeatMap;
 let StatusBadge;
 
@@ -19,6 +21,8 @@ before(async () => {
   });
   ({ default: AppRoutes } = await vite.ssrLoadModule('/src/routes/index.jsx'));
   ({ AuthProvider } = await vite.ssrLoadModule('/src/context/AuthContext.jsx'));
+  ({ AuthContext } = await vite.ssrLoadModule('/src/context/AuthContext.jsx'));
+  ({ default: PublicShell } = await vite.ssrLoadModule('/src/layouts/PublicShell.jsx'));
   ({ default: SeatMap } = await vite.ssrLoadModule('/src/components/SeatMap.jsx'));
   ({ default: StatusBadge } = await vite.ssrLoadModule(
     '/src/components/primitives/StatusBadge.jsx',
@@ -52,6 +56,33 @@ test('guests see login and register actions in the shared header and the site fo
   assert.match(html, /href="\/register"/);
   assert.match(html, /class="area__footer"/);
   assert.doesNotMatch(html, /Đăng xuất/);
+});
+
+test('customer complaint navigation is emitted once when an area supplies the same destination', () => {
+  const html = renderToStaticMarkup(
+    React.createElement(
+      MemoryRouter,
+      { initialEntries: ['/complaints/75'] },
+      React.createElement(
+        AuthContext.Provider,
+        {
+          value: {
+            user: { role: 'KHACH_HANG', permissions: [] },
+            logout() {},
+          },
+        },
+        React.createElement(PublicShell, {
+          links: [
+            { to: '/', label: 'Trang chủ' },
+            { to: '/complaints', label: 'Khiếu nại' },
+          ],
+        }),
+      ),
+    ),
+  );
+  const navigation = html.match(/<nav[^>]*aria-label="Điều hướng chính"[^>]*>(.*?)<\/nav>/)?.[1] ?? '';
+  assert.equal((navigation.match(/href="\/complaints"/g) ?? []).length, 1);
+  assert.match(navigation, /Khiếu nại/);
 });
 
 test('seat map groups seats by row, orders them numerically and names every seat for assistive tech', () => {

@@ -295,9 +295,6 @@ export function FacilityFilters({ state, controller, kind, rows }) {
             maxLength={150}
             onChange={(event) => controller.setFilters({ search: event.target.value })}
           />
-          <Button type="submit" disabled={state.pending} size="sm">
-            Tìm
-          </Button>
         </div>
       </FormField>
       {keys.map((key) => (
@@ -560,14 +557,24 @@ function ResourceWorkspace({ state, controller, adapter }) {
           }}
         />
       </section>
-      {!rooms && state.selection && (
-        <CinemaDetail
-          cinema={state.selection}
-          adapter={adapter}
-          controller={controller}
-          busy={state.pending}
-        />
-      )}
+      <Dialog
+        open={Boolean(!rooms && state.selection)}
+        size="inspector"
+        title={state.selection?.name ?? 'Chi tiết rạp'}
+        busy={state.pending}
+        onOpenChange={(open) => {
+          if (!open) controller.closeDetail();
+        }}
+      >
+        {!rooms && state.selection && (
+          <CinemaDetail
+            cinema={state.selection}
+            adapter={adapter}
+            controller={controller}
+            busy={state.pending}
+          />
+        )}
+      </Dialog>
     </>
   );
 }
@@ -576,7 +583,6 @@ function CinemaDetail({ cinema, adapter, controller, busy }) {
   return (
     <section className="facility-panel" aria-label="Chi tiết rạp">
       <p className="facility-eyebrow">RẠP ĐANG CHỌN</p>
-      <h2>{cinema.name}</h2>
       <StatusBadge status={cinema.status} />
       <dl className="facility-details">
         <div>
@@ -694,7 +700,8 @@ function SeatWorkspace({ state, controller, adapter, roomName }) {
   const occupancy = useOccupancy(state, adapter),
     source = state.mode === 'occupancy' ? occupancy.resource : state.resource;
   const view = resourceView({ ...state, resource: source }),
-    mapPossible = seatRows(view.all) !== null;
+    mapPossible = seatRows(view.all) !== null,
+    selectedSeat = view.all.find((row) => String(row.id) === String(state.selection?.id));
   const columns = [
     { key: 'label', label: 'Ghế' },
     { key: 'row', label: 'Hàng' },
@@ -856,16 +863,30 @@ function SeatWorkspace({ state, controller, adapter, roomName }) {
             />
           )}
         </section>
-        <SeatInspector
-          seat={view.all.find((row) => String(row.id) === String(state.selection?.id))}
-          roomName={roomName}
-          mode={state.mode}
+        <Dialog
+          open={Boolean(selectedSeat)}
+          size="inspector"
+          title={selectedSeat ? `Chi tiết ghế · ${selectedSeat.label}` : 'Chi tiết ghế'}
           busy={state.pending}
-          onEdit={state.mode === 'configuration' ? (row) => controller.openEditor(row) : undefined}
-          onDelete={
-            state.mode === 'configuration' ? (row) => controller.requestDelete(row) : undefined
-          }
-        />
+          onOpenChange={(open) => {
+            if (!open) controller.closeDetail();
+          }}
+        >
+          {selectedSeat && (
+            <SeatInspector
+              seat={selectedSeat}
+              roomName={roomName}
+              mode={state.mode}
+              busy={state.pending}
+              onEdit={
+                state.mode === 'configuration' ? (row) => controller.openEditor(row) : undefined
+              }
+              onDelete={
+                state.mode === 'configuration' ? (row) => controller.requestDelete(row) : undefined
+              }
+            />
+          )}
+        </Dialog>
       </div>
     </>
   );

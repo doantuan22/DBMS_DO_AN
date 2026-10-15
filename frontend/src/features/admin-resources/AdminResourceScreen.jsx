@@ -417,6 +417,65 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
         ? { format: formatDate }
         : {}),
   }));
+  const extraFilterCount = Object.keys(definition.filters).filter((key) => key !== 'search').length;
+  const appliedExtraFilterCount = Object.entries(state.applied).filter(
+    ([key, value]) => key !== 'search' && value !== '' && value != null,
+  ).length;
+  const renderAdditionalFilters = () => (
+    <>
+      {Object.entries(filterOptions)
+        .filter(([key]) => Object.hasOwn(definition.filters, key))
+        .map(([key, options]) => (
+          <div key={key}>{namedFilter(key, `${filterLabels[key]} lọc`, options)}</div>
+        ))}
+      {Object.hasOwn(definition.filters, 'effectiveOn') && (
+        <FormField label="Trong kỳ phân công ngày">
+          <Input
+            type="date"
+            value={state.filters.effectiveOn}
+            disabled={busy}
+            onChange={(e) => controller.setFilters({ effectiveOn: e.target.value })}
+          />
+        </FormField>
+      )}
+      {['minDuration', 'maxDuration', 'minPrice', 'maxPrice']
+        .filter((key) => Object.hasOwn(definition.filters, key))
+        .map((key) => (
+          <FormField key={key} label={filterLabels[key]}>
+            <Input
+              type="number"
+              min={key.includes('Price') ? 0 : 1}
+              step={key.includes('Price') ? '0.01' : 1}
+              value={state.filters[key]}
+              disabled={busy}
+              onChange={(e) => controller.setFilters({ [key]: e.target.value })}
+            />
+          </FormField>
+        ))}
+      {['fromDate', 'toDate']
+        .filter((key) => Object.hasOwn(definition.filters, key))
+        .map((key) => (
+          <FormField
+            key={key}
+            label={filterLabels[key]}
+            hint="Lọc khuyến mãi có khoảng hiệu lực giao với kỳ ngày Việt Nam đã chọn."
+          >
+            <Input
+              type="date"
+              value={state.filters[key]}
+              disabled={busy}
+              onChange={(e) => controller.setFilters({ [key]: e.target.value })}
+            />
+          </FormField>
+        ))}
+      {RESOURCE_STATUSES[kind] &&
+        namedFilter(
+          'status',
+          'Trạng thái lọc',
+          RESOURCE_STATUSES[kind].map((status) => ({ id: status, label: status })),
+        )}
+    </>
+  );
   const confirmation = state.confirmation,
     editor = state.editor;
   const from = confirmation?.row?.TenRap,
@@ -511,57 +570,19 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
               onChange={(e) => controller.setFilters({ search: e.target.value })}
             />
           </FormField>
-          {Object.entries(filterOptions)
-            .filter(([key]) => Object.hasOwn(definition.filters, key))
-            .map(([key, options]) => (
-              <div key={key}>{namedFilter(key, `${filterLabels[key]} lọc`, options)}</div>
-            ))}
-          {Object.hasOwn(definition.filters, 'effectiveOn') && (
-            <FormField label="Trong kỳ phân công ngày">
-              <Input
-                type="date"
-                value={state.filters.effectiveOn}
-                disabled={busy}
-                onChange={(e) => controller.setFilters({ effectiveOn: e.target.value })}
-              />
-            </FormField>
+          {extraFilterCount > 2 ? (
+            <details className="admin-resource__advanced-filters">
+              <summary>
+                <span>Bộ lọc nâng cao</span>
+                {appliedExtraFilterCount > 0 && (
+                  <span>{appliedExtraFilterCount} điều kiện đang áp dụng</span>
+                )}
+              </summary>
+              <div className="admin-resource__advanced-fields">{renderAdditionalFilters()}</div>
+            </details>
+          ) : (
+            renderAdditionalFilters()
           )}
-          {['minDuration', 'maxDuration', 'minPrice', 'maxPrice']
-            .filter((key) => Object.hasOwn(definition.filters, key))
-            .map((key) => (
-              <FormField key={key} label={filterLabels[key]}>
-                <Input
-                  type="number"
-                  min={key.includes('Price') ? 0 : 1}
-                  step={key.includes('Price') ? '0.01' : 1}
-                  value={state.filters[key]}
-                  disabled={busy}
-                  onChange={(e) => controller.setFilters({ [key]: e.target.value })}
-                />
-              </FormField>
-            ))}
-          {['fromDate', 'toDate']
-            .filter((key) => Object.hasOwn(definition.filters, key))
-            .map((key) => (
-              <FormField
-                key={key}
-                label={filterLabels[key]}
-                hint="Lọc khuyến mãi có khoảng hiệu lực giao với kỳ ngày Việt Nam đã chọn."
-              >
-                <Input
-                  type="date"
-                  value={state.filters[key]}
-                  disabled={busy}
-                  onChange={(e) => controller.setFilters({ [key]: e.target.value })}
-                />
-              </FormField>
-            ))}
-          {RESOURCE_STATUSES[kind] &&
-            namedFilter(
-              'status',
-              'Trạng thái lọc',
-              RESOURCE_STATUSES[kind].map((status) => ({ id: status, label: status })),
-            )}
         </FilterBar>
       )}
       {state.resource.status === 'success' && (
@@ -583,18 +604,21 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
           onPageChange: controller.setPage,
         }}
       />
-      <AsyncState status={state.selectionError ? 'error' : 'idle'} error={state.selectionError} />
-      {state.selection && (
-        <section
-          className="admin-resource__panel"
-          aria-label={`Chi tiết ${definition.title.toLowerCase()}`}
-        >
-          <div className="admin-resource__actions">
-            <h2>{definition.name(state.selection)}</h2>
-            <Button variant="secondary" disabled={busy} onClick={controller.closeDetail}>
-              Đóng chi tiết
-            </Button>
-          </div>
+      <Dialog
+        open={Boolean(state.selectedId)}
+        size="inspector"
+        title={state.selection ? definition.name(state.selection) : `Chi tiết ${definition.title.toLowerCase()}`}
+        busy={busy}
+        onOpenChange={(open) => {
+          if (!open) controller.closeDetail();
+        }}
+      >
+        {state.selectionError && <AsyncState status="error" error={state.selectionError} />}
+        {state.selectedId && !state.selection && !state.selectionError && (
+          <AsyncState status="loading" loadingMessage="Đang tải chi tiết…" />
+        )}
+        {state.selection && (
+          <section className="admin-resource__panel" aria-label={`Chi tiết ${definition.title.toLowerCase()}`}>
           {state.selection.TrangThai && <StatusBadge status={state.selection.TrangThai} />}
           <dl className="admin-resource__details">
             {definition.details
@@ -612,8 +636,9 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
           {catalog && (
             <CatalogDetails kind={kind} row={state.selection} lookups={state.lookups} can={can} />
           )}
-        </section>
-      )}
+          </section>
+        )}
+      </Dialog>
       <Dialog
         key={
           editor

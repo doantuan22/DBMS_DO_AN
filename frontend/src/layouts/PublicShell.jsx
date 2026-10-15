@@ -90,6 +90,10 @@ export default function PublicShell({ title, links = [], children }) {
         { to: '/movies', label: 'Phim' },
         { to: '/cinemas', label: 'Rạp chiếu' },
       ];
+  const hasCustomerComplaintsLink = destinations.some(
+    (link) =>
+      link.to === '/complaints' && (!link.role || user?.role === link.role),
+  );
   const navLink = (to, label) => (
     <NavLink key={to} to={to} end={to === '/'} className="area__nav-link" onClick={closeMenu}>
       {label}
@@ -146,7 +150,9 @@ export default function PublicShell({ title, links = [], children }) {
             Tìm phim
           </Link>
           {user && navLink('/profile', 'Hồ sơ')}
-          {user?.role === ROLES.CUSTOMER && navLink('/complaints', 'Khiếu nại')}
+          {user?.role === ROLES.CUSTOMER &&
+            !hasCustomerComplaintsLink &&
+            navLink('/complaints', 'Khiếu nại')}
           {allowedAreas.map(([, area]) => navLink(area.path, area.label))}
           <div className="cp-mobile-account">
             {user ? (

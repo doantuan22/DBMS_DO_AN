@@ -91,6 +91,24 @@ async function fundedCustomer(apiBase, pool, tag) {
 }
 
 export const hardeningScenarios = [
+  {
+    id: 'E2E-MOVIE-SEARCH-NAV',
+    title: 'Tìm phim navigation focuses the search control and Enter applies URL-backed filters',
+    async run({ page, origin, assert }) {
+      await page.goto(`${origin}/movies`);
+      await page.getByRole('link', { name: 'Tìm phim' }).click();
+      await page.waitForURL('**/movies?search=');
+      const search = page.getByRole('searchbox', { name: 'Tìm phim hoặc đạo diễn' });
+      await expectPoll(async () => search.evaluate((input) => document.activeElement === input), {
+        message: 'Tìm phim did not focus the movie search field',
+      });
+      await search.fill('galaxy');
+      await page.keyboard.press('Enter');
+      await page.waitForURL((url) => url.pathname === '/movies' && url.searchParams.get('search') === 'galaxy');
+      assert.equal(await search.inputValue(), 'galaxy');
+      return { url: page.url(), focusedSearch: true };
+    },
+  },
   // ------------------------------------------------------------------ Admin: dashboard & revenue vs SQL
   {
     id: 'E2E-ADM-DASHBOARD',
@@ -410,7 +428,8 @@ export const hardeningScenarios = [
       await page.getByRole('button', { name: 'Danh sách' }).click();
       await page.getByRole('button', { name: 'Xem K3' }).click();
       await page.getByRole('button', { name: 'Sửa ghế' }).click();
-      dialog = page.getByRole('dialog');
+      // The seat inspector stays open behind its editor; assert that the editor closes.
+      dialog = page.getByRole('dialog', { name: 'Chỉnh sửa ghế' });
       await dialog.getByLabel('Trạng thái').selectOption('Hỏng');
       await dialog.getByRole('button', { name: 'Lưu ghế' }).click();
       await dialog.waitFor({ state: 'hidden' });
@@ -939,28 +958,57 @@ async function runAxe(page) {
 }
 
 async function auditPages(ctx, viewport) {
-  const { browser, origin, pool, assert } = ctx;
+  const { browser, origin, pool, apiBase, assert } = ctx;
+  const screenshotDir = path.join(
+    ROOT,
+    '.audit-output',
+    'frontend-page-audit',
+    `${viewport.width}x${viewport.height}`,
+  );
+  fs.mkdirSync(screenshotDir, { recursive: true });
   const sample = await one(
     pool,
     `SELECT TOP 1 s.SuatChieuID, s.PhimID FROM dbo.SUATCHIEU s JOIN dbo.vw_LichChieuChiTiet v ON v.SuatChieuID = s.SuatChieuID
       WHERE s.TrangThai = N'Mở bán' AND v.IsBookable = 1 AND s.ThoiGianBatDau > dbo.fn_BayGio() ORDER BY s.ThoiGianBatDau`,
   );
+  const auditCustomer = await one(
+    pool,
+    `SELECT TOP 1 n.Email FROM dbo.NGUOIDUNG n
+      WHERE n.Email LIKE @prefix
+        AND EXISTS (SELECT 1 FROM dbo.DONDATVE d WHERE d.NguoiDungID = n.NguoiDungID)
+        AND EXISTS (SELECT 1 FROM dbo.KHIEUNAI k WHERE k.NguoiDungID = n.NguoiDungID)
+      ORDER BY n.NguoiDungID DESC`,
+    { prefix: 'e2e.ui.%' },
+  );
+  const auditCustomerEmail = auditCustomer?.Email ?? ACCOUNTS.customer;
   const order = await one(
     pool,
     `SELECT TOP 1 d.DonDatVeID FROM dbo.DONDATVE d JOIN dbo.NGUOIDUNG n ON n.NguoiDungID = d.NguoiDungID WHERE n.Email = @e ORDER BY d.DonDatVeID DESC`,
-    { e: ACCOUNTS.customer },
+    { e: auditCustomerEmail },
   );
+  const cinema = await one(pool, 'SELECT TOP 1 RapID FROM dbo.RAPCHIEUPHIM ORDER BY RapID');
+  const complaint = await one(
+    pool,
+    `SELECT TOP 1 k.KhieuNaiID FROM dbo.KHIEUNAI k JOIN dbo.NGUOIDUNG n ON n.NguoiDungID = k.NguoiDungID
+      WHERE n.Email = @e ORDER BY k.KhieuNaiID DESC`,
+    { e: auditCustomerEmail },
+  );
+  const customerPaths = ['/account', '/profile', '/orders', '/complaints'];
+  if (order) customerPaths.push(`/orders/${order.DonDatVeID}`, `/orders/${order.DonDatVeID}/payment`);
+  if (complaint) customerPaths.push(`/complaints/${complaint.KhieuNaiID}`);
   const plan = {
     public: [
       '/',
       '/movies',
       `/movies/${sample.PhimID}`,
       '/cinemas',
+      `/cinemas/${cinema?.RapID ?? 1}`,
       '/login',
       '/register',
       `/booking/${sample.SuatChieuID}`,
+      '/forbidden',
     ],
-    customer: ['/orders', `/orders/${order?.DonDatVeID ?? 1}`, '/complaints', '/profile'],
+    customer: customerPaths,
     manager: [
       '/manager/overview',
       '/manager/rooms',
@@ -969,26 +1017,35 @@ async function auditPages(ctx, viewport) {
       '/manager/pricing',
       '/manager/bookings',
       '/manager/revenue',
+      '/manager',
     ],
-    support: ['/support/complaints'],
+    support: [
+      '/support/complaints',
+      `/support/complaints/${complaint?.KhieuNaiID ?? 1}`,
+    ],
     admin: [
       '/admin/overview',
       '/admin/access/users',
+      '/admin/access/assignments',
       '/admin/catalog/movies',
       '/admin/catalog/genres',
+      '/admin/catalog/actors',
       '/admin/commerce/products',
       '/admin/commerce/promotions',
       '/admin/cinemas',
+      '/admin/cinemas/images',
       '/admin/facilities/rooms',
+      '/admin/facilities/seats',
       '/admin/operations/showtimes',
       '/admin/operations/pricing',
       '/admin/bookings',
       '/admin/service/complaints',
+      '/admin/service/escalations',
       '/admin/reports/revenue',
     ],
   };
   const accountFor = {
-    customer: ACCOUNTS.customer,
+    customer: auditCustomerEmail,
     manager: ACCOUNTS.manager,
     support: ACCOUNTS.support,
     admin: ACCOUNTS.admin,
@@ -996,14 +1053,46 @@ async function auditPages(ctx, viewport) {
   const findings = [];
   let pages = 0;
   for (const [role, paths] of Object.entries(plan)) {
-    const context = await browser.newContext({ viewport });
+    const { deviceScaleFactor = 1, ...pageViewport } = viewport;
+    const context = await browser.newContext({ viewport: pageViewport, deviceScaleFactor });
     const page = await context.newPage();
-    if (role !== 'public') await uiLogin(page, origin, accountFor[role]);
+    if (role !== 'public')
+      await uiLogin(
+        page,
+        origin,
+        accountFor[role],
+        role === 'customer' && auditCustomer ? 'E2eTest-123!' : undefined,
+      );
     for (const route of paths) {
+      const runtimeErrors = [];
+      const onPageError = (error) => runtimeErrors.push(`uncaught JavaScript: ${error.message}`);
+      const onConsole = (message) => {
+        if (message.type() === 'error' && !message.text().startsWith('Failed to load resource:'))
+          runtimeErrors.push(`console.error: ${message.text()}`);
+      };
+      const onResponse = (response) => {
+        if (response.url().startsWith(apiBase) && response.status() >= 500)
+          runtimeErrors.push(`API ${response.status()}: ${response.request().method()} ${response.url()}`);
+      };
+      page.on('pageerror', onPageError);
+      page.on('console', onConsole);
+      page.on('response', onResponse);
       await page.goto(`${origin}${route}`);
       await page.waitForLoadState('networkidle').catch(() => {});
       await sleep(400);
       pages += 1;
+      const main = page.locator('main').first();
+      const mainVisible = await main.isVisible().catch(() => false);
+      const mainText = mainVisible ? await main.innerText().catch(() => '') : '';
+      if (!mainVisible || !mainText.trim())
+        findings.push(`${role} ${route}: no visible, populated main content (landed ${page.url()})`);
+      if (role === 'admin' && route.startsWith('/admin/')) {
+        const navPaths = await page.locator('.staff-shell__nav-group a').evaluateAll((links) =>
+          links.map((link) => new URL(link.href).pathname),
+        );
+        if (!navPaths.includes(route))
+          findings.push(`${role} ${route}: page has no matching staff navigation link`);
+      }
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - window.innerWidth,
       );
@@ -1012,9 +1101,47 @@ async function auditPages(ctx, viewport) {
         findings.push(
           `${role} ${route}: ${violation.id} (${violation.impact}) ${violation.nodes.join(' | ')}`,
         );
+      const routeName = route.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '') || 'home';
+      await page.screenshot({
+        path: path.join(screenshotDir, `${role}-${routeName}.png`),
+        fullPage: true,
+      });
+      const localOrigins = [new URL(origin).origin, new URL(apiBase).origin];
+      const brokenImages = await page.locator('img').evaluateAll((images, allowedOrigins) =>
+        images
+          .filter((image) => {
+            const rect = image.getBoundingClientRect();
+            const style = getComputedStyle(image);
+            let imageOrigin = '';
+            try {
+              imageOrigin = new URL(image.currentSrc || image.src, window.location.href).origin;
+            } catch {
+              return false;
+            }
+            return (
+              rect.width > 0 &&
+              rect.height > 0 &&
+              style.visibility !== 'hidden' &&
+              style.display !== 'none' &&
+              image.complete &&
+              image.naturalWidth === 0 &&
+              allowedOrigins.includes(imageOrigin)
+            );
+          })
+          .map((image) => image.currentSrc || image.src),
+        localOrigins,
+      );
+      if (brokenImages.length)
+        findings.push(`${role} ${route}: broken images ${brokenImages.join(' | ')}`);
+      if (runtimeErrors.length)
+        findings.push(`${role} ${route}: ${runtimeErrors.join(' | ')}`);
+      page.off('pageerror', onPageError);
+      page.off('console', onConsole);
+      page.off('response', onResponse);
     }
     await context.close();
   }
+  for (const finding of findings) console.log(`[PAGE-AUDIT] ${finding}`);
   assert.deepEqual(findings, [], `${findings.length} responsive/accessibility findings`);
   return { pages, viewport: `${viewport.width}x${viewport.height}` };
 }
@@ -1023,6 +1150,11 @@ const viewports = [
   ['E2E-A11Y-DESKTOP', 'Desktop 1366×900', { width: 1366, height: 900 }],
   ['E2E-A11Y-TABLET', 'Tablet 768×1024', { width: 768, height: 1024 }],
   ['E2E-A11Y-MOBILE', 'Mobile 390×844', { width: 390, height: 844 }],
+  [
+    'E2E-A11Y-ZOOM-200',
+    'Desktop 200% zoom equivalent (683×450 CSS px at 2× device scale)',
+    { width: 683, height: 450, deviceScaleFactor: 2 },
+  ],
 ];
 export const responsiveScenarios = [
   ...viewports.map(([id, name, viewport]) => ({
@@ -1081,6 +1213,15 @@ export const responsiveScenarios = [
       await admin.getByRole('button', { name: 'Mở điều hướng quản trị' }).tap();
       const nav = admin.getByRole('dialog').getByRole('link', { name: 'Thể loại' });
       await nav.waitFor({ state: 'visible' });
+      const navigationEvidence = path.join(
+        ROOT,
+        '.audit-output',
+        'acceptance',
+        'screenshots',
+        'E2E-RESP-MOBILE-FLOWS-NAV-DRAWER.png',
+      );
+      fs.mkdirSync(path.dirname(navigationEvidence), { recursive: true });
+      await admin.screenshot({ path: navigationEvidence, fullPage: true });
       await nav.tap();
       await admin.waitForURL('**/admin/catalog/genres');
       const overflow = await admin.evaluate(
@@ -1122,11 +1263,30 @@ export const responsiveScenarios = [
         'false',
       );
 
-      // skip link is the first tab stop and lands on the main region
+      // Capture the actual focus path from the reloaded route through the skip target.
       await page.goto(`${origin}/movies`);
+      const focusBeforeTab = await page.evaluate(() => ({
+        tag: document.activeElement?.tagName,
+        id: document.activeElement?.id,
+        className: document.activeElement?.className,
+        text: document.activeElement?.textContent?.trim(),
+      }));
       await page.keyboard.press('Tab');
-      const skip = await page.evaluate(() => document.activeElement?.textContent?.trim());
-      assert.match(skip ?? '', /Chuyển đến nội dung chính/);
+      const skipFocus = await page.evaluate(() => ({
+        tag: document.activeElement?.tagName,
+        id: document.activeElement?.id,
+        className: document.activeElement?.className,
+        href: document.activeElement?.getAttribute('href'),
+        text: document.activeElement?.textContent?.trim(),
+      }));
+      assert.match(skipFocus.text ?? '', /Chuyển đến nội dung chính/);
+      assert.equal(skipFocus.href, '#main-content');
+      await page.keyboard.press('Enter');
+      const mainFocus = await page.evaluate(() => ({
+        tag: document.activeElement?.tagName,
+        id: document.activeElement?.id,
+      }));
+      assert.equal(mainFocus.id, 'main-content', 'skip link must focus the main region');
 
       // dialog: focus is inside, Escape closes, focus returns to the trigger
       await uiLogin(page, origin, ACCOUNTS.admin);
@@ -1162,7 +1322,7 @@ export const responsiveScenarios = [
       await dialog.waitFor({ state: 'hidden' });
       const restored = await page.evaluate(() => document.activeElement?.textContent?.trim());
       assert.match(restored ?? '', /Thêm thể loại/);
-      return { seat: movedTo };
+      return { seat: movedTo, focusBeforeTab, skipFocus, mainFocus };
     },
   },
 ];

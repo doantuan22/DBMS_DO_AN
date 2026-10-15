@@ -396,6 +396,9 @@ export function createFacilityController({
         if (adapter.kind === 'cinemas') url();
       }
     },
+    closeDetail() {
+      if (!busy()) emit({ selection: null, selectedId: null });
+    },
     setFilters(patch) {
       emit({ filters: { ...state.filters, ...patch } });
     },

@@ -1,20 +1,18 @@
-Vai trò
-Email
-Admin
-admin@cinemadb.vn
-Manager
-manager.q1@cinemadb.vn
-Manager
-manager.binhthanh@cinemadb.vn
-CSKH
-cskh@cinemadb.vn
-Customer
-khachhang1@gmail.com
-Customer
-khachhang2@gmail.com
-Customer
-khachhang3@gmail.com
-Customer
-khachhang4@gmail.com
+Tài khoản test (seed hiện tại)
 
-mk: demo@123
+Mật khẩu dùng chung: `CinemaStarDemo!2026`
+
+| Vai trò | Email | Trạng thái |
+|---|---|---|
+| Admin | `admin1@example.test` | Hoạt động |
+| Admin | `admin2@example.test` | Hoạt động |
+| Quản lý rạp | `manager1@example.test` | Hoạt động |
+| Quản lý rạp | `manager2@example.test` | Hoạt động |
+| CSKH | `support1@example.test` | Hoạt động |
+| CSKH | `support2@example.test` | Hoạt động |
+| Khách hàng | `customer1@example.test` | Hoạt động |
+| Khách hàng | `customer2@example.test` | Hoạt động |
+| Khách hàng | `customer3@example.test` | Hoạt động |
+| Khách hàng | `customer4@example.test` | Hoạt động |
+| Khách hàng | `customer5@example.test` | Hoạt động |
+| Khách hàng | `customer6@example.test` | Bị khóa |

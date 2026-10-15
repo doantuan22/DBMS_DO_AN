@@ -7,10 +7,13 @@ import NotFound from '../pages/NotFound';
 import { MANAGER_SECTION_ROUTES, managerEntryPath } from './managerSectionRoutes';
 import FacilityScreen from '../features/facilities/FacilityScreen';
 import OperationsScreen from '../features/operations/OperationsScreen';
+import NoWorkspaceAccess from '../components/NoWorkspaceAccess';
 
 export function ManagerEntryRoute() {
+  const { user } = useAuth();
   const { hash, search } = useLocation();
-  return <Navigate to={`${managerEntryPath(hash)}${search}`} replace />;
+  const path = managerEntryPath(hash, user);
+  return path ? <Navigate to={`${path}${search}`} replace /> : <NoWorkspaceAccess />;
 }
 
 export default function ManagerSectionRoute({ section }) {

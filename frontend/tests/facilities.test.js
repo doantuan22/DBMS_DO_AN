@@ -591,6 +591,16 @@ test('Cinema counts are independent optional full rooms and dependency rejection
   assert.equal(failed.controller.getSnapshot().resource.status, 'success');
   assert.equal(failed.controller.getSnapshot().counts.status, 'error');
 });
+
+test('closing the contextual detail inspector clears the selected record', async () => {
+  const item = fixture({ kind: 'cinemas', query: '' });
+  await item.controller.start();
+  item.controller.select(cinemas[0]);
+  assert.equal(item.controller.getSnapshot().selection.id, cinemas[0].id);
+  item.controller.closeDetail();
+  assert.equal(item.controller.getSnapshot().selection, null);
+});
+
 test('configuration never gets sold state from adapters; occupancy mode is read-only and requires permission', async () => {
   const item = fixture();
   await item.controller.start();
@@ -633,7 +643,16 @@ test('raw adapters keep real technical IDs internal and API payload whitelists u
   });
 });
 
-let vite, SeatLayout, SeatInspector, View, Editor, Route, AuthContext, ManagerRoute, CinemaContext;
+let vite,
+  SeatLayout,
+  SeatInspector,
+  View,
+  FacilityFilters,
+  Editor,
+  Route,
+  AuthContext,
+  ManagerRoute,
+  CinemaContext;
 before(async () => {
   vite = await createServer({
     configFile: 'vite.config.js',
@@ -647,6 +666,7 @@ before(async () => {
   ({ FacilityView: View } = await vite.ssrLoadModule(
     '/src/features/facilities/FacilityScreen.jsx',
   ));
+  ({ FacilityFilters } = await vite.ssrLoadModule('/src/features/facilities/FacilityScreen.jsx'));
   ({ default: Editor } = await vite.ssrLoadModule('/src/features/facilities/FacilityEditor.jsx'));
   ({ default: Route } = await vite.ssrLoadModule('/src/routes/AdminSectionRoute.jsx'));
   ({ default: ManagerRoute } = await vite.ssrLoadModule('/src/routes/ManagerSectionRoute.jsx'));
@@ -685,6 +705,38 @@ test('actual Admin seat/cinema/image routes own distinct workspaces and deny for
       /Không có quyền truy cập/,
     );
   }
+});
+test('cinema details open in a contextual inspector drawer', async () => {
+  const item = fixture({ kind: 'cinemas', query: 'cinemaId=1' });
+  await item.controller.start();
+  item.controller.select(item.controller.getSnapshot().resource.rows[0]);
+  const html = render(
+    React.createElement(View, {
+      state: item.controller.getSnapshot(),
+      controller: item.controller,
+      adapter: item.adapter,
+    }),
+    actor(),
+    '/admin/cinemas',
+  );
+  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--inspector"');
+  const detailStart = html.indexOf('class="facility-panel" aria-label="Chi tiết rạp"');
+  assert.ok(dialogStart >= 0 && detailStart > dialogStart);
+  assert.match(html, /Rạp A/);
+  item.controller.dispose();
+});
+test('facility search uses one FilterBar submit action for button and Enter', () => {
+  const html = render(
+    React.createElement(FacilityFilters, {
+      kind: 'cinemas',
+      rows: [],
+      state: { filters: { search: '', city: '' }, applied: { search: '', city: '' }, pending: false },
+      controller: { applyFilters() {}, resetFilters() {}, setFilters() {} },
+    }),
+  );
+  assert.equal((html.match(/type="submit"/g) ?? []).length, 1);
+  assert.match(html, /type="search"/);
+  assert.match(html, /Tìm rạp/);
 });
 test('SeatLayout renders 130 actual buttons without invented gaps; filter marks rather than moves seats', () => {
   const seats = Array.from({ length: 130 }, (_, index) => seat(index + 1));

@@ -245,17 +245,23 @@ export function OperationsView({ state, controller, adapter }) {
         { key: 'status', label: 'Trạng thái' },
         { key: 'effectiveOn', label: 'Có hiệu lực ngày', format: formatDate },
       ];
-  const selectFilter = (key, label, options) => (
+  const selectFilter = (key, label, options, allLabel = 'Không giới hạn') => (
     <FormField label={label}>
       <Select
         value={state.filters[key]}
         disabled={busy}
         onChange={(e) => controller.setFilters({ [key]: e.target.value })}
       >
-        <option value="">Không giới hạn</option>
-        {options.map((value) => (
-          <option key={value}>{value}</option>
-        ))}
+        <option value="">{allLabel}</option>
+        {options.map((option) => {
+          const value = typeof option === 'string' ? option : option.value;
+          const optionLabel = typeof option === 'string' ? option : option.label;
+          return (
+            <option key={value} value={value}>
+              {optionLabel}
+            </option>
+          );
+        })}
       </Select>
     </FormField>
   );
@@ -479,9 +485,27 @@ export function OperationsView({ state, controller, adapter }) {
           </>
         ) : (
           <>
-            {selectFilter('seatType', 'Loại ghế', [...SEAT_TYPES, 'Tất cả'])}
-            {selectFilter('dayType', 'Loại ngày', DAY_TYPES)}
-            {selectFilter('format', 'Định dạng', [...ROOM_TYPES, 'Tất cả'])}
+            {selectFilter(
+              'seatType',
+              'Loại ghế',
+              [...SEAT_TYPES, { value: 'Tất cả', label: 'Tất cả (quy tắc giá)' }],
+              'Tất cả loại ghế',
+            )}
+            {selectFilter(
+              'dayType',
+              'Loại ngày',
+              DAY_TYPES.map((value) => ({
+                value,
+                label: value === 'Tất cả' ? 'Tất cả (quy tắc giá)' : value,
+              })),
+              'Không lọc theo loại ngày',
+            )}
+            {selectFilter(
+              'format',
+              'Định dạng',
+              [...ROOM_TYPES, { value: 'Tất cả', label: 'Tất cả (quy tắc giá)' }],
+              'Tất cả định dạng',
+            )}
             {selectFilter('status', 'Trạng thái bảng giá', RESOURCE_STATUSES.pricing)}
             <FormField label="Có hiệu lực ngày">
               <Input
@@ -525,9 +549,17 @@ export function OperationsView({ state, controller, adapter }) {
         error={state.movies.error}
         onRetry={() => void controller.start()}
       />
-      {selected && (
-        <section className="operations__panel" aria-label={`Chi tiết ${title.toLowerCase()}`}>
-          <h2>{operationLabel(kind, selected)}</h2>
+      <Dialog
+        open={Boolean(selected)}
+        size="inspector"
+        title={selected ? operationLabel(kind, selected) : `Chi tiết ${title.toLowerCase()}`}
+        busy={busy}
+        onOpenChange={(open) => {
+          if (!open) controller.closeDetail();
+        }}
+      >
+        {selected && (
+          <section className="operations__panel" aria-label={`Chi tiết ${title.toLowerCase()}`}>
           <p>
             {selected.cinemaName ?? cinemaName} · <StatusBadge status={selected.status} />
           </p>
@@ -555,11 +587,9 @@ export function OperationsView({ state, controller, adapter }) {
               </p>
             </>
           )}
-          <Button variant="secondary" onClick={() => controller.closeDetail()}>
-            Đóng chi tiết
-          </Button>
-        </section>
-      )}
+          </section>
+        )}
+      </Dialog>
       <Dialog
         open={Boolean(editor)}
         busy={busy}

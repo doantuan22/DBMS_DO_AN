@@ -145,9 +145,21 @@ export const managerScenarios = [
 
       // select the seat on the map → inspector → edit
       await page.getByRole('button', { name: 'Danh sách' }).click();
-      await page.getByRole('button', { name: 'Xem Q7' }).click();
+      const seatTrigger = page.getByRole('button', { name: 'Xem Q7' });
+      await seatTrigger.click();
+      const inspector = page.getByRole('dialog', { name: 'Chi tiết ghế · Q7' });
+      await inspector.waitFor({ state: 'visible' });
+      await inspector.locator('.ui-dialog__header button').click();
+      await inspector.waitFor({ state: 'hidden' });
+      assert.equal(
+        await seatTrigger.evaluate((element) => element === document.activeElement),
+        true,
+        'closing the seat inspector restores focus to its trigger',
+      );
+      await seatTrigger.click();
       await page.getByRole('button', { name: 'Sửa ghế' }).click();
-      dialog = page.getByRole('dialog');
+      // The seat inspector stays open behind its editor; assert that the editor closes.
+      dialog = page.getByRole('dialog', { name: 'Chỉnh sửa ghế' });
       await dialog.getByLabel('Trạng thái').selectOption('Bảo trì');
       await dialog.getByRole('button', { name: 'Lưu ghế' }).click();
       await dialog.waitFor({ state: 'hidden' });

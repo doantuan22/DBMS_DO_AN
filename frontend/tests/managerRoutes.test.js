@@ -70,6 +70,13 @@ test('actual AppRoutes owns six Manager screens, bookings, legacy index and loca
   assert.equal(managerEntryPath('#unknown'), '/manager/overview');
 });
 
+test('Manager entry respects requested permission and falls back to the first allowed section', () => {
+  const partial = actor(['QL_PHONG']);
+  assert.equal(managerEntryPath('#manager-pricing', partial), '/manager/rooms');
+  assert.equal(managerEntryPath('#manager-rooms', partial), '/manager/rooms');
+  assert.equal(managerEntryPath('', actor([])), null);
+});
+
 test('every deep link and fresh router reload selects its own route; Memory history supports back/forward', async () => {
   const router = createMemoryRouter(tree(), { initialEntries: ['/manager/overview'] });
   try {

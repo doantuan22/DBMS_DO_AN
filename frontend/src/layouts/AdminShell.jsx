@@ -191,8 +191,6 @@ export default function AdminShell({ portal = 'admin', children }) {
           </button>
           <span className="admin-header-location">
             {isManager ? 'Không gian quản lý' : 'Không gian quản trị'}
-            <span> / </span>
-            <strong>{activeItem?.label ?? (isManager ? 'Manager' : 'Admin')}</strong>
           </span>
           <button
             className="admin-search-trigger"

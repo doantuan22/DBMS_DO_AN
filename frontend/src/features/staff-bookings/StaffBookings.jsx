@@ -114,7 +114,6 @@ function ManagerBookings({ user, context }) {
             title="Quản lý đặt vé"
             breadcrumbs={[{ label: 'Manager' }, { label: 'Quản lý đặt vé' }]}
           />
-          <FilterBar label="Bộ lọc đơn đặt vé" />
           <AsyncState status={state.status} error={state.error} />
         </>
       ) : !state.cinemas.length ? (

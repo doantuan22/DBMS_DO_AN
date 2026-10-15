@@ -59,6 +59,11 @@ export default function Login() {
           {location.state.message}
         </p>
       )}
+      {location.state?.sessionExpired && (
+        <p className="form-error" role="status">
+          Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.
+        </p>
+      )}
       <form onSubmit={submit}>
         <FormField label="Email" required>
           <Input

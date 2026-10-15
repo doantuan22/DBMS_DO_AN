@@ -21,6 +21,7 @@ import {
   Select,
   Button,
   ConfirmDialog,
+  Dialog,
   AsyncState,
   StatusBadge,
 } from '../../components/ui';
@@ -213,23 +214,22 @@ export function ComplaintView({ adapter, state, controller }) {
           },
         ]}
       />
-      <AsyncState
-        status={state.detail.status}
-        error={state.detail.error}
-        onRetry={controller.reloadDetail}
-      />
-      {state.detail.status === 'success' && (
-        <section className="admin-resource__panel" aria-label="Hồ sơ khiếu nại">
-          <div className="admin-resource__actions">
-            <h2>{complaint.title}</h2>
-            <Button
-              variant="secondary"
-              disabled={busy}
-              onClick={() => void controller.select(null)}
-            >
-              Đóng hồ sơ
-            </Button>
-          </div>
+      <Dialog
+        open={Boolean(state.selectedId)}
+        size="inspector"
+        title={complaint?.title ?? 'Chi tiết khiếu nại'}
+        busy={busy}
+        onOpenChange={(open) => {
+          if (!open) void controller.select(null);
+        }}
+      >
+        <AsyncState
+          status={state.detail.status}
+          error={state.detail.error}
+          onRetry={controller.reloadDetail}
+        />
+        {state.detail.status === 'success' && complaint && (
+          <section className="admin-resource__panel" aria-label="Hồ sơ khiếu nại">
           <p>
             {complaint.senderName} · {complaint.type} · {complaint.priority} ·{' '}
             {formatDateTime(complaint.createdAt)}
@@ -336,8 +336,9 @@ export function ComplaintView({ adapter, state, controller }) {
               Bạn có quyền tra cứu hồ sơ; cần quyền xử lý để ghi nhận nội dung hoặc đổi trạng thái.
             </p>
           )}
-        </section>
-      )}
+          </section>
+        )}
+      </Dialog>
       <ConfirmDialog
         key={`${confirmation?.id ?? 'none'}:${confirmation?.action ?? 'none'}`}
         open={Boolean(confirmation)}

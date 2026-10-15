@@ -1,3 +1,6 @@
+import { ADMIN_SECTION_PERMISSIONS, userCanAct } from '../utils/authorization.js';
+import { ROLES } from '../constants/roles.js';
+
 export const ADMIN_SECTION_ROUTES = Object.freeze({
   dashboard: { path: '/admin/overview', label: 'Tổng quan' },
   users: { path: '/admin/access/users', label: 'Tài khoản' },
@@ -34,4 +37,12 @@ const SECTION_BY_PATH = new Map(
 
 export function resolveAdminSection(pathname) {
   return SECTION_BY_PATH.get(pathname) ?? null;
+}
+
+export function adminEntryPath(user) {
+  return (
+    Object.entries(ADMIN_SECTION_ROUTES).find(([section]) =>
+      userCanAct(user, ROLES.ADMIN, ADMIN_SECTION_PERMISSIONS[section]),
+    )?.[1].path ?? null
+  );
 }

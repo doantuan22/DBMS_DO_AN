@@ -290,6 +290,31 @@ test('curated showtime table shows names and timezone, hides internal IDs; no fa
   assert.doesNotMatch(html, />201<|>301<|>11<|Mã phòng|Mã phim/);
   controller.dispose();
 });
+test('selected operation details open in the focused inspector drawer', async () => {
+  const a = adapter({ kind: 'pricing', list: async () => pricing });
+  const controller = createController({ adapter: a });
+  await controller.start();
+  controller.select(pricing[0]);
+  const render = () =>
+    renderToStaticMarkup(
+      React.createElement(
+        MemoryRouter,
+        null,
+        React.createElement(View, { state: controller.getSnapshot(), controller, adapter: a }),
+      ),
+    );
+  let html = render();
+  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--inspector"');
+  const detailStart = html.indexOf('class="operations__panel"');
+  assert.ok(dialogStart >= 0 && detailStart > dialogStart);
+  assert.match(html, /VIP · Ngày thường · 2D/);
+  assert.doesNotMatch(html, /Đóng chi tiết/);
+
+  controller.select(pricing[1]);
+  html = render();
+  assert.match(html, /Thường · Cuối tuần · 3D/);
+  controller.dispose();
+});
 test('pricing filters complete rules, including open ends and exact wildcard dimensions', async () => {
   let calls = 0;
   const controller = createController({
@@ -314,6 +339,54 @@ test('pricing filters complete rules, including open ends and exact wildcard dim
   assert.equal(model.operationsView(controller.getSnapshot(), 'pricing').total, 0);
   controller.resetFilters();
   assert.equal(model.operationsView(controller.getSnapshot(), 'pricing').total, 2);
+  controller.dispose();
+});
+test('pricing all-record sentinels stay separate from stored Tất cả rule values', async () => {
+  const wildcard = {
+    ...pricing[0],
+    id: 403,
+    seatType: 'Tất cả',
+    dayType: 'Tất cả',
+    format: 'Tất cả',
+  };
+  const a = adapter({ kind: 'pricing', list: async () => [...pricing, wildcard] });
+  const controller = createController({ adapter: a });
+  await controller.start();
+
+  assert.deepEqual(model.defaultFilters('pricing'), {
+    seatType: '',
+    dayType: '',
+    format: '',
+    status: '',
+    effectiveOn: '',
+  });
+  assert.equal(model.operationsView(controller.getSnapshot(), 'pricing').total, 3);
+
+  controller.setFilters({ seatType: 'Tất cả', dayType: 'Tất cả', format: 'Tất cả' });
+  controller.applyFilters();
+  assert.deepEqual(
+    model.operationsView(controller.getSnapshot(), 'pricing').rows.map((row) => row.id),
+    [403],
+  );
+
+  controller.resetFilters();
+  controller.setFilters({ status: 'Áp dụng', effectiveOn: '2026-10-15' });
+  controller.applyFilters();
+  assert.deepEqual(
+    model.operationsView(controller.getSnapshot(), 'pricing').rows.map((row) => row.id),
+    [401, 403],
+  );
+
+  const html = renderToStaticMarkup(
+    React.createElement(
+      MemoryRouter,
+      null,
+      React.createElement(View, { state: controller.getSnapshot(), controller, adapter: a }),
+    ),
+  );
+  assert.match(html, /<option value=""[^>]*>Tất cả loại ghế<\/option>/);
+  assert.match(html, /<option value="Tất cả"[^>]*>Tất cả \(quy tắc giá\)<\/option>/);
+  assert.match(html, /<option value=""[^>]*>Không lọc theo loại ngày<\/option>/);
   controller.dispose();
 });
 test('pricing form keeps exactly three day types, finite nonnegative surcharge and valid date order', async () => {

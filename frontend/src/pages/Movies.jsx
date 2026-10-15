@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getGenres, getMovies } from '../api/catalogApi';
 import MovieGrid from '../components/MovieGrid';
@@ -14,12 +14,15 @@ export default function Movies() {
 }
 function MovieResults() {
   const [params, setParams] = useSearchParams();
+  const searchInputRef = useRef(null);
   const [search, setSearch] = useState(params.get('search') ?? '');
   const [genreId, setGenreId] = useState(params.get('genreId') ?? '');
   const [status, setStatus] = useState(params.get('status') ?? '');
   const appliedSearch = params.get('search') ?? '';
   const routeGenre = params.get('genreId') ?? '',
     routeStatus = params.get('status') ?? '';
+  const searchParam = params.get('search') ?? '';
+  const hasSearchTarget = params.has('search');
   const applied = useMemo(
     () => ({ search: appliedSearch, genreId: routeGenre, status: routeStatus }),
     [appliedSearch, routeGenre, routeStatus],
@@ -28,6 +31,10 @@ function MovieResults() {
   const [moviesState, setMoviesState] = useState({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
   const [genreAttempt, setGenreAttempt] = useState(0);
+
+  useEffect(() => {
+    if (hasSearchTarget) searchInputRef.current?.focus();
+  }, [hasSearchTarget, searchParam]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -92,8 +99,8 @@ function MovieResults() {
       >
         <FormField label="Tìm phim hoặc đạo diễn">
           <Input
+            ref={searchInputRef}
             type="search"
-            autoFocus={params.has('search') && !params.get('search')}
             value={search}
             maxLength={100}
             onChange={(e) => setSearch(e.target.value)}

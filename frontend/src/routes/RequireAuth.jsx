@@ -1,8 +1,9 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import SessionRecovery from './SessionRecovery';
 
 export default function RequireAuth() {
-  const { user, initializing } = useAuth();
+  const { user, initializing, authIssue } = useAuth();
   const location = useLocation();
   if (initializing)
     return (
@@ -10,6 +11,14 @@ export default function RequireAuth() {
         Đang khôi phục phiên đăng nhập…
       </main>
     );
-  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (!user && authIssue?.kind === 'unavailable') return <SessionRecovery />;
+  if (!user)
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname, sessionExpired: authIssue?.kind === 'expired' }}
+      />
+    );
   return <Outlet />;
 }

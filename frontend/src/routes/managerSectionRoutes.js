@@ -1,3 +1,5 @@
+import { userCanAct } from '../utils/authorization.js';
+
 export const MANAGER_SECTION_ROUTES = Object.freeze({
   overview: { path: '/manager/overview', label: 'Tổng quan', permission: 'XEM_BAO_CAO_RAP' },
   rooms: { path: '/manager/rooms', label: 'Phòng chiếu', permission: 'QL_PHONG' },
@@ -17,7 +19,14 @@ export const resolveManagerSection = (pathname) =>
     ([, route]) => route.path === pathname.replace(/\/$/, ''),
   )?.[0] ?? null;
 
-export const managerEntryPath = (hash) => {
+export const managerEntryPath = (hash, user) => {
   const section = hash?.replace(/^#manager-/, '');
-  return MANAGER_SECTION_ROUTES[section]?.path ?? '/manager/overview';
+  const requested = MANAGER_SECTION_ROUTES[section];
+  if (requested && (user === undefined || userCanAct(user, 'QUAN_LY_RAP', requested.permission)))
+    return requested.path;
+  return (
+    Object.values(MANAGER_SECTION_ROUTES).find(
+      (route) => user === undefined || userCanAct(user, 'QUAN_LY_RAP', route.permission),
+    )?.path ?? null
+  );
 };

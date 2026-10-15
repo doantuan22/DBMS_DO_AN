@@ -28,6 +28,8 @@ for (const role of ['KHACH_HANG', 'QUAN_LY_RAP', 'CSKH', 'ADMIN'])
       birthday: '1990-02-01',
       gender: 'Nam',
       loyaltyPoints: 23,
+      permissions: [{ code: 'QL_PHONG', name: 'Quản lý phòng' }],
+      cinemaAssignments: [{ cinemaId: 4, name: 'Cinema Four', city: 'Hà Nội' }],
     };
     const html = renderToStaticMarkup(
       React.createElement(
@@ -39,6 +41,8 @@ for (const role of ['KHACH_HANG', 'QUAN_LY_RAP', 'CSKH', 'ADMIN'])
     assert.match(html, /Họ tên/);
     assert.match(html, /type="tel"/);
     assert.match(html, /readOnly=""/);
+    if (role !== 'KHACH_HANG') assert.match(html, /Quản lý phòng/);
+    if (role === 'QUAN_LY_RAP') assert.match(html, /Cinema Four/);
     if (role === 'KHACH_HANG') {
       assert.match(html, /type="date"/);
       assert.match(html, /Giới tính/);

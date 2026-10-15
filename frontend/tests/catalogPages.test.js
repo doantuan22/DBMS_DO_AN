@@ -61,6 +61,18 @@ test('home, movie list, and cinema list render loading states', () => {
   assert.match(render(inRouter(React.createElement(Cinemas))), /Đang tải danh sách rạp/);
 });
 
+test('movie search URL is reflected by the visible search control', () => {
+  const html = render(
+    React.createElement(
+      MemoryRouter,
+      { initialEntries: ['/movies?search=galaxy'] },
+      React.createElement(Movies),
+    ),
+  );
+  assert.match(html, /Tìm phim hoặc đạo diễn/);
+  assert.match(html, /value="galaxy"/);
+});
+
 test('movie cards link to the real movie identifier', () => {
   const html = render(
     React.createElement(

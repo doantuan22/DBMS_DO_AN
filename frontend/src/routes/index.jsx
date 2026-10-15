@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import AreaLayout from '../layouts/AreaLayout';
 import StaffShell from '../layouts/StaffShell';
 import RequireRole from './RequireRole';
@@ -26,6 +26,7 @@ import ManagerSectionRoute, { ManagerEntryRoute } from './ManagerSectionRoute';
 import { MANAGER_SCREEN_ROUTES } from './managerSectionRoutes';
 import SupportPortal from '../pages/SupportPortal';
 import AdminSectionRoute from './AdminSectionRoute';
+import AdminEntryRoute from './AdminEntryRoute';
 import StaffBookings from '../features/staff-bookings/StaffBookings';
 import { ADMIN_SCREEN_ROUTES } from './adminSectionRoutes';
 import { ROLE_AREAS, ROLES } from '../constants/roles';
@@ -135,7 +136,7 @@ export default function AppRoutes() {
       <Route element={<RequireRole role={ROLES.ADMIN} />}>
         <Route path="/admin" element={<StaffShell portal="admin" />}>
           <Route element={<AdminLayout />}>
-            <Route index element={<Navigate to="overview" replace />} />
+            <Route index element={<AdminEntryRoute />} />
             <Route path="bookings" element={<StaffBookings portal="admin" />} />
             {ADMIN_SCREEN_ROUTES.map(({ section, path }) => (
               <Route key={section} path={path} element={<AdminSectionRoute section={section} />} />

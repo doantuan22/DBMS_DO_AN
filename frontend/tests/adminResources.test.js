@@ -287,6 +287,24 @@ test('curated table uses names/STT and role read-only edit, no raw keys or Role 
   assert.doesNotMatch(html, /NguoiDungID|VaiTroID|MaVaiTro|>51<|name="roleId"/);
   controller.dispose();
 });
+test('selected Admin resource details are rendered inside the inspector drawer', async () => {
+  const controller = createController({ adapter: adapter() });
+  await controller.start();
+  controller.select(users[0]);
+  const html = renderToStaticMarkup(
+    React.createElement(
+      MemoryRouter,
+      null,
+      React.createElement(View, { kind: 'users', state: controller.getSnapshot(), controller }),
+    ),
+  );
+  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--inspector"');
+  const detailStart = html.indexOf('class="admin-resource__panel"');
+  assert.ok(dialogStart >= 0 && detailStart > dialogStart);
+  assert.match(html, /manager@example\.test/);
+  assert.doesNotMatch(html, /Đóng chi tiết/);
+  controller.dispose();
+});
 test('immutable assignment Manager selector explains its own context without changing shared room behavior', async () => {
   const c = createController({ adapter: adapter('assignments') });
   await c.start();

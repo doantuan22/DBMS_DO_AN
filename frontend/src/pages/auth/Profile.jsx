@@ -7,6 +7,8 @@ import { businessDate } from '../../utils/dateTime';
 import '../../features/customer/customer-account.css';
 import { ROLES } from '../../constants/roles';
 
+const permissionLabel = (permission) => permission.name || permission.code;
+
 function profileForm(user) {
   return {
     HoTen: user.name ?? '',
@@ -23,6 +25,8 @@ export default function Profile() {
 function ProfileForm() {
   const { user, updateProfile } = useAuth();
   const isCustomer = user.role === ROLES.CUSTOMER;
+  const permissions = user.permissions ?? [];
+  const cinemaAssignments = user.cinemaAssignments ?? [];
   const [form, setForm] = useState(() => profileForm(user));
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -146,6 +150,41 @@ function ProfileForm() {
             <FormField label="Điểm tích lũy">
               <Input value={`${user.loyaltyPoints} điểm`} readOnly />
             </FormField>
+          )}
+          {!isCustomer && (
+            <section className="profile-access-summary" aria-labelledby="profile-permissions-heading">
+              <h2 id="profile-permissions-heading">Quyền chức năng được cấp</h2>
+              {permissions.length ? (
+                <ul>
+                  {permissions.map((permission, index) => (
+                    <li key={permission.code ?? `${permission.name}-${index}`}>
+                      {permissionLabel(permission)}
+                      {permission.code && permission.name && <small> ({permission.code})</small>}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Chưa có quyền chức năng nào được ghi nhận cho tài khoản này.</p>
+              )}
+            </section>
+          )}
+          {user.role === ROLES.MANAGER && (
+            <section className="profile-access-summary" aria-labelledby="profile-cinemas-heading">
+              <h2 id="profile-cinemas-heading">Rạp được phân công</h2>
+              {cinemaAssignments.length ? (
+                <ul>
+                  {cinemaAssignments.map((assignment, index) => (
+                    <li key={assignment.cinemaId ?? `${assignment.name}-${index}`}>
+                      {assignment.name}
+                      {assignment.city && <small> · {assignment.city}</small>}
+                      {assignment.assignmentStatus && <small> · {assignment.assignmentStatus}</small>}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Chưa có rạp nào được phân công cho tài khoản này.</p>
+              )}
+            </section>
           )}
         </section>
       </div>
