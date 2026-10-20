@@ -64,6 +64,20 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: start;
 }
+.staff-bookings__customer-cell,
+.staff-bookings__show-cell,
+.staff-bookings__seats-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.staff-bookings__seats-truncate {
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .staff-bookings__secondary-text {
   display: block;
   color: var(--color-text-muted);

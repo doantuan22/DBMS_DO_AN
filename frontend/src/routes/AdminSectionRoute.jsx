@@ -11,6 +11,7 @@ import FacilityScreen from '../features/facilities/FacilityScreen';
 import OperationsScreen from '../features/operations/OperationsScreen';
 import AdminResourceScreen from '../features/admin-resources/AdminResourceScreen';
 import AdminComplaints from '../features/admin-service/AdminComplaints';
+import AdminEscalationModule from '../features/admin/AdminEscalationModule';
 import AdminAnalytics from '../features/admin-analytics/AdminAnalytics';
 
 export default function AdminSectionRoute({ section }) {
@@ -28,6 +29,7 @@ function AuthorizedAdminSection({ section }) {
   )
     return <AdminResourceScreen kind={section} />;
   if (section === 'complaints') return <AdminComplaints />;
+  if (section === 'escalations') return <AdminEscalationModule currentUser={user} />;
   if (section === 'revenue') return <AdminAnalytics kind="overview" />;
   if (section === 'rooms') return <AdminRooms />;
   if (section === 'seats') return <AdminSeatContextRoute />;

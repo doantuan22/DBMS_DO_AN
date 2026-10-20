@@ -652,12 +652,7 @@ function AdminWorkspace({ routeSection, seatContext }) {
   if (active === 'escalations')
     return (
       <section className="catalog-section" aria-label="Yêu cầu hỗ trợ từ CSKH">
-        {routeSection ? (
-          <PageHeader
-            title="Yêu cầu CSKH"
-            breadcrumbs={[{ label: 'Quản trị' }, { label: 'Yêu cầu CSKH' }]}
-          />
-        ) : (
+        {!routeSection && (
           <>
             <h1>Quản trị hệ thống</h1>
             {!shell && (

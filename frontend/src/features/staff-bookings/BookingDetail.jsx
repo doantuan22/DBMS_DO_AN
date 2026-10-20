@@ -41,7 +41,7 @@ export default function BookingDetail({
           <dd>{money(order.discountTotal)}</dd>
         </div>
         <div>
-          <dt>Tổng snapshot</dt>
+          <dt>Tổng thanh toán</dt>
           <dd>
             <strong>{money(order.total)}</strong>
           </dd>

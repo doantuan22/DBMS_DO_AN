@@ -239,30 +239,49 @@ export function FacilityFilters({ state, controller, adapter, kind, rows }) {
     ),
   };
   const filterFields = isSingleBox ? (
-    <FormField label="Chọn ảnh rạp">
-      <SearchableSelect
-        ariaLabel="Chọn ảnh rạp"
-        value={state.filters.search}
-        disabled={state.pending}
-        textValue
-        placeholder={
-          state.resource.status === 'loading'
-            ? 'Đang tải danh sách…'
-            : singleBoxOptions.length
-              ? 'Chọn ảnh rạp'
-              : 'Chưa có lựa chọn'
-        }
-        searchPlaceholder="Gõ để lọc chú thích..."
-        allLabel="Tất cả"
-        options={singleBoxOptions}
-        emptyMessage="Chưa có lựa chọn."
-        noMatchMessage="Không tìm thấy kết quả khớp từ khóa."
-        onChange={(value) => {
-          controller.setFilters({ search: value, status: '' });
-          requestAnimationFrame(() => controller.applyFilters());
-        }}
-      />
-    </FormField>
+    <>
+      {!manager && (
+        <ResourceSelect
+          label="Rạp chiếu"
+          value={state.scope?.cinemaId ?? ''}
+          scopeKey="image-filter-cinemas"
+          options={(state.lookup?.rows ?? []).map((row) => ({ id: row.id, label: row.name }))}
+          lookupStatus={state.lookup?.status ?? 'idle'}
+          lookupError={state.lookup?.error}
+          onRetry={() => void controller.start?.()}
+          required={false}
+          disabled={state.pending}
+          onChange={(id) => void controller.chooseCinema?.(id)}
+          emptyMessage="Chưa có rạp để chọn."
+        />
+      )}
+      {Boolean(state.scope?.cinemaId) && (
+        <FormField label="Chọn ảnh rạp">
+          <SearchableSelect
+            ariaLabel="Chọn ảnh rạp"
+            value={state.filters?.search ?? ''}
+            disabled={state.pending}
+            textValue
+            placeholder={
+              state.resource?.status === 'loading'
+                ? 'Đang tải danh sách…'
+                : singleBoxOptions.length
+                  ? 'Chọn ảnh rạp'
+                  : 'Chưa có lựa chọn'
+            }
+            searchPlaceholder="Gõ để lọc chú thích..."
+            allLabel="Tất cả"
+            options={singleBoxOptions}
+            emptyMessage="Chưa có lựa chọn."
+            noMatchMessage="Không tìm thấy kết quả khớp từ khóa."
+            onChange={(value) => {
+              controller.setFilters({ search: value, status: '' });
+              requestAnimationFrame(() => controller.applyFilters());
+            }}
+          />
+        </FormField>
+      )}
+    </>
   ) : (
     <>
       {seats && !manager && (
@@ -610,15 +629,13 @@ export function FacilityView({ state, controller, adapter }) {
         <RoomsWorkspace state={state} controller={controller} adapter={adapter} cinema={cinema} />
       ) : (
         <>
-          {(kind !== 'images' || state.scope.cinemaId) && (
-            <FacilityFilters
-              state={state}
-              controller={controller}
-              adapter={adapter}
-              kind={kind}
-              rows={view.all}
-            />
-          )}
+          <FacilityFilters
+            state={state}
+            controller={controller}
+            adapter={adapter}
+            kind={kind}
+            rows={view.all}
+          />
           {kind === 'seats' ? (
             <SeatWorkspace
               state={state}
@@ -1401,17 +1418,30 @@ function GalleryWorkspace({ state, controller, cinemaName }) {
   return (
     <section className="facility-panel" aria-label="Thư viện ảnh rạp">
       <div className="facility-panel-heading">
-        <h2>{cinemaName || 'Chọn rạp để quản lý hình ảnh'}</h2>
-        <Button
-          size="sm"
-          variant="secondary"
-          disabled={!state.scope.cinemaId || state.pending || state.resource.status === 'loading'}
-          onClick={() => void controller.reload()}
-        >
-          Tải lại
-        </Button>
+        <h2>{cinemaName ? `Thư viện ảnh · ${cinemaName}` : 'Quản lý hình ảnh rạp'}</h2>
+        {Boolean(state.scope?.cinemaId) && (
+          <Button
+            size="sm"
+            variant="secondary"
+            disabled={state.pending || state.resource?.status === 'loading'}
+            onClick={() => void controller.reload()}
+          >
+            Tải lại
+          </Button>
+        )}
       </div>
-      <CinemaImageGrid state={state} controller={controller} cinemaName={cinemaName} />
+      {!state.scope?.cinemaId ? (
+        <div className="facility-empty-context">
+          <p
+            className="facility-help"
+            style={{ fontSize: '1rem', margin: '2.5rem 1rem', textAlign: 'center' }}
+          >
+            Vui lòng chọn một rạp chiếu từ bộ lọc phía trên để xem và quản lý danh sách hình ảnh.
+          </p>
+        </div>
+      ) : (
+        <CinemaImageGrid state={state} controller={controller} cinemaName={cinemaName} />
+      )}
     </section>
   );
 }

@@ -214,6 +214,7 @@
 }
 .cinema-public .cp-date-control .cp-date-strip {
   flex: 1;
+  min-width: 0;
 }
 .cinema-public .cp-date-arrows {
   display: flex;
@@ -228,29 +229,59 @@
   color: var(--cp-text);
   cursor: pointer;
   border-radius: var(--cp-radius-sm);
+  transition: all 0.15s ease;
+}
+.cinema-public .cp-date-arrows button:hover:not(:disabled) {
+  background: var(--cp-surface-2);
+  border-color: #64748b;
 }
 .cinema-public .cp-date-strip button {
   display: grid;
   gap: 4px;
   flex: 0 0 auto;
-  padding: 12px 20px;
-  color: var(--cp-text-secondary);
-  background: transparent;
+  min-width: 100px;
+  padding: 10px 18px;
+  text-align: center;
+  color: var(--cp-text);
+  background: var(--cp-surface);
   border: 1px solid var(--cp-border);
-  border-radius: var(--cp-radius-sm);
+  border-radius: var(--cp-radius-md);
   cursor: pointer;
   scroll-snap-align: start;
+  transition: all 0.15s ease;
 }
 .cinema-public .cp-date-strip button span {
   font-size: 12.1px;
+  color: var(--cp-text-secondary);
+  font-weight: 500;
 }
 .cinema-public .cp-date-strip button strong {
   font-size: 14.3px;
   color: var(--cp-text);
+  font-weight: 700;
+}
+.cinema-public .cp-date-strip button:hover:not(:disabled):not([aria-pressed='true']) {
+  background: var(--cp-surface-2);
+  border-color: #64748b;
+  transform: translateY(-1px);
 }
 .cinema-public .cp-date-strip button[aria-pressed='true'] {
-  border-color: var(--cp-accent);
-  background: var(--cp-accent-soft);
+  border-color: #2563eb;
+  background: #1e40af;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+.cinema-public .cp-date-strip button[aria-pressed='true'] span {
+  color: #bfdbfe;
+}
+.cinema-public .cp-date-strip button[aria-pressed='true'] strong {
+  color: #ffffff;
+}
+.cinema-public .cp-date-strip button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  background: transparent;
+  border-color: var(--cp-border);
 }
 .cinema-public .cp-quick-shows {
   display: grid;
@@ -304,7 +335,7 @@
   cursor: pointer;
 }
 .cinema-public .cp-film-rail {
-  --cp-film-count: min(5, var(--cp-available-films));
+  --cp-film-count: 5;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: calc((100% - (var(--cp-film-count) - 1) * 22px) / var(--cp-film-count));
@@ -314,6 +345,19 @@
   padding: 4px 4px 18px;
   margin: 0 -4px;
   scrollbar-width: none;
+}
+.cinema-public .cp-film-rail .movie-card {
+  max-width: 280px;
+}
+@media (max-width: 1200px) {
+  .cinema-public .cp-film-rail {
+    --cp-film-count: 4;
+  }
+}
+@media (max-width: 900px) {
+  .cinema-public .cp-film-rail {
+    --cp-film-count: 3;
+  }
 }
 .cinema-public .cp-film-announcements {
   display: grid;

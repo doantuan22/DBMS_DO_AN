@@ -214,57 +214,50 @@ export function BookingView({ state, controller, portal, cinemaId }) {
       key: 'customer',
       label: 'Khách hàng',
       render: (row) => (
-        <>
+        <div className="staff-bookings__customer-cell">
           <strong>{row.HoTenKhachHang}</strong>
-          <span className="staff-bookings__secondary-text">{row.Email}</span>
-        </>
+          <span className="staff-bookings__secondary-text" title={row.Email}>
+            {row.Email}
+          </span>
+        </div>
       ),
     },
     {
       key: 'show',
       label: 'Phim / Suất / Rạp',
       render: (row) => (
-        <>
+        <div className="staff-bookings__show-cell">
           <strong>{row.TenPhim}</strong>
-          <br />
-          {formatDateTime(row.ThoiGianBatDau)}
-          <br />
-          {row.TenRap} · {row.TenPhong}
-        </>
+          <span className="staff-bookings__secondary-text">
+            {formatDateTime(row.ThoiGianBatDau)} · {row.TenPhong}
+          </span>
+        </div>
       ),
     },
     {
       key: 'seats',
       label: 'Vé / Ghế',
       render: (row) => (
-        <>
-          {row.SoLuongVe} vé
-          <span className="staff-bookings__secondary-text">
-            {row.DanhSachGhe || 'Không có vé hoạt động'}
+        <div className="staff-bookings__seats-cell">
+          <strong>{row.SoLuongVe} vé</strong>
+          <span
+            className="staff-bookings__secondary-text staff-bookings__seats-truncate"
+            title={row.DanhSachGhe || 'Không có vé hoạt động'}
+          >
+            {row.DanhSachGhe || 'Không có vé'}
           </span>
-        </>
+        </div>
       ),
     },
     {
       key: 'TongTienThanhToan',
-      label: 'Tổng snapshot',
-      render: (row) => money(row.TongTienThanhToan),
+      label: 'Tổng tiền',
+      render: (row) => <strong>{money(row.TongTienThanhToan)}</strong>,
     },
     {
       key: 'TrangThaiDon',
-      label: 'Trạng thái đơn',
+      label: 'Trạng thái',
       render: (row) => <StatusBadge status={row.TrangThaiDon} />,
-    },
-    {
-      key: 'TrangThaiThanhToanMoiNhat',
-      label: 'Thanh toán gần nhất',
-      className: 'staff-bookings__secondary-column',
-      render: (row) =>
-        row.TrangThaiThanhToanMoiNhat ? (
-          <StatusBadge status={row.TrangThaiThanhToanMoiNhat} />
-        ) : (
-          'Chưa thử thanh toán'
-        ),
     },
     {
       key: 'action',
@@ -277,7 +270,7 @@ export function BookingView({ state, controller, portal, cinemaId }) {
           onClick={() => controller.showOrder(row.DonDatVeID)}
           aria-label={`Xem đơn #${row.DonDatVeID} của ${row.HoTenKhachHang}`}
         >
-          Xem chi tiết
+          Chi tiết
         </Button>
       ),
     },
