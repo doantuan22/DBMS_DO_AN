@@ -137,7 +137,7 @@ export default function AdminShell({ portal = 'admin', children }) {
         <AdminIcon name={isManager ? 'grid' : 'videos'} />
       </span>
       <span className="admin-brand__name">
-        CinemaStar<small>{isManager ? 'MANAGER WORKSPACE' : 'ADMIN WORKSPACE'}</small>
+        CinemaStar<small>{isManager ? 'KHÔNG GIAN QUẢN LÝ' : 'QUẢN TRỊ HỆ THỐNG'}</small>
       </span>
     </Link>
   );
@@ -190,7 +190,8 @@ export default function AdminShell({ portal = 'admin', children }) {
             <AdminIcon name="menu" />
           </button>
           <span className="admin-header-location">
-            {isManager ? 'Không gian quản lý' : 'Không gian quản trị'}
+            {isManager ? 'Quản lý rạp' : 'Quản trị hệ thống'}
+            {activeItem?.label ? ` · ${activeItem.label}` : ''}
           </span>
           <button
             className="admin-search-trigger"

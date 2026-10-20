@@ -97,6 +97,9 @@ function OrderContext({ orderId, user }) {
         {order.status === 'Hết hạn' && (
           <p role="status">Đơn đã hết thời gian giữ ghế. Chọn suất chiếu để đặt lại.</p>
         )}
+        {order.status === 'Đã hủy' && !order.cancellationNotice && (
+          <p role="status">Đơn hàng đã được hủy. Không phát sinh thanh toán tiếp theo.</p>
+        )}
         {order.cancellationNotice && <p role="status">{order.cancellationNotice}</p>}
         {order.compensation && <p>Điểm bồi thường đã cộng: {order.compensation.points}.</p>}
       </section>

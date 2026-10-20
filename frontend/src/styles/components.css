@@ -460,28 +460,6 @@
   max-width: 54rem;
 }
 
-.ui-dialog--inspector {
-  position: fixed;
-  inset: 0 0 0 auto;
-  flex-direction: column;
-  width: min(42rem, calc(100vw - 2rem));
-  max-width: 42rem;
-  height: 100dvh;
-  max-height: 100dvh;
-  margin: 0;
-  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
-}
-
-.ui-dialog--inspector[open] {
-  display: flex;
-}
-
-.ui-dialog--inspector .ui-dialog__body {
-  flex: 1 1 auto;
-  max-height: none;
-  overflow: auto;
-}
-
 .ui-dialog__header,
 .ui-dialog__footer {
   display: flex;
@@ -563,21 +541,14 @@
 }
 
 .manager-resource-select {
-  display: flex;
-  flex: 1 1 100%;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
   min-width: 0;
   max-width: 100%;
 }
 
 .manager-resource-select > label {
-  display: flex;
-  flex: 1 1 14rem;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: min(14rem, 100%);
+  min-width: 0;
   font-size: var(--font-size-sm);
   font-weight: 600;
 }
@@ -594,6 +565,15 @@
   background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
+}
+
+/* The combobox owns its own clear/toggle buttons, so feature themes must not shrink its gutter. */
+.manager-resource-select .ui-searchable-select {
+  min-width: 0;
+}
+
+.manager-resource-select .ui-searchable-select__input {
+  padding-right: 4.25rem;
 }
 
 .manager-resource-select input:focus-visible,
@@ -872,11 +852,6 @@ button.ui-filter-bar__chip:hover:not(:disabled) {
 }
 
 @media (max-width: 640px) {
-  .manager-resource-select > label {
-    flex-basis: 100%;
-    min-width: 0;
-  }
-
   .ui-page-header__row {
     flex-direction: column;
   }
@@ -916,15 +891,6 @@ button.ui-filter-bar__chip:hover:not(:disabled) {
     border-radius: var(--radius-lg);
   }
 
-  .ui-dialog--inspector {
-    width: 100vw;
-    max-width: 100vw;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0;
-    border-radius: 0;
-  }
-
   .ui-dialog__header,
   .ui-dialog__body,
   .ui-dialog__footer {
@@ -959,4 +925,71 @@ button.ui-filter-bar__chip:hover:not(:disabled) {
 .facility-filters__search-row button {
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+.ui-searchable-select {
+  position: relative;
+  width: 100%;
+  min-width: 12rem;
+}
+
+.ui-searchable-select__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ui-searchable-select__input {
+  width: 100%;
+  padding-right: 4.25rem;
+  cursor: pointer;
+}
+
+.ui-searchable-select__input:focus {
+  cursor: text;
+}
+
+.ui-searchable-select__clear,
+.ui-searchable-select__toggle {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.ui-searchable-select__clear {
+  right: 2.25rem;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.ui-searchable-select__toggle {
+  right: 0.35rem;
+}
+
+.ui-searchable-select__clear:hover:not(:disabled),
+.ui-searchable-select__toggle:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
+
+.ui-searchable-select__dropdown {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  left: 0;
+}
+
+.ui-searchable-select__hint {
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
 }

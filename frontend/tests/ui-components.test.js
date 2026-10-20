@@ -162,9 +162,11 @@ test('ResourceSelect exposes named options and links lookup error state to the c
     scopeKey: 'cinema-scope-1',
     onChange() {},
   });
-  assert.match(ready, /Central Cinema/);
-  assert.match(ready, /<option value="19"/);
+  assert.match(ready, /role="combobox"/);
+  assert.match(ready, /aria-label="Cinema"/);
+  assert.match(ready, /value="Central Cinema"/);
   assert.doesNotMatch(ready, /Downtown/);
+  assert.doesNotMatch(ready, />\s*19\s*</);
 
   const failed = render(ResourceSelect, {
     label: 'Room',

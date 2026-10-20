@@ -16,27 +16,12 @@ import StatusBadge from '../../components/ui/StatusBadge';
 import AsyncState from '../../components/ui/AsyncState';
 import Dialog from '../../components/ui/Dialog';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
+import RoomIcon from '../../components/ui/RoomIcon';
 import useBookingDraftGuard from '../staff-bookings/useBookingDraftGuard';
 import { ROOM_TYPES, RESOURCE_STATUSES } from '../../../../shared/resourceContract.mjs';
 import { createRoomsController } from './roomsController';
 import { roomsView, roomSeatsPath, sameRoomsScope } from './roomsModel';
 import './admin-rooms.css';
-
-function RoomIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      aria-hidden="true"
-    >
-      <path d="M3 3h18v8H3zM5 15h4v6H5zM15 15h4v6h-4zM3 18h8M13 18h8" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 export default function AdminRooms() {
   const { user } = useAuth();
@@ -169,24 +154,16 @@ export function RoomsView({ state, controller }) {
             >
               Sửa
             </Button>
-            <details className="admin-rooms__danger-actions">
-              <summary
-                className="ui-button ui-button--secondary ui-button--sm"
-                aria-label={`Thao tác khác ${row.TenPhong} · ${row.TenRap}`}
-              >
-                Khác <span aria-hidden="true">⌄</span>
-              </summary>
-              <Button
-                variant="quiet"
-                size="sm"
-                className="admin-rooms__delete"
-                disabled={state.pending}
-                onClick={() => controller.requestDelete(row)}
-                aria-label={`Xóa ${row.TenPhong} · ${row.TenRap}`}
-              >
-                Xóa phòng
-              </Button>
-            </details>
+            <Button
+              variant="danger"
+              size="sm"
+              className="admin-rooms__delete"
+              disabled={state.pending}
+              onClick={() => controller.requestDelete(row)}
+              aria-label={`Xóa ${row.TenPhong} · ${row.TenRap}`}
+            >
+              Xóa phòng
+            </Button>
           </div>
         </div>
       ),

@@ -59,3 +59,46 @@ export async function expectPoll(check, { timeout = 10000, message = 'condition 
 
 /** Fill a text-like field inside the open dialog by its (partial) label. */
 export const dialogField = (page, label, options) => page.getByRole('dialog').getByLabel(label, options);
+
+export async function pickSearchableOption(container, label, text) {
+  const page = container.page ? container.page() : container;
+  const box = container.getByRole('combobox', { name: label });
+  await box.click();
+  await box.fill(text);
+  const opt = page.getByRole('option', { name: text });
+  if (await opt.count()) {
+    await opt.first().click();
+  } else {
+    await box.press('Enter');
+  }
+}
+
+export async function selectCustomOption(container, label, valueOrText) {
+  const page = container.page ? container.page() : container;
+  const text = typeof valueOrText === 'object' ? valueOrText.label : valueOrText;
+
+  // 1. Target the specific FormField by its label text
+  const field = container.locator('.ui-form-field').filter({ hasText: label });
+  if (await field.count()) {
+    const nativeInField = field.locator('select.ui-custom-select__native, select');
+    if (await nativeInField.count()) {
+      await nativeInField.first().selectOption(valueOrText, { force: true });
+      return;
+    }
+  }
+
+  const native = container.locator(`select[aria-label="${label}"]`).or(
+    container.locator(`select.ui-custom-select__native`)
+  ).filter({ has: page.locator(`option:has-text("${text}")`) });
+  if (await native.count()) {
+    await native.first().selectOption(valueOrText, { force: true });
+    return;
+  }
+  const trigger = container.getByRole('button', { name: label });
+  if (await trigger.count()) {
+    await trigger.click();
+    const opt = page.getByRole('option', { name: text });
+    if (await opt.count()) await opt.first().click();
+  }
+}
+

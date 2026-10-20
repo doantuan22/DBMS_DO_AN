@@ -560,7 +560,8 @@ test('ResourceTable schema displays names, real seat count and all supported row
   assert.match(html, /81/);
   assert.match(html, /Phòng 101/);
   assert.match(html, /Xem sơ đồ ghế/);
-  assert.match(html, /<details class="admin-rooms__danger-actions"><summary/);
+  assert.match(html, /Xóa phòng/);
+  assert.doesNotMatch(html, /<details class="admin-rooms__danger-actions"/);
   assert.match(html, /cinemaId=1&amp;roomId=101/);
   assert.doesNotMatch(html, /PhongID|RapID|TongSoGhe/);
   assert.doesNotMatch(html, /admin-room-editor/);

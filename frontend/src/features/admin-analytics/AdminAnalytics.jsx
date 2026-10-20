@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
@@ -260,7 +261,13 @@ export function RevenueDetails({ report }) {
       byMovie: ['Theo phim', 'PhimID', 'TenPhim'],
       byDate: ['Theo ngày', 'Ngay', 'Ngay'],
     },
-    rows = report[group],
+    rawRows = report[group] ?? [],
+    rows = useMemo(() => {
+      if (group === 'byCinema') {
+        return [...rawRows].sort((a, b) => (Number(b.DoanhThuThucTe) || 0) - (Number(a.DoanhThuThucTe) || 0));
+      }
+      return rawRows;
+    }, [rawRows, group]),
     [label, key, name] = groups[group],
     pageSize = 20;
   const columns = [

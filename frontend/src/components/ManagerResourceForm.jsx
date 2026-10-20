@@ -1,7 +1,20 @@
 import { useRef, useState } from 'react';
 import { fieldsFor, initialManagerValues, managerBody } from '../utils/managerForms';
+import { formatDateTime, businessLocalToInstant } from '../utils/dateTime';
 import ResourceSelect from './ui/ResourceSelect';
 import Select from './ui/Select';
+
+function formatLocalPreview(val) {
+  if (!val) return '';
+  try {
+    const instant = val.includes('Z') || /[+-]\d{2}:\d{2}$/.test(val)
+      ? val
+      : businessLocalToInstant(val);
+    return formatDateTime(instant);
+  } catch {
+    return val;
+  }
+}
 
 const labels = { room: 'phòng', seat: 'ghế', showtime: 'suất', pricing: 'giá' };
 export default function ManagerResourceForm({
@@ -124,6 +137,11 @@ export default function ManagerResourceForm({
                 required={name !== 'endsOn'}
                 onChange={(event) => updateField(name, event.target.value)}
               />
+            )}
+            {type === 'datetime-local' && values[name] && (
+              <span className="operations__help" style={{ display: 'block', fontSize: 'var(--font-size-xs, 0.75rem)', marginTop: 'var(--space-1)', color: 'var(--color-primary, #6366f1)' }}>
+                Thời gian (UTC+7): <strong>{formatLocalPreview(values[name])}</strong>
+              </span>
             )}
           </label>
         );

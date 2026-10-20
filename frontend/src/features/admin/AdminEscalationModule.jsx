@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { adminApi } from '../../api/adminApi';
 import { formatDateTime } from '../../utils/dateTime';
-import { Button, FormField, Select, AsyncState } from '../../components/ui';
+import { Button, FormField, Select, AsyncState, PageHeader } from '../../components/ui';
 import StatusBadge from '../../components/primitives/StatusBadge';
 import '../support/support-chat.css';
 
@@ -173,39 +173,30 @@ export default function AdminEscalationModule({ currentUser }) {
 
   return (
     <div className="admin-escalations" style={{ display: 'grid', gap: '1rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
-        }}
-      >
-        <div>
-          <h2 style={{ margin: 0 }}>Yêu cầu hỗ trợ từ CSKH</h2>
-          <p style={{ margin: 0, color: 'var(--color-text-muted)', fontSize: '0.9625rem' }}>
-            Hàng đợi tiếp nhận và xử lý các vấn đề chuyển cấp vượt thẩm quyền của nhân viên CSKH.
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <span
-            style={{
-              padding: '0.25rem 0.625rem',
-              borderRadius: '9999px',
-              background: pendingCount > 0 ? '#fef3c7' : '#f1f5f9',
-              color: pendingCount > 0 ? '#92400e' : '#475569',
-              fontWeight: 600,
-              fontSize: '0.935rem',
-            }}
-          >
-            {pendingCount} yêu cầu chờ tiếp nhận
-          </span>
-          <Button variant="secondary" size="sm" onClick={loadList}>
-            Làm mới
-          </Button>
-        </div>
-      </div>
+      <PageHeader
+        title="Yêu cầu hỗ trợ từ CSKH"
+        description="Hàng đợi tiếp nhận và xử lý các vấn đề chuyển cấp vượt thẩm quyền của nhân viên CSKH."
+        breadcrumbs={[{ label: 'Admin', to: '/admin' }, { label: 'Yêu cầu CSKH' }]}
+        actions={
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <span
+              style={{
+                padding: '0.25rem 0.625rem',
+                borderRadius: '9999px',
+                background: pendingCount > 0 ? '#fef3c7' : '#f1f5f9',
+                color: pendingCount > 0 ? '#92400e' : '#475569',
+                fontWeight: 600,
+                fontSize: '0.935rem',
+              }}
+            >
+              {pendingCount} chờ tiếp nhận
+            </span>
+            <Button variant="secondary" size="sm" onClick={loadList}>
+              Làm mới
+            </Button>
+          </div>
+        }
+      />
 
       {notice && (
         <p

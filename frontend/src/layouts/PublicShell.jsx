@@ -172,7 +172,9 @@ export default function PublicShell({ title, links = [], children }) {
         <div className="area__account public-shell__account">
           {user ? (
             <>
-              <span className="area__user-name">{user.name || user.email}</span>
+              <Link to="/profile" className="area__user-name" title="Hồ sơ tài khoản">
+                {user.name || user.email}
+              </Link>
               <button
                 type="button"
                 className="catalog-button catalog-button--secondary catalog-button--sm"

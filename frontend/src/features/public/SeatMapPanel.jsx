@@ -66,7 +66,12 @@ export default function SeatMapPanel({
       else nextSeat += direction;
     }
   };
-  const statuses = [...new Set(seats.map((seat) => seat.status))];
+  const standardStatuses = ['Trống', 'Đang giữ', 'Đã đặt', 'Bảo trì'];
+  const presentStatuses = new Set(seats.map((seat) => seat.status));
+  const statuses = [
+    ...standardStatuses,
+    ...[...presentStatuses].filter((s) => s && !standardStatuses.includes(s)),
+  ];
   const types = [...new Set(seats.map((seat) => seat.type).filter(Boolean))];
   return (
     <div className="cp-seat-panel">

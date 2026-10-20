@@ -4,7 +4,9 @@ import {
   confirmIfAsked,
   expectPoll,
   expectText,
+  pickSearchableOption,
   rowOf,
+  selectCustomOption,
   uiLogin,
   visible,
 } from './browser-helpers.mjs';
@@ -25,8 +27,14 @@ async function managerCinemaId(pool) {
 }
 
 async function searchByName(page, label, value) {
-  // The filter bar's keyword input is identified by its placeholder.
-  await page.getByPlaceholder(label).first().fill(value);
+  // The filter bar's keyword input is identified by placeholder or label
+  const input = page
+    .getByPlaceholder(label)
+    .or(page.getByLabel(label))
+    .or(page.getByPlaceholder('Nhập tên hoặc số trong tên phòng'))
+    .or(page.getByPlaceholder('Nhập từ khóa'))
+    .first();
+  await input.fill(value);
   await page.keyboard.press('Enter');
 }
 
@@ -92,8 +100,9 @@ export const managerScenarios = [
       await page.getByRole('dialog').waitFor({ state: 'hidden' });
       await searchByName(page, 'Nhập từ khóa', temp);
       const tempRow = rowOf(page, temp);
-      await tempRow.locator('summary', { hasText: 'Khác' }).click();
-      await tempRow.getByRole('button', { name: 'Xóa' }).click();
+      const summary = tempRow.locator('summary', { hasText: 'Khác' });
+      if (await summary.count()) await summary.click();
+      await tempRow.getByRole('button', { name: /Xóa/ }).click();
       await confirmIfAsked(page);
       await expectPoll(
         async () =>
@@ -115,15 +124,8 @@ export const managerScenarios = [
       assert.ok(state.roomId, 'E2E-MGR-ROOM must run first');
       await uiLogin(page, origin, ACCOUNTS.manager);
       await page.goto(`${origin}/manager/seats?cinemaId=${state.cinemaId}`);
-      // choose the room like a user: look it up by name, then pick it in the room selector
-      await page.getByPlaceholder('Nhập tên phòng...').fill(state.roomName);
-      await page.keyboard.press('Enter');
-      const roomSelect = page.getByLabel('Phòng', { exact: true });
-      await expectPoll(
-        async () => (await roomSelect.locator('option', { hasText: state.roomName }).count()) > 0,
-        { message: 'room not offered by the selector' },
-      );
-      await roomSelect.selectOption({ label: state.roomName });
+      // choose the room like a user: pick it in the room selector
+      await pickSearchableOption(page, 'Phòng', state.roomName);
       await page.getByRole('button', { name: '＋ Thêm ghế' }).click();
       let dialog = page.getByRole('dialog');
       await dialog.getByLabel('Hàng ghế').fill('Q');
@@ -144,7 +146,7 @@ export const managerScenarios = [
       assert.deepEqual([seat.LoaiGhe, seat.TrangThai], ['VIP', 'Hoạt động']);
 
       // select the seat on the map → inspector → edit
-      await page.getByRole('button', { name: 'Danh sách' }).click();
+      await page.getByRole('button', { name: 'Danh sách', exact: true }).click();
       const seatTrigger = page.getByRole('button', { name: 'Xem Q7' });
       await seatTrigger.click();
       const inspector = page.getByRole('dialog', { name: 'Chi tiết ghế · Q7' });
@@ -206,12 +208,12 @@ export const managerScenarios = [
 
       await page.getByRole('button', { name: 'Thêm suất chiếu' }).click();
       let dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Phim', { exact: true }).selectOption({ label: movie.TenPhim });
-      await dialog.getByLabel('Phòng', { exact: true }).selectOption({ label: state.roomName });
-      await dialog.getByLabel('Bắt đầu', { exact: true }).fill(startLocal);
-      await dialog.getByLabel('Kết thúc', { exact: true }).fill(endLocal);
-      await dialog.getByLabel('Định dạng', { exact: true }).selectOption('IMAX');
-      await dialog.getByLabel('Giá vé cơ bản', { exact: true }).fill('110000');
+      await pickSearchableOption(dialog, 'Phim', movie.TenPhim);
+      await pickSearchableOption(dialog, 'Phòng', state.roomName);
+      await dialog.getByLabel(/Bắt đầu/).fill(startLocal);
+      await dialog.getByLabel(/Kết thúc/).fill(endLocal);
+      await selectCustomOption(dialog, 'Định dạng', 'IMAX');
+      await dialog.getByLabel(/Giá vé cơ bản/).fill('110000');
       await dialog.getByRole('button', { name: 'Tạo suất' }).click();
       await dialog.waitFor({ state: 'hidden' });
       let showtime;
@@ -232,13 +234,13 @@ export const managerScenarios = [
       );
 
       // edit the base price
-      await page.getByLabel('Phòng lọc lịch').selectOption({ label: state.roomName });
+      await selectCustomOption(page, 'Phòng lọc lịch', { label: state.roomName });
       await page.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
       await page.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
       await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await page.getByRole('button', { name: /^Sửa / }).first().click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Giá vé cơ bản', { exact: true }).fill('125000');
+      await dialog.getByLabel(/Giá vé cơ bản/).fill('125000');
       await dialog
         .getByRole('button', { name: /^(Lưu|Cập nhật)/ })
         .first()
@@ -288,10 +290,10 @@ export const managerScenarios = [
       const endsOn = new Date(first.getTime() + 3 * 86400000).toISOString().slice(0, 10);
       await page.getByRole('button', { name: 'Thêm bảng giá' }).click();
       let dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Loại ghế bảng giá').selectOption('Sweetbox');
-      await dialog.getByLabel('Loại ngày', { exact: true }).selectOption('Cuối tuần');
-      await dialog.getByLabel('Định dạng bảng giá').selectOption('4DX');
-      await dialog.getByLabel('Phụ thu', { exact: true }).fill('9000');
+      await selectCustomOption(dialog, 'Loại ghế bảng giá', 'Sweetbox');
+      await selectCustomOption(dialog, 'Loại ngày', 'Cuối tuần');
+      await selectCustomOption(dialog, 'Định dạng bảng giá', '4DX');
+      await dialog.getByLabel(/Phụ thu/).fill('9000');
       await dialog.getByLabel('Ngày áp dụng', { exact: true }).fill(startsOn);
       await dialog.getByLabel('Ngày kết thúc', { exact: true }).fill(endsOn);
       await dialog.getByRole('button', { name: 'Tạo giá' }).click();
@@ -310,7 +312,7 @@ export const managerScenarios = [
       assert.deepEqual([Number(rule.PhuThu), rule.TrangThai], [9000, 'Áp dụng']);
 
       // narrow the list to the rule created above (earlier runs leave paused Sweetbox rules)
-      await page.getByLabel('Loại ghế', { exact: true }).selectOption('Sweetbox');
+      await selectCustomOption(page, 'Loại ghế', 'Sweetbox');
       await page.getByLabel('Có hiệu lực ngày').fill(startsOn);
       await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await expectPoll(
@@ -319,7 +321,7 @@ export const managerScenarios = [
       );
       await page.getByRole('button', { name: /^Sửa / }).first().click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Phụ thu', { exact: true }).fill('11000');
+      await dialog.getByLabel(/Phụ thu/).fill('11000');
       await dialog
         .getByRole('button', { name: /^(Lưu|Cập nhật)/ })
         .first()
@@ -337,7 +339,7 @@ export const managerScenarios = [
       // pause the rule so re-runs never collide with an active overlapping rule
       await page.getByRole('button', { name: /^Sửa / }).first().click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel(/^Trạng thái/).selectOption('Tạm dừng');
+      await selectCustomOption(dialog, 'Trạng thái', 'Tạm dừng');
       await dialog
         .getByRole('button', { name: /^(Lưu|Cập nhật)/ })
         .first()
@@ -442,7 +444,7 @@ export const managerScenarios = [
 
       // cancel
       await page.getByRole('button', { name: 'Hủy đơn', exact: true }).first().click();
-      await page.getByRole('dialog').getByRole('button', { name: 'Hủy đơn', exact: true }).click();
+      await page.getByRole('dialog').getByRole('button', { name: 'Hủy đơn', exact: true }).last().click();
       await expectPoll(
         async () =>
           (await scalar(pool, 'SELECT TrangThai FROM dbo.DONDATVE WHERE DonDatVeID = @id', {
@@ -478,8 +480,8 @@ export const managerScenarios = [
           `SELECT TOP 1 RapID FROM dbo.RAPCHIEUPHIM WHERE RapID NOT IN (${assigned.join(',')}) ORDER BY RapID`,
         )
       ).RapID;
-      await page.goto(`${origin}/manager/overview`);
-      await expectText(page, 'Dashboard');
+      await page.goto(`${origin}/manager`);
+      await expectText(page, 'Phòng chiếu');
       await page.goto(`${origin}/manager/rooms`);
       const selector = page.locator('select[aria-label="Rạp hiện tại"]');
       await selector.waitFor({ state: 'attached' });

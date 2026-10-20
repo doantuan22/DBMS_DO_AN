@@ -10,5 +10,7 @@ export { default as FormField } from './FormField';
 export { default as Input } from './Input';
 export { default as PageHeader } from './PageHeader';
 export { default as ResourceSelect } from './ResourceSelect';
+export { default as RoomIcon } from './RoomIcon';
+export { default as SearchableSelect } from './SearchableSelect';
 export { default as Select } from './Select';
 export { default as StatusBadge } from './StatusBadge';

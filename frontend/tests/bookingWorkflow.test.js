@@ -178,6 +178,26 @@ test('server search/paging use full totals and safe query never exposes PII', as
   assert.match(html, /40 kết quả/);
   controller.dispose();
 });
+test('booking detail opens in a centered dialog instead of below the ticket list', async () => {
+  const controller = createController({ api: api() });
+  await controller.start();
+  controller.showOrder(61);
+  await tick();
+  const html = renderToStaticMarkup(
+    React.createElement(
+      MemoryRouter,
+      null,
+      React.createElement(View, { state: controller.getSnapshot(), controller, portal: 'admin' }),
+    ),
+  );
+  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--lg"');
+  const detailStart = html.indexOf('class="staff-bookings__detail"');
+  assert.ok(dialogStart >= 0 && detailStart > dialogStart);
+  assert.match(html, /Chi tiết đơn #61/);
+  assert.doesNotMatch(html, /ui-dialog--inspector/);
+  controller.dispose();
+});
+
 test('booking filter apply suppresses duplicate requests and chip removal resets the result page', async () => {
   const calls = [],
     controller = createController({

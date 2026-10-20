@@ -205,17 +205,21 @@ function ProfileContent({ user }) {
           </form>
 
           {!isCustomer && (
-            <section className="profile-card" aria-labelledby="profile-permissions-heading">
-              <header className="profile-card__header">
+            <details className="profile-card profile-details-accordion" aria-labelledby="profile-permissions-heading">
+              <summary className="profile-card__header" style={{ cursor: 'pointer', listStyle: 'none' }}>
                 <div>
-                  <p className="profile-eyebrow">Phân quyền</p>
-                  <h2 id="profile-permissions-heading">Quyền chức năng được cấp</h2>
-                  <p>Các chức năng tài khoản này có thể truy cập trong workspace.</p>
+                  <p className="profile-eyebrow">Phân quyền tài khoản</p>
+                  <h2 id="profile-permissions-heading" style={{ fontSize: 'var(--font-size-lg)' }}>
+                    Quyền chức năng được cấp ({permissions.length})
+                  </h2>
+                  <p style={{ margin: 0, fontSize: 'var(--font-size-sm)', color: 'var(--color-text-muted)' }}>
+                    Bấm để xem chi tiết các quyền kỹ thuật trong workspace.
+                  </p>
                 </div>
                 <span className="profile-count">{permissions.length} quyền</span>
-              </header>
+              </summary>
               {permissions.length ? (
-                <ul className="profile-permission-list">
+                <ul className="profile-permission-list" style={{ marginTop: 'var(--space-4)' }}>
                   {permissions.map((permission, index) => (
                     <li key={permission.code ?? `${permission.name}-${index}`}>
                       <span className="profile-permission-list__check" aria-hidden="true">✓</span>
@@ -229,7 +233,7 @@ function ProfileContent({ user }) {
               ) : (
                 <p className="profile-empty-state">Chưa có quyền chức năng nào được ghi nhận cho tài khoản này.</p>
               )}
-            </section>
+            </details>
           )}
 
           {isManager && (

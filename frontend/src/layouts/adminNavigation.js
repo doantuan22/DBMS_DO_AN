@@ -7,7 +7,7 @@ const groups = [
     'Rạp & cơ sở vật chất',
     [
       ['cinemas', 'map-icon'],
-      ['cinemaImages', 'page'],
+      ['cinemaImages', 'gallery'],
       ['rooms', 'layout'],
       ['seats', 'table'],
     ],

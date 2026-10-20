@@ -19,9 +19,11 @@ import FilterBar from '../../components/ui/FilterBar';
 import FormField from '../../components/ui/FormField';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import SearchableSelect from '../../components/ui/SearchableSelect';
 import Button from '../../components/ui/Button';
 import AsyncState from '../../components/ui/AsyncState';
 import StatusBadge from '../../components/ui/StatusBadge';
+import RoomIcon from '../../components/ui/RoomIcon';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import Dialog from '../../components/ui/Dialog';
 import Forbidden from '../../pages/Forbidden';
@@ -32,6 +34,8 @@ import FacilityEditor from './FacilityEditor';
 import SeatLayout from './SeatLayout';
 import SeatInspector from './SeatInspector';
 import './facilities.css';
+// Manager rooms reuses the Admin rooms surface so both portals present the same design.
+import '../admin-rooms/admin-rooms.css';
 import { loadOccupancy } from './occupancyRead';
 import { ROOM_TYPES, SEAT_TYPES, RESOURCE_STATUSES } from '../../../../shared/resourceContract.mjs';
 
@@ -182,38 +186,101 @@ function FacilityWorkspace({ adapter, managerStore }) {
       void controller.syncQuery(query);
     }
   }, [controller, query]);
+  void controller.syncQuery;
   return <FacilityView state={state} controller={controller} adapter={ownerAdapter} />;
 }
 
-function NamedContext({ state, controller, adapter }) {
-  return (
-    <section
-      className="facility-panel facility-context-selectors"
-      aria-label="Chọn context cơ sở vật chất"
-    >
-      {!adapter.managerCinemaId && (
-        <div>
-          <ResourceSelect
-            label="Rạp"
-            value={state.scope.cinemaId}
-            options={state.lookup.rows.map((row) => ({ id: row.id, label: row.name }))}
-            scopeKey="facility-cinemas"
-            lookupStatus={state.lookup.status}
-            lookupError={state.lookup.error}
-            onRetry={() => void controller.start()}
-            required={false}
-            disabled={state.pending}
-            onChange={(id) => void controller.chooseCinema(id)}
-          />
-          {state.lookup.limited && (
-            <p className="facility-help">
-              Chỉ có rạp xuất hiện trong danh sách phòng được cấp quyền; rạp chưa có phòng cần quyền
-              tra cứu rạp.
-            </p>
-          )}
-        </div>
+export function FacilityFilters({ state, controller, adapter, kind, rows }) {
+  const keys =
+    kind === 'seats'
+      ? ['row', 'type', 'status']
+      : kind === 'rooms'
+        ? ['type', 'status']
+        : kind === 'cinemas'
+          ? ['city', 'status']
+          : ['status'];
+  // PA-3b single-box pages: images keeps search capability inside one searchable select.
+  const isSingleBox = kind === 'images',
+    seats = kind === 'seats',
+    manager = Boolean(adapter?.managerCinemaId),
+    roomChosen = Boolean(state.scope?.roomId);
+  const singleBoxOptions = isSingleBox
+    ? [
+        ...new Map(
+          (state.resource.status === 'success' ? state.resource.rows : []).map((row) => [
+            String(row.id),
+            String(row.description || 'Chưa có chú thích'),
+          ]),
+        ).entries(),
+      ].map(([value, label]) => ({ value, label }))
+    : [];
+  const labels = {
+    search:
+      kind === 'seats'
+        ? 'Tên ghế'
+        : kind === 'images'
+          ? 'Chú thích'
+          : kind === 'cinemas'
+            ? 'Tìm rạp'
+            : kind === 'rooms'
+              ? 'Tên / số phòng'
+              : 'Tên',
+    row: 'Hàng ghế',
+    type: kind === 'rooms' ? 'Loại phòng' : 'Loại',
+    status: 'Trạng thái',
+    city: 'Thành phố',
+  };
+  const filterOptions = {
+    row: [...new Set(rows.map((row) => row.row).filter(Boolean))],
+    type: kind === 'seats' ? SEAT_TYPES : ROOM_TYPES,
+    status: RESOURCE_STATUSES[kind === 'images' ? 'cinemaImages' : kind] ?? [],
+    city: [...new Set(rows.map((row) => row.city).filter(Boolean))].sort((a, b) =>
+      a.localeCompare(b, 'vi'),
+    ),
+  };
+  const filterFields = isSingleBox ? (
+    <FormField label="Chọn ảnh rạp">
+      <SearchableSelect
+        ariaLabel="Chọn ảnh rạp"
+        value={state.filters.search}
+        disabled={state.pending}
+        textValue
+        placeholder={
+          state.resource.status === 'loading'
+            ? 'Đang tải danh sách…'
+            : singleBoxOptions.length
+              ? 'Chọn ảnh rạp'
+              : 'Chưa có lựa chọn'
+        }
+        searchPlaceholder="Gõ để lọc chú thích..."
+        allLabel="Tất cả"
+        options={singleBoxOptions}
+        emptyMessage="Chưa có lựa chọn."
+        noMatchMessage="Không tìm thấy kết quả khớp từ khóa."
+        onChange={(value) => {
+          controller.setFilters({ search: value, status: '' });
+          requestAnimationFrame(() => controller.applyFilters());
+        }}
+      />
+    </FormField>
+  ) : (
+    <>
+      {seats && !manager && (
+        <ResourceSelect
+          label="Rạp chiếu"
+          value={state.scope.cinemaId}
+          scopeKey="seat-filter-cinemas"
+          options={state.lookup.rows.map((row) => ({ id: row.id, label: row.name }))}
+          lookupStatus={state.lookup.status}
+          lookupError={state.lookup.error}
+          onRetry={() => void controller.start()}
+          required={false}
+          disabled={state.pending}
+          onChange={(id) => void controller.chooseCinema(id)}
+          emptyMessage="Chưa có rạp để chọn."
+        />
       )}
-      {adapter.kind === 'seats' && (
+      {seats && (
         <ResourceSelect
           label="Phòng"
           scopeKey={state.scope.cinemaId}
@@ -228,78 +295,22 @@ function NamedContext({ state, controller, adapter }) {
           emptyMessage={state.scope.cinemaId ? 'Rạp này chưa có phòng để chọn.' : 'Chọn rạp trước.'}
         />
       )}
-      <AsyncState
-        status={state.lookup.status === 'error' ? 'error' : 'idle'}
-        error={state.lookup.error}
-        errorMessage={state.lookup.error?.message}
-      />
-      <AsyncState
-        status={state.lookup.status === 'loading' ? 'loading' : 'idle'}
-        loadingMessage="Đang tải danh sách rạp…"
-      />
-      <AsyncState
-        status={state.rooms.status === 'error' ? 'error' : 'idle'}
-        error={state.rooms.error}
-        errorMessage={state.rooms.error?.message}
-      />
-    </section>
-  );
-}
-
-export function FacilityFilters({ state, controller, kind, rows }) {
-  const keys =
-    kind === 'seats'
-      ? ['row', 'type', 'status']
-      : kind === 'rooms'
-        ? ['type', 'status']
-        : kind === 'cinemas'
-          ? ['city', 'status']
-          : ['status'];
-  const labels = {
-    search:
-      kind === 'seats'
-        ? 'Tên ghế'
-        : kind === 'images'
-          ? 'Chú thích'
-          : kind === 'cinemas'
-            ? 'Tìm rạp'
-            : 'Tên',
-    row: 'Hàng ghế',
-    type: 'Loại',
-    status: 'Trạng thái',
-    city: 'Thành phố',
-  };
-  const filterOptions = {
-    row: [...new Set(rows.map((row) => row.row).filter(Boolean))],
-    type: kind === 'seats' ? SEAT_TYPES : ROOM_TYPES,
-    status: RESOURCE_STATUSES[kind === 'images' ? 'cinemaImages' : kind] ?? [],
-    city: [...new Set(rows.map((row) => row.city).filter(Boolean))].sort((a, b) =>
-      a.localeCompare(b, 'vi'),
-    ),
-  };
-  return (
-    <FilterBar
-      label={`Bộ lọc ${facilityLabels[kind]}`}
-      schema={['search', ...keys].map((key) => ({ key, label: labels[key] }))}
-      draft={state.filters}
-      applied={state.applied}
-      applyLabel={kind === 'cinemas' ? 'Tìm rạp' : 'Tìm'}
-      pending={state.pending}
-      onRemoveFilter={(key) => controller.removeFilter(key)}
-      onApply={() => controller.applyFilters()}
-      onReset={() => controller.resetFilters()}
-    >
-      <FormField label={labels.search}>
+      <FormField
+        label={labels.search}
+        hint={kind === 'rooms' ? 'Tìm theo tên phòng, ví dụ Phòng 01.' : undefined}
+      >
         <div className="facility-filters__search-row">
           <Input
             type="search"
-            disabled={state.pending}
+            disabled={state.pending || (seats && !roomChosen)}
             placeholder={
               kind === 'seats'
                 ? 'Ví dụ: A1'
                 : kind === 'cinemas'
                   ? 'Nhập tên rạp, địa chỉ...'
-                  : 'Nhập từ khóa'
+                  : kind === 'rooms'
+                    ? 'Nhập tên hoặc số trong tên phòng'
+                    : 'Nhập từ khóa'
             }
             value={state.filters.search}
             maxLength={150}
@@ -310,18 +321,228 @@ export function FacilityFilters({ state, controller, kind, rows }) {
       {keys.map((key) => (
         <FormField key={key} label={labels[key]}>
           <Select
-            disabled={state.pending}
+            disabled={state.pending || (seats && !roomChosen)}
             value={state.filters[key]}
             onChange={(event) => controller.setFilters({ [key]: event.target.value })}
           >
-            <option value="">Tất cả</option>
+            <option value="">
+              {kind === 'rooms' && key === 'type'
+                ? 'Tất cả loại phòng'
+                : kind === 'rooms' && key === 'status'
+                  ? 'Tất cả trạng thái'
+                  : 'Tất cả'}
+            </option>
             {filterOptions[key]?.map((value) => (
               <option key={value}>{value}</option>
             ))}
           </Select>
         </FormField>
       ))}
+    </>
+  );
+  const filterBar = (
+    <FilterBar
+      label={`Bộ lọc ${facilityLabels[kind]}`}
+      schema={
+        isSingleBox
+          ? [
+              {
+                key: 'search',
+                label: 'Ảnh rạp',
+                format: (value) =>
+                  singleBoxOptions.find((option) => option.value === String(value))?.label ?? value,
+              },
+            ]
+          : ['search', ...keys].map((key) => ({ key, label: labels[key] }))
+      }
+      draft={isSingleBox ? { search: state.filters.search } : state.filters}
+      applied={isSingleBox ? { search: state.applied.search } : state.applied}
+      applyLabel={
+        kind === 'seats'
+          ? 'Tìm ghế'
+          : kind === 'cinemas'
+            ? 'Tìm rạp'
+            : kind === 'rooms'
+              ? 'Tìm phòng'
+              : 'Tìm'
+      }
+      pending={state.pending}
+      onRemoveFilter={(key) => controller.removeFilter(key)}
+      onApply={() => controller.applyFilters()}
+      onReset={() => controller.resetFilters()}
+    >
+      {filterFields}
     </FilterBar>
+  );
+  if (!seats) return filterBar;
+  // Seat search reuses the Admin/Manager rooms filter panel; Rạp/Phòng live inside the bar.
+  return (
+    <section
+      className="admin-rooms__panel facility-seats__filters"
+      aria-labelledby="seat-filter-title"
+    >
+      <h2 id="seat-filter-title">Tìm ghế</h2>
+      {filterBar}
+      {state.lookup.limited && (
+        <p className="admin-rooms__muted">
+          Chỉ có rạp xuất hiện trong danh sách phòng được cấp quyền; rạp chưa có phòng cần quyền tra
+          cứu rạp.
+        </p>
+      )}
+      <AsyncState
+        status={state.lookup.status === 'error' ? 'error' : 'idle'}
+        error={state.lookup.error}
+      />
+    </section>
+  );
+}
+
+function RoomsWorkspace({ state, controller, adapter, cinema }) {
+  const view = resourceView(state),
+    cinemaName = cinema?.name ?? 'Chưa chọn rạp',
+    seatPath = (row) =>
+      `/manager/seats?${new URLSearchParams({ cinemaId: String(row.cinemaId), roomId: String(row.id) })}`;
+  const columns = [
+    {
+      key: 'name',
+      label: 'Tên phòng',
+      render: (row) => (
+        <div className="admin-rooms__room">
+          <span className="admin-rooms__room-icon">
+            <RoomIcon />
+          </span>
+          <strong>{row.name}</strong>
+        </div>
+      ),
+    },
+    { key: 'cinemaName', label: 'Rạp', render: (row) => row.cinemaName ?? cinemaName },
+    {
+      key: 'type',
+      label: 'Loại phòng',
+      render: (row) => <span className="admin-rooms__format">{row.type ?? '—'}</span>,
+    },
+    {
+      key: 'seatCount',
+      label: 'Số ghế',
+      align: 'right',
+      render: (row) =>
+        row.seatCount == null ? (
+          <span className="admin-rooms__muted">Chưa có dữ liệu</span>
+        ) : (
+          <span className="admin-rooms__seat-count">
+            {row.seatCount}
+            <span className="admin-rooms__muted"> ghế</span>
+          </span>
+        ),
+    },
+    {
+      key: 'status',
+      label: 'Trạng thái',
+      render: (row) => <StatusBadge status={row.status} />,
+    },
+    {
+      key: 'actions',
+      label: 'Thao tác',
+      render: (row) => (
+        <div className="admin-rooms__row-actions">
+          {adapter.can('QL_GHE') && (
+            <Link
+              className="ui-button ui-button--secondary ui-button--sm admin-rooms__seats-link"
+              to={seatPath(row)}
+              aria-label={`Xem sơ đồ ghế ${row.name} · ${row.cinemaName ?? cinemaName}`}
+              aria-disabled={state.pending || undefined}
+              onClick={(event) => {
+                if (state.pending) event.preventDefault();
+              }}
+            >
+              <RoomIcon />
+              Xem sơ đồ ghế
+            </Link>
+          )}
+          <div className="admin-rooms__edit-actions">
+            <Button
+              variant="secondary"
+              size="sm"
+              disabled={state.pending}
+              onClick={() => controller.openEditor(row)}
+              aria-label={`Sửa ${row.name} · ${row.cinemaName ?? cinemaName}`}
+            >
+              Sửa
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              className="admin-rooms__delete"
+              disabled={state.pending}
+              onClick={() => controller.requestDelete(row)}
+              aria-label={`Xóa ${row.name} · ${row.cinemaName ?? cinemaName}`}
+            >
+              Xóa phòng
+            </Button>
+          </div>
+        </div>
+      ),
+    },
+  ];
+  return (
+    <>
+      <section className="admin-rooms__panel" aria-labelledby="manager-room-filter-title">
+        <h2 id="manager-room-filter-title">Tìm phòng chiếu</h2>
+        <FacilityFilters
+          state={state}
+          controller={controller}
+          adapter={adapter}
+          kind="rooms"
+          rows={view.all}
+        />
+      </section>
+      <section
+        className="admin-rooms__panel admin-rooms__list"
+        aria-labelledby="manager-room-list-title"
+      >
+        <div className="admin-rooms__list-heading">
+          <div>
+            <h2 id="manager-room-list-title">Danh sách phòng</h2>
+            <p className="admin-rooms__muted">
+              {cinemaName}
+              {state.resource.status === 'success' && ` · ${view.total} phòng phù hợp`}
+            </p>
+          </div>
+          <div className="admin-rooms__list-tools">
+            <Button
+              variant="secondary"
+              size="sm"
+              disabled={!cinema || state.pending || state.resource.status === 'loading'}
+              onClick={() => void controller.reload()}
+            >
+              Tải lại
+            </Button>
+          </div>
+        </div>
+        <ResourceTable
+          columns={columns}
+          rows={view.rows}
+          rowKey="id"
+          caption="Phòng chiếu tại rạp đang chọn"
+          className="admin-rooms__table"
+          status={state.resource.status}
+          error={state.resource.error}
+          onRetry={() => void controller.reload()}
+          emptyMessage={
+            view.all.length
+              ? 'Không tìm thấy phòng khớp bộ lọc. Thử từ khóa khác hoặc xóa lọc.'
+              : 'Rạp này chưa có phòng chiếu. Chọn Thêm phòng để bắt đầu.'
+          }
+          pagination={{
+            page: view.page,
+            pageSize: state.pageSize,
+            total: view.total,
+            disabled: state.pending,
+            onPageChange: (page) => controller.setPage(page),
+          }}
+        />
+      </section>
+    </>
   );
 }
 
@@ -337,15 +558,19 @@ export function FacilityView({ state, controller, adapter }) {
     state.resource.status === 'success' && !state.pending && state.mode === 'configuration';
   const description = {
     seats: 'Cấu hình ghế theo phòng, xem thông tin và thao tác đúng context.',
-    rooms: 'Phòng chiếu và sức chứa tại rạp đang được phân công.',
-    cinemas: 'Quản lý rạp và truy cập các tài nguyên liên quan.',
+    rooms: 'Quản lý phòng và sức chứa theo từng rạp.',
+    cinemas: 'Quản lý rạp và thư viện hình ảnh liên quan.',
     images: 'Quản lý thư viện hình ảnh theo từng rạp.',
   }[kind];
+  const rooms = kind === 'rooms';
   return (
     <section
-      className={`facility-workspace facility-workspace--${kind}`}
-      aria-label={`Quản lý ${facilityLabels[kind]}`}
+      className={
+        rooms ? 'admin-rooms facility-rooms' : `facility-workspace facility-workspace--${kind}`
+      }
+      aria-label={rooms ? 'Quản lý phòng chiếu' : `Quản lý ${facilityLabels[kind]}`}
     >
+      {rooms && <p className="admin-rooms__eyebrow">CƠ SỞ VẬT CHẤT</p>}
       <PageHeader
         title={title}
         description={description}
@@ -370,13 +595,10 @@ export function FacilityView({ state, controller, adapter }) {
             errorMessage={state.notice.error.message}
           />
         ) : (
-          <p className="facility-success" role="status">
+          <p className={rooms ? 'admin-rooms__notice' : 'facility-success'} role="status">
             {state.notice.text}
           </p>
         ))}
-      {kind !== 'cinemas' && (kind === 'seats' || !manager) && (
-        <NamedContext state={state} controller={controller} adapter={adapter} />
-      )}
       {kind === 'cinemas' && state.lookup.status === 'error' && (
         <AsyncState
           status="error"
@@ -384,20 +606,32 @@ export function FacilityView({ state, controller, adapter }) {
           errorMessage={state.lookup.error.message}
         />
       )}
-      {(kind !== 'images' || state.scope.cinemaId) && (
-        <FacilityFilters state={state} controller={controller} kind={kind} rows={view.all} />
-      )}
-      {kind === 'seats' ? (
-        <SeatWorkspace
-          state={state}
-          controller={controller}
-          adapter={adapter}
-          roomName={contextLabel}
-        />
-      ) : kind === 'images' ? (
-        <GalleryWorkspace state={state} controller={controller} cinemaName={cinema?.name} />
+      {rooms ? (
+        <RoomsWorkspace state={state} controller={controller} adapter={adapter} cinema={cinema} />
       ) : (
-        <ResourceWorkspace state={state} controller={controller} adapter={adapter} />
+        <>
+          {(kind !== 'images' || state.scope.cinemaId) && (
+            <FacilityFilters
+              state={state}
+              controller={controller}
+              adapter={adapter}
+              kind={kind}
+              rows={view.all}
+            />
+          )}
+          {kind === 'seats' ? (
+            <SeatWorkspace
+              state={state}
+              controller={controller}
+              adapter={adapter}
+              roomName={contextLabel}
+            />
+          ) : kind === 'images' ? (
+            <GalleryWorkspace state={state} controller={controller} cinemaName={cinema?.name} />
+          ) : (
+            <ResourceWorkspace state={state} controller={controller} adapter={adapter} />
+          )}
+        </>
       )}
       {state.editor && (
         <FacilityEditor
@@ -512,17 +746,15 @@ function ResourceWorkspace({ state, controller, adapter }) {
           >
             Sửa
           </Button>
-          <details>
-            <summary>Khác</summary>
-            <Button
-              variant="danger"
-              size="sm"
-              disabled={state.pending}
-              onClick={() => controller.requestDelete(row)}
-            >
-              Xóa
-            </Button>
-          </details>
+          <Button
+            variant="danger"
+            size="sm"
+            disabled={state.pending}
+            onClick={() => controller.requestDelete(row)}
+            aria-label={`Xóa ${rooms ? 'phòng' : 'rạp'} ${row.name}`}
+          >
+            Xóa
+          </Button>
         </div>
       ),
     },
@@ -567,7 +799,7 @@ function ResourceWorkspace({ state, controller, adapter }) {
       </section>
       <Dialog
         open={Boolean(!rooms && state.selection)}
-        size="inspector"
+        size="lg"
         title={state.selection?.name ?? 'Chi tiết rạp'}
         busy={state.pending}
         onOpenChange={(open) => {
@@ -610,6 +842,7 @@ function CinemaDetail({ cinema, adapter, controller, busy }) {
           <dd>{cinema.description || 'Chưa có mô tả'}</dd>
         </div>
       </dl>
+      <CinemaImagesPanel key={cinema.id} cinema={cinema} />
       <div className="facility-actions">
         {adapter.can('QL_PHONG') && (
           <Link
@@ -619,12 +852,6 @@ function CinemaDetail({ cinema, adapter, controller, busy }) {
             Phòng chiếu
           </Link>
         )}
-        <Link
-          className="ui-button ui-button--secondary"
-          to={`/admin/cinemas/images?cinemaId=${encodeURIComponent(cinema.id)}`}
-        >
-          Hình ảnh rạp
-        </Link>
         {adapter.can('QL_SUAT_CHIEU') && (
           <Link className="ui-button ui-button--secondary" to="/admin/operations/showtimes">
             Danh sách suất chiếu
@@ -634,6 +861,103 @@ function CinemaDetail({ cinema, adapter, controller, busy }) {
           Sửa thông tin rạp
         </Button>
       </div>
+    </section>
+  );
+}
+
+function CinemaImagesPanel({ cinema }) {
+  const { user } = useAuth();
+  const [controller] = useState(() => {
+    const adapter = facilityAdapter('images', user);
+    return createFacilityController({
+      adapter: { ...adapter, cinemas: [{ id: cinema.id, name: cinema.name }] },
+      initialQuery: `cinemaId=${encodeURIComponent(cinema.id)}`,
+      cacheKey: `cinema-images:${cinema.id}`,
+    });
+  });
+  const state = useSyncExternalStore(
+    controller.subscribe,
+    controller.getSnapshot,
+    controller.getSnapshot,
+  );
+  useEffect(() => {
+    void controller.start();
+    return () => controller.dispose();
+  }, [controller]);
+  const canAdd = state.resource.status === 'success' && !state.pending;
+  return (
+    <section
+      className="facility-panel facility-panel--nested facility-cinema-images"
+      aria-label={`Ảnh rạp ${cinema.name}`}
+    >
+      <div className="facility-panel-heading">
+        <div>
+          <h3>Ảnh rạp</h3>
+          <p className="facility-help">Thêm, sửa hoặc xóa ảnh của rạp này.</p>
+        </div>
+        <div className="facility-actions">
+          <Button
+            size="sm"
+            variant="secondary"
+            disabled={state.pending || state.resource.status === 'loading'}
+            onClick={() => void controller.reload()}
+          >
+            Tải lại
+          </Button>
+          <Button size="sm" disabled={!canAdd} onClick={() => controller.openEditor()}>
+            ＋ Thêm ảnh
+          </Button>
+        </div>
+      </div>
+      {state.notice &&
+        (state.notice.error ? (
+          <AsyncState
+            status="error"
+            error={state.notice.error}
+            errorMessage={state.notice.error.message}
+          />
+        ) : (
+          <p className="facility-success" role="status">
+            {state.notice.text}
+          </p>
+        ))}
+      <CinemaImageGrid state={state} controller={controller} cinemaName={cinema.name} />
+      {state.editor && (
+        <FacilityEditor
+          kind="images"
+          editor={state.editor}
+          contextLabel={cinema.name}
+          busy={state.pending}
+          controller={controller}
+        />
+      )}
+      <ConfirmDialog
+        key={state.deleteTarget?.id ?? 'closed'}
+        open={Boolean(state.deleteTarget)}
+        title="Xóa ảnh rạp?"
+        busy={state.pending}
+        entityLabel={
+          state.deleteTarget
+            ? `${state.deleteTarget.description || 'Ảnh rạp'} · ${cinema.name} · ${state.deleteTarget.status}`
+            : undefined
+        }
+        description="Ảnh sẽ bị xóa khỏi thư viện của rạp này."
+        onOpenChange={(open) => {
+          if (!open) controller.cancelDelete();
+        }}
+        onConfirm={() => controller.confirmDelete()}
+      />
+      <ConfirmDialog
+        open={Boolean(state.confirmation)}
+        title="Bỏ thay đổi chưa lưu?"
+        description="Bản nháp hiện tại sẽ bị bỏ trước khi đóng form."
+        confirmLabel="Bỏ thay đổi"
+        busy={state.pending}
+        onOpenChange={(open) => {
+          if (!open) controller.cancelDiscard();
+        }}
+        onConfirm={() => controller.confirmDiscard()}
+      />
     </section>
   );
 }
@@ -783,40 +1107,43 @@ function SeatWorkspace({ state, controller, adapter, roomName }) {
           </p>
         </div>
       )}
-      <div className="facility-panel-heading">
-        <p>
-          {roomName || 'Chọn rạp và phòng để xem ghế'}
-          {source.status === 'success' && ` · ${view.total}/${view.all.length} ghế khớp lọc`}
-        </p>
-        <div className="facility-actions">
-          <Button
-            variant="secondary"
-            size="sm"
-            aria-pressed={state.view === 'map'}
-            onClick={() => controller.setView('map')}
-          >
-            Sơ đồ
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            aria-pressed={state.view === 'list'}
-            onClick={() => controller.setView('list')}
-          >
-            Danh sách
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={!state.scope.roomId || state.pending}
-            onClick={() => void controller.reload()}
-          >
-            Tải lại cấu hình
-          </Button>
+      <section className="admin-rooms__panel admin-rooms__list" aria-labelledby="seat-list-title">
+        <div className="admin-rooms__list-heading">
+          <div>
+            <h2 id="seat-list-title">{state.view === 'map' ? 'Sơ đồ ghế' : 'Danh sách ghế'}</h2>
+            <p className="admin-rooms__muted">
+              {roomName || 'Chọn rạp và phòng để xem ghế'}
+              {source.status === 'success' && ` · ${view.total}/${view.all.length} ghế khớp lọc`}
+            </p>
+          </div>
+          <div className="admin-rooms__list-tools">
+            <Button
+              variant="secondary"
+              size="sm"
+              aria-pressed={state.view === 'map'}
+              onClick={() => controller.setView('map')}
+            >
+              Sơ đồ
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              aria-pressed={state.view === 'list'}
+              onClick={() => controller.setView('list')}
+            >
+              Danh sách
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              disabled={!state.scope.roomId || state.pending}
+              onClick={() => void controller.reload()}
+            >
+              Tải lại cấu hình
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="facility-seat-workspace">
-        <section className="facility-panel">
+        <div className="facility-seat-workspace">
           {source.status === 'success' && view.all.length ? (
             <>
               {!mapPossible && (
@@ -851,51 +1178,86 @@ function SeatWorkspace({ state, controller, adapter, roomName }) {
               )}
             </>
           ) : (
-            <AsyncState
-              status={
-                source.status === 'success'
-                  ? 'empty'
-                  : source.status === 'idle'
+            <div className="facility-seat-empty-container">
+              <AsyncState
+                status={
+                  source.status === 'success'
                     ? 'empty'
-                    : source.status
-              }
-              error={source.error}
-              emptyMessage={
-                state.mode === 'occupancy'
-                  ? 'Chọn suất chiếu để xem tình trạng ghế.'
-                  : state.scope.roomId
-                    ? 'Phòng chưa có ghế.'
-                    : 'Chọn phòng để tải sơ đồ ghế.'
-              }
-              onRetry={() => void controller.reload()}
-            />
+                    : source.status === 'idle'
+                      ? 'empty'
+                      : source.status
+                }
+                error={source.error}
+                emptyMessage={
+                  state.mode === 'occupancy'
+                    ? 'Chọn suất chiếu để xem tình trạng ghế.'
+                    : state.scope.roomId
+                      ? 'Phòng chưa có ghế.'
+                      : state.scope.cinemaId
+                        ? 'Chọn phòng trong bộ lọc để tải sơ đồ ghế.'
+                        : 'Chọn rạp và phòng trong bộ lọc để tải sơ đồ ghế.'
+                }
+                onRetry={() => void controller.reload()}
+              />
+              {!state.scope.roomId && state.rooms.rows?.length > 0 && (
+                <div
+                  className="facility-room-quickselect"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'var(--space-3)',
+                    marginTop: 'var(--space-4)',
+                    padding: 'var(--space-4)',
+                    background: 'var(--color-surface-subtle, rgba(255,255,255,0.03))',
+                    borderRadius: 'var(--radius-lg)',
+                    border: '1px dashed var(--color-border)',
+                  }}
+                >
+                  <p style={{ margin: 0, fontSize: 'var(--font-size-sm)', color: 'var(--color-text-muted)' }}>
+                    Chọn nhanh phòng chiếu để mở sơ đồ ghế ngay:
+                  </p>
+                  <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {state.rooms.rows.slice(0, 6).map((r) => (
+                      <Button
+                        key={r.id}
+                        variant="secondary"
+                        size="sm"
+                        disabled={state.pending}
+                        onClick={() => void controller.chooseRoom(r.id)}
+                      >
+                        Sơ đồ {r.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           )}
-        </section>
-        <Dialog
-          open={Boolean(selectedSeat)}
-          size="inspector"
-          title={selectedSeat ? `Chi tiết ghế · ${selectedSeat.label}` : 'Chi tiết ghế'}
-          busy={state.pending}
-          onOpenChange={(open) => {
-            if (!open) controller.closeDetail();
-          }}
-        >
-          {selectedSeat && (
-            <SeatInspector
-              seat={selectedSeat}
-              roomName={roomName}
-              mode={state.mode}
-              busy={state.pending}
-              onEdit={
-                state.mode === 'configuration' ? (row) => controller.openEditor(row) : undefined
-              }
-              onDelete={
-                state.mode === 'configuration' ? (row) => controller.requestDelete(row) : undefined
-              }
-            />
-          )}
-        </Dialog>
-      </div>
+        </div>
+      </section>
+      <Dialog
+        open={Boolean(selectedSeat)}
+        size="md"
+        title={selectedSeat ? `Chi tiết ghế · ${selectedSeat.label}` : 'Chi tiết ghế'}
+        busy={state.pending}
+        onOpenChange={(open) => {
+          if (!open) controller.closeDetail();
+        }}
+      >
+        {selectedSeat && (
+          <SeatInspector
+            seat={selectedSeat}
+            roomName={roomName}
+            mode={state.mode}
+            busy={state.pending}
+            onEdit={state.mode === 'configuration' ? (row) => controller.openEditor(row) : undefined}
+            onDelete={
+              state.mode === 'configuration' ? (row) => controller.requestDelete(row) : undefined
+            }
+          />
+        )}
+      </Dialog>
     </>
   );
 }
@@ -922,7 +1284,7 @@ export function FacilityImage({ image, cinemaName, large = false }) {
   );
 }
 
-function GalleryWorkspace({ state, controller, cinemaName }) {
+function CinemaImageGrid({ state, controller, cinemaName }) {
   const view = resourceView(state),
     [preview, setPreview] = useState(null);
   const currentPreview =
@@ -930,18 +1292,7 @@ function GalleryWorkspace({ state, controller, cinemaName }) {
     preview.cinemaId === Number(state.scope.cinemaId) &&
     view.all.find((image) => image.id === preview.id);
   return (
-    <section className="facility-panel" aria-label="Thư viện ảnh rạp">
-      <div className="facility-panel-heading">
-        <h2>{cinemaName || 'Chọn rạp để quản lý hình ảnh'}</h2>
-        <Button
-          size="sm"
-          variant="secondary"
-          disabled={!state.scope.cinemaId || state.pending || state.resource.status === 'loading'}
-          onClick={() => void controller.reload()}
-        >
-          Tải lại
-        </Button>
-      </div>
+    <>
       {state.resource.status === 'success' && view.total ? (
         <>
           <p>{view.total} ảnh phù hợp</p>
@@ -982,17 +1333,15 @@ function GalleryWorkspace({ state, controller, cinemaName }) {
                         Đặt ảnh chính
                       </Button>
                     )}
-                    <details>
-                      <summary>Khác</summary>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        disabled={state.pending}
-                        onClick={() => controller.requestDelete(image)}
-                      >
-                        Xóa ảnh
-                      </Button>
-                    </details>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      disabled={state.pending}
+                      onClick={() => controller.requestDelete(image)}
+                      aria-label={`Xóa ảnh ${image.description || index + 1} của ${cinemaName}`}
+                    >
+                      Xóa ảnh
+                    </Button>
                   </div>
                 </div>
               </article>
@@ -1044,6 +1393,25 @@ function GalleryWorkspace({ state, controller, cinemaName }) {
           />
         )}
       </Dialog>
+    </>
+  );
+}
+
+function GalleryWorkspace({ state, controller, cinemaName }) {
+  return (
+    <section className="facility-panel" aria-label="Thư viện ảnh rạp">
+      <div className="facility-panel-heading">
+        <h2>{cinemaName || 'Chọn rạp để quản lý hình ảnh'}</h2>
+        <Button
+          size="sm"
+          variant="secondary"
+          disabled={!state.scope.cinemaId || state.pending || state.resource.status === 'loading'}
+          onClick={() => void controller.reload()}
+        >
+          Tải lại
+        </Button>
+      </div>
+      <CinemaImageGrid state={state} controller={controller} cinemaName={cinemaName} />
     </section>
   );
 }

@@ -32,6 +32,15 @@ export default function Cinemas() {
   }, [attempt]);
   const resource = state.attempt === attempt ? state : { status: 'loading' };
   const rows = resource.status === 'success' ? cinemaView(resource.data, applied) : [];
+  const [page, setPage] = useState(1);
+  const pageSize = 12;
+  const totalPages = Math.ceil(rows.length / pageSize) || 1;
+  const pagedRows = rows.slice((page - 1) * pageSize, page * pageSize);
+
+  useEffect(() => {
+    setPage(1);
+  }, [appliedSearch, params]);
+
   const cities =
     resource.status === 'success'
       ? [...new Set(resource.data.map((r) => r.city).filter(Boolean))]
@@ -100,7 +109,42 @@ export default function Cinemas() {
         <>
           <p role="status">{rows.length} rạp theo bộ lọc · toàn bộ danh sách đang hoạt động</p>
           {rows.length ? (
-            <CinemaList cinemas={rows} />
+            <>
+              <CinemaList cinemas={pagedRows} />
+              {totalPages > 1 && (
+                <nav
+                  className="catalog-actions"
+                  aria-label="Phân trang danh sách rạp"
+                  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 'var(--space-6)', gap: 'var(--space-3)' }}
+                >
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    disabled={page <= 1}
+                    onClick={() => {
+                      setPage((p) => Math.max(1, p - 1));
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                  >
+                    ← Trang trước
+                  </Button>
+                  <span className="catalog-muted">
+                    Trang {page} / {totalPages}
+                  </span>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    disabled={page >= totalPages}
+                    onClick={() => {
+                      setPage((p) => Math.min(totalPages, p + 1));
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                  >
+                    Trang sau →
+                  </Button>
+                </nav>
+              )}
+            </>
           ) : (
             <AsyncState
               status="empty"

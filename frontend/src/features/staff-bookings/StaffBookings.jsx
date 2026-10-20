@@ -20,6 +20,7 @@ import {
   AsyncState,
   Button,
   ConfirmDialog,
+  Dialog,
   FilterBar,
   FormField,
   Input,
@@ -339,116 +340,136 @@ export function BookingView({ state, controller, portal, cinemaId }) {
           {state.notice.error?.message ?? state.notice.text}
         </p>
       )}
-      <FilterBar
-        label="Bộ lọc đơn đặt vé"
-        schema={[
-          { key: 'search', label: 'Tìm kiếm' },
-          { key: 'status', label: 'Trạng thái' },
-          ...(!cinemaId
-            ? [
-                {
-                  key: 'cinemaId',
-                  label: 'Rạp',
-                  format: (id) =>
-                    cinemas.find((row) => String(row.RapID) === id)?.TenRap ?? 'Rạp đã chọn',
-                },
-              ]
-            : []),
-        ]}
-        draft={state.filters}
-        applied={state.applied}
-        pending={busy}
-        onRemoveFilter={controller.removeFilter}
-        onApply={controller.applyFilters}
-        onReset={controller.resetFilters}
-      >
-        <FormField label="Tìm mã đơn / vé / khách hàng / phim">
-          <Input
-            value={state.filters.search}
-            maxLength={100}
-            disabled={busy}
-            onChange={(e) => controller.setFilters({ search: e.target.value })}
-          />
-        </FormField>
-        <FormField label="Trạng thái đơn">
-          <Select
-            value={state.filters.status}
-            disabled={busy}
-            onChange={(e) => controller.setFilters({ status: e.target.value })}
-          >
-            <option value="">Tất cả trạng thái</option>
-            {bookingStatuses.map((status) => (
-              <option key={status}>{status}</option>
-            ))}
-          </Select>
-        </FormField>
-        {!cinemaId && (
-          <FormField label="Rạp lọc đơn">
-            <Select
-              value={state.filters.cinemaId}
-              disabled={busy || state.metadata.status !== 'success'}
-              onChange={(e) => controller.setFilters({ cinemaId: e.target.value })}
+      {state.editor ? (
+        <div className="staff-bookings__workspace">
+          <div style={{ marginBottom: 'var(--space-4)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Button
+              variant="secondary"
+              onClick={controller.closeEditor}
+              disabled={busy}
             >
-              <option value="">Tất cả rạp được phép</option>
-              {cinemas.map((row) => (
-                <option key={row.RapID} value={row.RapID}>
-                  {row.TenRap}
-                </option>
-              ))}
-            </Select>
-          </FormField>
-        )}
-      </FilterBar>
-      {state.list.status === 'success' && (
-        <p role="status">Có {state.list.data.total} đơn phù hợp.</p>
-      )}
-      <ResourceTable
-        caption="Danh sách đơn đặt vé"
-        columns={columns}
-        rows={state.list.data?.orders ?? []}
-        rowKey="DonDatVeID"
-        status={state.list.status}
-        error={state.list.error}
-        onRetry={() => void controller.reloadList()}
-        pagination={
-          state.list.status === 'success'
-            ? {
-                page: state.list.data.page,
-                pageSize: state.list.data.pageSize,
-                total: state.list.data.total,
-                disabled: busy,
-                onPageChange: controller.setPage,
-              }
-            : undefined
-        }
-      />
-      <div
-        className={`staff-bookings__workspace${state.editor && order ? ' staff-bookings__workspace--editing' : ''}`}
-      >
-        <div>
-          <AsyncState
-            status={state.detail.status === 'success' ? 'idle' : state.detail.status}
-            error={state.detail.error}
-            onRetry={() => void controller.reloadDetail()}
-            loadingMessage="Đang tải chi tiết đơn…"
-          />
-          {order && (
-            <BookingDetail
-              order={order}
-              busy={busy}
-              editing={Boolean(state.editor)}
-              onEdit={controller.startEdit}
-              onCancel={controller.requestCancel}
-              onClose={controller.closeDetail}
-              onRefresh={controller.reloadDetail}
-              onHoldElapsed={controller.onHoldElapsed}
-            />
-          )}
+              ← Quay lại danh sách đơn
+            </Button>
+            <span className="staff-bookings__secondary-text">Đang trong chế độ {state.editor === 'edit' ? 'sửa ghế' : 'tạo đơn'}</span>
+          </div>
+          <div>
+            <BookingEditor state={state} controller={controller} cinemaId={cinemaId} />
+          </div>
         </div>
-        {state.editor && (
-          <BookingEditor state={state} controller={controller} cinemaId={cinemaId} />
+      ) : (
+        <>
+          <FilterBar
+            label="Bộ lọc đơn đặt vé"
+            schema={[
+              { key: 'search', label: 'Tìm kiếm' },
+              { key: 'status', label: 'Trạng thái' },
+              ...(!cinemaId
+                ? [
+                    {
+                      key: 'cinemaId',
+                      label: 'Rạp',
+                      format: (id) =>
+                        cinemas.find((row) => String(row.RapID) === id)?.TenRap ?? 'Rạp đã chọn',
+                    },
+                  ]
+                : []),
+            ]}
+            draft={state.filters}
+            applied={state.applied}
+            pending={busy}
+            onRemoveFilter={controller.removeFilter}
+            onApply={controller.applyFilters}
+            onReset={controller.resetFilters}
+          >
+            <FormField label="Tìm mã đơn / vé / khách hàng / phim">
+              <Input
+                value={state.filters.search}
+                maxLength={100}
+                disabled={busy}
+                onChange={(e) => controller.setFilters({ search: e.target.value })}
+              />
+            </FormField>
+            <FormField label="Trạng thái đơn">
+              <Select
+                value={state.filters.status}
+                disabled={busy}
+                onChange={(e) => controller.setFilters({ status: e.target.value })}
+              >
+                <option value="">Tất cả trạng thái</option>
+                {bookingStatuses.map((status) => (
+                  <option key={status}>{status}</option>
+                ))}
+              </Select>
+            </FormField>
+            {!cinemaId && (
+              <FormField label="Rạp lọc đơn">
+                <Select
+                  value={state.filters.cinemaId}
+                  disabled={busy || state.metadata.status !== 'success'}
+                  onChange={(e) => controller.setFilters({ cinemaId: e.target.value })}
+                >
+                  <option value="">Tất cả rạp được phép</option>
+                  {cinemas.map((row) => (
+                    <option key={row.RapID} value={row.RapID}>
+                      {row.TenRap}
+                    </option>
+                  ))}
+                </Select>
+              </FormField>
+            )}
+          </FilterBar>
+          {state.list.status === 'success' && (
+            <p role="status">Có {state.list.data.total} đơn phù hợp.</p>
+          )}
+          <ResourceTable
+            caption="Danh sách đơn đặt vé"
+            columns={columns}
+            rows={state.list.data?.orders ?? []}
+            rowKey="DonDatVeID"
+            status={state.list.status}
+            error={state.list.error}
+            onRetry={() => void controller.reloadList()}
+            pagination={
+              state.list.status === 'success'
+                ? {
+                    page: state.list.data.page,
+                    pageSize: state.list.data.pageSize,
+                    total: state.list.data.total,
+                    disabled: busy,
+                    onPageChange: controller.setPage,
+                  }
+                : undefined
+            }
+          />
+        </>
+      )}
+      <Dialog
+        open={Boolean(state.selectedId) && !state.editor}
+        size="lg"
+        title={order ? `Chi tiết đơn #${order.id}` : 'Chi tiết đơn đặt vé'}
+        busy={busy}
+        onOpenChange={(open) => {
+          if (!open) controller.closeDetail();
+        }}
+      >
+        <AsyncState
+          status={state.detail.status === 'success' ? 'idle' : state.detail.status}
+          error={state.detail.error}
+          onRetry={() => void controller.reloadDetail()}
+          loadingMessage="Đang tải chi tiết đơn…"
+        />
+        {order && (
+          <BookingDetail
+            order={order}
+            busy={busy}
+            editing={Boolean(state.editor)}
+            onEdit={controller.startEdit}
+            onCancel={controller.requestCancel}
+            onRefresh={controller.reloadDetail}
+            onHoldElapsed={controller.onHoldElapsed}
+          />
         )}
-      </div>
+      </Dialog>
       <ConfirmDialog
         key={`${confirmation?.kind}:${confirmation?.snapshot?.orderId ?? ''}`}
         open={Boolean(confirmation)}

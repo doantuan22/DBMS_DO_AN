@@ -108,10 +108,11 @@ test('Manager resource selector renders accessible loading, empty, error, and na
   const populated = render({
     lookupStatus: 'success',
     options: [{ id: 123, label: 'Tên phim thật' }],
+    value: '123',
   });
   assert.match(populated, /Tên phim thật/);
   assert.doesNotMatch(populated, />\s*123\s*</);
-  assert.match(populated, /<select[^>]*aria-label="Phim"/);
+  assert.match(populated, /role="combobox"[^>]*aria-label="Phim"/);
 });
 test('R7 gallery excludes inactive images, sorts cover first then display order, and has accessible empty/single/multi output', () => {
   const rows = [

@@ -119,6 +119,7 @@ export default function AppRoutes() {
         }
       >
         <Route path="/support" element={<StaffShell portal="support" />}>
+          <Route index element={<SupportPortal />} />
           <Route path="*" element={<SupportPortal />} />
         </Route>
       </Route>

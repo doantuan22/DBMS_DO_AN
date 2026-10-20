@@ -34,6 +34,7 @@ import {
   FilterBar,
   ResourceTable,
   ResourceSelect,
+  SearchableSelect,
   FormField,
   Input,
   Select,
@@ -149,6 +150,33 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
     const lookupName = filterLookupNames[key];
     const lookup = lookupName ? (state.lookups[lookupName] ?? { status: 'loading' }) : null;
     const lookupPending = lookup && lookup.status !== 'success';
+    // PA-3b: single-box searchable select. Click opens the full list, typing filters inline.
+    const searchable = ['movieId'].includes(key);
+    if (searchable) {
+      return (
+        <FormField label={label}>
+          <SearchableSelect
+            ariaLabel={label}
+            value={state.filters[key]}
+            disabled={busy || lookupPending}
+            placeholder={
+              lookup?.status === 'loading'
+                ? 'Đang tải danh mục…'
+                : lookup?.status === 'error'
+                  ? 'Danh mục chưa tải được'
+                  : options.length
+                    ? `Chọn ${label.toLocaleLowerCase()}`
+                    : 'Chưa có lựa chọn'
+            }
+            searchPlaceholder={`Gõ để lọc ${label.toLocaleLowerCase()}...`}
+            allLabel="Tất cả"
+            options={options.map((r) => ({ value: r.id, label: r.label }))}
+            emptyMessage="Chưa có lựa chọn."
+            onChange={(value) => controller.setFilters({ [key]: value })}
+          />
+        </FormField>
+      );
+    }
     const emptyLabel =
       lookup?.status === 'loading'
         ? 'Đang tải danh mục…'
@@ -180,6 +208,22 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
     render: (row) => <StatusBadge status={row.TrangThai} />,
   };
   const catalog = ['movies', 'actors', 'genres'].includes(kind);
+  // PA-3b single-box pages: keep search capability, merge into exactly one searchable select.
+  const singleBoxKinds = ['actors'];
+  const isSingleBox = singleBoxKinds.includes(kind);
+  const singleBoxOptions =
+    kind === 'actors'
+      ? (state.resource.status === 'success'
+          ? state.resource.rows.map((row) => ({
+              value: String(row[definition.id]),
+              label: String(definition.name(row)),
+            }))
+          : []
+        ).filter(
+          (option, index, list) => list.findIndex((item) => item.value === option.value) === index,
+        )
+      : [];
+  const singleBoxLabel = kind === 'actors' ? 'Diễn viên' : definition.title;
   const columns =
     kind === 'users'
       ? [
@@ -326,16 +370,6 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
                     label: kind === 'actors' ? 'Diễn viên' : 'Thể loại',
                     render: (r) => <strong>{definition.name(r)}</strong>,
                   },
-                  ...(kind === 'actors'
-                    ? [
-                        { key: 'QuocTich', label: 'Quốc tịch' },
-                        {
-                          key: 'NgaySinh',
-                          label: 'Ngày sinh',
-                          render: (r) => (r.NgaySinh ? formatDate(r.NgaySinh) : 'Chưa có dữ liệu'),
-                        },
-                      ]
-                    : []),
                   {
                     key: 'links',
                     label: 'Phim liên kết',
@@ -344,6 +378,22 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
                       return movies === null ? 'Chưa tra cứu được' : `${movies.length} phim`;
                     },
                   },
+                  ...(kind === 'actors'
+                    ? [
+                        {
+                          key: 'QuocTich',
+                          label: 'Quốc tịch',
+                          className: 'admin-resource__secondary-column',
+                          render: (r) => r.QuocTich || '—',
+                        },
+                        {
+                          key: 'NgaySinh',
+                          label: 'Ngày sinh',
+                          className: 'admin-resource__secondary-column',
+                          render: (r) => (r.NgaySinh ? formatDate(r.NgaySinh) : 'Chưa có dữ liệu'),
+                        },
+                      ]
+                    : []),
                 ];
   columns.push({
     key: 'actions',
@@ -568,6 +618,49 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
       )}
       {kind === 'products' ? (
         <ProductFilters state={state} controller={controller} />
+      ) : isSingleBox ? (
+        <FilterBar
+          label={`Bộ lọc ${definition.title.toLowerCase()}`}
+          schema={[
+            {
+              key: 'search',
+              label: singleBoxLabel,
+              format: (value) =>
+                singleBoxOptions.find((option) => option.value === String(value))?.label ?? value,
+            },
+          ]}
+          draft={{ search: state.filters.search }}
+          applied={{ search: state.applied.search }}
+          pending={busy}
+          onRemoveFilter={(key) => controller.setFilters({ [key]: '' })}
+          onApply={controller.applyFilters}
+          onReset={controller.resetFilters}
+        >
+          <FormField label={`Chọn ${singleBoxLabel.toLocaleLowerCase()}`}>
+            <SearchableSelect
+              ariaLabel={`Chọn ${singleBoxLabel.toLocaleLowerCase()}`}
+              value={state.filters.search}
+              disabled={busy}
+              textValue
+              placeholder={
+                state.resource.status === 'loading'
+                  ? 'Đang tải danh sách…'
+                  : singleBoxOptions.length
+                    ? `Chọn ${singleBoxLabel.toLocaleLowerCase()}`
+                    : 'Chưa có lựa chọn'
+              }
+              searchPlaceholder={`Gõ để lọc ${singleBoxLabel.toLocaleLowerCase()}...`}
+              allLabel="Tất cả"
+              options={singleBoxOptions}
+              emptyMessage="Chưa có lựa chọn."
+              noMatchMessage="Không tìm thấy kết quả khớp từ khóa."
+              onChange={(value) => {
+                controller.setFilters({ search: value, movieId: '' });
+                requestAnimationFrame(() => controller.applyFilters());
+              }}
+            />
+          </FormField>
+        </FilterBar>
       ) : (
         <FilterBar
           label={`Bộ lọc ${definition.title.toLowerCase()}`}
@@ -642,7 +735,7 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
       />
       <Dialog
         open={Boolean(state.selectedId)}
-        size="inspector"
+        size="lg"
         title={
           state.selection
             ? definition.name(state.selection)
@@ -663,6 +756,24 @@ export function ResourceView({ kind, state, controller, can = () => false }) {
             aria-label={`Chi tiết ${definition.title.toLowerCase()}`}
           >
             {state.selection.TrangThai && <StatusBadge status={state.selection.TrangThai} />}
+            {kind === 'products' && state.selection.HinhAnh && (
+              <div style={{ margin: 'var(--space-3) 0', textAlign: 'center' }}>
+                <img
+                  src={state.selection.HinhAnh}
+                  alt={state.selection.TenSanPham}
+                  style={{
+                    maxWidth: '160px',
+                    maxHeight: '160px',
+                    objectFit: 'cover',
+                    borderRadius: 'var(--radius-md)',
+                    border: '1px solid var(--color-border)',
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
             <dl className="admin-resource__details">
               {definition.details
                 .filter(([, key]) => state.selection[key] != null)
@@ -802,41 +913,75 @@ export function ResourceEditor({ kind, state, controller }) {
               maxLength: f.maxLength,
               onChange: (e) => controller.changeField(f.name, e.target.value),
             };
+            const fieldLabel =
+              kind === 'promotions' && f.name === 'discountValue'
+                ? ['Phần trăm', 'PERCENT'].includes(editor.values.discountType)
+                  ? 'Giá trị giảm (%)'
+                  : 'Giá trị giảm (VND)'
+                : f.label;
+            let fieldHint;
+            if (f.type === 'datetime-local' && editor.values[f.name]) {
+              try {
+                fieldHint = `Thời gian (UTC+7): ${formatDateTime(businessLocalToInstant(editor.values[f.name]))}`;
+              } catch {
+                fieldHint = undefined;
+              }
+            }
             return (
-              <FormField
-                key={f.name}
-                label={f.label}
-                required={!f.optional}
-                error={editor.errors[f.name]}
-              >
-                {f.type === 'select' ? (
-                  <Select {...props}>
-                    {f.options.map((value) => (
-                      <option key={value}>{value}</option>
-                    ))}
-                  </Select>
-                ) : f.type === 'textarea' ? (
-                  <textarea className="ui-input" rows={4} {...props} />
-                ) : (
-                  <Input
-                    {...props}
-                    type={f.type}
-                    min={f.min}
-                    max={f.max}
-                    step={
-                      f.type === 'number'
-                        ? f.integer
-                          ? 1
-                          : '0.01'
-                        : f.type === 'datetime-local'
-                          ? '0.001'
-                          : undefined
-                    }
-                    minLength={f.minLength}
-                    autoComplete={f.type === 'password' ? 'new-password' : undefined}
-                  />
+              <div key={f.name}>
+                <FormField
+                  label={fieldLabel}
+                  required={!f.optional}
+                  error={editor.errors[f.name]}
+                  hint={fieldHint}
+                >
+                  {f.type === 'select' ? (
+                    <Select {...props}>
+                      {f.options.map((value) => (
+                        <option key={value}>{value}</option>
+                      ))}
+                    </Select>
+                  ) : f.type === 'textarea' ? (
+                    <textarea className="ui-input" rows={4} {...props} />
+                  ) : (
+                    <Input
+                      {...props}
+                      type={f.type}
+                      min={f.min}
+                      max={f.max}
+                      step={
+                        f.type === 'number'
+                          ? f.integer
+                            ? 1
+                            : '0.01'
+                          : f.type === 'datetime-local'
+                            ? '0.001'
+                            : undefined
+                      }
+                      minLength={f.minLength}
+                      autoComplete={f.type === 'password' ? 'new-password' : undefined}
+                    />
+                  )}
+                </FormField>
+                {kind === 'products' && f.name === 'image' && editor.values[f.name] && (
+                  <div style={{ marginTop: 'var(--space-2)' }}>
+                    <img
+                      src={editor.values[f.name]}
+                      alt="Xem trước ảnh sản phẩm"
+                      style={{
+                        maxWidth: '120px',
+                        maxHeight: '120px',
+                        objectFit: 'cover',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid var(--color-border)',
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
                 )}
-              </FormField>
+              </div>
             );
           })}
           {kind === 'assignments' && (

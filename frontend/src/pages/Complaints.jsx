@@ -125,8 +125,22 @@ function OwnComplaints() {
       pending.current = false;
     }
   }
+  const [filterStatus, setFilterStatus] = useState('');
+  const [historyPage, setHistoryPage] = useState(1);
+  const historyPageSize = 5;
+
+  const rawComplaints = resource.status === 'success' ? resource.data : [];
+  const filteredComplaints = filterStatus
+    ? rawComplaints.filter((c) => c.status === filterStatus)
+    : rawComplaints;
+  const totalHistoryPages = Math.ceil(filteredComplaints.length / historyPageSize) || 1;
+  const pagedComplaints = filteredComplaints.slice(
+    (historyPage - 1) * historyPageSize,
+    historyPage * historyPageSize,
+  );
+
   return (
-    <section className="catalog-page customer-journey">
+    <section className="catalog-page customer-journey cp-complaints-page">
       <AccountNavigation />
       <PageHeader
         title="Khiếu nại của tôi"
@@ -135,18 +149,45 @@ function OwnComplaints() {
       />
       <div className="customer-journey__layout">
         <section className="customer-journey__main" aria-labelledby="complaint-history-heading">
-          <h2 id="complaint-history-heading">Lịch sử khiếu nại</h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '8px' }}>
+            <h2 id="complaint-history-heading">Lịch sử khiếu nại</h2>
+            {rawComplaints.length > 0 && (
+              <span className="catalog-muted" style={{ fontSize: '0.875rem' }}>
+                Tổng {rawComplaints.length} khiếu nại
+              </span>
+            )}
+          </div>
+          {rawComplaints.length > 0 && (
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '16px' }} role="group" aria-label="Lọc theo trạng thái khiếu nại">
+              {['', 'Mới', 'Đang xử lý', 'Đã giải quyết', 'Đã đóng'].map((st) => (
+                <button
+                  key={st}
+                  type="button"
+                  className={`ui-button ui-button--sm ${filterStatus === st ? 'ui-button--primary' : 'ui-button--secondary'}`}
+                  onClick={() => {
+                    setFilterStatus(st);
+                    setHistoryPage(1);
+                  }}
+                >
+                  {st || 'Tất cả'}
+                </button>
+              ))}
+            </div>
+          )}
           <AsyncState
             status={
-              resource.status === 'success' && !resource.data.length ? 'empty' : resource.status
+              resource.status === 'success' && !rawComplaints.length ? 'empty' : resource.status
             }
             error={resource.error}
             onRetry={load}
             loadingMessage="Đang tải khiếu nại…"
             emptyMessage="Chưa có khiếu nại. Bạn có thể gửi phản hồi bằng biểu mẫu bên cạnh."
           />
+          {resource.status === 'success' && filteredComplaints.length === 0 && rawComplaints.length > 0 && (
+            <p className="catalog-muted">Không có khiếu nại nào với trạng thái "{filterStatus}".</p>
+          )}
           {resource.status === 'success' &&
-            resource.data.map((complaint) => (
+            pagedComplaints.map((complaint) => (
               <article className="customer-panel" key={complaint.id}>
                 <div className="customer-timeline__heading">
                   <h3>{complaint.title}</h3>
@@ -170,6 +211,33 @@ function OwnComplaints() {
                 </Link>
               </article>
             ))}
+          {totalHistoryPages > 1 && (
+            <nav
+              className="catalog-actions"
+              aria-label="Phân trang khiếu nại"
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '16px', gap: '8px' }}
+            >
+              <Button
+                variant="secondary"
+                size="sm"
+                disabled={historyPage <= 1}
+                onClick={() => setHistoryPage((p) => Math.max(1, p - 1))}
+              >
+                ← Trang trước
+              </Button>
+              <span className="catalog-muted">
+                Trang {historyPage} / {totalHistoryPages}
+              </span>
+              <Button
+                variant="secondary"
+                size="sm"
+                disabled={historyPage >= totalHistoryPages}
+                onClick={() => setHistoryPage((p) => Math.min(totalHistoryPages, p + 1))}
+              >
+                Trang sau →
+              </Button>
+            </nav>
+          )}
         </section>
         {canCreate && (
           <form className="customer-panel customer-complaints-form" onSubmit={onSubmit}>

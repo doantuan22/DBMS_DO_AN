@@ -311,7 +311,7 @@ test('curated showtime table shows names and timezone, hides internal IDs; no fa
   assert.doesNotMatch(html, />201<|>301<|>11<|Mã phòng|Mã phim/);
   controller.dispose();
 });
-test('selected operation details open in the focused inspector drawer', async () => {
+test('selected operation details open in a centered dialog', async () => {
   const a = adapter({ kind: 'pricing', list: async () => pricing });
   const controller = createController({ adapter: a });
   await controller.start();
@@ -325,11 +325,11 @@ test('selected operation details open in the focused inspector drawer', async ()
       ),
     );
   let html = render();
-  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--inspector"');
+  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--lg"');
   const detailStart = html.indexOf('class="operations__panel"');
   assert.ok(dialogStart >= 0 && detailStart > dialogStart);
   assert.match(html, /VIP · Ngày thường · 2D/);
-  assert.doesNotMatch(html, /Đóng chi tiết/);
+  assert.doesNotMatch(html, /ui-dialog--inspector|Đóng chi tiết/);
 
   controller.select(pricing[1]);
   html = render();

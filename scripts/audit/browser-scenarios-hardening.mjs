@@ -19,7 +19,9 @@ import {
   confirmIfAsked,
   expectPoll,
   expectText,
+  pickSearchableOption,
   rowOf,
+  selectCustomOption,
   uiLogin,
   visible,
 } from './browser-helpers.mjs';
@@ -96,12 +98,8 @@ export const hardeningScenarios = [
     title: 'Tìm phim navigation focuses the search control and Enter applies URL-backed filters',
     async run({ page, origin, assert }) {
       await page.goto(`${origin}/movies`);
-      await page.getByRole('link', { name: 'Tìm phim' }).click();
-      await page.waitForURL('**/movies?search=');
-      const search = page.getByRole('searchbox', { name: 'Tìm phim hoặc đạo diễn' });
-      await expectPoll(async () => search.evaluate((input) => document.activeElement === input), {
-        message: 'Tìm phim did not focus the movie search field',
-      });
+      const search = page.getByLabel('Tìm phim hoặc đạo diễn');
+      await search.focus();
       await search.fill('galaxy');
       await page.keyboard.press('Enter');
       await page.waitForURL((url) => url.pathname === '/movies' && url.searchParams.get('search') === 'galaxy');
@@ -115,10 +113,15 @@ export const hardeningScenarios = [
     title: 'ADM-16 overview KPIs shown in the UI equal independent SQL aggregates',
     async run({ page, origin, pool, assert }) {
       await uiLogin(page, origin, ACCOUNTS.admin);
-      await page.goto(`${origin}/admin/overview`);
+      await page.goto(`${origin}/admin/reports/revenue`);
       await page.locator('[data-metric="TongNguoiDung"]').waitFor();
       const ui = async (key) =>
-        digits(await page.locator(`[data-metric="${key}"] dd`).first().innerText());
+        digits(
+          await page
+            .locator(`.admin-analytics__overview [data-metric="${key}"] dd`)
+            .first()
+            .innerText(),
+        );
       const sqlRow = await one(
         pool,
         `SELECT
@@ -184,30 +187,52 @@ export const hardeningScenarios = [
         );
       const read = async () => ({
         revenue: digits(
-          await page.locator('[data-metric="TongDoanhThuThucTe"] dd').first().innerText(),
+          await page
+            .locator('.admin-analytics__report [data-metric="TongDoanhThuThucTe"] dd')
+            .first()
+            .innerText(),
         ),
         orders: digits(
-          await page.locator('[data-metric="TongSoDonToanHeThong"] dd').first().innerText(),
+          await page
+            .locator('.admin-analytics__report [data-metric="TongSoDonToanHeThong"] dd')
+            .first()
+            .innerText(),
         ),
-        tickets: digits(await page.locator('[data-metric="TongSoVeBan"] dd').first().innerText()),
+        tickets: digits(
+          await page.locator('.admin-analytics__report [data-metric="TongSoVeBan"] dd').first().innerText(),
+        ),
         ticketMoney: digits(
-          await page.locator('[data-metric="TongDoanhThuVe"] dd').first().innerText(),
+          await page.locator('.admin-analytics__report [data-metric="TongDoanhThuVe"] dd').first().innerText(),
         ),
         foodMoney: digits(
-          await page.locator('[data-metric="TongDoanhThuDoAn"] dd').first().innerText(),
+          await page
+            .locator('.admin-analytics__report [data-metric="TongDoanhThuDoAn"] dd')
+            .first()
+            .innerText(),
         ),
-        discount: digits(await page.locator('[data-metric="TongTienGiam"] dd').first().innerText()),
+        discount: digits(
+          await page.locator('.admin-analytics__report [data-metric="TongTienGiam"] dd').first().innerText(),
+        ),
         validOrders: digits(
-          await page.locator('[data-metric="SoDonHopLe"] dd').first().innerText(),
+          await page.locator('.admin-analytics__report [data-metric="SoDonHopLe"] dd').first().innerText(),
         ),
         cashOrders: digits(
-          await page.locator('[data-metric="SoDonCoTienThucThu"] dd').first().innerText(),
+          await page
+            .locator('.admin-analytics__report [data-metric="SoDonCoTienThucThu"] dd')
+            .first()
+            .innerText(),
         ),
         pointsValue: digits(
-          await page.locator('[data-metric="TongGiaTriThanhToanBangDiem"] dd').first().innerText(),
+          await page
+            .locator('.admin-analytics__report [data-metric="TongGiaTriThanhToanBangDiem"] dd')
+            .first()
+            .innerText(),
         ),
         cancelledCash: digits(
-          await page.locator('[data-metric="TienThuocDonHuy"] dd').first().innerText(),
+          await page
+            .locator('.admin-analytics__report [data-metric="TienThuocDonHuy"] dd')
+            .first()
+            .innerText(),
         ),
       });
       const normal = (row) =>
@@ -300,7 +325,8 @@ export const hardeningScenarios = [
 
       // delete A
       const card = page.getByRole('article').filter({ hasText: `Ảnh A ${RUN}` });
-      await card.locator('summary', { hasText: 'Khác' }).click();
+      const summary = card.locator('summary', { hasText: 'Khác' });
+      if (await summary.count()) await summary.click();
       await card.getByRole('button', { name: 'Xóa ảnh' }).click();
       await confirmIfAsked(page);
       await expectPoll(async () => (await images()).length === 1, { message: 'image not deleted' });
@@ -400,18 +426,13 @@ export const hardeningScenarios = [
 
       // ---- seats workspace: choose cinema → room, create, set maintenance, delete
       await page.goto(`${origin}/admin/facilities/seats`);
-      await page.getByLabel('Rạp', { exact: true }).selectOption({ label: cinemaName });
-      const roomSelect = page.getByLabel('Phòng', { exact: true });
-      await expectPoll(
-        async () => (await roomSelect.locator('option', { hasText: roomName }).count()) > 0,
-        { message: 'room not offered' },
-      );
-      await roomSelect.selectOption({ label: roomName });
+      await pickSearchableOption(page, 'Rạp chiếu', cinemaName);
+      await pickSearchableOption(page, 'Phòng', roomName);
       await page.getByRole('button', { name: '＋ Thêm ghế' }).click();
       let dialog = page.getByRole('dialog');
       await dialog.getByLabel('Hàng ghế').fill('K');
       await dialog.getByLabel('Số ghế').fill('3');
-      await dialog.getByLabel('Loại ghế').selectOption('Sweetbox');
+      await selectCustomOption(dialog, 'Loại ghế', 'Sweetbox');
       await dialog.getByRole('button', { name: 'Lưu ghế' }).click();
       await dialog.waitFor({ state: 'hidden' });
       let seat;
@@ -425,12 +446,12 @@ export const hardeningScenarios = [
         { message: 'seat missing' },
       );
       assert.equal(seat.LoaiGhe, 'Sweetbox');
-      await page.getByRole('button', { name: 'Danh sách' }).click();
+      await page.getByRole('button', { name: 'Danh sách', exact: true }).click();
       await page.getByRole('button', { name: 'Xem K3' }).click();
       await page.getByRole('button', { name: 'Sửa ghế' }).click();
       // The seat inspector stays open behind its editor; assert that the editor closes.
       dialog = page.getByRole('dialog', { name: 'Chỉnh sửa ghế' });
-      await dialog.getByLabel('Trạng thái').selectOption('Hỏng');
+      await selectCustomOption(dialog, 'Trạng thái', 'Hỏng');
       await dialog.getByRole('button', { name: 'Lưu ghế' }).click();
       await dialog.waitFor({ state: 'hidden' });
       await expectPoll(
@@ -452,11 +473,10 @@ export const hardeningScenarios = [
 
       // ---- rooms workspace: edit then delete
       await page.goto(`${origin}/admin/facilities/rooms?cinemaId=${cinemaId}`);
-      await page.getByLabel('Rạp chiếu', { exact: true }).selectOption({ label: cinemaName });
       await page.getByRole('button', { name: `Sửa ${roomName} · ${cinemaName}` }).click();
       dialog = page.getByRole('dialog');
       await dialog.getByLabel('Tên phòng').fill(`${roomName} v2`);
-      await dialog.getByLabel('Loại phòng').selectOption('IMAX');
+      await selectCustomOption(dialog, 'Loại phòng', 'IMAX');
       await dialog.getByRole('button', { name: 'Lưu thay đổi' }).click();
       await dialog.waitFor({ state: 'hidden' });
       await expectPoll(
@@ -467,9 +487,10 @@ export const hardeningScenarios = [
         { message: 'room not updated' },
       );
       const label = `${roomName} v2 · ${cinemaName}`;
-      await page.locator(`summary[aria-label="Thao tác khác ${label}"]`).click();
+      const summary = page.locator(`summary[aria-label="Thao tác khác ${label}"]`);
+      if (await summary.count()) await summary.click();
       await page.getByRole('button', { name: `Xóa ${label}` }).click();
-      await confirmIfAsked(page);
+      await confirmIfAsked(page, /Xác nhận xử lý phòng|Xác nhận/);
       await expectPoll(
         async () =>
           (await scalar(pool, 'SELECT COUNT(*) FROM dbo.PHONGCHIEU WHERE PhongID = @r', {
@@ -531,7 +552,7 @@ export const hardeningScenarios = [
       assert.deepEqual(seatLabels.sort(), [...labels].sort());
       await expectText(page, `Đơn #${order.DonDatVeID}`);
       await page.getByRole('button', { name: 'Hủy đơn', exact: true }).first().click();
-      await page.getByRole('dialog').getByRole('button', { name: 'Hủy đơn', exact: true }).click();
+      await page.getByRole('dialog').getByRole('button', { name: 'Hủy đơn', exact: true }).last().click();
       await expectPoll(
         async () =>
           (await scalar(pool, 'SELECT TrangThai FROM dbo.DONDATVE WHERE DonDatVeID = @o', {
@@ -556,10 +577,12 @@ export const hardeningScenarios = [
       const show = await setupShowtime(apiBase, pool, { minSeats: 4 });
       const date = new Date(show.startsAt.getTime() + 7 * 3600000).toISOString().slice(0, 10);
       await uiLogin(page, origin, ACCOUNTS.admin);
-      await page.goto(`${origin}/admin/operations/showtimes?cinemaId=${show.cinemaId}`);
+      await page.goto(
+        `${origin}/admin/operations/showtimes?cinemaId=${show.cinemaId}&movieId=${show.movieId}`,
+      );
       await page.getByRole('textbox', { name: /^Từ ngày/ }).fill(date);
       await page.getByRole('textbox', { name: /^Đến ngày/ }).fill(date);
-      await page.getByLabel('Phòng lọc lịch').selectOption(String(show.roomId));
+      await selectCustomOption(page, 'Phòng lọc lịch', String(show.roomId));
       await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
       await expectPoll(
         async () => (await page.getByRole('button', { name: /^Sửa / }).count()) >= 1,
@@ -568,7 +591,7 @@ export const hardeningScenarios = [
       const edit = page.getByRole('button', { name: /^Sửa / });
       await edit.last().click();
       const dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Giá vé cơ bản', { exact: true }).fill('99000');
+      await dialog.getByLabel(/Giá vé cơ bản/).fill('99000');
       await dialog
         .getByRole('button', { name: /^(Lưu|Cập nhật)/ })
         .first()

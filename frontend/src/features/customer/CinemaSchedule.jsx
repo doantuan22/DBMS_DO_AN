@@ -10,9 +10,13 @@ export default function CinemaSchedule({ cinema }) {
   const [movies, setMovies] = useState({ status: 'loading' }),
     [shows, setShows] = useState({ status: 'idle' }),
     [attempt, setAttempt] = useState(0);
-  const movieId =
-    params.get('movieId') ??
-    String(movies.data?.find((movie) => movie.status === 'Đang chiếu')?.id ?? '');
+  const isReal = (m) => !/^e2e\b|^test\b/i.test(m.title ?? '');
+  const defaultMovie =
+    movies.data?.find((m) => m.status === 'Đang chiếu' && isReal(m) && m.posterUrl) ??
+    movies.data?.find((m) => m.status === 'Đang chiếu' && isReal(m)) ??
+    movies.data?.find((m) => m.status === 'Đang chiếu') ??
+    movies.data?.[0];
+  const movieId = params.get('movieId') ?? String(defaultMovie?.id ?? '');
   const key = `${cinema.id}:${movieId}:${date}:${attempt}`;
   useEffect(() => {
     const c = new AbortController();

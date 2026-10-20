@@ -64,10 +64,10 @@ test('actual AppRoutes owns six Manager screens, bookings, legacy index and loca
   }
   assert.equal(matchRoutes(tree(), '/manager').at(-1).route.element.type.name, 'ManagerEntryRoute');
   assert.equal(matchRoutes(tree(), '/manager/unknown').at(-1).route.element.type.name, 'NotFound');
-  assert.equal(managerEntryPath(''), '/manager/overview');
+  assert.equal(managerEntryPath(''), '/manager/rooms');
   for (const section of Object.keys(MANAGER_SECTION_ROUTES))
     assert.equal(managerEntryPath(`#manager-${section}`), `/manager/${section}`);
-  assert.equal(managerEntryPath('#unknown'), '/manager/overview');
+  assert.equal(managerEntryPath('#unknown'), '/manager/rooms');
 });
 
 test('Manager entry respects requested permission and falls back to the first allowed section', () => {
@@ -78,7 +78,7 @@ test('Manager entry respects requested permission and falls back to the first al
 });
 
 test('every deep link and fresh router reload selects its own route; Memory history supports back/forward', async () => {
-  const router = createMemoryRouter(tree(), { initialEntries: ['/manager/overview'] });
+  const router = createMemoryRouter(tree(), { initialEntries: ['/manager/rooms'] });
   try {
     for (const route of Object.values(MANAGER_SECTION_ROUTES)) {
       await router.navigate(route.path);
@@ -131,6 +131,20 @@ test('each screen renders the route breadcrumb/title and rejects missing permiss
   );
 });
 
+test('Manager revenue keeps the Admin analytics filter surface', async () => {
+  const { default: ManagerRevenue } = await vite.ssrLoadModule(
+    '/src/components/ManagerRevenue.jsx',
+  );
+  const html = renderToStaticMarkup(React.createElement(ManagerRevenue, { cinemaId: '2' }));
+  assert.match(html, /Phạm vi báo cáo/);
+  assert.match(html, /aria-label="Bộ lọc doanh thu"/);
+  assert.match(html, /aria-label="Từ ngày doanh thu"/);
+  assert.match(html, /aria-label="Đến ngày doanh thu"/);
+  assert.match(html, />Lọc doanh thu</);
+  assert.match(html, />Đặt lại</);
+  assert.match(html, /admin-analytics__report/);
+});
+
 test('sidebar marks exactly the matching Manager route active for all seven destinations', () => {
   for (const route of Object.values(MANAGER_SECTION_ROUTES)) {
     const html = render(
@@ -167,7 +181,6 @@ test('booking query changes keep the same route element and have no cinema key o
 
 test('screen API ownership preserves scope, dependency permission and 403/404 errors', async () => {
   for (const [section, expected] of Object.entries({
-    overview: ['dashboard'],
     rooms: ['rooms'],
     seats: ['rooms'],
     showtimes: ['rooms', 'showtimes'],
@@ -177,7 +190,6 @@ test('screen API ownership preserves scope, dependency permission and 403/404 er
     const calls = [];
     const api = Object.fromEntries(
       Object.entries({
-        getDashboard: 'dashboard',
         getRooms: 'rooms',
         getManagerShowtimes: 'showtimes',
         getPricing: 'pricing',
@@ -364,3 +376,28 @@ test('Manager internal navigation keeps drafts, leaving its scope confirms, and 
     true,
   );
 });
+
+test('ManagerResourceForm safely renders datetime-local preview in UTC+7 without throwing', () => {
+  const html = renderToStaticMarkup(
+    React.createElement(Form, {
+      kind: 'showtime',
+      row: {
+        id: 1,
+        showtimeId: 1,
+        movieId: 10,
+        roomId: 2,
+        format: '2D',
+        startsAt: '2026-10-20T12:30:00.000Z',
+        endsAt: '2026-10-20T14:30:00.000Z',
+        basePrice: 85000,
+      },
+      lookups: {
+        movies: [{ id: 10, title: 'Phim Test' }],
+        rooms: [{ id: 2, name: 'Phòng 2' }],
+      },
+    }),
+  );
+  assert.match(html, /Thời gian \(UTC\+7\)/);
+  assert.match(html, /19:30 20\/10\/2026/);
+});
+

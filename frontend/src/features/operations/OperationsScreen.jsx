@@ -390,6 +390,8 @@ export function OperationsView({ state, controller, adapter }) {
           value={state.cinemaId}
           required={false}
           placeholder="Tất cả rạp"
+          includeAllOption
+          allLabel="Tất cả rạp"
           options={cinemas.map((row) => ({ id: row.id, label: row.name }))}
           lookupStatus={state.cinemas.status}
           lookupError={state.cinemas.error}
@@ -557,7 +559,7 @@ export function OperationsView({ state, controller, adapter }) {
       />
       <Dialog
         open={Boolean(selected)}
-        size="inspector"
+        size="lg"
         title={selected ? operationLabel(kind, selected) : `Chi tiết ${title.toLowerCase()}`}
         busy={busy}
         onOpenChange={(open) => {

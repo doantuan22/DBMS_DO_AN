@@ -722,11 +722,10 @@ const render = (element, user = actor(), path = '/admin/facilities/seats') =>
       React.createElement(AuthContext.Provider, { value: { user } }, element),
     ),
   );
-test('actual Admin seat/cinema/image routes own distinct workspaces and deny foreign actors', () => {
+test('actual Admin seat/cinema routes own distinct workspaces and deny foreign actors', () => {
   for (const [section, label] of [
     ['seats', 'Sơ đồ'],
     ['cinemas', 'Danh sách rạp'],
-    ['cinemaImages', 'Thư viện ảnh rạp'],
   ]) {
     const html = render(React.createElement(Route, { section }));
     assert.ok(html.includes(label));
@@ -737,7 +736,7 @@ test('actual Admin seat/cinema/image routes own distinct workspaces and deny for
     );
   }
 });
-test('cinema details open in a contextual inspector drawer', async () => {
+test('cinema details open in a centered dialog with the embedded image manager', async () => {
   const item = fixture({ kind: 'cinemas', query: 'cinemaId=1' });
   await item.controller.start();
   item.controller.select(item.controller.getSnapshot().resource.rows[0]);
@@ -750,12 +749,31 @@ test('cinema details open in a contextual inspector drawer', async () => {
     actor(),
     '/admin/cinemas',
   );
-  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--inspector"');
+  const dialogStart = html.indexOf('class="ui-dialog ui-dialog--lg"');
   const detailStart = html.indexOf('class="facility-panel" aria-label="Chi tiết rạp"');
+  const galleryStart = html.indexOf('aria-label="Ảnh rạp Rạp A"');
   assert.ok(dialogStart >= 0 && detailStart > dialogStart);
+  assert.ok(galleryStart > detailStart);
   assert.match(html, /Rạp A/);
+  assert.match(html, /Thêm ảnh/);
+  assert.doesNotMatch(html, /Hình ảnh rạp|ui-dialog--inspector/);
   item.controller.dispose();
 });
+test('cinema row exposes its delete action directly without a Khác disclosure', async () => {
+  const item = fixture({ kind: 'cinemas', query: '' });
+  await item.controller.start();
+  const html = render(
+    React.createElement(View, {
+      state: item.controller.getSnapshot(),
+      controller: item.controller,
+      adapter: item.adapter,
+    }),
+  );
+  assert.match(html, />Xóa<\/button>/);
+  assert.doesNotMatch(html, /<summary>Khác<\/summary>|<details/);
+  item.controller.dispose();
+});
+
 test('facility search uses one FilterBar submit action for button and Enter', () => {
   const html = render(
     React.createElement(FacilityFilters, {
@@ -823,9 +841,11 @@ test('gallery uses real thumbnails/preview, metadata and scoped actions without 
   assert.match(html, /facility-gallery/);
   assert.match(html, /src="\/test-image.jpg"/);
   assert.match(html, /Xem ảnh/);
+  assert.match(html, /Sửa ảnh/);
+  assert.match(html, /Xóa ảnh/);
   assert.match(html, /Đặt ảnh chính/);
   assert.match(html, /Thứ tự/);
-  assert.doesNotMatch(html, /<table|HinhAnhRapID|RapID/);
+  assert.doesNotMatch(html, /<summary>Khác<\/summary>|<table|HinhAnhRapID|RapID/);
 });
 test('Manager Room list has real count and paired seat action; forged cinema URL is denied', async () => {
   const store = createManagerCinemaStore();
@@ -845,6 +865,15 @@ test('Manager Room list has real count and paired seat action; forged cinema URL
   assert.match(html, /STT/);
   assert.match(html, /cinemaId=1&amp;roomId=11/);
   assert.doesNotMatch(html, /catalog-form|RoomID/);
+  // Manager rooms mirrors the Admin rooms surface.
+  assert.match(html, /admin-rooms facility-rooms/);
+  assert.match(html, /Tìm phòng chiếu/);
+  assert.match(html, /Danh sách phòng/);
+  assert.match(html, /admin-rooms__table/);
+  for (const label of ['STT', 'Tên phòng', 'Rạp', 'Loại phòng', 'Số ghế', 'Trạng thái', 'Thao tác'])
+    assert.ok(html.includes(label), `missing column label ${label}`);
+  assert.match(html, /Xem sơ đồ ghế/);
+  assert.match(html, /Xóa phòng/);
   const denied = render(
     React.createElement(
       CinemaContext.Provider,

@@ -5,7 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { createServer } from 'vite';
 import { passwordMessage } from '../src/features/customer/accountValidation.js';
-let vite, Booking, Amounts, History, discovery;
+let vite, Booking, Amounts, History, Items, discovery;
 before(async () => {
   vite = await createServer({
     configFile: 'vite.config.js',
@@ -13,7 +13,7 @@ before(async () => {
     appType: 'custom',
   });
   ({ default: Booking } = await vite.ssrLoadModule('/src/features/customer/BookingExperience.jsx'));
-  ({ OrderAmounts: Amounts, PaymentHistory: History } = await vite.ssrLoadModule(
+  ({ OrderAmounts: Amounts, PaymentHistory: History, OrderItems: Items } = await vite.ssrLoadModule(
     '/src/features/customer/OrderReceipt.jsx',
   ));
   discovery = await vite.ssrLoadModule('/src/features/customer/discoveryModel.js');
@@ -192,3 +192,34 @@ test('points panel shows the balance and the SERVER preview; order receipt separ
   assert.match(receipt, /70\.000/);
   assert.doesNotMatch(receipt, /hoàn tiền/i);
 });
+
+test('cancelled order in OrderAmounts renders 0 VND payable and explicit cancellation alert', () => {
+  const html = render(Amounts, {
+    order: {
+      status: 'Đã hủy',
+      ticketTotal: 100000,
+      productTotal: 0,
+      discountTotal: 0,
+      total: 100000,
+    },
+  });
+  assert.match(html, /Số tiền cần thanh toán/);
+  assert.match(html, /0\s*₫/);
+  assert.match(html, /Đơn hàng đã hủy\. Không phát sinh thanh toán cho đơn này\./);
+});
+
+test('cancelled tickets in OrderItems render strikethrough and cancellation warning', () => {
+  const html = render(Items, {
+    order: {
+      tickets: [
+        { id: 1, label: 'A1', type: 'Thường', status: 'Đã hủy', price: 90000, code: 'VE001' },
+        { id: 2, label: 'A2', type: 'Thường', status: 'Đã thanh toán', price: 90000, code: 'VE002' },
+      ],
+      products: [],
+    },
+  });
+  assert.match(html, /1 vé đã hủy · không tính vào tổng tiền/);
+  assert.match(html, /line-through/);
+  assert.match(html, /Vé đã hủy/);
+});
+

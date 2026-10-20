@@ -51,7 +51,7 @@ const renderWithRoute = (path, user, element) =>
 test('every Admin destination has a unique canonical path and resolves back to its section', () => {
   const entries = Object.entries(routes);
   const paths = entries.map(([, route]) => route.path);
-  assert.equal(entries.length, 18);
+  assert.equal(entries.length, 17);
   assert.equal(new Set(paths).size, paths.length);
   for (const [section, route] of entries) assert.equal(resolveAdminSection(route.path), section);
   assert.equal(resolveAdminSection('/admin'), null);
@@ -68,7 +68,7 @@ test('every Admin destination has a unique canonical path and resolves back to i
       ],
     },
   ];
-  assert.equal(screenRoutes.length, 17);
+  assert.equal(screenRoutes.length, 16);
   for (const { path, section } of screenRoutes) {
     assert.equal(matchRoutes(routeTree, `/admin/${path}`)?.at(-1)?.route.section, section);
   }
@@ -101,7 +101,10 @@ test('Admin entry selects the first authorized section or reports no available s
     routes.movies.path,
   );
   assert.equal(adminEntryPath({ role: 'ADMIN', permissions: [] }), null);
-  assert.equal(adminEntryPath({ role: 'CSKH', permissions: [{ code: permissions.dashboard }] }), null);
+  assert.equal(
+    adminEntryPath({ role: 'CSKH', permissions: [{ code: permissions.dashboard }] }),
+    null,
+  );
 });
 
 test('Admin sidebar links use route ownership and mark the deep link active', () => {
@@ -115,7 +118,9 @@ test('Admin sidebar links use route ownership and mark the deep link active', ()
     user,
     React.createElement(StaffShell, { portal: 'admin' }, React.createElement('p', null, 'Screen')),
   );
-  for (const [, route] of Object.entries(routes)) {
+  for (const [section, route] of Object.entries(routes)) {
+    // Ảnh rạp is managed inside the cinema detail dialog, not as a sidebar destination.
+    if (section === 'cinemaImages') continue;
     assert.ok(html.includes(`href="${route.path}"`), `missing Admin link ${route.path}: ${html}`);
   }
   assert.match(

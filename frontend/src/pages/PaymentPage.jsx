@@ -169,65 +169,100 @@ function PaymentContext({ orderId, user }) {
       <div className="customer-journey__layout">
         <div className="customer-journey__main">
           <section className="customer-panel">
-            <h2>Thanh toán mô phỏng</h2>
-            <p className="catalog-muted">
-              Đây là luồng thanh toán mô phỏng hiện có. Xác nhận sẽ ghi nhận kết quả thành công cho
-              phương thức đã chọn.
-            </p>
-            {order.pointsUsed > 0 && (
-              <p>
-                Đã dùng {order.pointsUsed} điểm, giảm {money(order.pointsDiscount)}.
-              </p>
-            )}
-            <p>
-              Số tiền cần thanh toán: <strong>{money(order.total)}</strong>
-            </p>
-            {payable && pointsOnly && (
-              <p role="status">Đơn đã được trả đủ bằng điểm. Hãy xác nhận để hoàn tất đơn.</p>
-            )}
-            {payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}
-            {payable && (
-              <div className="payment-actions">
-                {!pointsOnly && (
-                  <FormField label="Phương thức">
-                    <Select
-                      value={method}
-                      disabled={busy || confirmation || !canConfirm}
-                      onChange={(e) => setMethod(e.target.value)}
-                    >
-                      {METHODS.map((item) => (
-                        <option key={item} value={item}>
-                          {{
-                            THE_NOI_DIA: 'Thẻ nội địa',
-                            THE_QUOC_TE: 'Thẻ quốc tế',
-                            TIEN_MAT: 'Tiền mặt',
-                          }[item] ?? item}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormField>
+            {order.status === 'Đã hủy' ? (
+              <>
+                <h2>Đơn hàng đã hủy</h2>
+                <p className="form-error" role="status">
+                  Đơn hàng này đã bị hủy. Không phát sinh thanh toán cho đơn này.
+                </p>
+                <p>
+                  Giá trị đơn ban đầu: {money(order.total)}
+                </p>
+                <div className="payment-actions">
+                  <Link className="catalog-button" to={`/movies/${order.movieId}`}>
+                    Chọn lịch chiếu để đặt lại
+                  </Link>
+                  <Link className="catalog-button catalog-button--secondary" to={`/orders/${order.id}`}>
+                    Xem chi tiết đơn
+                  </Link>
+                </div>
+              </>
+            ) : order.status === 'Hết hạn' ? (
+              <>
+                <h2>Đơn hàng đã hết hạn</h2>
+                <p className="form-error" role="status">
+                  Đã hết thời gian giữ ghế. Ghế đã được giải phóng; vui lòng đặt vé lại.
+                </p>
+                <p>
+                  Giá trị đơn ban đầu: {money(order.total)}
+                </p>
+                <div className="payment-actions">
+                  <Link className="catalog-button" to={`/movies/${order.movieId}`}>
+                    Chọn lịch chiếu để đặt lại
+                  </Link>
+                  <Link className="catalog-button catalog-button--secondary" to={`/orders/${order.id}`}>
+                    Xem chi tiết đơn
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>Thanh toán mô phỏng</h2>
+                <p className="catalog-muted">
+                  Đây là luồng thanh toán mô phỏng hiện có. Xác nhận sẽ ghi nhận kết quả thành công cho
+                  phương thức đã chọn.
+                </p>
+                {order.pointsUsed > 0 && (
+                  <p>
+                    Đã dùng {order.pointsUsed} điểm, giảm {money(order.pointsDiscount)}.
+                  </p>
                 )}
-                <Button onClick={() => setConfirmation(true)} loading={busy} disabled={!canConfirm}>
-                  {busy
-                    ? 'Đang xác nhận…'
-                    : pointsOnly
-                      ? 'Xác nhận thanh toán bằng điểm'
-                      : 'Xác nhận thanh toán'}
-                </Button>
-              </div>
-            )}
-            {payable && canPay && !canConfirm && (
-              <p role="status">Đang xác minh thời gian giữ ghế…</p>
-            )}
-            {message && (
-              <p role="status" className={message.includes('Đã') ? 'form-success' : 'form-error'}>
-                {message}
-              </p>
-            )}
-            {['Hết hạn', 'Đã hủy'].includes(order.status) && (
-              <Link className="catalog-button" to={`/movies/${order.movieId}`}>
-                Chọn lịch chiếu để đặt lại
-              </Link>
+                <p>
+                  Số tiền cần thanh toán: <strong>{money(order.total)}</strong>
+                </p>
+                {payable && pointsOnly && (
+                  <p role="status">Đơn đã được trả đủ bằng điểm. Hãy xác nhận để hoàn tất đơn.</p>
+                )}
+                {payable && !canPay && <p role="status">Bạn chưa được cấp quyền thanh toán.</p>}
+                {payable && (
+                  <div className="payment-actions">
+                    {!pointsOnly && (
+                      <FormField label="Phương thức">
+                        <Select
+                          value={method}
+                          disabled={busy || confirmation || !canConfirm}
+                          onChange={(e) => setMethod(e.target.value)}
+                        >
+                          {METHODS.map((item) => (
+                            <option key={item} value={item}>
+                              {{
+                                THE_NOI_DIA: 'Thẻ nội địa',
+                                THE_QUOC_TE: 'Thẻ quốc tế',
+                                TIEN_MAT: 'Tiền mặt',
+                              }[item] ?? item}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormField>
+                    )}
+                    <Button onClick={() => setConfirmation(true)} loading={busy} disabled={!canConfirm}>
+                      {busy
+                        ? 'Đang xác nhận…'
+                        : pointsOnly
+                          ? 'Xác nhận thanh toán bằng điểm'
+                          : 'Xác nhận thanh toán'}
+                    </Button>
+                  </div>
+                )}
+                {payable && canPay && !canConfirm && (
+                  <p role="status">Đang xác minh thời gian giữ ghế…</p>
+                )}
+                {message && (
+                  <p role="status" className={message.includes('Đã') ? 'form-success' : 'form-error'}>
+                    {message}
+                  </p>
+                )}
+              </>
             )}
           </section>
           <PaymentHistory payments={order.payments} title="Lịch sử giao dịch" />

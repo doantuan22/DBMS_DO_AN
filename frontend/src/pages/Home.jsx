@@ -31,7 +31,14 @@ export default function Home() {
   const [cinemas, retryCinemas] = useCollection(cinemasLoader);
   const [genres, retryGenres] = useCollection(getGenres);
   const rows = movies.status === 'success' ? movies.data : [];
-  const featured = rows.find((m) => m.status === 'Đang chiếu') ?? rows[0];
+  const isReal = (m) => !/^e2e\b|^test\b/i.test(m.title ?? '');
+  const featured =
+    rows.find((m) => m.status === 'Đang chiếu' && m.posterUrl && isReal(m)) ??
+    rows.find((m) => m.status === 'Đang chiếu' && isReal(m)) ??
+    rows.find((m) => m.status === 'Đang chiếu' && m.posterUrl) ??
+    rows.find((m) => m.status === 'Đang chiếu') ??
+    rows.find((m) => m.posterUrl && isReal(m)) ??
+    rows[0];
   const featuredMovieId = featured?.id;
   const [detail, setDetail] = useState(null);
   const [detailAttempt, setDetailAttempt] = useState(0);

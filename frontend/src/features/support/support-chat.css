@@ -201,3 +201,64 @@
   color: var(--color-text-muted, #64748b);
   cursor: pointer;
 }
+
+/* Dark theme adaptations for Customer portal (.cinema-public) */
+.cinema-public .support-chat {
+  background: var(--cp-surface, #131b2e);
+  border-color: var(--cp-border, #1e293b);
+  color: var(--cp-text, #f1f5f9);
+}
+
+.cinema-public .support-chat__header {
+  border-bottom-color: var(--cp-border, #1e293b);
+}
+
+.cinema-public .support-chat__header strong {
+  color: var(--cp-text, #f1f5f9);
+}
+
+.cinema-public .support-chat__header > .catalog-muted,
+.cinema-public .support-chat__polling,
+.cinema-public .support-chat__state,
+.cinema-public .support-chat__notice {
+  color: var(--cp-text-secondary, #94a3b8) !important;
+}
+
+.cinema-public .support-chat__messages {
+  color: var(--cp-text, #f1f5f9);
+}
+
+.cinema-public .support-chat__meta {
+  color: var(--cp-text-muted, #64748b);
+}
+
+.cinema-public .support-chat__msg--customer .support-chat__bubble {
+  background: var(--cp-accent, #6366f1);
+  color: #ffffff;
+}
+
+.cinema-public .support-chat__msg--staff .support-chat__bubble {
+  background: var(--cp-surface-elevated, #1e293b);
+  color: var(--cp-text, #f1f5f9);
+  border: 1px solid var(--cp-border, #334155);
+}
+
+.cinema-public .support-chat__form {
+  border-top-color: var(--cp-border, #1e293b);
+}
+
+.cinema-public .support-chat__input {
+  background: var(--cp-surface-elevated, #1e293b);
+  border-color: var(--cp-border, #334155);
+  color: var(--cp-text, #f1f5f9);
+}
+
+.cinema-public .support-chat__input:focus {
+  border-color: var(--cp-accent, #6366f1);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+.cinema-public .support-chat__toggle-label {
+  color: var(--cp-text-secondary, #94a3b8);
+}
+

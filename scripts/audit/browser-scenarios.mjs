@@ -66,17 +66,34 @@ export const scenarios = [
 
       const target = await one(
         pool,
-        `SELECT TOP 1 s.SuatChieuID, s.PhimID FROM dbo.SUATCHIEU s
+        `SELECT TOP 1 s.SuatChieuID, s.PhimID,
+               CONVERT(VARCHAR(10), DATEADD(HOUR, 7, s.ThoiGianBatDau), 23) AS ShowtimeDate
+           FROM dbo.SUATCHIEU s
            JOIN dbo.vw_LichChieuChiTiet v ON v.SuatChieuID = s.SuatChieuID
           WHERE s.TrangThai = N'Mở bán' AND v.IsBookable = 1 AND v.SoGheDaDat <= v.TongSoGhe - 6
-            AND s.ThoiGianBatDau > DATEADD(HOUR, 3, dbo.fn_BayGio())
+            AND s.ThoiGianBatDau > dbo.fn_BayGio()
           ORDER BY s.ThoiGianBatDau`,
       );
       assert.ok(target, 'no bookable showtime');
 
       // Browse: movie detail → pick the showtime link (real navigation, no URL typing for booking).
       await page.goto(`${origin}/movies/${target.PhimID}`);
-      await page.locator(`a[href="/booking/${target.SuatChieuID}"]`).first().click();
+      const link = page.locator(`a[href="/booking/${target.SuatChieuID}"]`).first();
+      try {
+        await link.waitFor({ state: 'visible', timeout: 3000 });
+      } catch {
+        const parts = target.ShowtimeDate.split('-');
+        const dateText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        const dateBtn = page.locator('.cp-date-strip button').filter({ hasText: dateText });
+        if (await dateBtn.count()) {
+          await dateBtn.first().click();
+        } else {
+          const upcoming = page.locator('.cp-upcoming-dates button').filter({ hasText: dateText });
+          if (await upcoming.count()) await upcoming.first().click();
+        }
+        await link.waitFor({ state: 'visible', timeout: 10000 });
+      }
+      await link.click();
       await page.waitForURL(`**/booking/${target.SuatChieuID}`);
 
       // Seats

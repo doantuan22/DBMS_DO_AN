@@ -51,7 +51,6 @@
   font-size: var(--font-size-sm);
   font-weight: 600;
 }
-.admin-rooms .manager-resource-select input,
 .admin-rooms .manager-resource-select select {
   box-sizing: border-box;
   width: 100%;
@@ -143,24 +142,14 @@
   display: flex;
   gap: var(--space-2);
 }
-.admin-rooms__danger-actions summary {
-  list-style: none;
-  cursor: pointer;
-  min-height: 40px;
-}
-.admin-rooms__danger-actions summary::-webkit-details-marker {
-  display: none;
-}
-.admin-rooms__danger-actions[open] {
-  display: grid;
-  gap: var(--space-2);
-  justify-items: start;
-}
 .admin-rooms__delete {
-  color: var(--color-danger-text);
+  background: var(--color-danger-text);
+  color: #ffffff;
+  border-color: var(--color-danger-text);
 }
 .admin-rooms__delete:hover {
-  background: var(--color-danger-subtle);
+  background: #b91c1c;
+  color: #ffffff;
 }
 .admin-rooms__choose {
   display: grid;

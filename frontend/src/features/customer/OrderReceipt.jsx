@@ -2,6 +2,8 @@ import { formatDateTime } from '../../utils/dateTime';
 import { StatusBadge } from '../../components/ui';
 import { customerMoney as money } from './customerFormatting';
 export function OrderAmounts({ order }) {
+  const isCancelled = order.status === 'Đã hủy';
+  const hasSuccessfulPayment = order.payments?.some((p) => p.status === 'Thành công');
   return (
     <section className="customer-panel" aria-label="Giá trị đơn đã xác nhận">
       <h2>Giá trị đơn</h2>
@@ -31,33 +33,63 @@ export function OrderAmounts({ order }) {
           </div>
         )}
         <div className="customer-facts__total">
-          <dt>Tiền phải trả / đã trả (không gồm điểm)</dt>
-          <dd>{money(order.total)}</dd>
+          <dt>{isCancelled ? 'Số tiền cần thanh toán' : 'Tiền phải trả / đã trả (không gồm điểm)'}</dt>
+          <dd>{isCancelled ? money(0) : money(order.total)}</dd>
         </div>
       </dl>
-      <p className="catalog-muted">Khoản tiền đã được xác nhận cho đơn này.</p>
+      {isCancelled ? (
+        <p className="catalog-muted" style={{ color: 'var(--color-danger-text, #ef4444)' }}>
+          Đơn hàng đã hủy. Không phát sinh thanh toán cho đơn này.
+        </p>
+      ) : hasSuccessfulPayment ? (
+        <p className="catalog-muted">Khoản tiền đã được xác nhận cho đơn này.</p>
+      ) : (
+        <p className="catalog-muted">Số tiền cần thanh toán theo đơn đã đặt.</p>
+      )}
     </section>
   );
 }
 export function OrderItems({ order }) {
+  const cancelledTickets = order.tickets?.filter((ticket) => ticket.status === 'Đã hủy') ?? [];
   return (
     <>
       <section className="customer-panel">
-        <h2>Vé & ghế</h2>
-        {order.tickets.length ? (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <h2>Vé & ghế</h2>
+          {cancelledTickets.length > 0 && (
+            <span style={{ fontSize: '0.875rem', color: 'var(--color-danger-text, #ef4444)' }}>
+              ({cancelledTickets.length} vé đã hủy · không tính vào tổng tiền)
+            </span>
+          )}
+        </div>
+        {order.tickets?.length ? (
           <ul className="customer-lines">
-            {order.tickets.map((ticket) => (
-              <li key={ticket.id}>
-                <div>
-                  <strong>{ticket.label}</strong> · {ticket.type}
-                  <p>
-                    {ticket.code && <>Mã vé: {ticket.code} · </>}
-                    <StatusBadge status={ticket.status} />
-                  </p>
-                </div>
-                <strong>{money(ticket.price)}</strong>
-              </li>
-            ))}
+            {order.tickets.map((ticket) => {
+              const isCancelled = ticket.status === 'Đã hủy';
+              return (
+                <li key={ticket.id} style={isCancelled ? { opacity: 0.75 } : undefined}>
+                  <div>
+                    <strong style={isCancelled ? { textDecoration: 'line-through' } : undefined}>
+                      {ticket.label}
+                    </strong> · {ticket.type}
+                    <p>
+                      {ticket.code && <>Mã vé: {ticket.code} · </>}
+                      <StatusBadge status={ticket.status} />
+                    </p>
+                  </div>
+                  <div>
+                    {isCancelled ? (
+                      <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <del style={{ opacity: 0.6 }}>{money(ticket.price)}</del>
+                        <span style={{ fontSize: '0.8rem', color: 'var(--color-danger-text, #ef4444)' }}>(Vé đã hủy)</span>
+                      </span>
+                    ) : (
+                      <strong>{money(ticket.price)}</strong>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p>Đơn này chưa có vé.</p>

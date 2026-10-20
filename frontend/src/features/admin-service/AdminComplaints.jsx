@@ -225,7 +225,7 @@ export function ComplaintView({ adapter, state, controller }) {
       />
       <Dialog
         open={Boolean(state.selectedId)}
-        size="inspector"
+        size="lg"
         title={complaint?.title ?? 'Chi tiết khiếu nại'}
         busy={busy}
         onOpenChange={(open) => {

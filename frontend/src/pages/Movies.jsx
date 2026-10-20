@@ -174,8 +174,8 @@ function MovieResults() {
             type="text"
             value={search}
             maxLength={100}
-            aria-label="Tìm tên phim hoặc đạo diễn"
-            placeholder="Tìm tên phim hoặc đạo diễn..."
+            aria-label="Tìm phim hoặc đạo diễn"
+            placeholder="Tìm phim hoặc đạo diễn..."
             onChange={(event) => setSearch(event.target.value)}
           />
           {search && (

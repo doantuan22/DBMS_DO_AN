@@ -31,6 +31,25 @@
 .facility-panel-heading p {
   color: var(--color-text-muted);
 }
+.facility-panel--nested {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.facility-cinema-images {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+.facility-cinema-images .facility-panel-heading h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+.facility-cinema-images .facility-gallery {
+  margin-top: var(--space-4);
+}
 .facility-help,
 .facility-empty {
   color: var(--color-text-muted);
@@ -52,8 +71,7 @@
   color: var(--color-text);
 }
 .facility-context select,
-.facility-workspace .manager-resource-select select,
-.facility-workspace .manager-resource-select input {
+.facility-workspace .manager-resource-select select {
   box-sizing: border-box;
   width: 100%;
   min-height: 2.75rem;
@@ -70,11 +88,6 @@
   gap: var(--space-2);
   font-weight: 600;
 }
-.facility-context-selectors {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: var(--space-6);
-}
 .facility-workspace .ui-filter-bar__fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
@@ -88,22 +101,6 @@
 }
 .facility-actions > a {
   text-decoration: none;
-}
-.facility-actions details {
-  min-width: 48px;
-}
-.facility-actions summary {
-  cursor: pointer;
-  padding: var(--space-2);
-  border-radius: var(--radius-md);
-}
-.facility-actions details[open] {
-  display: grid;
-  gap: var(--space-2);
-}
-.facility-actions summary:focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
 }
 .facility-success {
   margin: 0;
@@ -135,7 +132,6 @@
 }
 .facility-seat-workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
   gap: var(--space-6);
   align-items: start;
 }
@@ -356,9 +352,6 @@
   min-height: 44px;
 }
 @media (max-width: 1279px) {
-  .facility-seat-workspace {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .facility-inspector {
     position: static;
   }
@@ -385,10 +378,53 @@
   .facility-workspace .ui-page-header__actions > button {
     width: 100%;
   }
-  .facility-context-selectors {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .ui-dialog--facility-drawer {
     border-radius: 0;
+  }
+}
+/* Manager rooms reuses the Admin rooms surface; it has three filter fields. */
+.admin-rooms.facility-rooms .ui-filter-bar__fields {
+  grid-template-columns: minmax(220px, 1.6fr) repeat(2, minmax(160px, 1fr));
+}
+@media (max-width: 1280px) {
+  .admin-rooms.facility-rooms .ui-filter-bar__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .admin-rooms.facility-rooms .ui-filter-bar__fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* Seat filters reuse the same panel and field grid as the Admin/Manager rooms surface. */
+.facility-seats__filters .ui-filter-bar {
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+  background: none;
+}
+.facility-seats__filters .manager-resource-select {
+  display: grid;
+  gap: var(--space-2);
+}
+.facility-seats__filters .manager-resource-select__help {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+}
+.facility-seats__filters .ui-filter-bar__fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-4);
+}
+@media (max-width: 1280px) {
+  .facility-seats__filters .ui-filter-bar__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .facility-seats__filters .ui-filter-bar__fields {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

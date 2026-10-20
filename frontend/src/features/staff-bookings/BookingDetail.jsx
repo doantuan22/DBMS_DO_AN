@@ -10,20 +10,14 @@ export default function BookingDetail({
   editing,
   onEdit,
   onCancel,
-  onClose,
   onRefresh,
   onHoldElapsed,
 }) {
   return (
     <section className="staff-bookings__detail" aria-label={`Chi tiết đơn ${order.id}`}>
-      <div className="staff-bookings__actions">
-        <h2>
-          Đơn #{order.id} · <StatusBadge status={order.status} />
-        </h2>
-        <Button variant="secondary" disabled={busy} onClick={onClose}>
-          Đóng chi tiết
-        </Button>
-      </div>
+      <p>
+        <strong>Đơn #{order.id}</strong> · <StatusBadge status={order.status} />
+      </p>
       <p>
         <strong>{order.user.name}</strong> · {order.user.email} ·{' '}
         {order.user.phone || 'Chưa có SĐT'}

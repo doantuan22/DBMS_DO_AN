@@ -1,10 +1,5 @@
-import { useId, useState } from 'react';
-import Select from './ui/Select';
-
-const normalize = (value) =>
-  String(value ?? '')
-    .trim()
-    .toLocaleLowerCase();
+import { useId } from 'react';
+import SearchableSelect from './ui/SearchableSelect';
 
 export default function NamedResourceSelect({
   label,
@@ -21,9 +16,10 @@ export default function NamedResourceSelect({
   required = true,
   emptyMessage = 'Không có lựa chọn phù hợp.',
   placeholder,
+  includeAllOption = false,
+  allLabel = 'Tất cả',
 }) {
   const id = useId();
-  const [search, setSearch] = useState('');
   const selectedValue = value === null || value === undefined ? '' : String(value);
   const available = options.map((option) => ({
     ...option,
@@ -42,89 +38,52 @@ export default function NamedResourceSelect({
     });
   }
 
-  const query = normalize(search);
-  const filtered = query
-    ? available.filter((option) => normalize(option.label).includes(query))
-    : available;
-  const selected = available.find((option) => option.id === selectedValue);
-  const visible =
-    selected && !filtered.some((option) => option.id === selected.id)
-      ? [selected, ...filtered]
-      : filtered;
   const lookupFailed = lookupStatus === 'error';
   const lookupLoading = lookupStatus === 'loading';
-  const isDisabled = disabled || readOnly || lookupLoading || lookupFailed;
+  const lowerLabel = label.toLocaleLowerCase('vi');
+  const selected = available.find((option) => option.id === selectedValue);
+  const isDisabled =
+    disabled ||
+    readOnly ||
+    lookupLoading ||
+    lookupFailed ||
+    (!available.length && lookupStatus === 'success');
 
   return (
     <div className="manager-resource-select">
-      <label htmlFor={`${id}-search`}>
-        Tìm {label.toLocaleLowerCase()}
-        <span className="manager-resource-select__search-input-wrap">
-          <input
-            id={`${id}-search`}
-            type="search"
-            value={search}
-            disabled={disabled || readOnly || lookupLoading || lookupFailed}
-            autoComplete="off"
-            placeholder={`Nhập tên ${label.toLocaleLowerCase()}...`}
-            onChange={(event) => setSearch(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                event.preventDefault();
-                if (filtered.length > 0) onChange(filtered[0].id);
-              }
-            }}
-            aria-describedby={`${id}-help`}
-          />
-          <button
-            type="button"
-            className="ui-button ui-button--secondary ui-button--sm manager-resource-select__search-btn"
-            disabled={disabled || readOnly || lookupLoading || lookupFailed || !search.trim()}
-            onClick={() => {
-              if (filtered.length > 0) onChange(filtered[0].id);
-            }}
-          >
-            Tìm
-          </button>
-        </span>
-      </label>
-      <label htmlFor={id}>
-        {label}
-        <Select
-          id={id}
-          aria-label={label}
-          aria-invalid={lookupFailed || undefined}
-          aria-describedby={lookupFailed ? `${id}-help ${id}-error` : `${id}-help`}
-          value={selectedValue}
-          disabled={isDisabled || (!available.length && lookupStatus === 'success')}
-          required={required && !readOnly}
-          onChange={(event) => onChange(event.target.value)}
-        >
-          <option value="">{placeholder ?? `Chọn ${label.toLocaleLowerCase()}`}</option>
-          {visible.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
-      </label>
+      <label htmlFor={`${id}-combobox`}>{label}</label>
+      <SearchableSelect
+        id={`${id}-combobox`}
+        ariaLabel={label}
+        value={selected ? selectedValue : ''}
+        options={available.map((option) => ({ value: option.id, label: option.label }))}
+        onChange={(next) => onChange(next)}
+        placeholder={placeholder ?? `Chọn ${lowerLabel}`}
+        searchPlaceholder={`Gõ để tìm ${lowerLabel}...`}
+        disabled={isDisabled}
+        includeAllOption={includeAllOption}
+        allLabel={allLabel}
+        emptyMessage={emptyMessage}
+        noMatchMessage={`Không tìm thấy ${lowerLabel} khớp từ khóa.`}
+        invalid={lookupFailed}
+        describedBy={`${id}-help${lookupFailed ? ` ${id}-error` : ''}`}
+        required={required && !readOnly}
+      />
       <p id={`${id}-help`} className="manager-resource-select__help" aria-live="polite">
         {lookupLoading
-          ? `Đang tải danh sách ${label.toLocaleLowerCase()}…`
+          ? `Đang tải danh sách ${lowerLabel}…`
           : lookupFailed
             ? ''
             : !available.length
               ? emptyMessage
-              : query && !filtered.length
-                ? `Không tìm thấy ${label.toLocaleLowerCase()} khớp từ khóa.`
-                : readOnly
-                  ? readOnlyHint
-                  : 'Có thể tìm theo tên hoặc dùng phím mũi tên để chọn.'}
+              : readOnly
+                ? readOnlyHint
+                : 'Bấm để mở danh sách, gõ để tìm hoặc dùng phím mũi tên để chọn.'}
       </p>
       {lookupFailed && (
         <div id={`${id}-error`} className="manager-resource-select__error" role="alert">
           <span>
-            {lookupError?.message ?? `Không tải được danh sách ${label.toLocaleLowerCase()}.`}
+            {lookupError?.message ?? `Không tải được danh sách ${lowerLabel}.`}
           </span>
           {onRetry && (
             <button type="button" disabled={disabled} onClick={onRetry}>

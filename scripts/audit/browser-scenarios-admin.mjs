@@ -1,10 +1,35 @@
 // Admin portal (ADM-02..18) + cross-role RBAC. DOM-driven, SQL-verified.
 import { ACCOUNTS, one, rows, scalar } from './lib.mjs';
-import { confirmIfAsked, expectPoll, expectText, rowOf, uiLogin } from './browser-helpers.mjs';
+import {
+  confirmIfAsked,
+  expectPoll,
+  expectText,
+  pickSearchableOption,
+  rowOf,
+  selectCustomOption,
+  uiLogin,
+} from './browser-helpers.mjs';
 
 const state = {};
 async function adminSearch(page, label, text) {
-  await page.getByLabel(label, { exact: true }).fill(text);
+  const clean = label.replace(/^(Tìm|Chọn)\s*/i, '');
+  const combobox = page.getByRole('combobox', { name: new RegExp(`(Chọn|Tìm)\\s+${clean}`, 'i') });
+  const input = page
+    .getByLabel(label, { exact: true })
+    .or(page.getByPlaceholder(label))
+    .or(page.getByRole('searchbox'))
+    .first();
+  const searchControl = combobox.or(input);
+  await searchControl.first().waitFor({ state: 'visible' });
+  if (await combobox.first().isVisible().catch(() => false)) {
+    await combobox.first().click();
+    await combobox.first().fill(text);
+    const opt = page.getByRole('option', { name: text });
+    if (await opt.count()) await opt.first().click();
+    else await combobox.first().press('Enter');
+    return;
+  }
+  await input.fill(text);
   await page.getByRole('button', { name: 'Áp dụng lọc' }).click();
 }
 const USER_SEARCH = 'Tìm tên / email / số điện thoại';
@@ -27,11 +52,15 @@ export const adminScenarios = [
       assert.equal(new URL(page.url()).pathname.startsWith('/admin'), true, `landed on ${page.url()}`);
       await page.goto(`${origin}/admin/access/users`);
       const email = `e2e.cskh.${RUN}@example.test`;
+      await page.waitForSelector('button:has-text("Tạo tài khoản nội bộ")');
       await page.getByRole('button', { name: 'Tạo tài khoản nội bộ' }).click();
-      const dialog = page.getByRole('dialog');
+      const dialog = page.locator('dialog[open]').last();
       await dialog.getByLabel('Họ tên').fill(`E2E CSKH ${RUN}`);
       await dialog.getByLabel('Email').fill(email);
-      await dialog.getByLabel('Vai trò tài khoản nội bộ', { exact: true }).selectOption({ label: 'Chăm sóc khách hàng' });
+      const roleBox = dialog.getByRole('combobox', { name: 'Vai trò tài khoản nội bộ' });
+      await roleBox.click();
+      await roleBox.fill('Chăm sóc khách hàng');
+      await page.getByRole('option', { name: 'Chăm sóc khách hàng' }).first().click();
       await dialog.getByLabel(/^Mật khẩu ban đầu/).fill('E2eStaff-123!');
       await dialog.getByRole('button', { name: 'Tạo mới' }).click();
       await dialog.waitFor({ state: 'hidden' });
@@ -54,8 +83,10 @@ export const adminScenarios = [
       // lock
       await adminSearch(page, USER_SEARCH, email);
       await rowOf(page, email).getByRole('button', { name: /^Sửa / }).click();
-      await page.getByRole('dialog').getByLabel('Trạng thái tài khoản').selectOption('Bị khóa');
-      await page.getByRole('dialog').getByRole('button', { name: 'Lưu thay đổi' }).click();
+      const editDialog = page.locator('dialog[open]').last();
+      const statusSelect = editDialog.locator('select.ui-custom-select__native');
+      await statusSelect.selectOption('Bị khóa', { force: true });
+      await editDialog.getByRole('button', { name: 'Lưu thay đổi' }).click();
       await confirmSave(page);
       await expectPoll(
         async () => (await scalar(pool, 'SELECT TrangThai FROM dbo.NGUOIDUNG WHERE NguoiDungID = @id', { id: user.NguoiDungID })) === 'Bị khóa',
@@ -76,8 +107,10 @@ export const adminScenarios = [
       await page.reload();
       await adminSearch(page, USER_SEARCH, email);
       await rowOf(page, email).getByRole('button', { name: /^Sửa / }).click();
-      await page.getByRole('dialog').getByLabel('Trạng thái tài khoản').selectOption('Hoạt động');
-      await page.getByRole('dialog').getByRole('button', { name: 'Lưu thay đổi' }).click();
+      const unlockDialog = page.locator('dialog[open]').last();
+      const unlockSelect = unlockDialog.locator('select.ui-custom-select__native');
+      await unlockSelect.selectOption('Hoạt động', { force: true });
+      await unlockDialog.getByRole('button', { name: 'Lưu thay đổi' }).click();
       await confirmSave(page);
       await expectPoll(
         async () => (await scalar(pool, 'SELECT TrangThai FROM dbo.NGUOIDUNG WHERE NguoiDungID = @id', { id: user.NguoiDungID })) === 'Hoạt động',
@@ -130,8 +163,8 @@ export const adminScenarios = [
       await dialog.getByLabel('Tên phim').fill(title);
       await dialog.getByLabel('Thời lượng (phút)').fill('105');
       await dialog.getByLabel('Đạo diễn').fill('E2E Director');
-      await dialog.getByLabel('Phân loại độ tuổi').selectOption('T16');
-      await dialog.getByLabel('Thêm thể loại phim', { exact: true }).selectOption({ label: `${genre} v2` });
+      await selectCustomOption(dialog, 'Phân loại độ tuổi', 'T16');
+      await pickSearchableOption(dialog, 'Thêm thể loại phim', `${genre} v2`);
       await dialogSubmit(page, 'Tạo mới');
       let movie;
       await expectPoll(async () => (movie = await one(pool, 'SELECT * FROM dbo.PHIM WHERE TenPhim = @n', { n: title })), { message: 'movie missing' });
@@ -142,7 +175,7 @@ export const adminScenarios = [
       await adminSearch(page, 'Tìm tên phim / đạo diễn', title);
       await page.getByRole('button', { name: `Diễn viên ${title}` }).click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Thêm diễn viên', { exact: true }).selectOption({ label: actorName });
+      await pickSearchableOption(dialog, 'Thêm diễn viên', actorName);
       await dialog.getByLabel(`Vai diễn của ${actorName}`).fill('Vai chính');
       await dialog.getByRole('button', { name: /^(Lưu|Tạo)/ }).first().click();
       await confirmSave(page);
@@ -182,7 +215,7 @@ export const adminScenarios = [
       await page.getByRole('button', { name: 'Thêm sản phẩm' }).click();
       let dialog = page.getByRole('dialog');
       await dialog.getByLabel('Tên sản phẩm').fill(product);
-      await dialog.getByLabel('Loại sản phẩm').selectOption('Combo');
+      await selectCustomOption(dialog, 'Loại sản phẩm', 'Combo');
       await dialog.getByLabel('Giá bán (VND)').fill('59000');
       await dialogSubmit(page, 'Tạo mới');
       let row;
@@ -217,7 +250,7 @@ export const adminScenarios = [
       await page.getByRole('button', { name: 'Thêm khuyến mãi' }).click();
       dialog = page.getByRole('dialog');
       await dialog.getByLabel('Mã khuyến mãi').fill(code);
-      await dialog.getByLabel('Loại giảm giá').selectOption('Số tiền');
+      await selectCustomOption(dialog, 'Loại giảm giá', 'Số tiền');
       await dialog.getByLabel(/^Giá trị giảm/).fill('15000');
       const now = new Date(Date.now() + 7 * 3600000);
       const local = (offsetDays) => new Date(now.getTime() + offsetDays * 86400000).toISOString().slice(0, 16);
@@ -231,7 +264,7 @@ export const adminScenarios = [
       await page.getByRole('button', { name: `Sửa ${code}` }).click();
       dialog = page.getByRole('dialog');
       await dialog.getByLabel('Tổng số lượt').fill('9');
-      await dialog.getByLabel('Trạng thái khuyến mãi').selectOption('Tạm dừng');
+      await selectCustomOption(dialog, 'Trạng thái khuyến mãi', 'Tạm dừng');
       await dialog.getByRole('button', { name: 'Lưu thay đổi' }).click();
       await confirmSave(page);
       await expectPoll(async () => (await scalar(pool, 'SELECT SoLuong FROM dbo.KHUYENMAI WHERE KhuyenMaiID = @id', { id: promo.KhuyenMaiID })) === 9, { message: 'promotion not updated' });
@@ -288,7 +321,7 @@ export const adminScenarios = [
       await page.getByRole('button', { name: /Thêm phòng/ }).first().click();
       dialog = page.getByRole('dialog');
       await dialog.getByLabel('Tên phòng').fill(roomName);
-      await dialog.getByLabel('Loại phòng').selectOption('3D');
+      await selectCustomOption(dialog, 'Loại phòng', '3D');
       await dialog.getByRole('button', { name: 'Thêm phòng' }).click();
       await dialog.waitFor({ state: 'hidden' });
       let room;
@@ -305,12 +338,12 @@ export const adminScenarios = [
       const date = new Date(Date.now() + (15 + (parseInt(RUN, 36) % 20)) * 86400000).toISOString().slice(0, 10);
       await page.getByRole('button', { name: 'Thêm suất chiếu' }).click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Phim', { exact: true }).selectOption({ label: movie.TenPhim });
-      await dialog.getByLabel('Phòng', { exact: true }).selectOption({ label: roomName });
-      await dialog.getByLabel('Bắt đầu', { exact: true }).fill(`${date}T09:00`);
-      await dialog.getByLabel('Kết thúc', { exact: true }).fill(`${date}T11:00`);
-      await dialog.getByLabel('Định dạng', { exact: true }).selectOption('3D');
-      await dialog.getByLabel('Giá vé cơ bản', { exact: true }).fill('88000');
+      await pickSearchableOption(dialog, 'Phim', movie.TenPhim);
+      await pickSearchableOption(dialog, 'Phòng', roomName);
+      await dialog.getByLabel(/Bắt đầu/).fill(`${date}T09:00`);
+      await dialog.getByLabel(/Kết thúc/).fill(`${date}T11:00`);
+      await selectCustomOption(dialog, 'Định dạng', '3D');
+      await dialog.getByLabel(/Giá vé cơ bản/).fill('88000');
       await dialog.getByRole('button', { name: 'Tạo suất' }).click();
       await dialog.waitFor({ state: 'hidden' });
       let showtime;
@@ -321,11 +354,11 @@ export const adminScenarios = [
       // an overlapping showtime must be refused by the database and surfaced in the UI
       await page.getByRole('button', { name: 'Thêm suất chiếu' }).click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Phim', { exact: true }).selectOption({ label: movie.TenPhim });
-      await dialog.getByLabel('Phòng', { exact: true }).selectOption({ label: roomName });
-      await dialog.getByLabel('Bắt đầu', { exact: true }).fill(`${date}T10:00`);
-      await dialog.getByLabel('Kết thúc', { exact: true }).fill(`${date}T12:00`);
-      await dialog.getByLabel('Giá vé cơ bản', { exact: true }).fill('88000');
+      await pickSearchableOption(dialog, 'Phim', movie.TenPhim);
+      await pickSearchableOption(dialog, 'Phòng', roomName);
+      await dialog.getByLabel(/Bắt đầu/).fill(`${date}T10:00`);
+      await dialog.getByLabel(/Kết thúc/).fill(`${date}T12:00`);
+      await dialog.getByLabel(/Giá vé cơ bản/).fill('88000');
       await dialog.getByRole('button', { name: 'Tạo suất' }).click();
       await expectText(page, 'phòng', 8000);
       assert.equal(await scalar(pool, 'SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE PhongID = @r', { r: room.PhongID }), 1, 'overlap must not create a row');
@@ -336,7 +369,7 @@ export const adminScenarios = [
       await page.goto(`${origin}/admin/operations/pricing?cinemaId=${cinemaRow.RapID}`);
       await page.getByRole('button', { name: 'Thêm bảng giá' }).click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Phụ thu', { exact: true }).fill('4000');
+      await dialog.getByLabel(/Phụ thu/).fill('4000');
       await dialog.getByLabel('Ngày áp dụng', { exact: true }).fill(date);
       await dialog.getByRole('button', { name: 'Tạo giá' }).click();
       await dialog.waitFor({ state: 'hidden' });
@@ -365,7 +398,7 @@ export const adminScenarios = [
       let dialog = page.getByRole('dialog');
       await dialog.getByLabel('Họ tên').fill(`E2E Manager ${RUN}`);
       await dialog.getByLabel('Email').fill(email);
-      await dialog.getByLabel('Vai trò tài khoản nội bộ', { exact: true }).selectOption({ label: 'Quản lý rạp' });
+      await pickSearchableOption(dialog, 'Vai trò tài khoản nội bộ', 'Quản lý rạp');
       await dialog.getByLabel(/^Mật khẩu ban đầu/).fill('E2eMgr-123!');
       await dialogSubmit(page, 'Tạo mới');
       let manager;
@@ -375,8 +408,8 @@ export const adminScenarios = [
       await page.goto(`${origin}/admin/access/assignments`);
       await page.getByRole('button', { name: 'Thêm phân công' }).click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Manager', { exact: true }).selectOption({ label: `E2E Manager ${RUN} · ${email}` });
-      await dialog.getByLabel('Rạp phân công', { exact: true }).selectOption({ label: cinema.TenRap });
+      await pickSearchableOption(dialog, 'Manager', email);
+      await pickSearchableOption(dialog, 'Rạp phân công', cinema.TenRap);
       await dialog.getByRole('button', { name: 'Tạo mới' }).click();
       await confirmSave(page);
       let assignment;
@@ -398,7 +431,7 @@ export const adminScenarios = [
       await adminSearch(page, 'Tìm Manager / email / rạp', email);
       await rowOf(page, email).getByRole('button', { name: /Sửa/ }).click();
       dialog = page.getByRole('dialog');
-      await dialog.getByLabel('Trạng thái phân công').selectOption('Hết hạn');
+      await selectCustomOption(dialog, 'Trạng thái phân công', 'Hết hạn');
       await dialog.getByRole('button', { name: 'Lưu thay đổi' }).click();
       await confirmSave(page);
       await expectPoll(async () => (await scalar(pool, 'SELECT TrangThai FROM dbo.PHANCONG_RAP WHERE PhanCongID = @id', { id: assignment.PhanCongID })) === 'Hết hạn', { message: 'assignment not expired' });
