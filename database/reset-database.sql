@@ -1,7 +1,5 @@
--- Xóa database rồi chạy lại các bước khởi tạo; chỉ dùng đúng target đã xác nhận.
+-- Retired safety stub. CinemaBookingDB is the long-lived primary database.
+-- This file intentionally cannot DROP, recreate, truncate, or reseed any database.
 :on error exit
-
--- Tạo database và cấu hình tùy chọn.
-:r ./00_database/001_drop_database.sql
-
-:r ./run-all.sql
+;THROW 51990, N'Database reset is disabled. Use the approved, reviewed cleanup plan for CinemaBookingDB.', 1;
+GO

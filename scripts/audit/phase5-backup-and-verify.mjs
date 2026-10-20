@@ -1,140 +1,118 @@
-// Phase 5.3: Backup & Restore Verification for Project Databases
+// Main database backup and optional, non-destructive restore drill.
+// The script reads credentials from the ignored backend/.env and never prints them.
+// It never drops or overwrites a database. A restore drill requires the exact
+// temporary target CinemaBookingDB_Test to be absent and leaves it in place.
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { ROOT, sql } from './lib.mjs';
 
-const BACKUP_DIR = 'D:\\DBMS_DO_AN_BACKUPS';
+const MAIN_DB = 'CinemaBookingDB';
+const TEST_DB = 'CinemaBookingDB_Test';
+const BACKUP_DIR = path.join(ROOT, '.audit-output', 'database-backups');
+const ENV_PATH = path.join(ROOT, 'backend', '.env');
+const RESTORE_DRILL = process.argv.includes('--restore-drill');
+const require = createRequire(path.join(ROOT, 'backend', 'package.json'));
+const dotenv = require('dotenv');
 
-// EXACT explicit target list - NO wildcards
-const TARGET_DBS = [
-  'CinemaBookingDB',
-  'CinemaBookingDB_Test',
-];
+const quoteSql = (value) => String(value).replaceAll("'", "''");
 
-const masterConfig = {
-  server: 'localhost',
-  port: 1433,
-  database: 'master',
-  user: 'sa',
-  password: 'doantuan',
-  options: {
-    encrypt: false,
-    trustServerCertificate: true,
-    useUTC: true,
-  },
-  requestTimeout: 120000,
-};
-
-async function main() {
-  console.log('=== PHASE 5.3: BACKUP AND RECOVERY CERTIFICATION ===');
-  const pool = await new sql.ConnectionPool(masterConfig).connect();
-
-  console.log('[1/4] Verifying database targets in sys.databases...');
-  const { recordset: currentDbs } = await pool.request().query('SELECT name FROM sys.databases');
-  const existingNames = new Set(currentDbs.map((d) => d.name));
-
-  for (const target of TARGET_DBS) {
-    if (!existingNames.has(target)) {
-      throw new Error(`Target database "${target}" does not exist in SQL Server!`);
-    }
+function loadMainConfig() {
+  if (!fs.existsSync(ENV_PATH)) throw new Error('Missing backend/.env.');
+  const env = dotenv.parse(fs.readFileSync(ENV_PATH));
+  for (const key of ['DB_SERVER', 'DB_DATABASE', 'DB_USER', 'DB_PASSWORD']) {
+    if (!env[key]) throw new Error(`backend/.env is missing ${key}.`);
   }
-
-  // Double check non-target protection
-  const forbidden = ['HotelBooking_DB0_Test', 'oneshop', 'oneshop_test', 'oneshop_v3_audit_test', 'master', 'tempdb', 'model', 'msdb'];
-  for (const f of forbidden) {
-    if (TARGET_DBS.includes(f)) {
-      throw new Error(`CRITICAL: Protected database "${f}" is in the target list! Aborting.`);
-    }
+  if (env.DB_DATABASE !== MAIN_DB) {
+    throw new Error(`Refusing backup: backend/.env must target ${MAIN_DB}.`);
   }
-  console.log(`  -> Validated 5 target databases. Protected systems checked.`);
-
-  if (!fs.existsSync(BACKUP_DIR)) {
-    fs.mkdirSync(BACKUP_DIR, { recursive: true });
-  }
-
-  console.log('[2/4] Taking full COPY_ONLY backups with CHECKSUM...');
-  const backupResults = [];
-  for (const dbName of TARGET_DBS) {
-    const backupFile = path.join(BACKUP_DIR, `${dbName}_backup_20261014.bak`);
-    console.log(`  Backing up ${dbName} to ${backupFile}...`);
-
-    await pool.request().batch(`
-      BACKUP DATABASE [${dbName}]
-      TO DISK = N'${backupFile}'
-      WITH INIT, COPY_ONLY, CHECKSUM, STATS = 100;
-    `);
-
-    console.log(`  Verifying backup file integrity for ${dbName}...`);
-    await pool.request().batch(`
-      RESTORE VERIFYONLY
-      FROM DISK = N'${backupFile}'
-      WITH CHECKSUM;
-    `);
-
-    const stats = fs.statSync(backupFile);
-    backupResults.push({
-      database: dbName,
-      file: backupFile,
-      sizeBytes: stats.size,
-      verified: true,
-      timestamp: new Date().toISOString(),
-    });
-    console.log(`  -> ${dbName}: Backup verified (${(stats.size / 1024 / 1024).toFixed(2)} MB).`);
-  }
-
-  console.log('[3/4] Performing isolated restore drill of main database CinemaBookingDB...');
-  const mainBackup = path.join(BACKUP_DIR, 'CinemaBookingDB_backup_20261014.bak');
-  const drillDb = 'CinemaBookingDB_BackupDrillTest';
-
-  // Get file list from backup
-  const { recordset: fileList } = await pool.request().query(`
-    RESTORE FILELISTONLY FROM DISK = N'${mainBackup}';
-  `);
-  const dataLogical = fileList.find((f) => f.Type === 'D').LogicalName;
-  const logLogical = fileList.find((f) => f.Type === 'L').LogicalName;
-
-  const dataDest = path.join(BACKUP_DIR, `${drillDb}.mdf`);
-  const logDest = path.join(BACKUP_DIR, `${drillDb}.ldf`);
-
-  await pool.request().batch(`
-    IF DB_ID('${drillDb}') IS NOT NULL
-    BEGIN
-      ALTER DATABASE [${drillDb}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-      DROP DATABASE [${drillDb}];
-    END
-
-    RESTORE DATABASE [${drillDb}]
-    FROM DISK = N'${mainBackup}'
-    WITH
-      MOVE '${dataLogical}' TO '${dataDest}',
-      MOVE '${logLogical}' TO '${logDest}',
-      REPLACE;
-  `);
-
-  const { recordset: drillCount } = await pool.request().query(`
-    SELECT COUNT(*) AS cnt FROM [${drillDb}].sys.tables WHERE is_ms_shipped = 0;
-  `);
-  console.log(`  -> Restore drill successful: ${drillDb} restored with ${drillCount[0].cnt} tables.`);
-
-  // Cleanup drill database
-  await pool.request().batch(`
-    ALTER DATABASE [${drillDb}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE [${drillDb}];
-  `);
-  if (fs.existsSync(dataDest)) fs.unlinkSync(dataDest);
-  if (fs.existsSync(logDest)) fs.unlinkSync(logDest);
-  console.log(`  -> Drill database cleaned up.`);
-
-  console.log('[4/4] Writing backup report...');
-  const reportPath = path.join(ROOT, '.audit-output', 'acceptance', 'backup-certification.json');
-  fs.mkdirSync(path.dirname(reportPath), { recursive: true });
-  fs.writeFileSync(reportPath, JSON.stringify({ backupResults, completedAt: new Date().toISOString() }, null, 2));
-
-  await pool.close();
-  console.log('=== ALL 5 TARGET DATABASES BACKED UP AND RESTORE VERIFIED ===');
+  return {
+    server: env.DB_SERVER,
+    port: Number(env.DB_PORT ?? 1433),
+    database: 'master',
+    user: env.DB_USER,
+    password: env.DB_PASSWORD,
+    options: {
+      encrypt: String(env.DB_ENCRYPT).toLowerCase() === 'true',
+      trustServerCertificate: String(env.DB_TRUST_SERVER_CERTIFICATE ?? 'true') === 'true',
+      useUTC: true,
+    },
+    requestTimeout: 120000,
+  };
 }
 
-main().catch((err) => {
-  console.error('BACKUP / RESTORE VERIFICATION FAILED:', err);
-  process.exit(1);
+async function main() {
+  const config = loadMainConfig();
+  const stamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
+  const backupFile = path.join(BACKUP_DIR, `${MAIN_DB}_pre_cleanup_${stamp}.bak`);
+  const escapedBackupFile = quoteSql(backupFile);
+  const pool = await new sql.ConnectionPool(config).connect();
+
+  try {
+    const { recordset } = await pool.request().query(`
+      SELECT name, state_desc FROM sys.databases
+      WHERE name IN (N'${MAIN_DB}', N'${TEST_DB}');
+    `);
+    const databases = new Map(recordset.map((row) => [row.name, row.state_desc]));
+    if (databases.get(MAIN_DB) !== 'ONLINE') {
+      throw new Error(`${MAIN_DB} is missing or not ONLINE.`);
+    }
+    if (RESTORE_DRILL && databases.has(TEST_DB)) {
+      throw new Error(`Restore drill requires ${TEST_DB} to be absent; it will not overwrite or drop it.`);
+    }
+
+    fs.mkdirSync(BACKUP_DIR, { recursive: true });
+    console.log(`[1/2] Backing up ${MAIN_DB} with CHECKSUM...`);
+    await pool.request().batch(`
+      BACKUP DATABASE [${MAIN_DB}]
+      TO DISK = N'${escapedBackupFile}'
+      WITH COPY_ONLY, CHECKSUM, COMPRESSION, STATS = 10;
+    `);
+
+    console.log('[2/2] Verifying the backup with RESTORE VERIFYONLY...');
+    await pool.request().batch(`
+      RESTORE VERIFYONLY
+      FROM DISK = N'${escapedBackupFile}'
+      WITH CHECKSUM;
+    `);
+    console.log(`Backup verified: ${backupFile} (${fs.statSync(backupFile).size} bytes).`);
+
+    if (!RESTORE_DRILL) {
+      console.log('Restore drill not requested. No database was created or changed.');
+      return;
+    }
+
+    const { recordset: files } = await pool.request().query(`
+      RESTORE FILELISTONLY FROM DISK = N'${escapedBackupFile}';
+    `);
+    const dataFile = files.find((file) => file.Type === 'D');
+    const logFile = files.find((file) => file.Type === 'L');
+    if (!dataFile || !logFile) throw new Error('Backup file list does not contain one data and one log file.');
+
+    const dataPath = path.join(BACKUP_DIR, `${TEST_DB}_${stamp}.mdf`);
+    const logPath = path.join(BACKUP_DIR, `${TEST_DB}_${stamp}.ldf`);
+    await pool.request().batch(`
+      RESTORE DATABASE [${TEST_DB}]
+      FROM DISK = N'${escapedBackupFile}'
+      WITH
+        MOVE N'${quoteSql(dataFile.LogicalName)}' TO N'${quoteSql(dataPath)}',
+        MOVE N'${quoteSql(logFile.LogicalName)}' TO N'${quoteSql(logPath)}',
+        RECOVERY, CHECKSUM;
+    `);
+    const { recordset: inventory } = await pool.request().query(`
+      SELECT
+        (SELECT COUNT(*) FROM [${TEST_DB}].sys.tables WHERE is_ms_shipped = 0) AS tables,
+        (SELECT COUNT(*) FROM [${TEST_DB}].sys.procedures WHERE is_ms_shipped = 0) AS procedures,
+        (SELECT COUNT(*) FROM [${TEST_DB}].sys.views WHERE is_ms_shipped = 0) AS views;
+    `);
+    console.log(`Restore drill passed in ${TEST_DB}: ${JSON.stringify(inventory[0])}.`);
+    console.log(`${TEST_DB} was left in place; remove it only after explicit scope confirmation.`);
+  } finally {
+    await pool.close();
+  }
+}
+
+main().catch((error) => {
+  console.error(`Backup workflow failed: ${error.message}`);
+  process.exitCode = 1;
 });

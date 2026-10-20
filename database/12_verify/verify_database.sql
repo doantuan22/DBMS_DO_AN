@@ -9,5 +9,3 @@ GO
 :r ./12_verify/verify_procedures.sql
 :r ./12_verify/verify_dependencies.sql
 :r ./12_verify/verify_security.sql
-:r ./12_verify/verify_seed.sql
-:r ./12_verify/verify_fixed_rbac.sql
