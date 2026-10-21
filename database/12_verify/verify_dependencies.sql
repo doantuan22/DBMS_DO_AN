@@ -1,4 +1,4 @@
-IF EXISTS (SELECT 1 FROM sys.sql_expression_dependencies WHERE referenced_id IS NULL AND referenced_database_name IS NULL AND referenced_server_name IS NULL AND referenced_schema_name IS NOT NULL)
+IF EXISTS (SELECT 1 FROM sys.sql_expression_dependencies WHERE referenced_id IS NULL AND referenced_database_name IS NULL AND referenced_server_name IS NULL AND referenced_schema_name IS NOT NULL AND NOT (OBJECT_NAME(referencing_id)=N'sp_upgraddiagrams' AND referenced_entity_name=N'dtproperties'))
 BEGIN
  SELECT OBJECT_NAME(referencing_id) AS ReferencingObject,referenced_schema_name,referenced_entity_name FROM sys.sql_expression_dependencies WHERE referenced_id IS NULL;
  THROW 51003, 'Unresolved local dependency.', 1;

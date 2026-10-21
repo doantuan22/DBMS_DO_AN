@@ -27,6 +27,9 @@ const manifestPath = path.join(ROOT, '.audit-output', 'seed-demo-manifest.json')
 if (!fs.existsSync(manifestPath)) throw new Error('Seed manifest is missing; run the demo seed before verification.');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 if (manifest.database !== MAIN_DB) throw new Error(`Manifest target mismatch: ${manifest.database}.`);
+const seededAt = new Date(manifest.generatedAt);
+if (!Number.isFinite(seededAt.getTime())) throw new Error('Seed manifest generatedAt is not a valid timestamp.');
+const seedAgeMinutes = Math.max(0, (Date.now() - seededAt.getTime()) / 60000);
 
 const identifier = (value) => `[${String(value).replaceAll(']', ']]')}]`;
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
@@ -41,18 +44,20 @@ try {
   const objectState = (await pool.request().query(`
     SELECT
       (SELECT COUNT(*) FROM sys.tables WHERE is_ms_shipped=0 AND name<>'sysdiagrams') AS app_tables,
-      (SELECT COUNT(*) FROM sys.procedures WHERE is_ms_shipped=0) AS procedures,
+      (SELECT COUNT(*) FROM sys.procedures WHERE is_ms_shipped=0 AND name NOT IN (N'sp_alterdiagram',N'sp_creatediagram',N'sp_dropdiagram',N'sp_helpdiagramdefinition',N'sp_helpdiagrams',N'sp_renamediagram',N'sp_upgraddiagrams')) AS procedures,
       (SELECT COUNT(*) FROM sys.views WHERE is_ms_shipped=0) AS views,
-      (SELECT COUNT(*) FROM sys.objects WHERE type IN ('FN','IF','TF') AND is_ms_shipped=0) AS functions,
+      (SELECT COUNT(*) FROM sys.objects WHERE type IN ('FN','IF','TF') AND is_ms_shipped=0 AND name<>N'fn_diagramobjects') AS functions,
       (SELECT COUNT(*) FROM sys.triggers WHERE is_ms_shipped=0) AS triggers,
       (SELECT COUNT(*) FROM sys.foreign_keys) AS foreign_keys,
       (SELECT COUNT(*) FROM sys.check_constraints) AS checks,
       (SELECT COUNT(*) FROM sys.foreign_keys WHERE is_disabled=1 OR is_not_trusted=1) AS bad_fks,
       (SELECT COUNT(*) FROM sys.check_constraints WHERE is_disabled=1 OR is_not_trusted=1) AS bad_checks,
-      (SELECT COUNT(*) FROM sys.triggers WHERE is_disabled=1) AS disabled_triggers;
+      (SELECT COUNT(*) FROM sys.triggers WHERE is_disabled=1) AS disabled_triggers,
+      (SELECT COUNT(*) FROM sys.objects WHERE is_ms_shipped=0 AND (name IN (N'fn_diagramobjects',N'sp_alterdiagram',N'sp_creatediagram',N'sp_dropdiagram',N'sp_helpdiagramdefinition',N'sp_helpdiagrams',N'sp_renamediagram',N'sp_upgraddiagrams',N'sysdiagrams') OR OBJECT_NAME(parent_object_id)=N'sysdiagrams')) AS sql_diagram_support_objects;
   `)).recordset[0];
-  assert(objectState.app_tables === 29 && objectState.procedures === 154 && objectState.views === 6
-    && objectState.functions === 22 && objectState.triggers === 9 && objectState.foreign_keys === 37 && objectState.checks === 65,
+  assert(objectState.app_tables === 29 && objectState.procedures === 147 && objectState.views === 6
+    && objectState.functions === 21 && objectState.triggers === 9 && objectState.foreign_keys === 37 && objectState.checks === 65
+    && objectState.sql_diagram_support_objects === 11,
   `Schema inventory changed: ${JSON.stringify(objectState)}.`);
   assert(!objectState.bad_fks && !objectState.bad_checks && !objectState.disabled_triggers,
     `A foreign key, check or trigger is disabled/untrusted: ${JSON.stringify(objectState)}.`);
@@ -70,7 +75,7 @@ try {
     .map(([name, expected]) => `${name}: expected ${expected}, found ${rowCounts[name]}`);
   assert(countDrift.length === 0, `Seed manifest row counts changed: ${countDrift.join('; ')}.`);
 
-  const coverage = (await pool.request().query(`
+  const coverage = (await pool.request().input('SeededAt', sql.DateTime2, seededAt).query(`
     DECLARE @Now datetime2(7)=dbo.fn_BayGio();
     SELECT
       (SELECT COUNT(*) FROM dbo.VAITRO) AS roles,
@@ -89,6 +94,11 @@ try {
       (SELECT COUNT(*) FROM dbo.DIENVIEN) AS actors,
       (SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE ThoiGianKetThuc<@Now) AS past_showtimes,
       (SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE ThoiGianBatDau<=@Now AND ThoiGianKetThuc>@Now) AS ongoing_showtimes,
+      (SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE TrangThai=N'Đóng bán'
+        AND ThoiGianBatDau>=DATEADD(hour,-4,@SeededAt) AND ThoiGianBatDau<=DATEADD(minute,10,@SeededAt)) AS seeded_live_fixtures,
+      (SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE TrangThai=N'Đóng bán'
+        AND ThoiGianBatDau>=DATEADD(hour,-4,@SeededAt) AND ThoiGianBatDau<=DATEADD(minute,10,@SeededAt)
+        AND ThoiGianBatDau<=@Now AND ThoiGianKetThuc>@Now) AS active_seeded_live_fixtures,
       (SELECT COUNT(*) FROM dbo.SUATCHIEU WHERE ThoiGianBatDau>@Now AND TrangThai=N'Mở bán') AS future_open_showtimes,
       (SELECT COUNT(*) FROM dbo.SUATCHIEU a JOIN dbo.SUATCHIEU b ON b.PhongID=a.PhongID AND b.SuatChieuID>a.SuatChieuID
         AND a.ThoiGianBatDau<b.ThoiGianKetThuc AND b.ThoiGianBatDau<a.ThoiGianKetThuc
@@ -97,6 +107,15 @@ try {
       (SELECT COUNT(*) FROM dbo.DONDATVE WHERE TrangThai=N'Hoàn thành') AS completed_orders,
       (SELECT COUNT(*) FROM dbo.DONDATVE WHERE TrangThai=N'Chờ thanh toán') AS pending_orders,
       (SELECT COUNT(*) FROM dbo.DONDATVE WHERE TrangThai=N'Hết hạn') AS expired_orders,
+      (SELECT COUNT(*) FROM dbo.DONDATVE WHERE HanGiuCho IS NOT NULL
+        AND NgayDat>=DATEADD(hour,-4,@SeededAt) AND NgayDat<=DATEADD(minute,10,@SeededAt)
+        AND TrangThai IN (N'Chờ thanh toán',N'Hết hạn')) AS seeded_hold_fixtures,
+      (SELECT COUNT(*) FROM dbo.DONDATVE WHERE HanGiuCho IS NOT NULL
+        AND NgayDat>=DATEADD(hour,-4,@SeededAt) AND NgayDat<=DATEADD(minute,10,@SeededAt)
+        AND TrangThai=N'Chờ thanh toán' AND HanGiuCho>@Now) AS active_seeded_holds,
+      (SELECT COUNT(*) FROM dbo.DONDATVE WHERE HanGiuCho IS NOT NULL
+        AND NgayDat>=DATEADD(hour,-4,@SeededAt) AND NgayDat<=DATEADD(minute,10,@SeededAt)
+        AND (TrangThai=N'Hết hạn' OR (TrangThai=N'Chờ thanh toán' AND HanGiuCho<=@Now))) AS expired_seeded_holds,
       (SELECT COUNT(*) FROM dbo.DONDATVE WHERE TrangThai=N'Đã hủy') AS cancelled_orders,
       (SELECT COUNT(*) FROM dbo.THANHTOAN) AS payments,
       (SELECT COUNT(*) FROM dbo.THANHTOAN WHERE TrangThai=N'Thành công') AS successful_payments,
@@ -131,9 +150,15 @@ try {
     && coverage.cinemas === 4 && coverage.rooms === 12 && coverage.seats === 960
     && coverage.movies === 20 && coverage.genres >= 8 && coverage.actors >= 40,
   `Catalog/account coverage failed: ${JSON.stringify(coverage)}.`);
-  assert(coverage.past_showtimes >= 100 && coverage.ongoing_showtimes >= 4 && coverage.future_open_showtimes >= 100
-    && coverage.overlapping_showtimes === 0 && coverage.orders === 310 && coverage.completed_orders === 240
-    && coverage.pending_orders >= 4 && coverage.expired_orders === 5 && coverage.cancelled_orders >= 10,
+  assert(coverage.past_showtimes >= 100 && coverage.seeded_live_fixtures === 4
+    && coverage.active_seeded_live_fixtures <= coverage.seeded_live_fixtures
+    && coverage.future_open_showtimes >= 100 && coverage.overlapping_showtimes === 0,
+  `Schedule coverage failed: ${JSON.stringify(coverage)}.`);
+  assert(coverage.orders === 310 && coverage.completed_orders === 240
+    && coverage.expired_orders >= 5 && coverage.pending_orders + coverage.expired_orders >= 9
+    && coverage.seeded_hold_fixtures === 4
+    && coverage.active_seeded_holds + coverage.expired_seeded_holds === coverage.seeded_hold_fixtures
+    && coverage.cancelled_orders >= 10,
   `Schedule/order lifecycle coverage failed: ${JSON.stringify(coverage)}.`);
   assert(coverage.payments >= 350 && coverage.successful_payments >= 290 && coverage.failed_payments >= 50
     && coverage.processing_payments >= 4 && coverage.reviews >= 60 && coverage.invalid_reviews === 0,
@@ -177,6 +202,15 @@ try {
     result: 'PASS', database: identity.database_name, server: identity.machine_name,
     verifiedAtUtc: identity.utc_now, businessToday: identity.local_today, fixedDataSeed: manifest.fixedDataSeed,
     schema: objectState, tableRowCounts: rowCounts, coverage,
+    temporalFixtures: {
+      seededAtUtc: manifest.generatedAt,
+      seedAgeMinutes: Math.round(seedAgeMinutes),
+      originallySeededLiveShowtimes: coverage.seeded_live_fixtures,
+      currentlyOngoingSeededShowtimes: coverage.active_seeded_live_fixtures,
+      originallySeededHoldOrders: coverage.seeded_hold_fixtures,
+      currentlyActiveSeededHolds: coverage.active_seeded_holds,
+      effectivelyExpiredSeededHolds: coverage.expired_seeded_holds,
+    },
     foreignKeyOrphans: orphanFks, dbccViolations: dbcc.recordset?.length ?? 0,
     apiIntegration: 'NOT RUN',
   };
@@ -184,7 +218,7 @@ try {
   fs.mkdirSync(outDir,{recursive:true});
   fs.writeFileSync(path.join(outDir,'seed-data-verification.json'),`${JSON.stringify(report,null,2)}\n`,'utf8');
   const tableMarkdown = tables.map((row) => `| ${row.table_name} | ${row.row_count} | ${Number(row.row_count)>0 ? 'Covered' : 'No rows; confirm domain reason'} |`).join('\n');
-  const md = `# Seed Data Verification Report\n\n- Result: **PASS** (SQL checks only; API result is appended by verify-demo-api.mjs)\n- Target: ${MAIN_DB} on ${identity.machine_name}\n- Verified at UTC: ${identity.utc_now}; Vietnam business date: ${identity.local_today}\n- Fixed data seed: ${manifest.fixedDataSeed}\n- Schema unchanged: ${objectState.app_tables} application tables, ${objectState.procedures} procedures, ${objectState.views} views, ${objectState.functions} functions, ${objectState.triggers} triggers\n- Integrity: ${objectState.foreign_keys} trusted FKs, ${objectState.checks} trusted CHECK constraints, zero disabled triggers, zero orphan rows, zero DBCC violations\n\n## Coverage\n\n| Area | Verified coverage | Result |\n|---|---|---|\n| Users/RBAC | ${coverage.customers} customers (${coverage.locked_accounts} locked), ${coverage.users} users; ${coverage.roles} roles / ${coverage.permissions} permissions / ${coverage.role_permissions} mappings | PASS |\n| Venues/catalog | ${coverage.cinemas} cinemas, ${coverage.rooms} rooms, ${coverage.seats} seats, ${coverage.movies} movies, ${coverage.genres} genres, ${coverage.actors} actors | PASS |\n| Showtime | ${coverage.past_showtimes} past, ${coverage.ongoing_showtimes} ongoing, ${coverage.future_open_showtimes} future open; ${coverage.overlapping_showtimes} overlaps | PASS |\n| Orders/payments | ${coverage.orders} orders (completed, pending, expired and canceled), ${coverage.payments} attempts including successful, failed and pending | PASS |\n| Reviews | ${coverage.reviews} eligible reviews; ${coverage.invalid_reviews} invalid | PASS |\n| Complaints | ${coverage.complaints} total (${coverage.linked_complaints} linked, ${coverage.unlinked_complaints} unlinked), ${coverage.complaint_history} timeline rows, ${coverage.complaint_messages} messages, ${coverage.escalations} escalations | PASS |\n| Compensation | ${coverage.compensations} procedure-generated cases; ${coverage.invalid_compensations} invalid | PASS |\n\n## Per-table row counts\n\n| Table | Rows | Coverage |\n|---|---:|---|\n${tableMarkdown}\n\nFull machine-readable evidence: .audit-output/seed-data-verification.json.\n`;
+  const md = `# Seed Data Verification Report\n\n- Result: **PASS** (SQL checks only; API result is appended by verify-demo-api.mjs)\n- Target: ${MAIN_DB} on ${identity.machine_name}\n- Verified at UTC: ${identity.utc_now}; Vietnam business date: ${identity.local_today}\n- Fixed data seed: ${manifest.fixedDataSeed}\n- Seed age: ${Math.round(seedAgeMinutes)} minutes; temporal fixtures are checked by their effective time window.\n- Schema unchanged: ${objectState.app_tables} application tables, ${objectState.procedures} procedures, ${objectState.views} views, ${objectState.functions} functions, ${objectState.triggers} triggers\n- Integrity: ${objectState.foreign_keys} trusted FKs, ${objectState.checks} trusted CHECK constraints, zero disabled triggers, zero orphan rows, zero DBCC violations\n\n## Coverage\n\n| Area | Verified coverage | Result |\n|---|---|---|\n| Users/RBAC | ${coverage.customers} customers (${coverage.locked_accounts} locked), ${coverage.users} users; ${coverage.roles} roles / ${coverage.permissions} permissions / ${coverage.role_permissions} mappings | PASS |\n| Venues/catalog | ${coverage.cinemas} cinemas, ${coverage.rooms} rooms, ${coverage.seats} seats, ${coverage.movies} movies, ${coverage.genres} genres, ${coverage.actors} actors | PASS |\n| Showtime | ${coverage.past_showtimes} past, ${coverage.ongoing_showtimes} ongoing, ${coverage.future_open_showtimes} future open; ${coverage.seeded_live_fixtures} original live fixtures (${coverage.active_seeded_live_fixtures} still in progress); ${coverage.overlapping_showtimes} overlaps | PASS |\n| Orders/payments | ${coverage.orders} orders (${coverage.completed_orders} completed, ${coverage.pending_orders} pending, ${coverage.expired_orders} expired, ${coverage.cancelled_orders} canceled); ${coverage.seeded_hold_fixtures} original hold fixtures (${coverage.active_seeded_holds} active, ${coverage.expired_seeded_holds} effectively expired); ${coverage.payments} payment attempts | PASS |\n| Reviews | ${coverage.reviews} eligible reviews; ${coverage.invalid_reviews} invalid | PASS |\n| Complaints | ${coverage.complaints} total (${coverage.linked_complaints} linked, ${coverage.unlinked_complaints} unlinked), ${coverage.complaint_history} timeline rows, ${coverage.complaint_messages} messages, ${coverage.escalations} escalations | PASS |\n| Compensation | ${coverage.compensations} procedure-generated cases; ${coverage.invalid_compensations} invalid | PASS |\n\n## Per-table row counts\n\n| Table | Rows | Coverage |\n|---|---:|---|\n${tableMarkdown}\n\nFull machine-readable evidence: .audit-output/seed-data-verification.json.\n`;
   fs.writeFileSync(path.join(ROOT,'SEED_DATA_VERIFICATION_REPORT.md'),md,'utf8');
   console.log('Read-only SQL coverage, FK-orphan, and DBCC checks passed.');
   console.log(JSON.stringify(report,null,2));

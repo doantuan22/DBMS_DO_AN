@@ -37,9 +37,9 @@ IF DB_NAME() <> N'CinemaBookingDB'
     THROW 51602, N'Kiểm tra không chạy trên CinemaBookingDB.', 1;
 PRINT N'HOÀN TẤT: schema đã được tạo; seed chưa được nạp.';
 SELECT DB_NAME() AS DatabaseName,
-    (SELECT COUNT(*) FROM sys.tables WHERE is_ms_shipped = 0) AS Tables,
-    (SELECT COUNT(*) FROM sys.procedures WHERE is_ms_shipped = 0) AS Procedures,
+    (SELECT COUNT(*) FROM sys.tables WHERE is_ms_shipped = 0 AND name<>N'sysdiagrams') AS Tables,
+    (SELECT COUNT(*) FROM sys.procedures WHERE is_ms_shipped = 0 AND name NOT IN (N'sp_alterdiagram',N'sp_creatediagram',N'sp_dropdiagram',N'sp_helpdiagramdefinition',N'sp_helpdiagrams',N'sp_renamediagram',N'sp_upgraddiagrams')) AS Procedures,
     (SELECT COUNT(*) FROM sys.views WHERE is_ms_shipped = 0) AS Views,
-    (SELECT COUNT(*) FROM sys.objects WHERE type IN ('FN','IF','TF') AND is_ms_shipped = 0) AS Functions,
+    (SELECT COUNT(*) FROM sys.objects WHERE type IN ('FN','IF','TF') AND is_ms_shipped = 0 AND name<>N'fn_diagramobjects') AS Functions,
     (SELECT COUNT(*) FROM sys.triggers WHERE parent_class = 1) AS Triggers;
 GO
