@@ -1,0 +1,162 @@
+{
+  "test": "SP-READONLY-CORE",
+  "executedUtc": "2026-10-21T13:54:31.593Z",
+  "targetBefore": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "targetAfter": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "expectedAssertions": 14,
+  "actualAssertions": 14,
+  "passed": 14,
+  "failed": 0,
+  "assertions": [
+    {
+      "TestName": "sp_Cinema_List",
+      "InputValue": "city=NULL",
+      "ExpectedValue": "4",
+      "ActualValue": "4",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Clock_GetNow",
+      "InputValue": "movie=4",
+      "ExpectedValue": "one row; runtime=121; clock current",
+      "ActualValue": "rows=1; runtime=121",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Genre_List",
+      "InputValue": "no filters",
+      "ExpectedValue": "12",
+      "ActualValue": "12",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Movie_List",
+      "InputValue": "all filters=NULL",
+      "ExpectedValue": "20",
+      "ActualValue": "20",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Product_ListActive",
+      "InputValue": "no parameters",
+      "ExpectedValue": "13",
+      "ActualValue": "13",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Promotion_Validate valid preview",
+      "InputValue": "active customer; STAR10; total=100000",
+      "ExpectedValue": "valid=1; discount=10000",
+      "ActualValue": "valid=1; discount=10000.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_RBAC_GetPermissionsByUser",
+      "InputValue": "active admin=1",
+      "ExpectedValue": "33",
+      "ActualValue": "33",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Seat_ListByShowtime",
+      "InputValue": "showtime=4",
+      "ExpectedValue": "80",
+      "ActualValue": "80",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Seat_ListByShowtime invalid ID",
+      "InputValue": "-2147483648",
+      "ExpectedValue": "THROW 50021",
+      "ActualValue": "error 50021",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Showtime_GetDetail",
+      "InputValue": "showtime=4",
+      "ExpectedValue": "1",
+      "ActualValue": "1",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Showtime_ListByMovie",
+      "InputValue": "movie=4; cinema/date=NULL",
+      "ExpectedValue": "5",
+      "ActualValue": "5",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Showtime_ValidateTimes overlap",
+      "InputValue": "existing future room/time interval",
+      "ExpectedValue": "THROW 50001",
+      "ActualValue": "error 50001",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_Showtime_ValidateTimes valid future",
+      "InputValue": "future interval=movie runtime; room=NULL",
+      "ExpectedValue": "no error",
+      "ActualValue": "no error",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "sp_System_HealthCheck",
+      "InputValue": "no parameters",
+      "ExpectedValue": "Healthy / CinemaBookingDB / one row",
+      "ActualValue": "Healthy / CinemaBookingDB / rows=1",
+      "Verdict": "PASS"
+    }
+  ],
+  "resultSetShapes": [
+    {
+      "rows": 1,
+      "columns": [
+        "ServerName",
+        "DatabaseName",
+        "StateDesc"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "IsValid",
+        "KhuyenMaiID",
+        "MaCode",
+        "LoaiGiamGia",
+        "GiaTriGiam",
+        "TienGiam",
+        "Message"
+      ]
+    },
+    {
+      "rows": 14,
+      "columns": [
+        "TestName",
+        "InputValue",
+        "ExpectedValue",
+        "ActualValue",
+        "Verdict"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "Cases",
+        "Passed",
+        "Failed",
+        "Mode"
+      ]
+    }
+  ],
+  "verdict": "PASS"
+}

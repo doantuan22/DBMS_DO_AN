@@ -1,0 +1,323 @@
+{
+  "test": "DEFAULT-001",
+  "executedUtc": "2026-10-21T13:51:33.936Z",
+  "targetBefore": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "targetAfter": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "batches": 2,
+  "resultSets": [
+    [
+      {
+        "ConstraintName": "DF_BANGGIA_PhuThu",
+        "TableName": "[dbo].[BANGGIA]",
+        "ColumnName": "PhuThu",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_BANGGIA_TrangThai",
+        "TableName": "[dbo].[BANGGIA]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Áp dụng')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_CHITIETVE_TrangThai",
+        "TableName": "[dbo].[CHITIETVE]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Đã đặt')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DANHGIAPHIM_NgayDanhGia_ClockVN",
+        "TableName": "[dbo].[DANHGIAPHIM]",
+        "ColumnName": "NgayDanhGia",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DONDATVE_NgayDat_ClockVN",
+        "TableName": "[dbo].[DONDATVE]",
+        "ColumnName": "NgayDat",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DONDATVE_TongTienVe",
+        "TableName": "[dbo].[DONDATVE]",
+        "ColumnName": "TongTienVe",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DONDATVE_TongTienDoAn",
+        "TableName": "[dbo].[DONDATVE]",
+        "ColumnName": "TongTienDoAn",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DONDATVE_TienGiamGia",
+        "TableName": "[dbo].[DONDATVE]",
+        "ColumnName": "TienGiamGia",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DONDATVE_TrangThai",
+        "TableName": "[dbo].[DONDATVE]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Chờ thanh toán')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_DONDATVE_DiemSuDung",
+        "TableName": "[dbo].[DONDATVE]",
+        "ColumnName": "DiemSuDung",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_GHE_LoaiGhe",
+        "TableName": "[dbo].[GHE]",
+        "ColumnName": "LoaiGhe",
+        "DefaultExpression": "(N'Thường')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_GHE_TrangThai",
+        "TableName": "[dbo].[GHE]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hoạt động')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_HINHANH_RAPCHIEUPHIM_LaAnhDaiDien",
+        "TableName": "[dbo].[HINHANH_RAPCHIEUPHIM]",
+        "ColumnName": "LaAnhDaiDien",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_HINHANH_RAPCHIEUPHIM_ThuTuHienThi",
+        "TableName": "[dbo].[HINHANH_RAPCHIEUPHIM]",
+        "ColumnName": "ThuTuHienThi",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_HINHANH_RAPCHIEUPHIM_TrangThai",
+        "TableName": "[dbo].[HINHANH_RAPCHIEUPHIM]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hoạt động')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_HINHANH_RAPCHIEUPHIM_NgayTao_ClockVN",
+        "TableName": "[dbo].[HINHANH_RAPCHIEUPHIM]",
+        "ColumnName": "NgayTao",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_HOSOKHACHHANG_DiemTichLuy",
+        "TableName": "[dbo].[HOSOKHACHHANG]",
+        "ColumnName": "DiemTichLuy",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_KHIEUNAI_MucDoUuTien",
+        "TableName": "[dbo].[KHIEUNAI]",
+        "ColumnName": "MucDoUuTien",
+        "DefaultExpression": "(N'Trung bình')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_KHIEUNAI_NgayTao_ClockVN",
+        "TableName": "[dbo].[KHIEUNAI]",
+        "ColumnName": "NgayTao",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_KHIEUNAI_TrangThai",
+        "TableName": "[dbo].[KHIEUNAI]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Mới')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_KHUYENMAI_DonHangToiThieu",
+        "TableName": "[dbo].[KHUYENMAI]",
+        "ColumnName": "DonHangToiThieu",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_KHUYENMAI_SoLuongDaDung",
+        "TableName": "[dbo].[KHUYENMAI]",
+        "ColumnName": "SoLuongDaDung",
+        "DefaultExpression": "((0))",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_KHUYENMAI_TrangThai",
+        "TableName": "[dbo].[KHUYENMAI]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hoạt động')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_NGUOIDUNG_NgayTao_ClockVN",
+        "TableName": "[dbo].[NGUOIDUNG]",
+        "ColumnName": "NgayTao",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_NGUOIDUNG_TrangThai",
+        "TableName": "[dbo].[NGUOIDUNG]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hoạt động')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_PHANCONG_RAP_TrangThai",
+        "TableName": "[dbo].[PHANCONG_RAP]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hiệu lực')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_PHIM_TrangThai",
+        "TableName": "[dbo].[PHIM]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Sắp chiếu')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_PHONGCHIEU_LoaiPhong",
+        "TableName": "[dbo].[PHONGCHIEU]",
+        "ColumnName": "LoaiPhong",
+        "DefaultExpression": "(N'2D')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_PHONGCHIEU_TrangThai",
+        "TableName": "[dbo].[PHONGCHIEU]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hoạt động')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_RAPCHIEUPHIM_TrangThai",
+        "TableName": "[dbo].[RAPCHIEUPHIM]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Hoạt động')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_SANPHAM_TrangThai",
+        "TableName": "[dbo].[SANPHAM]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Đang bán')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_SUATCHIEU_DinhDang",
+        "TableName": "[dbo].[SUATCHIEU]",
+        "ColumnName": "DinhDang",
+        "DefaultExpression": "(N'2D')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_SUATCHIEU_TrangThai",
+        "TableName": "[dbo].[SUATCHIEU]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Mở bán')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_TINNHAN_KHIEUNAI_LoaiTinNhan",
+        "TableName": "[dbo].[TINNHAN_KHIEUNAI]",
+        "ColumnName": "LoaiTinNhan",
+        "DefaultExpression": "(N'Công khai')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_TINNHAN_KHIEUNAI_ThoiGianGui_ClockVN",
+        "TableName": "[dbo].[TINNHAN_KHIEUNAI]",
+        "ColumnName": "ThoiGianGui",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_THANHTOAN_NgayTao_ClockVN",
+        "TableName": "[dbo].[THANHTOAN]",
+        "ColumnName": "NgayTao",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_THANHTOAN_TrangThai",
+        "TableName": "[dbo].[THANHTOAN]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Đang xử lý')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_VAITRO_QUYEN_NgayGan_ClockVN",
+        "TableName": "[dbo].[VAITRO_QUYEN]",
+        "ColumnName": "NgayGan",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_XULY_KHIEUNAI_NgayXuLy_ClockVN",
+        "TableName": "[dbo].[XULY_KHIEUNAI]",
+        "ColumnName": "NgayXuLy",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_YEUCAU_CHUYENCAP_MucDoUuTien",
+        "TableName": "[dbo].[YEUCAU_CHUYENCAP]",
+        "ColumnName": "MucDoUuTien",
+        "DefaultExpression": "(N'Trung bình')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_YEUCAU_CHUYENCAP_TrangThai",
+        "TableName": "[dbo].[YEUCAU_CHUYENCAP]",
+        "ColumnName": "TrangThai",
+        "DefaultExpression": "(N'Chờ tiếp nhận')",
+        "Naming": "Named"
+      },
+      {
+        "ConstraintName": "DF_YEUCAU_CHUYENCAP_ThoiGianGui_ClockVN",
+        "TableName": "[dbo].[YEUCAU_CHUYENCAP]",
+        "ColumnName": "ThoiGianGui",
+        "DefaultExpression": "([dbo].[fn_BayGio]())",
+        "Naming": "Named"
+      }
+    ],
+    [
+      {
+        "ExpectedCount": 42,
+        "ActualCount": 42,
+        "Verdict": "PASS"
+      }
+    ]
+  ],
+  "verdict": "PASS"
+}

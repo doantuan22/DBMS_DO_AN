@@ -1,0 +1,211 @@
+{
+  "target": "DoanTuanIT/CinemaBookingDB",
+  "database": "CinemaBookingDB",
+  "mode": "read-only procedure execution; no persistent writes",
+  "startedAt": "2026-10-21T10:40:11.233Z",
+  "count": 25,
+  "passed": 25,
+  "failed": 0,
+  "results": [
+    {
+      "name": "sp_System_HealthCheck",
+      "input": "no parameters",
+      "expected": "one Healthy row for CinemaBookingDB",
+      "actual": "1 rows; Healthy; CinemaBookingDB",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Clock_GetNow",
+      "input": "existing movie ID",
+      "expected": "one row; runtime equals PHIM.ThoiLuong; DB clock current",
+      "actual": "1 rows; runtime=121",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Genre_List",
+      "input": "NULL/default filters",
+      "expected": "12 rows from base-table oracle",
+      "actual": "12 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Cinema_List",
+      "input": "NULL/default filters",
+      "expected": "4 rows from base-table oracle",
+      "actual": "4 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Movie_List",
+      "input": "NULL/default filters",
+      "expected": "20 rows from base-table oracle",
+      "actual": "20 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Product_ListActive",
+      "input": "NULL/default filters",
+      "expected": "13 rows from base-table oracle",
+      "actual": "13 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Review_ListByMovie",
+      "input": "existing movie ID",
+      "expected": "16 rows from base-table oracle",
+      "actual": "16 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Cinema_GetImages",
+      "input": "existing active cinema ID",
+      "expected": "1 active image rows",
+      "actual": "1 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Cinema_List city filter",
+      "input": "city not in Main data",
+      "expected": "0 rows",
+      "actual": "0 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Showtime_ListByMovie",
+      "input": "existing bookable movie ID; cinema/date NULL",
+      "expected": "5 bookable showtimes",
+      "actual": "5 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Showtime_GetDetail",
+      "input": "existing bookable showtime ID",
+      "expected": "1 row",
+      "actual": "1 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Seat_ListByShowtime",
+      "input": "existing bookable showtime ID",
+      "expected": "80 physical seats",
+      "actual": "80 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Seat_ListByShowtime invalid ID",
+      "input": "showtime=-2147483648",
+      "expected": "THROW 50021",
+      "actual": "error 50021",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Movie_GetDetail recordsets",
+      "input": "existing movie ID",
+      "expected": "[1,2,4,10]",
+      "actual": "[1,2,4,10]",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_RBAC_GetPermissionsByUser",
+      "input": "active admin ID",
+      "expected": "33 distinct role permissions",
+      "actual": "33 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Manager_ListAssignedCinemas",
+      "input": "active assigned manager ID",
+      "expected": "1 current assignments",
+      "actual": "1 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Manager_Dashboard",
+      "input": "current manager and assigned cinema",
+      "expected": "one row for assigned cinema",
+      "actual": "1 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Admin_Dashboard",
+      "input": "active admin ID with global-report permission",
+      "expected": "one dashboard row",
+      "actual": "1 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Admin_Report_Revenue",
+      "input": "active admin; all dates; all cinemas",
+      "expected": "4 recordsets; orders=293; revenue=64022000",
+      "actual": "4 recordsets; orders=293; revenue=64022000",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Promotion_Validate valid preview",
+      "input": "active customer; STAR10; total=100000",
+      "expected": "IsValid=1; discount=10000",
+      "actual": "IsValid=true; discount=10000",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Promotion_Validate unknown code",
+      "input": "active customer; nonexistent code; total=100000",
+      "expected": "IsValid=0; discount=0",
+      "actual": "IsValid=false; discount=0",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Showtime_ValidateTimes valid future input",
+      "input": "existing movie runtime; future window; no room conflict check",
+      "expected": "no error",
+      "actual": "no error",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Showtime_ValidateTimes overlap rejection",
+      "input": "existing future room/time slot; no writes",
+      "expected": "THROW 50001",
+      "actual": "error 50001",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Order_ListByCustomer",
+      "input": "active customer with order history",
+      "expected": "6 order rows",
+      "actual": "6 rows",
+      "verdict": "PASS",
+      "note": ""
+    },
+    {
+      "name": "sp_Order_GetDetailByCustomer recordsets",
+      "input": "active customer; own latest order",
+      "expected": "[1,2,3,1]",
+      "actual": "[1,2,3,1]",
+      "verdict": "PASS",
+      "note": ""
+    }
+  ]
+}

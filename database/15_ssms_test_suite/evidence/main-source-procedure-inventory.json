@@ -1,0 +1,4789 @@
+{
+  "createdAt": "2026-10-21T11:24:45.254Z",
+  "count": 147,
+  "objects": [
+    {
+      "name": "sp_Admin_Actor_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Actor_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 648,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HoTen",
+          "type": "NVARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "NgaySinh",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "QuocTich",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Actor_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Actor_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1328,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DienVienID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Actor_List",
+      "file": "database/08_procedures/admin/sp_Admin_Actor_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Actor_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Actor_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 849,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DienVienID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HoTen",
+          "type": "NVARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "NgaySinh",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "QuocTich",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Assignment_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Assignment_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1924,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Assignment_List",
+      "file": "database/08_procedures/admin/sp_Admin_Assignment_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Cinema_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Cinema_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 586,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenRap",
+          "type": "NVARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "DiaChi",
+          "type": "NVARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "ThanhPho",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "SoDienThoai",
+          "type": "VARCHAR(20)",
+          "default": "NULL"
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayHoatDong",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Cinema_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Cinema_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1329,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Cinema_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Cinema_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 588,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenRap",
+          "type": "NVARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "DiaChi",
+          "type": "NVARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "ThanhPho",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "SoDienThoai",
+          "type": "VARCHAR(20)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(500)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Dashboard",
+      "file": "database/08_procedures/admin/sp_Admin_Dashboard.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Genre_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Genre_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 780,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenTheLoai",
+          "type": "NVARCHAR(100)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Genre_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Genre_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 981,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TheLoaiID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Genre_List",
+      "file": "database/08_procedures/admin/sp_Admin_Genre_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [
+        "sp_Genre_List"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Genre_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Genre_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1018,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TheLoaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenTheLoai",
+          "type": "NVARCHAR(100)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_MovieActor_Set",
+      "file": "database/08_procedures/admin/sp_Admin_MovieActor_Set.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1969,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DanhSachJson",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Movie_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Movie_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 635,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [
+        "sp_Movie_GetDetail"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenPhim",
+          "type": "NVARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "ThoiLuong",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NgayKhoiChieu",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "NgonNgu",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "PhuDe",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "DoTuoi",
+          "type": "NVARCHAR(20)",
+          "default": "NULL"
+        },
+        {
+          "name": "DaoDien",
+          "type": "NVARCHAR(150)",
+          "default": "NULL"
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(MAX)",
+          "default": "NULL"
+        },
+        {
+          "name": "PosterURL",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        },
+        {
+          "name": "TrailerURL",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        },
+        {
+          "name": "TheLoaiIdList",
+          "type": "VARCHAR(MAX)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Movie_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Movie_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1102,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Movie_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Movie_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 637,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [
+        "sp_Movie_GetDetail"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenPhim",
+          "type": "NVARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "ThoiLuong",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NgayKhoiChieu",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "NgonNgu",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "PhuDe",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "DoTuoi",
+          "type": "NVARCHAR(20)",
+          "default": "NULL"
+        },
+        {
+          "name": "DaoDien",
+          "type": "NVARCHAR(150)",
+          "default": "NULL"
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(MAX)",
+          "default": "NULL"
+        },
+        {
+          "name": "PosterURL",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        },
+        {
+          "name": "TrailerURL",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TheLoaiIdList",
+          "type": "VARCHAR(MAX)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Permission_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Permission_Create.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MaQuyen",
+          "type": "VARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TenQuyen",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Permission_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Permission_Delete.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "QuyenID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Permission_List",
+      "file": "database/08_procedures/admin/sp_Admin_Permission_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Permission_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Permission_Update.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "QuyenID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenQuyen",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Product_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Product_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 586,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenSanPham",
+          "type": "NVARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "LoaiSanPham",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "Gia",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        },
+        {
+          "name": "HinhAnh",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Product_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Product_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 980,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SanPhamID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Product_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Product_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 588,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SanPhamID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenSanPham",
+          "type": "NVARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "LoaiSanPham",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "Gia",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "HinhAnh",
+          "type": "NVARCHAR(500)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Promotion_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Promotion_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 774,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MaCode",
+          "type": "VARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        },
+        {
+          "name": "LoaiGiamGia",
+          "type": "NVARCHAR(20)",
+          "default": null
+        },
+        {
+          "name": "GiaTriGiam",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "DonHangToiThieu",
+          "type": "DECIMAL(18, 2)",
+          "default": "0"
+        },
+        {
+          "name": "GiamToiDa",
+          "type": "DECIMAL(18, 2)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "SoLuong",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Promotion_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Promotion_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1686,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhuyenMaiID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Promotion_List",
+      "file": "database/08_procedures/admin/sp_Admin_Promotion_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Promotion_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Promotion_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 790,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhuyenMaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        },
+        {
+          "name": "LoaiGiamGia",
+          "type": "NVARCHAR(20)",
+          "default": null
+        },
+        {
+          "name": "GiaTriGiam",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "DonHangToiThieu",
+          "type": "DECIMAL(18, 2)",
+          "default": "0"
+        },
+        {
+          "name": "GiamToiDa",
+          "type": "DECIMAL(18, 2)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "SoLuong",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_Report_Revenue",
+      "file": "database/08_procedures/admin/sp_Admin_Report_Revenue.sql",
+      "directWrite": true,
+      "firstDmlIndex": 969,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TuNgay",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "DenNgay",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_RolePermission_Set",
+      "file": "database/08_procedures/admin/sp_Admin_RolePermission_Set.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "VaiTroID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "QuyenIdList",
+          "type": "VARCHAR(MAX)",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Role_Create",
+      "file": "database/08_procedures/admin/sp_Admin_Role_Create.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MaVaiTro",
+          "type": "VARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TenVaiTro",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Role_Delete",
+      "file": "database/08_procedures/admin/sp_Admin_Role_Delete.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "VaiTroID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Role_List",
+      "file": "database/08_procedures/admin/sp_Admin_Role_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_Role_Update",
+      "file": "database/08_procedures/admin/sp_Admin_Role_Update.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50405,
+        "index": 27
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "VaiTroID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenVaiTro",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_User_Create",
+      "file": "database/08_procedures/admin/sp_Admin_User_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1340,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HoTen",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "Email",
+          "type": "VARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "MatKhauHash",
+          "type": "VARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "SoDienThoai",
+          "type": "VARCHAR(20)",
+          "default": "NULL"
+        },
+        {
+          "name": "VaiTroID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Admin_User_List",
+      "file": "database/08_procedures/admin/sp_Admin_User_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "VaiTroID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "SearchTerm",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Admin_User_UpdateStatus",
+      "file": "database/08_procedures/admin/sp_Admin_User_UpdateStatus.sql",
+      "directWrite": true,
+      "firstDmlIndex": 588,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Assignment_Update",
+      "file": "database/08_procedures/admin/usp_Admin_Assignment_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 2342,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhanCongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_CinemaImage_Create",
+      "file": "database/08_procedures/admin/usp_Admin_CinemaImage_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1472,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "URL",
+          "type": "NVARCHAR(500)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        },
+        {
+          "name": "LaAnhDaiDien",
+          "type": "BIT",
+          "default": "0"
+        },
+        {
+          "name": "ThuTuHienThi",
+          "type": "INT",
+          "default": "0"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "N'Hoạt động'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_CinemaImage_Delete",
+      "file": "database/08_procedures/admin/usp_Admin_CinemaImage_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 588,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HinhAnhRapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_CinemaImage_List",
+      "file": "database/08_procedures/admin/usp_Admin_CinemaImage_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_CinemaImage_SetCover",
+      "file": "database/08_procedures/admin/usp_Admin_CinemaImage_SetCover.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1664,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HinhAnhRapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_CinemaImage_Update",
+      "file": "database/08_procedures/admin/usp_Admin_CinemaImage_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1498,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HinhAnhRapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "URL",
+          "type": "NVARCHAR(500)",
+          "default": null
+        },
+        {
+          "name": "MoTa",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        },
+        {
+          "name": "ThuTuHienThi",
+          "type": "INT",
+          "default": "0"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "N'Hoạt động'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Cinema_List",
+      "file": "database/08_procedures/admin/usp_Admin_Cinema_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Movie_List",
+      "file": "database/08_procedures/admin/usp_Admin_Movie_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "TheLoaiID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "SearchTerm",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Pricing_Create",
+      "file": "database/08_procedures/admin/usp_Admin_Pricing_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 888,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "LoaiNgay",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "PhuThu",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Pricing_List",
+      "file": "database/08_procedures/admin/usp_Admin_Pricing_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Pricing_Update",
+      "file": "database/08_procedures/admin/usp_Admin_Pricing_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1465,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "GiaID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhuThu",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "LoaiNgay",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "CapNhatDieuKien",
+          "type": "BIT",
+          "default": "0"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Product_List",
+      "file": "database/08_procedures/admin/usp_Admin_Product_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_RolePermission_List",
+      "file": "database/08_procedures/admin/usp_Admin_RolePermission_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "VaiTroID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Room_Create",
+      "file": "database/08_procedures/admin/usp_Admin_Room_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 947,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenPhong",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "LoaiPhong",
+          "type": "NVARCHAR(50)",
+          "default": "N'2D'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Room_Delete",
+      "file": "database/08_procedures/admin/usp_Admin_Room_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1188,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 227
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Room_List",
+      "file": "database/08_procedures/admin/usp_Admin_Room_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Room_Update",
+      "file": "database/08_procedures/admin/usp_Admin_Room_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1021,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenPhong",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "LoaiPhong",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Seat_Create",
+      "file": "database/08_procedures/admin/usp_Admin_Seat_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 975,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HangGhe",
+          "type": "VARCHAR(10)",
+          "default": null
+        },
+        {
+          "name": "SoGhe",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": "N'Thường'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Seat_Delete",
+      "file": "database/08_procedures/admin/usp_Admin_Seat_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1076,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "GheID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Seat_List",
+      "file": "database/08_procedures/admin/usp_Admin_Seat_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Seat_Update",
+      "file": "database/08_procedures/admin/usp_Admin_Seat_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1532,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "GheID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Showtime_Cancel",
+      "file": "database/08_procedures/admin/usp_Admin_Showtime_Cancel.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [
+        "sp_Showtime_CancelCascade"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Showtime_Create",
+      "file": "database/08_procedures/admin/usp_Admin_Showtime_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1428,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 227
+      },
+      "calls": [
+        "sp_Showtime_ValidateTimes",
+        "sp_Showtime_GetDetail"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThoiGianBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "ThoiGianKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": "N'2D'"
+        },
+        {
+          "name": "GiaVeCoBan",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "usp_Admin_Showtime_List",
+      "file": "database/08_procedures/admin/usp_Admin_Showtime_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 204
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "TuNgay",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "DenNgay",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "usp_Admin_Showtime_Update",
+      "file": "database/08_procedures/admin/usp_Admin_Showtime_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 2871,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 227
+      },
+      "calls": [
+        "sp_Showtime_ValidateTimes"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThoiGianBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "ThoiGianKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "GiaVeCoBan",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Auth_Login",
+      "file": "database/08_procedures/auth/sp_Auth_Login.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "Email",
+          "type": "VARCHAR(150)",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Auth_RegisterCustomer",
+      "file": "database/08_procedures/auth/sp_Auth_RegisterCustomer.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1120,
+      "firstThrowBeforeDml": {
+        "number": 50400,
+        "index": 64
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "HoTen",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "Email",
+          "type": "VARCHAR(150)",
+          "default": null
+        },
+        {
+          "name": "MatKhauHash",
+          "type": "VARCHAR(255)",
+          "default": null
+        },
+        {
+          "name": "SoDienThoai",
+          "type": "VARCHAR(20)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgaySinh",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "GioiTinh",
+          "type": "NVARCHAR(10)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_RBAC_GetPermissionsByUser",
+      "file": "database/08_procedures/auth/sp_RBAC_GetPermissionsByUser.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_User_ChangePassword",
+      "file": "database/08_procedures/auth/sp_User_ChangePassword.sql",
+      "directWrite": true,
+      "firstDmlIndex": 259,
+      "firstThrowBeforeDml": {
+        "number": 50016,
+        "index": 226
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NewPasswordHash",
+          "type": "VARCHAR(255)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_User_GetCurrent",
+      "file": "database/08_procedures/auth/sp_User_GetCurrent.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_User_GetPasswordHash",
+      "file": "database/08_procedures/auth/sp_User_GetPasswordHash.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_User_UpdateProfile",
+      "file": "database/08_procedures/auth/sp_User_UpdateProfile.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1230,
+      "firstThrowBeforeDml": {
+        "number": 50400,
+        "index": 64
+      },
+      "calls": [
+        "sp_User_GetCurrent"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HoTen",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "SoDienThoai",
+          "type": "VARCHAR(20)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgaySinh",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "GioiTinh",
+          "type": "NVARCHAR(10)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Booking_Create",
+      "file": "database/08_procedures/booking/sp_Booking_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 3434,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [
+        "sp_Order_ExpirePending",
+        "sp_Promotion_Validate"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MaKhuyenMai",
+          "type": "VARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "DanhSachGheId",
+          "type": "VARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "DanhSachDoAnJson",
+          "type": "NVARCHAR(MAX)",
+          "default": "NULL"
+        },
+        {
+          "name": "DiemSuDung",
+          "type": "INT",
+          "default": "0"
+        },
+        {
+          "name": "ChiXemTruoc",
+          "type": "BIT",
+          "default": "0"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_DatVe",
+      "file": "database/08_procedures/booking/sp_DatVe.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [
+        "sp_Booking_Create"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MaKhuyenMai",
+          "type": "VARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "DanhSachGheId",
+          "type": "VARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "DanhSachDoAnJson",
+          "type": "NVARCHAR(MAX)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_Create",
+      "file": "database/08_procedures/customer/sp_Complaint_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 878,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "LoaiKhieuNai",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "TieuDe",
+          "type": "NVARCHAR(200)",
+          "default": null
+        },
+        {
+          "name": "NoiDung",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "MucDoUuTien",
+          "type": "NVARCHAR(50)",
+          "default": "N'Trung bình'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_GetByCustomer",
+      "file": "database/08_procedures/customer/sp_Complaint_GetByCustomer.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Complaint_ListByCustomer",
+      "file": "database/08_procedures/customer/sp_Complaint_ListByCustomer.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Order_Cancel",
+      "file": "database/08_procedures/customer/sp_Order_Cancel.sql",
+      "directWrite": true,
+      "firstDmlIndex": 689,
+      "firstThrowBeforeDml": {
+        "number": 50034,
+        "index": 550
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Order_ExpirePending",
+      "file": "database/08_procedures/customer/sp_Order_ExpirePending.sql",
+      "directWrite": true,
+      "firstDmlIndex": 371,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "TraVeKetQua",
+          "type": "BIT",
+          "default": "1"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Order_GetDetailByCustomer",
+      "file": "database/08_procedures/customer/sp_Order_GetDetailByCustomer.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Order_ListByCustomer",
+      "file": "database/08_procedures/customer/sp_Order_ListByCustomer.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Review_Create",
+      "file": "database/08_procedures/customer/sp_Review_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 835,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SoSao",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NoiDung",
+          "type": "NVARCHAR(1000)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Review_ListByMovie",
+      "file": "database/08_procedures/customer/sp_Review_ListByMovie.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Dashboard",
+      "file": "database/08_procedures/manager/sp_Manager_Dashboard.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_ListAssignedCinemas",
+      "file": "database/08_procedures/manager/sp_Manager_ListAssignedCinemas.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Pricing_Create",
+      "file": "database/08_procedures/manager/sp_Manager_Pricing_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 717,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "LoaiNgay",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "PhuThu",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Pricing_List",
+      "file": "database/08_procedures/manager/sp_Manager_Pricing_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Pricing_Update",
+      "file": "database/08_procedures/manager/sp_Manager_Pricing_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1524,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "GiaID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhuThu",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "LoaiNgay",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "CapNhatDieuKien",
+          "type": "BIT",
+          "default": "0"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Revenue",
+      "file": "database/08_procedures/manager/sp_Manager_Revenue.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TuNgay",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "DenNgay",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Room_Create",
+      "file": "database/08_procedures/manager/sp_Manager_Room_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 941,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenPhong",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "LoaiPhong",
+          "type": "NVARCHAR(50)",
+          "default": "N'2D'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Room_Delete",
+      "file": "database/08_procedures/manager/sp_Manager_Room_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1297,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 231
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Room_List",
+      "file": "database/08_procedures/manager/sp_Manager_Room_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Room_Update",
+      "file": "database/08_procedures/manager/sp_Manager_Room_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1184,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TenPhong",
+          "type": "NVARCHAR(100)",
+          "default": null
+        },
+        {
+          "name": "LoaiPhong",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Seat_BatchCreate",
+      "file": "database/08_procedures/manager/sp_Manager_Seat_BatchCreate.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1248,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NumRows",
+          "type": "INT",
+          "default": "8"
+        },
+        {
+          "name": "SeatsPerRow",
+          "type": "INT",
+          "default": "12"
+        },
+        {
+          "name": "VipRows",
+          "type": "INT",
+          "default": "3"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Seat_Create",
+      "file": "database/08_procedures/manager/sp_Manager_Seat_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1095,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "HangGhe",
+          "type": "VARCHAR(10)",
+          "default": null
+        },
+        {
+          "name": "SoGhe",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": "N'Thường'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Seat_Delete",
+      "file": "database/08_procedures/manager/sp_Manager_Seat_Delete.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1169,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "GheID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Seat_ListByRoom",
+      "file": "database/08_procedures/manager/sp_Manager_Seat_ListByRoom.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Seat_Update",
+      "file": "database/08_procedures/manager/sp_Manager_Seat_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1771,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "GheID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiGhe",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Showtime_Cancel",
+      "file": "database/08_procedures/manager/sp_Manager_Showtime_Cancel.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [
+        "sp_Showtime_CancelCascade"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LyDo",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Showtime_Create",
+      "file": "database/08_procedures/manager/sp_Manager_Showtime_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1515,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 231
+      },
+      "calls": [
+        "sp_Showtime_ValidateTimes",
+        "sp_Showtime_GetDetail"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThoiGianBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "ThoiGianKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": "N'2D'"
+        },
+        {
+          "name": "GiaVeCoBan",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Manager_Showtime_List",
+      "file": "database/08_procedures/manager/sp_Manager_Showtime_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TuNgay",
+          "type": "DATE",
+          "default": "NULL"
+        },
+        {
+          "name": "DenNgay",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Manager_Showtime_Update",
+      "file": "database/08_procedures/manager/sp_Manager_Showtime_Update.sql",
+      "directWrite": true,
+      "firstDmlIndex": 3035,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 231
+      },
+      "calls": [
+        "sp_Showtime_ValidateTimes"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThoiGianBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "ThoiGianKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "GiaVeCoBan",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Payment_CreateAttempt",
+      "file": "database/08_procedures/payment/sp_Payment_CreateAttempt.sql",
+      "directWrite": true,
+      "firstDmlIndex": 3318,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [
+        "sp_Order_ExpirePending"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhuongThuc",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Payment_UpdateResult",
+      "file": "database/08_procedures/payment/sp_Payment_UpdateResult.sql",
+      "directWrite": true,
+      "firstDmlIndex": 3933,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [
+        "sp_Order_ExpirePending"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThanhToanID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThaiThanhToan",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "MaGiaoDichNgoai",
+          "type": "VARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "GhiChu",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_XuLyThanhToan",
+      "file": "database/08_procedures/payment/sp_XuLyThanhToan.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [
+        "sp_Payment_UpdateResult"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThanhToanID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThaiThanhToan",
+          "type": "NVARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "MaGiaoDichNgoai",
+          "type": "VARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "GhiChu",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Cinema_GetImages",
+      "file": "database/08_procedures/public/sp_Cinema_GetImages.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Cinema_List",
+      "file": "database/08_procedures/public/sp_Cinema_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "ThanhPho",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Genre_List",
+      "file": "database/08_procedures/public/sp_Genre_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Movie_GetDetail",
+      "file": "database/08_procedures/public/sp_Movie_GetDetail.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Movie_List",
+      "file": "database/08_procedures/public/sp_Movie_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "TheLoaiID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "SearchTerm",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Product_ListActive",
+      "file": "database/08_procedures/public/sp_Product_ListActive.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Promotion_Validate",
+      "file": "database/08_procedures/public/sp_Promotion_Validate.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 214
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "MaCode",
+          "type": "VARCHAR(50)",
+          "default": null
+        },
+        {
+          "name": "TongTienDon",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Seat_ListByShowtime",
+      "file": "database/08_procedures/public/sp_Seat_ListByShowtime.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50021,
+        "index": 176
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Showtime_GetDetail",
+      "file": "database/08_procedures/public/sp_Showtime_GetDetail.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Showtime_ListByMovie",
+      "file": "database/08_procedures/public/sp_Showtime_ListByMovie.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "NgayChieu",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_Authorize",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_Authorize.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 238
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "int",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_Cancel",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_Cancel.sql",
+      "directWrite": true,
+      "firstDmlIndex": 2397,
+      "firstThrowBeforeDml": {
+        "number": 50033,
+        "index": 883
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize",
+        "sp_StaffBooking_Detail"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "int",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_StaffBooking_Create",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_Create.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50511,
+        "index": 1070
+      },
+      "calls": [
+        "sp_StaffBooking_LockShow",
+        "sp_Booking_Create",
+        "sp_StaffBooking_Authorize"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "CustomerID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "DanhSachGheId",
+          "type": "varchar(max)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_StaffBooking_Customers",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_Customers.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50511,
+        "index": 199
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "Search",
+          "type": "nvarchar(100)",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_Detail",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_Detail.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50033,
+        "index": 642
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "int",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_List",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50511,
+        "index": 264
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "Search",
+          "type": "nvarchar(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "Status",
+          "type": "nvarchar(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "RapID",
+          "type": "int",
+          "default": "NULL"
+        },
+        {
+          "name": "Page",
+          "type": "int",
+          "default": "1"
+        },
+        {
+          "name": "PageSize",
+          "type": "int",
+          "default": "20"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_LockShow",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_LockShow.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50516,
+        "index": 52
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "CustomerID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "int",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_Options",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_Options.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50021,
+        "index": 421
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "int",
+          "default": "NULL"
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "int",
+          "default": "NULL"
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "int",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_StaffBooking_UpdateSeats",
+      "file": "database/08_procedures/staff_booking/sp_StaffBooking_UpdateSeats.sql",
+      "directWrite": true,
+      "firstDmlIndex": 3730,
+      "firstThrowBeforeDml": {
+        "number": 50033,
+        "index": 724
+      },
+      "calls": [
+        "sp_StaffBooking_Authorize",
+        "sp_StaffBooking_LockShow",
+        "sp_StaffBooking_Detail"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "PortalRole",
+          "type": "varchar(50)",
+          "default": null
+        },
+        {
+          "name": "DonDatVeID",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "DanhSachGheId",
+          "type": "varchar(max)",
+          "default": null
+        },
+        {
+          "name": "ExpectedVeIdList",
+          "type": "varchar(max)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_Assign_Admin",
+      "file": "database/08_procedures/support/sp_Complaint_Assign_Admin.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1387,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 148
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "AdminID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NhanVienMoiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LyDo",
+          "type": "NVARCHAR(500)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_Assign_Self",
+      "file": "database/08_procedures/support/sp_Complaint_Assign_Self.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1160,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_Chat_AddInternalNote",
+      "file": "database/08_procedures/support/sp_Complaint_Chat_AddInternalNote.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [
+        "sp_Complaint_Chat_Send"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NoiDung",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_Chat_List",
+      "file": "database/08_procedures/support/sp_Complaint_Chat_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LaNoiBo",
+          "type": "BIT",
+          "default": "1"
+        },
+        {
+          "name": "Page",
+          "type": "INT",
+          "default": "1"
+        },
+        {
+          "name": "PageSize",
+          "type": "INT",
+          "default": "50"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Complaint_Chat_Send",
+      "file": "database/08_procedures/support/sp_Complaint_Chat_Send.sql",
+      "directWrite": true,
+      "firstDmlIndex": 2276,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NoiDung",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "LoaiTinNhan",
+          "type": "NVARCHAR(50)",
+          "default": "N'Công khai'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Complaint_Unassigned_List",
+      "file": "database/08_procedures/support/sp_Complaint_Unassigned_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LoaiKhieuNai",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "SearchTerm",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "MucDoUuTien",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Escalation_Claim",
+      "file": "database/08_procedures/support/sp_Escalation_Claim.sql",
+      "directWrite": true,
+      "firstDmlIndex": 996,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 148
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "AdminID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "YeuCauID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Escalation_Create",
+      "file": "database/08_procedures/support/sp_Escalation_Create.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1301,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LyDo",
+          "type": "NVARCHAR(500)",
+          "default": null
+        },
+        {
+          "name": "MucDoUuTien",
+          "type": "NVARCHAR(50)",
+          "default": "N'Trung bình'"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Escalation_GetDetail",
+      "file": "database/08_procedures/support/sp_Escalation_GetDetail.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "YeuCauID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Escalation_List_Admin",
+      "file": "database/08_procedures/support/sp_Escalation_List_Admin.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 148
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "AdminID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "MucDoUuTien",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "SearchTerm",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Escalation_List_CSKH",
+      "file": "database/08_procedures/support/sp_Escalation_List_CSKH.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Escalation_Process",
+      "file": "database/08_procedures/support/sp_Escalation_Process.sql",
+      "directWrite": true,
+      "firstDmlIndex": 1218,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 148
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "AdminID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "YeuCauID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KetQuaXuLy",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "TrangThaiMoi",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Support_Complaint_AddProcessing",
+      "file": "database/08_procedures/support/sp_Support_Complaint_AddProcessing.sql",
+      "directWrite": true,
+      "firstDmlIndex": 943,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NoiDungXuLy",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "TrangThaiSauXuLy",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Support_Complaint_GetDetail",
+      "file": "database/08_procedures/support/sp_Support_Complaint_GetDetail.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Support_Complaint_GetOrderReference",
+      "file": "database/08_procedures/support/sp_Support_Complaint_GetOrderReference.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Support_Complaint_List",
+      "file": "database/08_procedures/support/sp_Support_Complaint_List.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "LoaiKhieuNai",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "SearchTerm",
+          "type": "NVARCHAR(100)",
+          "default": "NULL"
+        },
+        {
+          "name": "MucDoUuTien",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        },
+        {
+          "name": "PhuTrach",
+          "type": "NVARCHAR(50)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_Support_Complaint_UpdateStatus",
+      "file": "database/08_procedures/support/sp_Support_Complaint_UpdateStatus.sql",
+      "directWrite": true,
+      "firstDmlIndex": 943,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 208
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "TrangThaiMoi",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Support_Customer_GetPoints",
+      "file": "database/08_procedures/support/sp_Support_Customer_GetPoints.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 152
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhachHangID",
+          "type": "INT",
+          "default": null
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_XuLyKhieuNai",
+      "file": "database/08_procedures/support/sp_XuLyKhieuNai.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [
+        "sp_Support_Complaint_AddProcessing"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "KhieuNaiID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NoiDungXuLy",
+          "type": "NVARCHAR(MAX)",
+          "default": null
+        },
+        {
+          "name": "TrangThaiSauXuLy",
+          "type": "NVARCHAR(50)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Clock_GetNow",
+      "file": "database/08_procedures/system/sp_Clock_GetNow.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_PhanCongQuanLyRap",
+      "file": "database/08_procedures/system/sp_PhanCongQuanLyRap.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [
+        "sp_Admin_Assignment_Create"
+      ],
+      "params": [
+        {
+          "name": "ActorID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "RapID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NgayBatDau",
+          "type": "DATE",
+          "default": null
+        },
+        {
+          "name": "NgayKetThuc",
+          "type": "DATE",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Showtime_CancelCascade",
+      "file": "database/08_procedures/system/sp_Showtime_CancelCascade.sql",
+      "directWrite": true,
+      "firstDmlIndex": 3362,
+      "firstThrowBeforeDml": {
+        "number": 50300,
+        "index": 1195
+      },
+      "calls": [
+        "sp_Order_ExpirePending"
+      ],
+      "params": [
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "LyDo",
+          "type": "NVARCHAR(255)",
+          "default": "NULL"
+        }
+      ],
+      "writeCapable": true
+    },
+    {
+      "name": "sp_Showtime_ValidateTimes",
+      "file": "database/08_procedures/system/sp_Showtime_ValidateTimes.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": {
+        "number": 50216,
+        "index": 785
+      },
+      "calls": [],
+      "params": [
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThoiGianBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "ThoiGianKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "SuatChieuID",
+          "type": "INT",
+          "default": "NULL"
+        },
+        {
+          "name": "TrangThai",
+          "type": "NVARCHAR(50)",
+          "default": "N'Mở bán'"
+        }
+      ],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_System_HealthCheck",
+      "file": "database/08_procedures/system/sp_System_HealthCheck.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [],
+      "params": [],
+      "writeCapable": false
+    },
+    {
+      "name": "sp_ThemSuatChieu",
+      "file": "database/08_procedures/system/sp_ThemSuatChieu.sql",
+      "directWrite": false,
+      "firstDmlIndex": null,
+      "firstThrowBeforeDml": null,
+      "calls": [
+        "sp_Manager_Showtime_Create"
+      ],
+      "params": [
+        {
+          "name": "NguoiDungID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhimID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "PhongID",
+          "type": "INT",
+          "default": null
+        },
+        {
+          "name": "ThoiGianBatDau",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "ThoiGianKetThuc",
+          "type": "DATETIME2",
+          "default": null
+        },
+        {
+          "name": "DinhDang",
+          "type": "NVARCHAR(50)",
+          "default": "N'2D'"
+        },
+        {
+          "name": "GiaVeCoBan",
+          "type": "DECIMAL(18, 2)",
+          "default": null
+        }
+      ],
+      "writeCapable": true
+    }
+  ]
+}

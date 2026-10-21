@@ -1,0 +1,97 @@
+{
+  "test": "00_PRECHECK",
+  "executedUtc": "2026-10-21T13:51:33.827Z",
+  "targetBefore": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "targetAfter": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "batches": 2,
+  "resultSets": [
+    [
+      {
+        "ServerName": "DoanTuanIT",
+        "DatabaseName": "CinemaBookingDB",
+        "DatabaseState": "ONLINE",
+        "RCSI": true,
+        "OpenTransactions": 0
+      }
+    ],
+    [
+      {
+        "ObjectType": "Table",
+        "ExpectedCount": 29,
+        "ActualCount": 29,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Stored Procedure",
+        "ExpectedCount": 147,
+        "ActualCount": 147,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "View",
+        "ExpectedCount": 6,
+        "ActualCount": 6,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Function",
+        "ExpectedCount": 21,
+        "ActualCount": 21,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Trigger",
+        "ExpectedCount": 9,
+        "ActualCount": 9,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Primary Key",
+        "ExpectedCount": 29,
+        "ActualCount": 29,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Unique Constraint",
+        "ExpectedCount": 11,
+        "ActualCount": 11,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Foreign Key",
+        "ExpectedCount": 37,
+        "ActualCount": 37,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Check Constraint",
+        "ExpectedCount": 65,
+        "ActualCount": 65,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Index",
+        "ExpectedCount": 71,
+        "ActualCount": 71,
+        "Verdict": "PASS"
+      },
+      {
+        "ObjectType": "Default Constraint",
+        "ExpectedCount": 42,
+        "ActualCount": 42,
+        "Verdict": "PASS"
+      }
+    ]
+  ],
+  "verdict": "PASS"
+}

@@ -1,0 +1,20 @@
+{
+  "startedUtc": "2026-10-21T11:51:45.012Z",
+  "verdict": "PASS",
+  "target": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE"
+  },
+  "actualResult": {
+    "TestName": "sp_Booking_Create atomic rollback",
+    "InputValue": "showtime=7; seat=481; one-use promotion; points=-1",
+    "ExpectedValue": "error 50410; promo usage=0; order/ticket/food=0; identities unchanged; fixture rows=0",
+    "ActualValue": "error=50410; promo=0; order/ticket/food=0/0/0; identities unchanged=yes; fixture rows after rollback=0; SQL message=Số điểm sử dụng không hợp lệ.",
+    "Verdict": "PASS"
+  },
+  "post": {
+    "untrustedOrDisabledChecks": 0
+  },
+  "finishedUtc": "2026-10-21T11:51:45.472Z"
+}

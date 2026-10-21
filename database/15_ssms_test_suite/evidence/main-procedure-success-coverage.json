@@ -1,0 +1,1408 @@
+{
+  "generatedUtc": "2026-10-21T12:57:51.536Z",
+  "target": "DoanTuanIT / CinemaBookingDB",
+  "inventoryWriteCapable": 79,
+  "persistentWriteProcedures": 78,
+  "nonPersistentReportProcedure": "dbo.sp_Admin_Report_Revenue (uses temp result materialization; covered by read procedure audit)",
+  "passed": 78,
+  "failed": 0,
+  "blocked": 0,
+  "procedures": [
+    {
+      "procedure": "dbo.sp_Admin_Actor_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Actor_Create",
+      "expected": {
+        "HoTen": "Audit Actor 9025854CD258",
+        "QuocTich": "Audit"
+      },
+      "actual": {
+        "DienVienID": 50,
+        "HoTen": "Audit Actor 9025854CD258",
+        "NgaySinh": null,
+        "QuocTich": "Audit"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Actor_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Actor_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Admin_Actor_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Actor_Update",
+      "expected": {
+        "HoTen": "Audit Actor Updated 9025854CD258",
+        "QuocTich": "Updated"
+      },
+      "actual": {
+        "DienVienID": 50,
+        "HoTen": "Audit Actor Updated 9025854CD258",
+        "NgaySinh": null,
+        "QuocTich": "Updated"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Assignment_Create",
+      "successfulPath": "PASS",
+      "mode": "invoked by successful sp_PhanCongQuanLyRap wrapper",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_PhanCongQuanLyRap; dbo.sp_PhanCongQuanLyRap delegates to dbo.sp_Admin_Assignment_Create",
+      "expected": {
+        "NguoiDungID": 137,
+        "RapID": 11,
+        "TrangThai": "Hiệu lực"
+      },
+      "actual": {
+        "PhanCongID": 7,
+        "NguoiDungID": 137,
+        "HoTen": "Audit Manager C8B7E680191E",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "NgayBatDau": "2026-10-21T00:00:00.000Z",
+        "NgayKetThuc": null,
+        "TrangThai": "Hiệu lực"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Cinema_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Cinema_Create",
+      "expected": {
+        "TenRap": "Audit Cinema 9025854CD258",
+        "TrangThai": "Hoạt động"
+      },
+      "actual": {
+        "RapID": 8,
+        "TenRap": "Audit Cinema 9025854CD258",
+        "DiaChi": "1 Audit Street",
+        "ThanhPho": "Hanoi",
+        "SoDienThoai": null,
+        "MoTa": "rollback fixture",
+        "NgayHoatDong": "2040-01-01T00:00:00.000Z",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Cinema_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Cinema_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Admin_Cinema_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Cinema_Update",
+      "expected": {
+        "RapID": 8,
+        "TenRap": "Audit Cinema U 9025854CD258",
+        "TrangThai": "Tạm đóng"
+      },
+      "actual": {
+        "RapID": 8,
+        "TenRap": "Audit Cinema U 9025854CD258",
+        "DiaChi": "2 Audit Street",
+        "ThanhPho": "Hanoi",
+        "SoDienThoai": null,
+        "MoTa": "updated fixture",
+        "TrangThai": "Tạm đóng"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Genre_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Genre_Create",
+      "expected": {
+        "TenTheLoai": "AuditGenre9025854CD258"
+      },
+      "actual": {
+        "TheLoaiID": 14,
+        "TenTheLoai": "AuditGenre9025854CD258"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Genre_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Genre_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Admin_Genre_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Genre_Update",
+      "expected": {
+        "TheLoaiID": 14,
+        "TenTheLoai": "AuditGenreU9025854CD258"
+      },
+      "actual": {
+        "TheLoaiID": 14,
+        "TenTheLoai": "AuditGenreU9025854CD258"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_MovieActor_Set",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_MovieActor_Set_set",
+      "expected": {
+        "PhimID": 22,
+        "DienVienID": 50,
+        "VaiDien": "Audit lead"
+      },
+      "actual": [
+        {
+          "PhimID": 22,
+          "DienVienID": 50,
+          "HoTen": "Audit Actor Updated 9025854CD258",
+          "VaiDien": "Audit lead"
+        }
+      ]
+    },
+    {
+      "procedure": "dbo.sp_Admin_Movie_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Movie_Create",
+      "expected": {
+        "outputIDPositive": true
+      },
+      "actual": {
+        "outputID": 22,
+        "resultRows": [
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Movie_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Movie_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Admin_Movie_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Movie_Update",
+      "expected": {
+        "PhimID": 22,
+        "TenPhim": "Audit Film U 9025854CD258"
+      },
+      "actual": {
+        "PhimID": 22,
+        "TenPhim": "Audit Film U 9025854CD258",
+        "ThoiLuong": 95,
+        "NgayKhoiChieu": "2040-01-01T00:00:00.000Z",
+        "NgayKetThuc": "2040-02-01T00:00:00.000Z",
+        "NgonNgu": "Vietnamese",
+        "PhuDe": "English",
+        "DoTuoi": "P",
+        "DaoDien": "Audit Director 2",
+        "MoTa": "updated rollback movie fixture",
+        "PosterURL": null,
+        "TrailerURL": null,
+        "TrangThai": "Sắp chiếu",
+        "DiemDanhGiaTrungBinh": 0,
+        "SoLuotDanhGia": 0
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Product_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Product_Create",
+      "expected": {
+        "Gia": 12500,
+        "TrangThai": "Đang bán"
+      },
+      "actual": {
+        "SanPhamID": 15,
+        "TenSanPham": "Audit Product 9025854CD258",
+        "LoaiSanPham": "Snack",
+        "Gia": 12500,
+        "MoTa": "rollback fixture",
+        "HinhAnh": null,
+        "TrangThai": "Đang bán"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Product_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Product_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Admin_Product_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Product_Update",
+      "expected": {
+        "SanPhamID": 15,
+        "Gia": 15000,
+        "LoaiSanPham": "Combo"
+      },
+      "actual": {
+        "SanPhamID": 15,
+        "TenSanPham": "Audit Product U 9025854CD258",
+        "LoaiSanPham": "Combo",
+        "Gia": 15000,
+        "MoTa": "updated fixture",
+        "HinhAnh": null,
+        "TrangThai": "Đang bán"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Promotion_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Promotion_Create",
+      "expected": {
+        "MaCode": "AU9025854CD258",
+        "SoLuong": 3,
+        "SoLuongDaDung": 0
+      },
+      "actual": {
+        "KhuyenMaiID": 10,
+        "MaCode": "AU9025854CD258",
+        "MoTa": "rollback fixture",
+        "LoaiGiamGia": "FIXED",
+        "GiaTriGiam": 5000,
+        "DonHangToiThieu": 0,
+        "GiamToiDa": null,
+        "NgayBatDau": "2040-01-01T00:00:00.000Z",
+        "NgayKetThuc": "2040-01-02T00:00:00.000Z",
+        "SoLuong": 3,
+        "SoLuongDaDung": 0,
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_Promotion_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Promotion_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Admin_Promotion_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_Promotion_Update",
+      "expected": {
+        "KhuyenMaiID": 10,
+        "GiaTriGiam": 6000,
+        "SoLuong": 5,
+        "SoLuongDaDung": 0
+      },
+      "actual": {
+        "KhuyenMaiID": 10,
+        "MaCode": "AU9025854CD258",
+        "MoTa": "updated fixture",
+        "LoaiGiamGia": "FIXED",
+        "GiaTriGiam": 6000,
+        "DonHangToiThieu": 10000,
+        "GiamToiDa": null,
+        "NgayBatDau": "2040-01-01T00:00:00.000Z",
+        "NgayKetThuc": "2040-01-02T00:00:00.000Z",
+        "SoLuong": 5,
+        "SoLuongDaDung": 0,
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_User_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_User_Create",
+      "expected": {
+        "Email": "audit-9025854cd258@invalid.example",
+        "MaVaiTro": "QUAN_LY_RAP",
+        "TrangThai": "Hoạt động"
+      },
+      "actual": {
+        "NguoiDungID": 132,
+        "HoTen": "Audit Manager 9025854CD258",
+        "Email": "audit-9025854cd258@invalid.example",
+        "SoDienThoai": null,
+        "MaVaiTro": "QUAN_LY_RAP",
+        "TenVaiTro": "Quản lý rạp",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Admin_User_UpdateStatus",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-admin-crud-success-smoke.json#sp_Admin_User_UpdateStatus_lock",
+      "expected": {
+        "NguoiDungID": 132,
+        "TrangThai": "Bị khóa"
+      },
+      "actual": {
+        "NguoiDungID": 132,
+        "HoTen": "Audit Manager 9025854CD258",
+        "Email": "audit-9025854cd258@invalid.example",
+        "TrangThai": "Bị khóa"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Assignment_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Assignment_Update",
+      "expected": {
+        "PhanCongID": 7,
+        "TrangThai": "Hiệu lực"
+      },
+      "actual": {
+        "PhanCongID": 7,
+        "NguoiDungID": 137,
+        "TenQuanLy": "Audit Manager C8B7E680191E",
+        "Email": "facility-c8b7e680191e@invalid.example",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "NgayBatDau": "2026-10-21T00:00:00.000Z",
+        "NgayKetThuc": "2026-11-20T00:00:00.000Z",
+        "TrangThai": "Hiệu lực"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_CinemaImage_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_CinemaImage_Create_first_cover",
+      "expected": {
+        "RapID": 11,
+        "LaAnhDaiDien": true
+      },
+      "actual": {
+        "HinhAnhRapID": 7,
+        "RapID": 11,
+        "URL": "https://audit.invalid/C8B7E680191E/cover-a.jpg",
+        "MoTa": "cover-a",
+        "LaAnhDaiDien": true,
+        "ThuTuHienThi": 1,
+        "TrangThai": "Hoạt động",
+        "NgayTao": "2026-10-21T12:44:51.688Z"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_CinemaImage_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_CinemaImage_Delete_first",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.usp_Admin_CinemaImage_SetCover",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_CinemaImage_SetCover",
+      "expected": {
+        "coverID": 7
+      },
+      "actual": {
+        "row": {
+          "HinhAnhRapID": 7,
+          "RapID": 11,
+          "URL": "https://audit.invalid/C8B7E680191E/cover-a.jpg",
+          "MoTa": "cover-a",
+          "LaAnhDaiDien": true,
+          "ThuTuHienThi": 1,
+          "TrangThai": "Hoạt động",
+          "NgayTao": "2026-10-21T12:44:51.688Z"
+        },
+        "actualCoverID": 7
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_CinemaImage_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_CinemaImage_Update_disable_cover",
+      "expected": {
+        "HinhAnhRapID": 7,
+        "TrangThai": "Tạm ẩn",
+        "LaAnhDaiDien": false
+      },
+      "actual": {
+        "HinhAnhRapID": 7,
+        "RapID": 11,
+        "URL": "https://audit.invalid/C8B7E680191E/cover-a-updated.jpg",
+        "MoTa": "updated cover",
+        "LaAnhDaiDien": false,
+        "ThuTuHienThi": 3,
+        "TrangThai": "Tạm ẩn",
+        "NgayTao": "2026-10-21T12:44:51.688Z"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Pricing_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Pricing_Create",
+      "expected": {
+        "RapID": 11,
+        "PhuThu": 1250,
+        "TrangThai": "Áp dụng"
+      },
+      "actual": {
+        "GiaID": 41,
+        "RapID": 11,
+        "LoaiGhe": "Thường",
+        "LoaiNgay": "Ngày thường",
+        "DinhDang": "2D",
+        "PhuThu": 1250,
+        "NgayBatDau": "2026-10-31T00:00:00.000Z",
+        "NgayKetThuc": "2026-11-30T00:00:00.000Z",
+        "TrangThai": "Áp dụng"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Pricing_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Pricing_Update",
+      "expected": {
+        "GiaID": 41,
+        "LoaiGhe": "VIP",
+        "DinhDang": "3D",
+        "PhuThu": 2000
+      },
+      "actual": {
+        "GiaID": 41,
+        "RapID": 11,
+        "LoaiGhe": "VIP",
+        "LoaiNgay": "Cuối tuần",
+        "DinhDang": "3D",
+        "PhuThu": 2000,
+        "NgayBatDau": "2026-10-31T00:00:00.000Z",
+        "NgayKetThuc": "2026-11-30T00:00:00.000Z",
+        "TrangThai": "Áp dụng"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Room_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Room_Create",
+      "expected": {
+        "RapID": 11,
+        "LoaiPhong": "2D"
+      },
+      "actual": {
+        "PhongID": 19,
+        "RapID": 11,
+        "TenPhong": "AdminRoomC8B7E680191E",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Room_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Room_Delete_with_showtime_history",
+      "expected": "Ngưng hoạt động",
+      "actual": 1
+    },
+    {
+      "procedure": "dbo.usp_Admin_Room_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Room_Update",
+      "expected": {
+        "PhongID": 19,
+        "LoaiPhong": "3D"
+      },
+      "actual": {
+        "PhongID": 19,
+        "RapID": 11,
+        "TenPhong": "AdminRoomUC8B7E680191E",
+        "LoaiPhong": "3D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Seat_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Seat_Create",
+      "expected": {
+        "HangGhe": "Z",
+        "SoGhe": 1
+      },
+      "actual": {
+        "GheID": 985,
+        "PhongID": 19,
+        "HangGhe": "Z",
+        "SoGhe": 1,
+        "LoaiGhe": "Thường",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Seat_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Seat_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.usp_Admin_Seat_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Seat_Update",
+      "expected": {
+        "GheID": 985,
+        "LoaiGhe": "VIP",
+        "TrangThai": "Bảo trì"
+      },
+      "actual": {
+        "GheID": 985,
+        "PhongID": 19,
+        "HangGhe": "Z",
+        "SoGhe": 1,
+        "LoaiGhe": "VIP",
+        "TrangThai": "Bảo trì"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Showtime_Cancel",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Showtime_Cancel",
+      "expected": "Đã hủy",
+      "actual": {
+        "message": {
+          "Message": "Hủy suất chiếu thành công.",
+          "SoDonDaHuy": 0
+        },
+        "status": "Đã hủy"
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Showtime_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Showtime_Create",
+      "expected": {
+        "PhongID": 19,
+        "TrangThaiSuatChieu": "Mở bán"
+      },
+      "actual": {
+        "SuatChieuID": 298,
+        "PhimID": 24,
+        "TenPhim": "Audit Schedule Film C8B7E680191E",
+        "PosterURL": null,
+        "ThoiLuong": 90,
+        "DoTuoi": "P",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "DiaChiRap": "9 Audit Way",
+        "ThanhPho": "Hanoi",
+        "PhongID": 19,
+        "TenPhong": "AdminRoomUC8B7E680191E",
+        "LoaiPhong": "3D",
+        "ThoiGianBatDau": "2026-10-28T17:00:00.000Z",
+        "ThoiGianKetThuc": "2026-10-28T18:30:00.000Z",
+        "NgayChieu": "2026-10-29T00:00:00.000Z",
+        "GioBatDau": "00:00",
+        "GioKetThuc": "01:30",
+        "DinhDang": "2D",
+        "GiaVeCoBan": 120000,
+        "TrangThaiSuatChieu": "Mở bán",
+        "TongSoGhe": 0,
+        "SoGheDaDat": 0,
+        "SoGheConLai": 0
+      }
+    },
+    {
+      "procedure": "dbo.usp_Admin_Showtime_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#usp_Admin_Showtime_Update",
+      "expected": {
+        "SuatChieuID": 298,
+        "GiaVeCoBan": 125000
+      },
+      "actual": {
+        "SuatChieuID": 298,
+        "PhimID": 24,
+        "TenPhim": "Audit Schedule Film C8B7E680191E",
+        "PosterURL": null,
+        "ThoiLuong": 90,
+        "DoTuoi": "P",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "DiaChiRap": "9 Audit Way",
+        "ThanhPho": "Hanoi",
+        "PhongID": 19,
+        "TenPhong": "AdminRoomUC8B7E680191E",
+        "LoaiPhong": "3D",
+        "ThoiGianBatDau": "2026-10-28T17:30:00.000Z",
+        "ThoiGianKetThuc": "2026-10-28T19:00:00.000Z",
+        "NgayChieu": "2026-10-29T00:00:00.000Z",
+        "GioBatDau": "00:30",
+        "GioKetThuc": "02:00",
+        "DinhDang": "2D",
+        "GiaVeCoBan": 125000,
+        "TrangThaiSuatChieu": "Mở bán",
+        "TongSoGhe": 0,
+        "SoGheDaDat": 0,
+        "SoGheConLai": 0
+      }
+    },
+    {
+      "procedure": "dbo.sp_Auth_RegisterCustomer",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-auth-success-smoke.json#sp_Auth_RegisterCustomer",
+      "expected": {
+        "role": "KHACH_HANG",
+        "status": "Hoạt động",
+        "points": 0
+      },
+      "actual": {
+        "outputID": 136,
+        "row": {
+          "NguoiDungID": 136,
+          "HoTen": "Audit Customer ecb16f99066240",
+          "Email": "audit-auth-ecb16f99066240@invalid.example",
+          "SoDienThoai": null,
+          "MaVaiTro": "KHACH_HANG",
+          "TenVaiTro": "Khách hàng",
+          "TrangThai": "Hoạt động",
+          "DiemTichLuy": 0
+        }
+      }
+    },
+    {
+      "procedure": "dbo.sp_User_ChangePassword",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-auth-success-smoke.json#sp_User_ChangePassword",
+      "expected": {
+        "hash": "AUDIT-HASH-2-ecb16f99066240",
+        "message": "Đổi mật khẩu thành công."
+      },
+      "actual": {
+        "message": {
+          "Message": "Đổi mật khẩu thành công."
+        },
+        "storedHash": "AUDIT-HASH-2-ecb16f99066240"
+      }
+    },
+    {
+      "procedure": "dbo.sp_User_UpdateProfile",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-auth-success-smoke.json#sp_User_UpdateProfile",
+      "expected": {
+        "HoTen": "Audit Customer Updated ecb16f99066240",
+        "SoDienThoai": "98ecb16f99",
+        "NgaySinh": "1991-04-05",
+        "GioiTinh": "Khác"
+      },
+      "actual": {
+        "procedureRow": {
+          "NguoiDungID": 136,
+          "HoTen": "Audit Customer Updated ecb16f99066240",
+          "Email": "audit-auth-ecb16f99066240@invalid.example",
+          "SoDienThoai": "98ecb16f99",
+          "NgayTao": "2026-10-21T12:44:07.213Z",
+          "TrangThai": "Hoạt động",
+          "MaVaiTro": "KHACH_HANG",
+          "TenVaiTro": "Khách hàng",
+          "NgaySinh": "1991-04-05T00:00:00.000Z",
+          "GioiTinh": "Khác",
+          "DiemTichLuy": 0
+        },
+        "storedRow": {
+          "HoTen": "Audit Customer Updated ecb16f99066240",
+          "SoDienThoai": "98ecb16f99",
+          "NgaySinh": "1991-04-05T00:00:00.000Z",
+          "GioiTinh": "Khác"
+        },
+        "normalizedBirthDate": "1991-04-05"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Booking_Create",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_DatVe",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_Complaint_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Complaint_Create_success",
+      "expected": "returns a unique complaint id and New status",
+      "actual": {
+        "KhieuNaiID": 33,
+        "NguoiDungID": 11,
+        "DonDatVeID": null,
+        "LoaiKhieuNai": "Hỗ trợ",
+        "TieuDe": "Audit complaint A866E601A86D418D9BBD A",
+        "NoiDung": "audit fixture A866E601A86D418D9BBD58DB8549BBD9",
+        "MucDoUuTien": "Trung bình",
+        "NgayTao": "2026-10-21T12:36:05.416Z",
+        "TrangThai": "Mới"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Order_Cancel",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_Order_ExpirePending",
+      "successfulPath": "PASS",
+      "mode": "successful expiry and once-only points-release regression",
+      "evidence": ".audit-output/main-transactional-sql-regressions.json#points_booking_payment_expiry",
+      "expected": "PASS points_payment; outer transaction rolls back; no persistent row changes",
+      "actual": {
+        "marker": {
+          "AuditSqlRegressionPassed": "PASS points_payment"
+        },
+        "resultRecordsets": 3
+      }
+    },
+    {
+      "procedure": "dbo.sp_Review_Create",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Pricing_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Pricing_Create",
+      "expected": {
+        "RapID": 11,
+        "LoaiGhe": "Đôi",
+        "PhuThu": 3000
+      },
+      "actual": {
+        "GiaID": 42,
+        "RapID": 11,
+        "LoaiGhe": "Đôi",
+        "LoaiNgay": "Cuối tuần",
+        "DinhDang": "2D",
+        "PhuThu": 3000,
+        "NgayBatDau": "2026-10-31T00:00:00.000Z",
+        "NgayKetThuc": "2026-11-30T00:00:00.000Z",
+        "TrangThai": "Áp dụng"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Pricing_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Pricing_Update",
+      "expected": {
+        "GiaID": 42,
+        "LoaiGhe": "Sweetbox",
+        "PhuThu": 3500
+      },
+      "actual": {
+        "GiaID": 42,
+        "RapID": 11,
+        "LoaiGhe": "Sweetbox",
+        "LoaiNgay": "Cuối tuần",
+        "DinhDang": "2D",
+        "PhuThu": 3500,
+        "NgayBatDau": "2026-10-31T00:00:00.000Z",
+        "NgayKetThuc": "2026-11-30T00:00:00.000Z",
+        "TrangThai": "Áp dụng"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Room_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Room_Create",
+      "expected": {
+        "RapID": 11,
+        "TrangThai": "Hoạt động"
+      },
+      "actual": {
+        "PhongID": 20,
+        "RapID": 11,
+        "TenPhong": "MgrRoomC8B7E680191E",
+        "LoaiPhong": "2D",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Room_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Room_Delete_with_showtime_history",
+      "expected": "Ngưng hoạt động",
+      "actual": "Ngưng hoạt động"
+    },
+    {
+      "procedure": "dbo.sp_Manager_Room_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Room_Update",
+      "expected": {
+        "PhongID": 20,
+        "LoaiPhong": "IMAX"
+      },
+      "actual": {
+        "PhongID": 20,
+        "RapID": 11,
+        "TenPhong": "MgrRoomUC8B7E680191E",
+        "LoaiPhong": "IMAX",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Seat_BatchCreate",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Seat_BatchCreate",
+      "expected": {
+        "PhongID": 20,
+        "TongSoGheTao": 6
+      },
+      "actual": {
+        "TongSoGheTao": 6,
+        "PhongID": 20
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Seat_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Seat_Create",
+      "expected": {
+        "HangGhe": "C",
+        "SoGhe": 9,
+        "TrangThai": "Hoạt động"
+      },
+      "actual": {
+        "GheID": 984,
+        "PhongID": 20,
+        "HangGhe": "C",
+        "SoGhe": 9,
+        "LoaiGhe": "Thường",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Seat_Delete",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Seat_Delete",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "procedure": "dbo.sp_Manager_Seat_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Seat_Update",
+      "expected": {
+        "GheID": 984,
+        "LoaiGhe": "VIP"
+      },
+      "actual": {
+        "GheID": 984,
+        "PhongID": 20,
+        "HangGhe": "C",
+        "SoGhe": 9,
+        "LoaiGhe": "VIP",
+        "TrangThai": "Hoạt động"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Showtime_Cancel",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Showtime_Cancel",
+      "expected": "Đã hủy",
+      "actual": "Đã hủy"
+    },
+    {
+      "procedure": "dbo.sp_Manager_Showtime_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Showtime_Create",
+      "expected": {
+        "PhongID": 20,
+        "TrangThaiSuatChieu": "Mở bán"
+      },
+      "actual": {
+        "SuatChieuID": 299,
+        "PhimID": 24,
+        "TenPhim": "Audit Schedule Film C8B7E680191E",
+        "PosterURL": null,
+        "ThoiLuong": 90,
+        "DoTuoi": "P",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "DiaChiRap": "9 Audit Way",
+        "ThanhPho": "Hanoi",
+        "PhongID": 20,
+        "TenPhong": "MgrRoomUC8B7E680191E",
+        "LoaiPhong": "IMAX",
+        "ThoiGianBatDau": "2026-10-28T20:00:00.000Z",
+        "ThoiGianKetThuc": "2026-10-28T21:30:00.000Z",
+        "NgayChieu": "2026-10-29T00:00:00.000Z",
+        "GioBatDau": "03:00",
+        "GioKetThuc": "04:30",
+        "DinhDang": "2D",
+        "GiaVeCoBan": 130000,
+        "TrangThaiSuatChieu": "Mở bán",
+        "TongSoGhe": 6,
+        "SoGheDaDat": 0,
+        "SoGheConLai": 6
+      }
+    },
+    {
+      "procedure": "dbo.sp_Manager_Showtime_Update",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Manager_Showtime_Update",
+      "expected": {
+        "SuatChieuID": 299,
+        "GiaVeCoBan": 135000
+      },
+      "actual": {
+        "SuatChieuID": 299,
+        "PhimID": 24,
+        "TenPhim": "Audit Schedule Film C8B7E680191E",
+        "PosterURL": null,
+        "ThoiLuong": 90,
+        "DoTuoi": "P",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "DiaChiRap": "9 Audit Way",
+        "ThanhPho": "Hanoi",
+        "PhongID": 20,
+        "TenPhong": "MgrRoomUC8B7E680191E",
+        "LoaiPhong": "IMAX",
+        "ThoiGianBatDau": "2026-10-28T20:30:00.000Z",
+        "ThoiGianKetThuc": "2026-10-28T22:00:00.000Z",
+        "NgayChieu": "2026-10-29T00:00:00.000Z",
+        "GioBatDau": "03:30",
+        "GioKetThuc": "05:00",
+        "DinhDang": "2D",
+        "GiaVeCoBan": 135000,
+        "TrangThaiSuatChieu": "Mở bán",
+        "TongSoGhe": 6,
+        "SoGheDaDat": 0,
+        "SoGheConLai": 6
+      }
+    },
+    {
+      "procedure": "dbo.sp_Payment_CreateAttempt",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_Payment_UpdateResult",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_XuLyThanhToan",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; procedure calls in smoke.sql plus aliases in runner",
+      "evidence": ".audit-output/main-transactional-business-smoke.json#transactional_business_smoke_and_compatibility_aliases",
+      "expected": "Booking and successful VNPAY callbacks through both Payment_UpdateResult and deployed XuLyThanhToan alias; order cancellation releases held ticket; complaint, review and read paths succeed; outer transaction rolls every row back",
+      "actual": {
+        "marker": {
+          "AuditSmokePassed": true
+        },
+        "resultRecordsets": 51
+      }
+    },
+    {
+      "procedure": "dbo.sp_StaffBooking_Cancel",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; exact calls in regression.sql",
+      "evidence": ".audit-output/main-staff-booking-regression.json#staff_booking_success_failure_cancel_and_history_regression",
+      "expected": "StaffBooking_Create and UpdateSeats succeed; cancellation preserves payment history; stale/invalid/spoof/scope/expired/closed/payment refusal paths match; all writes rolled back",
+      "actual": {
+        "marker": {
+          "AuditStaffBookingPassed": true
+        },
+        "resultRecordsets": 12
+      }
+    },
+    {
+      "procedure": "dbo.sp_StaffBooking_Create",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; exact calls in regression.sql",
+      "evidence": ".audit-output/main-staff-booking-regression.json#staff_booking_success_failure_cancel_and_history_regression",
+      "expected": "StaffBooking_Create and UpdateSeats succeed; cancellation preserves payment history; stale/invalid/spoof/scope/expired/closed/payment refusal paths match; all writes rolled back",
+      "actual": {
+        "marker": {
+          "AuditStaffBookingPassed": true
+        },
+        "resultRecordsets": 12
+      }
+    },
+    {
+      "procedure": "dbo.sp_StaffBooking_UpdateSeats",
+      "successfulPath": "PASS",
+      "mode": "successful transaction and state oracle; exact calls in regression.sql",
+      "evidence": ".audit-output/main-staff-booking-regression.json#staff_booking_success_failure_cancel_and_history_regression",
+      "expected": "StaffBooking_Create and UpdateSeats succeed; cancellation preserves payment history; stale/invalid/spoof/scope/expired/closed/payment refusal paths match; all writes rolled back",
+      "actual": {
+        "marker": {
+          "AuditStaffBookingPassed": true
+        },
+        "resultRecordsets": 12
+      }
+    },
+    {
+      "procedure": "dbo.sp_Complaint_Assign_Admin",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Complaint_Assign_Admin_success",
+      "expected": "admin assigns an unassigned complaint to active support staff",
+      "actual": {
+        "KhieuNaiID": 34,
+        "NguoiDungID": 11,
+        "DonDatVeID": null,
+        "LoaiKhieuNai": "Hỗ trợ",
+        "TieuDe": "Audit complaint A866E601A86D418D9BBD B",
+        "NoiDung": "admin assignment fixture A866E601A86D418D9BBD58DB8549BBD9",
+        "MucDoUuTien": "Trung bình",
+        "NgayTao": "2026-10-21T12:36:05.659Z",
+        "TrangThai": "Đang xử lý",
+        "NhanVienPhuTrachID": 7,
+        "TenNhanVienPhuTrach": "Đặng Thu Hà"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Complaint_Assign_Self",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Complaint_Assign_Self_success",
+      "expected": "assigns once to active CSKH and moves complaint to processing",
+      "actual": {
+        "KhieuNaiID": 33,
+        "NguoiDungID": 11,
+        "DonDatVeID": null,
+        "LoaiKhieuNai": "Hỗ trợ",
+        "TieuDe": "Audit complaint A866E601A86D418D9BBD A",
+        "NoiDung": "audit fixture A866E601A86D418D9BBD58DB8549BBD9",
+        "MucDoUuTien": "Trung bình",
+        "NgayTao": "2026-10-21T12:36:05.416Z",
+        "TrangThai": "Đang xử lý",
+        "NhanVienPhuTrachID": 7,
+        "TenNhanVienPhuTrach": "Đặng Thu Hà"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Complaint_Chat_AddInternalNote",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Complaint_Chat_AddInternalNote_success",
+      "expected": "uses the internal-message path and labels message Nội bộ",
+      "actual": {
+        "TinNhanID": 8,
+        "KhieuNaiID": 33,
+        "NguoiGuiID": 7,
+        "HoTenNguoiGui": "Đặng Thu Hà",
+        "MaVaiTroNguoiGui": "CSKH",
+        "TenVaiTroNguoiGui": "Chăm sóc khách hàng",
+        "NoiDung": "internal A866E601A86D418D9BBD58DB8549BBD9",
+        "LoaiTinNhan": "Nội bộ",
+        "ThoiGianGui": "2026-10-21T12:36:05.475Z",
+        "LaNguoiGui": true
+      }
+    },
+    {
+      "procedure": "dbo.sp_Complaint_Chat_Send",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Complaint_Chat_Send_public_success",
+      "expected": "returns the newly inserted public message for assigned support",
+      "actual": {
+        "TinNhanID": 7,
+        "KhieuNaiID": 33,
+        "NguoiGuiID": 7,
+        "HoTenNguoiGui": "Đặng Thu Hà",
+        "MaVaiTroNguoiGui": "CSKH",
+        "TenVaiTroNguoiGui": "Chăm sóc khách hàng",
+        "NoiDung": "public A866E601A86D418D9BBD58DB8549BBD9",
+        "LoaiTinNhan": "Công khai",
+        "ThoiGianGui": "2026-10-21T12:36:05.472Z",
+        "LaNguoiGui": true
+      }
+    },
+    {
+      "procedure": "dbo.sp_Escalation_Claim",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Escalation_Claim_success",
+      "expected": "assigns the escalation to the active admin and moves it to processing",
+      "actual": {
+        "YeuCauID": 3,
+        "KhieuNaiID": 33,
+        "NguoiYeuCauID": 7,
+        "TenNguoiYeuCau": "Đặng Thu Hà",
+        "LyDo": "escalate A866E601A86D418D9BBD58DB8549BBD9",
+        "MucDoUuTien": "Cao",
+        "AdminPhuTrachID": 1,
+        "TenAdminPhuTrach": "CinemaStar Bootstrap Admin",
+        "TrangThai": "Đang xử lý",
+        "ThoiGianGui": "2026-10-21T12:36:05.525Z",
+        "ThoiGianTiepNhan": "2026-10-21T12:36:05.573Z",
+        "KetQuaXuLy": null,
+        "ThoiGianHoanTat": null
+      }
+    },
+    {
+      "procedure": "dbo.sp_Escalation_Create",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Escalation_Create_success",
+      "expected": "creates an unclaimed escalation for the assigned CSKH",
+      "actual": {
+        "YeuCauID": 3,
+        "KhieuNaiID": 33,
+        "NguoiYeuCauID": 7,
+        "TenNguoiYeuCau": "Đặng Thu Hà",
+        "LyDo": "escalate A866E601A86D418D9BBD58DB8549BBD9",
+        "MucDoUuTien": "Cao",
+        "AdminPhuTrachID": null,
+        "TrangThai": "Chờ tiếp nhận",
+        "ThoiGianGui": "2026-10-21T12:36:05.525Z",
+        "ThoiGianTiepNhan": null,
+        "KetQuaXuLy": null,
+        "ThoiGianHoanTat": null
+      }
+    },
+    {
+      "procedure": "dbo.sp_Escalation_Process",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Escalation_Process_success",
+      "expected": "stores admin resolution and terminal escalation state",
+      "actual": {
+        "YeuCauID": 3,
+        "KhieuNaiID": 33,
+        "NguoiYeuCauID": 7,
+        "TenNguoiYeuCau": "Đặng Thu Hà",
+        "LyDo": "escalate A866E601A86D418D9BBD58DB8549BBD9",
+        "MucDoUuTien": "Cao",
+        "AdminPhuTrachID": 1,
+        "TenAdminPhuTrach": "CinemaStar Bootstrap Admin",
+        "TrangThai": "Đã giải quyết",
+        "ThoiGianGui": "2026-10-21T12:36:05.525Z",
+        "ThoiGianTiepNhan": "2026-10-21T12:36:05.573Z",
+        "KetQuaXuLy": "resolved A866E601A86D418D9BBD58DB8549BBD9",
+        "ThoiGianHoanTat": "2026-10-21T12:36:05.619Z"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Support_Complaint_AddProcessing",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Support_Complaint_AddProcessing_success",
+      "expected": "writes processing history; trigger keeps parent status synchronized",
+      "actual": {
+        "XuLyID": 34,
+        "KhieuNaiID": 33,
+        "NguoiXuLyID": 7,
+        "NoiDungXuLy": "support processing A866E601A86D418D9BBD58DB8549BBD9",
+        "NgayXuLy": "2026-10-21T12:36:05.487Z",
+        "TrangThaiSauXuLy": "Đang xử lý"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Support_Complaint_UpdateStatus",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_Support_Complaint_UpdateStatus_success",
+      "expected": "writes a status history row and trigger synchronizes parent",
+      "actual": {
+        "history": {
+          "KhieuNaiID": 34,
+          "TrangThai": "Đã đóng"
+        },
+        "parent": {
+          "TrangThai": "Đã đóng"
+        }
+      }
+    },
+    {
+      "procedure": "dbo.sp_XuLyKhieuNai",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-complaint-workflow-smoke.json#sp_XuLyKhieuNai_alias_and_history_trigger",
+      "expected": "alias inserts history; trigger updates complaint status to resolved",
+      "actual": {
+        "history": {
+          "XuLyID": 38,
+          "KhieuNaiID": 33,
+          "NguoiXuLyID": 7,
+          "NoiDungXuLy": "close complaint A866E601A86D418D9BBD58DB8549BBD9",
+          "NgayXuLy": "2026-10-21T12:36:05.640Z",
+          "TrangThaiSauXuLy": "Đã giải quyết"
+        },
+        "parent": {
+          "TrangThai": "Đã giải quyết",
+          "NhanVienPhuTrachID": 7
+        }
+      }
+    },
+    {
+      "procedure": "dbo.sp_PhanCongQuanLyRap",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_PhanCongQuanLyRap",
+      "expected": {
+        "NguoiDungID": 137,
+        "RapID": 11,
+        "TrangThai": "Hiệu lực"
+      },
+      "actual": {
+        "PhanCongID": 7,
+        "NguoiDungID": 137,
+        "HoTen": "Audit Manager C8B7E680191E",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "NgayBatDau": "2026-10-21T00:00:00.000Z",
+        "NgayKetThuc": null,
+        "TrangThai": "Hiệu lực"
+      }
+    },
+    {
+      "procedure": "dbo.sp_Showtime_CancelCascade",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_Showtime_CancelCascade_direct",
+      "expected": {
+        "status": "Đã hủy"
+      },
+      "actual": {
+        "result": {
+          "Message": "Hủy suất chiếu thành công.",
+          "SoDonDaHuy": 0
+        },
+        "status": "Đã hủy"
+      }
+    },
+    {
+      "procedure": "dbo.sp_ThemSuatChieu",
+      "successfulPath": "PASS",
+      "mode": "named success-path assertion",
+      "evidence": ".audit-output/main-facility-schedule-success-smoke.json#sp_ThemSuatChieu",
+      "expected": {
+        "PhongID": 19,
+        "GiaVeCoBan": 140000
+      },
+      "actual": {
+        "SuatChieuID": 300,
+        "PhimID": 24,
+        "TenPhim": "Audit Schedule Film C8B7E680191E",
+        "PosterURL": null,
+        "ThoiLuong": 90,
+        "DoTuoi": "P",
+        "RapID": 11,
+        "TenRap": "Audit Facility C8B7E680191E",
+        "DiaChiRap": "9 Audit Way",
+        "ThanhPho": "Hanoi",
+        "PhongID": 19,
+        "TenPhong": "AdminRoomUC8B7E680191E",
+        "LoaiPhong": "3D",
+        "ThoiGianBatDau": "2026-10-28T23:00:00.000Z",
+        "ThoiGianKetThuc": "2026-10-29T00:30:00.000Z",
+        "NgayChieu": "2026-10-29T00:00:00.000Z",
+        "GioBatDau": "06:00",
+        "GioKetThuc": "07:30",
+        "DinhDang": "2D",
+        "GiaVeCoBan": 140000,
+        "TrangThaiSuatChieu": "Mở bán",
+        "TongSoGhe": 0,
+        "SoGheDaDat": 0,
+        "SoGheConLai": 0
+      }
+    }
+  ]
+}

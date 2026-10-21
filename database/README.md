@@ -10,7 +10,7 @@
 
 ## Current Main inventory
 
-Main has 29 application tables, 147 application stored procedures, 6 views, 21 application functions, and 9 enabled triggers. Its 37 foreign keys and 65 check constraints are enabled and trusted. The database also has 11 SQL Server database-diagram support objects (`sysdiagrams`, its helper modules, and its keys); these are inventoried separately and excluded from the application baseline. See [SEED_DATA_VERIFICATION_REPORT.md](../SEED_DATA_VERIFICATION_REPORT.md) for current table counts and business integrity results.
+Main has 29 application tables, 147 application stored procedures, 6 views, 21 application functions, 9 enabled triggers, 142 PK/UQ/FK/CHECK constraints, 42 default constraints, and 71 indexes. The database also has 11 SQL Server database-diagram support objects (`sysdiagrams`, its helper modules, and its keys); these are inventoried separately and excluded from the application baseline. See [SEED_DATA_VERIFICATION_REPORT.md](../SEED_DATA_VERIFICATION_REPORT.md) for current table counts and business integrity results.
 
 The demo seed preserves the `ADMIN`, `QUAN_LY_RAP`, `CSKH`, and `KHACH_HANG` RBAC rows. Ordinary business creation goes through existing stored procedures; only guarded historical/ongoing schedule and transaction fixtures use parameterized T-SQL.
 
@@ -31,11 +31,11 @@ Run `npm run seed:all` to regenerate local vector artwork, back up and replace t
 
 The seed refuses non-local/non-development targets, schema or RBAC drift, non-`example.test` accounts, and row-count drift from the previous manifest (or the known original synthetic snapshot on first replacement). It creates a COPY_ONLY backup and requires `RESTORE VERIFYONLY` to pass before the atomic reset. It does not change schema, procedures, constraints, or triggers. Credentials, verified backups, and machine-readable reports stay under ignored `.audit-output/`.
 
-## Main read-only audit and SSMS demos
+## Main audit and SSMS test suite
 
-The Main audit results and complete live object inventory are in [MAIN_DATABASE_AUDIT_REPORT.md](14_audit/MAIN_DATABASE_AUDIT_REPORT.md). For a safe SSMS run, open `14_audit/main_readonly_demo.sql` and `14_audit/main_readonly_procedure_demo.sql`; both guard `DB_NAME()` and use only reads, table variables, and temporary tables. The first checks functions/views, constraints and index metadata, reports DMV index suggestions, and emits `STATISTICS IO/TIME` plus actual-plan XML for three representative views. The second executes a selected set of read-only procedures and prints expected/actual PASS/FAIL rows.
+The Main audit results and complete live object inventory are in [MAIN_DATABASE_AUDIT_REPORT.md](14_audit/MAIN_DATABASE_AUDIT_REPORT.md). The SSMS-ready suite is in [15_ssms_test_suite/README.md](15_ssms_test_suite/README.md), with a 474-row object map, target precheck, DML demos with rollback, independent-session schedule race, index plans, and final integrity check. Every `.sql` file selects `CinemaBookingDB` and checks the expected Main server/database before testing.
 
-`14_audit/main_readonly_procedures.mjs` runs the broader source-reviewed read-only stored-procedure assertions against the exact `backend/.env` target and writes redacted count-only evidence under ignored `.audit-output/`. The final report generator reads live Main metadata and does not change SQL data. Current result: **NOT DATABASE READY FOR DEMO** because write-capable procedure coverage, trigger firing, negative-DML constraint checks, rollback/concurrency, and a restore drill are not complete; these are listed per object/test as NOT TESTED or BLOCKED in the audit report. Do not interpret read-only PASS checks as write-path certification.
+The Main audit result is **DATABASE READY FOR SSMS DEMO**: 147/147 stored procedures, including 78/78 successful persistent-write paths, all 9 triggers, 142 integrity constraints, 21 functions, 6 views, and 71 indexes have runtime evidence. The test suite report distinguishes SSMS replay scripts from Node `mssql` runners; 28 procedures have direct SSMS calls, with 15 positive writer paths. The other 62 writer procedures and 57 read/validation procedures have runtime evidence but no standalone SSMS block. `sp_Booking_Create` has an SSMS rollback test; its success path is covered by Node. The suite inventories 42 DEFAULT constraints but does not claim a separate DML assertion for every default. `FULL SYSTEM E2E VERIFIED` is not claimed.
 
 ## Tests and temporary Test database
 
@@ -53,5 +53,6 @@ The last `audit:all` passed. Test remains online with 29 tables and 3,915 rows. 
 - `12_verify/` — schema, constraint, module, security, and data verification sources.
 - `13_migrations/` — migration history; inspect target guards before deployment.
 - `14_audit/` — Main database read-only audit demos, procedure runner, and full audit report.
+- `15_ssms_test_suite/` — SSMS test suite, object-to-test map, demo instructions, and packaged runtime evidence.
 
 `baseline-manifest.json` is a historical generated artifact with stale database/object counts. It is not the live Main inventory and must not be used as the current row-count baseline.

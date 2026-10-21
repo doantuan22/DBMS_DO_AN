@@ -1,0 +1,293 @@
+{
+  "startedUtc": "2026-10-21T12:43:06.219Z",
+  "target": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE"
+  },
+  "verdict": "PASS",
+  "before": {
+    "identity": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE"
+    },
+    "counts": [
+      {
+        "n": "BANGGIA",
+        "c": "24"
+      },
+      {
+        "n": "CHITIETVE",
+        "c": "595"
+      },
+      {
+        "n": "DANHGIAPHIM",
+        "c": "80"
+      },
+      {
+        "n": "SUATCHIEU",
+        "c": "292"
+      },
+      {
+        "n": "XULY_KHIEUNAI",
+        "c": "32"
+      },
+      {
+        "n": "KHIEUNAI",
+        "c": "30"
+      },
+      {
+        "n": "NGUOIDUNG",
+        "c": "130"
+      }
+    ],
+    "ids": {
+      "BANGGIA": 40,
+      "CHITIETVE": 608,
+      "DANHGIAPHIM": 82,
+      "SUATCHIEU": 297,
+      "XULY_KHIEUNAI": 40
+    }
+  },
+  "tests": [
+    {
+      "TestId": 1,
+      "ObjectName": "TRG_BangGia_KiemTraChongLan",
+      "Scenario": "Valid single-row insert",
+      "Expected": "no error",
+      "Actual": "0",
+      "Verdict": "PASS",
+      "Details": "Inactive-in-time applied rule; rollback."
+    },
+    {
+      "TestId": 2,
+      "ObjectName": "TRG_BangGia_KiemTraChongLan",
+      "Scenario": "Multi-row self-overlap",
+      "Expected": "50215",
+      "Actual": "50215",
+      "Verdict": "PASS",
+      "Details": "Two same-key applied rules with intersecting dates; rollback."
+    },
+    {
+      "TestId": 3,
+      "ObjectName": "TRG_ChiTietVe_KiemTraGheDungPhong",
+      "Scenario": "Valid row same room",
+      "Expected": "no error",
+      "Actual": "0",
+      "Verdict": "PASS",
+      "Details": "Valid ticket fixture; rollback."
+    },
+    {
+      "TestId": 4,
+      "ObjectName": "TRG_ChiTietVe_KiemTraGheDungPhong",
+      "Scenario": "Cross-room seat rejected",
+      "Expected": "50002",
+      "Actual": "50002",
+      "Verdict": "PASS",
+      "Details": "Valid FKs, seat belongs to another room; rollback."
+    },
+    {
+      "TestId": 5,
+      "ObjectName": "TRG_ChiTietVe_KiemTraTrungGhe",
+      "Scenario": "Multi-row duplicate seat",
+      "Expected": "50003",
+      "Actual": "50003",
+      "Verdict": "PASS",
+      "Details": "Two inserted tickets claim one seat in one showtime; rollback."
+    },
+    {
+      "TestId": 6,
+      "ObjectName": "TRG_DanhGia_KiemTraDaXemPhim",
+      "Scenario": "Valid past purchase",
+      "Expected": "no error",
+      "Actual": "0",
+      "Verdict": "PASS",
+      "Details": "Existing completed/paid purchase; rollback."
+    },
+    {
+      "TestId": 7,
+      "ObjectName": "TRG_DanhGia_KiemTraDaXemPhim",
+      "Scenario": "Unpurchased review rejected",
+      "Expected": "50004",
+      "Actual": "50004",
+      "Verdict": "PASS",
+      "Details": "Pair has no past completed/paid purchase; rollback."
+    },
+    {
+      "TestId": 8,
+      "ObjectName": "TRG_DanhGia_KiemTraDaXemPhim",
+      "Scenario": "Multi-row valid+invalid set",
+      "Expected": "50004",
+      "Actual": "50004",
+      "Verdict": "PASS",
+      "Details": "One valid and one unpurchased review in the same statement; rollback."
+    },
+    {
+      "TestId": 9,
+      "ObjectName": "TRG_KhieuNai_NhanVienPhuTrachBatBien",
+      "Scenario": "Non-assignment field update",
+      "Expected": "no error",
+      "Actual": "0",
+      "Verdict": "PASS",
+      "Details": "Assigned user unchanged; no-op title update; rollback."
+    },
+    {
+      "TestId": 10,
+      "ObjectName": "TRG_KhieuNai_NhanVienPhuTrachBatBien",
+      "Scenario": "Reassign existing complaint",
+      "Expected": "50605",
+      "Actual": "50605",
+      "Verdict": "PASS",
+      "Details": "Existing assigned agent changed to another valid staff member; rollback."
+    },
+    {
+      "TestId": 11,
+      "ObjectName": "TRG_KhieuNai_NhanVienPhuTrachBatBien",
+      "Scenario": "Multi-row reassignment",
+      "Expected": "50605",
+      "Actual": "50605",
+      "Verdict": "PASS",
+      "Details": "Two assigned complaints reassigned together; rollback."
+    },
+    {
+      "TestId": 12,
+      "ObjectName": "TRG_NguoiDung_VaiTroBatBien",
+      "Scenario": "Non-role field update",
+      "Expected": "no error",
+      "Actual": "0",
+      "Verdict": "PASS",
+      "Details": "Existing account name no-op update; rollback."
+    },
+    {
+      "TestId": 13,
+      "ObjectName": "TRG_NguoiDung_VaiTroBatBien",
+      "Scenario": "Change existing account role",
+      "Expected": "50406",
+      "Actual": "50406",
+      "Verdict": "PASS",
+      "Details": "Changed role only; rollback."
+    },
+    {
+      "TestId": 14,
+      "ObjectName": "TRG_NguoiDung_VaiTroBatBien",
+      "Scenario": "Multi-row role change",
+      "Expected": "50406",
+      "Actual": "50406",
+      "Verdict": "PASS",
+      "Details": "Two accounts assigned another existing role together; rollback."
+    },
+    {
+      "TestId": 15,
+      "ObjectName": "TRG_SuatChieu_KiemTraTrungLich",
+      "Scenario": "Valid single showtime",
+      "Expected": "no error",
+      "Actual": "0",
+      "Verdict": "PASS",
+      "Details": "Future test date, no existing overlap; rollback."
+    },
+    {
+      "TestId": 16,
+      "ObjectName": "TRG_SuatChieu_KiemTraTrungLich",
+      "Scenario": "Multi-row self-overlap",
+      "Expected": "50001",
+      "Actual": "50001",
+      "Verdict": "PASS",
+      "Details": "Two rows overlap in one room; rollback."
+    },
+    {
+      "TestId": 17,
+      "ObjectName": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
+      "Scenario": "Valid history updates parent",
+      "Expected": "Đang xử lý",
+      "Actual": "Đang xử lý",
+      "Verdict": "PASS",
+      "Details": "History insert and trigger parent update; both rolled back."
+    },
+    {
+      "TestId": 18,
+      "ObjectName": "TRG_XuLyKhieuNai_CapNhatTrangThaiKhieuNai",
+      "Scenario": "Multi-row histories update both parents",
+      "Expected": "both Đang xử lý",
+      "Actual": "Đang xử lý / Đang xử lý",
+      "Verdict": "PASS",
+      "Details": "Two history rows in one insert update two parents; rollback."
+    },
+    {
+      "TestId": 19,
+      "ObjectName": "TRG_XuLyKhieuNai_KiemTraVaiTro",
+      "Scenario": "Customer actor rejected",
+      "Expected": "50005",
+      "Actual": "50005",
+      "Verdict": "PASS",
+      "Details": "Valid customer FK but forbidden actor role; rollback."
+    },
+    {
+      "TestId": 20,
+      "ObjectName": "TRG_XuLyKhieuNai_KiemTraVaiTro",
+      "Scenario": "Multi-row customer actors rejected",
+      "Expected": "50005",
+      "Actual": "50005",
+      "Verdict": "PASS",
+      "Details": "Two forbidden customer actors in one insert; rollback."
+    },
+    {
+      "TestId": 21,
+      "ObjectName": "Rollback/identity safety",
+      "Scenario": "Identity values unchanged",
+      "Expected": "unchanged",
+      "Actual": "unchanged",
+      "Verdict": "PASS",
+      "Details": ""
+    }
+  ],
+  "after": {
+    "identity": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE"
+    },
+    "counts": [
+      {
+        "n": "BANGGIA",
+        "c": "24"
+      },
+      {
+        "n": "CHITIETVE",
+        "c": "595"
+      },
+      {
+        "n": "DANHGIAPHIM",
+        "c": "80"
+      },
+      {
+        "n": "SUATCHIEU",
+        "c": "292"
+      },
+      {
+        "n": "XULY_KHIEUNAI",
+        "c": "32"
+      },
+      {
+        "n": "KHIEUNAI",
+        "c": "30"
+      },
+      {
+        "n": "NGUOIDUNG",
+        "c": "130"
+      }
+    ],
+    "ids": {
+      "BANGGIA": 40,
+      "CHITIETVE": 608,
+      "DANHGIAPHIM": 82,
+      "SUATCHIEU": 297,
+      "XULY_KHIEUNAI": 40
+    }
+  },
+  "integrityViolations": [],
+  "rowAndIdentityStateUnchanged": true,
+  "failures": [],
+  "blocked": [],
+  "finishedUtc": "2026-10-21T12:43:07.215Z"
+}

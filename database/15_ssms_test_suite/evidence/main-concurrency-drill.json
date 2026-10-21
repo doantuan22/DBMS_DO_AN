@@ -1,0 +1,1677 @@
+{
+  "startedUtc": "2026-10-21T12:43:10.272Z",
+  "target": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "spid": 63
+  },
+  "backup": {
+    "path": ".audit-output\\database-backups\\CinemaBookingDB_pre_concurrency_20261021124309_AC6B5E3F6E2A.bak",
+    "copyOnly": true,
+    "checksum": true,
+    "verifyOnly": true,
+    "bytes": 23191552,
+    "modifiedUtc": "2026-10-21T12:43:10.769Z"
+  },
+  "fixtureTag": "audit-AC6B5E3F6E2A",
+  "tests": [
+    {
+      "name": "preflight_backup_restoreverify",
+      "expected": "COPY_ONLY CHECKSUM backup and RESTORE VERIFYONLY succeed; Main/Test unchanged",
+      "actual": "backup bytes=23191552; Main and Test online",
+      "verdict": "PASS"
+    },
+    {
+      "name": "concurrent_same_seat_double_booking",
+      "sessions": {
+        "sessionA": 65,
+        "sessionB": 66,
+        "independent": true
+      },
+      "inputs": {
+        "showtimeId": 7,
+        "seatA": 481,
+        "seatB": 481,
+        "distinctSeats": false,
+        "promotion": null
+      },
+      "expected": "one winner commits; blocked second request returns 50025; cleanup restores baseline",
+      "winner": {
+        "orderId": 320,
+        "ticketCount": 1,
+        "promotionId": null,
+        "discount": 0
+      },
+      "lockWait": {
+        "seen": true,
+        "waitType": "LCK_M_U",
+        "blockingSessionId": 65
+      },
+      "actual": "winner committed; blocked second call returned error 50025",
+      "transactionCleanup": [
+        {
+          "sessionId": 66,
+          "transactionClosed": true,
+          "killed": false,
+          "rollbackError": null
+        }
+      ],
+      "committedStateBeforeCleanup": {
+        "orderRows": 1,
+        "ticketRows": 1,
+        "fixtureOrderRows": 1
+      },
+      "verdict": "PASS",
+      "cleanup": {
+        "stateRestored": true,
+        "constraintViolations": 0
+      }
+    },
+    {
+      "name": "concurrent_promotion_quota_one_use",
+      "sessions": {
+        "sessionA": 65,
+        "sessionB": 66,
+        "independent": true
+      },
+      "inputs": {
+        "showtimeId": 7,
+        "seatA": 482,
+        "seatB": 483,
+        "distinctSeats": true,
+        "promotion": "isolated quota-1 fixture"
+      },
+      "expected": "one winner commits; blocked second request returns 50029; cleanup restores baseline",
+      "winner": {
+        "orderId": 320,
+        "ticketCount": 1,
+        "promotionId": -211299680,
+        "discount": 8500
+      },
+      "lockWait": {
+        "seen": true,
+        "waitType": "LCK_M_U",
+        "blockingSessionId": 65
+      },
+      "actual": "winner committed; blocked second call returned error 50029",
+      "transactionCleanup": [
+        {
+          "sessionId": 66,
+          "transactionClosed": true,
+          "killed": false,
+          "rollbackError": null
+        }
+      ],
+      "committedStateBeforeCleanup": {
+        "orderRows": 1,
+        "ticketRows": 1,
+        "fixtureOrderRows": 1
+      },
+      "verdict": "PASS",
+      "cleanup": {
+        "stateRestored": true,
+        "constraintViolations": 0
+      }
+    },
+    {
+      "name": "concurrent_showtime_overlap",
+      "sessions": {
+        "sessionA": 65,
+        "sessionB": 66,
+        "independent": true
+      },
+      "inputs": {
+        "roomId": 7,
+        "showtimeIds": [
+          -211299681,
+          -211299682
+        ],
+        "interval": "2045-11-15; movie runtime exact"
+      },
+      "expected": "one interval commits; second concurrent insert rejected by TRG_SuatChieu_KiemTraTrungLich error 50001; cleanup restores baseline",
+      "lockWait": {
+        "seen": true,
+        "waitType": "LCK_M_X",
+        "blockingSessionId": 65
+      },
+      "actual": "winner committed; overlapping second insert returned error 50001",
+      "transactionCleanup": [
+        {
+          "sessionId": 66,
+          "transactionClosed": true,
+          "killed": false,
+          "rollbackError": "Transaction has been aborted."
+        }
+      ],
+      "rowsBeforeCleanup": {
+        "fixtureRows": 1,
+        "roomRows": 1
+      },
+      "verdict": "PASS",
+      "cleanup": {
+        "stateRestored": true,
+        "constraintViolations": 0
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "mainAndTestBefore": [
+    {
+      "name": "CinemaBookingDB",
+      "state_desc": "ONLINE",
+      "create_date": "2026-10-14T19:05:15.090Z"
+    },
+    {
+      "name": "CinemaBookingDB_Test",
+      "state_desc": "ONLINE",
+      "create_date": "2026-10-20T16:19:57.823Z"
+    }
+  ],
+  "fixture": {
+    "showtimeId": 7,
+    "movieId": 5,
+    "roomId": 7,
+    "seatIds": [
+      481,
+      482,
+      483
+    ],
+    "freeSeatCount": 80,
+    "existingOrders": 0
+  },
+  "isolation": {
+    "is_read_committed_snapshot_on": true,
+    "snapshot_isolation_state_desc": "OFF"
+  },
+  "before": {
+    "target": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE",
+      "spid": 63
+    },
+    "counts": [
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "row_count": "24"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "row_count": "242"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "row_count": "595"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "row_count": "48"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "row_count": "310"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "row_count": "960"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HOSOKHACHHANG",
+        "row_count": "120"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "row_count": "30"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "row_count": "8"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "row_count": "130"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "row_count": "20"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_DIENVIEN",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_THELOAI",
+        "row_count": "40"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "row_count": "33"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "row_count": "13"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "row_count": "292"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "row_count": "0"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "row_count": "356"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO_QUYEN",
+        "row_count": "59"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "row_count": "32"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "row_count": "2"
+      }
+    ],
+    "identities": [
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_job_history",
+        "columnName": "instance_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_jobsteps_logs",
+        "columnName": "log_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "columnName": "BoiThuongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_database_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "fulltext_thesaurus_phrase_table",
+        "columnName": "phraseid",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "columnName": "diagram_id",
+        "identityValue": 1
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "columnName": "GiaID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "columnName": "ChiTietDoAnID",
+        "identityValue": 243
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "columnName": "VeID",
+        "identityValue": 608
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "columnName": "DanhGiaID",
+        "identityValue": 82
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "columnName": "DienVienID",
+        "identityValue": 50
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "columnName": "DonDatVeID",
+        "identityValue": 319
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "columnName": "GheID",
+        "identityValue": 977
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "columnName": "HinhAnhRapID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "columnName": "KhieuNaiID",
+        "identityValue": 34
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "columnName": "KhuyenMaiID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "columnName": "NguoiDungID",
+        "identityValue": 134
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "columnName": "PhanCongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "columnName": "PhimID",
+        "identityValue": 23
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "columnName": "PhongID",
+        "identityValue": 18
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "columnName": "QuyenID",
+        "identityValue": 33
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "columnName": "RapID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "columnName": "SanPhamID",
+        "identityValue": 15
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "columnName": "SuatChieuID",
+        "identityValue": 297
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "columnName": "ThanhToanID",
+        "identityValue": 360
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "columnName": "TheLoaiID",
+        "identityValue": 14
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "columnName": "VaiTroID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "columnName": "XuLyID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "columnName": "TinNhanID",
+        "identityValue": 11
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "columnName": "YeuCauID",
+        "identityValue": 3
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_1977058079",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2009058193",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2041058307",
+        "columnName": "queuing_order",
+        "identityValue": null
+      }
+    ]
+  },
+  "customerFixtureBaseline": {
+    "target": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE",
+      "spid": 63
+    },
+    "counts": [
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "row_count": "24"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "row_count": "242"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "row_count": "595"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "row_count": "48"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "row_count": "310"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "row_count": "960"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HOSOKHACHHANG",
+        "row_count": "122"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "row_count": "30"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "row_count": "8"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "row_count": "132"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "row_count": "20"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_DIENVIEN",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_THELOAI",
+        "row_count": "40"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "row_count": "33"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "row_count": "13"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "row_count": "292"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "row_count": "0"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "row_count": "356"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO_QUYEN",
+        "row_count": "59"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "row_count": "32"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "row_count": "2"
+      }
+    ],
+    "identities": [
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_job_history",
+        "columnName": "instance_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_jobsteps_logs",
+        "columnName": "log_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "columnName": "BoiThuongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_database_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "fulltext_thesaurus_phrase_table",
+        "columnName": "phraseid",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "columnName": "diagram_id",
+        "identityValue": 1
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "columnName": "GiaID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "columnName": "ChiTietDoAnID",
+        "identityValue": 243
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "columnName": "VeID",
+        "identityValue": 608
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "columnName": "DanhGiaID",
+        "identityValue": 82
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "columnName": "DienVienID",
+        "identityValue": 50
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "columnName": "DonDatVeID",
+        "identityValue": 319
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "columnName": "GheID",
+        "identityValue": 977
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "columnName": "HinhAnhRapID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "columnName": "KhieuNaiID",
+        "identityValue": 34
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "columnName": "KhuyenMaiID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "columnName": "NguoiDungID",
+        "identityValue": 134
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "columnName": "PhanCongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "columnName": "PhimID",
+        "identityValue": 23
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "columnName": "PhongID",
+        "identityValue": 18
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "columnName": "QuyenID",
+        "identityValue": 33
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "columnName": "RapID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "columnName": "SanPhamID",
+        "identityValue": 15
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "columnName": "SuatChieuID",
+        "identityValue": 297
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "columnName": "ThanhToanID",
+        "identityValue": 360
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "columnName": "TheLoaiID",
+        "identityValue": 14
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "columnName": "VaiTroID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "columnName": "XuLyID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "columnName": "TinNhanID",
+        "identityValue": 11
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "columnName": "YeuCauID",
+        "identityValue": 3
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_1977058079",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2009058193",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2041058307",
+        "columnName": "queuing_order",
+        "identityValue": null
+      }
+    ]
+  },
+  "bookingPreflight": {
+    "showtimeId": 7,
+    "seat1": 481,
+    "orders": 0,
+    "returnedSeats": 80,
+    "freeSeats": 3
+  },
+  "promotionFixtureBaseline": {
+    "target": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE",
+      "spid": 63
+    },
+    "counts": [
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "row_count": "24"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "row_count": "242"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "row_count": "595"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "row_count": "48"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "row_count": "310"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "row_count": "960"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HOSOKHACHHANG",
+        "row_count": "122"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "row_count": "30"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "row_count": "9"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "row_count": "132"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "row_count": "20"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_DIENVIEN",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_THELOAI",
+        "row_count": "40"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "row_count": "33"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "row_count": "13"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "row_count": "292"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "row_count": "0"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "row_count": "356"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO_QUYEN",
+        "row_count": "59"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "row_count": "32"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "row_count": "2"
+      }
+    ],
+    "identities": [
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_job_history",
+        "columnName": "instance_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_jobsteps_logs",
+        "columnName": "log_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "columnName": "BoiThuongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_database_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "fulltext_thesaurus_phrase_table",
+        "columnName": "phraseid",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "columnName": "diagram_id",
+        "identityValue": 1
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "columnName": "GiaID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "columnName": "ChiTietDoAnID",
+        "identityValue": 243
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "columnName": "VeID",
+        "identityValue": 608
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "columnName": "DanhGiaID",
+        "identityValue": 82
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "columnName": "DienVienID",
+        "identityValue": 50
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "columnName": "DonDatVeID",
+        "identityValue": 319
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "columnName": "GheID",
+        "identityValue": 977
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "columnName": "HinhAnhRapID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "columnName": "KhieuNaiID",
+        "identityValue": 34
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "columnName": "KhuyenMaiID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "columnName": "NguoiDungID",
+        "identityValue": 134
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "columnName": "PhanCongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "columnName": "PhimID",
+        "identityValue": 23
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "columnName": "PhongID",
+        "identityValue": 18
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "columnName": "QuyenID",
+        "identityValue": 33
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "columnName": "RapID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "columnName": "SanPhamID",
+        "identityValue": 15
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "columnName": "SuatChieuID",
+        "identityValue": 297
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "columnName": "ThanhToanID",
+        "identityValue": 360
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "columnName": "TheLoaiID",
+        "identityValue": 14
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "columnName": "VaiTroID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "columnName": "XuLyID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "columnName": "TinNhanID",
+        "identityValue": 11
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "columnName": "YeuCauID",
+        "identityValue": 3
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_1977058079",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2009058193",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2041058307",
+        "columnName": "queuing_order",
+        "identityValue": null
+      }
+    ]
+  },
+  "after": {
+    "target": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE",
+      "spid": 63
+    },
+    "counts": [
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "row_count": "24"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "row_count": "242"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "row_count": "595"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "row_count": "48"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "row_count": "310"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "row_count": "960"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HOSOKHACHHANG",
+        "row_count": "120"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "row_count": "30"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "row_count": "8"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "row_count": "130"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "row_count": "20"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_DIENVIEN",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_THELOAI",
+        "row_count": "40"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "row_count": "33"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "row_count": "13"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "row_count": "292"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "row_count": "0"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "row_count": "356"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO_QUYEN",
+        "row_count": "59"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "row_count": "32"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "row_count": "2"
+      }
+    ],
+    "identities": [
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_job_history",
+        "columnName": "instance_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_jobsteps_logs",
+        "columnName": "log_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "columnName": "BoiThuongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_database_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "fulltext_thesaurus_phrase_table",
+        "columnName": "phraseid",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "columnName": "diagram_id",
+        "identityValue": 1
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "columnName": "GiaID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "columnName": "ChiTietDoAnID",
+        "identityValue": 243
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "columnName": "VeID",
+        "identityValue": 608
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "columnName": "DanhGiaID",
+        "identityValue": 82
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "columnName": "DienVienID",
+        "identityValue": 50
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "columnName": "DonDatVeID",
+        "identityValue": 319
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "columnName": "GheID",
+        "identityValue": 977
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "columnName": "HinhAnhRapID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "columnName": "KhieuNaiID",
+        "identityValue": 34
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "columnName": "KhuyenMaiID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "columnName": "NguoiDungID",
+        "identityValue": 134
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "columnName": "PhanCongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "columnName": "PhimID",
+        "identityValue": 23
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "columnName": "PhongID",
+        "identityValue": 18
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "columnName": "QuyenID",
+        "identityValue": 33
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "columnName": "RapID",
+        "identityValue": 10
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "columnName": "SanPhamID",
+        "identityValue": 15
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "columnName": "SuatChieuID",
+        "identityValue": 297
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "columnName": "ThanhToanID",
+        "identityValue": 360
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "columnName": "TheLoaiID",
+        "identityValue": 14
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "columnName": "VaiTroID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "columnName": "XuLyID",
+        "identityValue": 40
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "columnName": "TinNhanID",
+        "identityValue": 11
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "columnName": "YeuCauID",
+        "identityValue": 3
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_1977058079",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2009058193",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2041058307",
+        "columnName": "queuing_order",
+        "identityValue": null
+      }
+    ]
+  },
+  "stateUnchanged": true,
+  "constraintState": {
+    "violations": 0,
+    "clean": true
+  },
+  "mainAndTestAfter": [
+    {
+      "name": "CinemaBookingDB",
+      "state_desc": "ONLINE",
+      "create_date": "2026-10-14T19:05:15.090Z"
+    },
+    {
+      "name": "CinemaBookingDB_Test",
+      "state_desc": "ONLINE",
+      "create_date": "2026-10-20T16:19:57.823Z"
+    }
+  ],
+  "finishedUtc": "2026-10-21T12:43:13.351Z",
+  "sessionsClosed": true
+}

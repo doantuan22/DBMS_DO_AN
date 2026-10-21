@@ -1,0 +1,54 @@
+{
+  "test": "FINAL-001",
+  "executedUtc": "2026-10-21T13:56:07.180Z",
+  "targetBefore": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "targetAfter": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "batches": 2,
+  "resultSets": [
+    [
+      {
+        "ServerName": "DoanTuanIT",
+        "DatabaseName": "CinemaBookingDB",
+        "DatabaseState": "ONLINE",
+        "OpenTransactions": 0
+      }
+    ],
+    [],
+    [
+      {
+        "CheckName": "Concurrency fixture absent",
+        "Verdict": "PASS"
+      },
+      {
+        "CheckName": "DBCC CHECKCONSTRAINTS",
+        "Verdict": "PASS"
+      }
+    ],
+    []
+  ],
+  "dbccCheckdb": "completed without error rows/messages",
+  "dbccCheckconstraints": {
+    "violationRows": 0,
+    "verdictRows": [
+      {
+        "CheckName": "Concurrency fixture absent",
+        "Verdict": "PASS"
+      },
+      {
+        "CheckName": "DBCC CHECKCONSTRAINTS",
+        "Verdict": "PASS"
+      }
+    ]
+  },
+  "verdict": "PASS"
+}

@@ -1,0 +1,790 @@
+{
+  "startedUtc": "2026-10-21T13:24:03.026Z",
+  "target": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE"
+  },
+  "scripts": [
+    {
+      "script": "main_readonly_demo.sql",
+      "batches": 2,
+      "assertions": 45,
+      "failed": 0,
+      "assertionRows": [
+        {
+          "name": "Application object inventory",
+          "input": "Expected tables/procedures/views/functions/triggers = 29/147/6/21/9",
+          "expected": "29/147/6/21/9",
+          "actual": "29/147/6/21/9",
+          "verdict": "PASS"
+        },
+        {
+          "name": "Constraint and index state",
+          "input": null,
+          "expected": "FK 37; CHECK 65; all trusted/enabled; no disabled indexes",
+          "actual": "FK 37; CHECK 65; untrusted 0; disabled indexes 0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_BayGio current UTC clock",
+          "input": null,
+          "expected": "within the last 2 seconds",
+          "actual": "2026-10-21T13:24:04.8369177",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DanhSachGheSuatChieu multi-row",
+          "input": "showtime=4",
+          "expected": "80",
+          "actual": "80",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DanhSachGheSuatChieu unknown showtime",
+          "input": "showtime=-2147483648",
+          "expected": "0 rows",
+          "actual": "0 rows",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DonDangGiuGhe canceled order",
+          "input": "canceled; future deadline",
+          "expected": "0",
+          "actual": "0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DonDangGiuGhe exact expiry boundary",
+          "input": "pending; deadline = now",
+          "expected": "0",
+          "actual": "0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DonDangGiuGhe NULL status",
+          "input": "NULL status/deadline",
+          "expected": "0",
+          "actual": "0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DonDangGiuGhe paid order",
+          "input": "completed; old deadline",
+          "expected": "1",
+          "actual": "1",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_DonDangGiuGhe pending before expiry",
+          "input": "pending; deadline = now + 1 minute",
+          "expected": "1",
+          "actual": "1",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GheCoVeHieuLucSuatTuongLai existing seat",
+          "input": "seat=625",
+          "expected": "1",
+          "actual": "1",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GheCoVeHieuLucSuatTuongLai unknown seat",
+          "input": "seat=-2147483648",
+          "expected": "0",
+          "actual": "0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GioiHanDonDangGiu",
+          "input": null,
+          "expected": "3",
+          "actual": "3",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GioiHanGheMoiDon",
+          "input": null,
+          "expected": "10",
+          "actual": "10",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GioiHanGiamGiaPhanTram",
+          "input": null,
+          "expected": "99",
+          "actual": "99",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GioiHanSoLuongSanPham",
+          "input": null,
+          "expected": "10",
+          "actual": "10",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GioRap NULL",
+          "input": "NULL",
+          "expected": "NULL",
+          "actual": "NULL",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_GioRap UTC-to-cinema boundary",
+          "input": "2026-10-20T17:00:00",
+          "expected": "2026-10-21 00:00 +07:00",
+          "actual": "2026-10-21T00:00:00+07:00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_HomNay business date",
+          "input": null,
+          "expected": "2026-10-21",
+          "actual": "2026-10-21",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_KiemTraQuanLyRapScope",
+          "input": "user=6; cinema=4",
+          "expected": "1",
+          "actual": "1",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_KiemTraQuyenNguoiDung admin permission",
+          "input": "active ADMIN user 1; XEM_BAO_CAO_TOANHE",
+          "expected": "1",
+          "actual": "1",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_KiemTraQuyenNguoiDung unknown user/permission",
+          "input": "user=-2147483648; permission=NO_SUCH_PERMISSION",
+          "expected": "0",
+          "actual": "0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_NgayKinhDoanh date boundary",
+          "input": "2026-10-20T17:00:00",
+          "expected": "2026-10-21",
+          "actual": "2026-10-21",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_NgayKinhDoanh NULL",
+          "input": "NULL",
+          "expected": "NULL",
+          "actual": "NULL",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhBoiThuongVe NULL boundary",
+          "input": "ve=NULL; food=NULL; discount=NULL",
+          "expected": "amount=0; points=0",
+          "actual": "amount=0.000000; points=0",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhBoiThuongVe proportional amount/points",
+          "input": "ve=100000; food=50000; discount=30000",
+          "expected": "amount=80000; points=80",
+          "actual": "amount=80000.000000; points=80",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhGiaVe current bookable fixture",
+          "input": "showtime=4; seat=241",
+          "expected": "85000.00",
+          "actual": "85000.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhGiaVe unknown IDs",
+          "input": "showtime=-2147483648; seat=-2147483648",
+          "expected": "0",
+          "actual": "0.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhTongTienDoAn order snapshot",
+          "input": "order=310",
+          "expected": "35000.00",
+          "actual": "35000.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhTongTienDoAn unknown order",
+          "input": "order=-2147483648",
+          "expected": "0",
+          "actual": "0.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhTongTienDon order snapshot",
+          "input": "order=310",
+          "expected": "225000.00",
+          "actual": "225000.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhTongTienDon unknown order",
+          "input": "order=-2147483648",
+          "expected": "0",
+          "actual": "0.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhTongTienVe order snapshot",
+          "input": "order=310",
+          "expected": "0.00",
+          "actual": "0.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_TinhTongTienVe unknown order",
+          "input": "order=-2147483648",
+          "expected": "0",
+          "actual": "0.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_ThoiGianGiaHanThanhToanPhut",
+          "input": null,
+          "expected": "5",
+          "actual": "5",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_ThoiGianGiuChoPhut",
+          "input": null,
+          "expected": "5",
+          "actual": "5",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_UtcTuGioRap cinema-to-UTC boundary",
+          "input": "2026-10-21 00:00 local",
+          "expected": "2026-10-20 17:00 UTC",
+          "actual": "2026-10-20T17:00:00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "fn_UtcTuGioRap NULL",
+          "input": "NULL",
+          "expected": "NULL",
+          "actual": "NULL",
+          "verdict": "PASS"
+        },
+        {
+          "name": "Trigger state",
+          "input": null,
+          "expected": "9 enabled application triggers",
+          "actual": "9 total; 0 disabled",
+          "verdict": "PASS"
+        },
+        {
+          "name": "vw_ChiTietDonDatVe row coverage",
+          "input": null,
+          "expected": "310",
+          "actual": "310",
+          "verdict": "PASS"
+        },
+        {
+          "name": "vw_DanhSachKhieuNai row coverage",
+          "input": null,
+          "expected": "30",
+          "actual": "30",
+          "verdict": "PASS"
+        },
+        {
+          "name": "vw_DoanhThuTheoRap paid-payment revenue",
+          "input": "successful payment orders grouped once per order",
+          "expected": "64022000.00",
+          "actual": "64022000.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "vw_LichChieuChiTiet row coverage",
+          "input": null,
+          "expected": "292",
+          "actual": "292",
+          "verdict": "PASS"
+        },
+        {
+          "name": "vw_LichSuDatVe row coverage",
+          "input": null,
+          "expected": "310",
+          "actual": "310",
+          "verdict": "PASS"
+        },
+        {
+          "name": "vw_ThongKePhim row coverage",
+          "input": null,
+          "expected": "20",
+          "actual": "20",
+          "verdict": "PASS"
+        }
+      ],
+      "summaries": [
+        {
+          "ReadOnlyCases": 45,
+          "PassedReadOnlyCases": 45,
+          "OverallStatus": "READ-ONLY SUITE ONLY: 45 assertions passed; consult MAIN_DATABASE_AUDIT_REPORT.md for current overall readiness."
+        }
+      ],
+      "recordsetCount": 18,
+      "actualPlanResultSets": 3,
+      "hasStatisticsIoTime": true,
+      "verdict": "PASS",
+      "expectedAssertionCount": 45
+    },
+    {
+      "script": "main_readonly_procedure_demo.sql",
+      "batches": 1,
+      "assertions": 14,
+      "failed": 0,
+      "assertionRows": [
+        {
+          "name": "sp_Cinema_List",
+          "input": "city=NULL",
+          "expected": "4",
+          "actual": "4",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Clock_GetNow",
+          "input": "movie=4",
+          "expected": "one row; runtime=121; clock current",
+          "actual": "rows=1; runtime=121",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Genre_List",
+          "input": "no filters",
+          "expected": "12",
+          "actual": "12",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Movie_List",
+          "input": "all filters=NULL",
+          "expected": "20",
+          "actual": "20",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Product_ListActive",
+          "input": "no parameters",
+          "expected": "13",
+          "actual": "13",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Promotion_Validate valid preview",
+          "input": "active customer; STAR10; total=100000",
+          "expected": "valid=1; discount=10000",
+          "actual": "valid=1; discount=10000.00",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_RBAC_GetPermissionsByUser",
+          "input": "active admin=1",
+          "expected": "33",
+          "actual": "33",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Seat_ListByShowtime",
+          "input": "showtime=4",
+          "expected": "80",
+          "actual": "80",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Seat_ListByShowtime invalid ID",
+          "input": "-2147483648",
+          "expected": "THROW 50021",
+          "actual": "error 50021",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Showtime_GetDetail",
+          "input": "showtime=4",
+          "expected": "1",
+          "actual": "1",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Showtime_ListByMovie",
+          "input": "movie=4; cinema/date=NULL",
+          "expected": "5",
+          "actual": "5",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Showtime_ValidateTimes overlap",
+          "input": "existing future room/time interval",
+          "expected": "THROW 50001",
+          "actual": "error 50001",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_Showtime_ValidateTimes valid future",
+          "input": "future interval=movie runtime; room=NULL",
+          "expected": "no error",
+          "actual": "no error",
+          "verdict": "PASS"
+        },
+        {
+          "name": "sp_System_HealthCheck",
+          "input": "no parameters",
+          "expected": "Healthy / CinemaBookingDB / one row",
+          "actual": "Healthy / CinemaBookingDB / rows=1",
+          "verdict": "PASS"
+        }
+      ],
+      "summaries": [
+        {
+          "Cases": 14,
+          "Passed": 14,
+          "Failed": 0,
+          "Mode": "READ-ONLY PROCEDURE DEMO; no persistent writes"
+        }
+      ],
+      "recordsetCount": 4,
+      "actualPlanResultSets": 0,
+      "hasStatisticsIoTime": false,
+      "verdict": "PASS",
+      "expectedAssertionCount": 14
+    }
+  ],
+  "integrity": {
+    "rowFingerprintsSame": true,
+    "checkConstraintFindings": 0,
+    "checkDbFindings": 0,
+    "openTransactions": []
+  },
+  "verdict": "PASS",
+  "before": {
+    "target": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE"
+    },
+    "rows": [
+      {
+        "table": "[dbo].[BOITHUONG_HUYSUAT]",
+        "count": 6,
+        "sha256": "e7edabd889a637402c1326d9fe817dd553d6656736c5442928f063237537123b"
+      },
+      {
+        "table": "[dbo].[sysdiagrams]",
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "[dbo].[BANGGIA]",
+        "count": 24,
+        "sha256": "37e3ba2114060fa99226fe4e534848dbe446d38a5d0c708be248f27dbd7ce225"
+      },
+      {
+        "table": "[dbo].[CHITIETDOAN]",
+        "count": 242,
+        "sha256": "0354c94e4e54159eddc33c6296a84432ba3448b815a37acc24d753db1b03ecc2"
+      },
+      {
+        "table": "[dbo].[CHITIETVE]",
+        "count": 595,
+        "sha256": "a46e5450c1895fba7ae7ad84e229e95e4269df0e5774a16b24f739c737792030"
+      },
+      {
+        "table": "[dbo].[DANHGIAPHIM]",
+        "count": 80,
+        "sha256": "a7be7726b1349d2f993cc0caf502162c0bfe20875ec6c9c2bfd36e5af0619838"
+      },
+      {
+        "table": "[dbo].[DIENVIEN]",
+        "count": 48,
+        "sha256": "7d0fb4d5e2d5a209bf2c108524ec319a3d32bf0b35a30a593630e5c0ab997e65"
+      },
+      {
+        "table": "[dbo].[DONDATVE]",
+        "count": 310,
+        "sha256": "61b6109a9d85e86c5d125a1238260439539b06db2598cb6b4f04a7c7337b14b1"
+      },
+      {
+        "table": "[dbo].[GHE]",
+        "count": 960,
+        "sha256": "0139ab38a5c8f9769167f9704cabcc14ed7a71375e8ba62013972767b8780165"
+      },
+      {
+        "table": "[dbo].[HINHANH_RAPCHIEUPHIM]",
+        "count": 4,
+        "sha256": "e4dbd8e928de43fdd1414aac0453d0bc29c91e71b777e3ce1d888ebbe31ccb69"
+      },
+      {
+        "table": "[dbo].[HOSOKHACHHANG]",
+        "count": 120,
+        "sha256": "ecd7ce74902c054980f5a4b364bb700ce3fe5a19016eafa6fd7188048db6574a"
+      },
+      {
+        "table": "[dbo].[KHIEUNAI]",
+        "count": 30,
+        "sha256": "0e72530b1deee4dd445cdfd142edf8cced2babbbe8508dbca44d6617a5b97be2"
+      },
+      {
+        "table": "[dbo].[KHUYENMAI]",
+        "count": 8,
+        "sha256": "e4134a95a5242265874552eee538a8e6d0d586cb6ea897a4f58ffcdf4b7bc4af"
+      },
+      {
+        "table": "[dbo].[NGUOIDUNG]",
+        "count": 130,
+        "sha256": "0a76b64505384e13e755bb4c9c7a618c5ae868afc55c5f1c655be24712003d00"
+      },
+      {
+        "table": "[dbo].[PHANCONG_RAP]",
+        "count": 4,
+        "sha256": "2df86aab1e71fdb4625057ae69a2e8a0eb86b27c96bfbe80768379805df2c449"
+      },
+      {
+        "table": "[dbo].[PHIM]",
+        "count": 20,
+        "sha256": "5e2842d47b8807c418422b152db0cc69a98459e5b0b527940b4adcab4d81b3e0"
+      },
+      {
+        "table": "[dbo].[PHIM_DIENVIEN]",
+        "count": 80,
+        "sha256": "8761b9b16c7a2620a5bbef5f2df5def2e2e01632eabc463349db0077a746fdfa"
+      },
+      {
+        "table": "[dbo].[PHIM_THELOAI]",
+        "count": 40,
+        "sha256": "6c1f61e132822734ca6ba59378d0a64640d168dd63f012e38d4d2430177cbdb9"
+      },
+      {
+        "table": "[dbo].[PHONGCHIEU]",
+        "count": 12,
+        "sha256": "6e535f3387a6390b9bf5b020e68afa812ad6b16f288662388a7486ac1e84e926"
+      },
+      {
+        "table": "[dbo].[QUYEN]",
+        "count": 33,
+        "sha256": "6b97de4da176ab07eb017a431d012db7bed3b97321b378500a32077230154b8c"
+      },
+      {
+        "table": "[dbo].[RAPCHIEUPHIM]",
+        "count": 4,
+        "sha256": "3962730cadafa3048dce2861a5e7c44b34eec13013f72cb103f45c93d5f263a9"
+      },
+      {
+        "table": "[dbo].[SANPHAM]",
+        "count": 13,
+        "sha256": "4f9d6cbe8d9acc31267d26d20d64f3b98752a1c3f1a9edda7c51d535a399d2eb"
+      },
+      {
+        "table": "[dbo].[SUATCHIEU]",
+        "count": 292,
+        "sha256": "d391a8f43b7ba40bd8c872234effa797a1078df891fef55e2857e8d3e7755ba6"
+      },
+      {
+        "table": "[dbo].[THANHTOAN]",
+        "count": 356,
+        "sha256": "c8d067b87393675e33254d212b8548ae2389bedb45d6f628146d507dc0439f45"
+      },
+      {
+        "table": "[dbo].[THELOAI]",
+        "count": 12,
+        "sha256": "3e4d6fe70a970f53db97c2d401365fb24eea778f84dca056e26d03af553349a1"
+      },
+      {
+        "table": "[dbo].[VAITRO]",
+        "count": 4,
+        "sha256": "9e18c0e1feaf8660ae444ae1a1fc8456f557bb1825e5bbc77ab526ffea3f8054"
+      },
+      {
+        "table": "[dbo].[VAITRO_QUYEN]",
+        "count": 59,
+        "sha256": "9e7c2b4ee06b5a8a1b9bc84c4f38482f17a4f0cbe8c3f032f8c8c7c6e7eb30bc"
+      },
+      {
+        "table": "[dbo].[XULY_KHIEUNAI]",
+        "count": 32,
+        "sha256": "5d9562a7be38eb73dd79ccc6e575857f49387366e7cec6f462b7337d6f97989c"
+      },
+      {
+        "table": "[dbo].[TINNHAN_KHIEUNAI]",
+        "count": 6,
+        "sha256": "c91fa24f0a66d1c750af019ae766547e10e2f9a82a652edfb8351624c365f464"
+      },
+      {
+        "table": "[dbo].[YEUCAU_CHUYENCAP]",
+        "count": 2,
+        "sha256": "87534497d9932e1bb84867259b9c860206ee9b22ed86f0f2e9efd8e40b5ee97f"
+      }
+    ]
+  },
+  "after": {
+    "target": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE"
+    },
+    "rows": [
+      {
+        "table": "[dbo].[BOITHUONG_HUYSUAT]",
+        "count": 6,
+        "sha256": "e7edabd889a637402c1326d9fe817dd553d6656736c5442928f063237537123b"
+      },
+      {
+        "table": "[dbo].[sysdiagrams]",
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "table": "[dbo].[BANGGIA]",
+        "count": 24,
+        "sha256": "37e3ba2114060fa99226fe4e534848dbe446d38a5d0c708be248f27dbd7ce225"
+      },
+      {
+        "table": "[dbo].[CHITIETDOAN]",
+        "count": 242,
+        "sha256": "0354c94e4e54159eddc33c6296a84432ba3448b815a37acc24d753db1b03ecc2"
+      },
+      {
+        "table": "[dbo].[CHITIETVE]",
+        "count": 595,
+        "sha256": "a46e5450c1895fba7ae7ad84e229e95e4269df0e5774a16b24f739c737792030"
+      },
+      {
+        "table": "[dbo].[DANHGIAPHIM]",
+        "count": 80,
+        "sha256": "a7be7726b1349d2f993cc0caf502162c0bfe20875ec6c9c2bfd36e5af0619838"
+      },
+      {
+        "table": "[dbo].[DIENVIEN]",
+        "count": 48,
+        "sha256": "7d0fb4d5e2d5a209bf2c108524ec319a3d32bf0b35a30a593630e5c0ab997e65"
+      },
+      {
+        "table": "[dbo].[DONDATVE]",
+        "count": 310,
+        "sha256": "61b6109a9d85e86c5d125a1238260439539b06db2598cb6b4f04a7c7337b14b1"
+      },
+      {
+        "table": "[dbo].[GHE]",
+        "count": 960,
+        "sha256": "0139ab38a5c8f9769167f9704cabcc14ed7a71375e8ba62013972767b8780165"
+      },
+      {
+        "table": "[dbo].[HINHANH_RAPCHIEUPHIM]",
+        "count": 4,
+        "sha256": "e4dbd8e928de43fdd1414aac0453d0bc29c91e71b777e3ce1d888ebbe31ccb69"
+      },
+      {
+        "table": "[dbo].[HOSOKHACHHANG]",
+        "count": 120,
+        "sha256": "ecd7ce74902c054980f5a4b364bb700ce3fe5a19016eafa6fd7188048db6574a"
+      },
+      {
+        "table": "[dbo].[KHIEUNAI]",
+        "count": 30,
+        "sha256": "0e72530b1deee4dd445cdfd142edf8cced2babbbe8508dbca44d6617a5b97be2"
+      },
+      {
+        "table": "[dbo].[KHUYENMAI]",
+        "count": 8,
+        "sha256": "e4134a95a5242265874552eee538a8e6d0d586cb6ea897a4f58ffcdf4b7bc4af"
+      },
+      {
+        "table": "[dbo].[NGUOIDUNG]",
+        "count": 130,
+        "sha256": "0a76b64505384e13e755bb4c9c7a618c5ae868afc55c5f1c655be24712003d00"
+      },
+      {
+        "table": "[dbo].[PHANCONG_RAP]",
+        "count": 4,
+        "sha256": "2df86aab1e71fdb4625057ae69a2e8a0eb86b27c96bfbe80768379805df2c449"
+      },
+      {
+        "table": "[dbo].[PHIM]",
+        "count": 20,
+        "sha256": "5e2842d47b8807c418422b152db0cc69a98459e5b0b527940b4adcab4d81b3e0"
+      },
+      {
+        "table": "[dbo].[PHIM_DIENVIEN]",
+        "count": 80,
+        "sha256": "8761b9b16c7a2620a5bbef5f2df5def2e2e01632eabc463349db0077a746fdfa"
+      },
+      {
+        "table": "[dbo].[PHIM_THELOAI]",
+        "count": 40,
+        "sha256": "6c1f61e132822734ca6ba59378d0a64640d168dd63f012e38d4d2430177cbdb9"
+      },
+      {
+        "table": "[dbo].[PHONGCHIEU]",
+        "count": 12,
+        "sha256": "6e535f3387a6390b9bf5b020e68afa812ad6b16f288662388a7486ac1e84e926"
+      },
+      {
+        "table": "[dbo].[QUYEN]",
+        "count": 33,
+        "sha256": "6b97de4da176ab07eb017a431d012db7bed3b97321b378500a32077230154b8c"
+      },
+      {
+        "table": "[dbo].[RAPCHIEUPHIM]",
+        "count": 4,
+        "sha256": "3962730cadafa3048dce2861a5e7c44b34eec13013f72cb103f45c93d5f263a9"
+      },
+      {
+        "table": "[dbo].[SANPHAM]",
+        "count": 13,
+        "sha256": "4f9d6cbe8d9acc31267d26d20d64f3b98752a1c3f1a9edda7c51d535a399d2eb"
+      },
+      {
+        "table": "[dbo].[SUATCHIEU]",
+        "count": 292,
+        "sha256": "d391a8f43b7ba40bd8c872234effa797a1078df891fef55e2857e8d3e7755ba6"
+      },
+      {
+        "table": "[dbo].[THANHTOAN]",
+        "count": 356,
+        "sha256": "c8d067b87393675e33254d212b8548ae2389bedb45d6f628146d507dc0439f45"
+      },
+      {
+        "table": "[dbo].[THELOAI]",
+        "count": 12,
+        "sha256": "3e4d6fe70a970f53db97c2d401365fb24eea778f84dca056e26d03af553349a1"
+      },
+      {
+        "table": "[dbo].[VAITRO]",
+        "count": 4,
+        "sha256": "9e18c0e1feaf8660ae444ae1a1fc8456f557bb1825e5bbc77ab526ffea3f8054"
+      },
+      {
+        "table": "[dbo].[VAITRO_QUYEN]",
+        "count": 59,
+        "sha256": "9e7c2b4ee06b5a8a1b9bc84c4f38482f17a4f0cbe8c3f032f8c8c7c6e7eb30bc"
+      },
+      {
+        "table": "[dbo].[XULY_KHIEUNAI]",
+        "count": 32,
+        "sha256": "5d9562a7be38eb73dd79ccc6e575857f49387366e7cec6f462b7337d6f97989c"
+      },
+      {
+        "table": "[dbo].[TINNHAN_KHIEUNAI]",
+        "count": 6,
+        "sha256": "c91fa24f0a66d1c750af019ae766547e10e2f9a82a652edfb8351624c365f464"
+      },
+      {
+        "table": "[dbo].[YEUCAU_CHUYENCAP]",
+        "count": 2,
+        "sha256": "87534497d9932e1bb84867259b9c860206ee9b22ed86f0f2e9efd8e40b5ee97f"
+      }
+    ]
+  },
+  "finishedUtc": "2026-10-21T13:24:06.653Z"
+}

@@ -1,0 +1,266 @@
+{
+  "capturedUtc": "2026-10-21T13:50:27.158Z",
+  "target": {
+    "server": "DoanTuanIT",
+    "database": "CinemaBookingDB",
+    "state": "ONLINE"
+  },
+  "expected": 42,
+  "actual": 42,
+  "verdict": "PASS",
+  "defaults": [
+    {
+      "constraint": "DF_BANGGIA_PhuThu",
+      "table": "BANGGIA",
+      "column": "PhuThu",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_BANGGIA_TrangThai",
+      "table": "BANGGIA",
+      "column": "TrangThai",
+      "expression": "(N'Áp dụng')"
+    },
+    {
+      "constraint": "DF_CHITIETVE_TrangThai",
+      "table": "CHITIETVE",
+      "column": "TrangThai",
+      "expression": "(N'Đã đặt')"
+    },
+    {
+      "constraint": "DF_DANHGIAPHIM_NgayDanhGia_ClockVN",
+      "table": "DANHGIAPHIM",
+      "column": "NgayDanhGia",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_DONDATVE_DiemSuDung",
+      "table": "DONDATVE",
+      "column": "DiemSuDung",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_DONDATVE_NgayDat_ClockVN",
+      "table": "DONDATVE",
+      "column": "NgayDat",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_DONDATVE_TienGiamGia",
+      "table": "DONDATVE",
+      "column": "TienGiamGia",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_DONDATVE_TongTienDoAn",
+      "table": "DONDATVE",
+      "column": "TongTienDoAn",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_DONDATVE_TongTienVe",
+      "table": "DONDATVE",
+      "column": "TongTienVe",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_DONDATVE_TrangThai",
+      "table": "DONDATVE",
+      "column": "TrangThai",
+      "expression": "(N'Chờ thanh toán')"
+    },
+    {
+      "constraint": "DF_GHE_LoaiGhe",
+      "table": "GHE",
+      "column": "LoaiGhe",
+      "expression": "(N'Thường')"
+    },
+    {
+      "constraint": "DF_GHE_TrangThai",
+      "table": "GHE",
+      "column": "TrangThai",
+      "expression": "(N'Hoạt động')"
+    },
+    {
+      "constraint": "DF_HINHANH_RAPCHIEUPHIM_LaAnhDaiDien",
+      "table": "HINHANH_RAPCHIEUPHIM",
+      "column": "LaAnhDaiDien",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_HINHANH_RAPCHIEUPHIM_NgayTao_ClockVN",
+      "table": "HINHANH_RAPCHIEUPHIM",
+      "column": "NgayTao",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_HINHANH_RAPCHIEUPHIM_ThuTuHienThi",
+      "table": "HINHANH_RAPCHIEUPHIM",
+      "column": "ThuTuHienThi",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_HINHANH_RAPCHIEUPHIM_TrangThai",
+      "table": "HINHANH_RAPCHIEUPHIM",
+      "column": "TrangThai",
+      "expression": "(N'Hoạt động')"
+    },
+    {
+      "constraint": "DF_HOSOKHACHHANG_DiemTichLuy",
+      "table": "HOSOKHACHHANG",
+      "column": "DiemTichLuy",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_KHIEUNAI_MucDoUuTien",
+      "table": "KHIEUNAI",
+      "column": "MucDoUuTien",
+      "expression": "(N'Trung bình')"
+    },
+    {
+      "constraint": "DF_KHIEUNAI_NgayTao_ClockVN",
+      "table": "KHIEUNAI",
+      "column": "NgayTao",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_KHIEUNAI_TrangThai",
+      "table": "KHIEUNAI",
+      "column": "TrangThai",
+      "expression": "(N'Mới')"
+    },
+    {
+      "constraint": "DF_KHUYENMAI_DonHangToiThieu",
+      "table": "KHUYENMAI",
+      "column": "DonHangToiThieu",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_KHUYENMAI_SoLuongDaDung",
+      "table": "KHUYENMAI",
+      "column": "SoLuongDaDung",
+      "expression": "((0))"
+    },
+    {
+      "constraint": "DF_KHUYENMAI_TrangThai",
+      "table": "KHUYENMAI",
+      "column": "TrangThai",
+      "expression": "(N'Hoạt động')"
+    },
+    {
+      "constraint": "DF_NGUOIDUNG_NgayTao_ClockVN",
+      "table": "NGUOIDUNG",
+      "column": "NgayTao",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_NGUOIDUNG_TrangThai",
+      "table": "NGUOIDUNG",
+      "column": "TrangThai",
+      "expression": "(N'Hoạt động')"
+    },
+    {
+      "constraint": "DF_PHANCONG_RAP_TrangThai",
+      "table": "PHANCONG_RAP",
+      "column": "TrangThai",
+      "expression": "(N'Hiệu lực')"
+    },
+    {
+      "constraint": "DF_PHIM_TrangThai",
+      "table": "PHIM",
+      "column": "TrangThai",
+      "expression": "(N'Sắp chiếu')"
+    },
+    {
+      "constraint": "DF_PHONGCHIEU_LoaiPhong",
+      "table": "PHONGCHIEU",
+      "column": "LoaiPhong",
+      "expression": "(N'2D')"
+    },
+    {
+      "constraint": "DF_PHONGCHIEU_TrangThai",
+      "table": "PHONGCHIEU",
+      "column": "TrangThai",
+      "expression": "(N'Hoạt động')"
+    },
+    {
+      "constraint": "DF_RAPCHIEUPHIM_TrangThai",
+      "table": "RAPCHIEUPHIM",
+      "column": "TrangThai",
+      "expression": "(N'Hoạt động')"
+    },
+    {
+      "constraint": "DF_SANPHAM_TrangThai",
+      "table": "SANPHAM",
+      "column": "TrangThai",
+      "expression": "(N'Đang bán')"
+    },
+    {
+      "constraint": "DF_SUATCHIEU_DinhDang",
+      "table": "SUATCHIEU",
+      "column": "DinhDang",
+      "expression": "(N'2D')"
+    },
+    {
+      "constraint": "DF_SUATCHIEU_TrangThai",
+      "table": "SUATCHIEU",
+      "column": "TrangThai",
+      "expression": "(N'Mở bán')"
+    },
+    {
+      "constraint": "DF_TINNHAN_KHIEUNAI_LoaiTinNhan",
+      "table": "TINNHAN_KHIEUNAI",
+      "column": "LoaiTinNhan",
+      "expression": "(N'Công khai')"
+    },
+    {
+      "constraint": "DF_TINNHAN_KHIEUNAI_ThoiGianGui_ClockVN",
+      "table": "TINNHAN_KHIEUNAI",
+      "column": "ThoiGianGui",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_THANHTOAN_NgayTao_ClockVN",
+      "table": "THANHTOAN",
+      "column": "NgayTao",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_THANHTOAN_TrangThai",
+      "table": "THANHTOAN",
+      "column": "TrangThai",
+      "expression": "(N'Đang xử lý')"
+    },
+    {
+      "constraint": "DF_VAITRO_QUYEN_NgayGan_ClockVN",
+      "table": "VAITRO_QUYEN",
+      "column": "NgayGan",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_XULY_KHIEUNAI_NgayXuLy_ClockVN",
+      "table": "XULY_KHIEUNAI",
+      "column": "NgayXuLy",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_YEUCAU_CHUYENCAP_MucDoUuTien",
+      "table": "YEUCAU_CHUYENCAP",
+      "column": "MucDoUuTien",
+      "expression": "(N'Trung bình')"
+    },
+    {
+      "constraint": "DF_YEUCAU_CHUYENCAP_ThoiGianGui_ClockVN",
+      "table": "YEUCAU_CHUYENCAP",
+      "column": "ThoiGianGui",
+      "expression": "([dbo].[fn_BayGio]())"
+    },
+    {
+      "constraint": "DF_YEUCAU_CHUYENCAP_TrangThai",
+      "table": "YEUCAU_CHUYENCAP",
+      "column": "TrangThai",
+      "expression": "(N'Chờ tiếp nhận')"
+    }
+  ],
+  "note": "Metadata inventory only; this evidence does not claim independent DML execution per default constraint."
+}

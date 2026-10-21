@@ -1,0 +1,1329 @@
+{
+  "startedUtc": "2026-10-21T11:29:13.051Z",
+  "target": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE"
+  },
+  "planned": 48,
+  "tests": [
+    {
+      "procedure": "sp_Admin_Actor_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        48
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Admin_Assignment_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        0
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Admin_Genre_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        12
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Admin_Permission_Create",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_Permission_Delete",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_Permission_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        33
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Admin_Permission_Update",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_Promotion_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        8
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Admin_RolePermission_Set",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_Role_Create",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_Role_Delete",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_Role_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        4
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Admin_Role_Update",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "intentional refusal error 50405",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "actual": "error 50405",
+      "message": "Vai trò, danh mục quyền và ma trận quyền là cố định.",
+      "expectedError": 50405
+    },
+    {
+      "procedure": "sp_Admin_User_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_CinemaImage_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Cinema_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        4
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Movie_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Pricing_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        6
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Product_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        13
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_RolePermission_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        33
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Room_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        3
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Seat_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        80
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "usp_Admin_Showtime_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        73
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Auth_Login",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        7,
+        0
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_User_GetCurrent",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_User_GetPasswordHash",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Complaint_GetByCustomer",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Complaint_ListByCustomer",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Manager_Pricing_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        6
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Manager_Revenue",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Manager_Room_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        3
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Manager_Seat_ListByRoom",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        80
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Manager_Showtime_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        73
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_StaffBooking_Authorize",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_StaffBooking_Customers",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        0
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_StaffBooking_Detail",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        2,
+        3,
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_StaffBooking_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        50,
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_StaffBooking_LockShow",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [],
+      "verdict": "PASS",
+      "outputNames": [
+        "RapID",
+        "PhongID"
+      ],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_StaffBooking_Options",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        4,
+        42,
+        80
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Complaint_Chat_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        0
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Complaint_Unassigned_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        10
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Escalation_GetDetail",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        1,
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Escalation_List_Admin",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Escalation_List_CSKH",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        0
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Support_Complaint_GetDetail",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Support_Complaint_GetOrderReference",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        1,
+        0,
+        2
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Support_Complaint_List",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        30
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    },
+    {
+      "procedure": "sp_Support_Customer_GetPoints",
+      "category": "READ_ONLY",
+      "input": "source-backed existing fixture/default filters",
+      "expected": "successful runtime call",
+      "recordsetRows": [
+        1,
+        1
+      ],
+      "verdict": "PASS",
+      "outputNames": [],
+      "actual": "success"
+    }
+  ],
+  "verdict": "PASS",
+  "before": {
+    "id": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE"
+    },
+    "counts": [
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "row_count": "24"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "row_count": "242"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "row_count": "595"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "row_count": "48"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "row_count": "310"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "row_count": "960"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HOSOKHACHHANG",
+        "row_count": "120"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "row_count": "30"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "row_count": "8"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "row_count": "130"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "row_count": "20"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_DIENVIEN",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_THELOAI",
+        "row_count": "40"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "row_count": "33"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "row_count": "13"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "row_count": "292"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "row_count": "0"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "row_count": "356"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO_QUYEN",
+        "row_count": "59"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "row_count": "32"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "row_count": "2"
+      }
+    ],
+    "identities": [
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_job_history",
+        "columnName": "instance_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_jobsteps_logs",
+        "columnName": "log_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "columnName": "BoiThuongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_database_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "fulltext_thesaurus_phrase_table",
+        "columnName": "phraseid",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "columnName": "diagram_id",
+        "identityValue": 1
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "columnName": "GiaID",
+        "identityValue": 24
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "columnName": "ChiTietDoAnID",
+        "identityValue": 242
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "columnName": "VeID",
+        "identityValue": 595
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "columnName": "DanhGiaID",
+        "identityValue": 80
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "columnName": "DienVienID",
+        "identityValue": 48
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "columnName": "DonDatVeID",
+        "identityValue": 310
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "columnName": "GheID",
+        "identityValue": 960
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "columnName": "HinhAnhRapID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "columnName": "KhieuNaiID",
+        "identityValue": 30
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "columnName": "KhuyenMaiID",
+        "identityValue": 8
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "columnName": "NguoiDungID",
+        "identityValue": 130
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "columnName": "PhanCongID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "columnName": "PhimID",
+        "identityValue": 20
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "columnName": "PhongID",
+        "identityValue": 12
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "columnName": "QuyenID",
+        "identityValue": 33
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "columnName": "RapID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "columnName": "SanPhamID",
+        "identityValue": 13
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "columnName": "SuatChieuID",
+        "identityValue": 292
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "columnName": "ThanhToanID",
+        "identityValue": 356
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "columnName": "TheLoaiID",
+        "identityValue": 12
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "columnName": "VaiTroID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "columnName": "XuLyID",
+        "identityValue": 32
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "columnName": "TinNhanID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "columnName": "YeuCauID",
+        "identityValue": 2
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_1977058079",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2009058193",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2041058307",
+        "columnName": "queuing_order",
+        "identityValue": null
+      }
+    ]
+  },
+  "after": {
+    "id": {
+      "serverName": "DoanTuanIT",
+      "databaseName": "CinemaBookingDB",
+      "state": "ONLINE"
+    },
+    "counts": [
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "row_count": "24"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "row_count": "242"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "row_count": "595"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "row_count": "48"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "row_count": "310"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "row_count": "960"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HOSOKHACHHANG",
+        "row_count": "120"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "row_count": "30"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "row_count": "8"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "row_count": "130"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "row_count": "20"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_DIENVIEN",
+        "row_count": "80"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM_THELOAI",
+        "row_count": "40"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "row_count": "33"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "row_count": "13"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "row_count": "292"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "row_count": "0"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "row_count": "6"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "row_count": "356"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "row_count": "12"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "row_count": "4"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO_QUYEN",
+        "row_count": "59"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "row_count": "32"
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "row_count": "2"
+      }
+    ],
+    "identities": [
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_job_history",
+        "columnName": "instance_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "sqlagent_jobsteps_logs",
+        "columnName": "log_id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BOITHUONG_HUYSUAT",
+        "columnName": "BoiThuongID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "ipv6_database_firewall_rules_table",
+        "columnName": "id",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "fulltext_thesaurus_phrase_table",
+        "columnName": "phraseid",
+        "identityValue": null
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "sysdiagrams",
+        "columnName": "diagram_id",
+        "identityValue": 1
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "BANGGIA",
+        "columnName": "GiaID",
+        "identityValue": 24
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETDOAN",
+        "columnName": "ChiTietDoAnID",
+        "identityValue": 242
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "CHITIETVE",
+        "columnName": "VeID",
+        "identityValue": 595
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DANHGIAPHIM",
+        "columnName": "DanhGiaID",
+        "identityValue": 80
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DIENVIEN",
+        "columnName": "DienVienID",
+        "identityValue": 48
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "DONDATVE",
+        "columnName": "DonDatVeID",
+        "identityValue": 310
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "GHE",
+        "columnName": "GheID",
+        "identityValue": 960
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "HINHANH_RAPCHIEUPHIM",
+        "columnName": "HinhAnhRapID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHIEUNAI",
+        "columnName": "KhieuNaiID",
+        "identityValue": 30
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "KHUYENMAI",
+        "columnName": "KhuyenMaiID",
+        "identityValue": 8
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "NGUOIDUNG",
+        "columnName": "NguoiDungID",
+        "identityValue": 130
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHANCONG_RAP",
+        "columnName": "PhanCongID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHIM",
+        "columnName": "PhimID",
+        "identityValue": 20
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "PHONGCHIEU",
+        "columnName": "PhongID",
+        "identityValue": 12
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "QUYEN",
+        "columnName": "QuyenID",
+        "identityValue": 33
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "RAPCHIEUPHIM",
+        "columnName": "RapID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SANPHAM",
+        "columnName": "SanPhamID",
+        "identityValue": 13
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "SUATCHIEU",
+        "columnName": "SuatChieuID",
+        "identityValue": 292
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THANHTOAN",
+        "columnName": "ThanhToanID",
+        "identityValue": 356
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "THELOAI",
+        "columnName": "TheLoaiID",
+        "identityValue": 12
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "VAITRO",
+        "columnName": "VaiTroID",
+        "identityValue": 4
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "XULY_KHIEUNAI",
+        "columnName": "XuLyID",
+        "identityValue": 32
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "TINNHAN_KHIEUNAI",
+        "columnName": "TinNhanID",
+        "identityValue": 6
+      },
+      {
+        "schemaName": "dbo",
+        "tableName": "YEUCAU_CHUYENCAP",
+        "columnName": "YeuCauID",
+        "identityValue": 2
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_1977058079",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2009058193",
+        "columnName": "queuing_order",
+        "identityValue": null
+      },
+      {
+        "schemaName": "sys",
+        "tableName": "queue_messages_2041058307",
+        "columnName": "queuing_order",
+        "identityValue": null
+      }
+    ]
+  },
+  "stateUnchanged": true,
+  "failures": [],
+  "finishedUtc": "2026-10-21T11:29:13.402Z"
+}

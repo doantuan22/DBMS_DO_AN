@@ -1,0 +1,475 @@
+{
+  "test": "FUNCTION-VIEW-INDEX",
+  "executedUtc": "2026-10-21T13:54:33.677Z",
+  "targetBefore": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "targetAfter": {
+    "serverName": "DoanTuanIT",
+    "databaseName": "CinemaBookingDB",
+    "state": "ONLINE",
+    "openTransactions": 0
+  },
+  "expectedAssertions": 45,
+  "actualAssertions": 45,
+  "passed": 45,
+  "failed": 0,
+  "assertions": [
+    {
+      "TestName": "Application object inventory",
+      "InputValue": "Expected tables/procedures/views/functions/triggers = 29/147/6/21/9",
+      "ExpectedValue": "29/147/6/21/9",
+      "ActualValue": "29/147/6/21/9",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "Constraint and index state",
+      "InputValue": null,
+      "ExpectedValue": "FK 37; CHECK 65; all trusted/enabled; no disabled indexes",
+      "ActualValue": "FK 37; CHECK 65; untrusted 0; disabled indexes 0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_BayGio current UTC clock",
+      "InputValue": null,
+      "ExpectedValue": "within the last 2 seconds",
+      "ActualValue": "2026-10-21T13:54:32.9958969",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DanhSachGheSuatChieu multi-row",
+      "InputValue": "showtime=4",
+      "ExpectedValue": "80",
+      "ActualValue": "80",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DanhSachGheSuatChieu unknown showtime",
+      "InputValue": "showtime=-2147483648",
+      "ExpectedValue": "0 rows",
+      "ActualValue": "0 rows",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DonDangGiuGhe canceled order",
+      "InputValue": "canceled; future deadline",
+      "ExpectedValue": "0",
+      "ActualValue": "0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DonDangGiuGhe exact expiry boundary",
+      "InputValue": "pending; deadline = now",
+      "ExpectedValue": "0",
+      "ActualValue": "0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DonDangGiuGhe NULL status",
+      "InputValue": "NULL status/deadline",
+      "ExpectedValue": "0",
+      "ActualValue": "0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DonDangGiuGhe paid order",
+      "InputValue": "completed; old deadline",
+      "ExpectedValue": "1",
+      "ActualValue": "1",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_DonDangGiuGhe pending before expiry",
+      "InputValue": "pending; deadline = now + 1 minute",
+      "ExpectedValue": "1",
+      "ActualValue": "1",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GheCoVeHieuLucSuatTuongLai existing seat",
+      "InputValue": "seat=625",
+      "ExpectedValue": "1",
+      "ActualValue": "1",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GheCoVeHieuLucSuatTuongLai unknown seat",
+      "InputValue": "seat=-2147483648",
+      "ExpectedValue": "0",
+      "ActualValue": "0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GioiHanDonDangGiu",
+      "InputValue": null,
+      "ExpectedValue": "3",
+      "ActualValue": "3",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GioiHanGheMoiDon",
+      "InputValue": null,
+      "ExpectedValue": "10",
+      "ActualValue": "10",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GioiHanGiamGiaPhanTram",
+      "InputValue": null,
+      "ExpectedValue": "99",
+      "ActualValue": "99",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GioiHanSoLuongSanPham",
+      "InputValue": null,
+      "ExpectedValue": "10",
+      "ActualValue": "10",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GioRap NULL",
+      "InputValue": "NULL",
+      "ExpectedValue": "NULL",
+      "ActualValue": "NULL",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_GioRap UTC-to-cinema boundary",
+      "InputValue": "2026-10-20T17:00:00",
+      "ExpectedValue": "2026-10-21 00:00 +07:00",
+      "ActualValue": "2026-10-21T00:00:00+07:00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_HomNay business date",
+      "InputValue": null,
+      "ExpectedValue": "2026-10-21",
+      "ActualValue": "2026-10-21",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_KiemTraQuanLyRapScope",
+      "InputValue": "user=6; cinema=4",
+      "ExpectedValue": "1",
+      "ActualValue": "1",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_KiemTraQuyenNguoiDung admin permission",
+      "InputValue": "active ADMIN user 1; XEM_BAO_CAO_TOANHE",
+      "ExpectedValue": "1",
+      "ActualValue": "1",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_KiemTraQuyenNguoiDung unknown user/permission",
+      "InputValue": "user=-2147483648; permission=NO_SUCH_PERMISSION",
+      "ExpectedValue": "0",
+      "ActualValue": "0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_NgayKinhDoanh date boundary",
+      "InputValue": "2026-10-20T17:00:00",
+      "ExpectedValue": "2026-10-21",
+      "ActualValue": "2026-10-21",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_NgayKinhDoanh NULL",
+      "InputValue": "NULL",
+      "ExpectedValue": "NULL",
+      "ActualValue": "NULL",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhBoiThuongVe NULL boundary",
+      "InputValue": "ve=NULL; food=NULL; discount=NULL",
+      "ExpectedValue": "amount=0; points=0",
+      "ActualValue": "amount=0.000000; points=0",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhBoiThuongVe proportional amount/points",
+      "InputValue": "ve=100000; food=50000; discount=30000",
+      "ExpectedValue": "amount=80000; points=80",
+      "ActualValue": "amount=80000.000000; points=80",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhGiaVe current bookable fixture",
+      "InputValue": "showtime=4; seat=241",
+      "ExpectedValue": "85000.00",
+      "ActualValue": "85000.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhGiaVe unknown IDs",
+      "InputValue": "showtime=-2147483648; seat=-2147483648",
+      "ExpectedValue": "0",
+      "ActualValue": "0.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhTongTienDoAn order snapshot",
+      "InputValue": "order=310",
+      "ExpectedValue": "35000.00",
+      "ActualValue": "35000.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhTongTienDoAn unknown order",
+      "InputValue": "order=-2147483648",
+      "ExpectedValue": "0",
+      "ActualValue": "0.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhTongTienDon order snapshot",
+      "InputValue": "order=310",
+      "ExpectedValue": "225000.00",
+      "ActualValue": "225000.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhTongTienDon unknown order",
+      "InputValue": "order=-2147483648",
+      "ExpectedValue": "0",
+      "ActualValue": "0.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhTongTienVe order snapshot",
+      "InputValue": "order=310",
+      "ExpectedValue": "0.00",
+      "ActualValue": "0.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_TinhTongTienVe unknown order",
+      "InputValue": "order=-2147483648",
+      "ExpectedValue": "0",
+      "ActualValue": "0.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_ThoiGianGiaHanThanhToanPhut",
+      "InputValue": null,
+      "ExpectedValue": "5",
+      "ActualValue": "5",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_ThoiGianGiuChoPhut",
+      "InputValue": null,
+      "ExpectedValue": "5",
+      "ActualValue": "5",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_UtcTuGioRap cinema-to-UTC boundary",
+      "InputValue": "2026-10-21 00:00 local",
+      "ExpectedValue": "2026-10-20 17:00 UTC",
+      "ActualValue": "2026-10-20T17:00:00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "fn_UtcTuGioRap NULL",
+      "InputValue": "NULL",
+      "ExpectedValue": "NULL",
+      "ActualValue": "NULL",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "Trigger state",
+      "InputValue": null,
+      "ExpectedValue": "9 enabled application triggers",
+      "ActualValue": "9 total; 0 disabled",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "vw_ChiTietDonDatVe row coverage",
+      "InputValue": null,
+      "ExpectedValue": "310",
+      "ActualValue": "310",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "vw_DanhSachKhieuNai row coverage",
+      "InputValue": null,
+      "ExpectedValue": "30",
+      "ActualValue": "30",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "vw_DoanhThuTheoRap paid-payment revenue",
+      "InputValue": "successful payment orders grouped once per order",
+      "ExpectedValue": "64022000.00",
+      "ActualValue": "64022000.00",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "vw_LichChieuChiTiet row coverage",
+      "InputValue": null,
+      "ExpectedValue": "292",
+      "ActualValue": "292",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "vw_LichSuDatVe row coverage",
+      "InputValue": null,
+      "ExpectedValue": "310",
+      "ActualValue": "310",
+      "Verdict": "PASS"
+    },
+    {
+      "TestName": "vw_ThongKePhim row coverage",
+      "InputValue": null,
+      "ExpectedValue": "20",
+      "ActualValue": "20",
+      "Verdict": "PASS"
+    }
+  ],
+  "resultSetShapes": [
+    {
+      "rows": 1,
+      "columns": [
+        "SqlServer",
+        "DatabaseName",
+        "UtcNow",
+        "BusinessDate",
+        "AuditMode"
+      ]
+    },
+    {
+      "rows": 45,
+      "columns": [
+        "TestName",
+        "InputValue",
+        "ExpectedValue",
+        "ActualValue",
+        "Verdict"
+      ]
+    },
+    {
+      "rows": 71,
+      "columns": [
+        "TableName",
+        "IndexName",
+        "IndexType",
+        "is_unique",
+        "is_primary_key",
+        "is_disabled",
+        "filter_definition",
+        "KeyColumns"
+      ]
+    },
+    {
+      "rows": 0,
+      "columns": []
+    },
+    {
+      "rows": 71,
+      "columns": [
+        "TableName",
+        "IndexName",
+        "UserSeeks",
+        "UserScans",
+        "UserLookups",
+        "UserUpdates"
+      ]
+    },
+    {
+      "rows": 0,
+      "columns": []
+    },
+    {
+      "rows": 14,
+      "columns": [
+        "TriggerName",
+        "ParentTable",
+        "DmlEvent",
+        "is_disabled",
+        "Result"
+      ]
+    },
+    {
+      "rows": 142,
+      "columns": [
+        "ConstraintType",
+        "name",
+        "ParentTable",
+        "is_disabled",
+        "is_not_trusted",
+        "Result"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "RowsRead"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "RowsRead"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "RowsRead"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "RowsRead"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "Microsoft SQL Server 2005 XML Showplan"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "RowsRead"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "Microsoft SQL Server 2005 XML Showplan"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "RowsRead"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "Microsoft SQL Server 2005 XML Showplan"
+      ]
+    },
+    {
+      "rows": 1,
+      "columns": [
+        "ReadOnlyCases",
+        "PassedReadOnlyCases",
+        "OverallStatus"
+      ]
+    }
+  ],
+  "verdict": "PASS"
+}
