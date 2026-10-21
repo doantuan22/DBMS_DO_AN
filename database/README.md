@@ -2,17 +2,17 @@
 
 ## Database policy
 
-- `CinemaBookingDB` is the only long-lived application database.
+- `CinemaBookingDB` is the only long-lived application database; the checked-in `backend/.env` targets its local development instance.
 - `CinemaBookingDB_Test` is the exact isolated restore and write-test target. It must be removed after its tests only with separate explicit approval.
 - Do not create Demo, DryRun, BackupDrill, or other long-lived database names.
-- Main schema installation, legacy reset, and retired seed entry points are fail-closed. The current Main schema is not dropped or recreated.
+- Main schema installation is guarded. The demo runner replaces recognized synthetic rows only; it never drops or recreates Main or its schema.
 - Current cleanup, seed, verification, and temporary Test status are documented in [DATABASE_CLEANUP_REPORT.md](../DATABASE_CLEANUP_REPORT.md).
 
 ## Current Main inventory
 
-Main has 29 tables, 147 stored procedures, 6 views, 21 functions, and 9 enabled triggers. Its 37 foreign keys and 65 check constraints are enabled and trusted. Main has 1,130 operational seed rows plus 96 preserved RBAC rows. See [SEED_DATA_VERIFICATION_REPORT.md](../SEED_DATA_VERIFICATION_REPORT.md) for full table counts and business integrity results.
+Main has 29 application tables, 154 stored procedures, 6 views, 22 functions, and 9 enabled triggers. Its 37 foreign keys and 65 check constraints are enabled and trusted. See [SEED_DATA_VERIFICATION_REPORT.md](../SEED_DATA_VERIFICATION_REPORT.md) for current table counts and business integrity results.
 
-The production seed uses the preserved `ADMIN`, `QUAN_LY_RAP`, `CSKH`, and `KHACH_HANG` roles. All ordinary business writes go through the existing stored procedures. One guarded offline bootstrap Admin insert is documented in [REALISTIC_PRODUCTION_SEED_REPORT.md](../REALISTIC_PRODUCTION_SEED_REPORT.md); the Backend and Frontend have no direct-insert bootstrap path.
+The demo seed preserves the `ADMIN`, `QUAN_LY_RAP`, `CSKH`, and `KHACH_HANG` RBAC rows. Ordinary business creation goes through existing stored procedures; only guarded historical/ongoing schedule and transaction fixtures use parameterized T-SQL.
 
 ## Schema installation
 
@@ -27,11 +27,9 @@ sqlcmd -S localhost -E -C -b -i run-all.sql
 
 ## Seed execution and verification
 
-The old `10_seed/seed-all.sql` and its historical fragments are retired and fail closed. Do not run `seed_base`, `seed_demo_dynamic`, or `seed_extended` manually.
+Run `npm run seed:all` to regenerate local vector artwork, back up and replace the recognized synthetic Main dataset, perform read-only SQL verification, and smoke-test the actual API. The steps are also available as `npm run seed:demo`, `npm run seed:verify`, and `npm run seed:api`.
 
-The replacement seed and its one-time execution requirements are documented in [SEED_EXECUTION_GUIDE.md](../SEED_EXECUTION_GUIDE.md). It targets only Main, converts Asia/Ho_Chi_Minh showtime wall times to UTC, and aborts against a non-empty operational database. Local account credentials and machine logs stay under ignored `.audit-output/`.
-
-Use `node scripts/seed/verify-seed.mjs` for read-only Main verification and `node scripts/seed/verify-login.mjs` for real Backend login checks. Original local vector artwork is listed in [SEED_IMAGE_MANIFEST.md](../SEED_IMAGE_MANIFEST.md); no external movie poster is hotlinked.
+The seed refuses non-local/non-development targets, schema or RBAC drift, non-`example.test` accounts, and row-count drift from the previous manifest (or the known original synthetic snapshot on first replacement). It creates a COPY_ONLY backup and requires `RESTORE VERIFYONLY` to pass before the atomic reset. It does not change schema, procedures, constraints, or triggers. Credentials, verified backups, and machine-readable reports stay under ignored `.audit-output/`.
 
 ## Tests and temporary Test database
 
@@ -44,7 +42,7 @@ The last `audit:all` passed. Test remains online with 29 tables and 3,915 rows. 
 - `00_database/` — database creation and options; physical drop entry point is disabled.
 - `01_schema/`, `02_tables/`, `03_constraints/`, `04_indexes/` — canonical schema.
 - `05_functions/`, `06_views/`, `07_triggers/`, `08_procedures/`, `09_security/` — business and security modules.
-- `10_seed/` — retired seed fragments, not part of schema installation.
+- `10_seed/` — all demo seed code (runner, SQL scenario fragments, artwork generator, schema inspector, and verifiers); do not run runner-owned SQL fragments standalone.
 - `11_tests/` — SQL regression tests; run only on the isolated Test target.
 - `12_verify/` — schema, constraint, module, security, and data verification sources.
 - `13_migrations/` — migration history; inspect target guards before deployment.

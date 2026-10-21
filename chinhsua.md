@@ -1,99 +1,113 @@
-# Đối chiếu `docs/Bao_Cao_Do_An_Hoan_Chinh.docx` với dự án thực tế
+# Đối chiếu báo cáo đồ án với dự án
 
-Ngày đối chiếu: 19/10/2026. Nguồn đối chiếu: mã nguồn trong `database/`, `backend/`, `frontend/`, `scripts/audit/`, kết quả chạy trong `.audit-output/acceptance/`.
+Ngày rà soát: 21/10/2026
 
-## Kết luận nhanh
+Tài liệu: `docs/BaoCaoDoAn_ChuanHoaVanPhong_HoanThien.docx`
 
-Phần kỹ thuật của báo cáo **khớp rất sát với dự án**. Đã kiểm tra bằng script và không phát hiện sai lệch ở các mục sau:
+## Kết luận
 
-- Số lượng đối tượng CSDL: 29 bảng, 37 FK, 65 CHECK, 42 DEFAULT, 11 UNIQUE, 29 PK, 31 index (5 unique filtered), 9 trigger, 6 view, 21 function (19 scalar + 2 TVF), 147 stored procedure.
-- Danh sách 147 tên procedure ở mục 3.6 trùng 100% với `CREATE OR ALTER PROCEDURE` trong `database/08_procedures/`.
-- Danh sách 31 tên index ở mục 3.5 trùng 100% với `database/04_indexes/`.
-- Toàn bộ cột/kiểu dữ liệu/NULL/IDENTITY của 29 bảng ở mục 2.3 và 215 tên ràng buộc/index (PK, UQ, FK, CK, DF, IX, UX) khớp với `database/02_tables`, `03_constraints`, `04_indexes`.
-- 33 mã quyền, 59 cặp vai trò–quyền (Khách 7, Quản lý 8, CSKH 11, Admin 33) khớp `database/10_seed/seed_base/002_reference.sql` và `003_reference.sql`.
-- `READ_COMMITTED_SNAPSHOT`, SQL Server 2016 SP1+, `fn_BayGio` trả UTC, `db_executor` + DENY + 7 SP RBAC bị từ chối, `DB_USER=sa` trong `.env.example`, `TABLOCKX` ở phân công rạp, SAVE TRAN ở `sp_Booking_Create`/`sp_Payment_UpdateResult`/`sp_Order_ExpirePending`, `sp_Manager_Room_Delete` chuyển "Ngưng hoạt động", tên CHECK/phương thức thanh toán (có `DIEM`), phiên bản thư viện ở Bảng 5.1, whitelist `PROCEDURES`, job hết hạn đơn, sessionStorage cho JWT, proxy `/api`.
-- Số liệu kiểm thử ở mục 4.1.5 và 4.2.6 (78/78 API, 26/26 DB, 41/41 CSKH, 64/65 E2E, LC-CONC-01…12 PASS, chạy lại E2E-A11Y-KEYBOARD 1/1) khớp file JSON trong `.audit-output/acceptance/`.
+Báo cáo nhìn chung bám khá sát dự án, nhất là phần mô hình dữ liệu, giao dịch, RBAC và kiến trúc backend gọi Stored Procedure. Tôi đã đối chiếu nội dung Word với mã nguồn SQL/Backend/Frontend và đọc catalog của database `CinemaBookingDB` trên `DoanTuanIT` ở chế độ chỉ đọc.
 
-Các điểm lệch thực sự được liệt kê bên dưới.
+Các định nghĩa của 29 bảng nghiệp vụ khớp tên cột, kiểu dữ liệu và NULL/NOT NULL với lược đồ hiện tại. Danh mục 147 Stored Procedure nghiệp vụ, 21 Function, 6 View và 9 Trigger trong báo cáo cũng khớp các đối tượng của dự án. Các lỗi đáng sửa chủ yếu nằm ở phạm vi thống kê catalog và một số mô tả giao diện/nghiệp vụ trong Chương 5.
 
----
+## Nội dung lệch hoặc cần diễn đạt lại
 
-## A. Nội dung báo cáo đang thiếu / lệch so với dự án (cần sửa trong báo cáo)
+### 1. Thống kê đối tượng: cần tách đối tượng của đồ án khỏi đối tượng hỗ trợ SQL Server
 
-### A1. Chương 6 hoàn toàn trống
+Các mục 2.1.1, 3.1–3.7, 5.1.4 và 6.1 đang dùng số liệu 29 bảng, 147 Stored Procedure, 21 Function, 6 View, 9 Trigger và 184 constraint như số của database. Đây là số đúng khi nói về **lược đồ nghiệp vụ do đồ án quản lý**, nhưng không phải tổng số mọi đối tượng đang có trong catalog của Main.
 
-- **Báo cáo hiện tại:** Chương 6 "KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN" chỉ có 3 tiêu đề (6.1 Kết quả đạt được, 6.2 Hạn chế, 6.3 Hướng phát triển), không có nội dung.
-- **Nội dung đúng (đề xuất, bám sát dự án):**
-  - **6.1 Kết quả đạt được:** CSDL SQL Server 29 bảng, 37 FK, 65 CHECK, 9 trigger, 6 view, 21 function, 147 stored procedure, kiến trúc DBMS-first (Backend chỉ gọi SP trong whitelist `backend/src/db/procedures.js`); đặt vé an toàn đồng thời (8 khách cùng đặt 1 ghế → 1 thành công, 7 nhận 409); chốt giá tại thời điểm đặt; RBAC cố định 4 vai trò, 33 quyền, 59 cặp, phạm vi rạp qua `PHANCONG_RAP`; 44 Use Case hoạt động (47 mã truy vết, ADM-03/04/05 ngừng); thanh toán mô phỏng (kể cả bằng điểm `DIEM`); bồi thường bằng điểm khi hủy suất; kết quả kiểm thử: backend 216/216, frontend 239/239, DB integrity 26/26, API integration 78/78, CSKH lifecycle 41/41, lifecycle 44/44, points-revenue 44/44, Browser E2E 64/65.
-  - **6.2 Hạn chế:** thanh toán chỉ mô phỏng, chưa có cổng thanh toán thật; không có hoàn tiền (chỉ bồi thường bằng điểm); RBAC cố định, không sửa được vai trò/quyền; môi trường dev dùng `sa` (chưa có bằng chứng chạy kiểm thử `db_executor`/EXECUTE-only); chưa có chính sách retry deadlock thống nhất; chưa có benchmark/execution plan cho index; Browser E2E đầy đủ còn 1/65 FAIL (E2E-A11Y-KEYBOARD, chạy lại riêng thì PASS) và chưa chạy lại trên snapshot mã hiện tại; chưa có ứng dụng mobile native; chưa chứng minh 3NF đầy đủ bằng phân tích phụ thuộc hàm (các cột snapshot/số dư như `TongTienVe`, `DiemTichLuy`, `SoLuongDaDung`).
-  - **6.3 Hướng phát triển:** tích hợp cổng thanh toán thật (VNPay/MoMo/ZaloPay – đã có sẵn giá trị trong CHECK `CK_THANHTOAN_PhuongThuc`); cơ chế hoàn tiền; dùng login ứng dụng EXECUTE-only (`db_executor`) khi triển khai và chạy `database/11_tests/permissions/*`; chính sách retry deadlock; benchmark index; ứng dụng mobile; cho phép cấu hình RBAC động (nếu thay đổi yêu cầu); báo cáo BI.
+Kết quả đọc catalog Main ngày 21/10/2026 có 30 bảng, 154 Stored Procedure, 22 Function, 6 View, 9 Trigger, 30 PK, 12 UQ, 37 FK, 65 CHECK và 42 DEFAULT. Phần chênh lệch là các đối tượng sơ đồ database do SSMS tạo: bảng `sysdiagrams`, hàm `fn_diagramobjects` và 7 thủ tục `sp_*diagram` (`sp_alterdiagram`, `sp_creatediagram`, `sp_dropdiagram`, `sp_helpdiagramdefinition`, `sp_helpdiagrams`, `sp_renamediagram`, `sp_upgraddiagrams`). Chúng không thuộc lược đồ nghiệp vụ của đồ án. Sau khi loại chúng, các số 29 bảng, 147 thủ tục, 21 hàm, 29 PK, 11 UQ và 184 constraint khớp phạm vi ứng dụng; 37 FK, 65 CHECK, 42 DEFAULT, 31 index độc lập, 6 view và 9 trigger cũng khớp.
 
-### A2. Các hình minh họa (Hình 5.1 → 5.11) chưa có ảnh; mục 5.3.6 đang là lời hướng dẫn chứ không phải nội dung
+**Cách sửa:** ở lần xuất hiện đầu tiên, ghi rõ “29 bảng nghiệp vụ và các đối tượng do đồ án quản lý; không tính đối tượng Database Diagrams do SSMS sinh”. Sửa câu ở mục 2.1.1 từ “29 bảng vật lý” thành “29 bảng nghiệp vụ trong lược đồ ứng dụng”. Ở mục 3.1, thay câu nói số liệu chưa được đối chiếu database đang vận hành bằng câu có ngày/phạm vi, ví dụ:
 
-- **Báo cáo hiện tại:** chỉ có 11 dòng chú thích dạng `[Hình 5.x …]`; file `.docx` chỉ chứa 2 ảnh (`word/media/image1.png`, `image2.png`, là ảnh trang bìa). Mục 5.3.6 viết kiểu hướng dẫn: "có thể sử dụng…", "Các hình ảnh được lựa chọn nên là ảnh chụp trực tiếp…".
-- **Nội dung đúng:** chèn ảnh chụp thật từ ứng dụng đang chạy (seed demo, tài khoản trong `note.md`, mật khẩu `CinemaStarDemo!2026`) và viết lại 5.3.6 thành mô tả các ảnh đã chèn (ví dụ: danh sách phim, chọn ghế `SeatMap`, thanh toán, quản lý phòng/ghế/suất, doanh thu rạp, xử lý khiếu nại CSKH, quản lý tài khoản/phân công, báo cáo doanh thu Admin). Hình 5.1 (kiến trúc) và 5.2 (sơ đồ tuần tự đặt vé) cần vẽ mới: React → REST API Express → `procedureClient` → Stored Procedure → SQL Server; luồng `sp_Booking_Create` (xem trước `@ChiXemTruoc` → tạo đơn → `sp_Payment_CreateAttempt` → `sp_Payment_UpdateResult`).
-- Các ảnh chụp có sẵn trong `.audit-output/acceptance/screenshots/` có thể dùng làm nguồn.
+> Tại thời điểm kiểm tra ngày 21/10/2026, lược đồ nghiệp vụ của đồ án có 29 bảng, 147 Stored Procedure, 21 Function, 6 View và 9 Trigger. Catalog Main có thêm các đối tượng Database Diagrams do SSMS tạo; các đối tượng này không được tính vào danh mục của hệ thống.
 
-### A3. Mục lục (MỤC LỤC) chỉ có tiêu đề, không có mục lục thật
+Sau đó dùng thống nhất cụm “đối tượng nghiệp vụ của đồ án” cho các số liệu ở mục 2.1.1, bảng 3.1–3.16, mục 5.1.4 và kết luận 6.1. `database/README.md` hiện ghi 29 bảng ứng dụng nhưng 154 Stored Procedure/22 Function; đây là cách đếm trộn phạm vi ứng dụng với đối tượng hỗ trợ SSMS, nên nên chuẩn hóa cùng nguyên tắc với báo cáo.
 
-- **Báo cáo hiện tại:** sau chữ "MỤC LỤC" không có trường TOC (không có `TOC` field/`w:sdt` trong `document.xml`); cũng chưa có danh mục bảng/hình.
-- **Nội dung đúng:** chèn mục lục tự động theo Heading 1–3 (Word: References → Table of Contents) và danh mục Bảng 3.1–3.6, 4.1–4.3, 5.1, Hình 5.1–5.11.
+### 2. Trailer phim không mặc nhiên là trailer chính thức
 
-### A4. Mã số sinh viên của Đoàn Anh Tuấn không thống nhất giữa hai tài liệu
+Ở mục 5.3.1, đoạn “Tra cứu phim, rạp chiếu và lịch chiếu” nói trang phim hiển thị “video trailer chính thức”. Dự án chỉ có trường `TrailerURL` tùy chọn và bộ seed demo hiện đặt trường này thành `NULL`; frontend kiểm tra URL hợp lệ nhưng không xác minh đó là trailer chính thức. Ảnh Hình 5.3 cũng không thể hiện video trailer.
 
-- **Báo cáo hiện tại (trang bìa):** Đoàn Anh Tuấn – **24110368**.
-- **`Phân Tích _ Thiết Kế.md` (tài liệu của dự án):** Đoàn Anh Tuấn – **24110366**.
-- **Cần làm:** đối chiếu MSSV thật (thẻ sinh viên) rồi thống nhất hai tài liệu. Tôi không xác định được con số nào đúng từ mã nguồn. Các MSSV còn lại (Trí 24110361, Thịnh 24110337, Bằng 24110166, Huân 24110220) khớp nhau.
-- Ngoài ra ngày trên bìa khác nhau: báo cáo ghi "tháng 10 năm 2026", tài liệu phân tích ghi "tháng 09 năm 2026" (chỉ cần xác nhận cho đúng bản nộp).
+**Cách sửa:** đổi thành “Trang chi tiết hiển thị thông tin phim và liên kết trailer nếu quản trị viên đã cấu hình URL hợp lệ. Với bộ dữ liệu demo hiện tại, trường TrailerURL chưa được nạp nên không phải phim nào cũng có trailer.”
 
-### A5. Mục 2.1.2 trích dẫn các file ERD không còn trong dự án
+### 3. Sai tên View lịch chiếu
 
-- **Báo cáo hiện tại:** liệt kê `erd/ERD_DATABASE_CINEMABOOKING.mmd`, `.dbml`, `.drawio`, `.svg`.
-- **Thực tế:** thư mục `erd/` không tồn tại; các file này từng nằm ở `docs/report/erd/` và đã bị xóa khỏi cây làm việc (commit `c076986`). Không có sơ đồ ERD nào được chèn vào báo cáo.
-- **Nội dung đúng:** hoặc khôi phục 4 file ERD từ git (`git show c076986^:docs/report/erd/<tên file>`) và đặt vào `docs/report/erd/` rồi sửa đường dẫn trong báo cáo; hoặc chèn hình ERD (xuất từ `.svg`/`.drawio`) vào mục 2.1.2 và bỏ đường dẫn không còn tồn tại. Hiện mục 2.1.2 không có hình ERD, trong khi đây là phần cốt lõi của chương thiết kế CSDL.
+Ở mục 5.3.1, đoạn dưới Hình 5.3 gọi View là `v_LichChieu`. Tên thực tế là `dbo.vw_LichChieuChiTiet`; các Stored Procedure đọc lịch chiếu sử dụng View này.
 
-### A6. Mâu thuẫn nội bộ về số nhóm bảng: "sáu nhóm" (mục 2.1.1) và "bốn nhóm" (mục 3.1)
+**Cách sửa:** thay `v_LichChieu` bằng `vw_LichChieuChiTiet`, đồng thời diễn đạt rằng API/Stored Procedure sử dụng View để lấy dữ liệu, không phải giao diện frontend truy vấn trực tiếp SQL Server.
 
-- **Báo cáo hiện tại:** 2.1.1.b chia 29 bảng thành **sáu nhóm** (6 + 4 + 5 + 2 + 7 + 5 bảng); 3.1 viết "được tổ chức thành **bốn nhóm** nghiệp vụ" và Bảng 3.1 gộp "Rạp, phim và lịch chiếu" (11 bảng) thành một nhóm.
-- **Nội dung đúng:** cả hai cách chia đều tổng 29 bảng, nhưng cần thống nhất. Đề xuất sửa câu ở mục 3.1 thành: "Danh mục 29 bảng được trình bày theo bốn nhóm nghiệp vụ (gộp từ sáu nhóm dữ liệu ở mục 2.1.1)", hoặc đổi Bảng 3.1 sang đúng sáu nhóm như 2.1.1.
+### 4. Mô tả thời điểm giữ ghế chưa đúng với luồng đặt vé
 
-### A7. Mục 5.2.1 (giao diện/font) chưa phản ánh đúng mã nguồn Frontend
+Ở mục 5.3.1, đoạn “Lựa chọn ghế và chuẩn bị đơn đặt vé” nói hệ thống giữ ghế ngay khi khách xác nhận bước chọn ghế. Nhưng Hình 5.4 ghi rõ “Ghế chỉ được giữ sau khi tạo đơn thành công”. Trong mã nguồn, việc giữ chỗ được biểu diễn bằng đơn `DONDATVE` ở trạng thái chờ thanh toán cùng `HanGiuCho`; không có trạng thái giữ ghế độc lập được ghi ngay lúc chọn ghế. Trạng thái ghế đang giữ được suy ra từ đơn còn hiệu lực. Chế độ xem trước cũng không tạo đơn hoặc chiếm ghế.
 
-- **Báo cáo hiện tại:** "Font chữ Inter và các tài nguyên giao diện được quản lý trong thư mục tài nguyên… Thay vì phụ thuộc vào một thư viện UI lớn, dự án sử dụng các thành phần đã được xây dựng…".
-- **Thực tế:**
-  - Font Inter (`/assets/fonts/InterVariable.woff2`, `font-family: 'Cinema Inter'`) chỉ dùng cho khu vực công khai (`frontend/src/styles/public/public-tokens.css`). `frontend/src/styles/tokens.css` dùng `'Plus Jakarta Sans'` (Inter chỉ là font dự phòng) cho khu vực nội bộ.
-  - Khu vực Admin/Manager dùng bộ icon SVG và CSS từ mẫu **TailAdmin** (`frontend/src/vendor/tailadmin/icons/*.svg`, `frontend/src/styles/admin-tailadmin.css`, nạp qua `components/ui/AdminIcon.jsx`).
-- **Nội dung đúng (đề xuất thay thế):** "Giao diện khu vực công khai dùng font Inter (variable font, tự lưu trong `public/assets/fonts`), khu vực quản trị/nội bộ dùng Plus Jakarta Sans kết hợp bộ icon và CSS lấy từ mẫu TailAdmin (thư mục `src/vendor/tailadmin`); phần còn lại là các component nội bộ, không dùng thư viện UI lớn như MUI/Ant Design."
+**Cách sửa:** thay bằng “Ở bước chọn ghế/xem trước, hệ thống kiểm tra khả năng đặt nhưng chưa giữ ghế. Sau khi tạo đơn thành công, database ghi đơn chờ thanh toán và thời hạn `HanGiuCho`; ghế được xem là đang giữ trong thời hạn này. Nếu ghế không còn khả dụng khi xác nhận, API trả xung đột và khách cần chọn lại.” Cách diễn đạt này cũng thống nhất với ảnh Hình 5.4 và luồng `sp_Booking_Create`.
 
-### A8. Mục 5.1.2 liệt kê chưa đủ module Frontend
+### 5. Báo cáo nói có mã QR và soát vé tại quầy nhưng ứng dụng hiện chỉ có mã vé dạng văn bản
 
-- **Báo cáo hiện tại:** nêu 7 module `customer, facilities, operations, staff-bookings, support, admin-resources, admin-analytics`.
-- **Thực tế (`frontend/src/features/`):** có 13 thư mục: `admin`, `admin-analytics`, `admin-resources`, `admin-rooms`, `admin-service`, `admin-workspace`, `customer`, `facilities`, `manager`, `operations`, `public`, `staff-bookings`, `support`.
-- **Nội dung đúng:** bổ sung `public`, `manager`, `admin`, `admin-rooms`, `admin-service`, `admin-workspace`, hoặc đổi câu thành "gồm các module tiêu biểu như …".
+Mục 5.3.1, đoạn “Thanh toán mô phỏng và quản lý vé điện tử”/dưới Hình 5.5 mô tả mã QR và việc dùng vé để soát tại quầy. Mã nguồn hiện trả và hiển thị `MaVe` dưới dạng chuỗi văn bản; ảnh Hình 5.5 cũng minh họa “Mã vé: TK-…”, không có QR. Không tìm thấy chức năng tạo/hiển thị QR hoặc API/quy trình quét và check-in vé trong Frontend/Backend.
 
-### A9. Bảng 5.1 / mục 5.2.4 thiếu thông tin công cụ kiểm thử và lint
+**Cách sửa:** thay “mã QR vé điện tử” bằng “mã vé điện tử (`MaVe`)” và bỏ câu khẳng định có thể dùng để soát vé tại quầy. Chỉ giữ lại nội dung QR/check-in nếu chức năng đó được bổ sung và kiểm thử.
 
-- **Báo cáo hiện tại:** Kiểm thử = "Node.js Test Runner, Playwright, axe-core"; không nêu phiên bản; không nhắc lint.
-- **Thực tế:** `@playwright/test ^1.64.0`, `axe-core ^4.10.2` (ở `package.json` gốc); Frontend có `oxlint` (`npm --prefix frontend run lint`); Prettier (`npm run format:check`); Backend/Frontend đều dùng `node --test`.
-- **Nội dung đúng:** thêm các phiên bản trên vào Bảng 5.1 và thêm dòng "Chất lượng mã: Prettier, oxlint".
+### 6. Chưa có hạng thành viên theo điểm
 
----
+Mục 5.3.1, đoạn đăng ký và quản lý tài khoản nói khách hàng “kiểm tra hạng thành viên”. Hồ sơ hiện chỉ hiển thị số dư điểm với nhãn “Thành viên CinemaStar”; chưa có cấp hạng hoặc quy tắc tính hạng theo điểm.
 
-## B. Điểm cần lưu ý nhưng báo cáo hiện đang đúng (không cần sửa)
+**Cách sửa:** đổi thành “theo dõi số điểm tích lũy hiện có”. Nếu muốn mô tả hạng thành viên, cần bổ sung cấp hạng, ngưỡng điểm, cách tính và giao diện tương ứng trước.
 
-- Báo cáo ghi rõ đây là số liệu từ bộ script chứ không phải truy vấn SQL Server trực tiếp (mục 3, đoạn đầu) – giữ nguyên.
-- Báo cáo ghi đúng việc `THANH_TOAN` được gán cho Quản lý rạp trong ma trận nhưng nghiệp vụ thanh toán vẫn giới hạn cho khách hàng.
-- Báo cáo ghi đúng là hệ thống không có hoàn tiền, chỉ có bồi thường bằng điểm (khớp `README.md` gốc).
+### 7. Sai tên thủ tục, khoảng đệm suất chiếu và nhãn loại ngày
 
-## C. Ngược lại: tài liệu của dự án đang lỗi thời so với báo cáo (nên sửa phía dự án)
+Mục 5.3.2, đoạn “Quản lý suất chiếu, bảng giá và báo cáo doanh thu rạp” nêu thủ tục `sp_KiemTraTrungSuatChieu` và khoảng đệm dọn phòng 15 phút. Dự án không có thủ tục tên đó và không áp dụng khoảng đệm 15 phút. Tạo/cập nhật suất chiếu gọi `sp_Showtime_ValidateTimes`; trigger `TRG_SuatChieu_KiemTraTrungLich` chặn các khoảng thời gian giao nhau trong cùng phòng. Thủ tục kiểm tra thời lượng suất so với thời lượng phim (từ thời lượng phim đến tối đa thêm 120 phút) và giới hạn thời lượng; đây không phải quy tắc dọn phòng 15 phút.
 
-Báo cáo đúng, còn các tài liệu dưới đây sai/cũ:
+Cùng câu này ghi loại ngày “Tất cả các ngày”, trong khi giá trị nghiệp vụ được lưu là `Tất cả` (cùng `Ngày thường`, `Cuối tuần`). Câu “tạo đơn đặt vé tại quầy” cũng dễ khiến người đọc hiểu là có POS/thu tiền mặt, trong khi phạm vi đề tài loại POS ra ngoài và Manager/Admin chỉ tạo đơn chờ thanh toán.
 
-| Tài liệu | Đang ghi | Thực tế (và báo cáo ghi đúng) |
-|---|---|---|
-| `database/README.md` | "27 tables and 169 SQL modules: 134 procedures, 6 views, 21 functions and 8 triggers" | 29 bảng, 147 procedure (63+7+2+9+19+3+10+9+19+6 file trong `08_procedures/*`), 6 view, 21 function, 9 trigger |
-| `database/README.md` | "02_tables — 27 canonical table definitions", "07_triggers — 8 integrity and fixed-role triggers" | thư mục có 29 file bảng, 9 file trigger |
-| `database/README.md` | "4 roles, 23 permission entries and 40 Role–Permission pairs" | 33 quyền, 59 cặp vai trò–quyền (seed `002_reference.sql`, `003_reference.sql`) |
-| `Phân Tích _ Thiết Kế.md` §1.4 | "Database: 25 bảng" | 29 bảng |
-| `Phân Tích _ Thiết Kế.md` (bìa) | MSSV Đoàn Anh Tuấn 24110366, "tháng 09 năm 2026" | xem mục A4 |
-| `README.md` (gốc) | đang bị xóa trắng trong working tree (`git status`: ` M README.md`, nội dung 0 byte) | cần khôi phục (`git checkout -- README.md`) hoặc viết lại trước khi nộp |
+**Cách sửa:** viết lại theo hướng: “Khi tạo hoặc cập nhật suất chiếu, các Stored Procedure gọi `sp_Showtime_ValidateTimes`; trigger `TRG_SuatChieu_KiemTraTrungLich` tiếp tục ngăn các suất trong cùng phòng chồng lấn thời gian. Thời lượng và mốc thời gian được kiểm tra theo quy tắc của database; dự án không thiết lập khoảng đệm dọn phòng 15 phút. Bảng giá dùng các loại ngày `Ngày thường`, `Cuối tuần`, `Tất cả`. Manager/Admin có thể hỗ trợ tạo đơn trên hệ thống ở trạng thái chờ thanh toán; chức năng POS và thu tiền tại quầy chưa nằm trong phạm vi.”
+
+### 8. Sai các trạng thái khiếu nại ở mục CSKH
+
+Mục 5.3.3, đoạn “Tiếp nhận và phân loại khiếu nại” liệt kê `Chờ tiếp nhận`, `Đang xử lý`, `Chờ khách phản hồi`, `Đã giải quyết`, `Đã đóng`. Giá trị của `KHIEUNAI.TrangThai` mà CHECK constraint và API hiện cho phép là `Mới`, `Đang xử lý`, `Đã giải quyết`, `Đã đóng`, `Từ chối`. `Chờ tiếp nhận` là trạng thái ban đầu của **yêu cầu chuyển cấp** (`YEUCAU_CHUYENCAP`), không phải khiếu nại; `Chờ khách phản hồi` không có trong tập trạng thái hiện tại.
+
+**Cách sửa:** thay danh sách trạng thái trong báo cáo bằng đúng năm giá trị trên. Nếu muốn có trạng thái chờ khách phản hồi hoặc dùng “Chờ tiếp nhận” cho khiếu nại, cần thay đổi đồng bộ CHECK constraint, API validator, bộ lọc giao diện và kiểm thử; không nên chỉ sửa câu chữ.
+
+### 9. Chuyển cấp khiếu nại không đồng nghĩa với hoàn tiền hoặc một bước phê duyệt thanh toán
+
+Mục 5.3.3, đoạn “Trao đổi hỗ trợ, ghi chú nội bộ và chuyển cấp hồ sơ” có thể khiến người đọc hiểu Admin duyệt và thực hiện hoàn tiền. Dự án cho phép CSKH gửi yêu cầu chuyển cấp; Admin kết luận yêu cầu bằng trạng thái `Đã giải quyết` hoặc `Từ chối` và ghi nội dung kết quả. Không có luồng hoàn tiền thực tế; điều này phù hợp với phần hạn chế 6.2.
+
+**Cách sửa:** nói rõ yêu cầu hoàn tiền (nếu có) chỉ là nội dung được chuyển cấp để xem xét; hệ thống không thực hiện hoàn tiền. Dùng “Admin tiếp nhận và kết luận yêu cầu chuyển cấp” thay cho cách diễn đạt hàm ý có quy trình hoàn tiền/phê duyệt giao dịch.
+
+### 10. Thời điểm được đánh giá phim đang được mô tả không thống nhất
+
+Mục 5.3.1, đoạn dưới Hình 5.5 nói khách hàng gửi đánh giá sau khi suất chiếu kết thúc. Nhưng mục 2.1.1/mô tả Trigger và mã `TRG_DanhGia_KiemTraDaXemPhim` kiểm tra suất đã **bắt đầu** (`ThoiGianBatDau <= thời điểm hiện tại`), không kiểm tra `ThoiGianKetThuc`. Vì vậy, câu ở Chương 5 đang hứa điều kiện chặt hơn điều kiện thực sự được áp dụng.
+
+**Cách sửa:** viết “Khách hàng có đơn đã thanh toán/hoàn thành cho phim có thể đánh giá khi suất chiếu đã bắt đầu.” Nếu muốn chỉ cho đánh giá sau khi phim kết thúc, cần sửa Trigger/thủ tục và kiểm thử tương ứng.
+
+### 11. Quy tắc thay đổi ghế cần nêu đúng từng loại thao tác
+
+Mục 5.3.2 nói không cho “xóa hoặc thay đổi cấu hình” của ghế từng có vé. Điều này đúng với xóa ghế và đổi loại ghế, nhưng hơi rộng nếu hiểu là không được đổi bất kỳ thuộc tính nào: mã hiện tại vẫn cho cập nhật trạng thái ghế nếu ghế không có vé hiệu lực ở suất tương lai. Ngược lại, đổi loại ghế bị chặn nếu có bất kỳ lịch sử vé nào.
+
+**Cách sửa:** nêu cụ thể “không xóa ghế hoặc đổi loại ghế đã có lịch sử vé; trạng thái hoạt động/bảo trì/hỏng chỉ được cập nhật khi không có vé hiệu lực ở suất chiếu tương lai.”
+
+### 12. “Theo thời gian thực” ở dashboard nên giới hạn nghĩa
+
+Mục 5.3.2 mô tả số liệu dashboard bảo đảm nhất quán “theo thời gian thực”. Dữ liệu được tổng hợp từ truy vấn database khi API/dashboard tải hoặc làm mới; mã nguồn không thể hiện cơ chế đẩy cập nhật liên tục (streaming/subscription). Do đó, “real-time” dễ bị hiểu là cập nhật tức thì liên tục.
+
+**Cách sửa:** thay bằng “số liệu được tổng hợp từ dữ liệu database tại thời điểm truy vấn/làm mới”. Chỉ dùng “thời gian thực” nếu có cơ chế cập nhật liên tục được triển khai và kiểm thử.
+
+### 13. Các tổng số kiểm thử cần gắn với lần chạy cụ thể
+
+Mục 4.1.5 đã ghi rõ một số kết quả ngày 14–15/10/2026 và lưu ý Browser E2E 64/65 chưa được chạy lại trên snapshot hiện tại; đây là cách trình bày phù hợp. Tuy nhiên, bảng kết quả 6.1 còn nêu nhiều tổng số suite (Backend 216/216, Frontend 239/239, vòng đời nghiệp vụ 44/44, điểm/doanh thu 44/44) mà không gắn ngày, commit hoặc đường dẫn log ngay cạnh số liệu. Trong `.audit-output` hiện có báo cáo xác minh seed, nhưng không có log để xác nhận những tổng này là kết quả của mã nguồn hiện tại.
+
+**Cách sửa:** giữ các số liệu nếu đó là kết quả lịch sử, nhưng ghi ngày chạy, commit/snapshot, database đích và dẫn tới log/artifact tương ứng. Nếu muốn coi là trạng thái hiện tại, chạy lại suite liên quan trên phiên bản hiện tại rồi cập nhật; không suy từ kết quả seed verification sang kết quả kiểm thử toàn hệ thống.
+
+## Nội dung đã đối chiếu và có thể giữ
+
+- Tên 29 bảng nghiệp vụ, toàn bộ tên cột, kiểu dữ liệu và tính NULL/NOT NULL trong các bảng cấu trúc Chương 2 khớp lược đồ dự án.
+- Danh sách tên 147 Stored Procedure nghiệp vụ, 21 Function, 6 View và 9 Trigger trong các bảng Chương 3 khớp Main sau khi loại các đối tượng sơ đồ SSMS. Các số 37 FK, 65 CHECK, 42 DEFAULT, 31 index độc lập và 184 constraint theo phạm vi nghiệp vụ cũng nhất quán.
+- Thông tin RBAC gồm 4 vai trò, 33 quyền và 59 quan hệ vai trò–quyền khớp database hiện tại. Nhận xét rằng ma trận quyền cố định và quyền `THANH_TOAN` trong ma trận không tự động mở nghiệp vụ thanh toán cho Manager là diễn đạt có cơ sở.
+- Mô tả transaction đặt vé, giá/đơn giá snapshot, giữ chỗ theo hạn, thanh toán mô phỏng, thanh toán hoàn toàn bằng điểm trong điều kiện phù hợp và bồi thường bằng điểm khi hủy suất chiếu nhìn chung khớp mã nguồn. Phần nói chưa chứng minh đầy đủ 3NF cũng thận trọng và nên giữ.
+- Các hình giao diện chính có trong file Word; riêng Hình 5.4 và 5.5 hỗ trợ việc sửa mô tả giữ ghế và mã vé như trên.
+
+## Thứ tự chỉnh sửa đề xuất
+
+1. Chốt quy ước đếm “đối tượng nghiệp vụ” và sửa thống nhất các số liệu ở Chương 2, Chương 3, Chương 5, Chương 6 cùng `database/README.md`.
+2. Sửa nội dung các mục 5.3.1–5.3.3 theo các điểm 2–12, đặc biệt là giữ ghế, QR/check-in, hạng thành viên, kiểm tra suất chiếu, trạng thái khiếu nại và đánh giá phim.
+3. Bổ sung nguồn/log và mốc phiên bản cho các tổng số kiểm thử ở Chương 4 và Chương 6.

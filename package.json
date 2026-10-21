@@ -18,7 +18,11 @@
     "audit:lifecycle": "node scripts/audit/lifecycle.mjs",
     "audit:testdb": "node scripts/audit/test-db.mjs",
     "audit:points": "node scripts/audit/points-revenue.mjs",
-    "audit:migrate": "node scripts/audit/apply-migration.mjs"
+    "audit:migrate": "node scripts/audit/apply-migration.mjs",
+    "seed:demo": "node database/10_seed/generate-media.mjs && node database/10_seed/seed-demo.mjs",
+    "seed:verify": "node database/10_seed/verify-seed.mjs",
+    "seed:api": "node database/10_seed/verify-demo-api.mjs",
+    "seed:all": "npm run seed:demo && npm run seed:verify && npm run seed:api"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
